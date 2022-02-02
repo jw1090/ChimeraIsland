@@ -19,6 +19,26 @@ public class Facility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+
+    public void UpgradeFacility()
+    {
+
+    }
+    public void Remove()
+    {
+
+    }
+
+    public int [] GetStats()
+    {
+        int[] stats = { };
+        return stats;
+    }
+    public int GetTier()
+    {
+        return 0;
     }
 }
