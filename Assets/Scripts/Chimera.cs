@@ -1,119 +1,116 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Chimera : MonoBehaviour
 {
-    [Header("General Stats")]
+    [Header("General Info")]
     [SerializeField] private ChimeraType chimeraType = ChimeraType.None;
-    [SerializeField] private ElementalType elementalType;
-    [SerializeField] private BehaviorType behaviorType;
+    [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private Habitat parentHabitat;
-    [SerializeField] private int baseEssenceRate;
-    [SerializeField] private int happiness;
+
+    [Header("Stats")]
+    [SerializeField] private int level;
     [SerializeField] private int agility;
     [SerializeField] private int strength;
     [SerializeField] private int defense;
     [SerializeField] private int stamina;
     [SerializeField] private int wisdom;
+    [SerializeField] private int happiness;
 
     [Header("Stat Growth")]
-    [SerializeField] private int agilityGrowth;
-    [SerializeField] private int strengthGrowth;
-    [SerializeField] private int defenseGrowth;
-    [SerializeField] private int staminaGrowth;
-    [SerializeField] private int wisdomGrowth;
-    [SerializeField] private int agilityExperience;
-    [SerializeField] private int strengthExperience;
-    [SerializeField] private int defenseExperience;
-    [SerializeField] private int staminaExperience;
-    [SerializeField] private int wisdomExperience;
-    [SerializeField] private int agilityThreshold;
-    [SerializeField] private int strengthThreshold;
-    [SerializeField] private int defenceThreshold;
-    [SerializeField] private int staminaThreshold;
-    [SerializeField] private int wisdomThreshold;
+    [SerializeField] private int agilityGrowth = 1;
+    [SerializeField] private int defenseGrowth = 1;
+    [SerializeField] private int strengthGrowth = 1;
+    [SerializeField] private int staminaGrowth = 1;
+    [SerializeField] private int wisdomGrowth = 1;
+    [SerializeField] private int agilityExperience = 0;
+    [SerializeField] private int defenseExperience = 0;
+    [SerializeField] private int strengthExperience = 0;
+    [SerializeField] private int staminaExperience = 0;
+    [SerializeField] private int wisdomExperience = 0;
+    [SerializeField] private int agilityThreshold = 100;
+    [SerializeField] private int defenceThreshold = 100;
+    [SerializeField] private int strengthThreshold = 100;
+    [SerializeField] private int staminaThreshold = 100;
+    [SerializeField] private int wisdomThreshold = 100;
 
-    [Header("Stored Stat Experience")]
+    [Header("Stored Experience")]
     [SerializeField] private int storedAgilityExperience = 0;
-    [SerializeField] private int storedStrenghtExperience = 0;
     [SerializeField] private int storedDefenseExperience = 0;
+    [SerializeField] private int storedStrenghtExperience = 0;
     [SerializeField] private int storedStaminaExperience = 0;
     [SerializeField] private int storedWisdomExperience = 0;
+    [SerializeField] private int experienceCap = 200;
+
+    [Header("Essence")]
+    [SerializeField] private float baseEssenceRate = 5;
+    [SerializeField] private int currentEssence = 0;
+    [SerializeField] private float essenceModifier = 1.0f; // Tuning knob for essence gain
+    [SerializeField] private int essenceCap = 100;
 
     [Header("Evolution Info")]
     [SerializeField] private Chimera[] evolutionPaths;
-    [SerializeField] private int evolutionStats;
+    [SerializeField] private int[] evolutionStats;
 
-    // Start is called before the first frame update
-    void Start()
+    // TODO: Complete ChimeraTick
+    // - Called by the habitat to transfer habitat stat rates into the chimera's stored stats every tick
+    // - Make sure each respective stat's experience does not go over the experienceCap variable
+    public void ChimeraTick(int agility, int defense , int strength, int stamina, int wisdom)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    //  - Made by: Joe 2/2/2022
+    //  - On tap call HarvestEssence() and AllocateExperience() functions to appropritely gain resources that have been stored
+    //  - Any other on tap interaction will go in here
+    public void ChimeraTap()
     {
-        
+        HarvestEssence();
+        AllocateExperience();
     }
 
-    // TODO: Complete this function
-    //  - Increase stat at rate of the relevant statgrowth variable agility += agilityGrowth
-    //  - Made by: Joao 2/2/2022
-    //  - Level Chimera up
+    // TODO: Complete HarvestEssence
+    // - This function is called by ChimeraTap(). On tap it will use essence forumala
+    // - and add stored essence to GameManager.Instance().IncreaseEssence(storedEssence)
+    // - currentEssence += (( x )Level * ( x )HappinessFormula * MonsterBaseValue) * essenceModifier 
+    // - Happiness for now = x1
+    private void HarvestEssence()
+    {
+
+    }
+
+    // TODO: Complete AllocateExperience
+    // - Transfer experience stored by the chimera and see if each stat's threshold is met.
+    // - If so, LevelUp is called with specific stat enumerator.
+    private void AllocateExperience()
+    {
+
+    }
+
+    // TODO: Complete LevelUp
+    // - Increase stat at rate of the relevant statgrowth variable.
+    // - For example: agility += agilityGrowth, defense += defenseGrowth...
     private void LevelUp(StatType statType)
     {
 
     }
 
-    //  - Made by: Joao 2/2/2022
-    //  - Check if all requirements are ok to evolve
+    // - Check if all requirements are ok to evolve
     private void CheckEvolution()
     {
 
     }
 
-    //  - Made by: Joao 2/2/2022
-    //  - Evolve Chimera to its new form
-    public void Evolve(Chimera newForm)
+    // - Evolve Chimera to its new form
+    private void Evolve(Chimera newForm)
     {
 
     }
 
-    // TODO: Complete this function
-    // - Transfer Experience stored to chimera and see if threshold is met.
-    // - If so, LevelUp is called with specific stat enumerator.
-    public void ChimeraTap()
-    {
-
-    }
-
-    // TODO: Complete this function
-    //  - Called by the habitat to transfer habitat stat rates into the chimera's stored stats every tick
-    //  - Made by: Joao 2/2/2022
-    //  - Stored expereince on habitat tick
-    public void TickExperience(int agility, int strength, int defense, int stamina, int wisdom)
-    {
-        
-    }
-
-    //  - Made by: Joao 2/2/2022
-    //  - Get the required stats needed to evolve
-    public int [] GetRequiredStats()
-    {
-        int[] requirements = { };
-        return requirements;
-    }
-
-    // TODO: Complete this function
-    //  - Use essence forumal to create this getter function
-    //  - currentEssence += (( x )Level * ( x )HappinessFormula * MonsterBaseValue) *  essenceRatio 
-    //  - Happiness for now = x1
-    //  - Made by: Joao 2/2/2022
-    //  - Get the essence when tapped. It is going to be used in habitats in order to update it with facilities.
-    public int GetEssence()
-    {
-        return 0;
-    }
+    #region Getters & Setters
+    // Get the required stats needed to evolve
+    public int[] GetRequiredStats() { return evolutionStats; }
+    #endregion
 }

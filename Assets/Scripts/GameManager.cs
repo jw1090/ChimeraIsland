@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Resources")]
+    [SerializeField] private int currentEssence = 0;
+
     [Header("References")]
-    [SerializeField] private GameObject Habitat1;
-    [SerializeField] private GameObject Habitat2;
-    [SerializeField] private GameObject Habitat3;
-    [SerializeField] private GameObject Habitat4;
-    [SerializeField] private GameObject Habitat5;
+    [SerializeField] private Habitat Habitat1;
+    [SerializeField] private TextMeshProUGUI essenceWallet;
 
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
 
-    //  - Made by: Joe 2/2/2022
-    //  - Basic Singleton Implementation
+    // - Made by: Joe 2/2/2022
+    // - Basic Singleton Implementation
     private void Initialize()
     {
         if (gameManagerInstance != null && gameManagerInstance != this)
@@ -33,17 +34,48 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        essenceWallet.text = currentEssence.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    // - Made by: Joe 2/2/2022
+    // - Increases your essence.
+    public void IncreaseEssence(int amount)
     {
-        
+        currentEssence += amount;
+        essenceWallet.text = currentEssence.ToString();
     }
 
+    // - Made by: Joe 2/2/2022
+    // - Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
+    public bool SpendEssence(int amount)
+    {
+        if(currentEssence - amount < 0)
+        {
+            return false;
+        }
 
+        currentEssence -= amount;
+        essenceWallet.text = currentEssence.ToString();
+
+        return true;
+    }
+
+    // - Adds Chimera to the habitat by pressing the add chimera button.
+    // - Make sure the capacity has room and that you are not instantiating the prefab under the map
+    public bool AddChimera(Chimera chimera, Habitat newHabitat)
+    {
+        return false;
+    }
+
+    // - Moves Chimera from one habitat to another
+    public bool TransferChimera(Chimera chimera, Habitat originHabitat, Habitat newHabitat)
+    {
+        return false;
+    }
+
+    #region Getters & Setters
+
+    #endregion
 }

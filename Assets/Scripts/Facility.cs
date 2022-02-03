@@ -8,37 +8,18 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilityType facilityType = FacilityType.None;
     [SerializeField] private StatType statType = StatType.None;
     [SerializeField] private int currentTier = 1;
-    [SerializeField] private int statAmount = 1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    [SerializeField] private int statModifier = 1;
+    [SerializeField] private int price = 100;
 
     public void UpgradeFacility()
     {
 
     }
-    public void Remove()
-    {
 
-    }
-
-    public int [] GetStats()
-    {
-        int[] stats = { };
-        return stats;
-    }
-    public int GetTier()
-    {
-        return 0;
-    }
+    #region Getters & Setters
+    public StatType GetStatType() { return statType; }
+    public int GetStatModifier() { return statModifier; }
+    public int GetTier() { return currentTier; }
+    public int GetPrice() { return price; }
+    #endregion
 }
