@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class ChimeraBehavior : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("General Info")]
+    [SerializeField] private BehaviorType behaviorType = BehaviorType.None;
 }

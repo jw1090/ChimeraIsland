@@ -5,9 +5,9 @@ using UnityEngine;
 public enum FacilityType
 {
     None = -1,
-    RuneStructure,
     BungeeCenote,
-    Waterfall,
-    Hiking,
-    RockRolling
+    HikingTrail,
+    RockRolling,
+    RuneStructure,
+    Waterfall
 }

@@ -135,11 +135,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5329750817026056157}
-  - component: {fileID: 5329750817026056155}
+  - component: {fileID: 1411145442486240231}
   - component: {fileID: 5329750817026056156}
   m_Layer: 0
   m_Name: Chimera
-  m_TagString: Untagged
+  m_TagString: Chimera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5329750817026056155
+--- !u!114 &1411145442486240231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,37 +172,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chimeraType: -1
-  elementalType: -1
-  behaviorType: -1
-  baseEssenceRate: 0
-  happiness: 0
+  elementalType: 0
+  behaviorType: 0
+  parentHabitat: {fileID: 0}
   agility: 0
   strength: 0
   defense: 0
   stamina: 0
   wisdom: 0
-  agilityGrowth: 0
-  strengthGrowth: 0
-  defenseGrowth: 0
-  staminaGrowth: 0
-  wisdomGrowth: 0
+  happiness: 0
+  agilityGrowth: 1
+  strengthGrowth: 1
+  defenseGrowth: 1
+  staminaGrowth: 1
+  wisdomGrowth: 1
   agilityExperience: 0
   strengthExperience: 0
   defenseExperience: 0
   staminaExperience: 0
   wisdomExperience: 0
-  agilityThreshold: 0
-  strengthThreshold: 0
-  defenceThreshold: 0
-  staminaThreshold: 0
-  wisdomThreshold: 0
+  agilityThreshold: 100
+  strengthThreshold: 100
+  defenceThreshold: 100
+  staminaThreshold: 100
+  wisdomThreshold: 100
   storedAgilityExperience: 0
   storedStrenghtExperience: 0
   storedDefenseExperience: 0
   storedStaminaExperience: 0
   storedWisdomExperience: 0
+  experienceCap: 200
+  baseEssenceRate: 5
+  currentEssence: 0
+  essenceCap: 100
+  essenceRatio: 0
   evolutionPaths: []
-  evolutionStats: 0
+  evolutionStats: 
 --- !u!114 &5329750817026056156
 MonoBehaviour:
   m_ObjectHideFlags: 0
