@@ -26,7 +26,7 @@ public class Habitat : MonoBehaviour
     [Header("Tick Info")]
     [SerializeField] private float tickTimer = 60.0f;
 
-    [Header("Facility Prefabs")]
+    [Header("Habitat 1 Facilities")]
     [SerializeField] private Facility bungeeCenote;
     [SerializeField] private Facility hikingTrail;
 
@@ -54,7 +54,22 @@ public class Habitat : MonoBehaviour
     // -
     public void AddFacility(FacilityType facilityType)
     {
-
+        switch (facilityType)
+        {
+            case FacilityType.None:
+                break;
+            case FacilityType.BungeeCenote:
+                
+                break;
+            case FacilityType.HikingTrail:
+                break;
+            case FacilityType.RockRolling:
+                break;
+            case FacilityType.RuneStructure:
+                break;
+            case FacilityType.Waterfall:
+                break;
+        }
     }
 
     // - Made by: Joe 2/2/2022
