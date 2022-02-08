@@ -29,6 +29,9 @@ public class Habitat : MonoBehaviour
     [Header("Habitat 1 Facilities")]
     [SerializeField] private Facility bungeeCenote;
     [SerializeField] private Facility hikingTrail;
+    [SerializeField] private Facility rockRolling;
+    [SerializeField] private Facility runeStructure;
+    [SerializeField] private Facility Waterfall;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,7 @@ public class Habitat : MonoBehaviour
     {
         while (isActive)
         {
+                        
             yield return new WaitForSeconds(tickTimer);
         }
     }
@@ -59,15 +63,24 @@ public class Habitat : MonoBehaviour
             case FacilityType.None:
                 break;
             case FacilityType.BungeeCenote:
-                
+                bungeeCenote.gameObject.SetActive(true);
+                UpdateStatRates();
                 break;
             case FacilityType.HikingTrail:
+                hikingTrail.gameObject.SetActive(true);
+                UpdateStatRates();
                 break;
             case FacilityType.RockRolling:
+                rockRolling.gameObject.SetActive(true);
+                UpdateStatRates();
                 break;
             case FacilityType.RuneStructure:
+                runeStructure.gameObject.SetActive(true);
+                UpdateStatRates();
                 break;
             case FacilityType.Waterfall:
+                Waterfall.gameObject.SetActive(true);
+                UpdateStatRates();
                 break;
         }
     }
@@ -115,6 +128,23 @@ public class Habitat : MonoBehaviour
     // - SpendEssence automatically check if you can afford and returns false if the purchase is not possible.
     public void UpgradeHabitatTier()
     {
+        if(habitatTier >= 3)
+        {
+            Debug.Log("Can't Upgrade");
+        }
+        else
+        {
+            if (GameManager.Instance.SpendEssence(costToUpgrade) == true)
+            {
+                habitatTier++;
+                UpdateStatRates();
+            }
+            else
+            {
+                Debug.Log("Can't Upgrade");
+            }
+        }
 
+       
     }
 }
