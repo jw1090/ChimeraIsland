@@ -279,7 +279,10 @@ public class Chimera : MonoBehaviour
     // - Evolve Chimera to its new form
     private void Evolve(Chimera newForm)
     {
-
+        //instantiate new chimera
+        Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
+        //destroy old
+        Destroy(this.gameObject);
     }
 
     #region Getters & Setters
