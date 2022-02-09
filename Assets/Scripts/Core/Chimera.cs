@@ -221,22 +221,32 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
             {
-                case StatType.Agility:
-                    agility += agilityGrowth;
-                    break;
-                case StatType.Defense:
-                    defense += defenseGrowth;
-                    break;
-                case StatType.Strength:
-                    strength += strengthGrowth;
-                    break;
-                case StatType.Stamina:
-                    stamina += staminaGrowth;
-                    break;
-                case StatType.Wisdom:
-                    wisdom += wisdomGrowth;
-                    break;
+            case StatType.Agility:
+                agility += agilityGrowth;
+                Debug.Log("New " + statType + " stat = " + agility);
+                break;
+            case StatType.Defense:
+                defense += defenseGrowth;
+                Debug.Log("New " + statType + " stat = " + defense);
+                break;
+            case StatType.Stamina:
+                stamina += staminaGrowth;
+                Debug.Log("New " + statType + " stat = " + stamina);
+                break;
+            case StatType.Strength:
+                strength += strengthGrowth;
+                Debug.Log("New " + statType + " stat = " + strength);
+                break;
+            case StatType.Wisdom:
+                wisdom += wisdomGrowth;
+                Debug.Log("New " + statType + " stat = " + wisdom);
+                break;
             }
+
+        foreach(Chimera evolution in evolutionPaths)
+        {
+
+        }
     }
 
     // - Check if all requirements are ok to evolve
