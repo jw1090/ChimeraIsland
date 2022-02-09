@@ -157,17 +157,17 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        habitatTier++;
+        ++habitatTier;
 
         Debug.Log("Habit upgraded to Tier: " + habitatTier);
 
         // Alternates upgrades.
-        if (habitatTier % 2 == 0)
+        if (habitatTier % 2 == 0) // Even levels increase Facility capacity.
         {
             facilityCapacity++;
             Debug.Log("It can now hold " + facilityCapacity + " Facilities.");
         }
-        else
+        else //Even levels increase Chimera capacity.
         {
             chimeraCapacity++;
             Debug.Log("It can now hold " + chimeraCapacity + " Chimeras.");
