@@ -220,7 +220,7 @@ public class Chimera : MonoBehaviour
     private void LevelUp(StatType statType)
     {
         switch (statType)
-            {
+        {
             case StatType.Agility:
                 agility += agilityGrowth;
                 Debug.Log("New " + statType + " stat = " + agility);
@@ -241,18 +241,39 @@ public class Chimera : MonoBehaviour
                 wisdom += wisdomGrowth;
                 Debug.Log("New " + statType + " stat = " + wisdom);
                 break;
-            }
+         }
 
-        foreach(Chimera evolution in evolutionPaths)
-        {
-
-        }
+        CheckEvolution();
     }
 
     // - Check if all requirements are ok to evolve
     private void CheckEvolution()
     {
+        foreach (Chimera evolution in evolutionPaths)
+        {
+            if (agility < evolution.GetRequiredStats()[0])
+            {
+                return;
+            }
+            if (defense < evolution.GetRequiredStats()[1])
+            {
+                return;
+            }
+            if (stamina < evolution.GetRequiredStats()[2])
+            {
+                return;
+            }
+            if (strength < evolution.GetRequiredStats()[3])
+            {
+                return;
+            }
+            if (wisdom < evolution.GetRequiredStats()[4])
+            {
+                return;
+            }
 
+            Evolve(evolution);
+        }
     }
 
     // - Evolve Chimera to its new form
