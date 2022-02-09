@@ -334,7 +334,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5329750817026056157}
   - component: {fileID: 1411145442486240231}
-  - component: {fileID: 5329750817026056156}
   m_Layer: 0
   m_Name: Chimera
   m_TagString: Chimera
@@ -369,10 +368,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5262b90ea4b7344b58b1a57c12e068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimeraType: -1
+  chimeraType: 0
   elementalType: 0
   parentHabitat: {fileID: 0}
-  level: 0
+  tappable: 0
+  level: 1
   agility: 0
   strength: 0
   defense: 0
@@ -381,41 +381,31 @@ MonoBehaviour:
   happiness: 0
   agilityGrowth: 1
   defenseGrowth: 1
-  strengthGrowth: 1
   staminaGrowth: 1
+  strengthGrowth: 1
   wisdomGrowth: 1
   agilityExperience: 0
   defenseExperience: 0
-  strengthExperience: 0
   staminaExperience: 0
+  strengthExperience: 0
   wisdomExperience: 0
   agilityThreshold: 100
   defenceThreshold: 100
-  strengthThreshold: 100
   staminaThreshold: 100
+  strengthThreshold: 100
   wisdomThreshold: 100
   storedAgilityExperience: 0
   storedDefenseExperience: 0
-  storedStrenghtExperience: 0
   storedStaminaExperience: 0
+  storedStrengthExperience: 0
   storedWisdomExperience: 0
-  experienceCap: 200
-  baseEssenceRate: 5
-  currentEssence: 0
+  experienceCap: 500
+  baseEssenceRate: 35
+  storedEssence: 0
   essenceModifier: 1
-  essenceCap: 100
+  essenceCap: 500
   evolutionPaths: []
   evolutionStats: 
---- !u!114 &5329750817026056156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5329750817026056158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709536f03f08617438d0040275586d26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  behaviorType: -1
+  model: {fileID: 3110941544268205204}
+  standardMat: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  tappableMat: {fileID: 2100000, guid: c4941add9fdb5714d9ff2b3bcd9bcfda, type: 2}
