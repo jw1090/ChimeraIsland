@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!23 &8022015 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3110941544268205204, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+  m_PrefabInstance: {fileID: 5329750817904526055}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &35383056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,7 +185,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3606806664540392360, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596384587555802892, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: statType
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: currentTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: statModifier
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
@@ -679,7 +700,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5780250189174645, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: currentTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: statModifier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_RootOrder
@@ -724,6 +753,10 @@ PrefabInstance:
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989869742123415941, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
@@ -857,9 +890,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 387865945}
-  - component: {fileID: 387865946}
   m_Layer: 0
-  m_Name: Facility
+  m_Name: Facilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -884,23 +916,6 @@ Transform:
   m_Father: {fileID: 674330412}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &387865946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387865944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8106c178ea50fa74d88f08603d65d666, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facilityType: 0
-  statType: 4
-  currentTier: 1
-  statModifier: 1
-  price: 100
 --- !u!1 &401655658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,23 +1793,21 @@ MonoBehaviour:
   costToUpgrade: 300
   chimeraCapacity: 1
   facilityCapacity: 2
-  chimera:
-  - {fileID: 0}
+  chimeras:
+  - {fileID: 1897800093}
   facilities:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 413481150}
+  - {fileID: 563141147}
+  - {fileID: 1878041313}
+  - {fileID: 35383058}
+  - {fileID: 1414356755}
   baseExperienceRate: 1
-  agilityExperienceRate: 0
-  defenseExperienceRate: 0
-  strengthExperienceRate: 0
-  staminaExperienceRate: 0
-  wisdomExperienceRate: 0
-  tickTimer: 60
+  tickTimer: 1
   bungeeCenote: {fileID: 413481150}
   hikingTrail: {fileID: 563141147}
   rockRolling: {fileID: 1878041313}
   runeStructure: {fileID: 35383058}
-  Waterfall: {fileID: 1414356755}
+  waterfall: {fileID: 1414356755}
 --- !u!1 &678461791
 GameObject:
   m_ObjectHideFlags: 0
@@ -3450,6 +3463,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
+    - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: statType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: currentTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: statModifier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -3494,13 +3519,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5131075599866437455, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5509396852312259999, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_Name
       value: Waterfall
       objectReference: {fileID: 0}
     - target: {fileID: 5509396852312259999, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
@@ -4157,7 +4186,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27362
+  m_Name: pb_Mesh16616
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4676,7 +4705,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1333074422840521484, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450265743498193595, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
+      propertyPath: statType
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450265743498193595, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
+      propertyPath: currentTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450265743498193595, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
+      propertyPath: statModifier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_RootOrder
@@ -4721,6 +4762,10 @@ PrefabInstance:
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183414880753445760, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
@@ -4895,13 +4940,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
+    - target: {fileID: 84028180941262389, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
+      propertyPath: statType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 84028180941262389, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
+      propertyPath: currentTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 84028180941262389, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
+      propertyPath: statModifier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7032462670226691816, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691818, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_Name
       value: Hiking Trail
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691818, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691822, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_RootOrder
@@ -5225,9 +5286,53 @@ PrefabInstance:
     m_TransformParent: {fileID: 674330412}
     m_Modifications:
     - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: tap
+      value: 
+      objectReference: {fileID: 2100000, guid: 0928286782afa2640b0dbff2c567e126, type: 2}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 8022015}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: normal
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: tappable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: essenceCap
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: chimeraType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: standardMat
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: tappableMat
+      value: 
+      objectReference: {fileID: 2100000, guid: c4941add9fdb5714d9ff2b3bcd9bcfda, type: 2}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: experienceCap
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
       propertyPath: parentHabitat
       value: 
       objectReference: {fileID: 674330413}
+    - target: {fileID: 1411145442486240231, guid: 65809d8e607183a40b959d707fa80627, type: 3}
+      propertyPath: baseEssenceRate
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 5329750817026056157, guid: 65809d8e607183a40b959d707fa80627, type: 3}
       propertyPath: m_RootOrder
       value: 1
