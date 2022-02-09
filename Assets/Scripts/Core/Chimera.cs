@@ -8,7 +8,6 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ChimeraType chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private Habitat parentHabitat;
     [SerializeField] private bool tappable = false;
 
     [Header("Stats")]
@@ -243,6 +242,8 @@ public class Chimera : MonoBehaviour
                 break;
          }
 
+        ++level;
+
         CheckEvolution();
     }
 
@@ -279,9 +280,13 @@ public class Chimera : MonoBehaviour
     // - Evolve Chimera to its new form
     private void Evolve(Chimera newForm)
     {
-        //instantiate new chimera
-        Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
-        //destroy old
+        // Instantiate new chimera
+        Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
+        Chimera child = this;
+
+        transform.parent.GetComponent<Habitat>().EvolveSwap(ref child, ref evolution);
+
+        // Destroy old
         Destroy(this.gameObject);
     }
 

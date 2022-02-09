@@ -204,4 +204,16 @@ public class Habitat : MonoBehaviour
 
         return facilityCount;
     }
+
+    public void EvolveSwap(ref Chimera child, ref Chimera adult)
+    {
+        for(int i = 0; i < chimeras.Length; ++i)
+        {
+            if(chimeras[i] == child)
+            {
+                chimeras[i] = adult;
+                return;
+            }
+        }
+    }
 }
