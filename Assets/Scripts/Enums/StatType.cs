@@ -7,7 +7,7 @@ public enum  StatType
     None = 1,
     Agility,
     Defense,
-    Strength,
     Stamina,
+    Strength,
     Wisdom
 }

@@ -76,6 +76,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Getters & Setters
-
+    public int GetEssence() { return currentEssence; }
     #endregion
 }
