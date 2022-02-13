@@ -200,6 +200,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8106c178ea50fa74d88f08603d65d666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &93296134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93296135}
+  m_Layer: 0
+  m_Name: Chimeras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &93296135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93296134}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1285791034}
+  m_Father: {fileID: 674330412}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &148309282
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +778,7 @@ Transform:
   - {fileID: 35383057}
   - {fileID: 1414356754}
   m_Father: {fileID: 674330412}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &401655658
 GameObject:
@@ -806,7 +837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -1333,8 +1364,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1318768558}
-  - {fileID: 1285791034}
   - {fileID: 387865945}
+  - {fileID: 93296135}
   m_Father: {fileID: 1791197280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2720,7 +2751,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32274
+  m_Name: pb_Mesh41352
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3232,15 +3263,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 674330412}
+    m_TransformParent: {fileID: 93296135}
     m_Modifications:
     - target: {fileID: 2933126838550717360, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_Name
-      value: Chimera
+      value: Base
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3260,15 +3291,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3280,34 +3311,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5363738410966708474, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
-    - target: {fileID: 7842933029923709940, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-    - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: standardMat
-      value: 
-      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: evolutionPaths.Array.data[0]
-      value: 
-      objectReference: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-    - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: evolutionPaths.Array.data[1]
-      value: 
-      objectReference: {fileID: 8275080904009367433, guid: c6479ee12f87fa949bbbb1d10ba64788, type: 3}
-    - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: evolutionStats.Array.data[0]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
-      propertyPath: evolutionStats.Array.data[4]
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
