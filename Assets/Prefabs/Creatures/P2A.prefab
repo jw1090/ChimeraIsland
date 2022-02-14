@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 8275080904009367433}
   - component: {fileID: 2933126839467129424}
   m_Layer: 0
-  m_Name: Monk
+  m_Name: P2A
   m_TagString: Chimera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,8 +116,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933126838550717360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_Children:
   - {fileID: 8648749374070730421}
   m_Father: {fileID: 0}
@@ -171,10 +171,10 @@ MonoBehaviour:
   essenceModifier: 1
   essenceCap: 500
   evolutionPaths: []
-  evolutionStats: 100000000d000000000000000000000015000000
+  evolutionStats: 000000000f0000000f0000002000000000000000
   model: {fileID: 5363738410966708474}
-  standardMat: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  tappableMat: {fileID: 2100000, guid: c4941add9fdb5714d9ff2b3bcd9bcfda, type: 2}
+  standardMat: {fileID: 2100000, guid: 489463ee16a088049860f3c015c30cf8, type: 2}
+  tappableMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
 --- !u!114 &2933126839467129424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,11 +289,11 @@ GameObject:
   - component: {fileID: 6933636255779051792}
   - component: {fileID: 7842933029923709940}
   - component: {fileID: 5363738410966708474}
-  - component: {fileID: 5921154473987635769}
+  - component: {fileID: 173966735096799150}
   - component: {fileID: 2933126837844192610}
   - component: {fileID: 2933126837844192614}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 5255191863899271164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8648749374070730421}
   m_RootOrder: 0
@@ -320,7 +320,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5255191863899271164}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5363738410966708474
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -340,7 +340,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 489463ee16a088049860f3c015c30cf8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,8 +362,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5921154473987635769
-SphereCollider:
+--- !u!136 &173966735096799150
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -372,8 +372,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &2933126837844192610
 NavMeshAgent:
