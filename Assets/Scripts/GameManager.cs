@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private int currentEssence = 0;
 
-    [Header("References")]
+    [Header("Habitats")]
+    [SerializeField] private Habitat activeHabitat;
     [SerializeField] private Habitat Habitat1;
+
+    [Header("UI References")]
     [SerializeField] private TextMeshProUGUI essenceWallet;
 
     private static GameManager gameManagerInstance;
@@ -77,5 +80,6 @@ public class GameManager : MonoBehaviour
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
+    public Habitat GetActiveHabitat() { return activeHabitat; }
     #endregion
 }
