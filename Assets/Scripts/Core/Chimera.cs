@@ -143,8 +143,6 @@ public class Chimera : MonoBehaviour
     // - Any other on tap interaction will go in here.
     public void ChimeraTap()
     {
-
-
         if(tappable)
         {
             HarvestEssence();
@@ -285,13 +283,8 @@ public class Chimera : MonoBehaviour
         // Instantiate new chimera
         Chimera child = this;
 
-<<<<<<< Updated upstream
         Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
         Debug.Log("Spawned:" + evolution);
-
-
-=======
->>>>>>> Stashed changes
         transform.parent.parent.GetComponent<Habitat>().EvolveSwap(ref child, ref evolution);
 
         // Destroy old
@@ -341,5 +334,7 @@ public class Chimera : MonoBehaviour
 
         return -1;
     }
+
+    public int GetLevel() { return level; }
     #endregion
 }

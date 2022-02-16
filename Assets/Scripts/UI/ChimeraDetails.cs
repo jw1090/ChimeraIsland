@@ -28,12 +28,12 @@ public class ChimeraDetails : MonoBehaviour
 
     private void UpdateDetails()
     {
-        level.text = "Level: " + chimera.GetStatByType(StatType.Agility).ToString();
+        level.text = "Level: " + chimera.GetLevel();
         agility.text = chimera.GetStatByType(StatType.Agility).ToString();
-        defence.text = chimera.GetStatByType(StatType.Agility).ToString();
-        stamina.text = chimera.GetStatByType(StatType.Agility).ToString();
-        strength.text = chimera.GetStatByType(StatType.Agility).ToString();
-        wisdom.text = chimera.GetStatByType(StatType.Agility).ToString();
-        happiness.text = chimera.GetStatByType(StatType.Agility).ToString();
+        defence.text = chimera.GetStatByType(StatType.Defense).ToString();
+        stamina.text = chimera.GetStatByType(StatType.Stamina).ToString();
+        strength.text = chimera.GetStatByType(StatType.Strength).ToString();
+        wisdom.text = chimera.GetStatByType(StatType.Wisdom).ToString();
+        happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
     }
 }
