@@ -5,5 +5,10 @@ using UnityEngine;
 public enum ChimeraType
 {
     None = -1,
-    Blob
+    Base,
+    P1,
+    P2,
+    P1A,
+    P1B,
+    P2A
 }

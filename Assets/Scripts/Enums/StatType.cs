@@ -9,5 +9,6 @@ public enum  StatType
     Defense,
     Stamina,
     Strength,
-    Wisdom
+    Wisdom,
+    Happiness
 }
