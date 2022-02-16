@@ -207,7 +207,7 @@ public class Habitat : MonoBehaviour
 
     public void EvolveSwap(ref Chimera child, ref Chimera adult)
     {
-        for(int i = 0; i < chimeras.Length; ++i)
+        for (int i = 0; i < chimeras.Length; ++i)
         {
             if(chimeras[i] == child)
             {
@@ -216,4 +216,12 @@ public class Habitat : MonoBehaviour
             }
         }
     }
+
+    public void TapFirstChimera()
+    {
+        chimeras[0].ChimeraTap();
+    }
+    
+    
+    
 }
