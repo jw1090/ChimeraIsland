@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private GameObject OpenChimeras;
-    [SerializeField] private GameObject ChimeraPanel;
-
     private static MenuManager menuManagerInstance;
     public static MenuManager Instance { get { return menuManagerInstance; } }
 
-    // - Made by: Joe 2/16/2022
+    // - Made by: Joe 2/2/2022
     // - Basic Singleton Implementation
     private void Initialize()
     {
@@ -30,5 +26,15 @@ public class MenuManager : MonoBehaviour
         Initialize();
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

@@ -285,13 +285,10 @@ public class Chimera : MonoBehaviour
         // Instantiate new chimera
         Chimera child = this;
 
-<<<<<<< Updated upstream
         Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
         Debug.Log("Spawned:" + evolution);
 
 
-=======
->>>>>>> Stashed changes
         transform.parent.parent.GetComponent<Habitat>().EvolveSwap(ref child, ref evolution);
 
         // Destroy old
@@ -302,6 +299,8 @@ public class Chimera : MonoBehaviour
     // Get the required stats needed to evolve
     public int[] GetRequiredStats() { return evolutionStats; }
 
+    //  - Made by: Joe 2/9/2022
+    //  - Returns stored experience based on parameter type.
     public int GetStoredExpByType(StatType statType)
     {
         switch (statType)
@@ -316,27 +315,6 @@ public class Chimera : MonoBehaviour
                 return storedStrengthExperience;
             case StatType.Wisdom:
                 return storedStaminaExperience;
-        }
-
-        return -1;
-    }
-
-    public int GetStatByType(StatType statType)
-    {
-        switch (statType)
-        {
-            case StatType.Agility:
-                return agility;
-            case StatType.Defense:
-                return defense;
-            case StatType.Stamina:
-                return stamina;
-            case StatType.Strength:
-                return strength;
-            case StatType.Wisdom:
-                return wisdom;
-            case StatType.Happiness:
-                return happiness;
         }
 
         return -1;
