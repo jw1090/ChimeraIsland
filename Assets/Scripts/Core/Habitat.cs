@@ -221,7 +221,6 @@ public class Habitat : MonoBehaviour
     {
         chimeras[0].ChimeraTap();
     }
-    
-    
-    
+
+    public Chimera[] GetChimeras() { return chimeras; }
 }

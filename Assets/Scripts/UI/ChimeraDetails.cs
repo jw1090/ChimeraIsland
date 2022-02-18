@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChimeraDetails : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Chimera chimera;
+    [SerializeField] private int chimeraSpot;
     [SerializeField] private CanvasRenderer icon;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI agility;
@@ -28,12 +28,14 @@ public class ChimeraDetails : MonoBehaviour
 
     private void UpdateDetails()
     {
-        level.text = "Level: " + chimera.GetLevel();
-        agility.text = chimera.GetStatByType(StatType.Agility).ToString();
-        defence.text = chimera.GetStatByType(StatType.Defense).ToString();
-        stamina.text = chimera.GetStatByType(StatType.Stamina).ToString();
-        strength.text = chimera.GetStatByType(StatType.Strength).ToString();
-        wisdom.text = chimera.GetStatByType(StatType.Wisdom).ToString();
-        happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
+        Chimera[] chimera = GameManager.Instance.GetActiveHabitat().GetChimeras();
+
+        level.text = "Level: " + chimera[chimeraSpot].GetLevel();
+        agility.text = chimera[chimeraSpot].GetStatByType(StatType.Agility).ToString();
+        defence.text = chimera[chimeraSpot].GetStatByType(StatType.Defense).ToString();
+        stamina.text = chimera[chimeraSpot].GetStatByType(StatType.Stamina).ToString();
+        strength.text = chimera[chimeraSpot].GetStatByType(StatType.Strength).ToString();
+        wisdom.text = chimera[chimeraSpot].GetStatByType(StatType.Wisdom).ToString();
+        happiness.text = chimera[chimeraSpot].GetStatByType(StatType.Happiness).ToString();
     }
 }

@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
             if (hit.collider.CompareTag("Chimera"))
             {
                 //Debug.Log("Tap on a chimera.");
-                Transform chimera = hit.collider.gameObject.transform.parent.parent;
+                Transform chimera = hit.collider.gameObject.transform.parent;
                 chimera.GetComponent<Chimera>().ChimeraTap();
             }
         }
