@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 8275080904009367433}
   - component: {fileID: 2933126839467129424}
   m_Layer: 0
-  m_Name: P1A
+  m_Name: A1
   m_TagString: Chimera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8648749374070730421}
+  - {fileID: 6933636255779051792}
   - {fileID: 5406313230291186503}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -167,42 +167,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chimeraType: 3
-  elementalType: 0
+  elementalType: 5
   tappable: 0
   level: 1
+  levelCap: 99
   agility: 0
-  strength: 0
   defense: 0
   stamina: 0
+  strength: 0
   wisdom: 0
   happiness: 0
-  agilityGrowth: 1
-  defenseGrowth: 1
-  staminaGrowth: 1
-  strengthGrowth: 1
-  wisdomGrowth: 1
+  happinessMod: 1
+  agilityGrowth: 4
+  defenseGrowth: 2
+  staminaGrowth: 3
+  strengthGrowth: 3
+  wisdomGrowth: 3
   agilityExperience: 0
   defenseExperience: 0
   staminaExperience: 0
   strengthExperience: 0
   wisdomExperience: 0
-  agilityThreshold: 2
-  defenceThreshold: 2
-  staminaThreshold: 2
-  strengthThreshold: 2
-  wisdomThreshold: 2
+  agilityThreshold: 0
+  defenseThreshold: 0
+  staminaThreshold: 0
+  strengthThreshold: 0
+  wisdomThreshold: 0
+  levelUpTracker: 0
+  thresholdScaling: 0
   storedAgilityExperience: 0
   storedDefenseExperience: 0
   storedStaminaExperience: 0
   storedStrengthExperience: 0
   storedWisdomExperience: 0
-  experienceCap: 500
-  baseEssenceRate: 35
+  experienceCap: 1000
+  baseEssenceRate: 10
   storedEssence: 0
   essenceModifier: 1
   essenceCap: 500
-  evolutionPaths: []
-  evolutionStats: 100000000d000000000000000000000015000000
+  evolutionPaths:
+  - {fileID: 8275080904009367433, guid: e2875a0a0e148eb4685c662f58c6e6e8, type: 3}
+  - {fileID: 8275080904009367433, guid: 21f2f53ad62557549981c461769d11d4, type: 3}
+  evolutionStats: 1900000000000000000000000a0000000a000000
   model: {fileID: 5363738410966708474}
   standardMat: {fileID: 2100000, guid: 489463ee16a088049860f3c015c30cf8, type: 2}
   tappableMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
@@ -324,8 +330,8 @@ GameObject:
   - component: {fileID: 2933126837844192614}
   - component: {fileID: 3317827504416219692}
   m_Layer: 0
-  m_Name: Flat Cube
-  m_TagString: Untagged
+  m_Name: Model
+  m_TagString: Chimera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -337,11 +343,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5255191863899271164}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
-  m_Father: {fileID: 8648749374070730421}
+  m_Father: {fileID: 2933126838550717363}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7842933029923709940
@@ -583,37 +589,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5406313230291186503}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8946211910685799457
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8648749374070730421}
-  m_Layer: 0
-  m_Name: Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8648749374070730421
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8946211910685799457}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6933636255779051792}
-  m_Father: {fileID: 2933126838550717363}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9081701386867650716
 GameObject:

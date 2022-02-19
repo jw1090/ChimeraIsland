@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -176,11 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3606806664540392360, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_Name
-      value: RuneStructure
-      objectReference: {fileID: 0}
-    - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
-      propertyPath: price
-      value: 50
+      value: RuneStructure - Wis
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
@@ -375,7 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 107895150}
   m_Layer: 5
-  m_Name: Chimeras Container
+  m_Name: Details Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -748,7 +744,7 @@ GameObject:
   - component: {fileID: 209325693}
   - component: {fileID: 209325692}
   m_Layer: 5
-  m_Name: ChimeraListPanel
+  m_Name: Detail Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -847,11 +843,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5780250189174645, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_Name
-      value: BungeeCenote
-      objectReference: {fileID: 0}
-    - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
-      propertyPath: price
-      value: 50
+      value: Bungee - Agi
       objectReference: {fileID: 0}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_RootOrder
@@ -863,7 +855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1316,10 +1308,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 413481149}
+  - {fileID: 1414356754}
   - {fileID: 563141146}
   - {fileID: 1878041312}
   - {fileID: 35383057}
-  - {fileID: 1414356754}
   m_Father: {fileID: 674330412}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3056,7 +3048,7 @@ MonoBehaviour:
   - {fileID: 35383058}
   - {fileID: 1414356755}
   baseExperienceRate: 1
-  tickTimer: 5
+  tickTimer: 0.2
 --- !u!1 &678461791
 GameObject:
   m_ObjectHideFlags: 0
@@ -3843,7 +3835,7 @@ GameObject:
   - component: {fileID: 955814890}
   - component: {fileID: 955814889}
   m_Layer: 5
-  m_Name: OpenCButtons
+  m_Name: Open Details Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3977,7 +3969,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
-  m_Name: IslandCamera
+  m_Name: Island Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4239,7 +4231,7 @@ GameObject:
   - component: {fileID: 977075019}
   - component: {fileID: 977075018}
   m_Layer: 5
-  m_Name: IslandView
+  m_Name: Island View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5701,7 +5693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318768557}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -100, y: 0, z: 100}
+  m_LocalPosition: {x: -100, y: -1, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 674330412}
@@ -6248,13 +6240,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
-    - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
-      propertyPath: price
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6262,7 +6250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6298,7 +6286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5509396852312259999, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_Name
-      value: Waterfall
+      value: Waterfall - Def
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
@@ -6332,7 +6320,7 @@ GameObject:
   - component: {fileID: 1418420236}
   - component: {fileID: 1418420240}
   m_Layer: 5
-  m_Name: MenuManager
+  m_Name: Menu Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7304,7 +7292,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21694
+  m_Name: pb_Mesh19822
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7612,7 +7600,7 @@ GameObject:
   - component: {fileID: 1601507828}
   - component: {fileID: 1601507830}
   m_Layer: 5
-  m_Name: ChimeraInfo
+  m_Name: Chimera Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7690,7 +7678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimera: {fileID: 6512892723480084736}
+  chimeraSpot: 0
   icon: {fileID: 952682556}
   level: {fileID: 511090360}
   agility: {fileID: 1156821242}
@@ -8073,7 +8061,7 @@ GameObject:
   - component: {fileID: 1838690949}
   - component: {fileID: 1838690948}
   m_Layer: 5
-  m_Name: CloseCButton
+  m_Name: Close Details Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8338,7 +8326,7 @@ GameObject:
   - component: {fileID: 1856542878}
   - component: {fileID: 1856542879}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8518,15 +8506,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1333074422840521484, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_Name
-      value: RockRolling
-      objectReference: {fileID: 0}
-    - target: {fileID: 3450265743498193595, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
-      propertyPath: price
-      value: 50
+      value: Rock Rolling - Str
       objectReference: {fileID: 0}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8534,7 +8518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9150,17 +9134,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
-    - target: {fileID: 84028180941262389, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
-      propertyPath: price
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691818, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_Name
-      value: Hiking Trail
+      value: Hiking Trail - Sta
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691822, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691822, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9168,7 +9148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691822, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7032462670226691822, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9768,7 +9748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2933126838550717363, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9802,9 +9782,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3968881065526701028, guid: 2a01344af8aae334597e624312ae4834, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5255191863899271164, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: m_TagString
       value: Chimera
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933636255779051792, guid: 2a01344af8aae334597e624312ae4834, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8275080904009367433, guid: 2a01344af8aae334597e624312ae4834, type: 3}
       propertyPath: wisdom

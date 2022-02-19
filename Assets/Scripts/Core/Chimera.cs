@@ -12,12 +12,14 @@ public class Chimera : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] private int level = 1;
+    [SerializeField] private int levelCap = 99;
     [SerializeField] private int agility = 0;
-    [SerializeField] private int strength = 0;
     [SerializeField] private int defense = 0;
     [SerializeField] private int stamina = 0;
+    [SerializeField] private int strength = 0;
     [SerializeField] private int wisdom = 0;
     [SerializeField] private int happiness = 0;
+    [SerializeField] private int happinessMod = 1;
 
     [Header("Stat Growth")]
     [SerializeField] private int agilityGrowth = 1;
@@ -30,11 +32,13 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int staminaExperience = 0;
     [SerializeField] private int strengthExperience = 0;
     [SerializeField] private int wisdomExperience = 0;
-    [SerializeField] private int agilityThreshold = 100;
-    [SerializeField] private int defenceThreshold = 100;
-    [SerializeField] private int staminaThreshold = 100;
-    [SerializeField] private int strengthThreshold = 100;
-    [SerializeField] private int wisdomThreshold = 100;
+    [SerializeField] private int agilityThreshold = 5;
+    [SerializeField] private int defenseThreshold = 5;
+    [SerializeField] private int staminaThreshold = 5;
+    [SerializeField] private int strengthThreshold = 5;
+    [SerializeField] private int wisdomThreshold = 5;
+    [SerializeField] private int levelUpTracker = 0;
+    [SerializeField] private int thresholdScaling = 0;
 
     [Header("Stored Experience")]
     [SerializeField] private int storedAgilityExperience = 0;
@@ -64,11 +68,15 @@ public class Chimera : MonoBehaviour
     // - Also adds Essence to stored essence.
     public void ChimeraTick(int agility, int defense , int stamina, int strength, int wisdom)
     {
-        ExperienceTick(StatType.Agility, agility);
-        ExperienceTick(StatType.Defense, defense);
-        ExperienceTick(StatType.Stamina, stamina);
-        ExperienceTick(StatType.Strength, strength);
-        ExperienceTick(StatType.Wisdom, wisdom);
+        if(level < levelCap)
+        {
+            ExperienceTick(StatType.Agility, agility);
+            ExperienceTick(StatType.Defense, defense);
+            ExperienceTick(StatType.Stamina, stamina);
+            ExperienceTick(StatType.Strength, strength);
+            ExperienceTick(StatType.Wisdom, wisdom);
+        }
+
         EssenceTick();
         tappable = true;
 
@@ -116,10 +124,10 @@ public class Chimera : MonoBehaviour
     // - The essence formula is located here.
     private void EssenceTick()
     {
-        // TODO: REVIEW THE ESSENCE FORMULA IN CLASS TO CONSIDER Happiness PROPERLY ---> DISCUSS WITH JOE AND SANTIAGO IN CLASS !!!
-        // Happiness for now = x1 let´s implement it properly in class given the work done this week
-        // make sure that essenceModifier is the variable intended here!!
-        int essenceGain = (int)((level * 1 * baseEssenceRate) * essenceModifier);
+        // Happiness can range between -100 and 100. At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
+        // Sqrt is used to gain diminishing returns on levels.
+        // EssenceModifier is used to tune the level scaling
+        int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
 
         if(storedEssence == essenceCap)
         {
@@ -146,11 +154,14 @@ public class Chimera : MonoBehaviour
         if(tappable)
         {
             HarvestEssence();
-            AllocateExperience();
+            if(level < levelCap)
+            {
+                AllocateExperience();
+            }
 
             tappable = false;
 
-            Debug.Log("Tap on " + chimeraType);
+            //Debug.Log("Tap on " + chimeraType);
             model.material = standardMat;
         }
     }
@@ -175,13 +186,17 @@ public class Chimera : MonoBehaviour
         {
             agilityExperience -= agilityThreshold;
             LevelUp(StatType.Agility);
+
+            agilityThreshold += (int)(Mathf.Sqrt(agilityThreshold) * 1.2f);
         }
 
         defenseExperience += storedDefenseExperience;
-        if (defenseExperience >= defenceThreshold)
+        if (defenseExperience >= defenseThreshold)
         {
-            defenseExperience -= defenceThreshold;
+            defenseExperience -= defenseThreshold;
             LevelUp(StatType.Defense);
+
+            defenseThreshold += (int)(Mathf.Sqrt(defenseThreshold) * 1.2f);
         }
 
         staminaExperience += storedStaminaExperience;
@@ -189,6 +204,8 @@ public class Chimera : MonoBehaviour
         {
             staminaExperience -= staminaThreshold;
             LevelUp(StatType.Stamina);
+
+            staminaThreshold += (int)(Mathf.Sqrt(staminaThreshold) * 1.2f);
         }
 
         strengthExperience += storedStrengthExperience;
@@ -196,6 +213,8 @@ public class Chimera : MonoBehaviour
         {
             strengthExperience -= strengthThreshold;
             LevelUp(StatType.Strength);
+
+            strengthThreshold += (int)(Mathf.Sqrt(strengthThreshold) * 1.2f);
         }
 
         wisdomExperience += storedWisdomExperience;
@@ -203,7 +222,11 @@ public class Chimera : MonoBehaviour
         {
             wisdomExperience -= wisdomThreshold;
             LevelUp(StatType.Wisdom);
+
+            wisdomThreshold += (int)(Mathf.Sqrt(wisdomThreshold) * 1.2f);
         }
+
+        CheckEvolution();
 
         // Cleanup
         storedAgilityExperience = 0;
@@ -242,48 +265,68 @@ public class Chimera : MonoBehaviour
                 break;
          }
 
-        ++level;
+        ++levelUpTracker;
 
-        CheckEvolution();
+        if(levelUpTracker % 5 == 0)
+        {
+            ++level;
+            Debug.Log("LEVEL UP! You are now level " + level + " !");
+        }
     }
 
     // - Check if all requirements are ok to evolve
     private void CheckEvolution()
     {
+        if (evolutionPaths.Length == 0)
+        {
+            return;
+        }
+
         foreach (Chimera evolution in evolutionPaths)
         {
             if (agility < evolution.GetRequiredStats()[0])
             {
-                return;
+                continue;
             }
             if (defense < evolution.GetRequiredStats()[1])
             {
-                return;
+                continue;
             }
             if (stamina < evolution.GetRequiredStats()[2])
             {
-                return;
+                continue;
             }
             if (strength < evolution.GetRequiredStats()[3])
             {
-                return;
+                continue;
             }
             if (wisdom < evolution.GetRequiredStats()[4])
             {
-                return;
+                continue;
             }
 
             Evolve(evolution);
+            return;
         }
     }
 
     // - Evolve Chimera to its new form
     private void Evolve(Chimera newForm)
     {
+        tappable = false;
+
         // Instantiate new chimera
         Chimera child = this;
 
         Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
+
+        evolution.SetEvolutionStats
+            (
+                level, agility, defense, stamina, strength, wisdom, levelUpTracker,
+                agilityThreshold, defenseThreshold, staminaThreshold, strengthThreshold, wisdomThreshold,
+                happiness, happinessMod
+            );
+
         Debug.Log("Spawned:" + evolution);
         transform.parent.parent.GetComponent<Habitat>().EvolveSwap(ref child, ref evolution);
 
@@ -294,7 +337,6 @@ public class Chimera : MonoBehaviour
     #region Getters & Setters
     // Get the required stats needed to evolve
     public int[] GetRequiredStats() { return evolutionStats; }
-
     public int GetStoredExpByType(StatType statType)
     {
         switch (statType)
@@ -313,7 +355,6 @@ public class Chimera : MonoBehaviour
 
         return -1;
     }
-
     public int GetStatByType(StatType statType)
     {
         switch (statType)
@@ -334,7 +375,30 @@ public class Chimera : MonoBehaviour
 
         return -1;
     }
-
     public int GetLevel() { return level; }
+    public void SetEvolutionStats
+        (
+            int newLevel, int newAgility, int newDefence, int newStamina, int newStrength, int newWisdom, int newLevelUpTracker,
+            int newAgilityThreshold, int newDefenseThreshold, int newStaminaThreshold, int newStrengthThreshold, int newWisdomThreshold,
+            int newHappiness, int newHappinessMod
+        )
+    {
+        level = newLevel;
+        agility = newAgility;
+        defense = newDefence;
+        stamina = newStamina;
+        strength = newStrength;
+        wisdom = newWisdom;
+        levelUpTracker = newLevelUpTracker;
+
+        agilityThreshold = newAgilityThreshold;
+        defenseThreshold = newDefenseThreshold;
+        staminaThreshold = newStaminaThreshold;
+        strengthThreshold = newStrengthThreshold;
+        wisdomThreshold = newWisdomThreshold;
+
+        happiness = newHappiness;
+        happinessMod = newHappinessMod;
+    }
     #endregion
 }
