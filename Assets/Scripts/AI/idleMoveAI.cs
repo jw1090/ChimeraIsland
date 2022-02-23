@@ -6,17 +6,22 @@ using UnityEngine.AI;
 public class idleMoveAI : MonoBehaviour
 {
     public Transform[] directPoints;
-    private int index = 0;
+    public int index = 0;
     public float patroTime = 2f;//wait time
 
     private float timer = 0;//timer
     private NavMeshAgent navMeshAgent;
 
-    void Start()
+    void OnEnable()
     {
+        index = 0;
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        navMeshAgent.destination = directPoints[index].position;
+
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(directPoints[index].position);
+      //  navMeshAgent.destination = directPoints[index].position;
+        timer = 0;
 
     }
 
@@ -31,13 +36,22 @@ public class idleMoveAI : MonoBehaviour
             {
                 index++;
 
-                index %= 11;
+               // index %= 11;
                 timer = 0;
-                if (index >= directPoints.Length)
+                if (index >= directPoints.Length-1)
                 {
-                    index = 0;
+                   // index = 0;
+                    //巡逻点最后一个点已经到达
+                    this.GetComponent<PlayerContruller>().enabled = true;
+                    this.enabled = false;
+                    print("到达最后一个点转到待机器械交互");
+
                 }
-                navMeshAgent.destination = directPoints[index].position;
+                else
+                {
+                    navMeshAgent.destination = directPoints[index].position;
+                }
+              
             }
         }
 
