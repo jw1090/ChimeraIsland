@@ -90,10 +90,10 @@ public class Chimera : MonoBehaviour
             ExperienceTick(StatType.Strength, strength);
             ExperienceTick(StatType.Wisdom, wisdom);
         }
-
+        happiness++;
         EssenceTick();
         tappable = true;
-
+        GetHappinessModifier();
         //Debug.Log(chimeraType + " stored: " + agility + " Agility.");
         //Debug.Log(chimeraType + " stored: " + defense + " Defense.");
         //Debug.Log(chimeraType + " stored: " + stamina + " Stamina.");
@@ -433,6 +433,35 @@ public class Chimera : MonoBehaviour
         happinessMod = newHappinessMod;
     }
 
+    private int GetHappinessModifier()
+    {
+        if(happiness == 0)
+        {
+
+            happinessMod = 1;
+
+            return happinessMod;
+        }
+
+        if (happiness > 0)
+        {
+            
+            happinessMod = ((1/50) * happiness) + 1;
+
+            return happinessMod;
+        }
+
+        if(happiness < 0)
+        {
+          
+           
+            return happinessMod;
+        }
+
+
+        return 0;
+        
+    }
 
     #endregion
 }
