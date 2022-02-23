@@ -41,9 +41,9 @@ GameObject:
   - component: {fileID: 3342887877363641066}
   - component: {fileID: 2489041064225476622}
   - component: {fileID: 302506482112070400}
-  - component: {fileID: 2049491045200005571}
   - component: {fileID: 7415709989468954264}
   - component: {fileID: 7415709989468954268}
+  - component: {fileID: 3002146996565254597}
   m_Layer: 0
   m_Name: Model
   m_TagString: Chimera
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 482829126823042054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.23, y: 1.23, z: 1.23}
+  m_LocalScale: {x: 1.7, y: 1.5, z: 5}
   m_Children: []
   m_Father: {fileID: 7415709988698984521}
   m_RootOrder: 0
@@ -114,19 +114,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2049491045200005571
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482829126823042054}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &7415709989468954264
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -175,6 +162,19 @@ MonoBehaviour:
   - {fileID: 0}
   index: 0
   patroTime: 2
+--- !u!65 &3002146996565254597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482829126823042054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2284156435896075979
 GameObject:
   m_ObjectHideFlags: 0
