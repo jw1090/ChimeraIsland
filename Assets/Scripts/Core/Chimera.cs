@@ -270,7 +270,7 @@ public class Chimera : MonoBehaviour
         if(levelUpTracker % 5 == 0)
         {
             ++level;
-            Debug.Log("LEVEL UP! You are now level " + level + " !");
+            Debug.Log("LEVEL UP! " + this.gameObject + " is now level " + level + " !");
         }
     }
 
