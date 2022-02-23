@@ -28,7 +28,7 @@ public class ChimeraDetails : MonoBehaviour
 
     private void UpdateDetails()
     {
-        Chimera[] chimera = GameManager.Instance.GetActiveHabitat().GetChimeras();
+        List<Chimera> chimera = GameManager.Instance.GetActiveHabitat().GetChimeras();
 
         level.text = "Level: " + chimera[chimeraSpot].GetLevel();
         agility.text = chimera[chimeraSpot].GetStatByType(StatType.Agility).ToString();
