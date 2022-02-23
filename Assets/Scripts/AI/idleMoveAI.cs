@@ -41,10 +41,10 @@ public class idleMoveAI : MonoBehaviour
                 if (index >= directPoints.Length-1)
                 {
                    // index = 0;
-                    //巡逻点最后一个点已经到达
+                    
                     this.GetComponent<PlayerContruller>().enabled = true;
                     this.enabled = false;
-                    print("到达最后一个点转到待机器械交互");
+                    print("Last facilities");
 
                 }
                 else
