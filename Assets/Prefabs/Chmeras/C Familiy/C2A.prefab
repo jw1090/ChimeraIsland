@@ -161,9 +161,9 @@ GameObject:
   - component: {fileID: 2032024872010821335}
   - component: {fileID: 1215330488576349235}
   - component: {fileID: 3919777644857886525}
-  - component: {fileID: 3325380790349663742}
   - component: {fileID: 6106465457967094437}
   - component: {fileID: 6106465457967094433}
+  - component: {fileID: 6478862608395628820}
   m_Layer: 0
   m_Name: Model
   m_TagString: Chimera
@@ -180,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 3811236617007487035}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.23, y: 1.23, z: 1.23}
+  m_LocalScale: {x: 7, y: 2, z: 3}
   m_Children: []
   m_Father: {fileID: 6106465458539893876}
   m_RootOrder: 0
@@ -234,19 +234,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3325380790349663742
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &6106465457967094437
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -295,6 +282,19 @@ MonoBehaviour:
   - {fileID: 0}
   index: 0
   patroTime: 2
+--- !u!65 &6478862608395628820
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811236617007487035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 0.9999999, z: 1}
+  m_Center: {x: 0, y: 0.000000059604645, z: 0}
 --- !u!1 &4629800336908395592
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,9 +420,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6106465458539893879}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.30686, z: 0}
-  m_LocalScale: {x: 0.899864, y: 0.5062736, z: 1.12}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2032024872010821335}
   - {fileID: 5412841762378112035}
