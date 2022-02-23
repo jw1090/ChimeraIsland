@@ -70,15 +70,15 @@ public class PlayerContruller : MonoBehaviour
                 index ++;
                 if (index==TargetTransForm.Count)
                 {
-                    //关闭所有表情
+                    
                     Effect[0].SetActive(false);
                     Effect[1].SetActive(false);
                     Effect[2].SetActive(false);
                     //index = 0;
-                    //已经走到最后一位置点。开启巡逻模式
+                    
                     this.GetComponent<idleMoveAI>().enabled = true;
                     this.enabled = false;
-                    print("到达最后一个点转到待机巡逻");
+                    print("Last Patnodes");
                 }
                 else
                 {
