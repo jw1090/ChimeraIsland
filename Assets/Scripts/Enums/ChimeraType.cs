@@ -5,6 +5,7 @@ using UnityEngine;
 public enum ChimeraType
 {
     None = -1,
+    Egg,
     A,
     A1,
     A2,

@@ -10,6 +10,10 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private bool tappable = false;
 
+    [Header("Egg Info")]
+    [SerializeField] private bool isEgg = false;
+    [SerializeField] private int clicksToHatch = 3;
+
     [Header("Stats")]
     [SerializeField] private int level = 1;
     [SerializeField] private int levelCap = 99;
@@ -66,6 +70,16 @@ public class Chimera : MonoBehaviour
     // - Made by: Joe 2/9/2022
     // - Called by the habitat to transfer habitat stat rates into the chimera's stored stats every tick.
     // - Also adds Essence to stored essence.
+
+    private void Start()
+    {
+        if(isEgg && experienceCap != 0)
+        {
+            experienceCap = 0;
+            Debug.Log( "ALERT: " + this.gameObject + " is an Egg. The experienceCap has been zeroed");
+        }
+
+    }
     public void ChimeraTick(int agility, int defense , int stamina, int strength, int wisdom)
     {
         if(level < levelCap)
@@ -159,6 +173,11 @@ public class Chimera : MonoBehaviour
                 AllocateExperience();
             }
 
+            if (isEgg && clicksToHatch > 0)
+            {
+                --clicksToHatch;
+                Debug.Log("Remaining Clicks to Hatch: " + clicksToHatch);
+            }
             tappable = false;
 
             //Debug.Log("Tap on " + chimeraType);
@@ -270,7 +289,7 @@ public class Chimera : MonoBehaviour
         if(levelUpTracker % 5 == 0)
         {
             ++level;
-            Debug.Log("LEVEL UP! You are now level " + level + " !");
+            Debug.Log("LEVEL UP! " + this.gameObject + " is now level " + level + " !");
         }
     }
 
@@ -282,8 +301,21 @@ public class Chimera : MonoBehaviour
             return;
         }
 
+
+
         foreach (Chimera evolution in evolutionPaths)
         {
+            //If it is an Egg  evolve regardless
+            if (isEgg)
+            {
+                if(clicksToHatch == 0)
+                {
+                    Evolve(evolution);
+                }
+                
+                return;
+            }
+            //If it is NOT an Egg, evaluate stats before evolve
             if (agility < evolution.GetRequiredStats()[0])
             {
                 continue;
@@ -400,5 +432,7 @@ public class Chimera : MonoBehaviour
         happiness = newHappiness;
         happinessMod = newHappinessMod;
     }
+
+
     #endregion
 }

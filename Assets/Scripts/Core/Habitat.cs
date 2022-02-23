@@ -12,8 +12,8 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int costToUpgrade = 300;
     [SerializeField] private int chimeraCapacity = 1;
     [SerializeField] private int facilityCapacity = 2;
-    [SerializeField] private Chimera[] chimeras;
-    [SerializeField] private Facility[] facilities;
+    [SerializeField] private List<Chimera> chimeras;
+    [SerializeField] private List<Facility> facilities;
 
     [Header("Stat Rates")]
     [SerializeField] private int baseExperienceRate = 1;
@@ -26,6 +26,9 @@ public class Habitat : MonoBehaviour
     [Header("Tick Info")]
     [SerializeField] private float tickTimer = 60.0f;
     private Coroutine tickCoroutine;
+
+    [Header("References")]
+    [SerializeField] private GameObject chimeraFolder;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +78,7 @@ public class Habitat : MonoBehaviour
         if (GameManager.Instance.SpendEssence(ToBuyFacility.GetPrice()) == false)
         {
             Debug.Log("Can't afford this facility. It costs " + 
-                ToBuyFacility.GetPrice() + " Essence" + "and you only have " + 
+                ToBuyFacility.GetPrice() + " Essence and you only have " + 
                 GameManager.Instance.GetEssence() + " Essence.");
             return;
         }
@@ -83,6 +86,38 @@ public class Habitat : MonoBehaviour
         ToBuyFacility.BuyFacility();
 
         UpdateStatRates();
+    }
+
+    // - Made by: Joe 2/23/2022
+    // - Called by the BuyEgg Script on a button to check price nad purchase an egg on the active habitat.
+    // - Adds it to the chimera list of that habitat and instantiates it as well
+    public void BuyEgg(Chimera egg)
+    {
+        // Return if no room for another Chimera.
+        if (chimeraCapacity == chimeras.Count)
+        {
+            Debug.Log("You must increase the Chimera capacity to add more chimeras.");
+            return;
+        }
+
+        int price = 200; // TODO: Add price to chimera eggs
+
+        if (GameManager.Instance.SpendEssence(price) == false)
+        {
+            Debug.Log("Can't afford this chimera. It costs " +
+                price + " Essence and you only have " +
+                GameManager.Instance.GetEssence() + " Essence.");
+            return;
+        }
+
+        float boundsX = Random.Range(-8.0f, 7.0f);
+        float boundsZ = Random.Range(-1.0f, 13.0f);
+
+        Vector3 testLocation = new Vector3(boundsX, 0.0f, boundsZ); // TODO: Use camera and spawn there
+
+        Chimera newEgg = Instantiate(egg, testLocation, Quaternion.identity, chimeraFolder.transform);
+
+        chimeras.Add(newEgg);
     }
 
     // - Made by: Joe 2/2/2022
@@ -205,9 +240,11 @@ public class Habitat : MonoBehaviour
         return facilityCount;
     }
 
+    // - Made by: Joe 2/16/2022
+    // - Used to evolve and link chimera to habitat
     public void EvolveSwap(ref Chimera child, ref Chimera adult)
     {
-        for (int i = 0; i < chimeras.Length; ++i)
+        for (int i = 0; i < chimeras.Count; ++i)
         {
             if(chimeras[i] == child)
             {
@@ -217,10 +254,5 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    public void TapFirstChimera()
-    {
-        chimeras[0].ChimeraTap();
-    }
-
-    public Chimera[] GetChimeras() { return chimeras; }
+    public List<Chimera> GetChimeras() { return chimeras; }
 }
