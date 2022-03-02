@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Habitat Habitat1;
 
     [Header("References")]
-    [SerializeField] private TextMeshProUGUI essenceWallet;
+    [SerializeField] private TextMeshProUGUI[] essenceWallets;
     [SerializeField] private Camera cam;
 
 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        essenceWallet.text = currentEssence.ToString();
+        UpdateWallets();
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseEssence(int amount)
     {
         currentEssence += amount;
-        essenceWallet.text = currentEssence.ToString();
+        UpdateWallets();
     }
 
     // - Made by: Joe 2/2/2022
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
 
         currentEssence -= amount;
-        essenceWallet.text = currentEssence.ToString();
+        UpdateWallets();
 
         return true;
     }
@@ -101,6 +101,14 @@ public class GameManager : MonoBehaviour
                 Transform chimera = hit.collider.gameObject.transform.parent;
                 chimera.GetComponent<Chimera>().ChimeraTap();
             }
+        }
+    }
+
+    private void UpdateWallets()
+    {
+        foreach (var wallet in essenceWallets)
+        {
+            wallet.text = currentEssence.ToString();
         }
     }
 
