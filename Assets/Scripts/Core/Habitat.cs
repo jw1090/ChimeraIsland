@@ -7,7 +7,7 @@ public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private bool isActive = false;
-    [SerializeField] private int costToActivate = 0;
+    //[SerializeField] private int costToActivate = 0;
     [SerializeField] private int habitatTier = 1;
     [SerializeField] private int costToUpgrade = 300;
     [SerializeField] private int chimeraCapacity = 1;
@@ -68,13 +68,6 @@ public class Habitat : MonoBehaviour
 
         Facility ToBuyFacility = GetFacility(facilityType);
 
-        // Return if Facility already exists.
-        if(ToBuyFacility.IsActive())
-        {
-            Debug.Log("Facility is already active.");
-            return;
-        }
-
         if (GameManager.Instance.SpendEssence(ToBuyFacility.GetPrice()) == false)
         {
             Debug.Log("Can't afford this facility. It costs " + 
@@ -100,7 +93,7 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        int price = 200; // TODO: Add price to chimera eggs
+        int price = egg.GetPrice();
 
         if (GameManager.Instance.SpendEssence(price) == false)
         {
@@ -252,6 +245,19 @@ public class Habitat : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public Facility FacilitySearch(FacilityType facilityType)
+    {
+        foreach(Facility facility in facilities)
+        {
+            if(facility.GetFacilityType() == facilityType)
+            {
+                return facility;
+            }
+        }
+
+        return null;
     }
 
     public List<Chimera> GetChimeras() { return chimeras; }
