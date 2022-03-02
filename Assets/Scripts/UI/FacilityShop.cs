@@ -7,7 +7,7 @@ public class FacilityShop : MonoBehaviour
 {
     [Header("Shop Info")]
     [SerializeField] private FacilityType facilityType = FacilityType.None;
-    private Facility facility;
+    [SerializeField] private Facility facility;
 
     [Header("References")]
     [SerializeField] private TextMeshProUGUI tierText;
