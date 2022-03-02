@@ -90,10 +90,10 @@ public class Chimera : MonoBehaviour
             ExperienceTick(StatType.Strength, strength);
             ExperienceTick(StatType.Wisdom, wisdom);
         }
-        happiness++;
-        EssenceTick();
+
+                EssenceTick();
         tappable = true;
-        GetHappinessModifier();
+       
         //Debug.Log(chimeraType + " stored: " + agility + " Agility.");
         //Debug.Log(chimeraType + " stored: " + defense + " Defense.");
         //Debug.Log(chimeraType + " stored: " + stamina + " Stamina.");
@@ -142,6 +142,7 @@ public class Chimera : MonoBehaviour
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
+      
 
         if(storedEssence == essenceCap)
         {
@@ -154,7 +155,8 @@ public class Chimera : MonoBehaviour
             Debug.Log("Cannot store anymore Essence.");
             return;
         }
-
+        
+   
         storedEssence += essenceGain;
 
         //Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
@@ -165,8 +167,16 @@ public class Chimera : MonoBehaviour
     // - Any other on tap interaction will go in here.
     public void ChimeraTap()
     {
+
+
         if(tappable)
         {
+            
+
+            happinessMod = GetHappinessModifier();
+
+            Debug.Log(happinessMod);
+
             HarvestEssence();
             if(level < levelCap)
             {
@@ -438,28 +448,21 @@ public class Chimera : MonoBehaviour
         if(happiness == 0)
         {
 
-            happinessMod = 1;
+            int newHappiness = 1;
 
-            return happinessMod;
+            return newHappiness;
         }
-
-        if (happiness > 0)
+        else if(happiness > 0)
         {
-            
-            happinessMod = ((1/50) * happiness) + 1;
-
-            return happinessMod;
-        }
-
-        if(happiness < 0)
-        {
-          
+            int newHappinessMod =  (1* happiness)/50 + 1;
            
-            return happinessMod;
+            return newHappinessMod;
         }
-
-
-        return 0;
+        else
+        {
+            int newHappinessMod = (1 * (int)Mathf.Sqrt(happiness + 100) / 15) + (1 / 3);
+            return newHappinessMod;
+        }
         
     }
 
