@@ -13,6 +13,7 @@ public class Chimera : MonoBehaviour
     [Header("Egg Info")]
     [SerializeField] private bool isEgg = false;
     [SerializeField] private int clicksToHatch = 3;
+    [SerializeField] private int price = 500;
 
     [Header("Stats")]
     [SerializeField] private int level = 1;
@@ -42,7 +43,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int strengthThreshold = 5;
     [SerializeField] private int wisdomThreshold = 5;
     [SerializeField] private int levelUpTracker = 0;
-    [SerializeField] private int thresholdScaling = 0;
 
     [Header("Stored Experience")]
     [SerializeField] private int storedAgilityExperience = 0;
@@ -78,7 +78,6 @@ public class Chimera : MonoBehaviour
             experienceCap = 0;
             Debug.Log( "ALERT: " + this.gameObject + " is an Egg. The experienceCap has been zeroed");
         }
-
     }
     public void ChimeraTick(int agility, int defense , int stamina, int strength, int wisdom)
     {
@@ -91,7 +90,7 @@ public class Chimera : MonoBehaviour
             ExperienceTick(StatType.Wisdom, wisdom);
         }
 
-                EssenceTick();
+        EssenceTick();
         tappable = true;
        
         //Debug.Log(chimeraType + " stored: " + agility + " Agility.");
@@ -137,12 +136,13 @@ public class Chimera : MonoBehaviour
     // - Checks if stored experience is below cap and appropriately assigns.
     // - The essence formula is located here.
     private void EssenceTick()
-    {
-        // Happiness can range between -100 and 100. At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
+    { 
+        happinessMod = HappinessModifierCalc();
+        //Debug.Log("Current Happiness Modifier: " + happinessMod);
+
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
-      
 
         if(storedEssence == essenceCap)
         {
@@ -167,16 +167,8 @@ public class Chimera : MonoBehaviour
     // - Any other on tap interaction will go in here.
     public void ChimeraTap()
     {
-
-
         if(tappable)
         {
-            
-
-            happinessMod = GetHappinessModifier();
-
-            Debug.Log(happinessMod);
-
             HarvestEssence();
             if(level < levelCap)
             {
@@ -192,6 +184,27 @@ public class Chimera : MonoBehaviour
 
             //Debug.Log("Tap on " + chimeraType);
             model.material = standardMat;
+        }
+    }
+
+    // - Made by: Santiago 3/02/2022
+    // Happiness can range between -100 and 100. At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.       
+    private int HappinessModifierCalc()
+    {
+        if (happiness == 0)
+        {
+            return 1;
+        }
+        else if (happiness > 0)
+        {
+            int hapMod = (happiness) / 50 + 1;
+
+            return hapMod;
+        }
+        else
+        {
+            int hapMod = (1 * (int)Mathf.Sqrt(happiness + 100) / 15) + (1 / 3);
+            return hapMod;
         }
     }
 
@@ -310,8 +323,6 @@ public class Chimera : MonoBehaviour
         {
             return;
         }
-
-
 
         foreach (Chimera evolution in evolutionPaths)
         {
@@ -443,28 +454,7 @@ public class Chimera : MonoBehaviour
         happinessMod = newHappinessMod;
     }
 
-    private int GetHappinessModifier()
-    {
-        if(happiness == 0)
-        {
-
-            int newHappiness = 1;
-
-            return newHappiness;
-        }
-        else if(happiness > 0)
-        {
-            int newHappinessMod =  (1* happiness)/50 + 1;
-           
-            return newHappinessMod;
-        }
-        else
-        {
-            int newHappinessMod = (1 * (int)Mathf.Sqrt(happiness + 100) / 15) + (1 / 3);
-            return newHappinessMod;
-        }
-        
-    }
+    public int GetPrice() { return price; }
 
     #endregion
 }
