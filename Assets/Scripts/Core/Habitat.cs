@@ -14,6 +14,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int facilityCapacity = 2;
     [SerializeField] private List<Chimera> chimeras;
     [SerializeField] private List<Facility> facilities;
+    [SerializeField] private PatrolNodeManager patrolNodeManager;
 
     [Header("Stat Rates")]
     [SerializeField] private int baseExperienceRate = 1;
@@ -261,4 +262,6 @@ public class Habitat : MonoBehaviour
     }
 
     public List<Chimera> GetChimeras() { return chimeras; }
+    public List<Facility> GetFacilities() { return facilities; }
+    public List<Transform> GetPatrolNodes() { return patrolNodeManager.GetPatrolNodes(); }
 }

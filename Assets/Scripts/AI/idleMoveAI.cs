@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class idleMoveAI : MonoBehaviour
+public class IdleMoveAI : MonoBehaviour
 {
-    public Transform[] directPoints;
+    public List<Transform> directPoints;
     public int index = 0;
-    public float patroTime = 2f;//wait time
+    public float patrolTime = 1f; //wait time
 
-    private float timer = 0;//timer
+    private float timer = 0; //timer
     private NavMeshAgent navMeshAgent;
 
-    void OnEnable()
+    private void Start()
     {
-        index = 0;
+        directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
+
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-
         navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(directPoints[index].position);
-      //  navMeshAgent.destination = directPoints[index].position;
-        timer = 0;
 
+        navMeshAgent.SetDestination(directPoints[index].position);
+        //  navMeshAgent.destination = directPoints[index].position;
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -32,19 +32,19 @@ public class idleMoveAI : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer >= patroTime)
+            if (timer >= patrolTime)
             {
                 index++;
 
                // index %= 11;
                 timer = 0;
-                if (index >= directPoints.Length-1)
+                if (index >= directPoints.Count - 1)
                 {
                    // index = 0;
                     
-                    this.GetComponent<PlayerContruller>().enabled = true;
+                    this.GetComponent<PlayerController>().enabled = true;
                     this.enabled = false;
-                    print("Last facilities");
+                    Debug.Log("Last facilities");
 
                 }
                 else
@@ -54,6 +54,7 @@ public class idleMoveAI : MonoBehaviour
               
             }
         }
-
     }
+
+    public void ResetIndex() { index = 1; }
 }
