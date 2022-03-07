@@ -6,4 +6,6 @@ public class ChimeraBehavior : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private BehaviorType behaviorType = BehaviorType.None;
+
+    public BehaviorType GetBehaviorType() { return behaviorType; }
 }
