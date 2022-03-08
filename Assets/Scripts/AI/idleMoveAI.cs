@@ -5,16 +5,18 @@ using UnityEngine.AI;
 
 public class IdleMoveAI : MonoBehaviour
 {
-    public List<Transform> directPoints;
+    public Transform[] directPoints;
     public int index = 0;
     public float patrolTime = 1f; //wait time
 
     private float timer = 0; //timer
     private NavMeshAgent navMeshAgent;
 
-    private void Start()
+    void OnEnable()
     {
-        directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
+        index = 0;
+
+        //directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
 
@@ -38,7 +40,7 @@ public class IdleMoveAI : MonoBehaviour
 
                // index %= 11;
                 timer = 0;
-                if (index >= directPoints.Count - 1)
+                if (index >= directPoints.Length - 1)
                 {
                    // index = 0;
                     
