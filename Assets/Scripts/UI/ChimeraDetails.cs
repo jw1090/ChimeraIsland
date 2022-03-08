@@ -15,10 +15,14 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI strength;
     [SerializeField] private TextMeshProUGUI wisdom;
     [SerializeField] private TextMeshProUGUI happiness;
+    private ChimeraDetailsFolder chimeraDetailsFolder;
 
     private void Start()
     {
         UpdateDetails();
+
+        chimeraDetailsFolder = GetComponentInParent<ChimeraDetailsFolder>();
+        chimeraDetailsFolder.Subscribe(this);
     }
 
     private void Update()
@@ -38,4 +42,6 @@ public class ChimeraDetails : MonoBehaviour
         wisdom.text = chimera[chimeraSpot].GetStatByType(StatType.Wisdom).ToString();
         happiness.text = chimera[chimeraSpot].GetStatByType(StatType.Happiness).ToString();
     }
+
+    private int GetChimeraSpot() { return chimeraSpot; }
 }

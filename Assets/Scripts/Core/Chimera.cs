@@ -387,6 +387,34 @@ public class Chimera : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+
+    private int HappinessCheck(ElementalType x, ElementalType y)
+    {
+        
+
+        if(Mathf.Abs(((int)x )-((int)y)) == 3)
+        {   
+            return 1;
+        }
+        else if (Mathf.Abs(((int)x) - ((int)y)) == 1)
+        {
+            return -1;
+        }
+
+        if(x - y == 2)
+        {
+            return 0;
+        }
+
+
+
+        return 0;
+    }
+
+
+
+
+
     #region Getters & Setters
     // Get the required stats needed to evolve
     public int[] GetRequiredStats() { return evolutionStats; }
