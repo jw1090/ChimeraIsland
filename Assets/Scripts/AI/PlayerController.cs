@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public string dislike;
     public float stayTime;
 
-    private void Start()
+    void OnEnable()
     {
         facilitiesList = GameManager.Instance.GetActiveHabitat().GetFacilities();
         idleMoveAI = GetComponent<IdleMoveAI>();
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(Vector3.Distance(this.transform.position, facilitiesList[index].transform.position));
 
-        if (Vector3.Distance(this.transform.position, facilitiesList[index].transform.position) < 4)
+        if (Vector3.Distance(this.transform.position, facilitiesList[index].transform.position) < 5)
         {
            // RemoveVerticalVelocity();
            // Going.text = "arrive" + TargetTransForm[indexpos].gameObject.name;
@@ -88,10 +88,9 @@ public class PlayerController : MonoBehaviour
                     effect[1].SetActive(false);
                     effect[2].SetActive(false);
                     */
-                    //index = 0;
+                    index = 0;
 
                     idleMoveAI.enabled = true;
-                    idleMoveAI.ResetIndex();
                     Debug.Log("Moving to idleMotionState - Idle Component Status: " + idleMoveAI.enabled);
 
                     enabled = false;
