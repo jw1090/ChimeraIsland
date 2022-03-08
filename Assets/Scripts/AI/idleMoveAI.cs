@@ -57,6 +57,4 @@ public class IdleMoveAI : MonoBehaviour
             }
         }
     }
-
-    public void ResetIndex() { index = 1; }
 }
