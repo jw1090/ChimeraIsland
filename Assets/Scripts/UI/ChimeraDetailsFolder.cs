@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] List<ChimeraDetails> chimeraDetailsList;
+    [SerializeField] List<Chimera> chimerasList;
 
     public void Subscribe(ChimeraDetails details)
     {
@@ -16,13 +17,20 @@ public class ChimeraDetailsFolder : MonoBehaviour
         chimeraDetailsList.Add(details);
     }
 
-    public void ActivateDetailsPanel()
+    /*
+    private void OnEnable()
     {
-        List<Chimera> chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
+        chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
 
-        for (int i = 0; i < chimerasList.Count; ++i)
+        if(chimerasList != null)
         {
-            chimeraDetailsList[i].gameObject.SetActive(true);
+            for (int i = 0; i < chimerasList.Count; ++i)
+            {
+                Debug.Log("Index: " + i);
+                Debug.Log("Chimera List Count: " + chimerasList.Count);
+                Debug.Log(chimeraDetailsList[i]);
+                chimeraDetailsList[i].gameObject.SetActive(true);
+            }
         }
-    }
+    } */
 }
