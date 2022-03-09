@@ -5,21 +5,34 @@ using UnityEngine;
 public class IslandFade : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] float delay = 0.2f;
+    [SerializeField] float delay = 0.5f;
 
     [Header("References")]
+    [SerializeField] GameObject islandView;
     [SerializeField] GameObject crossfade;
 
     public void FadeOnClick()
     {
         crossfade.gameObject.SetActive(true);
         StartCoroutine(DisableDelay());
-        StartCoroutine(GameManager.Instance.DisableCrossfade(crossfade));
     }
 
     private IEnumerator DisableDelay()
     {
         yield return new WaitForSeconds(delay);
-        this.gameObject.SetActive(false);
+        islandView.gameObject.SetActive(false);
+    }
+
+    public void StartCrossfadeDisable(float fadeDisableDelay)
+    {
+        StartCoroutine(DisableCrossfade(fadeDisableDelay));
+    }
+
+    private IEnumerator DisableCrossfade(float fadeDisableDelay)
+    {
+        Debug.Log("fade");
+        yield return new WaitForSeconds(fadeDisableDelay);
+
+        crossfade.SetActive(false);
     }
 }

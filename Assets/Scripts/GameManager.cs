@@ -103,13 +103,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public IEnumerator DisableCrossfade(GameObject fade)
-    {
-        yield return new WaitForSeconds(1.0f);
-        Debug.Log("fade");
-
-        fade.SetActive(false);
-    }
 
     private void UpdateWallets()
     {

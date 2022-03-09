@@ -402,7 +402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &107895150
 RectTransform:
   m_ObjectHideFlags: 0
@@ -837,7 +837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &209325691
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 977075020}
+      - m_Target: {fileID: 1418420241}
         m_TargetAssemblyTypeName: IslandFade, Assembly-CSharp
         m_MethodName: FadeOnClick
         m_Mode: 1
@@ -3029,7 +3029,6 @@ GameObject:
   - component: {fileID: 977075017}
   - component: {fileID: 977075019}
   - component: {fileID: 977075018}
-  - component: {fileID: 977075020}
   m_Layer: 5
   m_Name: Island View
   m_TagString: Untagged
@@ -3095,21 +3094,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977075016}
   m_CullTransparentMesh: 1
---- !u!114 &977075020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977075016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.2
-  crossfade: {fileID: 377004310}
-  animator: {fileID: 377004312}
 --- !u!1 &993386402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3972,8 +3956,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0
+  islandView: {fileID: 0}
   crossfade: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!1 &1312307696
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,6 +4971,7 @@ GameObject:
   - component: {fileID: 1418420237}
   - component: {fileID: 1418420236}
   - component: {fileID: 1418420240}
+  - component: {fileID: 1418420241}
   m_Layer: 5
   m_Name: Menu Manager
   m_TagString: Untagged
@@ -5094,6 +5079,21 @@ MonoBehaviour:
   CloseChimerasButton: {fileID: 1838690946}
   Marketplace: {fileID: 532682773}
   HabitatShop: {fileID: 1616706851}
+--- !u!114 &1418420241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418420235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
+  islandView: {fileID: 977075016}
+  crossfade: {fileID: 377004310}
 --- !u!1 &1435291744
 GameObject:
   m_ObjectHideFlags: 0
