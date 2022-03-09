@@ -140,7 +140,7 @@ public class Chimera : MonoBehaviour
     { 
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
-
+        
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
@@ -170,6 +170,8 @@ public class Chimera : MonoBehaviour
     {
         if(tappable)
         {
+
+            HappinessCheck();
             HarvestEssence();
             if(level < levelCap)
             {
@@ -389,35 +391,43 @@ public class Chimera : MonoBehaviour
     }
 
 
-    private int HappinessCheck(ElementalType x, ElementalType y)
-    {
+    //public int HappinessCheck(ElementalType compareType)
+    //{
         
 
-        if(Mathf.Abs(x - y) == 3)
-        {   
-            return 1;
-        }
-        else if (Mathf.Abs(x - y) == 1)
+    //    if(Mathf.Abs(compareType - elementalType) == 3)
+    //    {   
+    //        return 1;
+    //    }
+    //    else if (Mathf.Abs(compareType - elementalType) == 1)
+    //    {
+    //        return -1;
+    //    }
+
+    //    if(compareType == ElementalType.Fira || elementalType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Aero)
+    //    {
+    //        return -1;
+    //    }
+
+        
+
+    //    return 0;
+    //}
+
+
+    private void HappinessCheck()
+    {
+        if(GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
         {
-            return -1;
+            happiness++;
         }
-
-        if(ElementalType.Fira - ElementalType.Aqua == -2)
+        if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == -1)
         {
-            return -1;
+            happiness--;
         }
-
-        if (ElementalType.Aero - ElementalType.Electra == -2)
-        {
-            return -1;
-        }
-
-
-
-
-        return 0;
+       
     }
-
+    
 
 
 
@@ -491,6 +501,10 @@ public class Chimera : MonoBehaviour
     }
 
     public int GetPrice() { return price; }
+
+    public ElementalType GetElementalType() { return elementalType; }
+
+    public Texture2D GetProfileIcon() { return profileIcon; }
 
     #endregion
 }
