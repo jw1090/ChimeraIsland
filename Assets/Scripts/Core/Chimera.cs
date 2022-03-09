@@ -72,7 +72,6 @@ public class Chimera : MonoBehaviour
     // - Made by: Joe 2/9/2022
     // - Called by the habitat to transfer habitat stat rates into the chimera's stored stats every tick.
     // - Also adds Essence to stored essence.
-
     private void Start()
     {
         if(isEgg && experienceCap != 0)
@@ -435,7 +434,8 @@ public class Chimera : MonoBehaviour
 
     #region Getters & Setters
     // Get the required stats needed to evolve
-    public int[] GetRequiredStats() { return evolutionStats; }
+    public int[] GetRequiredStats() { return evolutionStats;}
+    public Texture2D getProfileIcon() { return profileIcon; }
     public int GetStoredExpByType(StatType statType)
     {
         switch (statType)
