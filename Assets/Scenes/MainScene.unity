@@ -402,7 +402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &107895150
 RectTransform:
   m_ObjectHideFlags: 0
@@ -633,7 +633,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 148309285}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &148309285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,7 +837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &209325691
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1161,7 +1173,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 354982205}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &354982205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,12 +1238,12 @@ GameObject:
   - component: {fileID: 377004313}
   - component: {fileID: 377004312}
   m_Layer: 5
-  m_Name: crossfade
+  m_Name: Crossfade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &377004311
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1227,7 +1251,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377004310}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1442,9 +1466,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 977075020}
-        m_TargetAssemblyTypeName: mapButton, Assembly-CSharp
-        m_MethodName: onClickPlains
+      - m_Target: {fileID: 1418420241}
+        m_TargetAssemblyTypeName: IslandFade, Assembly-CSharp
+        m_MethodName: FadeOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2445,16 +2469,16 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2077903637}
   - {fileID: 1906430777}
+  - {fileID: 2077903637}
   m_Father: {fileID: 1283837429}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 400, y: 120}
+  m_Pivot: {x: 1, y: 0}
 --- !u!4 &822753456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7692921483878910682, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
@@ -3005,7 +3029,6 @@ GameObject:
   - component: {fileID: 977075017}
   - component: {fileID: 977075019}
   - component: {fileID: 977075018}
-  - component: {fileID: 977075020}
   m_Layer: 5
   m_Name: Island View
   m_TagString: Untagged
@@ -3071,22 +3094,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977075016}
   m_CullTransparentMesh: 1
---- !u!114 &977075020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977075016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bd7c8cdf5a360e40b7eb2ac3ed39860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transition: {fileID: 377004312}
-  mapUI: {fileID: 1407351922}
-  crossFade: {fileID: 377004310}
-  transitionTime: 1
 --- !u!1 &993386402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3866,6 +3873,7 @@ GameObject:
   - component: {fileID: 1283837429}
   - component: {fileID: 1283837431}
   - component: {fileID: 1283837430}
+  - component: {fileID: 1283837432}
   m_Layer: 5
   m_Name: Habitat Panel
   m_TagString: Untagged
@@ -3895,7 +3903,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -40}
+  m_SizeDelta: {x: -81, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1283837430
 MonoBehaviour:
@@ -3935,6 +3943,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283837428}
   m_CullTransparentMesh: 1
+--- !u!114 &1283837432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283837428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+  islandView: {fileID: 0}
+  crossfade: {fileID: 0}
 --- !u!1 &1312307696
 GameObject:
   m_ObjectHideFlags: 0
@@ -4463,7 +4486,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1335883902}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1335883902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4816,7 +4851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1407351923}
   m_Layer: 5
-  m_Name: habitats
+  m_Name: Habitat Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4841,10 +4876,10 @@ RectTransform:
   m_Father: {fileID: 977075017}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1414356753
 PrefabInstance:
@@ -4936,6 +4971,7 @@ GameObject:
   - component: {fileID: 1418420237}
   - component: {fileID: 1418420236}
   - component: {fileID: 1418420240}
+  - component: {fileID: 1418420241}
   m_Layer: 5
   m_Name: Menu Manager
   m_TagString: Untagged
@@ -5043,6 +5079,21 @@ MonoBehaviour:
   CloseChimerasButton: {fileID: 1838690946}
   Marketplace: {fileID: 532682773}
   HabitatShop: {fileID: 1616706851}
+--- !u!114 &1418420241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418420235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
+  islandView: {fileID: 977075016}
+  crossfade: {fileID: 377004310}
 --- !u!1 &1435291744
 GameObject:
   m_ObjectHideFlags: 0
@@ -5329,7 +5380,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1497160961}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1497160961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5461,7 +5524,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19792
+  m_Name: pb_Mesh23190
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6562,11 +6625,11 @@ RectTransform:
   m_Children:
   - {fileID: 2062935809}
   m_Father: {fileID: 760508435}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 640.00006, y: -470}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 180, y: -60}
   m_SizeDelta: {x: 180, y: 120}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1906430778
@@ -7024,11 +7087,11 @@ RectTransform:
   m_Children:
   - {fileID: 1972813232}
   m_Father: {fileID: 760508435}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 890.00006, y: -470}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 180, y: 120}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2077903638
