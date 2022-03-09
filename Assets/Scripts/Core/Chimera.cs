@@ -504,5 +504,7 @@ public class Chimera : MonoBehaviour
 
     public ElementalType GetElementalType() { return elementalType; }
 
+    public Texture2D GetProfileIcon() { return profileIcon; }
+
     #endregion
 }

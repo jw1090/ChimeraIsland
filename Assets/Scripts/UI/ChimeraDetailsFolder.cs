@@ -16,11 +16,13 @@ public class ChimeraDetailsFolder : MonoBehaviour
         chimeraDetailsList.Add(details);
     }
 
-    private void OnEnable()
+    public void ActivateDetailsPanel()
     {
-        foreach(ChimeraDetails chimeraDetails in chimeraDetailsList)
-        {
+        List<Chimera> chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
 
+        for (int i = 0; i < chimerasList.Count; ++i)
+        {
+            chimeraDetailsList[i].gameObject.SetActive(true);
         }
     }
 }
