@@ -21,9 +21,6 @@ public class ChimeraDetails : MonoBehaviour
     private void Start()
     {
         chimeraDetailsFolder = GetComponentInParent<ChimeraDetailsFolder>();
-        chimeraDetailsFolder.Subscribe(this);
-
-        UpdateDetails();
     }
 
     private void Update()

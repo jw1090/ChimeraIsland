@@ -922,7 +922,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8d842918597234381e0b805bb6fee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimeraDetailsList: []
+  chimeraDetailsList:
+  - {fileID: 2123415204}
+  - {fileID: 483385885}
+  - {fileID: 2037036157}
   chimerasList: []
 --- !u!1 &241253665 stripped
 GameObject:
@@ -1587,6 +1590,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443946035}
   m_CullTransparentMesh: 1
+--- !u!114 &483385885 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
+  m_PrefabInstance: {fileID: 1324845087}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &486668251
 GameObject:
   m_ObjectHideFlags: 0
@@ -7282,6 +7296,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972813231}
   m_CullTransparentMesh: 1
+--- !u!114 &2037036157 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
+  m_PrefabInstance: {fileID: 503087016}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2062935808
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,6 +7585,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2123415204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
+  m_PrefabInstance: {fileID: 1574459907507595226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2131325066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7567,18 +7603,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1283837429}
     m_Modifications:
-    - target: {fileID: 3788780335049244993, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
-    - target: {fileID: 3788780335049244993, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
-    - target: {fileID: 3788780335383683918, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -8885233566054550202, guid: ac276b102861c0642818ccfad4302d6d, type: 3}
+    - target: {fileID: 3788780335383683905, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3788780336560262400, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_Name
       value: Essence Wallet
@@ -7685,30 +7713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2131325069 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3788780335383683904, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-  m_PrefabInstance: {fileID: 2131325066}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2131325070
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131325069}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bdabc6ee28e4c944b35289da298010b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &2138079261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 721497770782023407, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
