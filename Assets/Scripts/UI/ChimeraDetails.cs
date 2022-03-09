@@ -41,6 +41,7 @@ public class ChimeraDetails : MonoBehaviour
         strength.text = chimera[chimeraSpot].GetStatByType(StatType.Strength).ToString();
         wisdom.text = chimera[chimeraSpot].GetStatByType(StatType.Wisdom).ToString();
         happiness.text = chimera[chimeraSpot].GetStatByType(StatType.Happiness).ToString();
+        icon.SetTexture(chimera[chimeraSpot].getProfileIcon());
     }
 
     private int GetChimeraSpot() { return chimeraSpot; }

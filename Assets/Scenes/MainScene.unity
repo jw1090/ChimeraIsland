@@ -1030,6 +1030,81 @@ MonoBehaviour:
   objectToSwap:
   - {fileID: 1465115619}
   - {fileID: 71382450}
+--- !u!1 &309361708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309361709}
+  - component: {fileID: 309361711}
+  - component: {fileID: 309361710}
+  m_Layer: 5
+  m_Name: Clouds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &309361709
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309361708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 977075017}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &309361710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309361708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9e7f68a5119669041b70f1d8522d138b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &309361711
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309361708}
+  m_CullTransparentMesh: 1
 --- !u!1001 &321327041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2484,6 +2559,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7692921483878910682, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
   m_PrefabInstance: {fileID: 1875589437}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &874979775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3788780335383683904, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+  m_PrefabInstance: {fileID: 2131325066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &874979776
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874979775}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6bdabc6ee28e4c944b35289da298010b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &903197007
 GameObject:
   m_ObjectHideFlags: 0
@@ -3035,7 +3134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &977075017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3047,6 +3146,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 309361709}
   - {fileID: 1407351923}
   m_Father: {fileID: 1418420239}
   m_RootOrder: 1
@@ -3076,7 +3176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8e5a0b3cecf14784499a98c28000ff12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 792b6e0fdc7a780459614b06955ef5ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4874,7 +4974,7 @@ RectTransform:
   - {fileID: 1335883900}
   - {fileID: 148309283}
   m_Father: {fileID: 977075017}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5524,7 +5624,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23190
+  m_Name: pb_Mesh22902
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7214,6 +7314,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
+    - target: {fileID: 3788780335383683918, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8885233566054550202, guid: ac276b102861c0642818ccfad4302d6d, type: 3}
     - target: {fileID: 3788780336560262400, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_Name
       value: Essence Wallet
