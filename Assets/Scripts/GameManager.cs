@@ -112,6 +112,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public int ElementalAffinityCheck(ElementalType compareType)
+    {
+        int value = 0;
+        foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
+        {
+            ElementalType elementalType = chimera.GetElementalType();
+
+            if (Mathf.Abs(compareType - elementalType) == 3)
+            {
+                value = 1;
+            }
+            else if (Mathf.Abs(compareType - elementalType) == 1)
+            {
+                value = -1;
+            }
+
+            if (compareType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Fira  && elementalType == ElementalType.Aero)
+            {
+                value = -1;
+            }
+
+        }
+        return value;
+
+    }
+
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
     public Habitat GetActiveHabitat() { return activeHabitat; }
