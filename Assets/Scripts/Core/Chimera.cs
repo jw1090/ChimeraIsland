@@ -9,6 +9,8 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ChimeraType chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private bool tappable = false;
+    [SerializeField] private Texture2D profileIcon = null;
+    
 
     [Header("Egg Info")]
     [SerializeField] private bool isEgg = false;
@@ -392,19 +394,25 @@ public class Chimera : MonoBehaviour
     {
         
 
-        if(Mathf.Abs(((int)x )-((int)y)) == 3)
+        if(Mathf.Abs(x - y) == 3)
         {   
             return 1;
         }
-        else if (Mathf.Abs(((int)x) - ((int)y)) == 1)
+        else if (Mathf.Abs(x - y) == 1)
         {
             return -1;
         }
 
-        if(x - y == 2)
+        if(ElementalType.Fira - ElementalType.Aqua == -2)
         {
-            return 0;
+            return -1;
         }
+
+        if (ElementalType.Aero - ElementalType.Electra == -2)
+        {
+            return -1;
+        }
+
 
 
 
