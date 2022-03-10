@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class IdleMoveAI : MonoBehaviour
+public class IdleState : MonoBehaviour
 {
     public Transform[] directPoints;
     public int index = 0;
@@ -38,22 +38,22 @@ public class IdleMoveAI : MonoBehaviour
             {
                 index++;
 
-               // index %= 11;
+                // index %= 11;
                 timer = 0;
                 if (index >= directPoints.Length - 1)
                 {
-                   // index = 0;
-                    
+                    // index = 0;
+
                     this.GetComponent<PlayerController>().enabled = true;
                     this.enabled = false;
-                    Debug.Log("Last facilities");
+                    Debug.Log("Last Patnodes");
 
                 }
                 else
                 {
                     navMeshAgent.destination = directPoints[index].position;
                 }
-              
+
             }
         }
     }
