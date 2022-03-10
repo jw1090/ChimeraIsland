@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     //private List<GameObject> effect;
     private NavMeshAgent agent;
     private List<Facility> facilitiesList;
-    private IdleMoveAI idleMoveAI;
+    private IdleState idleState;
 
     public int index;
     public bool isAi;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         facilitiesList = GameManager.Instance.GetActiveHabitat().GetFacilities();
-        idleMoveAI = GetComponent<IdleMoveAI>();
+        idleState = GetComponent<IdleState>();
         agent = this.GetComponent<NavMeshAgent>();
 
         time = 0;
@@ -90,11 +90,8 @@ public class PlayerController : MonoBehaviour
                     */
                     index = 0;
 
-                    idleMoveAI.enabled = true;
-                    Debug.Log("Moving to idleMotionState - Idle Component Status: " + idleMoveAI.enabled);
-
+                    idleState.enabled = true;
                     enabled = false;
-                    Debug.Log("Last Patrol nodes have been reached! - Player Controller Status: " + enabled);
                 }
                 else
                 {
