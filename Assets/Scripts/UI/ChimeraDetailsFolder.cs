@@ -5,24 +5,18 @@ using UnityEngine;
 public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] List<ChimeraDetails> chimeraDetailsList;
+    [SerializeField] List<Chimera> chimerasList;
 
-    public void Subscribe(ChimeraDetails details)
+    private void OnEnable()
     {
-        if (chimeraDetailsList == null)
+        chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
+
+        if(chimeraDetailsList != null)
         {
-            chimeraDetailsList = new List<ChimeraDetails>();
-        }
-
-        chimeraDetailsList.Add(details);
-    }
-
-    public void ActivateDetailsPanel()
-    {
-        List<Chimera> chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
-
-        for (int i = 0; i < chimerasList.Count; ++i)
-        {
-            chimeraDetailsList[i].gameObject.SetActive(true);
+            for(int i = 0; i < chimerasList.Count; ++i)
+            {
+                chimeraDetailsList[i].gameObject.SetActive(true);
+            }
         }
     }
 }
