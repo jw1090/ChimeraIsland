@@ -113,7 +113,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public int ElementalAffinityCheck(ElementalType compareType)
     {
         int value = 0;
