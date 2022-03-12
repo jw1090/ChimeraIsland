@@ -16,10 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] essenceWallets;
     [SerializeField] private Camera cam;
 
-
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
-
 
     // - Made by: Joe 2/2/2022
     // - Basic Singleton Implementation
