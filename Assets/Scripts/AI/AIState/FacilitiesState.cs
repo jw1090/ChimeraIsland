@@ -2,37 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-// GetComponent<MeshRenderer>().enabled = true;
-
-
-/*private int ActiveFacilitiesCount()
-{
-    int facilityCount = 0;
-
-    foreach (Facility facility in facilities)
-    {
-        if (facility.IsActive())
-        {
-            ++facilityCount;
-        }
-    }
-
-    return facilityCount;
-}*/
 public class FacilitiesState : MonoBehaviour
 {
 
-    private List<Facility> facilitiesList;
-    // Start is called before the first frame update
-    void Start()
+    //Create new list to save the active facilities position
+    public List<Transform> transformsFacilities;
+
+    // add position after active
+    public void AddFacilitiesPos(Transform add)
     {
-        
+        transformsFacilities.Add(add);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

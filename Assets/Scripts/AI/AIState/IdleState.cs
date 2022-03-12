@@ -26,7 +26,7 @@ public class IdleState : MonoBehaviour
         //  navMeshAgent.destination = directPoints[index].position;
         timer = 0;
     }
-
+    public FacilitiesState facilitiesStatel;
     // Update is called once per frame
     void Update()
     {
@@ -42,12 +42,19 @@ public class IdleState : MonoBehaviour
                 timer = 0;
                 if (index >= directPoints.Length - 1)
                 {
-                    // index = 0;
-
-                    this.GetComponent<PlayerController>().enabled = true;
-                    this.enabled = false;
-                    Debug.Log("Last Patnodes");
-
+                   
+                    if ( facilitiesStatel.transformsFacilities.Count != 0)
+                    {
+                        this.GetComponent<PlayerController>().enabled = true;
+                        this.enabled = false;
+                        Debug.Log("Last Patnodes");
+                    }
+                    else
+                    {
+                        index = 0;
+                        navMeshAgent.destination = directPoints[index].position;
+                    }
+                   
                 }
                 else
                 {

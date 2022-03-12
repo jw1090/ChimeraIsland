@@ -11,7 +11,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private int statModifier = 1;
     [SerializeField] private int price = 100;
     private bool isActive;
-
+    public FacilitiesState facilitiesState;
     // - Made by: Joe 2/9/2022
     // - Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
@@ -21,6 +21,12 @@ public class Facility : MonoBehaviour
 
         if (currentTier == 1)
         {
+
+            //After Facilites Active£¬Add to gamemanager Facilitieslist
+            facilitiesState.AddFacilitiesPos(this.transform);
+
+
+
             isActive = true;
             Debug.Log(facilityType + " was purchased!");
             Debug.Log(facilityType + " will generate an additional " + statModifier + " " + statType + " for Chimeras per tick!");

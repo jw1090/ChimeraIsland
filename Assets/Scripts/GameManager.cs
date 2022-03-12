@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
 
+
     // - Made by: Joe 2/2/2022
     // - Basic Singleton Implementation
     private void Initialize()
