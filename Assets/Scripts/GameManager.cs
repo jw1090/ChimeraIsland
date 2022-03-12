@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] essenceWallets;
     [SerializeField] private Camera cam;
 
-
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
 
@@ -111,7 +110,6 @@ public class GameManager : MonoBehaviour
             wallet.text = currentEssence.ToString();
         }
     }
-
 
     public int ElementalAffinityCheck(ElementalType compareType)
     {
