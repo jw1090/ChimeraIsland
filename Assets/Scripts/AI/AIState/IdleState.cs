@@ -5,12 +5,14 @@ using UnityEngine.AI;
 
 public class IdleState : MonoBehaviour
 {
-    public Transform[] directPoints;
     public int index = 0;
     public float patrolTime = 1f; //wait time
 
     private float timer = 0; //timer
-    private NavMeshAgent navMeshAgent;
+
+    [Header("References")]
+    [SerializeField] private NavMeshAgent navMeshAgent;
+    public Transform[] directPoints;
 
     void OnEnable()
     {
@@ -26,7 +28,7 @@ public class IdleState : MonoBehaviour
         //  navMeshAgent.destination = directPoints[index].position;
         timer = 0;
     }
-    public FacilitiesState facilitiesStatel;
+
     // Update is called once per frame
     void Update()
     {
@@ -43,7 +45,7 @@ public class IdleState : MonoBehaviour
                 if (index >= directPoints.Length - 1)
                 {
                    
-                    if ( facilitiesStatel.transformsFacilities.Count != 0)
+                    if ( GetComponent<FacilitiesState>().transformsFacilities.Count != 0)
                     {
                         this.GetComponent<PlayerController>().enabled = true;
                         this.enabled = false;
