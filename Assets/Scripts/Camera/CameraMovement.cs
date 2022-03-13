@@ -23,20 +23,20 @@ public class CameraMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            pos.z += panSpeed * Time.deltaTime;
+            pos.z -= panSpeed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            pos.z -= panSpeed * Time.deltaTime;
+            pos.z += panSpeed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            pos.x -= panSpeed * Time.deltaTime;
+            pos.x += panSpeed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            pos.x += panSpeed * Time.deltaTime;
+            pos.x -= panSpeed * Time.deltaTime;
         }
     }
 }
