@@ -420,10 +420,18 @@ public class Chimera : MonoBehaviour
         if(GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
         {
             happiness++;
+            if(happiness > 100)
+            {
+                happiness = 100;
+            }
         }
         if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == -1)
         {
             happiness--;
+            if(happiness < -100)
+            {
+                happiness = -100;
+            }
         }
        
     }
