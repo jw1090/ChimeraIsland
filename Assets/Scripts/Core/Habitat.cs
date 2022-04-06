@@ -18,8 +18,6 @@ public class Habitat : MonoBehaviour
 
     [Header("Stat Rates")]
     [SerializeField] private int baseExperienceRate = 1;
-    private int agilityExpRate = 0;
-    private int defenseExpRate = 0;
     private int staminaExpRate = 0;
     private int strengthExpRate = 0;
     private int wisdomExpRate = 0;
@@ -48,7 +46,7 @@ public class Habitat : MonoBehaviour
             yield return new WaitForSeconds(tickTimer);
             foreach(Chimera chimera in chimeras)
             {
-                chimera.ChimeraTick(agilityExpRate, defenseExpRate, staminaExpRate, strengthExpRate, wisdomExpRate);
+                chimera.ChimeraTick(staminaExpRate, strengthExpRate, wisdomExpRate);
                 //Debug.Log("Tick");
             }
         }
@@ -119,8 +117,6 @@ public class Habitat : MonoBehaviour
     // - Called on start and whenever a facility is added.
     private void UpdateStatRates()
     {
-        agilityExpRate = baseExperienceRate;
-        defenseExpRate = baseExperienceRate;
         staminaExpRate = baseExperienceRate;
         strengthExpRate = baseExperienceRate;
         wisdomExpRate = baseExperienceRate;
@@ -134,14 +130,6 @@ public class Habitat : MonoBehaviour
 
             switch (facility.GetStatType())
             {
-                case StatType.Agility:
-                    agilityExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + agilityExpRate + " agility per tick.");
-                    break;
-                case StatType.Defense:
-                    defenseExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + defenseExpRate + " defense per tick.");
-                    break;
                 case StatType.Stamina:
                     staminaExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + staminaExpRate + " stamina per tick.");

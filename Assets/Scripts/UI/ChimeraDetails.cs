@@ -39,8 +39,6 @@ public class ChimeraDetails : MonoBehaviour
         chimera = GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot];
 
         level.text = "Level: " + chimera.GetLevel();
-        agility.text = chimera.GetStatByType(StatType.Agility).ToString();
-        defence.text = chimera.GetStatByType(StatType.Defense).ToString();
         stamina.text = chimera.GetStatByType(StatType.Stamina).ToString();
         strength.text = chimera.GetStatByType(StatType.Strength).ToString();
         wisdom.text = chimera.GetStatByType(StatType.Wisdom).ToString();

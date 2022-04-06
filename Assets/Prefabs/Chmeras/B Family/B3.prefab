@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3811236617007487035
+--- !u!1 &482829126823042054
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2032024872010821335}
-  - component: {fileID: 1215330488576349235}
-  - component: {fileID: 3919777644857886525}
-  - component: {fileID: 6106465457967094437}
-  - component: {fileID: 6478862608395628820}
-  - component: {fileID: 8718045509502198591}
+  - component: {fileID: 3342887877363641066}
+  - component: {fileID: 2489041064225476622}
+  - component: {fileID: 302506482112070400}
+  - component: {fileID: 7415709989468954264}
+  - component: {fileID: 3002146996565254597}
+  - component: {fileID: 1392357844759355854}
   m_Layer: 0
   m_Name: Model
   m_TagString: Chimera
@@ -21,35 +21,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2032024872010821335
+--- !u!4 &3342887877363641066
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
+  m_GameObject: {fileID: 482829126823042054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 7, y: 2, z: 3}
+  m_LocalScale: {x: 1.7, y: 1.5, z: 5}
   m_Children: []
-  m_Father: {fileID: 6106465458539893876}
+  m_Father: {fileID: 7415709988698984521}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1215330488576349235
+--- !u!33 &2489041064225476622
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3919777644857886525
+  m_GameObject: {fileID: 482829126823042054}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &302506482112070400
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
+  m_GameObject: {fileID: 482829126823042054}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -84,13 +84,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!195 &6106465457967094437
+--- !u!195 &7415709989468954264
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
+  m_GameObject: {fileID: 482829126823042054}
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
@@ -106,26 +106,26 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &6478862608395628820
+--- !u!65 &3002146996565254597
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
+  m_GameObject: {fileID: 482829126823042054}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.99999994, y: 0.9999999, z: 1}
-  m_Center: {x: 0, y: 0.000000059604645, z: 0}
---- !u!54 &8718045509502198591
+  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1392357844759355854
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811236617007487035}
+  m_GameObject: {fileID: 482829126823042054}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -133,9 +133,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!1 &6106465458539893879
+--- !u!1 &7415709988698984522
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,76 +143,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6106465458539893876}
-  - component: {fileID: 1070999743981996110}
+  - component: {fileID: 7415709988698984521}
+  - component: {fileID: 4362745166761184371}
   m_Layer: 0
-  m_Name: C2A
+  m_Name: B3
   m_TagString: Chimera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6106465458539893876
+--- !u!4 &7415709988698984521
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106465458539893879}
+  m_GameObject: {fileID: 7415709988698984522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2032024872010821335}
+  - {fileID: 3342887877363641066}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1070999743981996110
+--- !u!114 &4362745166761184371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106465458539893879}
+  m_GameObject: {fileID: 7415709988698984522}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf5262b90ea4b7344b58b1a57c12e068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimeraType: 17
-  elementalType: 0
+  chimeraType: 10
+  elementalType: 4
   tappable: 0
-  profileIcon: {fileID: 2800000, guid: d2060d06518b0fa428fbc695944d19ba, type: 3}
+  profileIcon: {fileID: 2800000, guid: 9a0fa91d278ad2848bf10339297bebb8, type: 3}
   isEgg: 0
   clicksToHatch: 3
   price: 500
   level: 1
   levelCap: 99
-  agility: 1
-  defense: 1
   stamina: 1
   strength: 1
   wisdom: 1
   happiness: 1
   happinessMod: 1
-  agilityGrowth: 7
-  defenseGrowth: 2
-  staminaGrowth: 4
-  strengthGrowth: 4
-  wisdomGrowth: 3
-  agilityExperience: 0
-  defenseExperience: 0
+  staminaGrowth: 3
+  strengthGrowth: 3
+  wisdomGrowth: 2
   staminaExperience: 0
   strengthExperience: 0
   wisdomExperience: 0
-  agilityThreshold: 3
-  defenseThreshold: 5
   staminaThreshold: 5
   strengthThreshold: 5
   wisdomThreshold: 4
   levelUpTracker: 0
-  storedAgilityExperience: 0
-  storedDefenseExperience: 0
   storedStaminaExperience: 0
   storedStrengthExperience: 0
   storedWisdomExperience: 0
@@ -222,7 +212,7 @@ MonoBehaviour:
   essenceModifier: 1
   essenceCap: 150
   evolutionPaths: []
-  evolutionStats: 5f00000000000000000000000000000000000000
-  model: {fileID: 3919777644857886525}
+  evolutionStats: 00000000000000000a000000
+  model: {fileID: 302506482112070400}
   standardMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
   tappableMat: {fileID: 2100000, guid: 02c57425cf74bc949b09403413c6b083, type: 2}
