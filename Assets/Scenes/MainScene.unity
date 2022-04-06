@@ -299,7 +299,7 @@ PrefabInstance:
     - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: facilitiesState
       value: 
-      objectReference: {fileID: 241253667}
+      objectReference: {fileID: 1042047380}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
 --- !u!4 &35383057 stripped
@@ -1068,7 +1068,7 @@ PrefabInstance:
     - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: facilitiesState
       value: 
-      objectReference: {fileID: 241253667}
+      objectReference: {fileID: 1042047380}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2938,6 +2938,10 @@ PrefabInstance:
       propertyPath: directPoints.Array.data[10]
       value: 
       objectReference: {fileID: 1146418192}
+    - target: {fileID: 1908189271997081013, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
       propertyPath: m_Name
       value: A
@@ -3597,6 +3601,62 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
   m_PrefabInstance: {fileID: 1027387754}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1042047379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1042047381}
+  - component: {fileID: 1042047380}
+  m_Layer: 0
+  m_Name: PositionManager
+  m_TagString: PosMgr
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1042047380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042047379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2314f6295ffe847b62a24519408b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformsFacilities: []
+  directPoints:
+  - {fileID: 822753456}
+  - {fileID: 1188871390}
+  - {fileID: 1695728582}
+  - {fileID: 510257777}
+  - {fileID: 1827162553}
+  - {fileID: 2138079261}
+  - {fileID: 247712200}
+  - {fileID: 1452186332}
+  - {fileID: 624540101}
+  - {fileID: 700745940}
+  - {fileID: 1146418192}
+--- !u!4 &1042047381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042047379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5126181, y: -19.212616, z: -18.870752}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1102266222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4983,7 +5043,7 @@ PrefabInstance:
     - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: facilitiesState
       value: 
-      objectReference: {fileID: 241253667}
+      objectReference: {fileID: 1042047380}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6336,7 +6396,7 @@ PrefabInstance:
     - target: {fileID: 3450265743498193595, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: facilitiesState
       value: 
-      objectReference: {fileID: 241253667}
+      objectReference: {fileID: 1042047380}
     - target: {fileID: 5078077640558258392, guid: c27a6a2113ef22c479463bf63540bccb, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -6755,7 +6815,7 @@ PrefabInstance:
     - target: {fileID: 84028180941262389, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: facilitiesState
       value: 
-      objectReference: {fileID: 241253667}
+      objectReference: {fileID: 1042047380}
     - target: {fileID: 7032462670226691818, guid: 9b80c3ae5605c004b8242eff970b4938, type: 3}
       propertyPath: m_Name
       value: Hiking Trail - Sta

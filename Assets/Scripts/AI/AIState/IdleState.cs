@@ -12,12 +12,12 @@ public class IdleState : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private NavMeshAgent navMeshAgent;
-    public Transform[] directPoints;
+    private Transform[] directPoints;
 
     void OnEnable()
     {
+        directPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<MoveState>().directPoints;
         index = 0;
-
         //directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -45,7 +45,7 @@ public class IdleState : MonoBehaviour
                 if (index >= directPoints.Length - 1)
                 {
                    
-                    if ( GetComponent<FacilitiesState>().transformsFacilities.Count != 0)
+                    if (GameObject.FindGameObjectWithTag("PosMgr").GetComponent<MoveState>().transformsFacilities.Count != 0)
                     {
                         this.GetComponent<PlayerController>().enabled = true;
                         this.enabled = false;
