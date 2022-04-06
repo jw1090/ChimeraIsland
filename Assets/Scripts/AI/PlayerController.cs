@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private List<Facility> facilitiesList;
     private IdleState idleState;
 
-    public FacilitiesState facilitiesState;
+    private MoveState facilitiesState;
     public int index;
     public bool isAi;
     public float time;
@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-       
-        idleState = GetComponent<IdleState>();
+        facilitiesState = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<MoveState>();
+         idleState = GetComponent<IdleState>();
         agent = this.GetComponent<NavMeshAgent>();
         time = 0;
         index = 0;
