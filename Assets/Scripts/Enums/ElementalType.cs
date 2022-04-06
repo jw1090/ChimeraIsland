@@ -8,7 +8,4 @@ public enum ElementalType
     Fira,
     Bio,
     Aqua,
-    Aero,
-    Geo,
-    Electra
 }

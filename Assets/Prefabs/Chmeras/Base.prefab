@@ -212,36 +212,27 @@ MonoBehaviour:
   chimeraType: 0
   elementalType: 0
   tappable: 0
+  profileIcon: {fileID: 0}
   isEgg: 0
   clicksToHatch: 3
+  price: 500
   level: 1
   levelCap: 99
-  agility: 1
-  defense: 1
   stamina: 1
   strength: 1
   wisdom: 1
   happiness: 0
   happinessMod: 1
-  agilityGrowth: 3
-  defenseGrowth: 2
   staminaGrowth: 2
   strengthGrowth: 3
   wisdomGrowth: 2
-  agilityExperience: 0
-  defenseExperience: 0
   staminaExperience: 0
   strengthExperience: 0
   wisdomExperience: 0
-  agilityThreshold: 3
-  defenseThreshold: 5
   staminaThreshold: 5
   strengthThreshold: 5
   wisdomThreshold: 4
   levelUpTracker: 0
-  thresholdScaling: 0
-  storedAgilityExperience: 0
-  storedDefenseExperience: 0
   storedStaminaExperience: 0
   storedStrengthExperience: 0
   storedWisdomExperience: 0
@@ -254,7 +245,7 @@ MonoBehaviour:
   - {fileID: 8275080904009367433, guid: 95f56b30dd303524fb5cc7d8219ff96a, type: 3}
   - {fileID: 8275080904009367433, guid: c6479ee12f87fa949bbbb1d10ba64788, type: 3}
   evolutionStats: 0000000000000000000000000000000000000000
-  model: {fileID: 5363738410966708474, guid: 2a01344af8aae334597e624312ae4834, type: 3}
+  model: {fileID: 7800635340028522791}
   standardMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
   tappableMat: {fileID: 2100000, guid: 02c57425cf74bc949b09403413c6b083, type: 2}
 --- !u!1 &6391004528488951480
@@ -330,7 +321,6 @@ GameObject:
   - component: {fileID: 7800635340028522791}
   - component: {fileID: 1797761443627986413}
   - component: {fileID: 7571885576051159772}
-  - component: {fileID: 6298145185790895913}
   m_Layer: 0
   m_Name: Model
   m_TagString: Chimera
@@ -436,32 +426,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6298145185790895913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7035475171129615475}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892ee19fe72551d40aac75736c4a5e44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  index: 0
-  patroTime: 2
 --- !u!1 &7557456822193319378
 GameObject:
   m_ObjectHideFlags: 0

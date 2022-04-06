@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*
     public int ElementalAffinityCheck(ElementalType compareType)
     {
         int value = 0;
@@ -136,6 +137,7 @@ public class GameManager : MonoBehaviour
         return value;
 
     }
+    */
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
