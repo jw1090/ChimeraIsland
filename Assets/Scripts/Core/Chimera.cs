@@ -279,7 +279,7 @@ public class Chimera : MonoBehaviour
 
         foreach (Chimera evolution in evolutionPaths)
         {
-            // If it is an Egg  evolve regardless
+            // If it is an Egg evolve regardless
             if (isEgg)
             {
                 if(clicksToHatch == 0)
@@ -289,15 +289,15 @@ public class Chimera : MonoBehaviour
                 return;
             }
             // If it is NOT an Egg, evaluate stats before evolve
-            if (stamina < evolution.GetRequiredStats()[2])
+            if (stamina < evolution.GetRequiredStats()[0])
             {
                 continue;
             }
-            if (strength < evolution.GetRequiredStats()[3])
+            if (strength < evolution.GetRequiredStats()[1])
             {
                 continue;
             }
-            if (wisdom < evolution.GetRequiredStats()[4])
+            if (wisdom < evolution.GetRequiredStats()[2])
             {
                 continue;
             }
