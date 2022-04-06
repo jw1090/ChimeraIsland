@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d31cb89b197b7745b0e8265fe210a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facilitiesState: {fileID: 5499375891180565079}
   index: 0
   isAi: 0
   time: 0
@@ -156,7 +155,6 @@ MonoBehaviour:
   index: 0
   patrolTime: 1
   navMeshAgent: {fileID: 0}
-  directPoints: []
 --- !u!114 &5499375891180565079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformsFacilities: []
+  directPoints: []
 --- !u!1 &5255191863899271164
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +181,7 @@ GameObject:
   - component: {fileID: 7842933029923709940}
   - component: {fileID: 5363738410966708474}
   - component: {fileID: 5398650295326392869}
+  - component: {fileID: 2420858298746490884}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Chimera
@@ -266,3 +266,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2420858298746490884
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255191863899271164}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
