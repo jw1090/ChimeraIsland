@@ -44,9 +44,10 @@ public class Habitat : MonoBehaviour
         while (isActive)
         {
             yield return new WaitForSeconds(tickTimer);
-            foreach(Chimera chimera in chimeras.ToArray())
+            foreach(Chimera chimera in chimeras)
             {
-                chimera.ChimeraTick(staminaExpRate, strengthExpRate, wisdomExpRate);
+                //chimera.ChimeraTick(staminaExpRate, strengthExpRate, wisdomExpRate);
+                chimera.EssenceTick();
                 //Debug.Log("Tick");
                 chimera.ChimeraTap();
             }
