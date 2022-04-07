@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        ChimeraMouseTap();
+        //ChimeraMouseTap();
     }
 
     // - Made by: Joe 2/2/2022
