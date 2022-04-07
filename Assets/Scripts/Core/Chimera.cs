@@ -68,27 +68,10 @@ public class Chimera : MonoBehaviour
             Debug.Log( "ALERT: " + this.gameObject + " is an Egg. The experienceCap has been zeroed");
         }
     }
-    public void ChimeraTick(int stamina, int strength, int wisdom)
-    {
-        if(level < levelCap)
-        {
-            ExperienceTick(StatType.Stamina, stamina);
-            ExperienceTick(StatType.Strength, strength);
-            ExperienceTick(StatType.Wisdom, wisdom);
-        }
-
-        EssenceTick();
-
-        //Debug.Log(chimeraType + " stored: " + stamina + " Stamina.");
-        //Debug.Log(chimeraType + " stored: " + strength + " Strength.");
-        //Debug.Log(chimeraType + " stored: " + wisdom + " Wisdom.");
-
-        //model.material = tappableMat;
-    }
 
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
-    private void ExperienceTick (StatType statType, int amount)
+    public void ExperienceTick (StatType statType, int amount)
     {
         // Return if incoming is greater than cap.
         if (amount + GetStoredExpByType(statType) > experienceCap)

@@ -51,6 +51,13 @@ public class Habitat : MonoBehaviour
                 //Debug.Log("Tick");
                 chimera.ChimeraTap();
             }
+            foreach(Facility facility in facilities)
+            {
+                if(facility.IsActive())
+                {
+                    facility.FacilityTick();
+                }
+            }
         }
     }
 
@@ -67,17 +74,26 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        Facility ToBuyFacility = GetFacility(facilityType);
+        Facility toBuyFacility = GetFacility(facilityType);
 
-        if (GameManager.Instance.SpendEssence(ToBuyFacility.GetPrice()) == false)
+        if(toBuyFacility.GetTier() == 3)
         {
-            Debug.Log("Can't afford this facility. It costs " + 
-                ToBuyFacility.GetPrice() + " Essence and you only have " + 
-                GameManager.Instance.GetEssence() + " Essence.");
+            Debug.Log("Facility is already at max tier.");
             return;
         }
 
-        ToBuyFacility.BuyFacility();
+        if (GameManager.Instance.SpendEssence(toBuyFacility.GetPrice()) == false)
+        {
+            Debug.Log
+            (
+                "Can't afford this facility. It costs " + 
+                toBuyFacility.GetPrice() + " Essence and you only have " + 
+                GameManager.Instance.GetEssence() + " Essence."
+            );
+            return;
+        }
+
+        toBuyFacility.BuyFacility();
 
         UpdateStatRates();
     }
