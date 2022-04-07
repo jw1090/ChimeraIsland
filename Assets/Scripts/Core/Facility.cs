@@ -24,7 +24,7 @@ public class Facility : MonoBehaviour
         if (currentTier == 1)
         {
 
-            //After Facilites Active£¬Add to gamemanager Facilitieslist
+            //After Facilites Active
             //moveState.AddFacilitiesPos(this.transform);
 
             isActive = true;
