@@ -43,11 +43,6 @@ public class GameManager : MonoBehaviour
         UpdateWallets();
     }
 
-    private void Update()
-    {
-        ChimeraMouseTap();
-    }
-
     // - Made by: Joe 2/2/2022
     // - Increases your essence.
     public void IncreaseEssence(int amount)

@@ -8,7 +8,6 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ChimeraType chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private bool tappable = false;
     [SerializeField] private Texture2D profileIcon = null;
 
     [Header("Egg Info")]
@@ -56,7 +55,7 @@ public class Chimera : MonoBehaviour
     [Header("Debug Materials")]
     [SerializeField] MeshRenderer model;
     [SerializeField] Material standardMat;
-    [SerializeField] Material tappableMat;
+
 
     // - Made by: Joe 2/9/2022
     // - Called by the habitat to transfer habitat stat rates into the chimera's stored stats every tick.
@@ -70,28 +69,9 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    public void ChimeraTick(int stamina, int strength, int wisdom)
-    {
-        if(level < levelCap)
-        {
-            ExperienceTick(StatType.Stamina, stamina);
-            ExperienceTick(StatType.Strength, strength);
-            ExperienceTick(StatType.Wisdom, wisdom);
-        }
-
-        EssenceTick();
-        tappable = true;
-
-        //Debug.Log(chimeraType + " stored: " + stamina + " Stamina.");
-        //Debug.Log(chimeraType + " stored: " + strength + " Strength.");
-        //Debug.Log(chimeraType + " stored: " + wisdom + " Wisdom.");
-
-        model.material = tappableMat;
-    }
-
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
-    private void ExperienceTick (StatType statType, int amount)
+    public void ExperienceTick (StatType statType, int amount)
     {
         // Return if incoming is greater than cap.
         if (amount + GetStoredExpByType(statType) > experienceCap)
@@ -116,7 +96,7 @@ public class Chimera : MonoBehaviour
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately assigns.
     // - The essence formula is located here.
-    private void EssenceTick()
+    public void EssenceTick()
     { 
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
@@ -146,12 +126,10 @@ public class Chimera : MonoBehaviour
     // - On tap call HarvestEssence() and AllocateExperience() functions to appropritely gain resources that have been stored.
     // - Any other on tap interaction will go in here.
     public void ChimeraTap()
-    {
-        if(tappable)
-        {
+    { 
             //HappinessCheck();
             HarvestEssence();
-            if(level < levelCap)
+            if (level < levelCap)
             {
                 AllocateExperience();
             }
@@ -161,11 +139,6 @@ public class Chimera : MonoBehaviour
                 --clicksToHatch;
                 Debug.Log("Remaining Clicks to Hatch: " + clicksToHatch);
             }
-            tappable = false;
-
-            //Debug.Log("Tap on " + chimeraType);
-            model.material = standardMat;
-        }
     }
 
     // - Made by: Santiago 3/02/2022
@@ -311,8 +284,6 @@ public class Chimera : MonoBehaviour
     // - Evolve Chimera to its new form
     private void Evolve(Chimera newForm)
     {
-        tappable = false;
-
         // Instantiate new chimera
         Chimera child = this;
         Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
