@@ -226,6 +226,10 @@ PrefabInstance:
       propertyPath: egg
       value: 
       objectReference: {fileID: 855878291477086151, guid: 1148e5e728841274c81d3b3936b7a343, type: 3}
+    - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!224 &23457437 stripped
@@ -1662,6 +1666,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486668251}
   m_CullTransparentMesh: 1
+--- !u!1 &500444165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 500444166}
+  m_Layer: 0
+  m_Name: SpawnNode
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &500444166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500444165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 674330412}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &503087016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2196,6 +2230,7 @@ Transform:
   - {fileID: 289429736}
   - {fileID: 387865945}
   - {fileID: 93296135}
+  - {fileID: 500444166}
   m_Father: {fileID: 1791197280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2226,6 +2261,7 @@ MonoBehaviour:
   baseExperienceRate: 1
   tickTimer: 0.8
   chimeraFolder: {fileID: 93296134}
+  spawnPoint: {fileID: 500444165}
 --- !u!1 &678461791
 GameObject:
   m_ObjectHideFlags: 0
@@ -3645,6 +3681,10 @@ PrefabInstance:
       propertyPath: egg
       value: 
       objectReference: {fileID: 855878291477086151, guid: 527a2570553dfb845988580c9ce9afcb, type: 3}
+    - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!224 &1102266223 stripped
@@ -7263,6 +7303,10 @@ PrefabInstance:
     - target: {fileID: 748089614479536148, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_Name
       value: Buy Egg A
+      objectReference: {fileID: 0}
+    - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}

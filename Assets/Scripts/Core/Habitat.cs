@@ -28,6 +28,7 @@ public class Habitat : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject chimeraFolder;
+    [SerializeField] private GameObject spawnPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -120,12 +121,7 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        float boundsX = Random.Range(-8.0f, 7.0f);
-        float boundsZ = Random.Range(-1.0f, 13.0f);
-
-        Vector3 testLocation = new Vector3(boundsX, 0.0f, boundsZ); // TODO: Use camera and spawn there
-
-        Chimera newEgg = Instantiate(egg, testLocation, Quaternion.identity, chimeraFolder.transform);
+        Chimera newEgg = Instantiate(egg, spawnPoint.transform.localPosition, Quaternion.identity, chimeraFolder.transform);
 
         chimeras.Add(newEgg);
     }
