@@ -236,20 +236,6 @@ public class Habitat : MonoBehaviour
         return facilityCount;
     }
 
-    // - Made by: Joe 2/16/2022
-    // - Used to evolve and link chimera to habitat
-    public void EvolveSwap(ref Chimera child, ref Chimera adult)
-    {
-        for (int i = 0; i < chimeras.Count; ++i)
-        {
-            if(chimeras[i] == child)
-            {
-                chimeras[i] = adult;
-                return;
-            }
-        }
-    }
-
     public Facility FacilitySearch(FacilityType facilityType)
     {
         foreach(Facility facility in facilities)

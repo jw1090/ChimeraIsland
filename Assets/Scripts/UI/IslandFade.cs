@@ -30,7 +30,6 @@ public class IslandFade : MonoBehaviour
 
     private IEnumerator DisableCrossfade(float fadeDisableDelay)
     {
-        Debug.Log("fade");
         yield return new WaitForSeconds(fadeDisableDelay);
 
         crossfade.SetActive(false);

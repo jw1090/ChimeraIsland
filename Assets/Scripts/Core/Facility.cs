@@ -23,7 +23,6 @@ public class Facility : MonoBehaviour
 
         if (currentTier == 1)
         {
-
             //After Facilites Active£¬Add to gamemanager Facilitieslist
             //moveState.AddFacilitiesPos(this.transform);
 
