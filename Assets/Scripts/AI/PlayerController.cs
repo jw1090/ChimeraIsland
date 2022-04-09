@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     //private List<GameObject> effect;
     private NavMeshAgent agent;
     private List<Facility> facilitiesList;
-    private IdleMoveAI idleMoveAI;
+    //private IdleState idleState;
 
     public int index;
     public bool isAi;
@@ -20,10 +20,9 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        facilitiesList = GameManager.Instance.GetActiveHabitat().GetFacilities();
-        idleMoveAI = GetComponent<IdleMoveAI>();
+        //facilitiesState = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<MoveState>();
+        //idleState = GetComponent<IdleState>();
         agent = this.GetComponent<NavMeshAgent>();
-
         time = 0;
         index = 0;
         SetPos(index);
@@ -39,69 +38,69 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < effect.Count; i++)
         {
             effect[i].SetActive(false);
-        }*/
-        agent.isStopped = false;
-        agent.SetDestination(facilitiesList[index].transform.position);
+        }
+        */
+        //if (facilitiesState.transformsFacilities.Count == 0)
+        //    return;
+        //agent.isStopped = false;
+        //agent.SetDestination(facilitiesState.transformsFacilities[index].position);
     }
     public void Update()
     {
         //Debug.Log(Vector3.Distance(this.transform.position, facilitiesList[index].transform.position));
+        //if (facilitiesState.transformsFacilities.Count == 0)
+        //    return;
+        //    if (Vector3.Distance(this.transform.position, facilitiesState.transformsFacilities[index].position) < 5)
+        //    {
+        //        // RemoveVerticalVelocity();
+        //        // Going.text = "arrive" + TargetTransForm[indexpos].gameObject.name;
+        //        agent.isStopped = true;
 
-        if (Vector3.Distance(this.transform.position, facilitiesList[index].transform.position) < 5)
-        {
-           // RemoveVerticalVelocity();
-           // Going.text = "arrive" + TargetTransForm[indexpos].gameObject.name;
-            agent.isStopped = true;
+        //        /*
+        //        // Effects
+        //        if (like.Contains(index.ToString()))
+        //        {
 
-            /*
-            // Effects
-            if (like.Contains(index.ToString()))
-            {
+        //            effect[0].SetActive(true);
+        //            effect[1].SetActive(false);
+        //            effect[2].SetActive(false);
 
-                effect[0].SetActive(true);
-                effect[1].SetActive(false);
-                effect[2].SetActive(false);
+        //        }
+        //        if (dislike.Contains(index.ToString()))
+        //        {
+        //            effect[0].SetActive(false);
+        //            effect[1].SetActive(true);
+        //            effect[2].SetActive(false);
+        //        }
+        //        if (normal.Contains(index.ToString()))
+        //        {
+        //            effect[0].SetActive(false);
+        //            effect[1].SetActive(false);
+        //            effect[2].SetActive(true);
+        //        }
+        //        */
+        //        if ((time += Time.deltaTime) > stayTime)
+        //        {
+        //            ++index;
 
-            }
-            if (dislike.Contains(index.ToString()))
-            {
-                effect[0].SetActive(false);
-                effect[1].SetActive(true);
-                effect[2].SetActive(false);
-            }
-            if (normal.Contains(index.ToString()))
-            {
-                effect[0].SetActive(false);
-                effect[1].SetActive(false);
-                effect[2].SetActive(true);
-            }*/
+        //            if (index == facilitiesState.transformsFacilities.Count)
+        //            {
+        //                /*
+        //                effect[0].SetActive(false);
+        //                effect[1].SetActive(false);
+        //                effect[2].SetActive(false);
+        //                */
+        //                index = 0;
 
-
-            if ((time += Time.deltaTime) > stayTime)
-            {
-                ++index;
-
-                if (index == facilitiesList.Count)
-                {
-                    /* Cleanup
-                    effect[0].SetActive(false);
-                    effect[1].SetActive(false);
-                    effect[2].SetActive(false);
-                    */
-                    index = 0;
-
-                    idleMoveAI.enabled = true;
-                    Debug.Log("Moving to idleMotionState - Idle Component Status: " + idleMoveAI.enabled);
-
-                    enabled = false;
-                    Debug.Log("Last Patrol nodes have been reached! - Player Controller Status: " + enabled);
-                }
-                else
-                {
-                    time = 0;
-                    SetPos(index);
-                }
-            }
-        }
+        //                idleState.enabled = true;
+        //                enabled = false;
+        //            }
+        //            else
+        //            {
+        //                time = 0;
+        //                SetPos(index);
+        //            }
+        //        }
+        //    }
     }
 }

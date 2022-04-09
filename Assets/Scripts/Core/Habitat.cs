@@ -14,12 +14,9 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int facilityCapacity = 2;
     [SerializeField] private List<Chimera> chimeras;
     [SerializeField] private List<Facility> facilities;
-    [SerializeField] private PatrolNodeManager patrolNodeManager;
 
     [Header("Stat Rates")]
     [SerializeField] private int baseExperienceRate = 1;
-    private int agilityExpRate = 0;
-    private int defenseExpRate = 0;
     private int staminaExpRate = 0;
     private int strengthExpRate = 0;
     private int wisdomExpRate = 0;
@@ -30,6 +27,7 @@ public class Habitat : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject chimeraFolder;
+    [SerializeField] private GameObject spawnPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +46,17 @@ public class Habitat : MonoBehaviour
             yield return new WaitForSeconds(tickTimer);
             foreach(Chimera chimera in chimeras)
             {
-                chimera.ChimeraTick(agilityExpRate, defenseExpRate, staminaExpRate, strengthExpRate, wisdomExpRate);
+                //chimera.ChimeraTick(staminaExpRate, strengthExpRate, wisdomExpRate);
+                chimera.EssenceTick();
                 //Debug.Log("Tick");
+                chimera.ChimeraTap();
+            }
+            foreach(Facility facility in facilities)
+            {
+                if(facility.IsActive())
+                {
+                    facility.FacilityTick();
+                }
             }
         }
     }
@@ -60,24 +67,33 @@ public class Habitat : MonoBehaviour
     // - Make sure only one can be active at a time.
     public void AddFacility(FacilityType facilityType)
     {
+        Facility toBuyFacility = GetFacility(facilityType);
+
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= facilityCapacity)
+        if (ActiveFacilitiesCount() >= facilityCapacity && toBuyFacility.GetTier() == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
         }
 
-        Facility ToBuyFacility = GetFacility(facilityType);
-
-        if (GameManager.Instance.SpendEssence(ToBuyFacility.GetPrice()) == false)
+        if(toBuyFacility.GetTier() == 3)
         {
-            Debug.Log("Can't afford this facility. It costs " + 
-                ToBuyFacility.GetPrice() + " Essence and you only have " + 
-                GameManager.Instance.GetEssence() + " Essence.");
+            Debug.Log("Facility is already at max tier.");
             return;
         }
 
-        ToBuyFacility.BuyFacility();
+        if (GameManager.Instance.SpendEssence(toBuyFacility.GetPrice()) == false)
+        {
+            Debug.Log
+            (
+                "Can't afford this facility. It costs " + 
+                toBuyFacility.GetPrice() + " Essence and you only have " + 
+                GameManager.Instance.GetEssence() + " Essence."
+            );
+            return;
+        }
+
+        toBuyFacility.BuyFacility();
 
         UpdateStatRates();
     }
@@ -104,12 +120,7 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        float boundsX = Random.Range(-8.0f, 7.0f);
-        float boundsZ = Random.Range(-1.0f, 13.0f);
-
-        Vector3 testLocation = new Vector3(boundsX, 0.0f, boundsZ); // TODO: Use camera and spawn there
-
-        Chimera newEgg = Instantiate(egg, testLocation, Quaternion.identity, chimeraFolder.transform);
+        Chimera newEgg = Instantiate(egg, spawnPoint.transform.localPosition, Quaternion.identity, chimeraFolder.transform);
 
         chimeras.Add(newEgg);
     }
@@ -119,8 +130,6 @@ public class Habitat : MonoBehaviour
     // - Called on start and whenever a facility is added.
     private void UpdateStatRates()
     {
-        agilityExpRate = baseExperienceRate;
-        defenseExpRate = baseExperienceRate;
         staminaExpRate = baseExperienceRate;
         strengthExpRate = baseExperienceRate;
         wisdomExpRate = baseExperienceRate;
@@ -134,14 +143,6 @@ public class Habitat : MonoBehaviour
 
             switch (facility.GetStatType())
             {
-                case StatType.Agility:
-                    agilityExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + agilityExpRate + " agility per tick.");
-                    break;
-                case StatType.Defense:
-                    defenseExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + defenseExpRate + " defense per tick.");
-                    break;
                 case StatType.Stamina:
                     staminaExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + staminaExpRate + " stamina per tick.");
@@ -150,7 +151,7 @@ public class Habitat : MonoBehaviour
                     strengthExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
                     break;
-                case StatType.Wisdom:
+                case StatType.Intelligence:
                     wisdomExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + wisdomExpRate + " wisdom per tick.");
                     break;
@@ -234,20 +235,6 @@ public class Habitat : MonoBehaviour
         return facilityCount;
     }
 
-    // - Made by: Joe 2/16/2022
-    // - Used to evolve and link chimera to habitat
-    public void EvolveSwap(ref Chimera child, ref Chimera adult)
-    {
-        for (int i = 0; i < chimeras.Count; ++i)
-        {
-            if(chimeras[i] == child)
-            {
-                chimeras[i] = adult;
-                return;
-            }
-        }
-    }
-
     public Facility FacilitySearch(FacilityType facilityType)
     {
         foreach(Facility facility in facilities)
@@ -263,5 +250,4 @@ public class Habitat : MonoBehaviour
 
     public List<Chimera> GetChimeras() { return chimeras; }
     public List<Facility> GetFacilities() { return facilities; }
-    public List<Transform> GetPatrolNodes() { return patrolNodeManager.GetPatrolNodes(); }
 }

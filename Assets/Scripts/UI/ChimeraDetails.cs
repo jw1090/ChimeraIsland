@@ -9,20 +9,17 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private int chimeraSpot;
     [SerializeField] private CanvasRenderer icon;
     [SerializeField] private TextMeshProUGUI level;
-    [SerializeField] private TextMeshProUGUI agility;
-    [SerializeField] private TextMeshProUGUI defence;
+    [SerializeField] private TextMeshProUGUI intelligence;
     [SerializeField] private TextMeshProUGUI stamina;
     [SerializeField] private TextMeshProUGUI strength;
-    [SerializeField] private TextMeshProUGUI wisdom;
     [SerializeField] private TextMeshProUGUI happiness;
+    [SerializeField] private TextMeshProUGUI element;
     private ChimeraDetailsFolder chimeraDetailsFolder;
+    private Chimera chimera;
 
     private void Start()
     {
-        UpdateDetails();
-
         chimeraDetailsFolder = GetComponentInParent<ChimeraDetailsFolder>();
-        chimeraDetailsFolder.Subscribe(this);
     }
 
     private void Update()
@@ -32,16 +29,24 @@ public class ChimeraDetails : MonoBehaviour
 
     private void UpdateDetails()
     {
-        List<Chimera> chimera = GameManager.Instance.GetActiveHabitat().GetChimeras();
+        if(GameManager.Instance.GetActiveHabitat().GetChimeras().Count <= chimeraSpot)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
-        level.text = "Level: " + chimera[chimeraSpot].GetLevel();
-        agility.text = chimera[chimeraSpot].GetStatByType(StatType.Agility).ToString();
-        defence.text = chimera[chimeraSpot].GetStatByType(StatType.Defense).ToString();
-        stamina.text = chimera[chimeraSpot].GetStatByType(StatType.Stamina).ToString();
-        strength.text = chimera[chimeraSpot].GetStatByType(StatType.Strength).ToString();
-        wisdom.text = chimera[chimeraSpot].GetStatByType(StatType.Wisdom).ToString();
-        happiness.text = chimera[chimeraSpot].GetStatByType(StatType.Happiness).ToString();
+        chimera = GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot];
+
+        //Debug.Log("Chimera: " + GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot]);
+
+        level.text = "Level: " + chimera.GetLevel();
+        intelligence.text = chimera.GetStatByType(StatType.Intelligence).ToString();
+        stamina.text = chimera.GetStatByType(StatType.Stamina).ToString();
+        strength.text = chimera.GetStatByType(StatType.Strength).ToString();
+        happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
+        icon.SetTexture(chimera.GetIcon());
+        element.text = "Element: " + chimera.GetElementalType().ToString();
     }
 
-    private int GetChimeraSpot() { return chimeraSpot; }
+    public int GetChimeraSpot() { return chimeraSpot; }
 }

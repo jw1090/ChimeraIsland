@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] essenceWallets;
     [SerializeField] private Camera cam;
 
-
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
 
@@ -42,11 +41,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateWallets();
-    }
-
-    private void Update()
-    {
-        ChimeraMouseTap();
     }
 
     // - Made by: Joe 2/2/2022
@@ -111,6 +105,34 @@ public class GameManager : MonoBehaviour
             wallet.text = currentEssence.ToString();
         }
     }
+
+    /*
+    public int ElementalAffinityCheck(ElementalType compareType)
+    {
+        int value = 0;
+        foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
+        {
+            ElementalType elementalType = chimera.GetElementalType();
+
+            if (Mathf.Abs(compareType - elementalType) == 3)
+            {
+                value = 1;
+            }
+            else if (Mathf.Abs(compareType - elementalType) == 1)
+            {
+                value = -1;
+            }
+
+            if (compareType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Fira  && elementalType == ElementalType.Aero)
+            {
+                value = -1;
+            }
+
+        }
+        return value;
+
+    }
+    */
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
