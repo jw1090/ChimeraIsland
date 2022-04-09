@@ -43,10 +43,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private float essenceModifier = 1.0f; // Tuning knob for essence gain
     [SerializeField] private int essenceCap = 100;
 
-    [Header("Debug Materials")]
-    [SerializeField] MeshRenderer model;
-    [SerializeField] Material standardMat;
-
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
@@ -241,8 +237,7 @@ public class Chimera : MonoBehaviour
         }
         return 0;
     }
-    */
-    /*
+
     private void HappinessCheck()
     {
         if(GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
