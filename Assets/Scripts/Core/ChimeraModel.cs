@@ -47,9 +47,13 @@ public class ChimeraModel : MonoBehaviour
         }
     }
 
-    private void Evolve(ChimeraModel chimera)
+    private void Evolve(ChimeraModel newModel)
     {
-        Debug.Log("This creature is evolving into " + chimera + "!");
+        Debug.Log("This creature is evolving into " + newModel + "!");
+
+        ChimeraModel newEvolution = Instantiate(newModel, chimera.transform);
+        chimera.SetModel(newEvolution);
+        Destroy(gameObject);
     }
 
     #region Getters & Setters
