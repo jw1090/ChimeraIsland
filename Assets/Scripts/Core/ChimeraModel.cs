@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class ChimeraModel : MonoBehaviour
 {
-    [Header("Egg Info")]
-    [SerializeField] private bool isEgg = false;
-
     [Header("Evolution Info")]
+    [SerializeField] private Texture2D profileIcon = null;
     [SerializeField] private List<ChimeraModel> evolutionPaths;
     [SerializeField] private int reqIntelligence = 0;
     [SerializeField] private int reqStamina = 0;
@@ -57,6 +55,7 @@ public class ChimeraModel : MonoBehaviour
     }
 
     #region Getters & Setters
+    public Texture2D GetIcon() { return profileIcon; }
     public int GetReqInt() { return reqIntelligence; }
     public int GetReqStam() { return reqStamina; }
     public int GetReqStr() { return reqStrength; }

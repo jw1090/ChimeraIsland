@@ -6,15 +6,9 @@ using UnityEngine.UI;
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private ChimeraType chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private Texture2D profileIcon = null;
     [SerializeField] private ChimeraModel currentChimeraModel = null;
-
-    [Header("Egg Info")]
-    [SerializeField] private bool isEgg = false;
-    [SerializeField] private int clicksToHatch = 3;
-    [SerializeField] private int price = 500;
+    [SerializeField] private int price = 200;
 
     [Header("Stats")]
     [SerializeField] private int level = 1;
@@ -116,12 +110,6 @@ public class Chimera : MonoBehaviour
             if (level < levelCap)
             {
                 AllocateExperience();
-            }
-
-            if (isEgg && clicksToHatch > 0)
-            {
-                --clicksToHatch;
-                Debug.Log("Remaining Clicks to Hatch: " + clicksToHatch);
             }
     }
 
@@ -236,47 +224,6 @@ public class Chimera : MonoBehaviour
     }
 
     /*
-    // - Check if all requirements are ok to evolve
-    private void CheckEvolution()
-    {
-        if (evolutionPaths.Length == 0)
-        {
-            return;
-        }
-
-        foreach (Chimera evolution in evolutionPaths)
-        {
-            // If it is an Egg evolve regardless
-            if (isEgg)
-            {
-                if(clicksToHatch == 0)
-                {
-                    Evolve(evolution);
-                }
-                return;
-            }
-            // If it is NOT an Egg, evaluate stats before evolve
-            if (wisdom < evolution.GetRequiredStats()[2])
-            {
-                continue;
-            }
-            if (stamina < evolution.GetRequiredStats()[0])
-            {
-                continue;
-            }
-            if (strength < evolution.GetRequiredStats()[1])
-            {
-                continue;
-            }
-            
-
-            Evolve(evolution);
-            return;
-        }
-    }
-    */
-
-    /*
     public int HappinessCheck(ElementalType compareType)
     {
         if(Mathf.Abs(compareType - elementalType) == 3)
@@ -352,7 +299,7 @@ public class Chimera : MonoBehaviour
     public int GetLevel() { return level; }
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
-    public Texture2D GetProfileIcon() { return profileIcon; }
+    public Texture2D GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     #endregion
 }

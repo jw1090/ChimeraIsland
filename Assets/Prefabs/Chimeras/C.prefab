@@ -10,6 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6106465458539893876}
   - component: {fileID: 1070999743981996110}
+  - component: {fileID: 8492417505084759421}
+  - component: {fileID: 1502805493311229590}
+  - component: {fileID: 403005344738894432}
+  - component: {fileID: 2731832444747474771}
+  - component: {fileID: 2155796668323405218}
   m_Layer: 0
   m_Name: C
   m_TagString: Chimera
@@ -44,29 +49,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5262b90ea4b7344b58b1a57c12e068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimeraType: 12
-  elementalType: 2
-  profileIcon: {fileID: 2800000, guid: 5a330f5318ed1da4c992526e74ea55a7, type: 3}
-  currentChimeraModel: {fileID: 0}
-  isEgg: 0
-  clicksToHatch: 3
-  price: 500
+  elementalType: 1
+  currentChimeraModel: {fileID: 3590851974544981161}
+  price: 200
   level: 1
   levelCap: 99
-  intelligence: 0
+  intelligence: 1
   stamina: 1
   strength: 1
   happiness: 1
   happinessMod: 1
-  intelligenceGrowth: 1
+  intelligenceGrowth: 3
   staminaGrowth: 3
   strengthGrowth: 3
   intelligenceExperience: 0
   staminaExperience: 0
   strengthExperience: 0
-  intelligenceThreshold: 5
-  staminaThreshold: 5
-  strengthThreshold: 5
+  intelligenceThreshold: 2
+  staminaThreshold: 2
+  strengthThreshold: 2
   levelUpTracker: 0
   storedIntelligenceExperience: 0
   storedStaminaExperience: 0
@@ -78,6 +79,90 @@ MonoBehaviour:
   essenceCap: 150
   model: {fileID: 3919777644857886525}
   standardMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
+--- !u!114 &8492417505084759421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106465458539893879}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d31cb89b197b7745b0e8265fe210a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
+  isAi: 0
+  time: 0
+  like: 
+  normal: 
+  dislike: 
+  stayTime: 2
+--- !u!114 &1502805493311229590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106465458539893879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b612cb9490da51b4e9d0d8de7520af34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
+  patrolTime: 0.2
+  navMeshAgent: {fileID: 0}
+--- !u!114 &403005344738894432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106465458539893879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2314f6295ffe847b62a24519408b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformsFacilities: []
+  directPoints: []
+--- !u!114 &2731832444747474771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106465458539893879}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc211fa163c52aa47a4dd08c46d26659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRadius: 0
+  patrolRange: 0
+--- !u!195 &2155796668323405218
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106465458539893879}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &2058772062214823168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,3 +230,14 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3096193168989067837, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
   m_PrefabInstance: {fileID: 2058772062214823168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3590851974544981161 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3262715612498190761, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
+  m_PrefabInstance: {fileID: 2058772062214823168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 818941f77a401d943944bdce340c8a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

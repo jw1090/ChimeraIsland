@@ -68,14 +68,14 @@ public class Habitat : MonoBehaviour
     // - Make sure only one can be active at a time.
     public void AddFacility(FacilityType facilityType)
     {
+        Facility toBuyFacility = GetFacility(facilityType);
+
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= facilityCapacity)
+        if (ActiveFacilitiesCount() >= facilityCapacity && toBuyFacility.GetTier() == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
         }
-
-        Facility toBuyFacility = GetFacility(facilityType);
 
         if(toBuyFacility.GetTier() == 3)
         {
