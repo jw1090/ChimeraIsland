@@ -19,26 +19,26 @@ public class Chimera : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int level = 1;
     [SerializeField] private int levelCap = 99;
-    [SerializeField] private int wisdom = 0;
+    [SerializeField] private int intelligence = 0;
     [SerializeField] private int stamina = 0;
     [SerializeField] private int strength = 0;
     [SerializeField] private int happiness = 0;
     [SerializeField] private int happinessMod = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int wisdomGrowth = 1;
+    [SerializeField] private int intelligenceGrowth = 1;
     [SerializeField] private int staminaGrowth = 1;
     [SerializeField] private int strengthGrowth = 1;
-    [SerializeField] private int wisdomExperience = 0;
+    [SerializeField] private int intelligenceExperience = 0;
     [SerializeField] private int staminaExperience = 0;
     [SerializeField] private int strengthExperience = 0;
-    [SerializeField] private int wisdomThreshold = 5;
+    [SerializeField] private int intelligenceThreshold = 5;
     [SerializeField] private int staminaThreshold = 5;
     [SerializeField] private int strengthThreshold = 5;
     [SerializeField] private int levelUpTracker = 0;
 
     [Header("Stored Experience")]
-    [SerializeField] private int storedWisdomExperience = 0;
+    [SerializeField] private int storedIntelligenceExperience = 0;
     [SerializeField] private int storedStaminaExperience = 0;
     [SerializeField] private int storedStrengthExperience = 0;
     [SerializeField] private int experienceCap = 200;
@@ -65,8 +65,8 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Wisdom:
-                storedWisdomExperience += amount;
+            case StatType.Intelligence:
+                storedIntelligenceExperience += amount;
                 break;
             case StatType.Stamina:
                 storedStaminaExperience += amount;
@@ -164,14 +164,14 @@ public class Chimera : MonoBehaviour
     {
         bool levelUp = false;
 
-        wisdomExperience += storedWisdomExperience;
-        if (wisdomExperience >= wisdomThreshold)
+        intelligenceExperience += storedIntelligenceExperience;
+        if (intelligenceExperience >= intelligenceThreshold)
         {
-            wisdomExperience -= wisdomThreshold;
+            intelligenceExperience -= intelligenceThreshold;
             levelUp = true;
-            LevelUp(StatType.Wisdom);
+            LevelUp(StatType.Intelligence);
 
-            wisdomThreshold += (int)(Mathf.Sqrt(wisdomThreshold) * 1.2f);
+            intelligenceThreshold += (int)(Mathf.Sqrt(intelligenceThreshold) * 1.2f);
         }
 
         staminaExperience += storedStaminaExperience;
@@ -196,11 +196,11 @@ public class Chimera : MonoBehaviour
 
         if (levelUp)
         {
-            currentChimeraModel.CheckEvolution(wisdom, stamina, strength);
+            currentChimeraModel.CheckEvolution(intelligence, stamina, strength);
         }
 
         // Cleanup
-        storedWisdomExperience = 0;
+        storedIntelligenceExperience = 0;
         storedStaminaExperience = 0;
         storedStrengthExperience = 0;
     }
@@ -212,9 +212,9 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Wisdom:
-                wisdom += wisdomGrowth;
-                Debug.Log("New " + statType + " stat = " + wisdom);
+            case StatType.Intelligence:
+                intelligence += intelligenceGrowth;
+                Debug.Log("New " + statType + " stat = " + intelligence);
                 break;
             case StatType.Stamina:
                 stamina += staminaGrowth;
@@ -274,28 +274,6 @@ public class Chimera : MonoBehaviour
             return;
         }
     }
-
-    // - Made by: Joe 4/5/2022
-    // - Evolve Chimera to its new form
-    private void Evolve(Chimera newForm)
-    {
-        // Instantiate new chimera
-        Chimera child = this;
-        Chimera evolution = Instantiate(newForm, transform.position, Quaternion.identity, transform.parent);
-
-        evolution.SetEvolutionStats
-            (
-                level, stamina, strength, wisdom, levelUpTracker,
-                staminaThreshold, strengthThreshold, wisdomThreshold,
-                happiness, happinessMod
-            );
-
-        Debug.Log("Spawned:" + evolution);
-        transform.parent.parent.GetComponent<Habitat>().EvolveSwap(ref child, ref evolution);
-
-        // Destroy old
-        Destroy(this.gameObject);
-    }
     */
 
     /*
@@ -341,7 +319,6 @@ public class Chimera : MonoBehaviour
 
     #region Getters & Setters
     // Get the required stats needed to evolve
-    //public int[] GetRequiredStats() { return evolutionStats;}
     public int GetStoredExpByType(StatType statType)
     {
         switch (statType)
@@ -350,8 +327,8 @@ public class Chimera : MonoBehaviour
                 return storedStaminaExperience;
             case StatType.Strength:
                 return storedStrengthExperience;
-            case StatType.Wisdom:
-                return storedStaminaExperience;
+            case StatType.Intelligence:
+                return storedIntelligenceExperience;
         }
 
         return -1;
@@ -360,12 +337,12 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
+            case StatType.Intelligence:
+                return intelligence;
             case StatType.Stamina:
                 return stamina;
             case StatType.Strength:
                 return strength;
-            case StatType.Wisdom:
-                return wisdom;
             case StatType.Happiness:
                 return happiness;
         }

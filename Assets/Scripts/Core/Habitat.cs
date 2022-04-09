@@ -152,7 +152,7 @@ public class Habitat : MonoBehaviour
                     strengthExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
                     break;
-                case StatType.Wisdom:
+                case StatType.Intelligence:
                     wisdomExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + wisdomExpRate + " wisdom per tick.");
                     break;

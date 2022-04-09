@@ -5,8 +5,8 @@ using UnityEngine;
 public enum  StatType
 {
     None = 1,
+    Intelligence,
     Stamina,
     Strength,
-    Wisdom,
     Happiness
 }
