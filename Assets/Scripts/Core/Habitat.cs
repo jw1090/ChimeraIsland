@@ -67,14 +67,14 @@ public class Habitat : MonoBehaviour
     // - Make sure only one can be active at a time.
     public void AddFacility(FacilityType facilityType)
     {
+        Facility toBuyFacility = GetFacility(facilityType);
+
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= facilityCapacity)
+        if (ActiveFacilitiesCount() >= facilityCapacity && toBuyFacility.GetTier() == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
         }
-
-        Facility toBuyFacility = GetFacility(facilityType);
 
         if(toBuyFacility.GetTier() == 3)
         {
@@ -151,7 +151,7 @@ public class Habitat : MonoBehaviour
                     strengthExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
                     break;
-                case StatType.Wisdom:
+                case StatType.Intelligence:
                     wisdomExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + wisdomExpRate + " wisdom per tick.");
                     break;
@@ -233,20 +233,6 @@ public class Habitat : MonoBehaviour
         }
 
         return facilityCount;
-    }
-
-    // - Made by: Joe 2/16/2022
-    // - Used to evolve and link chimera to habitat
-    public void EvolveSwap(ref Chimera child, ref Chimera adult)
-    {
-        for (int i = 0; i < chimeras.Count; ++i)
-        {
-            if(chimeras[i] == child)
-            {
-                chimeras[i] = adult;
-                return;
-            }
-        }
     }
 
     public Facility FacilitySearch(FacilityType facilityType)
