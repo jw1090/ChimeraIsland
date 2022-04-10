@@ -5,36 +5,41 @@ namespace AI.Chimera
 {
     public class WanderState : ChimeraBaseStates
     {
+        //total wander time
+        public float TotelTimer;
+        //time of wander point
+        public float PartTimer;
+        //wander over
+        public bool IsOver;
+
         public override void Enter(ChimeraStates chimeraStates)
         {
-            chimeraStates.Wander();
+            TotelTimer = 10f;
+            PartTimer = 2f;
+            IsOver = false;
+            chimeraStates.navMeshAgent.destination = RandomPos.Instance.GetNewWayPoint();
         }
 
         public override void Update(ChimeraStates chimeraStates)
         {
-            if (chimeraStates.navMeshAgent.remainingDistance < 1.5f)
+            TotelTimer -= Time.deltaTime;
+            PartTimer -= Time.deltaTime;
+            // Debug.Log(TotelTimer);
+            if (TotelTimer <= 0f)
             {
-                chimeraStates.timer += Time.deltaTime;
-
-                if (chimeraStates.timer >= chimeraStates.patrolTime)
-                {
-                    chimeraStates.index++;
-                    chimeraStates.timer = 0;
-                    if (chimeraStates.index >= chimeraStates.directPoints.Length - 1)
-                    {
-                        chimeraStates.index = 0;
-                        //chimeraStates.navMeshAgent.destination = chimeraStates.directPoints[chimeraStates.index].position;
-                        //____________________________________________________________________________________________________________________________
-                        //Here to change State
-                        //Patrol();
-                    }
-                    else
-                    {
-                        chimeraStates.navMeshAgent.destination = chimeraStates.directPoints[chimeraStates.index].position;
-                    }
-
-                }
+                IsOver = true;
+                chimeraStates.ChangeState(chimeraStates.states[StateEnum.Patrol]);
             }
+            if (PartTimer <= 0f && !IsOver)
+            {
+                PartTimer = 2f;
+                chimeraStates.navMeshAgent.destination = RandomPos.Instance.GetNewWayPoint();
+            }
+        }
+        public override void Exit(ChimeraStates chimeraStates)
+        {
+            TotelTimer = 0f;
+            PartTimer = 0f;
         }
     }
 }

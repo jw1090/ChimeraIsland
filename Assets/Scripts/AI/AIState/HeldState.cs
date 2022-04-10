@@ -9,8 +9,11 @@ namespace AI.Chimera
         {
 
         }
-
         public override void Update(ChimeraStates chimeraStates)
+        {
+
+        }
+        public override void Exit(ChimeraStates chimeraStates)
         {
 
         }

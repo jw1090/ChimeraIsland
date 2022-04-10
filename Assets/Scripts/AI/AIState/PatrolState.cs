@@ -8,9 +8,9 @@ namespace AI.Chimera
     {
         public override void Enter(ChimeraStates chimeraStates)
         {
-            chimeraStates.Patrol();
+            chimeraStates.navMeshAgent.destination = chimeraStates.patrolPoints[chimeraStates.index].position;
+            //Debug.Log(chimeraStates.index);
         }
-
         public override void Update(ChimeraStates chimeraStates)
         {
             if (chimeraStates.navMeshAgent.remainingDistance < 1.5f)
@@ -20,23 +20,26 @@ namespace AI.Chimera
                 if (chimeraStates.timer >= chimeraStates.patrolTime)
                 {
                     chimeraStates.index++;
+                    chimeraStates.WanderIndex++;
                     chimeraStates.timer = 0;
-                    if (chimeraStates.index >= chimeraStates.directPoints.Length - 1)
+                    if (chimeraStates.index >= chimeraStates.patrolPoints.Length - 1)
                     {
                         chimeraStates.index = 0;
-                        //chimeraStates.navMeshAgent.destination = chimeraStates.directPoints[chimeraStates.index].position;
-                        //____________________________________________________________________________________________________________________________
-                        //Here to change State
-                        //Wander();
                     }
-                    else
+                    if (chimeraStates.WanderIndex >= chimeraStates.patrolPoints.Length - 1)
                     {
-                        chimeraStates.navMeshAgent.destination = chimeraStates.directPoints[chimeraStates.index].position;
+                        chimeraStates.WanderIndex = 0;
                     }
 
+                    chimeraStates.ChangeState(chimeraStates.states[StateEnum.Wander]);
                 }
             }
         }
+        public override void Exit(ChimeraStates chimeraStates)
+        {
+
+        }
     }
 }
+
 
