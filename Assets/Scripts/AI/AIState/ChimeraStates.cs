@@ -4,39 +4,64 @@ using UnityEngine;
 using UnityEngine.AI;
 namespace AI.Chimera
 {
+    public enum StateEnum
+    {
+        Patrol,
+        Wander,
+        Held
+    }
+
     public class ChimeraStates : MonoBehaviour
     {
+        public static ChimeraStates Instance;
+
         ChimeraBaseStates currentStates;
 
         public int index = 0;
+        public int WanderIndex = 0;
         public float patrolTime = 1f; //wait time
         public float timer = 0; //timer
 
         [Header("References")]
         public NavMeshAgent navMeshAgent;
-        public Transform[] directPoints;
-        public PatrolState patrolState = new PatrolState();
-        public WanderState wanderState = new WanderState(); 
-        public HeldState heldState = new HeldState();
+        public Transform[] patrolPoints;
 
+        //public PatrolState patrolState = new PatrolState();
+        //public WanderState wanderState = new WanderState(); 
+        //public HeldState heldState = new HeldState();
+        //Mapping of state to state object instance
+        public Dictionary<StateEnum, ChimeraBaseStates> states = new Dictionary<StateEnum, ChimeraBaseStates>();
         void OnEnable()
         {
-            directPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
+            patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
             index = 0;
+            WanderIndex = -1;
             //directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
 
             navMeshAgent = GetComponent<NavMeshAgent>();
 
             navMeshAgent.isStopped = false;
 
-            navMeshAgent.SetDestination(directPoints[index].position);
+            navMeshAgent.SetDestination(patrolPoints[index].position);
             //  navMeshAgent.destination = directPoints[index].position;
             timer = 0;
         }
 
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+        }
         void Start()
         {
-            ChangeState(patrolState);
+            //Add the corresponding state and its object to the dictionary
+            states.Add(StateEnum.Patrol, new PatrolState());
+            states.Add(StateEnum.Wander, new WanderState());
+            states.Add(StateEnum.Held, new HeldState());
+
+            ChangeState(states[StateEnum.Patrol]);
         }
 
         // Update is called once per frame
@@ -47,64 +72,12 @@ namespace AI.Chimera
 
         public void ChangeState(ChimeraBaseStates states)
         {
+            if (currentStates != null)
+            {
+                currentStates.Exit(this);
+            }
             currentStates = states;
             currentStates.Enter(this);
-        }
-        
-        public void Wander()
-        {
-            if (navMeshAgent.remainingDistance < 1.5f)
-            {
-                timer += Time.deltaTime;
-
-                if (timer >= patrolTime)
-                {
-                    index++;
-
-                    // index %= 11;
-                    timer = 0;
-                    if (index >= directPoints.Length - 1)
-                    {
-
-                        //if (GameObject.FindGameObjectWithTag("PosMgr").GetComponent<MoveState>().transformsFacilities.Count != 0)
-                        //{
-                        //    this.GetComponent<PlayerController>().enabled = true;
-                        //    this.enabled = false;
-                        //    Debug.Log("Last Patnodes");
-                        //}
-                        index = 0;
-                        navMeshAgent.destination = directPoints[index].position;
-                    }
-                    else
-                    {
-                        navMeshAgent.destination = directPoints[index].position;
-                    }
-                }
-            }
-        }
-
-        public void Patrol()
-        {
-            if (navMeshAgent.remainingDistance < 1.5f)
-            {
-                timer += Time.deltaTime;
-
-                if (timer >= patrolTime)
-                {
-                    index++;
-
-                    timer = 0;
-                    if (index >= directPoints.Length - 1)
-                    {
-                        index = 0;
-                        navMeshAgent.destination = directPoints[index].position;
-                    }
-                    else
-                    {
-                        navMeshAgent.destination = directPoints[index].position;
-                    }
-                }
-            }
         }
     }
 }

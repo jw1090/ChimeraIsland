@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5834947763061098189}
   - component: {fileID: 855878291477086151}
-  - component: {fileID: 285595289324401198}
   - component: {fileID: 1351692579852877345}
   - component: {fileID: 1908189271997081013}
   - component: {fileID: 6986084506952480713}
@@ -76,27 +75,6 @@ MonoBehaviour:
   storedEssence: 0
   essenceModifier: 1
   essenceCap: 150
-  model: {fileID: 0}
-  standardMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
---- !u!114 &285595289324401198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4192189018358709760}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d31cb89b197b7745b0e8265fe210a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  index: 0
-  isAi: 0
-  time: 0
-  like: 
-  normal: 
-  dislike: 
-  stayTime: 2
 --- !u!114 &1351692579852877345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,10 +88,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  WanderIndex: 0
   patrolTime: 0.2
   timer: 0
   navMeshAgent: {fileID: 0}
-  directPoints: []
+  patrolPoints: []
 --- !u!114 &1908189271997081013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc211fa163c52aa47a4dd08c46d26659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRadius: 0
   patrolRange: 0
 --- !u!195 &6986084506952480713
 NavMeshAgent:

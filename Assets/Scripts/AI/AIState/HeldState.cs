@@ -14,5 +14,9 @@ namespace AI.Chimera
         {
 
         }
+        public override void Exit(ChimeraStates chimeraStates)
+        {
+
+        }
     }
 }
