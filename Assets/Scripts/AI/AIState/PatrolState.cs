@@ -11,7 +11,6 @@ namespace AI.Chimera
             chimeraStates.navMeshAgent.destination = chimeraStates.patrolPoints[chimeraStates.index].position;
             //Debug.Log(chimeraStates.index);
         }
-
         public override void Update(ChimeraStates chimeraStates)
         {
             if (chimeraStates.navMeshAgent.remainingDistance < 1.5f)
@@ -36,7 +35,6 @@ namespace AI.Chimera
                 }
             }
         }
-
         public override void Exit(ChimeraStates chimeraStates)
         {
 

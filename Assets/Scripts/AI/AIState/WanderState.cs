@@ -17,7 +17,6 @@ namespace AI.Chimera
             TotelTimer = 10f;
             PartTimer = 2f;
             IsOver = false;
-
             chimeraStates.navMeshAgent.destination = RandomPos.Instance.GetNewWayPoint();
         }
 

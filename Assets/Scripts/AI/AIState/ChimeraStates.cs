@@ -10,11 +10,9 @@ namespace AI.Chimera
         Wander,
         Held
     }
-
     public class ChimeraStates : MonoBehaviour
     {
         public static ChimeraStates Instance;
-
         ChimeraBaseStates currentStates;
 
         public int index = 0;
@@ -26,9 +24,6 @@ namespace AI.Chimera
         public NavMeshAgent navMeshAgent;
         public Transform[] patrolPoints;
 
-        //public PatrolState patrolState = new PatrolState();
-        //public WanderState wanderState = new WanderState(); 
-        //public HeldState heldState = new HeldState();
         //Mapping of state to state object instance
         public Dictionary<StateEnum, ChimeraBaseStates> states = new Dictionary<StateEnum, ChimeraBaseStates>();
         void OnEnable()
@@ -36,17 +31,14 @@ namespace AI.Chimera
             patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
             index = 0;
             WanderIndex = -1;
+
             //directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
-
             navMeshAgent = GetComponent<NavMeshAgent>();
-
             navMeshAgent.isStopped = false;
-
             navMeshAgent.SetDestination(patrolPoints[index].position);
             //  navMeshAgent.destination = directPoints[index].position;
             timer = 0;
         }
-
         void Awake()
         {
             if (Instance == null)
@@ -63,13 +55,10 @@ namespace AI.Chimera
 
             ChangeState(states[StateEnum.Patrol]);
         }
-
-        // Update is called once per frame
         void Update()
         {
             currentStates.Update(this);
         }
-
         public void ChangeState(ChimeraBaseStates states)
         {
             if (currentStates != null)
