@@ -29,7 +29,15 @@ public class Facility : MonoBehaviour
             isActive = true;
             Debug.Log(facilityType + " was purchased!");
             Debug.Log(facilityType + " will generate an additional " + statModifier + " " + statType + " for Chimeras per tick!");
-            GetComponent<MeshRenderer>().enabled = true;
+
+            if(transform.childCount != 0)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetComponent<MeshRenderer>().enabled = true;
+            }
         }
         else
         {
