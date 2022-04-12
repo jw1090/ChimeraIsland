@@ -12,8 +12,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private int price = 100;
     [SerializeField] private Chimera storedChimera;
     [SerializeField] private bool isActive = false;
-    //public MoveState moveState;
-    
+
     // - Made by: Joe 2/9/2022
     // - Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
@@ -23,13 +22,10 @@ public class Facility : MonoBehaviour
 
         if (currentTier == 1)
         {
-            //After Facilites Active£¬Add to gamemanager Facilitieslist
-            //moveState.AddFacilitiesPos(this.transform);
-
             isActive = true;
             Debug.Log(facilityType + " was purchased!");
-            Debug.Log(facilityType + " will generate an additional " + statModifier + " " + statType + " for Chimeras per tick!");
 
+            // If it has a child, activate the fancy model, otherwise use the primative mesh.
             if(transform.childCount != 0)
             {
                 transform.GetChild(0).gameObject.SetActive(true);
@@ -42,30 +38,36 @@ public class Facility : MonoBehaviour
         else
         {
             ++statModifier;
-
             Debug.Log(facilityType + " was increased to Tier " + currentTier + "!");
-            Debug.Log(facilityType + " now generates an additional " + statModifier + " " + statType + " for Chimeras per tick!");
         }
+
+        int newMod = statModifier + 1;
+
+        Debug.Log(facilityType + " now generates " + newMod + " " + statType + " for Chimeras per tick!");
     }
 
     public void FacilityTick()
     {
         if(storedChimera != null)
         {
-            storedChimera.ExperienceTick(statType,statModifier);
+            storedChimera.ExperienceTick(statType, statModifier);
+            FlatStatBoost();
             HappinessCheck();
         }
     }
 
+    private void FlatStatBoost()
+    {
+        storedChimera.ExperienceTick(StatType.Endurance, 1);
+        storedChimera.ExperienceTick(StatType.Intelligence, 1);
+        storedChimera.ExperienceTick(StatType.Strength, 1);
+    }
+
     private void HappinessCheck()
     {
-        if (GameManager.Instance.FacilityAffinityCheck(GetStatType()) == 1)
+        if(storedChimera.GetStatPreference() == statType)
         {
             storedChimera.IncreaseHappiness(1);
-        }
-        if(GameManager.Instance.FacilityAffinityCheck(GetStatType()) == -1)
-        {
-            storedChimera.IncreaseHappiness(-1);
         }
     }
 

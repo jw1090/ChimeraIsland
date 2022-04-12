@@ -7,7 +7,7 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private StatType statType = StatType.None;
+    [SerializeField] private StatType statPreference = StatType.None;
     [SerializeField] private ChimeraModel currentChimeraModel = null;
     [SerializeField] private int price = 200;
 
@@ -32,24 +32,15 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int strengthThreshold = 5;
     [SerializeField] private int levelUpTracker = 0;
 
-    [Header("Stored Experience")]
-    [SerializeField] private int storedEnduranceExperience = 0;
-    [SerializeField] private int storedIntelligenceExperience = 0;
-    [SerializeField] private int storedStrengthExperience = 0;
-    [SerializeField] private int experienceCap = 200;
-
     [Header("Essence")]
     [SerializeField] private float baseEssenceRate = 5;
-    [SerializeField] private int storedEssence = 0;
     [SerializeField] private float essenceModifier = 1.0f; // Tuning knob for essence gain
-    [SerializeField] private int essenceCap = 100;
 
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
     {
-        // Return if incoming is greater than cap.
-        if (amount + GetStoredExpByType(statType) > experienceCap)
+        if(level >= levelCap)
         {
             return;
         }
@@ -57,15 +48,17 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                storedEnduranceExperience += amount;
+                enduranceExperience += amount;
                 break;
             case StatType.Intelligence:
-                storedIntelligenceExperience += amount;
+                intelligenceExperience += amount;
                 break;
             case StatType.Strength:
-                storedStrengthExperience += amount;
+                strengthExperience += amount;
                 break;
         }
+
+        AllocateExperience();
     }
 
     // - Made by: Joe 2/9/2022
@@ -79,38 +72,11 @@ public class Chimera : MonoBehaviour
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
+        GameManager.Instance.IncreaseEssence(essenceGain);
 
-        if(storedEssence == essenceCap)
-        {
-            return;
-        }
-
-        if (storedEssence + essenceGain > essenceCap)
-        {
-            storedEssence = essenceCap;
-            Debug.Log("Cannot store anymore Essence.");
-            return;
-        }
-
-        storedEssence += essenceGain;
-
-        //Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
+        // Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
     }
 
-    // - Made by: Joe 2/2/2022
-    // - On tap call HarvestEssence() and AllocateExperience() functions to appropritely gain resources that have been stored.
-    // - Any other on tap interaction will go in here.
-    public void ChimeraTap()
-    {
-        //HappinessCheck();
-            HarvestEssence();
-            if (level < levelCap)
-            {
-                AllocateExperience();
-            }
-    }
-
-    
     // - Made by: Santiago 3/02/2022
     // - Happiness can range between -100 and 100.
     // - At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
@@ -132,16 +98,6 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    // - Made by: Joe 2/9/2022
-    // - This function is called by ChimeraTap(). On tap it will add stored essenece to the wallet.
-    // - Also clears the current essence being stored.
-    private void HarvestEssence()
-    {
-        // The GameManager will only display this value to the player therefore it is ok casting it to int here.
-        GameManager.Instance.IncreaseEssence(storedEssence);
-        storedEssence = 0;
-    }
-
     // - Made by: Joao && Joe 2/9/2022
     // - Transfer experience stored by the chimera and see if each stat's threshold is met.
     // - If so, LevelUp is called with specific stat enumerator.
@@ -149,7 +105,6 @@ public class Chimera : MonoBehaviour
     {
         bool levelUp = false;
 
-        enduranceExperience += storedEnduranceExperience;
         if (enduranceExperience >= enduranceThreshold)
         {
             enduranceExperience -= enduranceThreshold;
@@ -159,7 +114,6 @@ public class Chimera : MonoBehaviour
             enduranceThreshold += (int)(Mathf.Sqrt(enduranceThreshold) * 1.2f);
         }
 
-        intelligenceExperience += storedIntelligenceExperience;
         if (intelligenceExperience >= intelligenceThreshold)
         {
             intelligenceExperience -= intelligenceThreshold;
@@ -169,7 +123,6 @@ public class Chimera : MonoBehaviour
             intelligenceThreshold += (int)(Mathf.Sqrt(intelligenceThreshold) * 1.2f);
         }
 
-        strengthExperience += storedStrengthExperience;
         if (strengthExperience >= strengthThreshold)
         {
             strengthExperience -= strengthThreshold;
@@ -183,11 +136,6 @@ public class Chimera : MonoBehaviour
         {
             currentChimeraModel.CheckEvolution(intelligence, endurance, strength);
         }
-
-        // Cleanup
-        storedEnduranceExperience = 0;
-        storedIntelligenceExperience = 0;
-        storedStrengthExperience = 0;
     }
 
     // - Made by: Joao 2/9/2022
@@ -212,77 +160,14 @@ public class Chimera : MonoBehaviour
          }
 
         ++levelUpTracker;
-
-        if(levelUpTracker % 5 == 0)
+        if (levelUpTracker % 3 == 0)
         {
             ++level;
-            Debug.Log("LEVEL UP! " + this.gameObject + " is now level " + level + " !");
+            Debug.Log("LEVEL UP! " + gameObject + " is now level " + level + " !");
         }
     }
-
-
-    //public int HappinessCheck(ElementalType compareType)
-    //{
-    //    if (Mathf.Abs(compareType - elementalType) == 3)
-    //    {
-    //        return 1;
-    //    }
-    //    else if (Mathf.Abs(compareType - elementalType) == 1)
-    //    {
-    //        return -1;
-    //    }
-
-    //    if (compareType == ElementalType.Fira || elementalType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Aero)
-    //    {
-    //        return -1;
-    //    }
-    //    return 0;
-    //}
-
-    //private void HappinessCheck()
-    //{
-    //    if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
-    //    {
-    //        IncreaseHappiness(1);
-    //    }
-    //    if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == -1)
-    //    {
-    //        IncreaseHappiness(-1);
-    //    }
-    //}
-
-
-
-    //public void HappinessCheck()
-    //{
-      
-    //    //else if (Mathf.Abs(compareType - elementalType) == 1)
-    //    //{
-    //    //    return -1;
-    //    //}
-
-    //    //if (compareType == ElementalType.Fira || elementalType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Aero)
-    //    //{
-    //    //    return -1;
-    //    //}
-    //    //return 0;
-    //}
 
     #region Getters & Setters
-    public int GetStoredExpByType(StatType statType)
-    {
-        switch (statType)
-        {
-            case StatType.Endurance:
-                return storedEnduranceExperience;
-            case StatType.Strength:
-                return storedStrengthExperience;
-            case StatType.Intelligence:
-                return storedIntelligenceExperience;
-        }
-
-        return -1;
-    }
     public int GetStatByType(StatType statType)
     {
         switch (statType)
@@ -302,21 +187,23 @@ public class Chimera : MonoBehaviour
     public int GetLevel() { return level; }
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
-    public StatType GetStatType() { return statType; }
+    public StatType GetStatPreference() { return statPreference; }
     public Texture2D GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     public void IncreaseHappiness(int amount)
     {
-        happiness += amount;
-        if(happiness > 100)
+        if(happiness + amount >= 100)
         {
             happiness = 100;
+            return;
         }
-
-        if(happiness < -100)
+        else if(happiness + amount <= -100)
         {
             happiness = -100;
+            return;
         }
+
+        happiness += amount;
     }
     #endregion
 }

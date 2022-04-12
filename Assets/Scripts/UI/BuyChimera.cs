@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class BuyChimera : MonoBehaviour, IPointerClickHandler
+public class BuyEgg : MonoBehaviour, IPointerClickHandler
 {
     [Header("General Info")]
     [SerializeField] Chimera chimera;

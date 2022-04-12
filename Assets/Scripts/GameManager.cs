@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Tap on a chimera.");
                 Transform chimera = hit.collider.gameObject.transform.parent;
-                chimera.GetComponent<Chimera>().ChimeraTap();
+                //chimera.GetComponent<Chimera>().ChimeraTap();
             }
         }
     }
@@ -105,47 +105,6 @@ public class GameManager : MonoBehaviour
             wallet.text = currentEssence.ToString();
         }
     }
-
-    public int FacilityAffinityCheck(StatType compareType)
-    {
-        int value = 0;
-        foreach (Facility facility in GetActiveHabitat().GetFacilities())
-        {
-            StatType statType = facility.GetStatType();
-
-            if (compareType == statType)
-            {
-                value = 1;
-            }
-            else
-            {
-                value = -1;
-            }
-        }
-            return value;
-    }
-
-    //public int ElementalAffinityCheck(ElementalType compareType)
-    //{
-    //    int value = 0;
-    //    foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
-    //    {
-    //        ElementalType elementalType = chimera.GetElementalType();
-
-    //        if (Mathf.Abs(compareType - elementalType) == 3)
-    //        {
-    //            value = 1;
-    //        }
-    //        else if (Mathf.Abs(compareType - elementalType) == 1)
-    //        {
-    //            value = -1;
-    //        }
-
-            
-
-    //    }
-    //    return value;
-    //}
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }

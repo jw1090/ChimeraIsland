@@ -5,9 +5,9 @@ using UnityEngine;
 public enum ElementalType
 {
     None = -1,
-    Fira,
-    Bio,
     Aqua,
+    Bio,
+    Fira,
 }
 
 public enum FacilityType
@@ -15,7 +15,7 @@ public enum FacilityType
     None = -1,
     CaveExploring,
     RuneStone,
-    Waterfall
+    Waterfall,
 }
 
 public enum StatType
@@ -24,5 +24,5 @@ public enum StatType
     Endurance,
     Intelligence,
     Strength,
-    Happiness
+    Happiness,
 }
