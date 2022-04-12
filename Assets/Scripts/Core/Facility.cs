@@ -10,7 +10,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private int currentTier = 0;
     [SerializeField] private int statModifier = 1;
     [SerializeField] private int price = 100;
-    [SerializeField] private Chimera chimera;
+    [SerializeField] private Chimera storedChimera;
     [SerializeField] private bool isActive = false;
     //public MoveState moveState;
     
@@ -50,9 +50,22 @@ public class Facility : MonoBehaviour
 
     public void FacilityTick()
     {
-        if(chimera != null)
-        { 
-            chimera.ExperienceTick(statType,statModifier);
+        if(storedChimera != null)
+        {
+            storedChimera.ExperienceTick(statType,statModifier);
+            HappinessCheck();
+        }
+    }
+
+    private void HappinessCheck()
+    {
+        if (GameManager.Instance.FacilityAffinityCheck(GetStatType()) == 1)
+        {
+            storedChimera.IncreaseHappiness(1);
+        }
+        if(GameManager.Instance.FacilityAffinityCheck(GetStatType()) == -1)
+        {
+            storedChimera.IncreaseHappiness(-1);
         }
     }
 
