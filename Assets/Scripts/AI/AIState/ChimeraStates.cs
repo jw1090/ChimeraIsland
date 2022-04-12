@@ -28,21 +28,30 @@ namespace AI.Chimera
         public Dictionary<StateEnum, ChimeraBaseStates> states = new Dictionary<StateEnum, ChimeraBaseStates>();
         void OnEnable()
         {
+            //patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
+            //index = 0;
+            //WanderIndex = -1;
+
+            //navMeshAgent = GetComponent<NavMeshAgent>();
+            //navMeshAgent.isStopped = false;
+            //navMeshAgent.SetDestination(patrolPoints[index].position);
+            ////  navMeshAgent.destination = directPoints[index].position;
+            //timer = 0;
+        }
+        void Awake()
+        {
             patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
             index = 0;
             WanderIndex = -1;
 
-            //directPoints = GameManager.Instance.GetActiveHabitat().GetPatrolNodes();
             navMeshAgent = GetComponent<NavMeshAgent>();
             navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(patrolPoints[index].position);
             //  navMeshAgent.destination = directPoints[index].position;
             timer = 0;
-        }
-        void Awake()
-        {
             if (Instance == null)
             {
+                WanderIndex = 0;
                 Instance = this;
             }
         }

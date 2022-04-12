@@ -9,7 +9,7 @@ namespace AI.Chimera
         public override void Enter(ChimeraStates chimeraStates)
         {
             chimeraStates.navMeshAgent.destination = chimeraStates.patrolPoints[chimeraStates.index].position;
-            //Debug.Log(chimeraStates.index);
+       
         }
         public override void Update(ChimeraStates chimeraStates)
         {
