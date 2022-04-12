@@ -8,6 +8,7 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private StatType statType = StatType.None;
+    [SerializeField] private Passives passive = Passives.None;
     [SerializeField] private ChimeraModel currentChimeraModel = null;
     [SerializeField] private int price = 200;
 
@@ -75,7 +76,7 @@ public class Chimera : MonoBehaviour
     { 
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
-        
+     
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
@@ -103,6 +104,7 @@ public class Chimera : MonoBehaviour
     public void ChimeraTap()
     {
         //HappinessCheck();
+       
             HarvestEssence();
             if (level < levelCap)
             {
@@ -219,6 +221,20 @@ public class Chimera : MonoBehaviour
             Debug.Log("LEVEL UP! " + this.gameObject + " is now level " + level + " !");
         }
     }
+
+    //private void ActivePassive(Passives currentPassive)
+    //{
+    //    switch(currentPassive)
+    //    {
+    //        case Passives.GreenThumb:
+    //            if(GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
+    //            {
+    //                IncreaseHappiness(1);
+    //            }
+    //            break;
+          
+    //    }
+    //}
 
 
     //public int HappinessCheck(ElementalType compareType)
