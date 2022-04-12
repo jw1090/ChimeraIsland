@@ -7,19 +7,10 @@ public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private bool isActive = false;
-    //[SerializeField] private int costToActivate = 0;
-    [SerializeField] private int habitatTier = 1;
-    [SerializeField] private int costToUpgrade = 300;
-    [SerializeField] private int chimeraCapacity = 1;
-    [SerializeField] private int facilityCapacity = 2;
+    [SerializeField] private int chimeraCapacity = 3;
+    [SerializeField] private int facilityCapacity = 3;
     [SerializeField] private List<Chimera> chimeras;
     [SerializeField] private List<Facility> facilities;
-
-    [Header("Stat Rates")]
-    [SerializeField] private int baseExperienceRate = 1;
-    private int staminaExpRate = 0;
-    private int strengthExpRate = 0;
-    private int wisdomExpRate = 0;
 
     [Header("Tick Info")]
     [SerializeField] private float tickTimer = 60.0f;
@@ -32,7 +23,6 @@ public class Habitat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateStatRates();
         tickCoroutine = StartCoroutine(TickTimer());
     }
 
@@ -94,14 +84,12 @@ public class Habitat : MonoBehaviour
         }
 
         toBuyFacility.BuyFacility();
-
-        UpdateStatRates();
     }
 
     // - Made by: Joe 2/23/2022
-    // - Called by the BuyEgg Script on a button to check price nad purchase an egg on the active habitat.
+    // - Called by the BuyChimera Script on a button to check price nad purchase an egg on the active habitat.
     // - Adds it to the chimera list of that habitat and instantiates it as well
-    public void BuyEgg(Chimera egg)
+    public void BuyChimera(Chimera chimeraPrefab)
     {
         // Return if no room for another Chimera.
         if (chimeraCapacity == chimeras.Count)
@@ -110,98 +98,22 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        int price = egg.GetPrice();
+        int price = chimeraPrefab.GetPrice();
 
         if (GameManager.Instance.SpendEssence(price) == false)
         {
-            Debug.Log("Can't afford this chimera. It costs " +
+            Debug.Log
+            (
+                "Can't afford this chimera. It costs " +
                 price + " Essence and you only have " +
-                GameManager.Instance.GetEssence() + " Essence.");
+                GameManager.Instance.GetEssence() + " Essence."
+            );
             return;
         }
 
-        Chimera newEgg = Instantiate(egg, spawnPoint.transform.localPosition, Quaternion.identity, chimeraFolder.transform);
+        Chimera newChimera = Instantiate(chimeraPrefab, spawnPoint.transform.localPosition, Quaternion.identity, chimeraFolder.transform);
 
-        chimeras.Add(newEgg);
-    }
-
-    // - Made by: Joe 2/2/2022
-    // - Helper function to calculate current stat rates. Looks at baseExperienceRate and each facilities stat's that they provide.
-    // - Called on start and whenever a facility is added.
-    private void UpdateStatRates()
-    {
-        staminaExpRate = baseExperienceRate;
-        strengthExpRate = baseExperienceRate;
-        wisdomExpRate = baseExperienceRate;
-
-        foreach (Facility facility in facilities)
-        {
-            if (facility.IsActive() == false)
-            {
-                continue;
-            }
-
-            switch (facility.GetStatType())
-            {
-                case StatType.Endurance:
-                    staminaExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + staminaExpRate + " stamina per tick.");
-                    break;
-                case StatType.Intelligence:
-                    wisdomExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + wisdomExpRate + " wisdom per tick.");
-                    break;
-                case StatType.Strength:
-                    strengthExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
-                    break;
-            }
-        }
-
-        if(tickCoroutine == null)
-        {
-            return;
-        }
-
-        StopCoroutine(tickCoroutine);
-        tickCoroutine = StartCoroutine(TickTimer());
-    }
-
-    // - Made by: Santiago & Joe 2/9/2022
-    // - Used to upgrade tiers of the habitat 1 -> 2 -> 3 -> 4 -> 5 by pressing on the button.
-    // - Spends essence stored in the Gamemanager.Instance.SpendEssence(amount).
-    // - SpendEssence automatically check if you can afford and returns false if the purchase is not possible.
-    // - If % 2 increase facilityCap, else increase chimeraCap.
-    public void UpgradeHabitatTier()
-    {
-        if(habitatTier >= 5)
-        {
-            Debug.Log("Already maxed at Tier " + habitatTier + ".");
-
-            return;
-        }
-
-        if (GameManager.Instance.SpendEssence(costToUpgrade) == false)
-        {
-            Debug.Log("Can't afford an upgrade. " + costToUpgrade + " is too expensive.");
-            return;
-        }
-
-        ++habitatTier;
-
-        Debug.Log("Habit upgraded to Tier: " + habitatTier);
-
-        // Alternates upgrades.
-        if (habitatTier % 2 == 0) // Even levels increase Facility capacity.
-        {
-            facilityCapacity++;
-            Debug.Log("It can now hold " + facilityCapacity + " Facilities.");
-        }
-        else //Even levels increase Chimera capacity.
-        {
-            chimeraCapacity++;
-            Debug.Log("It can now hold " + chimeraCapacity + " Chimeras.");
-        }
+        chimeras.Add(newChimera);
     }
 
     // - Look through array to find Facility.

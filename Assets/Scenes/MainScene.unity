@@ -428,10 +428,18 @@ PrefabInstance:
       propertyPath: egg
       value: 
       objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
+    - target: {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
     - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!224 &23457437 stripped
@@ -803,8 +811,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 757350929}
   - {fileID: 1380480554}
+  - {fileID: 757350929}
   - {fileID: 1027387755}
   m_Father: {fileID: 443946036}
   m_RootOrder: 2
@@ -5229,8 +5237,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  habitatTier: 1
-  costToUpgrade: 300
   chimeraCapacity: 3
   facilityCapacity: 3
   chimeras:
@@ -5239,7 +5245,6 @@ MonoBehaviour:
   - {fileID: 35383058}
   - {fileID: 1414356755}
   - {fileID: 449551239}
-  baseExperienceRate: 1
   tickTimer: 0.4
   chimeraFolder: {fileID: 93296134}
   spawnPoint: {fileID: 500444165}
@@ -5744,7 +5749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8872,10 +8877,18 @@ PrefabInstance:
       propertyPath: egg
       value: 
       objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
+    - target: {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
     - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!224 &1102266223 stripped
@@ -11308,7 +11321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11384,7 +11397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462471, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Name
-      value: Buy Facilitiy Sta
+      value: Buy Facilitiy End
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057983226132, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facilityType
@@ -11392,7 +11405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_text
-      value: +STA
+      value: +END
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -17401,15 +17414,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buy Egg A
       objectReference: {fileID: 0}
-    - target: {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
-      propertyPath: egg
+    - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
       value: 
       objectReference: {fileID: 855878291477086151, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-    - target: {fileID: 748089614685564887, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!1001 &1574459907507595226
 PrefabInstance:

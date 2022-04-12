@@ -7,7 +7,7 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private StatType statType = StatType.None;
+    [SerializeField] private StatType statPreference = StatType.None;
     [SerializeField] private ChimeraModel currentChimeraModel = null;
     [SerializeField] private int price = 200;
 
@@ -110,7 +110,6 @@ public class Chimera : MonoBehaviour
             }
     }
 
-    
     // - Made by: Santiago 3/02/2022
     // - Happiness can range between -100 and 100.
     // - At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
@@ -220,54 +219,6 @@ public class Chimera : MonoBehaviour
         }
     }
 
-
-    //public int HappinessCheck(ElementalType compareType)
-    //{
-    //    if (Mathf.Abs(compareType - elementalType) == 3)
-    //    {
-    //        return 1;
-    //    }
-    //    else if (Mathf.Abs(compareType - elementalType) == 1)
-    //    {
-    //        return -1;
-    //    }
-
-    //    if (compareType == ElementalType.Fira || elementalType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Aero)
-    //    {
-    //        return -1;
-    //    }
-    //    return 0;
-    //}
-
-    //private void HappinessCheck()
-    //{
-    //    if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == 1)
-    //    {
-    //        IncreaseHappiness(1);
-    //    }
-    //    if (GameManager.Instance.ElementalAffinityCheck(GetElementalType()) == -1)
-    //    {
-    //        IncreaseHappiness(-1);
-    //    }
-    //}
-
-
-
-    //public void HappinessCheck()
-    //{
-      
-    //    //else if (Mathf.Abs(compareType - elementalType) == 1)
-    //    //{
-    //    //    return -1;
-    //    //}
-
-    //    //if (compareType == ElementalType.Fira || elementalType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Aero)
-    //    //{
-    //    //    return -1;
-    //    //}
-    //    //return 0;
-    //}
-
     #region Getters & Setters
     public int GetStoredExpByType(StatType statType)
     {
@@ -302,21 +253,23 @@ public class Chimera : MonoBehaviour
     public int GetLevel() { return level; }
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
-    public StatType GetStatType() { return statType; }
+    public StatType GetStatPreference() { return statPreference; }
     public Texture2D GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     public void IncreaseHappiness(int amount)
     {
-        happiness += amount;
-        if(happiness > 100)
+        if(happiness + amount >= 100)
         {
             happiness = 100;
+            return;
         }
-
-        if(happiness < -100)
+        else if(happiness + amount <= -100)
         {
             happiness = -100;
+            return;
         }
+
+        happiness += amount;
     }
     #endregion
 }
