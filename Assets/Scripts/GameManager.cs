@@ -106,33 +106,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /*
-    public int ElementalAffinityCheck(ElementalType compareType)
+    public int FacilityAffinityCheck(StatType compareType)
     {
         int value = 0;
-        foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
+        foreach (Facility facility in GetActiveHabitat().GetFacilities())
         {
-            ElementalType elementalType = chimera.GetElementalType();
+            StatType statType = facility.GetStatType();
 
-            if (Mathf.Abs(compareType - elementalType) == 3)
+            if (compareType == statType)
             {
                 value = 1;
             }
-            else if (Mathf.Abs(compareType - elementalType) == 1)
+            else
             {
                 value = -1;
             }
-
-            if (compareType == ElementalType.Fira && compareType == ElementalType.Aero || elementalType == ElementalType.Fira  && elementalType == ElementalType.Aero)
-            {
-                value = -1;
-            }
-
         }
-        return value;
-
+            return value;
     }
-    */
+
+    //public int ElementalAffinityCheck(ElementalType compareType)
+    //{
+    //    int value = 0;
+    //    foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
+    //    {
+    //        ElementalType elementalType = chimera.GetElementalType();
+
+    //        if (Mathf.Abs(compareType - elementalType) == 3)
+    //        {
+    //            value = 1;
+    //        }
+    //        else if (Mathf.Abs(compareType - elementalType) == 1)
+    //        {
+    //            value = -1;
+    //        }
+
+            
+
+    //    }
+    //    return value;
+    //}
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }

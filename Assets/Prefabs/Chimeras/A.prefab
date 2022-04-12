@@ -48,27 +48,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementalType: 0
+  statType: 4
   currentChimeraModel: {fileID: 4964925473268111379}
   price: 200
   level: 1
   levelCap: 99
+  endurance: 1
   intelligence: 1
-  stamina: 1
   strength: 1
   happiness: 0
   happinessMod: 1
+  enduranceGrowth: 3
   intelligenceGrowth: 3
-  staminaGrowth: 3
-  strengthGrowth: 3
+  strengthGrowth: 4
+  enduranceExperience: 0
   intelligenceExperience: 0
-  staminaExperience: 0
   strengthExperience: 0
+  enduranceThreshold: 2
   intelligenceThreshold: 2
-  staminaThreshold: 2
   strengthThreshold: 2
   levelUpTracker: 0
+  storedEnduranceExperience: 0
   storedIntelligenceExperience: 0
-  storedStaminaExperience: 0
   storedStrengthExperience: 0
   experienceCap: 500
   baseEssenceRate: 5
@@ -91,7 +92,7 @@ MonoBehaviour:
   WanderIndex: 0
   patrolTime: 0.2
   timer: 0
-  navMeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 6986084506952480713}
   patrolPoints: []
 --- !u!114 &1908189271997081013
 MonoBehaviour:
