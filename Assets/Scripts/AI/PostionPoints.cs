@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class PostionPoints : MonoBehaviour
 {
-
     public Transform[] PositionPoints;
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 namespace AI.Chimera
 {
     public enum StateEnum
@@ -10,9 +11,9 @@ namespace AI.Chimera
         Wander,
         Held
     }
-    public class ChimeraStates : MonoBehaviour
+    public class ChimeraBehaviors : MonoBehaviour
     {
-        public static ChimeraStates Instance;
+        public static ChimeraBehaviors Instance;
         ChimeraBaseStates currentStates;
 
         public int index = 0;
@@ -28,15 +29,7 @@ namespace AI.Chimera
         public Dictionary<StateEnum, ChimeraBaseStates> states = new Dictionary<StateEnum, ChimeraBaseStates>();
         void OnEnable()
         {
-            //patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;
-            //index = 0;
-            //WanderIndex = -1;
-
-            //navMeshAgent = GetComponent<NavMeshAgent>();
-            //navMeshAgent.isStopped = false;
-            //navMeshAgent.SetDestination(patrolPoints[index].position);
-            ////  navMeshAgent.destination = directPoints[index].position;
-            //timer = 0;
+            
         }
         void Awake()
         {

@@ -6,36 +6,37 @@ namespace AI.Chimera
 {
     public class PatrolState : ChimeraBaseStates
     {
-        public override void Enter(ChimeraStates chimeraStates)
+        public override void Enter(ChimeraBehaviors chimeraBehaviors)
         {
-            chimeraStates.navMeshAgent.destination = chimeraStates.patrolPoints[chimeraStates.index].position;
+            chimeraBehaviors.navMeshAgent.destination = chimeraBehaviors.patrolPoints[chimeraBehaviors.index].position;
        
         }
-        public override void Update(ChimeraStates chimeraStates)
+        public override void Update(ChimeraBehaviors ChimeraBehaviors)
         {
-            if (chimeraStates.navMeshAgent.remainingDistance < 1.5f)
+            if (ChimeraBehaviors.navMeshAgent.remainingDistance < 1.5f)
             {
-                chimeraStates.timer += Time.deltaTime;
+                ChimeraBehaviors.timer += Time.deltaTime;
 
-                if (chimeraStates.timer >= chimeraStates.patrolTime)
+                if (ChimeraBehaviors.timer >= ChimeraBehaviors.patrolTime)
                 {
-                    chimeraStates.index++;
-                    chimeraStates.WanderIndex++;
-                    chimeraStates.timer = 0;
-                    if (chimeraStates.index >= chimeraStates.patrolPoints.Length - 1)
+
+                    ChimeraBehaviors.index++;
+                    ChimeraBehaviors.WanderIndex++;
+                    ChimeraBehaviors.timer = 0;
+                    if (ChimeraBehaviors.index >= ChimeraBehaviors.patrolPoints.Length - 1)
                     {
-                        chimeraStates.index = 0;
+                        ChimeraBehaviors.index = 0;
                     }
-                    if (chimeraStates.WanderIndex >= chimeraStates.patrolPoints.Length - 1)
+                    if (ChimeraBehaviors.WanderIndex >= ChimeraBehaviors.patrolPoints.Length - 1)
                     {
-                        chimeraStates.WanderIndex = 0;
+                        ChimeraBehaviors.WanderIndex = 0;
                     }
 
-                    chimeraStates.ChangeState(chimeraStates.states[StateEnum.Wander]);
+                    ChimeraBehaviors.ChangeState(ChimeraBehaviors.states[StateEnum.Wander]);
                 }
             }
         }
-        public override void Exit(ChimeraStates chimeraStates)
+        public override void Exit(ChimeraBehaviors ChimeraBehaviors)
         {
 
         }

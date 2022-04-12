@@ -15,15 +15,15 @@ namespace AI.Chimera
         //wander over
         public bool IsOver;
 
-        public override void Enter(ChimeraStates chimeraStates)
+        public override void Enter(ChimeraBehaviors chimeraBehaviors)
         {
             TotelTimer = 10f;
             PartTimer = 2f;
             IsOver = false;
-            chimeraStates.navMeshAgent.destination = GetNewWayPoint(chimeraStates.gameObject.transform.position.y);
+            chimeraBehaviors.navMeshAgent.destination = GetNewWayPoint(chimeraBehaviors.gameObject.transform.position.y);
         }
 
-        public override void Update(ChimeraStates chimeraStates)
+        public override void Update(ChimeraBehaviors chimeraBehaviors)
         {
             TotelTimer -= Time.deltaTime;
             PartTimer -= Time.deltaTime;
@@ -31,32 +31,35 @@ namespace AI.Chimera
             if (TotelTimer <= 0f)
             {
                 IsOver = true;
-                chimeraStates.ChangeState(chimeraStates.states[StateEnum.Patrol]);
+                chimeraBehaviors.ChangeState(chimeraBehaviors.states[StateEnum.Patrol]);
             }
             if (PartTimer <= 0f && !IsOver)
             {
                 PartTimer = 2f;
-                chimeraStates.navMeshAgent.destination = GetNewWayPoint(chimeraStates.gameObject.transform.position.y);
+                chimeraBehaviors.navMeshAgent.destination = GetNewWayPoint(chimeraBehaviors.gameObject.transform.position.y);
             }
         }
-        public override void Exit(ChimeraStates chimeraStates)
+
+        public override void Exit(ChimeraBehaviors chimeraBehaviors)
         {
             TotelTimer = 0f;
             PartTimer = 0f;
         }
+
         public Vector3 GetNewWayPoint(float positionY)
         {
             float randomX = Random.Range(-patrolRange, patrolRange);
             float randomZ = Random.Range(-patrolRange, patrolRange);
 
             // Vector3 randomPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-            Vector3 randomPoint = new Vector3(AI.Chimera.ChimeraStates.Instance.patrolPoints[AI.Chimera.ChimeraStates.Instance.WanderIndex].position.x + randomX,
-                                              positionY,
-                                              AI.Chimera.ChimeraStates.Instance.patrolPoints[AI.Chimera.ChimeraStates.Instance.WanderIndex].position.z + randomZ);
+            Vector3 randomPoint = new Vector3
+            (
+                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.WanderIndex].position.x + randomX,
+                positionY,
+                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.WanderIndex].position.z + randomZ
+            );
             wayPoint = randomPoint;
             return wayPoint;
         }
     }
-
 }
-
