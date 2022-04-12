@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6106465458539893876}
   - component: {fileID: 1070999743981996110}
-  - component: {fileID: 8492417505084759421}
   - component: {fileID: 1502805493311229590}
   - component: {fileID: 2731832444747474771}
   - component: {fileID: 2155796668323405218}
@@ -53,50 +52,29 @@ MonoBehaviour:
   price: 200
   level: 1
   levelCap: 99
+  endurance: 0
   intelligence: 1
-  stamina: 1
   strength: 1
   happiness: 1
   happinessMod: 1
+  enduranceGrowth: 1
   intelligenceGrowth: 3
-  staminaGrowth: 3
   strengthGrowth: 3
+  enduranceExperience: 0
   intelligenceExperience: 0
-  staminaExperience: 0
   strengthExperience: 0
+  enduranceThreshold: 5
   intelligenceThreshold: 2
-  staminaThreshold: 2
   strengthThreshold: 2
   levelUpTracker: 0
+  storedEnduranceExperience: 0
   storedIntelligenceExperience: 0
-  storedStaminaExperience: 0
   storedStrengthExperience: 0
   experienceCap: 500
   baseEssenceRate: 5
   storedEssence: 0
   essenceModifier: 1
   essenceCap: 150
-  model: {fileID: 3919777644857886525}
-  standardMat: {fileID: 2100000, guid: fc3aaa8fb1c3f3c4b83572a643772428, type: 2}
---- !u!114 &8492417505084759421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106465458539893879}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d31cb89b197b7745b0e8265fe210a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  index: 0
-  isAi: 0
-  time: 0
-  like: 
-  normal: 
-  dislike: 
-  stayTime: 2
 --- !u!114 &1502805493311229590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,10 +88,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  WanderIndex: 0
   patrolTime: 0.2
   timer: 0
   navMeshAgent: {fileID: 0}
-  directPoints: []
+  patrolPoints: []
 --- !u!114 &2731832444747474771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc211fa163c52aa47a4dd08c46d26659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRadius: 0
   patrolRange: 0
 --- !u!195 &2155796668323405218
 NavMeshAgent:
@@ -210,11 +188,6 @@ PrefabInstance:
 --- !u!4 &2032024872010821335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 45327997127275479, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
-  m_PrefabInstance: {fileID: 2058772062214823168}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3919777644857886525 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3096193168989067837, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
   m_PrefabInstance: {fileID: 2058772062214823168}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3590851974544981161 stripped

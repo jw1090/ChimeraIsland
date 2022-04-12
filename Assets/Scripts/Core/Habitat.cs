@@ -143,17 +143,17 @@ public class Habitat : MonoBehaviour
 
             switch (facility.GetStatType())
             {
-                case StatType.Stamina:
+                case StatType.Endurance:
                     staminaExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + staminaExpRate + " stamina per tick.");
-                    break;
-                case StatType.Strength:
-                    strengthExpRate += facility.GetStatModifier();
-                    Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
                     break;
                 case StatType.Intelligence:
                     wisdomExpRate += facility.GetStatModifier();
                     Debug.Log("Now gaining " + wisdomExpRate + " wisdom per tick.");
+                    break;
+                case StatType.Strength:
+                    strengthExpRate += facility.GetStatModifier();
+                    Debug.Log("Now gaining " + strengthExpRate + " strength per tick.");
                     break;
             }
         }

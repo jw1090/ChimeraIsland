@@ -13,27 +13,27 @@ public class Chimera : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int level = 1;
     [SerializeField] private int levelCap = 99;
+    [SerializeField] private int endurance = 0;
     [SerializeField] private int intelligence = 0;
-    [SerializeField] private int stamina = 0;
     [SerializeField] private int strength = 0;
     [SerializeField] private int happiness = 0;
     [SerializeField] private int happinessMod = 1;
 
     [Header("Stat Growth")]
+    [SerializeField] private int enduranceGrowth = 1;
     [SerializeField] private int intelligenceGrowth = 1;
-    [SerializeField] private int staminaGrowth = 1;
     [SerializeField] private int strengthGrowth = 1;
+    [SerializeField] private int enduranceExperience = 0;
     [SerializeField] private int intelligenceExperience = 0;
-    [SerializeField] private int staminaExperience = 0;
     [SerializeField] private int strengthExperience = 0;
+    [SerializeField] private int enduranceThreshold = 5;
     [SerializeField] private int intelligenceThreshold = 5;
-    [SerializeField] private int staminaThreshold = 5;
     [SerializeField] private int strengthThreshold = 5;
     [SerializeField] private int levelUpTracker = 0;
 
     [Header("Stored Experience")]
+    [SerializeField] private int storedEnduranceExperience = 0;
     [SerializeField] private int storedIntelligenceExperience = 0;
-    [SerializeField] private int storedStaminaExperience = 0;
     [SerializeField] private int storedStrengthExperience = 0;
     [SerializeField] private int experienceCap = 200;
 
@@ -55,11 +55,11 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
+            case StatType.Endurance:
+                storedEnduranceExperience += amount;
+                break;
             case StatType.Intelligence:
                 storedIntelligenceExperience += amount;
-                break;
-            case StatType.Stamina:
-                storedStaminaExperience += amount;
                 break;
             case StatType.Strength:
                 storedStrengthExperience += amount;
@@ -148,6 +148,16 @@ public class Chimera : MonoBehaviour
     {
         bool levelUp = false;
 
+        enduranceExperience += storedEnduranceExperience;
+        if (enduranceExperience >= enduranceThreshold)
+        {
+            enduranceExperience -= enduranceThreshold;
+            levelUp = true;
+            LevelUp(StatType.Endurance);
+
+            enduranceThreshold += (int)(Mathf.Sqrt(enduranceThreshold) * 1.2f);
+        }
+
         intelligenceExperience += storedIntelligenceExperience;
         if (intelligenceExperience >= intelligenceThreshold)
         {
@@ -156,16 +166,6 @@ public class Chimera : MonoBehaviour
             LevelUp(StatType.Intelligence);
 
             intelligenceThreshold += (int)(Mathf.Sqrt(intelligenceThreshold) * 1.2f);
-        }
-
-        staminaExperience += storedStaminaExperience;
-        if (staminaExperience >= staminaThreshold)
-        {
-            staminaExperience -= staminaThreshold;
-            levelUp = true;
-            LevelUp(StatType.Stamina);
-
-            staminaThreshold += (int)(Mathf.Sqrt(staminaThreshold) * 1.2f);
         }
 
         strengthExperience += storedStrengthExperience;
@@ -180,12 +180,12 @@ public class Chimera : MonoBehaviour
 
         if (levelUp)
         {
-            currentChimeraModel.CheckEvolution(intelligence, stamina, strength);
+            currentChimeraModel.CheckEvolution(intelligence, endurance, strength);
         }
 
         // Cleanup
+        storedEnduranceExperience = 0;
         storedIntelligenceExperience = 0;
-        storedStaminaExperience = 0;
         storedStrengthExperience = 0;
     }
 
@@ -196,13 +196,13 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
+            case StatType.Endurance:
+                endurance += enduranceGrowth;
+                Debug.Log("New " + statType + " stat = " + endurance);
+                break;
             case StatType.Intelligence:
                 intelligence += intelligenceGrowth;
                 Debug.Log("New " + statType + " stat = " + intelligence);
-                break;
-            case StatType.Stamina:
-                stamina += staminaGrowth;
-                Debug.Log("New " + statType + " stat = " + stamina);
                 break;
             case StatType.Strength:
                 strength += strengthGrowth;
@@ -265,8 +265,8 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Stamina:
-                return storedStaminaExperience;
+            case StatType.Endurance:
+                return storedEnduranceExperience;
             case StatType.Strength:
                 return storedStrengthExperience;
             case StatType.Intelligence:
@@ -279,10 +279,10 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
+            case StatType.Endurance:
+                return endurance;
             case StatType.Intelligence:
                 return intelligence;
-            case StatType.Stamina:
-                return stamina;
             case StatType.Strength:
                 return strength;
             case StatType.Happiness:

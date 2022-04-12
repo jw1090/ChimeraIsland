@@ -14,15 +14,15 @@ public enum FacilityType
 {
     None = -1,
     CaveExploring,
-    RuneStructure,
+    RuneStone,
     Waterfall
 }
 
 public enum StatType
 {
     None = 1,
+    Endurance,
     Intelligence,
-    Stamina,
     Strength,
     Happiness
 }
