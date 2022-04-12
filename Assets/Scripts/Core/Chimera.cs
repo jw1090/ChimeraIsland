@@ -73,7 +73,7 @@ public class Chimera : MonoBehaviour
     // - The essence formula is located here.
     public void EssenceTick()
     { 
-        //happinessMod = HappinessModifierCalc();
+        happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
         
         // Sqrt is used to gain diminishing returns on levels.
