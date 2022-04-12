@@ -7,8 +7,8 @@ public class ChimeraModel : MonoBehaviour
     [Header("Evolution Info")]
     [SerializeField] private Texture2D profileIcon = null;
     [SerializeField] private List<ChimeraModel> evolutionPaths;
+    [SerializeField] private int reqEndurance = 0;
     [SerializeField] private int reqIntelligence = 0;
-    [SerializeField] private int reqStamina = 0;
     [SerializeField] private int reqStrength = 0;
 
     [Header("References")]
@@ -19,7 +19,7 @@ public class ChimeraModel : MonoBehaviour
         chimera = GetComponentInParent<Chimera>();
     }
 
-    public void CheckEvolution(int intelligence, int stamina, int strength)
+    public void CheckEvolution(int endurance, int intelligence, int strength)
     {
         if(evolutionPaths == null)
         {
@@ -28,11 +28,11 @@ public class ChimeraModel : MonoBehaviour
 
         foreach(var evolution in evolutionPaths)
         {
-            if (intelligence < evolution.GetReqInt())
+            if (endurance < evolution.GetReqEnd())
             {
                 continue;
             }
-            if (stamina < evolution.GetReqStam())
+            if (intelligence < evolution.GetReqInt())
             {
                 continue;
             }
@@ -56,8 +56,8 @@ public class ChimeraModel : MonoBehaviour
 
     #region Getters & Setters
     public Texture2D GetIcon() { return profileIcon; }
+    public int GetReqEnd() { return reqEndurance; }
     public int GetReqInt() { return reqIntelligence; }
-    public int GetReqStam() { return reqStamina; }
     public int GetReqStr() { return reqStrength; }
     #endregion
 }
