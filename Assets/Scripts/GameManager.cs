@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Tap on a chimera.");
                 Transform chimera = hit.collider.gameObject.transform.parent;
-                chimera.GetComponent<Chimera>().ChimeraTap();
+                //chimera.GetComponent<Chimera>().ChimeraTap();
             }
         }
     }

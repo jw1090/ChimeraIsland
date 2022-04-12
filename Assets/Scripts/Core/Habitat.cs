@@ -36,10 +36,8 @@ public class Habitat : MonoBehaviour
             yield return new WaitForSeconds(tickTimer);
             foreach(Chimera chimera in chimeras)
             {
-                //chimera.ChimeraTick(staminaExpRate, strengthExpRate, wisdomExpRate);
                 chimera.EssenceTick();
                 //Debug.Log("Tick");
-                chimera.ChimeraTap();
             }
             foreach(Facility facility in facilities)
             {
