@@ -40,8 +40,8 @@ public class ChimeraDetails : MonoBehaviour
         //Debug.Log("Chimera: " + GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot]);
 
         level.text = "Level: " + chimera.GetLevel();
+        stamina.text = chimera.GetStatByType(StatType.Endurance).ToString();
         intelligence.text = chimera.GetStatByType(StatType.Intelligence).ToString();
-        stamina.text = chimera.GetStatByType(StatType.Stamina).ToString();
         strength.text = chimera.GetStatByType(StatType.Strength).ToString();
         happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
         icon.SetTexture(chimera.GetIcon());
