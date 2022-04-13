@@ -10,11 +10,12 @@ public class Facility : MonoBehaviour
     [SerializeField] private int currentTier = 0;
     [SerializeField] private int statModifier = 1;
     [SerializeField] private int price = 100;
-    [SerializeField] private Chimera storedChimera;
     [SerializeField] private bool isActive = false;
 
-    // - Made by: Joe 2/9/2022
-    // - Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
+    [Header("References")]
+    [SerializeField] private Chimera storedChimera;
+
+    // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
     {
         price = (int)(price * 7.5);
@@ -44,6 +45,39 @@ public class Facility : MonoBehaviour
         int newMod = statModifier + 1;
 
         Debug.Log(facilityType + " now generates " + newMod + " " + statType + " for Chimeras per tick!");
+    }
+
+    // Called to properly link a chimera to a facility and adjust its states properly.
+    public bool PlaceChimera(Chimera chimera)
+    {
+        if(storedChimera != null) // Something is already in the facility.
+        {
+            Debug.Log("Cannot add " + chimera + ". " + storedChimera + " is already in this facility.");
+            return false;
+        }
+
+        storedChimera = chimera;
+        storedChimera.SetInFacility(true);
+        chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
+
+        Debug.Log(storedChimera + " added to the facility.");
+        return true;
+    }
+
+    // Removes Chimera from facility and cleans up chimera and facility logic.
+    public bool RemoveChimera()
+    {
+        if(storedChimera == null) // Facility is empty.
+        {
+            Debug.Log("Cannot remove Chimera, facility is empty.");
+            return false;
+        }
+
+        Debug.Log(storedChimera + " has been removed from the facility.");
+        storedChimera.SetInFacility(false);
+        storedChimera = null;
+
+        return true;
     }
 
     public void FacilityTick()
