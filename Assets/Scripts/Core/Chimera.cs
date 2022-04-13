@@ -162,9 +162,11 @@ public class Chimera : MonoBehaviour
                 strength += strengthGrowth;
                 Debug.Log("New " + statType + " stat = " + strength);
                 break;
-         }
+        }
 
+        GameManager.Instance.UpdateDetailsUI();
         ++levelUpTracker;
+
         if (levelUpTracker % 3 == 0)
         {
             ++level;
