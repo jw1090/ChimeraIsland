@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +16,14 @@ public class ChimeraDetailsFolder : MonoBehaviour
             {
                 chimeraDetailsList[i].gameObject.SetActive(true);
             }
+        }
+    }
+
+    public void UpdateDetailsList()
+    {
+        foreach(var detail in chimeraDetailsList)
+        {
+            detail.UpdateDetails();
         }
     }
 }
