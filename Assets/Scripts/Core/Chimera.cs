@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,25 @@ public class Chimera : MonoBehaviour
     [Header("References")]
     [SerializeField] private ChimeraModel currentChimeraModel = null;
 
+
+    //private IEnumerator HappinessTickTimer()
+    //{
+    //    while(!inFacility && happiness >= 0)
+    //    {
+    //        yield return new WaitForSeconds(happinessTickTimer);
+    //        Debug.Log("Decrease Happiness");
+    //        ChangeHappiness(-1);
+    //    }
+    //}
+    public void HappinessTick()
+    {
+        if (!inFacility)
+        {
+            ChangeHappiness(-1);
+            GameManager.Instance.UpdateDetailsUI();
+        }
+    }
+
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
@@ -71,7 +91,7 @@ public class Chimera : MonoBehaviour
         {
             return;
         }
-
+       
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
         
@@ -199,14 +219,14 @@ public class Chimera : MonoBehaviour
     public Sprite GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     public void SetInFacility(bool facilityState) { inFacility = facilityState; }
-    public void IncreaseHappiness(int amount)
+    public void ChangeHappiness(int amount)
     {
-        if(happiness + amount >= 100)
+        if (happiness + amount >= 100)
         {
             happiness = 100;
             return;
         }
-        else if(happiness + amount <= -100)
+        else if (happiness + amount <= -100)
         {
             happiness = -100;
             return;
@@ -214,5 +234,6 @@ public class Chimera : MonoBehaviour
 
         happiness += amount;
     }
+
     #endregion
 }

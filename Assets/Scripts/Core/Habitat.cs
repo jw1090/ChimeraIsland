@@ -13,6 +13,7 @@ public class Habitat : MonoBehaviour
 
     [Header("Tick Info")]
     [SerializeField] private float tickTimer = 60.0f;
+    [SerializeField] private int tickTracker = 0;
     private Coroutine tickCoroutine;
 
     [Header("References")]
@@ -33,9 +34,17 @@ public class Habitat : MonoBehaviour
         while (isActive)
         {
             yield return new WaitForSeconds(tickTimer);
+
+            ++tickTracker;
+
             foreach(Chimera chimera in chimeras)
             {
                 chimera.EssenceTick();
+                if(tickTracker % 5 == 0)
+                {
+                    chimera.HappinessTick();
+                }
+                
                 //Debug.Log("Tick");
             }
             foreach(Facility facility in facilities)
@@ -159,4 +168,5 @@ public class Habitat : MonoBehaviour
 
     public List<Chimera> GetChimeras() { return chimeras; }
     public List<Facility> GetFacilities() { return facilities; }
+    public float GetTickTracker() { return tickTracker; }
 }
