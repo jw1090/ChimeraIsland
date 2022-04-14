@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,11 +8,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentEssence = 0;
 
     [Header("Habitat")]
-    [SerializeField] private Habitat _ActiveHabitat;
-    [SerializeField] private Habitat _Habitat1;
+    [SerializeField] private Habitat _ActiveHabitat = null;
 
     [Header("References")]
     [SerializeField] private Camera cam = null;
+    [SerializeField] private PatrolNodes patrolNodes = null;
     [SerializeField] private ChimeraDetailsFolder chimeraDetailsFolder = null;
     [SerializeField] private TextMeshProUGUI[] essenceWallets = null;
 
@@ -94,6 +95,11 @@ public class GameManager : MonoBehaviour
     public void UpdateDetailsUI()
     {
         chimeraDetailsFolder.UpdateDetailsList();
+    }
+
+    public List<Transform> GetPatrolNodes()
+    {
+        return patrolNodes.GetNodes();
     }
 
     #region Getters & Setters

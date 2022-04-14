@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5834947763061098189}
   - component: {fileID: 855878291477086151}
-  - component: {fileID: 1351692579852877345}
   - component: {fileID: 6986084506952480713}
+  - component: {fileID: 6408947515153461123}
   m_Layer: 0
   m_Name: A
   m_TagString: Chimera
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementalType: 0
   statPreference: 2
-  currentChimeraModel: {fileID: 8280842387536629694}
   price: 200
+  inFacility: 0
   level: 1
   levelCap: 99
   endurance: 1
@@ -67,32 +67,9 @@ MonoBehaviour:
   intelligenceThreshold: 2
   strengthThreshold: 2
   levelUpTracker: 0
-  storedEnduranceExperience: 0
-  storedIntelligenceExperience: 0
-  storedStrengthExperience: 0
-  experienceCap: 500
   baseEssenceRate: 5
-  storedEssence: 0
   essenceModifier: 1
-  essenceCap: 150
---- !u!114 &1351692579852877345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4192189018358709760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b612cb9490da51b4e9d0d8de7520af34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  index: 0
-  WanderIndex: 0
-  patrolTime: 0.2
-  timer: 0
-  navMeshAgent: {fileID: 6986084506952480713}
-  patrolPoints: []
+  currentChimeraModel: {fileID: 8280842387536629694}
 --- !u!195 &6986084506952480713
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -115,6 +92,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6408947515153461123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4192189018358709760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b612cb9490da51b4e9d0d8de7520af34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nodes: []
+  _navMeshAgent: {fileID: 0}
 --- !u!1001 &7096979794104110399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -129,6 +120,18 @@ PrefabInstance:
     - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
       propertyPath: m_LocalPosition.x
