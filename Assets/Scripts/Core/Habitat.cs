@@ -8,13 +8,13 @@ public class Habitat : MonoBehaviour
     [SerializeField] private bool isActive = false;
     [SerializeField] private int chimeraCapacity = 3;
     [SerializeField] private int facilityCapacity = 3;
+    [SerializeField] private float unhappySpeed = 10;
     [SerializeField] private List<Chimera> chimeras;
     [SerializeField] private List<Facility> facilities;
 
     [Header("Tick Info")]
     [SerializeField] private float tickTimer = 60.0f;
     [SerializeField] private int tickTracker = 0;
-    private Coroutine tickCoroutine;
 
     [Header("References")]
     [SerializeField] private GameObject chimeraFolder;
@@ -23,12 +23,11 @@ public class Habitat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tickCoroutine = StartCoroutine(TickTimer());
+        StartCoroutine(TickTimer());
     }
 
-    // - Made by: Joe 2/9/2022
-    // - Coroutine in the start loop. If active, do the following.
-    // - Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
+    // Coroutine in the start loop. If active, do the following.
+    // Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
     private IEnumerator TickTimer()
     {
         while (isActive)
@@ -39,14 +38,16 @@ public class Habitat : MonoBehaviour
 
             foreach(Chimera chimera in chimeras)
             {
-                chimera.EssenceTick();
-                if(tickTracker % 5 == 0)
+                if(chimera.isActiveAndEnabled)
                 {
-                    chimera.HappinessTick();
+                    chimera.EssenceTick();
+                    if (tickTracker % unhappySpeed == 0)
+                    {
+                        chimera.HappinessTick();
+                    }
                 }
-                
-                //Debug.Log("Tick");
             }
+
             foreach(Facility facility in facilities)
             {
                 if(facility.IsActive())
@@ -57,10 +58,9 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    // - Made by: Santiago and Joe 2/9/2022
-    // - Buy Facility using GameManager to pay.
-    // - Instantiate a Facility prefab on a map at some set of xyz coordinates.
-    // - Make sure only one can be active at a time.
+    // Buy Facility using GameManager to pay.
+    // Instantiate a Facility prefab on a map at some set of xyz coordinates.
+    // Make sure only one can be active at a time.
     public void AddFacility(FacilityType facilityType)
     {
         Facility toBuyFacility = GetFacility(facilityType);
@@ -92,9 +92,8 @@ public class Habitat : MonoBehaviour
         toBuyFacility.BuyFacility();
     }
 
-    // - Made by: Joe 2/23/2022
-    // - Called by the BuyChimera Script on a button to check price nad purchase an egg on the active habitat.
-    // - Adds it to the chimera list of that habitat and instantiates it as well
+    // Called by the BuyChimera Script on a button to check price nad purchase an egg on the active habitat.
+    // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
         // Return if no room for another Chimera.
@@ -122,7 +121,7 @@ public class Habitat : MonoBehaviour
         chimeras.Add(newChimera);
     }
 
-    // - Look through array to find Facility.
+    // Look through array to find Facility.
     private Facility GetFacility(FacilityType facilityType)
     {
         foreach (Facility facility in facilities)
@@ -136,8 +135,7 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    // - Made by: Joe 2/9/2022
-    // - Coints how many facilities are active in the Habitat
+    // Coints how many facilities are active in the Habitat
     private int ActiveFacilitiesCount()
     {
         int facilityCount = 0;
