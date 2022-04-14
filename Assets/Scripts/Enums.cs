@@ -18,6 +18,16 @@ public enum FacilityType
     Waterfall,
 }
 
+public enum Passives
+{
+    None = -1,
+    GreenThumb,
+    Multitasking,
+    WorkMotivated
+
+
+}
+
 public enum StatType
 {
     None = 1,
