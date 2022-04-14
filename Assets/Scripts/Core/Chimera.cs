@@ -91,7 +91,12 @@ public class Chimera : MonoBehaviour
         {
             return;
         }
-       
+
+       //TODO: HERE COMES THE GREEN THUMB PASSIVE: 
+       // ALSO HERE COMES THE WORK MOTIVATED PASSIVE AS WELL- HAPPINESS CANNOT BE DECREASED.
+
+
+
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
         

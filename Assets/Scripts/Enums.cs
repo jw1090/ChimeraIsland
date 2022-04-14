@@ -24,8 +24,6 @@ public enum Passives
     GreenThumb,
     Multitasking,
     WorkMotivated
-
-
 }
 
 public enum StatType
