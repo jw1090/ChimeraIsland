@@ -99,7 +99,7 @@ public class Facility : MonoBehaviour
     {
         if(storedChimera.GetStatPreference() == statType)
         {
-            storedChimera.IncreaseHappiness(1);
+            storedChimera.ChangeHappiness(1);
         }
     }
 
