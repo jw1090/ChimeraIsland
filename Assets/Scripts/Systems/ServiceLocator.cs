@@ -25,6 +25,12 @@ public static class ServiceLocator
     public static T Get<T>()
     {
         T result = default(T);
+        object sysObj = null;
+        if (ServiceLocator.Contains<T>())
+        {
+            _systemRegistry.TryGetValue(typeof(T), out sysObj);
+            result = (T)sysObj;
+        }
 
         return result;
     }
