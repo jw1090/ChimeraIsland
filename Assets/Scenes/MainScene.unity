@@ -5317,7 +5317,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702410791
 GameObject:
@@ -5491,7 +5491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &722336215
 PrefabInstance:
@@ -7476,7 +7476,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 40, y: 180, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -8412,63 +8412,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
   m_PrefabInstance: {fileID: 1027387754}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1042047379
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1042047381}
-  - component: {fileID: 1042047382}
-  - component: {fileID: 1042047380}
-  m_Layer: 0
-  m_Name: PositionManager
-  m_TagString: PosMgr
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1042047380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042047379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64393487c6156a64c96a9fec84104706, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PositionPoints: []
---- !u!4 &1042047381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042047379}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5126181, y: -19.212616, z: -18.870752}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1042047382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042047379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb48ef6636201044a729414c4c36d55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1053109574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 22694147795787642, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
@@ -11867,7 +11810,7 @@ RectTransform:
   - {fileID: 977075017}
   - {fileID: 377004311}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11887,7 +11830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OpenChimerasButton: {fileID: 955814887}
-  ChimerasPanel: {fileID: 209325690}
+  DetailsPanel: {fileID: 209325690}
   CloseChimerasButton: {fileID: 1838690946}
   Marketplace: {fileID: 532682773}
 --- !u!114 &1418420241
@@ -14486,7 +14429,7 @@ Transform:
   m_Children:
   - {fileID: 674330412}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1797569389
 GameObject:
@@ -15442,10 +15385,11 @@ MonoBehaviour:
   currentEssence: 5
   activeHabitat: {fileID: 674330413}
   Habitat1: {fileID: 674330413}
+  cam: {fileID: 963194227}
+  chimeraDetailsFolder: {fileID: 209325695}
   essenceWallets:
   - {fileID: 2131325068}
   - {fileID: 2079950359}
-  cam: {fileID: 963194227}
 --- !u!1 &1857752866
 GameObject:
   m_ObjectHideFlags: 0
@@ -17432,10 +17376,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chimera Details 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1574459908703696424, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1574459908703696425, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -17520,10 +17460,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-      propertyPath: chimeraDetailsFolder
-      value: 
-      objectReference: {fileID: 209325695}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
 --- !u!1001 &3788780336505227094

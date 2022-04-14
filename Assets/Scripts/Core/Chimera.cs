@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +6,8 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private StatType statPreference = StatType.None;
-    [SerializeField] private ChimeraModel currentChimeraModel = null;
     [SerializeField] private int price = 200;
+    [SerializeField] private bool inFacility = false;
 
     [Header("Stats")]
     [SerializeField] private int level = 1;
@@ -35,6 +33,9 @@ public class Chimera : MonoBehaviour
     [Header("Essence")]
     [SerializeField] private float baseEssenceRate = 5;
     [SerializeField] private float essenceModifier = 1.0f; // Tuning knob for essence gain
+
+    [Header("References")]
+    [SerializeField] private ChimeraModel currentChimeraModel = null;
 
     // - Made by: Joe 2/9/2022
     // - Checks if stored experience is below cap and appropriately adds stat exp.
@@ -66,6 +67,11 @@ public class Chimera : MonoBehaviour
     // - The essence formula is located here.
     public void EssenceTick()
     { 
+        if(inFacility)
+        {
+            return;
+        }
+
         happinessMod = HappinessModifierCalc();
         //Debug.Log("Current Happiness Modifier: " + happinessMod);
         
@@ -157,9 +163,11 @@ public class Chimera : MonoBehaviour
                 strength += strengthGrowth;
                 Debug.Log("New " + statType + " stat = " + strength);
                 break;
-         }
+        }
 
+        GameManager.Instance.UpdateDetailsUI();
         ++levelUpTracker;
+
         if (levelUpTracker % 3 == 0)
         {
             ++level;
@@ -188,8 +196,9 @@ public class Chimera : MonoBehaviour
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
     public StatType GetStatPreference() { return statPreference; }
-    public Texture2D GetIcon() { return currentChimeraModel.GetIcon(); }
+    public Sprite GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
+    public void SetInFacility(bool facilityState) { inFacility = facilityState; }
     public void IncreaseHappiness(int amount)
     {
         if(happiness + amount >= 100)

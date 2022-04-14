@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject OpenChimerasButton;
-    [SerializeField] private GameObject ChimerasPanel;
+    [SerializeField] private GameObject DetailsPanel;
     [SerializeField] private GameObject CloseChimerasButton;
     [SerializeField] private GameObject Marketplace;
 
@@ -19,7 +17,7 @@ public class MenuManager : MonoBehaviour
     {
         OpenChimerasButton.SetActive(true);
         CloseChimerasButton.SetActive(false);
-        ChimerasPanel.SetActive(false);
+        DetailsPanel.SetActive(false);
         Marketplace.SetActive(false);
     }
 
@@ -27,7 +25,7 @@ public class MenuManager : MonoBehaviour
     {
         CloseAll();
         OpenChimerasButton.SetActive(false);
-        ChimerasPanel.SetActive(true);
+        DetailsPanel.SetActive(true);
         CloseChimerasButton.SetActive(true);
     }
 
