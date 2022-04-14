@@ -1,11 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChimeraModel : MonoBehaviour
 {
     [Header("Evolution Info")]
-    [SerializeField] private Texture2D profileIcon = null;
+    [SerializeField] private Sprite profileIcon = null;
     [SerializeField] private List<ChimeraModel> evolutionPaths;
     [SerializeField] private int reqEndurance = 0;
     [SerializeField] private int reqIntelligence = 0;
@@ -55,7 +55,7 @@ public class ChimeraModel : MonoBehaviour
     }
 
     #region Getters & Setters
-    public Texture2D GetIcon() { return profileIcon; }
+    public Sprite GetIcon() { return profileIcon; }
     public int GetReqEnd() { return reqEndurance; }
     public int GetReqInt() { return reqIntelligence; }
     public int GetReqStr() { return reqStrength; }

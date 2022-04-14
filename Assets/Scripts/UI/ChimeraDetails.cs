@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ChimeraDetails : MonoBehaviour
@@ -6,7 +7,7 @@ public class ChimeraDetails : MonoBehaviour
     [Header("References")]
     [SerializeField] private int chimeraSpot;
     [SerializeField] private Chimera chimera;
-    [SerializeField] private CanvasRenderer icon;
+    [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI intelligence;
     [SerializeField] private TextMeshProUGUI stamina;
@@ -17,11 +18,6 @@ public class ChimeraDetails : MonoBehaviour
     void OnEnable()
     {
         UpdateDetails();
-    }
-
-    private void Update()
-    {
-        //UpdateDetails();
     }
 
     public void UpdateDetails()
@@ -35,7 +31,6 @@ public class ChimeraDetails : MonoBehaviour
         chimera = GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot];
 
         //Debug.Log("Chimera: " + GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot]);
-        //Debug.Log("Icon Image: " + chimera.GetIcon());
 
         level.text = "Level: " + chimera.GetLevel();
         stamina.text = chimera.GetStatByType(StatType.Endurance).ToString();
@@ -43,7 +38,7 @@ public class ChimeraDetails : MonoBehaviour
         strength.text = chimera.GetStatByType(StatType.Strength).ToString();
         happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
         element.text = "Element: " + chimera.GetElementalType().ToString();
-        icon.SetTexture(chimera.GetIcon());
+        icon.sprite = chimera.GetIcon();
     }
 
     public int GetChimeraSpot() { return chimeraSpot; }

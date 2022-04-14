@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Chimera : MonoBehaviour
 {
@@ -195,7 +196,7 @@ public class Chimera : MonoBehaviour
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
     public StatType GetStatPreference() { return statPreference; }
-    public Texture2D GetIcon() { return currentChimeraModel.GetIcon(); }
+    public Sprite GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     public void SetInFacility(bool facilityState) { inFacility = facilityState; }
     public void IncreaseHappiness(int amount)
