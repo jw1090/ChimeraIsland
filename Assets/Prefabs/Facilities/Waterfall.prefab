@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1865579845439662283}
   - component: {fileID: 6153488508937182404}
   - component: {fileID: 5131075599866437455}
-  - component: {fileID: 8395633080516425126}
   - component: {fileID: -3574371952117081727}
   m_Layer: 0
   m_Name: Waterfall
@@ -83,19 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8395633080516425126
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5509396852312259999}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-3574371952117081727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,5 +99,5 @@ MonoBehaviour:
   currentTier: 0
   statModifier: 1
   price: 50
-  chimera: {fileID: 0}
+  storedChimera: {fileID: 0}
   isActive: 0

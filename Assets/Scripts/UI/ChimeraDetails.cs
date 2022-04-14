@@ -1,35 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ChimeraDetails : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private int chimeraSpot;
-    [SerializeField] private CanvasRenderer icon;
+    [SerializeField] private Chimera chimera;
+    [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI intelligence;
     [SerializeField] private TextMeshProUGUI stamina;
     [SerializeField] private TextMeshProUGUI strength;
     [SerializeField] private TextMeshProUGUI happiness;
     [SerializeField] private TextMeshProUGUI element;
-    private ChimeraDetailsFolder chimeraDetailsFolder;
-    private Chimera chimera;
 
-    private void Start()
-    {
-        chimeraDetailsFolder = GetComponentInParent<ChimeraDetailsFolder>();
-    }
-
-    private void Update()
+    void OnEnable()
     {
         UpdateDetails();
     }
 
-    private void UpdateDetails()
+    public void UpdateDetails()
     {
-        if(GameManager.Instance.GetActiveHabitat().GetChimeras().Count <= chimeraSpot)
+        if (GameManager.Instance.GetActiveHabitat().GetChimeras().Count <= chimeraSpot)
         {
             gameObject.SetActive(false);
             return;
@@ -44,8 +37,8 @@ public class ChimeraDetails : MonoBehaviour
         intelligence.text = chimera.GetStatByType(StatType.Intelligence).ToString();
         strength.text = chimera.GetStatByType(StatType.Strength).ToString();
         happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
-        icon.SetTexture(chimera.GetIcon());
         element.text = "Element: " + chimera.GetElementalType().ToString();
+        icon.sprite = chimera.GetIcon();
     }
 
     public int GetChimeraSpot() { return chimeraSpot; }

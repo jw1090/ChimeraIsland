@@ -9,7 +9,6 @@ namespace AI.Chimera
         public override void Enter(ChimeraBehaviors chimeraBehaviors)
         {
             chimeraBehaviors.navMeshAgent.destination = chimeraBehaviors.patrolPoints[chimeraBehaviors.index].position;
-       
         }
         public override void Update(ChimeraBehaviors ChimeraBehaviors)
         {
@@ -19,15 +18,14 @@ namespace AI.Chimera
 
                 if (ChimeraBehaviors.timer >= ChimeraBehaviors.patrolTime)
                 {
-
                     ChimeraBehaviors.index++;
                     ChimeraBehaviors.WanderIndex++;
                     ChimeraBehaviors.timer = 0;
-                    if (ChimeraBehaviors.index >= ChimeraBehaviors.patrolPoints.Length - 1)
+                    if (ChimeraBehaviors.index > ChimeraBehaviors.patrolPoints.Length - 1)
                     {
                         ChimeraBehaviors.index = 0;
                     }
-                    if (ChimeraBehaviors.WanderIndex >= ChimeraBehaviors.patrolPoints.Length - 1)
+                    if (ChimeraBehaviors.WanderIndex > ChimeraBehaviors.patrolPoints.Length - 1)
                     {
                         ChimeraBehaviors.WanderIndex = 0;
                     }
@@ -36,10 +34,7 @@ namespace AI.Chimera
                 }
             }
         }
-        public override void Exit(ChimeraBehaviors ChimeraBehaviors)
-        {
-
-        }
+        public override void Exit(ChimeraBehaviors ChimeraBehaviors) { }
     }
 }
 

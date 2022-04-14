@@ -6,29 +6,28 @@ namespace AI.Chimera
 {
     public class WanderState : ChimeraBaseStates
     {
-        public float patrolRange = 10f;
-        private Vector3 wayPoint;
+        [SerializeField] private float patrolRange = 10f;
         //total wander time
-        public float TotelTimer;
+        private float TotalTimer;
         //time of wander point
-        public float PartTimer;
+        private float PartTimer;
         //wander over
-        public bool IsOver;
+        private bool IsOver;
 
         public override void Enter(ChimeraBehaviors chimeraBehaviors)
         {
-            TotelTimer = 10f;
-            PartTimer = 2f;
+            TotalTimer = 10.0f;
+            PartTimer = 2.0f;
             IsOver = false;
             chimeraBehaviors.navMeshAgent.destination = GetNewWayPoint(chimeraBehaviors.gameObject.transform.position.y);
         }
 
         public override void Update(ChimeraBehaviors chimeraBehaviors)
         {
-            TotelTimer -= Time.deltaTime;
+            TotalTimer -= Time.deltaTime;
             PartTimer -= Time.deltaTime;
-            // Debug.Log(TotelTimer);
-            if (TotelTimer <= 0f)
+
+            if (TotalTimer <= 0f)
             {
                 IsOver = true;
                 chimeraBehaviors.ChangeState(chimeraBehaviors.states[StateEnum.Patrol]);
@@ -42,24 +41,22 @@ namespace AI.Chimera
 
         public override void Exit(ChimeraBehaviors chimeraBehaviors)
         {
-            TotelTimer = 0f;
-            PartTimer = 0f;
+            TotalTimer = 0.0f;
+            PartTimer = 0.0f;
         }
 
         public Vector3 GetNewWayPoint(float positionY)
         {
             float randomX = Random.Range(-patrolRange, patrolRange);
             float randomZ = Random.Range(-patrolRange, patrolRange);
-
             // Vector3 randomPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
             Vector3 randomPoint = new Vector3
             (
-                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.WanderIndex].position.x + randomX,
+                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.index].position.x + randomX,
                 positionY,
-                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.WanderIndex].position.z + randomZ
+                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.index].position.z + randomZ
             );
-            wayPoint = randomPoint;
-            return wayPoint;
+            return randomPoint;
         }
     }
 }

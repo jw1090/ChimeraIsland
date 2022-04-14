@@ -27,10 +27,6 @@ namespace AI.Chimera
 
         //Mapping of state to state object instance
         public Dictionary<StateEnum, ChimeraBaseStates> states = new Dictionary<StateEnum, ChimeraBaseStates>();
-        void OnEnable()
-        {
-            
-        }
         void Awake()
         {
             patrolPoints = GameObject.FindGameObjectWithTag("PosMgr").GetComponent<PostionPoints>().PositionPoints;

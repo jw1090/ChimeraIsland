@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Habitat Habitat1;
 
     [Header("References")]
-    [SerializeField] private TextMeshProUGUI[] essenceWallets;
-    [SerializeField] private Camera cam;
+    [SerializeField] private Camera cam = null;
+    [SerializeField] private ChimeraDetailsFolder chimeraDetailsFolder = null;
+    [SerializeField] private TextMeshProUGUI[] essenceWallets = null;
 
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
@@ -93,7 +92,7 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Tap on a chimera.");
                 Transform chimera = hit.collider.gameObject.transform.parent;
-                chimera.GetComponent<Chimera>().ChimeraTap();
+                //chimera.GetComponent<Chimera>().ChimeraTap();
             }
         }
     }
@@ -106,43 +105,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int FacilityAffinityCheck(StatType compareType)
+    public void UpdateDetailsUI()
     {
-        int value = 0;
-        foreach (Facility facility in GetActiveHabitat().GetFacilities())
-        {
-            StatType statType = facility.GetStatType();
-
-            if (compareType == statType)
-            {
-                value = 1;
-            }
-            else
-            {
-                value = -1;
-            }
-        }
-            return value;
-    }
-
-    public int ElementalAffinityCheck(ElementalType compareType)
-    {
-        int value = 0;
-        foreach (Chimera chimera in GetActiveHabitat().GetChimeras())
-        {
-            ElementalType elementalType = chimera.GetElementalType();
-
-            //if (Mathf.Abs(compareType - elementalType) == 3)
-            //{
-            //    value = 1;
-            //}
-            //else if (Mathf.Abs(compareType - elementalType) == 1)
-            //{
-            //    value = -1;
-            //}
-
-        }
-        return value;
+        chimeraDetailsFolder.UpdateDetailsList();
     }
 
     #region Getters & Setters
