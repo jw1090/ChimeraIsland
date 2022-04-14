@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private int currentEssence = 0;
 
-    [Header("Habitats")]
-    [SerializeField] private Habitat activeHabitat;
-    [SerializeField] private Habitat Habitat1;
+    [Header("Habitat")]
+    [SerializeField] private Habitat _ActiveHabitat;
+    [SerializeField] private Habitat _Habitat1;
 
     [Header("References")]
     [SerializeField] private Camera cam = null;
@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
 
-    // - Made by: Joe 2/2/2022
     // - Basic Singleton Implementation
     private void Initialize()
     {
@@ -65,19 +64,6 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // - Adds Chimera to the habitat by pressing the add chimera button.
-    // - Make sure the capacity has room and that you are not instantiating the prefab under the map
-    public bool AddChimera(Chimera chimera, Habitat newHabitat)
-    {
-        return false;
-    }
-
-    // - Moves Chimera from one habitat to another
-    public bool TransferChimera(Chimera chimera, Habitat originHabitat, Habitat newHabitat)
-    {
-        return false;
-    }
-
     private void ChimeraMouseTap()
     {
         if(Input.GetMouseButtonDown(0))
@@ -112,6 +98,6 @@ public class GameManager : MonoBehaviour
 
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
-    public Habitat GetActiveHabitat() { return activeHabitat; }
+    public Habitat GetActiveHabitat() { return _ActiveHabitat; }
     #endregion
 }
