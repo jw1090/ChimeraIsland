@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class ServiceLocator
 {
@@ -22,17 +23,15 @@ public static class ServiceLocator
         }
     }
 
-    public static T Get<T>()
+    static public T Get<T>()
     {
-        T result = default(T);
-        object sysObj = null;
-        if (ServiceLocator.Contains<T>())
+        object ret = default(T);
+        _systemRegistry.TryGetValue(typeof(T), out ret);
+        if (ret == null)
         {
-            _systemRegistry.TryGetValue(typeof(T), out sysObj);
-            result = (T)sysObj;
+            Debug.Log("Could not find [" + (typeof(T)) + "] as a registered system");
         }
-
-        return result;
+        return (T)ret;
     }
 
     public static bool Contains<T>()
