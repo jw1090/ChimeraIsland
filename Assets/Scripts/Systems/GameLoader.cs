@@ -57,12 +57,17 @@ public class GameLoader : AsyncLoader
 	{
         Debug.Log("Loading Core Systems");
 
-        //var screenManagerGO = Instantiate(screenManager, systemsParent);
-        //screenManagerGO.name = "ScreenManager";
-        //var screenManagerComp = screenManagerGO.GetComponent<ScreenManager>().Initialize();
-        //ServiceLocator.Register<ScreenManager>(screenManagerComp);
+        var persistentDataGO = new GameObject("Persistent Data Manager");
+        persistentDataGO.transform.SetParent(systemsParent);
+        var persistentDataComp = persistentDataGO.AddComponent<PersistentData>().Initialize();
+        ServiceLocator.Register<IPersistentData>(persistentDataComp);
 
-		yield return null;
+        var sessionDataGO = new GameObject("Session Data Manager");
+        sessionDataGO.transform.SetParent(systemsParent);
+        var sessionDataComp = sessionDataGO.AddComponent<SessionData>().Initialize();
+        ServiceLocator.Register<ISessionData>(sessionDataComp);
+
+        yield return null;
 	}
 
 	private IEnumerator InitializeModularSystems(Transform systemsParent)
