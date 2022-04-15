@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Chimera : MonoBehaviour
 {
@@ -38,27 +36,7 @@ public class Chimera : MonoBehaviour
     [Header("References")]
     [SerializeField] private ChimeraModel currentChimeraModel = null;
 
-
-    //private IEnumerator HappinessTickTimer()
-    //{
-    //    while(!inFacility && happiness >= 0)
-    //    {
-    //        yield return new WaitForSeconds(happinessTickTimer);
-    //        Debug.Log("Decrease Happiness");
-    //        ChangeHappiness(-1);
-    //    }
-    //}
-    public void HappinessTick()
-    {
-        if (!inFacility)
-        {
-            ChangeHappiness(-1);
-            GameManager.Instance.UpdateDetailsUI();
-        }
-    }
-
-    // - Made by: Joe 2/9/2022
-    // - Checks if stored experience is below cap and appropriately adds stat exp.
+    // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
     {
         if(level >= levelCap)
@@ -82,9 +60,8 @@ public class Chimera : MonoBehaviour
         AllocateExperience();
     }
 
-    // - Made by: Joe 2/9/2022
-    // - Checks if stored experience is below cap and appropriately assigns.
-    // - The essence formula is located here.
+    // Checks if stored experience is below cap and appropriately assigns.
+    // The essence formula is located here.
     public void EssenceTick()
     { 
         if(inFacility)
@@ -93,7 +70,7 @@ public class Chimera : MonoBehaviour
         }
        
         happinessMod = HappinessModifierCalc();
-        //Debug.Log("Current Happiness Modifier: " + happinessMod);
+        // Debug.Log("Current Happiness Modifier: " + happinessMod);
         
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
@@ -103,9 +80,17 @@ public class Chimera : MonoBehaviour
         // Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
     }
 
-    // - Made by: Santiago 3/02/2022
-    // - Happiness can range between -100 and 100.
-    // - At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
+    public void HappinessTick()
+    {
+        if (!inFacility)
+        {
+            ChangeHappiness(-1);
+            GameManager.Instance.UpdateDetailsUI();
+        }
+    }
+
+    // Happiness can range between -100 and 100.
+    // At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
     private int HappinessModifierCalc()
     {
         if (happiness == 0)
@@ -124,9 +109,8 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    // - Made by: Joao && Joe 2/9/2022
-    // - Transfer experience stored by the chimera and see if each stat's threshold is met.
-    // - If so, LevelUp is called with specific stat enumerator.
+    // Transfer experience stored by the chimera and see if each stat's threshold is met.
+    // If so, LevelUp is called with specific stat enumerator.
     private void AllocateExperience()
     {
         bool levelUp = false;
@@ -160,13 +144,11 @@ public class Chimera : MonoBehaviour
 
         if (levelUp)
         {
-            currentChimeraModel.CheckEvolution(intelligence, endurance, strength);
+            currentChimeraModel.CheckEvolution(endurance, intelligence, strength);
         }
     }
 
-    // - Made by: Joao 2/9/2022
-    // - Increase stat at rate of the relevant statgrowth variable.
-    // - For example: agility += agilityGrowth, defense += defenseGrowth...
+    // Increase stat at rate of the relevant statgrowth variable.
     private void LevelUp(StatType statType)
     {
         switch (statType)
