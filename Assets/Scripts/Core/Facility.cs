@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Facility : MonoBehaviour
 {
@@ -73,6 +74,12 @@ public class Facility : MonoBehaviour
 
         Debug.Log(storedChimera + " has been removed from the facility.");
         storedChimera.SetInFacility(false);
+        NavMeshHit myNavHit;
+        //find nearby walkable position
+        if (NavMesh.SamplePosition(transform.position, out myNavHit, 100, -1))
+        {
+            storedChimera.transform.position = myNavHit.position;
+        }
         storedChimera = null;
 
         return true;
@@ -102,6 +109,7 @@ public class Facility : MonoBehaviour
             storedChimera.ChangeHappiness(1);
         }
     }
+    public bool isChimeraStored() { return storedChimera != null; }
 
     #region Getters & Setters
     public FacilityType GetFacilityType() { return facilityType; }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,9 +17,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ChimeraDetailsFolder chimeraDetailsFolder = null;
     [SerializeField] private TextMeshProUGUI[] essenceWallets = null;
 
+    [Header("Chimera Remove")]
+    [SerializeField] private float clickHeldSeconds = 2.0f;
+    [SerializeField] private GameObject slider;
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
-
+    private RaycastHit hitInfo;
+    private float clickHeldCounter = 0.0f;
     // - Basic Singleton Implementation
     private void Initialize()
     {
@@ -41,7 +46,10 @@ public class GameManager : MonoBehaviour
     {
         UpdateWallets();
     }
-
+    private void Update()
+    {
+        checkRemove();
+    }
     // - Made by: Joe 2/2/2022
     // - Increases your essence.
     public void IncreaseEssence(int amount)
@@ -101,7 +109,34 @@ public class GameManager : MonoBehaviour
     {
         return patrolNodes.GetNodes();
     }
+    private void checkRemove()
+    {
+        //check remove held down
+        if (Input.GetMouseButton(0))
+        {
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hitInfo.collider.tag == "Facility" && hitInfo.collider.GetComponent<Facility>().IsActive() && hitInfo.collider.GetComponent<Facility>().isChimeraStored())
+            {
+                clickHeldCounter += Time.deltaTime;
+                if (clickHeldCounter >= clickHeldSeconds)
+                {
+                    hitInfo.collider.GetComponent<Facility>().RemoveChimera();
+                    clickHeldCounter = 0.0f;
+                }
+            }
+            else clickHeldCounter = 0.0f;
+        }
+        else clickHeldCounter = 0.0f;
 
+        //control remove slider
+        if (clickHeldCounter > 0.0f)
+        {
+            slider.SetActive(true);
+            slider.transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
+            slider.gameObject.GetComponent<Slider>().value = clickHeldCounter / 2.0f;
+        }
+        else slider.SetActive(false);
+    }
     #region Getters & Setters
     public int GetEssence() { return currentEssence; }
     public Habitat GetActiveHabitat() { return _ActiveHabitat; }
