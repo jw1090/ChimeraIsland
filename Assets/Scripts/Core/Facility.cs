@@ -109,7 +109,7 @@ public class Facility : MonoBehaviour
             storedChimera.ChangeHappiness(1);
         }
     }
-    public bool isChimeraStored() { return storedChimera != null; }
+    public bool IsChimeraStored() { return storedChimera != null; }
 
     #region Getters & Setters
     public FacilityType GetFacilityType() { return facilityType; }

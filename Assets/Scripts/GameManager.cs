@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        checkRemove();
+        CheckRemove();
     }
     // - Made by: Joe 2/2/2022
     // - Increases your essence.
@@ -109,13 +109,14 @@ public class GameManager : MonoBehaviour
     {
         return patrolNodes.GetNodes();
     }
-    private void checkRemove()
+    private void CheckRemove()
     {
         //check remove held down
+
         if (Input.GetMouseButton(0))
         {
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hitInfo.collider.tag == "Facility" && hitInfo.collider.GetComponent<Facility>().IsActive() && hitInfo.collider.GetComponent<Facility>().isChimeraStored())
+            if (hitInfo.collider.tag == "Facility" && hitInfo.collider.GetComponent<Facility>().IsActive() && hitInfo.collider.GetComponent<Facility>().IsChimeraStored())
             {
                 clickHeldCounter += Time.deltaTime;
                 if (clickHeldCounter >= clickHeldSeconds)
@@ -129,6 +130,7 @@ public class GameManager : MonoBehaviour
         else clickHeldCounter = 0.0f;
 
         //control remove slider
+
         if (clickHeldCounter > 0.0f)
         {
             slider.SetActive(true);
