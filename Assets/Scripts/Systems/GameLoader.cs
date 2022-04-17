@@ -45,6 +45,9 @@ public class GameLoader : AsyncLoader
 		Transform systemsParent = systemsGO.transform;
 		DontDestroyOnLoad(systemsGO);
 
+        // Because Unity can hold onto static values between sessions.
+        ResetStaticVariables();
+
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
 		Enqueue(InitializeModularSystems(systemsParent), 2);
@@ -88,8 +91,18 @@ public class GameLoader : AsyncLoader
 
     private IEnumerator LoadInitialScene(int index)
     {
-        Debug.Log($"GameLoader -> Starting Scene Load: {index}");        
-        yield return SceneManager.LoadSceneAsync(index);
+        int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (index != activeSceneIndex)
+        {
+            Debug.Log($"GameLoader -> Starting Scene Load: {index}");
+            yield return SceneManager.LoadSceneAsync(index);
+        }
+        else
+        {
+            // We are already have the desired scene loaded.
+            Debug.Log("GameLoader -> Skipping Scene Load: Scene is already active");
+            yield break;
+        }
     }
 
 	// AsyncLoader completion callback
