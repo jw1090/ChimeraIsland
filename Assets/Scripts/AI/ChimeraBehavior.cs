@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,6 +19,7 @@ namespace AI.Chimera
         [SerializeField] private List<Transform> _nodes;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ChimeraBaseState currentState;
+        private float _heightOffset = 2f;
         private int _patrolIndex = 0;
         private int _wanderIndex = 0;
         private float _timer = 0; // Timer
@@ -58,6 +60,33 @@ namespace AI.Chimera
             }
             currentState = state;
             currentState.Enter(this);
+        }
+
+        IEnumerator OnMouseDown()
+        {
+
+            Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//3D obj pos to world pos,mouse screen pos to Vector3£¬calculate the distance between mouse and obj
+            var offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
+            // Debug.Log("down");
+            ChangeState(states[StateEnum.Held]);
+            while (Input.GetMouseButton(0))
+            {
+                GetComponent<NavMeshAgent>().baseOffset = _heightOffset;
+                GetComponent<NavMeshAgent>().isStopped = true;
+                Vector3 curScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
+                Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenSpace) + offset;
+                transform.position = curPosition;
+
+                yield return new WaitForFixedUpdate();
+            }
+        }
+        IEnumerator OnMouseUp()
+        {
+            GetComponent<NavMeshAgent>().baseOffset = 0;
+            GetComponent<NavMeshAgent>().isStopped = false;
+            // Debug.Log("up");
+            ChangeState(states[StateEnum.Patrol]);
+            yield return new WaitForFixedUpdate();
         }
 
         public int GetPatrolIndex() { return _wanderIndex; }
