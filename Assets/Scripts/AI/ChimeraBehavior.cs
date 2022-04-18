@@ -64,8 +64,7 @@ namespace AI.Chimera
 
         IEnumerator OnMouseDown()
         {
-
-            Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//3D obj pos to world pos,mouse screen pos to Vector3£¬calculate the distance between mouse and obj
+            Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//3D obj pos to world pos,mouse screen pos to Vector3Â£Â¬calculate the distance between mouse and obj
             var offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
             // Debug.Log("down");
             ChangeState(states[StateEnum.Held]);
@@ -80,6 +79,7 @@ namespace AI.Chimera
                 yield return new WaitForFixedUpdate();
             }
         }
+        
         IEnumerator OnMouseUp()
         {
             GetComponent<NavMeshAgent>().baseOffset = 0;
