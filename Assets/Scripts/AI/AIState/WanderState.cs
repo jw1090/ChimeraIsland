@@ -1,61 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI.Chimera
 {
-    public class WanderState : ChimeraBaseStates
+    public class WanderState : ChimeraBaseState
     {
-        [SerializeField] private float patrolRange = 10f;
-        //total wander time
-        private float TotalTimer;
-        //time of wander point
-        private float PartTimer;
-        //wander over
-        private bool IsOver;
+        private ChimeraBehavior _chimeraBehavior = null;
+        private float _patrolRange = 10.0f;
+        private float _totalTimer = 0.0f; // Total wander time.
+        private float _partTimer = 0.0f; // Time of wander point.
+        private bool _isOver = false; // Wander over.
 
-        public override void Enter(ChimeraBehaviors chimeraBehaviors)
+        public override void Enter(ChimeraBehavior chimeraBehavior)
         {
-            TotalTimer = 10.0f;
-            PartTimer = 2.0f;
-            IsOver = false;
-            chimeraBehaviors.navMeshAgent.destination = GetNewWayPoint(chimeraBehaviors.gameObject.transform.position.y);
+            _chimeraBehavior = chimeraBehavior;
+            _totalTimer = 10.0f;
+            _partTimer = 2.0f;
+            _isOver = false;
+            _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
         }
 
-        public override void Update(ChimeraBehaviors chimeraBehaviors)
+        public override void Update()
         {
-            TotalTimer -= Time.deltaTime;
-            PartTimer -= Time.deltaTime;
+            _totalTimer -= Time.deltaTime;
+            _partTimer -= Time.deltaTime;
 
-            if (TotalTimer <= 0f)
+            if (_totalTimer <= 0f)
             {
-                IsOver = true;
-                chimeraBehaviors.ChangeState(chimeraBehaviors.states[StateEnum.Patrol]);
+                _isOver = true;
+                _chimeraBehavior.ChangeState(_chimeraBehavior.states[StateEnum.Patrol]);
             }
-            if (PartTimer <= 0f && !IsOver)
+            if (_partTimer <= 0f && !_isOver)
             {
-                PartTimer = 2f;
-                chimeraBehaviors.navMeshAgent.destination = GetNewWayPoint(chimeraBehaviors.gameObject.transform.position.y);
+                _partTimer = 2f;
+                _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
             }
         }
 
-        public override void Exit(ChimeraBehaviors chimeraBehaviors)
+        public override void Exit()
         {
-            TotalTimer = 0.0f;
-            PartTimer = 0.0f;
+            _totalTimer = 0.0f;
+            _partTimer = 0.0f;
         }
 
         public Vector3 GetNewWayPoint(float positionY)
         {
-            float randomX = Random.Range(-patrolRange, patrolRange);
-            float randomZ = Random.Range(-patrolRange, patrolRange);
-            // Vector3 randomPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+            float randomX = Random.Range(-_patrolRange, _patrolRange);
+            float randomZ = Random.Range(-_patrolRange, _patrolRange);
+            Vector3 agentPos = _chimeraBehavior.GetCurrentNode().position;
             Vector3 randomPoint = new Vector3
             (
-                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.index].position.x + randomX,
+                agentPos.x + randomX,
                 positionY,
-                AI.Chimera.ChimeraBehaviors.Instance.patrolPoints[AI.Chimera.ChimeraBehaviors.Instance.index].position.z + randomZ
+                agentPos.z + randomZ
             );
+
             return randomPoint;
         }
     }

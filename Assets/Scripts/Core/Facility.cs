@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Facility : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private bool isActive = false;
 
     [Header("References")]
-    [SerializeField] private Chimera storedChimera;
+    [SerializeField] private Chimera storedChimera = null;
 
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
@@ -73,6 +74,13 @@ public class Facility : MonoBehaviour
 
         Debug.Log(storedChimera + " has been removed from the facility.");
         storedChimera.SetInFacility(false);
+        NavMeshHit myNavHit;
+
+        // Find nearby walkable position.
+        if (NavMesh.SamplePosition(transform.position, out myNavHit, 100, -1))
+        {
+            storedChimera.transform.position = myNavHit.position;
+        }
         storedChimera = null;
 
         return true;
@@ -111,5 +119,14 @@ public class Facility : MonoBehaviour
     public int GetTier() { return currentTier; }
     public int GetPrice() { return price; }
     public bool IsActive() { return isActive; }
+    public bool IsChimeraStored()
+    {
+        if (isActive == false)
+        {
+            Debug.Log("This Facility is not active!");
+            return isActive;
+        }
+        return storedChimera != null;
+    }
     #endregion
 }

@@ -1,41 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AI.Chimera
 {
-    public class PatrolState : ChimeraBaseStates
+    public class PatrolState : ChimeraBaseState
     {
-        public override void Enter(ChimeraBehaviors chimeraBehaviors)
+        private ChimeraBehavior _chimeraBehavior = null;
+        public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
-            chimeraBehaviors.navMeshAgent.destination = chimeraBehaviors.patrolPoints[chimeraBehaviors.index].position;
+            _chimeraBehavior = chimeraBehaviors;
+            _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
         }
-        public override void Update(ChimeraBehaviors ChimeraBehaviors)
+
+        public override void Update()
         {
-            if (ChimeraBehaviors.navMeshAgent.remainingDistance < 1.5f)
+            if (_chimeraBehavior.GetAgentDistance() < 1.5f)
             {
-                ChimeraBehaviors.timer += Time.deltaTime;
+                _chimeraBehavior.AddToTimer(Time.deltaTime);
 
-                if (ChimeraBehaviors.timer >= ChimeraBehaviors.patrolTime)
+                if (_chimeraBehavior.GetTimer() >= _chimeraBehavior.GetPatrolTime())
                 {
-                    ChimeraBehaviors.index++;
-                    ChimeraBehaviors.WanderIndex++;
-                    ChimeraBehaviors.timer = 0;
-                    if (ChimeraBehaviors.index > ChimeraBehaviors.patrolPoints.Length - 1)
+                    _chimeraBehavior.IncreasePatrolIndex(1);
+                    _chimeraBehavior.IncreaseWanderIndex(1);
+                    _chimeraBehavior.ResetTimer();
+
+                    if (_chimeraBehavior.GetPatrolIndex() > _chimeraBehavior.GetNodeCount() - 1)
                     {
-                        ChimeraBehaviors.index = 0;
-                    }
-                    if (ChimeraBehaviors.WanderIndex > ChimeraBehaviors.patrolPoints.Length - 1)
-                    {
-                        ChimeraBehaviors.WanderIndex = 0;
+                        _chimeraBehavior.ResetPatrolIndex();
                     }
 
-                    ChimeraBehaviors.ChangeState(ChimeraBehaviors.states[StateEnum.Wander]);
+                    if (_chimeraBehavior.GetWanderIndex() > _chimeraBehavior.GetNodeCount() - 1)
+                    {
+                        _chimeraBehavior.ResetWanderIndex();
+                    }
+
+                    _chimeraBehavior.ChangeState(_chimeraBehavior.states[StateEnum.Wander]);
                 }
             }
         }
-        public override void Exit(ChimeraBehaviors ChimeraBehaviors) { }
+
+        public override void Exit()
+        {
+
+        }
     }
 }
-
-
