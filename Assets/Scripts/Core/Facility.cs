@@ -12,7 +12,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private bool isActive = false;
 
     [Header("References")]
-    [SerializeField] private Chimera storedChimera;
+    [SerializeField] private Chimera storedChimera = null;
 
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
@@ -75,7 +75,8 @@ public class Facility : MonoBehaviour
         Debug.Log(storedChimera + " has been removed from the facility.");
         storedChimera.SetInFacility(false);
         NavMeshHit myNavHit;
-        //find nearby walkable position
+
+        // Find nearby walkable position.
         if (NavMesh.SamplePosition(transform.position, out myNavHit, 100, -1))
         {
             storedChimera.transform.position = myNavHit.position;
@@ -109,7 +110,6 @@ public class Facility : MonoBehaviour
             storedChimera.ChangeHappiness(1);
         }
     }
-    public bool IsChimeraStored() { return storedChimera != null; }
 
     #region Getters & Setters
     public FacilityType GetFacilityType() { return facilityType; }
@@ -118,5 +118,14 @@ public class Facility : MonoBehaviour
     public int GetTier() { return currentTier; }
     public int GetPrice() { return price; }
     public bool IsActive() { return isActive; }
+    public bool IsChimeraStored()
+    {
+        if (isActive == false)
+        {
+            Debug.Log("This Facility is not active!");
+            return isActive;
+        }
+        return storedChimera != null;
+    }
     #endregion
 }

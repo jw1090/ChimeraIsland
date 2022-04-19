@@ -19,11 +19,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Chimera Remove")]
     [SerializeField] private float clickHeldSeconds = 2.0f;
+    [SerializeField] private float clickHeldCounter = 0.0f;
     [SerializeField] private GameObject slider;
+
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
-    private RaycastHit hitInfo;
-    private float clickHeldCounter = 0.0f;
+
     // - Basic Singleton Implementation
     private void Initialize()
     {
@@ -50,16 +51,15 @@ public class GameManager : MonoBehaviour
     {
         CheckRemove();
     }
-    // - Made by: Joe 2/2/2022
-    // - Increases your essence.
+
+    // Increases your essence.
     public void IncreaseEssence(int amount)
     {
         currentEssence += amount;
         UpdateWallets();
     }
 
-    // - Made by: Joe 2/2/2022
-    // - Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
+    // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
     public bool SpendEssence(int amount)
     {
         if(currentEssence - amount < 0)
@@ -71,25 +71,6 @@ public class GameManager : MonoBehaviour
         UpdateWallets();
 
         return true;
-    }
-
-    private void ChimeraMouseTap()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector2 mouse_pos = Input.mousePosition;
-            Ray ray = cam.ScreenPointToRay(mouse_pos);
-
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit);
-
-            if (hit.collider.CompareTag("Chimera"))
-            {
-                //Debug.Log("Tap on a chimera.");
-                Transform chimera = hit.collider.gameObject.transform.parent;
-                //chimera.GetComponent<Chimera>().ChimeraTap();
-            }
-        }
     }
 
     private void UpdateWallets()
@@ -109,19 +90,45 @@ public class GameManager : MonoBehaviour
     {
         return patrolNodes.GetNodes();
     }
+
+    private void ChimeraMouseTap()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector2 mouse_pos = Input.mousePosition;
+            Ray ray = cam.ScreenPointToRay(mouse_pos);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+
+            if (hit.collider.CompareTag("Chimera"))
+            {
+                //Debug.Log("Tap on a chimera.");
+                Transform chimera = hit.collider.gameObject.transform.parent;
+                //chimera.GetComponent<Chimera>().ChimeraTap();
+            }
+        }
+    }
+
     private void CheckRemove()
     {
-        //check remove held down
-
+        // Check remove held down.
         if (Input.GetMouseButton(0))
         {
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hitInfo.collider.tag == "Facility" && hitInfo.collider.GetComponent<Facility>().IsActive() && hitInfo.collider.GetComponent<Facility>().IsChimeraStored())
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit, 200.0f);
+
+            if(hit.collider == null)
+            {
+                return;
+            }
+
+            if (hit.collider.CompareTag("Facility") && hit.collider.GetComponent<Facility>().IsChimeraStored())
             {
                 clickHeldCounter += Time.deltaTime;
                 if (clickHeldCounter >= clickHeldSeconds)
                 {
-                    hitInfo.collider.GetComponent<Facility>().RemoveChimera();
+                    hit.collider.GetComponent<Facility>().RemoveChimera();
                     clickHeldCounter = 0.0f;
                 }
             }
@@ -129,8 +136,7 @@ public class GameManager : MonoBehaviour
         }
         else clickHeldCounter = 0.0f;
 
-        //control remove slider
-
+        // Control remove slider
         if (clickHeldCounter > 0.0f)
         {
             slider.SetActive(true);
