@@ -57,6 +57,9 @@ public class Chimera : MonoBehaviour
             case StatType.Strength:
                 strengthExperience += amount;
                 break;
+            default:
+                Debug.LogError("Default Experience Tick Please Change!");
+                break;
         }
 
         AllocateExperience();
@@ -191,6 +194,9 @@ public class Chimera : MonoBehaviour
                 strength += strengthGrowth;
                 Debug.Log("New " + statType + " stat = " + strength);
                 break;
+            default:
+                Debug.LogError("Default Level Up Please Change!");
+                break;
         }
 
         GameManager.Instance.UpdateDetailsUI();
@@ -216,8 +222,10 @@ public class Chimera : MonoBehaviour
                 return strength;
             case StatType.Happiness:
                 return happiness;
+            default:
+                Debug.LogError("Default StatType please change!");
+                break;
         }
-
         return -1;
     }
     public int GetLevel() { return level; }
