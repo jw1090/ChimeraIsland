@@ -107,7 +107,13 @@ public class Facility : MonoBehaviour
     {
         if(storedChimera.GetStatPreference() == statType)
         {
-            storedChimera.ChangeHappiness(1);
+            int happinessAmount = 1;
+            if(storedChimera.GetPassive() == Passives.WorkMotivated)
+            {
+                happinessAmount = 2;
+                storedChimera.ChangeHappiness(happinessAmount);
+            }
+            storedChimera.ChangeHappiness(happinessAmount);
         }
     }
 

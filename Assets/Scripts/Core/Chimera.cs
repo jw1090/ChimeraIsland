@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
@@ -5,6 +6,7 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ElementalType elementalType = ElementalType.None;
     [SerializeField] private StatType statPreference = StatType.None;
+    [SerializeField] private Passives passive = Passives.None;
     [SerializeField] private int price = 200;
     [SerializeField] private bool inFacility = false;
 
@@ -63,12 +65,16 @@ public class Chimera : MonoBehaviour
     // Checks if stored experience is below cap and appropriately assigns.
     // The essence formula is located here.
     public void EssenceTick()
-    { 
-        if(inFacility)
+    {
+        if (inFacility)
         {
+            if (passive == Passives.Multitasking)
+            {
+               MultitaskingTick();
+            }
             return;
         }
-       
+
         happinessMod = HappinessModifierCalc();
         // Debug.Log("Current Happiness Modifier: " + happinessMod);
         
@@ -79,12 +85,32 @@ public class Chimera : MonoBehaviour
 
         // Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
     }
-
+    private void MultitaskingTick()
+    {
+        happinessMod = HappinessModifierCalc();
+        int essenceGain = ((int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier))/2);
+        GameManager.Instance.IncreaseEssence(essenceGain);
+    }
     public void HappinessTick()
     {
         if (!inFacility)
         {
-            ChangeHappiness(-1);
+            int happinessAmount = -1;
+
+            if(passive == Passives.GreenThumb)
+            {
+                List<Chimera> chimeras = GameManager.Instance.GetActiveHabitat().GetChimeras();
+
+                foreach (Chimera chimera in chimeras)
+                {
+                    if(chimera.GetElementalType() == ElementalType.Bio)
+                    {
+                        happinessAmount = 1;
+                        ChangeHappiness(happinessAmount);
+                    }
+                }
+            }
+            ChangeHappiness(happinessAmount);
             GameManager.Instance.UpdateDetailsUI();
         }
     }
@@ -198,6 +224,7 @@ public class Chimera : MonoBehaviour
     public int GetPrice() { return price; }
     public ElementalType GetElementalType() { return elementalType; }
     public StatType GetStatPreference() { return statPreference; }
+    public Passives GetPassive() { return passive; }
     public Sprite GetIcon() { return currentChimeraModel.GetIcon(); }
     public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
     public void SetInFacility(bool facilityState) { inFacility = facilityState; }
@@ -216,6 +243,5 @@ public class Chimera : MonoBehaviour
 
         happiness += amount;
     }
-
     #endregion
 }
