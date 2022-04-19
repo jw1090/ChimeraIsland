@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuyFacility : MonoBehaviour, IPointerClickHandler
 {
@@ -17,8 +14,7 @@ public class BuyFacility : MonoBehaviour, IPointerClickHandler
         GetComponentInChildren<TextMeshProUGUI>().text = facility.GetPrice().ToString();
     }
 
-    // - Made by: Joe 3/02/2022
-    // - Adds a facility based on the assigned facilityType.
+    // Adds a facility based on the assigned facilityType.
     public void OnPointerClick(PointerEventData eventData)
     {
         facilityShop.PurchaseFacility();

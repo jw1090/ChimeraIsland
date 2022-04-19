@@ -1,4 +1,4 @@
-namespace AI.Chimera
+namespace AI.Behavior
 {
     public class HeldState : ChimeraBaseState
     {
