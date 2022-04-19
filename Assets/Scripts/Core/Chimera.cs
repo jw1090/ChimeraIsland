@@ -68,11 +68,9 @@ public class Chimera : MonoBehaviour
     {
         if (inFacility)
         {
-            Debug.Log("IM IN A FACILITY");
             if (passive == Passives.Multitasking)
             {
                MultitaskingTick();
-               Debug.Log("Multitasking Active");
             }
             return;
         }
