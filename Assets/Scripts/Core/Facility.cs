@@ -93,7 +93,6 @@ public class Facility : MonoBehaviour
             storedChimera.ExperienceTick(statType, statModifier);
             FlatStatBoost();
             HappinessCheck();
-            //TODO: HERE COMES THE MULTITASKING PASSIVE FOR FACILITIES -> GAIN ESSENCE WHILE TRAINING IN A FACILITY
         }
     }
 
@@ -108,7 +107,13 @@ public class Facility : MonoBehaviour
     {
         if(storedChimera.GetStatPreference() == statType)
         {
-            storedChimera.ChangeHappiness(1);
+            int happinessAmount = 1;
+            if(storedChimera.GetPassive() == Passives.WorkMotivated)
+            {
+                happinessAmount = 2;
+                storedChimera.ChangeHappiness(happinessAmount);
+            }
+            storedChimera.ChangeHappiness(happinessAmount);
         }
     }
 
