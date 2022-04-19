@@ -414,7 +414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748089614479536148, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_Name
-      value: Buy Egg C
+      value: Buy Chimera C
       objectReference: {fileID: 0}
     - target: {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: egg
@@ -429,6 +429,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
+    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: chimera
       value: 
       objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
@@ -5338,7 +5342,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674330411}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5347,8 +5351,8 @@ Transform:
   - {fileID: 500444166}
   - {fileID: 981150756}
   - {fileID: 19827497}
-  m_Father: {fileID: 1791197280}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &674330413
 MonoBehaviour:
@@ -5362,20 +5366,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc75f9953695204ca3455f2c91c24dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  chimeraCapacity: 3
-  facilityCapacity: 3
-  unhappySpeed: 10
-  chimeras:
+  _isActive: 0
+  _chimeraCapacity: 3
+  _facilityCapacity: 3
+  _unhappyRate: 10
+  _chimeras:
   - {fileID: 928165736}
-  facilities:
-  - {fileID: 35383058}
+  _facilities:
   - {fileID: 1414356755}
+  - {fileID: 35383058}
   - {fileID: 449551239}
-  tickTimer: 0.4
-  tickTracker: 0
-  chimeraFolder: {fileID: 93296134}
-  spawnPoint: {fileID: 500444165}
+  _tickTimer: 0.2
+  _tickTracker: 0
+  _chimeraFolder: {fileID: 93296134}
+  _spawnPoint: {fileID: 500444165}
+  _patrolNodes: {fileID: 1670965526}
 --- !u!1 &678461791
 GameObject:
   m_ObjectHideFlags: 0
@@ -5885,14 +5890,6 @@ PrefabInstance:
     - target: {fileID: 7285057057785462471, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Name
       value: Buy Facilitiy Int
-      objectReference: {fileID: 0}
-    - target: {fileID: 7285057057983226132, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: facilityType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: m_text
-      value: +INT
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -8129,14 +8126,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buy Facilitiy Str
       objectReference: {fileID: 0}
-    - target: {fileID: 7285057057983226132, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: facilityType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: m_text
-      value: +STR
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
 --- !u!224 &1027387755 stripped
@@ -8484,7 +8473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748089614479536148, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_Name
-      value: Buy Egg B
+      value: Buy Chimera B
       objectReference: {fileID: 0}
     - target: {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: egg
@@ -8499,6 +8488,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
+    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: chimera
       value: 
       objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
@@ -10629,10 +10622,6 @@ PrefabInstance:
       propertyPath: facility
       value: 
       objectReference: {fileID: 1414356755}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: facilityType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -10720,14 +10709,6 @@ PrefabInstance:
     - target: {fileID: 7285057057785462471, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Name
       value: Buy Facilitiy End
-      objectReference: {fileID: 0}
-    - target: {fileID: 7285057057983226132, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: facilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: m_text
-      value: +END
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -13926,52 +13907,6 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 58.478, y: 90.802, z: 86.394}
---- !u!1 &1791197279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1791197280}
-  - component: {fileID: 1791197281}
-  m_Layer: 0
-  m_Name: Habitat Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1791197280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791197279}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 674330412}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1791197281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791197279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c45ad10fedb7a604ba4036e0cc68fd48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ActiveHabitat: {fileID: 674330413}
-  _Habitat1: {fileID: 674330413}
 --- !u!1 &1797569389
 GameObject:
   m_ObjectHideFlags: 0
@@ -14933,7 +14868,6 @@ MonoBehaviour:
   currentEssence: 50
   _ActiveHabitat: {fileID: 674330413}
   cam: {fileID: 963194227}
-  patrolNodes: {fileID: 1670965526}
   chimeraDetailsFolder: {fileID: 209325695}
   essenceWallets:
   - {fileID: 2131325068}
@@ -15910,7 +15844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003456102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 662.505, y: 428.51453, z: -100.42231}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -15928,7 +15862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a011e41a057ad44094dec65031ecf8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolNodes: {fileID: 1670965526}
+  _menuManager: {fileID: 1418420240}
+  _habitat: {fileID: 674330413}
 --- !u!114 &2037036157 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
@@ -16905,9 +16840,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748089614479536148, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: m_Name
-      value: Buy Egg A
+      value: Buy Chimera A
       objectReference: {fileID: 0}
     - target: {fileID: 1227104486376058472, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
+      propertyPath: chimera
+      value: 
+      objectReference: {fileID: 855878291477086151, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: chimera
       value: 
       objectReference: {fileID: 855878291477086151, guid: 35a3eff497117014c8a8419c23e77737, type: 3}

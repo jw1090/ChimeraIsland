@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Camera cam = null;
-    [SerializeField] private PatrolNodes patrolNodes = null;
     [SerializeField] private ChimeraDetailsFolder chimeraDetailsFolder = null;
     [SerializeField] private TextMeshProUGUI[] essenceWallets = null;
 
@@ -84,11 +83,6 @@ public class GameManager : MonoBehaviour
     public void UpdateDetailsUI()
     {
         chimeraDetailsFolder.UpdateDetailsList();
-    }
-
-    public List<Transform> GetPatrolNodes()
-    {
-        return patrolNodes.GetNodes();
     }
 
     private void ChimeraMouseTap()

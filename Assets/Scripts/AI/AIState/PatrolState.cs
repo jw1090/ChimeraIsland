@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AI.Chimera
+namespace AI.Behavior
 {
     public class PatrolState : ChimeraBaseState
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AI.Behavior;
 
 public class Chimera : MonoBehaviour
 {
@@ -37,6 +38,14 @@ public class Chimera : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private ChimeraModel currentChimeraModel = null;
+    [SerializeField] private Habitat _habitat = null;
+
+    public void Initialize(Habitat habitat)
+    {
+        Debug.Log("<color=Yellow> Initializing Chimera " + this + " ... </color>");
+        _habitat = habitat;
+        GetComponent<ChimeraBehavior>().Initialize();
+    }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
@@ -69,6 +78,9 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
+        happinessMod = HappinessModifierCalc();
+        // Debug.Log("Current Happiness Modifier: " + happinessMod);
+
         if (inFacility)
         {
             if (passive == Passives.Multitasking)
@@ -78,9 +90,6 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        happinessMod = HappinessModifierCalc();
-        // Debug.Log("Current Happiness Modifier: " + happinessMod);
-        
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
@@ -90,8 +99,7 @@ public class Chimera : MonoBehaviour
     }
     private void MultitaskingTick()
     {
-        happinessMod = HappinessModifierCalc();
-        int essenceGain = ((int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier))/2);
+        int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier) * 0.5f);
         GameManager.Instance.IncreaseEssence(essenceGain);
     }
     public void HappinessTick()
@@ -230,6 +238,7 @@ public class Chimera : MonoBehaviour
     }
     public int GetLevel() { return level; }
     public int GetPrice() { return price; }
+    public Habitat GetHabitat() { return _habitat; }
     public ElementalType GetElementalType() { return elementalType; }
     public StatType GetStatPreference() { return statPreference; }
     public Passives GetPassive() { return passive; }

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private PatrolNodes patrolNodes = null;
+    [SerializeField] private MenuManager _menuManager = null;
+    [SerializeField] private Habitat _habitat = null;
 
     private IPersistentData _persistentData;
     private ISessionData _sessionData;
@@ -17,6 +18,13 @@ public class LevelManager : MonoBehaviour
         _persistentData = ServiceLocator.Get<IPersistentData>();
         _sessionData = ServiceLocator.Get<ISessionData>();
 
-        patrolNodes.Initialize();
+        if(_habitat != null)
+        {
+            _habitat.Initialize();
+        }
+        if (_menuManager != null)
+        {
+            _menuManager.Initialize();
+        }
     }
 }

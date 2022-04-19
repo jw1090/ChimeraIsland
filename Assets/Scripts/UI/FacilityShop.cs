@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class FacilityShop : MonoBehaviour
 {
@@ -18,8 +16,7 @@ public class FacilityShop : MonoBehaviour
         tierText.text = "T" + (facility.GetTier() + 1).ToString();
     }
 
-    // - Made by: Joe 3/02/2022
-    // - Handles the facility purchasing. Typically called by the BuyFacility script.
+    // Handles the facility purchasing. Typically called by the BuyFacility script.
     public void PurchaseFacility()
     {
         GameManager.Instance.GetActiveHabitat().AddFacility(facilityType);

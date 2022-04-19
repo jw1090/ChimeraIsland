@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject CloseChimerasButton;
     [SerializeField] private GameObject Marketplace;
 
-    private void Start()
+    public void Initialize()
     {
         CloseAll();
     }

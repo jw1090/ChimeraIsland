@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace AI.Chimera
+namespace AI.Behavior
 {
     public enum StateEnum
     {
@@ -15,10 +15,14 @@ namespace AI.Chimera
 
     public class ChimeraBehavior : MonoBehaviour
     {
+        [Header("General Info")]
+        [SerializeField] bool _isActive = false;
+
         [Header("References")]
         [SerializeField] private List<Transform> _nodes;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ChimeraBaseState currentState;
+
         private float _heightOffset = 2f;
         private int _patrolIndex = 0;
         private int _wanderIndex = 0;
@@ -28,12 +32,12 @@ namespace AI.Chimera
         // Mapping of state to state object instance.
         public Dictionary<StateEnum, ChimeraBaseState> states = new Dictionary<StateEnum, ChimeraBaseState>();
 
-        public void Start()
+        public void Initialize()
         {
             _patrolIndex = 0;
             _wanderIndex = 0;
             _timer = 0;
-            _nodes = GameManager.Instance.GetPatrolNodes();
+            _nodes = GetComponent<Chimera>().GetHabitat().GetPatrolNodes();
 
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _navMeshAgent.isStopped = false;
@@ -44,12 +48,17 @@ namespace AI.Chimera
             states.Add(StateEnum.Wander, new WanderState());
             states.Add(StateEnum.Held, new HeldState());
 
+            _isActive = true;
+
             ChangeState(states[StateEnum.Patrol]);
         }
 
         void Update()
         {
-            currentState.Update();
+            if(_isActive)
+            {
+                currentState.Update();
+            }
         }
 
         public void ChangeState(ChimeraBaseState state)

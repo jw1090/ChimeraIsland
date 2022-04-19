@@ -5,50 +5,66 @@ using UnityEngine;
 public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private bool isActive = false;
-    [SerializeField] private int chimeraCapacity = 3;
-    [SerializeField] private int facilityCapacity = 3;
-    [SerializeField] private float unhappySpeed = 10;
-    [SerializeField] private List<Chimera> chimeras;
-    [SerializeField] private List<Facility> facilities;
+    [SerializeField] private bool _isActive = false;
+    [SerializeField] private int _chimeraCapacity = 3;
+    [SerializeField] private int _facilityCapacity = 3;
+    [SerializeField] private float _unhappyRate = 10;
+    [SerializeField] private List<Chimera> _chimeras;
+    [SerializeField] private List<Facility> _facilities;
 
     [Header("Tick Info")]
-    [SerializeField] private float tickTimer = 60.0f;
-    [SerializeField] private int tickTracker = 0;
+    [SerializeField] private float _tickTimer = 60.0f;
+    [SerializeField] private int _tickTracker = 0;
 
     [Header("References")]
-    [SerializeField] private GameObject chimeraFolder;
-    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject _chimeraFolder;
+    [SerializeField] private GameObject _spawnPoint;
+    [SerializeField] private PatrolNodes _patrolNodes;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
+        Debug.Log("<color=Orange> Initializing Habitat ... </color>");
+        _isActive = true;
+        _patrolNodes.Initialize();
+
         StartCoroutine(TickTimer());
+
+        InitializeChimeras();
+    }
+
+    private void InitializeChimeras()
+    {
+        foreach(Chimera chimera in _chimeras)
+        {
+            chimera.Initialize(this);
+        }
     }
 
     // Coroutine in the start loop. If active, do the following.
     // Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
     private IEnumerator TickTimer()
     {
-        while (isActive)
+        while (_isActive)
         {
-            yield return new WaitForSeconds(tickTimer);
+            yield return new WaitForSeconds(_tickTimer);
 
-            ++tickTracker;
+            ++_tickTracker;
 
-            foreach(Chimera chimera in chimeras)
+            foreach(Chimera chimera in _chimeras)
             {
                 if(chimera.isActiveAndEnabled)
                 {
                     chimera.EssenceTick();
-                    if (tickTracker % unhappySpeed == 0)
+                    
+                    if (_tickTracker % _unhappyRate == 0)
                     {
                         chimera.HappinessTick();
+                        _tickTracker = 0;
                     }
                 }
             }
 
-            foreach(Facility facility in facilities)
+            foreach(Facility facility in _facilities)
             {
                 if(facility.IsActive())
                 {
@@ -66,7 +82,7 @@ public class Habitat : MonoBehaviour
         Facility toBuyFacility = GetFacility(facilityType);
 
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= facilityCapacity && toBuyFacility.GetTier() == 0)
+        if (ActiveFacilitiesCount() >= _facilityCapacity && toBuyFacility.GetTier() == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
@@ -97,7 +113,7 @@ public class Habitat : MonoBehaviour
     public void BuyChimera(Chimera chimeraPrefab)
     {
         // Return if no room for another Chimera.
-        if (chimeraCapacity == chimeras.Count)
+        if (_chimeraCapacity == _chimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
             return;
@@ -116,15 +132,16 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        Chimera newChimera = Instantiate(chimeraPrefab, spawnPoint.transform.localPosition, Quaternion.identity, chimeraFolder.transform);
+        Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
-        chimeras.Add(newChimera);
+        _chimeras.Add(newChimera);
+        newChimera.Initialize(this);
     }
 
     // Look through array to find Facility.
     private Facility GetFacility(FacilityType facilityType)
     {
-        foreach (Facility facility in facilities)
+        foreach (Facility facility in _facilities)
         {
             if (facility.GetFacilityType() == facilityType)
             {
@@ -140,7 +157,7 @@ public class Habitat : MonoBehaviour
     {
         int facilityCount = 0;
 
-        foreach (Facility facility in facilities)
+        foreach (Facility facility in _facilities)
         {
             if (facility.IsActive())
             {
@@ -153,7 +170,7 @@ public class Habitat : MonoBehaviour
 
     public Facility FacilitySearch(FacilityType facilityType)
     {
-        foreach(Facility facility in facilities)
+        foreach(Facility facility in _facilities)
         {
             if(facility.GetFacilityType() == facilityType)
             {
@@ -164,7 +181,7 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    public List<Chimera> GetChimeras() { return chimeras; }
-    public List<Facility> GetFacilities() { return facilities; }
-    public float GetTickTracker() { return tickTracker; }
+    public List<Chimera> GetChimeras() { return _chimeras; }
+    public List<Facility> GetFacilities() { return _facilities; }
+    public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 }
