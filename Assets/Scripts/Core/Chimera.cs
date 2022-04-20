@@ -1,56 +1,63 @@
+using AI.Behavior;
 using System.Collections.Generic;
 using UnityEngine;
-using AI.Behavior;
 
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private ElementalType elementalType = ElementalType.None;
-    [SerializeField] private StatType statPreference = StatType.None;
-    [SerializeField] private Passives passive = Passives.None;
-    [SerializeField] private int price = 200;
-    [SerializeField] private bool inFacility = false;
+    [SerializeField] private ElementalType _elementalType = ElementalType.None;
+    [SerializeField] private StatType _statPreference = StatType.None;
+    [SerializeField] private Passives _passive = Passives.None;
+    [SerializeField] private int _price = 200;
+    [SerializeField] private bool _inFacility = false;
 
     [Header("Stats")]
-    [SerializeField] private int level = 1;
-    [SerializeField] private int levelCap = 99;
-    [SerializeField] private int endurance = 0;
-    [SerializeField] private int intelligence = 0;
-    [SerializeField] private int strength = 0;
-    [SerializeField] private int happiness = 0;
-    [SerializeField] private int happinessMod = 1;
+    [SerializeField] private int _level = 1;
+    [SerializeField] private int _levelCap = 99;
+    [SerializeField] private int _endurance = 0;
+    [SerializeField] private int _intelligence = 0;
+    [SerializeField] private int _strength = 0;
+    [SerializeField] private int _happiness = 0;
+    [SerializeField] private int _happinessMod = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int enduranceGrowth = 1;
-    [SerializeField] private int intelligenceGrowth = 1;
-    [SerializeField] private int strengthGrowth = 1;
-    [SerializeField] private int enduranceExperience = 0;
-    [SerializeField] private int intelligenceExperience = 0;
-    [SerializeField] private int strengthExperience = 0;
-    [SerializeField] private int enduranceThreshold = 5;
-    [SerializeField] private int intelligenceThreshold = 5;
-    [SerializeField] private int strengthThreshold = 5;
-    [SerializeField] private int levelUpTracker = 0;
+    [SerializeField] private int _enduranceGrowth = 1;
+    [SerializeField] private int _intelligenceGrowth = 1;
+    [SerializeField] private int _strengthGrowth = 1;
+    [SerializeField] private int _enduranceExperience = 0;
+    [SerializeField] private int _intelligenceExperience = 0;
+    [SerializeField] private int _strengthExperience = 0;
+    [SerializeField] private int _enduranceThreshold = 5;
+    [SerializeField] private int _intelligenceThreshold = 5;
+    [SerializeField] private int _strengthThreshold = 5;
+    [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private float baseEssenceRate = 5;
-    [SerializeField] private float essenceModifier = 1.0f; // Tuning knob for essence gain
+    [SerializeField] private float _baseEssenceRate = 5;
+    [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
 
     [Header("References")]
-    [SerializeField] private ChimeraModel currentChimeraModel = null;
+    [SerializeField] private EvolutionLogic _currentEvolution = null;
     [SerializeField] private Habitat _habitat = null;
 
     public void Initialize(Habitat habitat)
     {
         Debug.Log("<color=Yellow> Initializing Chimera " + this + " ... </color>");
         _habitat = habitat;
+        InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
+    }
+
+    private void InitializeEvolution()
+    {
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
+        _currentEvolution.SetChimeraBrain(this);
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick (StatType statType, int amount)
     {
-        if(level >= levelCap)
+        if(_level >= _levelCap)
         {
             return;
         }
@@ -58,13 +65,13 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                enduranceExperience += amount;
+                _enduranceExperience += amount;
                 break;
             case StatType.Intelligence:
-                intelligenceExperience += amount;
+                _intelligenceExperience += amount;
                 break;
             case StatType.Strength:
-                strengthExperience += amount;
+                _strengthExperience += amount;
                 break;
             default:
                 Debug.LogError("Default Experience Tick Please Change!");
@@ -78,12 +85,12 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
-        happinessMod = HappinessModifierCalc();
+        _happinessMod = HappinessModifierCalc();
         // Debug.Log("Current Happiness Modifier: " + happinessMod);
 
-        if (inFacility)
+        if (_inFacility)
         {
-            if (passive == Passives.Multitasking)
+            if (_passive == Passives.Multitasking)
             {
                MultitaskingTick();
             }
@@ -92,23 +99,23 @@ public class Chimera : MonoBehaviour
 
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
-        int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier));
+        int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(_level * _essenceModifier));
         GameManager.Instance.IncreaseEssence(essenceGain);
 
         // Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
     }
     private void MultitaskingTick()
     {
-        int essenceGain = (int)((happinessMod * baseEssenceRate) + Mathf.Sqrt(level * essenceModifier) * 0.5f);
+        int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(_level * _essenceModifier) * 0.5f);
         GameManager.Instance.IncreaseEssence(essenceGain);
     }
     public void HappinessTick()
     {
-        if (!inFacility)
+        if (!_inFacility)
         {
             int happinessAmount = -1;
 
-            if(passive == Passives.GreenThumb)
+            if(_passive == Passives.GreenThumb)
             {
                 List<Chimera> chimeras = GameManager.Instance.GetActiveHabitat().GetChimeras();
 
@@ -130,18 +137,18 @@ public class Chimera : MonoBehaviour
     // At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
     private int HappinessModifierCalc()
     {
-        if (happiness == 0)
+        if (_happiness == 0)
         {
             return 1;
         }
-        else if (happiness > 0)
+        else if (_happiness > 0)
         {
-            int hapMod = (happiness) / 50 + 1;
+            int hapMod = (_happiness) / 50 + 1;
             return hapMod;
         }
         else
         {
-            int hapMod = (1 * (int)Mathf.Sqrt(happiness + 100) / 15) + (1 / 3);
+            int hapMod = (1 * (int)Mathf.Sqrt(_happiness + 100) / 15) + (1 / 3);
             return hapMod;
         }
     }
@@ -152,36 +159,36 @@ public class Chimera : MonoBehaviour
     {
         bool levelUp = false;
 
-        if (enduranceExperience >= enduranceThreshold)
+        if (_enduranceExperience >= _enduranceThreshold)
         {
-            enduranceExperience -= enduranceThreshold;
+            _enduranceExperience -= _enduranceThreshold;
             levelUp = true;
             LevelUp(StatType.Endurance);
 
-            enduranceThreshold += (int)(Mathf.Sqrt(enduranceThreshold) * 1.2f);
+            _enduranceThreshold += (int)(Mathf.Sqrt(_enduranceThreshold) * 1.2f);
         }
 
-        if (intelligenceExperience >= intelligenceThreshold)
+        if (_intelligenceExperience >= _intelligenceThreshold)
         {
-            intelligenceExperience -= intelligenceThreshold;
+            _intelligenceExperience -= _intelligenceThreshold;
             levelUp = true;
             LevelUp(StatType.Intelligence);
 
-            intelligenceThreshold += (int)(Mathf.Sqrt(intelligenceThreshold) * 1.2f);
+            _intelligenceThreshold += (int)(Mathf.Sqrt(_intelligenceThreshold) * 1.2f);
         }
 
-        if (strengthExperience >= strengthThreshold)
+        if (_strengthExperience >= _strengthThreshold)
         {
-            strengthExperience -= strengthThreshold;
+            _strengthExperience -= _strengthThreshold;
             levelUp = true;
             LevelUp(StatType.Strength);
 
-            strengthThreshold += (int)(Mathf.Sqrt(strengthThreshold) * 1.2f);
+            _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
         }
 
         if (levelUp)
         {
-            currentChimeraModel.CheckEvolution(endurance, intelligence, strength);
+            _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength);
         }
     }
 
@@ -191,16 +198,16 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                endurance += enduranceGrowth;
-                Debug.Log("New " + statType + " stat = " + endurance);
+                _endurance += _enduranceGrowth;
+                Debug.Log("New " + statType + " stat = " + _endurance);
                 break;
             case StatType.Intelligence:
-                intelligence += intelligenceGrowth;
-                Debug.Log("New " + statType + " stat = " + intelligence);
+                _intelligence += _intelligenceGrowth;
+                Debug.Log("New " + statType + " stat = " + _intelligence);
                 break;
             case StatType.Strength:
-                strength += strengthGrowth;
-                Debug.Log("New " + statType + " stat = " + strength);
+                _strength += _strengthGrowth;
+                Debug.Log("New " + statType + " stat = " + _strength);
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -208,12 +215,12 @@ public class Chimera : MonoBehaviour
         }
 
         GameManager.Instance.UpdateDetailsUI();
-        ++levelUpTracker;
+        ++_levelUpTracker;
 
-        if (levelUpTracker % 3 == 0)
+        if (_levelUpTracker % 3 == 0)
         {
-            ++level;
-            Debug.Log("LEVEL UP! " + gameObject + " is now level " + level + " !");
+            ++_level;
+            Debug.Log("LEVEL UP! " + gameObject + " is now level " + _level + " !");
         }
     }
 
@@ -223,42 +230,42 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                return endurance;
+                return _endurance;
             case StatType.Intelligence:
-                return intelligence;
+                return _intelligence;
             case StatType.Strength:
-                return strength;
+                return _strength;
             case StatType.Happiness:
-                return happiness;
+                return _happiness;
             default:
                 Debug.LogError("Default StatType please change!");
                 break;
         }
         return -1;
     }
-    public int GetLevel() { return level; }
-    public int GetPrice() { return price; }
+    public int GetLevel() { return _level; }
+    public int GetPrice() { return _price; }
     public Habitat GetHabitat() { return _habitat; }
-    public ElementalType GetElementalType() { return elementalType; }
-    public StatType GetStatPreference() { return statPreference; }
-    public Passives GetPassive() { return passive; }
-    public Sprite GetIcon() { return currentChimeraModel.GetIcon(); }
-    public void SetModel(ChimeraModel model) { currentChimeraModel = model; }
-    public void SetInFacility(bool facilityState) { inFacility = facilityState; }
+    public ElementalType GetElementalType() { return _elementalType; }
+    public StatType GetStatPreference() { return _statPreference; }
+    public Passives GetPassive() { return _passive; }
+    public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
+    public void SetModel(EvolutionLogic evolution) { _currentEvolution = evolution; }
+    public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void ChangeHappiness(int amount)
     {
-        if (happiness + amount >= 100)
+        if (_happiness + amount >= 100)
         {
-            happiness = 100;
+            _happiness = 100;
             return;
         }
-        else if (happiness + amount <= -100)
+        else if (_happiness + amount <= -100)
         {
-            happiness = -100;
+            _happiness = -100;
             return;
         }
 
-        happiness += amount;
+        _happiness += amount;
     }
     #endregion
 }
