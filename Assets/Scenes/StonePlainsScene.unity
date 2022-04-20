@@ -7243,10 +7243,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 200
   field of view: 80
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7270,7 +7270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0.9396927, z: -0.3420201, w: 0}
-  m_LocalPosition: {x: 0, y: 20, z: 15.38}
+  m_LocalPosition: {x: 0, y: 20, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7288,7 +7288,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ff54d215aeb56419e6064213d17685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 10
+  _speed: 20
+  _pos: {x: 0, y: 20, z: 15}
+  _zoom: 80
+  _zoomAmount: 20
+  _minZoom: 40
+  _maxZoom: 90
+  cameraGO: {fileID: 963194227}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15862,8 +15868,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a011e41a057ad44094dec65031ecf8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuManager: {fileID: 1418420240}
+  _camera: {fileID: 963194229}
   _habitat: {fileID: 674330413}
+  _menuManager: {fileID: 1418420240}
 --- !u!114 &2037036157 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}

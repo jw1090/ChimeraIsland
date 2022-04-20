@@ -42,7 +42,7 @@ public class Chimera : MonoBehaviour
 
     public void Initialize(Habitat habitat)
     {
-        Debug.Log("<color=Yellow> Initializing Chimera " + this + " ... </color>");
+        Debug.Log("<color=Orange> Initializing Chimera " + this + " ... </color>");
         _habitat = habitat;
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
