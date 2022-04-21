@@ -11,8 +11,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private int _price = 100;
     [SerializeField] private bool _isActive = false;
 
-    [Header("References")]
+    [Header("Chimera Info")]
     [SerializeField] private Chimera _storedChimera = null;
+    [SerializeField] private FacilityIcon _icon;
 
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
@@ -55,6 +56,8 @@ public class Facility : MonoBehaviour
             return false;
         }
 
+        _icon.gameObject.SetActive(true);
+        _icon.GetComponent<FacilityIcon>().SetIcon(chimera.GetIcon());
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
         chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
@@ -72,8 +75,11 @@ public class Facility : MonoBehaviour
             return false;
         }
 
+        _icon.RemoveIcon();
+        _icon.gameObject.SetActive(false);
         Debug.Log(_storedChimera + " has been removed from the facility.");
         _storedChimera.SetInFacility(false);
+
         NavMeshHit myNavHit;
 
         // Find nearby walkable position.
@@ -90,7 +96,10 @@ public class Facility : MonoBehaviour
     {
         if(_storedChimera != null)
         {
+            _icon.SetIcon(_storedChimera.GetIcon());
             _storedChimera.ExperienceTick(_statType, _statModifier);
+            _storedChimera.ExperienceTick(_statType, _statModifier);
+
             FlatStatBoost();
             HappinessCheck();
         }

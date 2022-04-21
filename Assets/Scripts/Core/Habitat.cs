@@ -13,7 +13,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private List<Facility> _facilities;
 
     [Header("Tick Info")]
-    [SerializeField] private float _tickTimer = 60.0f;
+    [SerializeField] private float _tickTimer = 0.2f;
     [SerializeField] private int _tickTracker = 0;
 
     [Header("References")]

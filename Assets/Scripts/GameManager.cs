@@ -22,10 +22,14 @@ public class GameManager : MonoBehaviour
 
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
+    private IPersistentData _persistentData = null;
 
     // - Basic Singleton Implementation
     private void Initialize()
     {
+        Debug.Log("<color=cyan>GameManager Init</color>");
+        _persistentData = ServiceLocator.Get<IPersistentData>();
+        Debug.Log($"{(_persistentData == null ? "NULL" : "OK")}");
         if (gameManagerInstance != null && gameManagerInstance != this)
         {
             Destroy(this.gameObject);
@@ -34,11 +38,22 @@ public class GameManager : MonoBehaviour
         {
             gameManagerInstance = this;
         }
+
+        LoadSavedData();
+    }
+
+    private void LoadSavedData()
+    {
+        if (_persistentData != null)
+        {
+            _currentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
+            Debug.Log($"Loaded Essense: {_currentEssence}");
+        }
     }
 
     void Awake()
     {
-        Initialize();
+        GameLoader.CallOnComplete(Initialize);
     }
 
     private void Start()
@@ -55,6 +70,16 @@ public class GameManager : MonoBehaviour
     {
         _currentEssence += amount;
         UpdateWallets();
+        if (_persistentData != null)
+        {
+            //Debug.Log("<color=lime>Saving Essence</color>");
+            _persistentData.SaveData(GameConsts.GameSaveKeys.ESSENCE, _currentEssence);
+        }
+        else if(_persistentData == null)
+        {
+            _persistentData = ServiceLocator.Get<IPersistentData>() as PersistentData;
+            //Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
+        }
     }
 
     // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
