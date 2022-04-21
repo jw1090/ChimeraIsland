@@ -19,12 +19,17 @@ public class Habitat : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder;
     [SerializeField] private GameObject _spawnPoint;
-    [SerializeField] private PatrolNodes _patrolNodes;
+     private PatrolNodes _patrolNodes;
+
+    public List<Chimera> GetChimeras() { return _chimeras; }
+    public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 
     public void Initialize()
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
         _isActive = true;
+
+        _patrolNodes = GetComponentInChildren<PatrolNodes>();
         _patrolNodes.Initialize();
 
         StartCoroutine(TickTimer());
@@ -34,8 +39,9 @@ public class Habitat : MonoBehaviour
 
     private void InitializeChimeras()
     {
-        foreach(Chimera chimera in _chimeras)
+        foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
         {
+            _chimeras.Add(chimera);
             chimera.Initialize(this);
         }
     }
@@ -180,8 +186,4 @@ public class Habitat : MonoBehaviour
 
         return null;
     }
-
-    public List<Chimera> GetChimeras() { return _chimeras; }
-    public List<Facility> GetFacilities() { return _facilities; }
-    public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 }

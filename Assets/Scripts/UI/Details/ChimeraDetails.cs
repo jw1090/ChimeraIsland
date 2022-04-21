@@ -40,6 +40,4 @@ public class ChimeraDetails : MonoBehaviour
         element.text = "Element: " + chimera.GetElementalType().ToString();
         icon.sprite = chimera.GetIcon();
     }
-
-    public int GetChimeraSpot() { return chimeraSpot; }
 }
