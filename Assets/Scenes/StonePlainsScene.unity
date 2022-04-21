@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
-    agentSlope: 55
-    agentClimb: 0.4
-    ledgeDropHeight: 0
+    agentRadius: 0.6
+    agentHeight: 1
+    agentSlope: 45
+    agentClimb: 1
+    ledgeDropHeight: 2
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.2
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -134,7 +134,8 @@ GameObject:
   - component: {fileID: 9557405}
   - component: {fileID: 9557404}
   - component: {fileID: 9557403}
-  m_Layer: 0
+  - component: {fileID: 9557406}
+  m_Layer: 3
   m_Name: RunicStones2_Low (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,6 +205,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: -1.874, y: 86.598, z: -62.04}
+--- !u!64 &9557406
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9557402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &15102203
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +230,8 @@ GameObject:
   - component: {fileID: 15102204}
   - component: {fileID: 15102206}
   - component: {fileID: 15102205}
-  m_Layer: 0
+  - component: {fileID: 15102207}
+  m_Layer: 3
   m_Name: RunicStones6_Low (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,6 +301,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15102203}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &15102207
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15102203}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &19827496
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 19827497}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +484,8 @@ GameObject:
   - component: {fileID: 23903731}
   - component: {fileID: 23903730}
   - component: {fileID: 23903729}
-  m_Layer: 0
+  - component: {fileID: 23903732}
+  m_Layer: 3
   m_Name: Stone 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,6 +555,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 115
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &23903732
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23903728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &35383056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,7 +716,8 @@ GameObject:
   - component: {fileID: 72426858}
   - component: {fileID: 72426857}
   - component: {fileID: 72426856}
-  m_Layer: 0
+  - component: {fileID: 72426859}
+  m_Layer: 3
   m_Name: RunicStones_Low (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -741,6 +787,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: -4.167, y: -52.704, z: 187.809}
+--- !u!64 &72426859
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72426855}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &81018741
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +812,8 @@ GameObject:
   - component: {fileID: 81018744}
   - component: {fileID: 81018743}
   - component: {fileID: 81018742}
-  m_Layer: 0
+  - component: {fileID: 81018745}
+  m_Layer: 3
   m_Name: RunicStones2_Low (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,6 +883,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 58.478, y: 90.802, z: 86.394}
+--- !u!64 &81018745
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81018741}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &93296134
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 93296135}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chimeras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,7 +982,8 @@ GameObject:
   - component: {fileID: 117145973}
   - component: {fileID: 117145975}
   - component: {fileID: 117145974}
-  m_Layer: 0
+  - component: {fileID: 117145976}
+  m_Layer: 3
   m_Name: RunicStones2_Low (72)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,6 +1052,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117145972}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &117145976
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117145972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &139611532
 PrefabInstance:
@@ -1234,7 +1324,8 @@ GameObject:
   - component: {fileID: 169930706}
   - component: {fileID: 169930708}
   - component: {fileID: 169930707}
-  m_Layer: 0
+  - component: {fileID: 169930709}
+  m_Layer: 3
   m_Name: RunicStones_Low (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1304,6 +1395,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169930705}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &169930709
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169930705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &173634025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1420,8 @@ GameObject:
   - component: {fileID: 173634026}
   - component: {fileID: 173634028}
   - component: {fileID: 173634027}
-  m_Layer: 0
+  - component: {fileID: 173634029}
+  m_Layer: 3
   m_Name: RunicStones6_Low (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1385,6 +1491,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173634025}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &173634029
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173634025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &176425272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,7 +1516,8 @@ GameObject:
   - component: {fileID: 176425275}
   - component: {fileID: 176425274}
   - component: {fileID: 176425273}
-  m_Layer: 0
+  - component: {fileID: 176425276}
+  m_Layer: 3
   m_Name: RunicStones2_Low (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1466,6 +1587,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 58.478, y: 90.802, z: 86.394}
+--- !u!64 &176425276
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176425272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &178539254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,7 +1612,8 @@ GameObject:
   - component: {fileID: 178539255}
   - component: {fileID: 178539257}
   - component: {fileID: 178539256}
-  m_Layer: 0
+  - component: {fileID: 178539258}
+  m_Layer: 3
   m_Name: RunicStones_Low (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1547,6 +1683,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178539254}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &178539258
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178539254}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &182287901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,7 +1706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182287902}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cliffs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,7 +1860,8 @@ GameObject:
   - component: {fileID: 182387318}
   - component: {fileID: 182387320}
   - component: {fileID: 182387319}
-  m_Layer: 0
+  - component: {fileID: 182387321}
+  m_Layer: 3
   m_Name: RunicStones6_Low (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1779,6 +1930,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182387317}
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &182387321
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182387317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &193500598
 GameObject:
@@ -2085,7 +2250,8 @@ GameObject:
   - component: {fileID: 222191664}
   - component: {fileID: 222191666}
   - component: {fileID: 222191665}
-  m_Layer: 0
+  - component: {fileID: 222191667}
+  m_Layer: 3
   m_Name: RunicStones6_Low (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2155,6 +2321,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222191663}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &222191667
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222191663}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &228341452
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,7 +2346,8 @@ GameObject:
   - component: {fileID: 228341455}
   - component: {fileID: 228341454}
   - component: {fileID: 228341453}
-  m_Layer: 0
+  - component: {fileID: 228341456}
+  m_Layer: 3
   m_Name: RunicStones2_Low (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2236,24 +2417,38 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 3.903, y: -167.88, z: -174.901}
+--- !u!64 &228341456
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228341452}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &241253665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
   m_PrefabInstance: {fileID: 928165734}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &241253668
-MonoBehaviour:
+--- !u!65 &241253668
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241253665}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4238cdcd547a624f9443b6da379a85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _snapToGround: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &250652201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,7 +2460,8 @@ GameObject:
   - component: {fileID: 250652204}
   - component: {fileID: 250652203}
   - component: {fileID: 250652202}
-  m_Layer: 0
+  - component: {fileID: 250652205}
+  m_Layer: 3
   m_Name: RunicStones2_Low (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2335,6 +2531,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 71.681, y: -88.648, z: -129.542}
+--- !u!64 &250652205
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250652201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &272405983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2556,8 @@ GameObject:
   - component: {fileID: 272405986}
   - component: {fileID: 272405985}
   - component: {fileID: 272405984}
-  m_Layer: 0
+  - component: {fileID: 272405987}
+  m_Layer: 3
   m_Name: RunicStones2_Low (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2416,6 +2627,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &272405987
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272405983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &301724487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,7 +2652,8 @@ GameObject:
   - component: {fileID: 301724488}
   - component: {fileID: 301724490}
   - component: {fileID: 301724489}
-  m_Layer: 0
+  - component: {fileID: 301724491}
+  m_Layer: 3
   m_Name: RunicStones2_Low (66)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,6 +2722,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301724487}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &301724491
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301724487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &307664162
 GameObject:
@@ -2593,7 +2833,8 @@ GameObject:
   - component: {fileID: 316473646}
   - component: {fileID: 316473645}
   - component: {fileID: 316473644}
-  m_Layer: 0
+  - component: {fileID: 316473647}
+  m_Layer: 3
   m_Name: RunicStones_Low (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2663,6 +2904,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: -4.451, y: 35.021, z: 1.237}
+--- !u!64 &316473647
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316473643}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &326444070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,7 +2929,8 @@ GameObject:
   - component: {fileID: 326444073}
   - component: {fileID: 326444072}
   - component: {fileID: 326444071}
-  m_Layer: 0
+  - component: {fileID: 326444074}
+  m_Layer: 3
   m_Name: RunicStones2_Low (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2744,6 +3000,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 3.874, y: 311.354, z: -184.208}
+--- !u!64 &326444074
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326444070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &330114896
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,7 +3025,8 @@ GameObject:
   - component: {fileID: 330114897}
   - component: {fileID: 330114899}
   - component: {fileID: 330114898}
-  m_Layer: 0
+  - component: {fileID: 330114900}
+  m_Layer: 3
   m_Name: RunicStones2_Low (63)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2825,6 +3096,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330114896}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &330114900
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330114896}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &333340224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,7 +3121,8 @@ GameObject:
   - component: {fileID: 333340225}
   - component: {fileID: 333340227}
   - component: {fileID: 333340226}
-  m_Layer: 0
+  - component: {fileID: 333340228}
+  m_Layer: 3
   m_Name: RunicStones2_Low (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2906,6 +3192,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333340224}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &333340228
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333340224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &335919049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,7 +3217,8 @@ GameObject:
   - component: {fileID: 335919052}
   - component: {fileID: 335919051}
   - component: {fileID: 335919050}
-  m_Layer: 0
+  - component: {fileID: 335919053}
+  m_Layer: 3
   m_Name: RunicStones_Low (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2987,6 +3288,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 58
   m_LocalEulerAnglesHint: {x: -4.167, y: 23.217, z: 187.809}
+--- !u!64 &335919053
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335919049}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &354982202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,7 +3554,8 @@ GameObject:
   - component: {fileID: 380188215}
   - component: {fileID: 380188214}
   - component: {fileID: 380188213}
-  m_Layer: 0
+  - component: {fileID: 380188216}
+  m_Layer: 3
   m_Name: RunicStones6_Low (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3309,6 +3625,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 12.877, y: -166.705, z: -163.498}
+--- !u!64 &380188216
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380188212}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &384993207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,7 +3650,8 @@ GameObject:
   - component: {fileID: 384993210}
   - component: {fileID: 384993209}
   - component: {fileID: 384993208}
-  m_Layer: 0
+  - component: {fileID: 384993211}
+  m_Layer: 3
   m_Name: RunicStones2_Low (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3390,6 +3721,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 3.903, y: -167.88, z: -174.901}
+--- !u!64 &384993211
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384993207}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &387865944
 GameObject:
   m_ObjectHideFlags: 0
@@ -3434,7 +3779,8 @@ GameObject:
   - component: {fileID: 411274737}
   - component: {fileID: 411274739}
   - component: {fileID: 411274738}
-  m_Layer: 0
+  - component: {fileID: 411274740}
+  m_Layer: 3
   m_Name: RunicStones2_Low (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3503,6 +3849,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411274736}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &411274740
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411274736}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &427119738
 GameObject:
@@ -3648,7 +4008,8 @@ GameObject:
   - component: {fileID: 434551966}
   - component: {fileID: 434551965}
   - component: {fileID: 434551964}
-  m_Layer: 0
+  - component: {fileID: 434551967}
+  m_Layer: 3
   m_Name: RunicStones2_Low (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3718,6 +4079,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -3.271, y: -168.585, z: -180.322}
+--- !u!64 &434551967
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434551963}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &443946035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,7 +4193,8 @@ GameObject:
   - component: {fileID: 466525761}
   - component: {fileID: 466525763}
   - component: {fileID: 466525762}
-  m_Layer: 0
+  - component: {fileID: 466525764}
+  m_Layer: 3
   m_Name: RunicStones2_Low (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3888,6 +4264,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466525760}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &466525764
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466525760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!114 &483385885 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
@@ -3910,7 +4300,8 @@ GameObject:
   - component: {fileID: 491943004}
   - component: {fileID: 491943003}
   - component: {fileID: 491943002}
-  m_Layer: 0
+  - component: {fileID: 491943005}
+  m_Layer: 3
   m_Name: RunicStones_Low (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3980,6 +4371,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 52
   m_LocalEulerAnglesHint: {x: -4.167, y: -6.253, z: 187.809}
+--- !u!64 &491943005
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491943001}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &498989744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,7 +4396,8 @@ GameObject:
   - component: {fileID: 498989747}
   - component: {fileID: 498989746}
   - component: {fileID: 498989745}
-  m_Layer: 0
+  - component: {fileID: 498989748}
+  m_Layer: 3
   m_Name: RunicStones2_Low (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4061,6 +4467,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 51
   m_LocalEulerAnglesHint: {x: 4.139, y: 106.956, z: -1.502}
+--- !u!64 &498989748
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498989744}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &500444165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4382,7 +4802,8 @@ GameObject:
   - component: {fileID: 525909138}
   - component: {fileID: 525909137}
   - component: {fileID: 525909136}
-  m_Layer: 0
+  - component: {fileID: 525909139}
+  m_Layer: 3
   m_Name: RunicStones2_Low (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4452,6 +4873,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 58.478, y: 90.802, z: 86.394}
+--- !u!64 &525909139
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525909135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &532682773
 GameObject:
   m_ObjectHideFlags: 0
@@ -4603,7 +5038,8 @@ GameObject:
   - component: {fileID: 560110025}
   - component: {fileID: 560110027}
   - component: {fileID: 560110026}
-  m_Layer: 0
+  - component: {fileID: 560110028}
+  m_Layer: 3
   m_Name: RunicStones2_Low (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4673,6 +5109,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560110024}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &560110028
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560110024}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &563575186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4684,7 +5134,8 @@ GameObject:
   - component: {fileID: 563575187}
   - component: {fileID: 563575189}
   - component: {fileID: 563575188}
-  m_Layer: 0
+  - component: {fileID: 563575190}
+  m_Layer: 3
   m_Name: RunicStones2_Low (70)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4754,6 +5205,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563575186}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &563575190
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563575186}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &567152604
 GameObject:
   m_ObjectHideFlags: 0
@@ -4765,7 +5230,8 @@ GameObject:
   - component: {fileID: 567152605}
   - component: {fileID: 567152607}
   - component: {fileID: 567152606}
-  m_Layer: 0
+  - component: {fileID: 567152608}
+  m_Layer: 3
   m_Name: RunicStones2_Low (71)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4835,6 +5301,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567152604}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &567152608
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567152604}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &613503036
 GameObject:
   m_ObjectHideFlags: 0
@@ -4846,7 +5326,8 @@ GameObject:
   - component: {fileID: 613503037}
   - component: {fileID: 613503039}
   - component: {fileID: 613503038}
-  m_Layer: 0
+  - component: {fileID: 613503040}
+  m_Layer: 3
   m_Name: RunicStones2_Low (47)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4916,6 +5397,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613503036}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &613503040
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613503036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &621047500
 GameObject:
   m_ObjectHideFlags: 0
@@ -4927,7 +5422,8 @@ GameObject:
   - component: {fileID: 621047503}
   - component: {fileID: 621047502}
   - component: {fileID: 621047501}
-  m_Layer: 0
+  - component: {fileID: 621047504}
+  m_Layer: 3
   m_Name: RunicStones2_Low (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4997,6 +5493,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 53
   m_LocalEulerAnglesHint: {x: 3.874, y: 194.861, z: -184.208}
+--- !u!64 &621047504
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621047500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &622608212
 GameObject:
   m_ObjectHideFlags: 0
@@ -5008,7 +5518,8 @@ GameObject:
   - component: {fileID: 622608215}
   - component: {fileID: 622608214}
   - component: {fileID: 622608213}
-  m_Layer: 0
+  - component: {fileID: 622608216}
+  m_Layer: 3
   m_Name: RunicStones2_Low (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5078,6 +5589,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: -1.874, y: -111.297, z: -62.04}
+--- !u!64 &622608216
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622608212}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &627259136
 GameObject:
   m_ObjectHideFlags: 0
@@ -5352,7 +5877,8 @@ GameObject:
   - component: {fileID: 702410794}
   - component: {fileID: 702410793}
   - component: {fileID: 702410792}
-  m_Layer: 0
+  - component: {fileID: 702410795}
+  m_Layer: 3
   m_Name: RunicStones_Low (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5422,6 +5948,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: -4.451, y: 41.081, z: 1.237}
+--- !u!64 &702410795
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702410791}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5526,7 +6066,8 @@ GameObject:
   - component: {fileID: 734796601}
   - component: {fileID: 734796600}
   - component: {fileID: 734796599}
-  m_Layer: 0
+  - component: {fileID: 734796602}
+  m_Layer: 3
   m_Name: RunicStones2_Low (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5596,6 +6137,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 4.139, y: 60.504, z: -1.502}
+--- !u!64 &734796602
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734796598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &736951642
 GameObject:
   m_ObjectHideFlags: 0
@@ -5607,7 +6162,8 @@ GameObject:
   - component: {fileID: 736951645}
   - component: {fileID: 736951644}
   - component: {fileID: 736951643}
-  m_Layer: 0
+  - component: {fileID: 736951646}
+  m_Layer: 3
   m_Name: Stone 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5677,6 +6233,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 116
   m_LocalEulerAnglesHint: {x: 12.877, y: -166.705, z: -163.498}
+--- !u!64 &736951646
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736951642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!4 &739230964 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6215058023569401640, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
@@ -5843,7 +6413,8 @@ GameObject:
   - component: {fileID: 795397199}
   - component: {fileID: 795397198}
   - component: {fileID: 795397197}
-  m_Layer: 0
+  - component: {fileID: 795397200}
+  m_Layer: 3
   m_Name: RunicStones2_Low (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5913,6 +6484,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 57
   m_LocalEulerAnglesHint: {x: 4.139, y: 136.426, z: -1.502}
+--- !u!64 &795397200
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795397196}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &810732624
 GameObject:
   m_ObjectHideFlags: 0
@@ -5999,7 +6584,8 @@ GameObject:
   - component: {fileID: 827740346}
   - component: {fileID: 827740345}
   - component: {fileID: 827740344}
-  m_Layer: 0
+  - component: {fileID: 827740347}
+  m_Layer: 3
   m_Name: RunicStones2_Low (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6069,6 +6655,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 39
   m_LocalEulerAnglesHint: {x: -1.874, y: -51.193, z: -62.04}
+--- !u!64 &827740347
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827740343}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &848478882
 GameObject:
   m_ObjectHideFlags: 0
@@ -6080,7 +6680,8 @@ GameObject:
   - component: {fileID: 848478883}
   - component: {fileID: 848478885}
   - component: {fileID: 848478884}
-  m_Layer: 0
+  - component: {fileID: 848478886}
+  m_Layer: 3
   m_Name: RunicStones6_Low (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6150,6 +6751,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848478882}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &848478886
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848478882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &848627331
 GameObject:
   m_ObjectHideFlags: 0
@@ -6161,7 +6776,8 @@ GameObject:
   - component: {fileID: 848627334}
   - component: {fileID: 848627333}
   - component: {fileID: 848627332}
-  m_Layer: 0
+  - component: {fileID: 848627335}
+  m_Layer: 3
   m_Name: RunicStones_Low (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6231,6 +6847,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 60
   m_LocalEulerAnglesHint: {x: -4.451, y: 151.513, z: 1.237}
+--- !u!64 &848627335
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848627331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &863405317
 GameObject:
   m_ObjectHideFlags: 0
@@ -6242,7 +6872,8 @@ GameObject:
   - component: {fileID: 863405320}
   - component: {fileID: 863405319}
   - component: {fileID: 863405318}
-  m_Layer: 0
+  - component: {fileID: 863405321}
+  m_Layer: 3
   m_Name: Stone 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6312,6 +6943,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 114
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &863405321
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863405317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &875477060
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,7 +6968,8 @@ GameObject:
   - component: {fileID: 875477063}
   - component: {fileID: 875477062}
   - component: {fileID: 875477061}
-  m_Layer: 0
+  - component: {fileID: 875477064}
+  m_Layer: 3
   m_Name: RunicStones_Low (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6393,6 +7039,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 257.794, y: 61.069, z: -92.65799}
+--- !u!64 &875477064
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875477060}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &897150794
 GameObject:
   m_ObjectHideFlags: 0
@@ -6404,7 +7064,8 @@ GameObject:
   - component: {fileID: 897150795}
   - component: {fileID: 897150797}
   - component: {fileID: 897150796}
-  m_Layer: 0
+  - component: {fileID: 897150798}
+  m_Layer: 3
   m_Name: RunicStones_Low (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6474,6 +7135,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897150794}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &897150798
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897150794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &907888627
 GameObject:
   m_ObjectHideFlags: 0
@@ -6485,7 +7160,8 @@ GameObject:
   - component: {fileID: 907888630}
   - component: {fileID: 907888629}
   - component: {fileID: 907888628}
-  m_Layer: 0
+  - component: {fileID: 907888631}
+  m_Layer: 3
   m_Name: RunicStones2_Low (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6555,6 +7231,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 62
   m_LocalEulerAnglesHint: {x: 4.139, y: 223.449, z: -1.502}
+--- !u!64 &907888631
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907888627}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &920505752
 GameObject:
   m_ObjectHideFlags: 0
@@ -6566,7 +7256,8 @@ GameObject:
   - component: {fileID: 920505753}
   - component: {fileID: 920505755}
   - component: {fileID: 920505754}
-  m_Layer: 0
+  - component: {fileID: 920505756}
+  m_Layer: 3
   m_Name: RunicStones6_Low (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6636,6 +7327,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920505752}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &920505756
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920505752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &928165734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6643,9 +7348,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 93296135}
     m_Modifications:
+    - target: {fileID: 1700650493192610771, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
       propertyPath: m_Name
       value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
       propertyPath: m_IsActive
@@ -6724,7 +7437,8 @@ GameObject:
   - component: {fileID: 933029317}
   - component: {fileID: 933029319}
   - component: {fileID: 933029318}
-  m_Layer: 0
+  - component: {fileID: 933029320}
+  m_Layer: 3
   m_Name: RunicStones_Low (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6794,6 +7508,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933029316}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &933029320
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933029316}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &934805650
 GameObject:
   m_ObjectHideFlags: 0
@@ -6805,7 +7533,8 @@ GameObject:
   - component: {fileID: 934805651}
   - component: {fileID: 934805653}
   - component: {fileID: 934805652}
-  m_Layer: 0
+  - component: {fileID: 934805654}
+  m_Layer: 3
   m_Name: RunicStones2_Low (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6875,6 +7604,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934805650}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &934805654
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934805650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &938550593
 GameObject:
   m_ObjectHideFlags: 0
@@ -6886,7 +7629,8 @@ GameObject:
   - component: {fileID: 938550596}
   - component: {fileID: 938550595}
   - component: {fileID: 938550594}
-  m_Layer: 0
+  - component: {fileID: 938550597}
+  m_Layer: 3
   m_Name: RunicStones_Low (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6956,6 +7700,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 50
   m_LocalEulerAnglesHint: {x: -4.352, y: 129.446, z: 1.217}
+--- !u!64 &938550597
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938550593}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &955814887
 GameObject:
   m_ObjectHideFlags: 0
@@ -7236,7 +7994,8 @@ GameObject:
   - component: {fileID: 964909345}
   - component: {fileID: 964909347}
   - component: {fileID: 964909346}
-  m_Layer: 0
+  - component: {fileID: 964909348}
+  m_Layer: 3
   m_Name: RunicStones2_Low (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7306,6 +8065,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964909344}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &964909348
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964909344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &976349399
 GameObject:
   m_ObjectHideFlags: 0
@@ -7317,7 +8090,8 @@ GameObject:
   - component: {fileID: 976349402}
   - component: {fileID: 976349401}
   - component: {fileID: 976349400}
-  m_Layer: 0
+  - component: {fileID: 976349403}
+  m_Layer: 3
   m_Name: RunicStones2_Low (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7387,6 +8161,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: -59.05, y: 52.826, z: -63.364}
+--- !u!64 &976349403
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976349399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &977075016
 GameObject:
   m_ObjectHideFlags: 0
@@ -7475,7 +8263,8 @@ GameObject:
   - component: {fileID: 979555002}
   - component: {fileID: 979555004}
   - component: {fileID: 979555003}
-  m_Layer: 0
+  - component: {fileID: 979555005}
+  m_Layer: 3
   m_Name: RunicStones_Low (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7544,6 +8333,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979555001}
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &979555005
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979555001}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!4 &981150756 stripped
 Transform:
@@ -7695,7 +8498,8 @@ GameObject:
   - component: {fileID: 1006086869}
   - component: {fileID: 1006086868}
   - component: {fileID: 1006086867}
-  m_Layer: 0
+  - component: {fileID: 1006086870}
+  m_Layer: 3
   m_Name: RunicStones2_Low (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7765,6 +8569,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 2.573, y: 156.894, z: 105.335}
+--- !u!64 &1006086870
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006086866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1009434360
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,7 +8594,8 @@ GameObject:
   - component: {fileID: 1009434363}
   - component: {fileID: 1009434362}
   - component: {fileID: 1009434361}
-  m_Layer: 0
+  - component: {fileID: 1009434364}
+  m_Layer: 3
   m_Name: RunicStones2_Low (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7846,6 +8665,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 78.059, y: -54.568, z: -72.046}
+--- !u!64 &1009434364
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009434360}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1011643541
 GameObject:
   m_ObjectHideFlags: 0
@@ -7857,7 +8690,8 @@ GameObject:
   - component: {fileID: 1011643542}
   - component: {fileID: 1011643544}
   - component: {fileID: 1011643543}
-  m_Layer: 0
+  - component: {fileID: 1011643545}
+  m_Layer: 3
   m_Name: RunicStones2_Low (59)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7926,6 +8760,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011643541}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1011643545
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011643541}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &1027387754
 PrefabInstance:
@@ -8052,7 +8900,8 @@ GameObject:
   - component: {fileID: 1056401457}
   - component: {fileID: 1056401459}
   - component: {fileID: 1056401458}
-  m_Layer: 0
+  - component: {fileID: 1056401460}
+  m_Layer: 3
   m_Name: RunicStones6_Low (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8122,6 +8971,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056401456}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1056401460
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056401456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1062678637
 GameObject:
   m_ObjectHideFlags: 0
@@ -8133,7 +8996,8 @@ GameObject:
   - component: {fileID: 1062678640}
   - component: {fileID: 1062678639}
   - component: {fileID: 1062678638}
-  m_Layer: 0
+  - component: {fileID: 1062678641}
+  m_Layer: 3
   m_Name: RunicStones2_Low (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8203,6 +9067,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 59
   m_LocalEulerAnglesHint: {x: 3.874, y: 224.331, z: -184.208}
+--- !u!64 &1062678641
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062678637}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1069795602
 GameObject:
   m_ObjectHideFlags: 0
@@ -8214,7 +9092,8 @@ GameObject:
   - component: {fileID: 1069795605}
   - component: {fileID: 1069795604}
   - component: {fileID: 1069795603}
-  m_Layer: 0
+  - component: {fileID: 1069795606}
+  m_Layer: 3
   m_Name: RunicStones2_Low (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8284,6 +9163,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: -1.874, y: 86.598, z: -62.04}
+--- !u!64 &1069795606
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069795602}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &1102266222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8421,7 +9314,8 @@ GameObject:
   - component: {fileID: 1122727449}
   - component: {fileID: 1122727448}
   - component: {fileID: 1122727447}
-  m_Layer: 0
+  - component: {fileID: 1122727450}
+  m_Layer: 3
   m_Name: RunicStones_Low (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8491,6 +9385,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 63
   m_LocalEulerAnglesHint: {x: -4.167, y: 110.24, z: 187.809}
+--- !u!64 &1122727450
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122727446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1125327128
 GameObject:
   m_ObjectHideFlags: 0
@@ -8592,7 +9500,8 @@ GameObject:
   - component: {fileID: 1138882476}
   - component: {fileID: 1138882478}
   - component: {fileID: 1138882477}
-  m_Layer: 0
+  - component: {fileID: 1138882479}
+  m_Layer: 3
   m_Name: RunicStones2_Low (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8662,6 +9571,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138882475}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1138882479
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138882475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1164162938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8673,7 +9596,8 @@ GameObject:
   - component: {fileID: 1164162939}
   - component: {fileID: 1164162941}
   - component: {fileID: 1164162940}
-  m_Layer: 0
+  - component: {fileID: 1164162942}
+  m_Layer: 3
   m_Name: RunicStones2_Low (62)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8743,6 +9667,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164162938}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1164162942
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164162938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1170934937
 GameObject:
   m_ObjectHideFlags: 0
@@ -8754,7 +9692,8 @@ GameObject:
   - component: {fileID: 1170934940}
   - component: {fileID: 1170934939}
   - component: {fileID: 1170934938}
-  m_Layer: 0
+  - component: {fileID: 1170934941}
+  m_Layer: 3
   m_Name: RunicStones2_Low (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8824,6 +9763,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: -13.452, y: -126.792, z: -261.647}
+--- !u!64 &1170934941
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170934937}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1175388336
 GameObject:
   m_ObjectHideFlags: 0
@@ -8835,7 +9788,8 @@ GameObject:
   - component: {fileID: 1175388337}
   - component: {fileID: 1175388339}
   - component: {fileID: 1175388338}
-  m_Layer: 0
+  - component: {fileID: 1175388340}
+  m_Layer: 3
   m_Name: RunicStones2_Low (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8905,6 +9859,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175388336}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1175388340
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175388336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1175907054
 GameObject:
   m_ObjectHideFlags: 0
@@ -8916,7 +9884,8 @@ GameObject:
   - component: {fileID: 1175907055}
   - component: {fileID: 1175907057}
   - component: {fileID: 1175907056}
-  m_Layer: 0
+  - component: {fileID: 1175907058}
+  m_Layer: 3
   m_Name: RunicStones2_Low (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8985,6 +9954,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175907054}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1175907058
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175907054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1176246968
 GameObject:
@@ -9264,7 +10247,8 @@ GameObject:
   - component: {fileID: 1224858131}
   - component: {fileID: 1224858133}
   - component: {fileID: 1224858132}
-  m_Layer: 0
+  - component: {fileID: 1224858134}
+  m_Layer: 3
   m_Name: RunicStones2_Low (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9334,6 +10318,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224858130}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1224858134
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224858130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1236701614
 GameObject:
   m_ObjectHideFlags: 0
@@ -9345,7 +10343,8 @@ GameObject:
   - component: {fileID: 1236701617}
   - component: {fileID: 1236701616}
   - component: {fileID: 1236701615}
-  m_Layer: 0
+  - component: {fileID: 1236701618}
+  m_Layer: 3
   m_Name: RunicStones_Low (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9415,6 +10414,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 1.587, y: 15.382, z: 196.098}
+--- !u!64 &1236701618
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236701614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1271574247
 GameObject:
   m_ObjectHideFlags: 0
@@ -9426,7 +10439,8 @@ GameObject:
   - component: {fileID: 1271574248}
   - component: {fileID: 1271574250}
   - component: {fileID: 1271574249}
-  m_Layer: 0
+  - component: {fileID: 1271574251}
+  m_Layer: 3
   m_Name: RunicStones2_Low (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9496,6 +10510,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271574247}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1271574251
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271574247}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1280256771
 GameObject:
   m_ObjectHideFlags: 0
@@ -9507,7 +10535,8 @@ GameObject:
   - component: {fileID: 1280256774}
   - component: {fileID: 1280256773}
   - component: {fileID: 1280256772}
-  m_Layer: 0
+  - component: {fileID: 1280256775}
+  m_Layer: 3
   m_Name: RunicStones_Low (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9577,6 +10606,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 47
   m_LocalEulerAnglesHint: {x: -4.167, y: -0.192, z: 187.809}
+--- !u!64 &1280256775
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280256771}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1283567564
 GameObject:
   m_ObjectHideFlags: 0
@@ -9588,7 +10631,8 @@ GameObject:
   - component: {fileID: 1283567565}
   - component: {fileID: 1283567567}
   - component: {fileID: 1283567566}
-  m_Layer: 0
+  - component: {fileID: 1283567568}
+  m_Layer: 3
   m_Name: RunicStones6_Low (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9657,6 +10701,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283567564}
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1283567568
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283567564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1283837428
 GameObject:
@@ -9765,7 +10823,8 @@ GameObject:
   - component: {fileID: 1322442990}
   - component: {fileID: 1322442992}
   - component: {fileID: 1322442991}
-  m_Layer: 0
+  - component: {fileID: 1322442993}
+  m_Layer: 3
   m_Name: RunicStones6_Low (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9834,6 +10893,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322442989}
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1322442993
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322442989}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &1324845087
 PrefabInstance:
@@ -10125,7 +11198,8 @@ GameObject:
   - component: {fileID: 1349951068}
   - component: {fileID: 1349951070}
   - component: {fileID: 1349951069}
-  m_Layer: 0
+  - component: {fileID: 1349951071}
+  m_Layer: 3
   m_Name: RunicStones2_Low (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10195,6 +11269,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349951067}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1349951071
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349951067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1365084755
 GameObject:
   m_ObjectHideFlags: 0
@@ -10206,7 +11294,8 @@ GameObject:
   - component: {fileID: 1365084756}
   - component: {fileID: 1365084758}
   - component: {fileID: 1365084757}
-  m_Layer: 0
+  - component: {fileID: 1365084759}
+  m_Layer: 3
   m_Name: RunicStones6_Low (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10276,6 +11365,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365084755}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1365084759
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365084755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1366670145
 GameObject:
   m_ObjectHideFlags: 0
@@ -10287,7 +11390,8 @@ GameObject:
   - component: {fileID: 1366670148}
   - component: {fileID: 1366670147}
   - component: {fileID: 1366670146}
-  m_Layer: 0
+  - component: {fileID: 1366670149}
+  m_Layer: 3
   m_Name: RunicStones2_Low (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10357,6 +11461,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 2.657, y: 31.547, z: -0.198}
+--- !u!64 &1366670149
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366670145}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1368848626
 GameObject:
   m_ObjectHideFlags: 0
@@ -10444,7 +11562,8 @@ GameObject:
   - component: {fileID: 1370950358}
   - component: {fileID: 1370950357}
   - component: {fileID: 1370950356}
-  m_Layer: 0
+  - component: {fileID: 1370950359}
+  m_Layer: 3
   m_Name: RunicStones_Low (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10514,6 +11633,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: -4.352, y: 129.446, z: 1.217}
+--- !u!64 &1370950359
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370950355}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!4 &1373955970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 816165554023415924, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
@@ -10636,7 +11769,8 @@ GameObject:
   - component: {fileID: 1394954400}
   - component: {fileID: 1394954399}
   - component: {fileID: 1394954398}
-  m_Layer: 0
+  - component: {fileID: 1394954401}
+  m_Layer: 3
   m_Name: RunicStones_Low (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10706,6 +11840,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 45
   m_LocalEulerAnglesHint: {x: -4.352, y: 135.507, z: 1.217}
+--- !u!64 &1394954401
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394954397}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1399073041
 GameObject:
   m_ObjectHideFlags: 0
@@ -10717,7 +11865,8 @@ GameObject:
   - component: {fileID: 1399073044}
   - component: {fileID: 1399073043}
   - component: {fileID: 1399073042}
-  m_Layer: 0
+  - component: {fileID: 1399073045}
+  m_Layer: 3
   m_Name: RunicStones_Low (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10787,6 +11936,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: -4.167, y: -52.704, z: 187.809}
+--- !u!64 &1399073045
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399073041}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1401460781
 GameObject:
   m_ObjectHideFlags: 0
@@ -10798,7 +11961,8 @@ GameObject:
   - component: {fileID: 1401460784}
   - component: {fileID: 1401460783}
   - component: {fileID: 1401460782}
-  m_Layer: 0
+  - component: {fileID: 1401460785}
+  m_Layer: 3
   m_Name: RunicStones_Low (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10868,6 +12032,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 1.587, y: 15.382, z: 196.098}
+--- !u!64 &1401460785
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401460781}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1407351922
 GameObject:
   m_ObjectHideFlags: 0
@@ -11269,7 +12447,8 @@ GameObject:
   - component: {fileID: 1442878612}
   - component: {fileID: 1442878614}
   - component: {fileID: 1442878613}
-  m_Layer: 0
+  - component: {fileID: 1442878615}
+  m_Layer: 3
   m_Name: RunicStones2_Low (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11339,6 +12518,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1442878611}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1442878615
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442878611}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1443834451
 GameObject:
   m_ObjectHideFlags: 0
@@ -11350,7 +12543,8 @@ GameObject:
   - component: {fileID: 1443834452}
   - component: {fileID: 1443834454}
   - component: {fileID: 1443834453}
-  m_Layer: 0
+  - component: {fileID: 1443834455}
+  m_Layer: 3
   m_Name: RunicStones2_Low (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11420,6 +12614,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443834451}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1443834455
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443834451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1444234818
 GameObject:
   m_ObjectHideFlags: 0
@@ -11431,7 +12639,8 @@ GameObject:
   - component: {fileID: 1444234819}
   - component: {fileID: 1444234821}
   - component: {fileID: 1444234820}
-  m_Layer: 0
+  - component: {fileID: 1444234822}
+  m_Layer: 3
   m_Name: RunicStones_Low (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11501,6 +12710,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444234818}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1444234822
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444234818}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1448833540
 GameObject:
   m_ObjectHideFlags: 0
@@ -11512,7 +12735,8 @@ GameObject:
   - component: {fileID: 1448833541}
   - component: {fileID: 1448833543}
   - component: {fileID: 1448833542}
-  m_Layer: 0
+  - component: {fileID: 1448833544}
+  m_Layer: 3
   m_Name: RunicStones2_Low (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11582,6 +12806,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448833540}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1448833544
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448833540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1452852140
 GameObject:
   m_ObjectHideFlags: 0
@@ -11593,7 +12831,8 @@ GameObject:
   - component: {fileID: 1452852141}
   - component: {fileID: 1452852143}
   - component: {fileID: 1452852142}
-  m_Layer: 0
+  - component: {fileID: 1452852144}
+  m_Layer: 3
   m_Name: RunicStones2_Low (67)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11662,6 +12901,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452852140}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1452852144
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452852140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1465115619
 GameObject:
@@ -11737,7 +12990,8 @@ GameObject:
   - component: {fileID: 1483397358}
   - component: {fileID: 1483397360}
   - component: {fileID: 1483397359}
-  m_Layer: 0
+  - component: {fileID: 1483397361}
+  m_Layer: 3
   m_Name: RunicStones_Low (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11806,6 +13060,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483397357}
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1483397361
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483397357}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1497160958
 GameObject:
@@ -11951,7 +13219,8 @@ GameObject:
   - component: {fileID: 1510017636}
   - component: {fileID: 1510017635}
   - component: {fileID: 1510017634}
-  m_Layer: 0
+  - component: {fileID: 1510017637}
+  m_Layer: 3
   m_Name: RunicStones_Low (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12021,6 +13290,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -4.451, y: -11.431, z: 1.237}
+--- !u!64 &1510017637
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510017633}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1541808181
 GameObject:
   m_ObjectHideFlags: 0
@@ -12032,7 +13315,8 @@ GameObject:
   - component: {fileID: 1541808184}
   - component: {fileID: 1541808183}
   - component: {fileID: 1541808182}
-  m_Layer: 0
+  - component: {fileID: 1541808185}
+  m_Layer: 3
   m_Name: RunicStones2_Low (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12102,6 +13386,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 3.874, y: 148.41, z: -184.208}
+--- !u!64 &1541808185
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541808181}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1547627783
 GameObject:
   m_ObjectHideFlags: 0
@@ -12113,7 +13411,8 @@ GameObject:
   - component: {fileID: 1547627784}
   - component: {fileID: 1547627786}
   - component: {fileID: 1547627785}
-  m_Layer: 0
+  - component: {fileID: 1547627787}
+  m_Layer: 3
   m_Name: RunicStones6_Low (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12183,6 +13482,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547627783}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1547627787
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547627783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1551449547
 GameObject:
   m_ObjectHideFlags: 0
@@ -12194,7 +13507,8 @@ GameObject:
   - component: {fileID: 1551449548}
   - component: {fileID: 1551449550}
   - component: {fileID: 1551449549}
-  m_Layer: 0
+  - component: {fileID: 1551449551}
+  m_Layer: 3
   m_Name: RunicStones2_Low (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12264,6 +13578,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551449547}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1551449551
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551449547}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1552993400
 GameObject:
   m_ObjectHideFlags: 0
@@ -12275,7 +13603,8 @@ GameObject:
   - component: {fileID: 1552993403}
   - component: {fileID: 1552993402}
   - component: {fileID: 1552993401}
-  m_Layer: 0
+  - component: {fileID: 1552993404}
+  m_Layer: 3
   m_Name: RunicStones_Low (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12345,6 +13674,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: -4.352, y: 82.995, z: 1.217}
+--- !u!64 &1552993404
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552993400}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1564144564
 GameObject:
   m_ObjectHideFlags: 0
@@ -12356,7 +13699,8 @@ GameObject:
   - component: {fileID: 1564144565}
   - component: {fileID: 1564144567}
   - component: {fileID: 1564144566}
-  m_Layer: 0
+  - component: {fileID: 1564144568}
+  m_Layer: 3
   m_Name: RunicStones_Low (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12426,6 +13770,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564144564}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1564144568
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564144564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1566073826
 GameObject:
   m_ObjectHideFlags: 0
@@ -12437,7 +13795,8 @@ GameObject:
   - component: {fileID: 1566073829}
   - component: {fileID: 1566073828}
   - component: {fileID: 1566073827}
-  m_Layer: 0
+  - component: {fileID: 1566073830}
+  m_Layer: 3
   m_Name: RunicStones2_Low (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12507,6 +13866,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 4.139, y: 60.504, z: -1.502}
+--- !u!64 &1566073830
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566073826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &1573628764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12588,7 +13961,8 @@ GameObject:
   - component: {fileID: 1574461366}
   - component: {fileID: 1574461365}
   - component: {fileID: 1574461364}
-  m_Layer: 0
+  - component: {fileID: 1574461367}
+  m_Layer: 3
   m_Name: RunicStones2_Low (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12658,6 +14032,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 46
   m_LocalEulerAnglesHint: {x: 4.139, y: 113.016, z: -1.502}
+--- !u!64 &1574461367
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574461363}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1594039318
 GameObject:
   m_ObjectHideFlags: 0
@@ -12669,7 +14057,8 @@ GameObject:
   - component: {fileID: 1594039321}
   - component: {fileID: 1594039320}
   - component: {fileID: 1594039319}
-  m_Layer: 0
+  - component: {fileID: 1594039322}
+  m_Layer: 3
   m_Name: RunicStones2_Low (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12739,6 +14128,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: -1.874, y: 86.598, z: -62.04}
+--- !u!64 &1594039322
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594039318}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!224 &1601507827 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1574459908703696425, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
@@ -12755,7 +14158,8 @@ GameObject:
   - component: {fileID: 1615327860}
   - component: {fileID: 1615327859}
   - component: {fileID: 1615327858}
-  m_Layer: 0
+  - component: {fileID: 1615327861}
+  m_Layer: 3
   m_Name: RunicStones2_Low (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12825,6 +14229,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1615327861
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615327857}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1622449117
 GameObject:
   m_ObjectHideFlags: 0
@@ -12836,7 +14254,8 @@ GameObject:
   - component: {fileID: 1622449118}
   - component: {fileID: 1622449120}
   - component: {fileID: 1622449119}
-  m_Layer: 0
+  - component: {fileID: 1622449121}
+  m_Layer: 3
   m_Name: RunicStones2_Low (69)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12905,6 +14324,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622449117}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1622449121
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622449117}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!114 &1670965526 stripped
 MonoBehaviour:
@@ -13078,7 +14511,8 @@ GameObject:
   - component: {fileID: 1717573944}
   - component: {fileID: 1717573946}
   - component: {fileID: 1717573945}
-  m_Layer: 0
+  - component: {fileID: 1717573947}
+  m_Layer: 3
   m_Name: RunicStones2_Low (43)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13148,6 +14582,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717573943}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1717573947
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717573943}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1719987565
 GameObject:
   m_ObjectHideFlags: 0
@@ -13159,7 +14607,8 @@ GameObject:
   - component: {fileID: 1719987566}
   - component: {fileID: 1719987568}
   - component: {fileID: 1719987567}
-  m_Layer: 0
+  - component: {fileID: 1719987569}
+  m_Layer: 3
   m_Name: RunicStones6_Low (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13228,6 +14677,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719987565}
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1719987569
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719987565}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1728891632
 GameObject:
@@ -13374,7 +14837,8 @@ GameObject:
   - component: {fileID: 1751547557}
   - component: {fileID: 1751547559}
   - component: {fileID: 1751547558}
-  m_Layer: 0
+  - component: {fileID: 1751547560}
+  m_Layer: 3
   m_Name: RunicStones2_Low (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13444,6 +14908,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751547556}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1751547560
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751547556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1751577785
 GameObject:
   m_ObjectHideFlags: 0
@@ -13455,7 +14933,8 @@ GameObject:
   - component: {fileID: 1751577788}
   - component: {fileID: 1751577787}
   - component: {fileID: 1751577786}
-  m_Layer: 0
+  - component: {fileID: 1751577789}
+  m_Layer: 3
   m_Name: RunicStones_Low (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13525,6 +15004,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 56
   m_LocalEulerAnglesHint: {x: -4.352, y: 158.916, z: 1.217}
+--- !u!64 &1751577789
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751577785}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1752064717
 GameObject:
   m_ObjectHideFlags: 0
@@ -13536,7 +15029,8 @@ GameObject:
   - component: {fileID: 1752064718}
   - component: {fileID: 1752064720}
   - component: {fileID: 1752064719}
-  m_Layer: 0
+  - component: {fileID: 1752064721}
+  m_Layer: 3
   m_Name: RunicStones2_Low (65)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13605,6 +15099,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752064717}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1752064721
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752064717}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1756952397
 GameObject:
@@ -13693,7 +15201,8 @@ GameObject:
   - component: {fileID: 1768027407}
   - component: {fileID: 1768027406}
   - component: {fileID: 1768027405}
-  m_Layer: 0
+  - component: {fileID: 1768027408}
+  m_Layer: 3
   m_Name: RunicStones2_Low (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13763,6 +15272,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 58.478, y: 90.802, z: 86.394}
+--- !u!64 &1768027408
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768027404}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1797569389
 GameObject:
   m_ObjectHideFlags: 0
@@ -13774,7 +15297,8 @@ GameObject:
   - component: {fileID: 1797569392}
   - component: {fileID: 1797569391}
   - component: {fileID: 1797569390}
-  m_Layer: 0
+  - component: {fileID: 1797569393}
+  m_Layer: 3
   m_Name: RunicStones_Low (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13844,6 +15368,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 77.225, y: -47.263, z: -62.407}
+--- !u!64 &1797569393
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797569389}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1806955772
 GameObject:
   m_ObjectHideFlags: 0
@@ -13855,7 +15393,8 @@ GameObject:
   - component: {fileID: 1806955775}
   - component: {fileID: 1806955774}
   - component: {fileID: 1806955773}
-  m_Layer: 0
+  - component: {fileID: 1806955776}
+  m_Layer: 3
   m_Name: RunicStones_Low (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13925,6 +15464,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1806955776
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806955772}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1821138110
 GameObject:
   m_ObjectHideFlags: 0
@@ -13936,7 +15489,8 @@ GameObject:
   - component: {fileID: 1821138113}
   - component: {fileID: 1821138112}
   - component: {fileID: 1821138111}
-  m_Layer: 0
+  - component: {fileID: 1821138114}
+  m_Layer: 3
   m_Name: RunicStones2_Low (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14006,6 +15560,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 58.478, y: 155.883, z: 86.394}
+--- !u!64 &1821138114
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821138110}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1826856179
 GameObject:
   m_ObjectHideFlags: 0
@@ -14017,7 +15585,8 @@ GameObject:
   - component: {fileID: 1826856180}
   - component: {fileID: 1826856182}
   - component: {fileID: 1826856181}
-  m_Layer: 0
+  - component: {fileID: 1826856183}
+  m_Layer: 3
   m_Name: RunicStones_Low (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14087,6 +15656,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826856179}
   m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1826856183
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826856179}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1827321534
 GameObject:
   m_ObjectHideFlags: 0
@@ -14098,7 +15681,8 @@ GameObject:
   - component: {fileID: 1827321535}
   - component: {fileID: 1827321537}
   - component: {fileID: 1827321536}
-  m_Layer: 0
+  - component: {fileID: 1827321538}
+  m_Layer: 3
   m_Name: RunicStones2_Low (68)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14168,6 +15752,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827321534}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1827321538
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827321534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1835034086
 GameObject:
   m_ObjectHideFlags: 0
@@ -14179,7 +15777,8 @@ GameObject:
   - component: {fileID: 1835034089}
   - component: {fileID: 1835034088}
   - component: {fileID: 1835034087}
-  m_Layer: 0
+  - component: {fileID: 1835034090}
+  m_Layer: 3
   m_Name: RunicStones2_Low (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14249,6 +15848,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 3.874, y: 181.262, z: -184.208}
+--- !u!64 &1835034090
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835034086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1838690946
 GameObject:
   m_ObjectHideFlags: 0
@@ -14393,7 +16006,8 @@ GameObject:
   - component: {fileID: 1845884406}
   - component: {fileID: 1845884405}
   - component: {fileID: 1845884404}
-  m_Layer: 0
+  - component: {fileID: 1845884407}
+  m_Layer: 3
   m_Name: RunicStones_Low (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14463,6 +16077,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: -16.307, y: -11.88, z: 3.718}
+--- !u!64 &1845884407
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845884403}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1853838084
 GameObject:
   m_ObjectHideFlags: 0
@@ -14608,7 +16236,8 @@ GameObject:
   - component: {fileID: 1853997638}
   - component: {fileID: 1853997637}
   - component: {fileID: 1853997636}
-  m_Layer: 0
+  - component: {fileID: 1853997639}
+  m_Layer: 3
   m_Name: RunicStones2_Low (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14678,6 +16307,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 3.874, y: 200.922, z: -184.208}
+--- !u!64 &1853997639
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853997635}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1856542877
 GameObject:
   m_ObjectHideFlags: 0
@@ -14742,7 +16385,8 @@ GameObject:
   - component: {fileID: 1857752869}
   - component: {fileID: 1857752868}
   - component: {fileID: 1857752867}
-  m_Layer: 0
+  - component: {fileID: 1857752870}
+  m_Layer: 3
   m_Name: RunicStones2_Low (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14812,6 +16456,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: -21.457, y: -123.191, z: 86.417}
+--- !u!64 &1857752870
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857752866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1863839828
 GameObject:
   m_ObjectHideFlags: 0
@@ -14823,7 +16481,8 @@ GameObject:
   - component: {fileID: 1863839829}
   - component: {fileID: 1863839831}
   - component: {fileID: 1863839830}
-  m_Layer: 0
+  - component: {fileID: 1863839832}
+  m_Layer: 3
   m_Name: RunicStones2_Low (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14892,6 +16551,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863839828}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &1863839832
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863839828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1865229465 stripped
 GameObject:
@@ -15209,7 +16882,8 @@ GameObject:
   - component: {fileID: 1891205826}
   - component: {fileID: 1891205825}
   - component: {fileID: 1891205824}
-  m_Layer: 0
+  - component: {fileID: 1891205827}
+  m_Layer: 3
   m_Name: RunicStones2_Low (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15279,6 +16953,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 58.478, y: 155.883, z: 86.394}
+--- !u!64 &1891205827
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891205823}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!4 &1897427444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1733193835598659475, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
@@ -15295,7 +16983,8 @@ GameObject:
   - component: {fileID: 1907209345}
   - component: {fileID: 1907209344}
   - component: {fileID: 1907209343}
-  m_Layer: 0
+  - component: {fileID: 1907209346}
+  m_Layer: 3
   m_Name: RunicStones_Low (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15365,6 +17054,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -4.352, y: 82.995, z: 1.217}
+--- !u!64 &1907209346
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907209342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1919611532
 GameObject:
   m_ObjectHideFlags: 0
@@ -15451,7 +17154,8 @@ GameObject:
   - component: {fileID: 1955163563}
   - component: {fileID: 1955163562}
   - component: {fileID: 1955163561}
-  m_Layer: 0
+  - component: {fileID: 1955163564}
+  m_Layer: 3
   m_Name: RunicStones_Low (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15521,6 +17225,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -16.307, y: -11.88, z: 3.718}
+--- !u!64 &1955163564
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955163560}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1957462524
 GameObject:
   m_ObjectHideFlags: 0
@@ -15532,7 +17250,8 @@ GameObject:
   - component: {fileID: 1957462527}
   - component: {fileID: 1957462526}
   - component: {fileID: 1957462525}
-  m_Layer: 0
+  - component: {fileID: 1957462528}
+  m_Layer: 3
   m_Name: RunicStones2_Low (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15602,6 +17321,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1957462528
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957462524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &1972813231
 GameObject:
   m_ObjectHideFlags: 0
@@ -15804,7 +17537,8 @@ GameObject:
   - component: {fileID: 2054088786}
   - component: {fileID: 2054088785}
   - component: {fileID: 2054088784}
-  m_Layer: 0
+  - component: {fileID: 2054088787}
+  m_Layer: 3
   m_Name: RunicStones_Low (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15874,6 +17608,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: -4.451, y: 64.491, z: 1.237}
+--- !u!64 &2054088787
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054088783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &2059327108
 GameObject:
   m_ObjectHideFlags: 0
@@ -15885,7 +17633,8 @@ GameObject:
   - component: {fileID: 2059327111}
   - component: {fileID: 2059327110}
   - component: {fileID: 2059327109}
-  m_Layer: 0
+  - component: {fileID: 2059327112}
+  m_Layer: 3
   m_Name: RunicStones_Low (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15955,6 +17704,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 61
   m_LocalEulerAnglesHint: {x: -4.352, y: 245.939, z: 1.217}
+--- !u!64 &2059327112
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059327108}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7546167369993726275, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &2077903636
 GameObject:
   m_ObjectHideFlags: 0
@@ -16110,7 +17873,8 @@ GameObject:
   - component: {fileID: 2081889515}
   - component: {fileID: 2081889514}
   - component: {fileID: 2081889513}
-  m_Layer: 0
+  - component: {fileID: 2081889516}
+  m_Layer: 3
   m_Name: RunicStones2_Low (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16180,6 +17944,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: -1.874, y: -51.193, z: -62.04}
+--- !u!64 &2081889516
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081889512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &2090224320
 GameObject:
   m_ObjectHideFlags: 0
@@ -16191,7 +17969,8 @@ GameObject:
   - component: {fileID: 2090224321}
   - component: {fileID: 2090224323}
   - component: {fileID: 2090224322}
-  m_Layer: 0
+  - component: {fileID: 2090224324}
+  m_Layer: 3
   m_Name: RunicStones6_Low (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16261,6 +18040,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090224320}
   m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &2090224324
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090224320}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5067920383580700672, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &2114194568
 GameObject:
   m_ObjectHideFlags: 0
@@ -16272,7 +18065,8 @@ GameObject:
   - component: {fileID: 2114194571}
   - component: {fileID: 2114194570}
   - component: {fileID: 2114194569}
-  m_Layer: 0
+  - component: {fileID: 2114194572}
+  m_Layer: 3
   m_Name: RunicStones2_Low (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16342,6 +18136,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: -20.801, y: 51.558, z: 2.922}
+--- !u!64 &2114194572
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114194568}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1 &2122699672
 GameObject:
   m_ObjectHideFlags: 0
@@ -16353,7 +18161,8 @@ GameObject:
   - component: {fileID: 2122699675}
   - component: {fileID: 2122699674}
   - component: {fileID: 2122699673}
-  m_Layer: 0
+  - component: {fileID: 2122699676}
+  m_Layer: 3
   m_Name: RunicStones2_Low (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16423,6 +18232,20 @@ Transform:
   m_Father: {fileID: 182287902}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -61.117, y: -72.1, z: 43.638}
+--- !u!64 &2122699676
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122699672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!114 &2123415204 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
@@ -16560,7 +18383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2138889762}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tiers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16595,7 +18418,8 @@ GameObject:
   - component: {fileID: 2141017220}
   - component: {fileID: 2141017222}
   - component: {fileID: 2141017221}
-  m_Layer: 0
+  - component: {fileID: 2141017223}
+  m_Layer: 3
   m_Name: RunicStones2_Low (64)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16664,6 +18488,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141017219}
+  m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!64 &2141017223
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141017219}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
 --- !u!1001 &748089613024356143
 PrefabInstance:
@@ -16778,6 +18616,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138889762}
     m_Modifications:
+    - target: {fileID: 603100826536317442, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 603100827140401923, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 816165553503225945, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 816165554023415924, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -16827,8 +18677,160 @@ PrefabInstance:
       value: TerrainTier3
       objectReference: {fileID: 0}
     - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798000216729362, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798000445182092, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798000652715058, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798000754233802, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798001001891283, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475798001092923163, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110577900465063163, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110577900861830927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110577901024222524, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110577901348773479, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110577901616114865, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237174843471, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237208468734, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237243271430, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237406650927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237447743719, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237466222545, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237710261911, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237746760230, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237812042607, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237908443206, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727237966835128, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953727238016514702, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332882386792998, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332882433054741, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332882531392523, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332882805469183, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332882950259154, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332883054364108, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332883392546455, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332883662058561, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332883946691406, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034332884216129944, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150756045602440451, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150756046294095958, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150756046763827543, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150756047146187778, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
@@ -16936,6 +18938,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138889762}
     m_Modifications:
+    - target: {fileID: 514825244806501389, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 514825244873324738, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 514825245228090174, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 514825246043363342, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 514825246245513751, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 514825246426320263, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014532333067361815, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014532333234437693, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014532333781848191, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014532333834948261, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014532334466654402, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733193834736522017, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659475, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -16985,8 +19035,136 @@ PrefabInstance:
       value: TerrainTier2
       objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945754749022321996, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945754749724676557, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945754750670760254, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825928971467540, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825929424127719, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825929525733069, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825929876822846, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930141455957, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930186393743, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930357564907, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930739291478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930795273100, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674825930843420722, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304201401846, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304236981072, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304422043146, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304707291039, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304805751097, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336304922688611, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336305228916026, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336305353863347, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336305565210403, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336305734805331, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336305855689434, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738336306070050122, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703570709856205, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703570738043499, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703571388532542, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703571402580632, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703571829150540, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045703572243713561, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5808470274826555636, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17114,6 +19292,178 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138889762}
     m_Modifications:
+    - target: {fileID: 596771349923183186, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 596771350874908423, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 596771351059566958, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 596771351283425855, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 596771351665753962, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 596771351751248955, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652814291280008, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652814586962160, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652814639813652, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652814845427025, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652815074065705, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652815293827533, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652815364214413, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652815496674503, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652815917372244, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057652816049692958, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317720674992821, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317720676208808, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317721032487734, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317721242878172, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317721243964097, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317721601257823, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722064638572, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722166931922, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722252714913, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722565382149, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722739930043, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120317722754539976, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636894537207326113, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636894537381504473, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636894537572897085, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636894537636468349, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4636894538427398638, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721985391053931, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721985665592732, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721985666416513, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721986267421948, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721986489347377, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289721986887797990, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146689364224376686, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146689364830212458, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6146689366154381575, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215058022600722003, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401640, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -17161,6 +19511,10 @@ PrefabInstance:
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_Name
       value: TerrainTier1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_IsActive
