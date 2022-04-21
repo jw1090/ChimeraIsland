@@ -4,12 +4,22 @@ using UnityEngine.AI;
 public class Facility : MonoBehaviour
 {
     [Header("General Info")]
+<<<<<<< Updated upstream
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _currentTier = 0;
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 100;
     [SerializeField] private bool _isActive = false;
+=======
+    [SerializeField] private FacilityType facilityType = FacilityType.None;
+    [SerializeField] private StatType statType = StatType.None;
+    [SerializeField] private int currentTier = 0;
+    [SerializeField] private int statModifier = 1;
+    [SerializeField] private int price = 100;
+    [SerializeField] private bool isActive = false;
+    [SerializeField] private GameObject icon;
+>>>>>>> Stashed changes
 
     [Header("References")]
     [SerializeField] private Chimera _storedChimera = null;
@@ -54,9 +64,16 @@ public class Facility : MonoBehaviour
             Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
             return false;
         }
+<<<<<<< Updated upstream
 
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
+=======
+        icon.gameObject.SetActive(true);
+        icon.GetComponent<FacilityIcon>().setIcon(chimera.GetIcon());
+        storedChimera = chimera;
+        storedChimera.SetInFacility(true);
+>>>>>>> Stashed changes
         chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
 
         Debug.Log(_storedChimera + " added to the facility.");
@@ -71,9 +88,16 @@ public class Facility : MonoBehaviour
             Debug.Log("Cannot remove Chimera, facility is empty.");
             return false;
         }
+<<<<<<< Updated upstream
 
         Debug.Log(_storedChimera + " has been removed from the facility.");
         _storedChimera.SetInFacility(false);
+=======
+        icon.GetComponent<FacilityIcon>().removeIcon();
+        icon.gameObject.SetActive(false);
+        Debug.Log(storedChimera + " has been removed from the facility.");
+        storedChimera.SetInFacility(false);
+>>>>>>> Stashed changes
         NavMeshHit myNavHit;
 
         // Find nearby walkable position.
@@ -90,7 +114,12 @@ public class Facility : MonoBehaviour
     {
         if(_storedChimera != null)
         {
+<<<<<<< Updated upstream
             _storedChimera.ExperienceTick(_statType, _statModifier);
+=======
+            icon.GetComponent<FacilityIcon>().setIcon(storedChimera.GetIcon());
+            storedChimera.ExperienceTick(statType, statModifier);
+>>>>>>> Stashed changes
             FlatStatBoost();
             HappinessCheck();
         }
