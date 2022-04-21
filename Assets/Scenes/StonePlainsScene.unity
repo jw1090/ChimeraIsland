@@ -436,10 +436,6 @@ PrefabInstance:
       propertyPath: chimera
       value: 
       objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
-    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
-      propertyPath: _chimera
-      value: 
-      objectReference: {fileID: 1070999743981996110, guid: d0f3cb4c1b32cbf4387a0cd7d83d498a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
 --- !u!224 &23457437 stripped
@@ -2038,7 +2034,7 @@ GameObject:
   - component: {fileID: 209325692}
   - component: {fileID: 209325695}
   m_Layer: 5
-  m_Name: Detail Panel
+  m_Name: Detail Folder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2142,11 +2138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8d842918597234381e0b805bb6fee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chimeraDetailsList:
+  chimeraDetailsList:
   - {fileID: 2123415204}
   - {fileID: 483385885}
   - {fileID: 2037036157}
-  _chimerasList:
+  chimerasList:
   - {fileID: 0}
 --- !u!1 &222191663
 GameObject:
@@ -4287,10 +4283,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-      propertyPath: _chimeraSpot
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
       propertyPath: chimeraDetailsFolder
       value: 
       objectReference: {fileID: 209325695}
@@ -5803,28 +5795,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 71382451}
     m_Modifications:
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 35383058}
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facility
       value: 
       objectReference: {fileID: 35383058}
     - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 35383058}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -5914,10 +5890,6 @@ PrefabInstance:
     - target: {fileID: 7285057057785462471, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Name
       value: Buy Facilitiy Int
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: m_text
-      value: +INT
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -7171,7 +7143,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1418420240}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: OpenDetailsPanel
+        m_MethodName: OpenChimeraPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8064,33 +8036,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 71382451}
     m_Modifications:
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 449551239}
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facility
       value: 
       objectReference: {fileID: 449551239}
     - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 449551239}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facilityType
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityButton
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Pivot.x
@@ -8179,10 +8131,6 @@ PrefabInstance:
     - target: {fileID: 7285057057785462471, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Name
       value: Buy Facilitiy Str
-      objectReference: {fileID: 0}
-    - target: {fileID: 8032177915247884123, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: m_text
-      value: +STR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
@@ -8551,10 +8499,6 @@ PrefabInstance:
       objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
     - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
       propertyPath: chimera
-      value: 
-      objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
-    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
-      propertyPath: _chimera
       value: 
       objectReference: {fileID: 4362745166761184371, guid: 0fa80c47774125f4790d87b87b6b1185, type: 3}
     m_RemovedComponents: []
@@ -9905,9 +9849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delay: 0.5
-  _islandView: {fileID: 977075016}
-  _crossfade: {fileID: 377004310}
+  delay: 0
+  islandView: {fileID: 0}
+  crossfade: {fileID: 0}
 --- !u!1 &1322442989
 GameObject:
   m_ObjectHideFlags: 0
@@ -10090,10 +10034,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
       propertyPath: chimeraSpot
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-      propertyPath: _chimeraSpot
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
@@ -10684,26 +10624,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 71382451}
     m_Modifications:
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 1414356755}
-    - target: {fileID: 5506218116883486429, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: facility
       value: 
       objectReference: {fileID: 1414356755}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facility
-      value: 
-      objectReference: {fileID: 1414356755}
-    - target: {fileID: 7133829139641227967, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
-      propertyPath: _facilityType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7285057057785462464, guid: 991dfadaf13b28b428dce6e34165a3a0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11331,11 +11255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227920f732abd754d982d8dcbb99f5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chimeraDetailsFolder: {fileID: 209325695}
-  _openDetailsButton: {fileID: 955814887}
-  _closeDetailsButton: {fileID: 1838690946}
-  _detailsPanel: {fileID: 209325690}
-  _marketplacePanel: {fileID: 532682773}
+  OpenChimerasButton: {fileID: 955814887}
+  DetailsPanel: {fileID: 209325690}
+  CloseChimerasButton: {fileID: 1838690946}
+  Marketplace: {fileID: 532682773}
 --- !u!114 &1418420241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11348,9 +11271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078a86ada2036c744b1c3571aa7909cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delay: 0.5
-  _islandView: {fileID: 977075016}
-  _crossfade: {fileID: 377004310}
+  delay: 0.5
+  islandView: {fileID: 977075016}
+  crossfade: {fileID: 377004310}
 --- !u!1 &1435291744
 GameObject:
   m_ObjectHideFlags: 0
@@ -14948,16 +14871,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17cfcec53b50074c98988fb7bb58b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentEssence: 0
-  _activeHabitat: {fileID: 674330413}
-  _cam: {fileID: 963194227}
-  _chimeraDetailsFolder: {fileID: 209325695}
-  _essenceWallets:
+  currentEssence: 50
+  _ActiveHabitat: {fileID: 674330413}
+  cam: {fileID: 963194227}
+  chimeraDetailsFolder: {fileID: 209325695}
+  essenceWallets:
   - {fileID: 2131325068}
   - {fileID: 2079950359}
-  _clickHeldSeconds: 2
-  _clickHeldCounter: 0
-  _slider: {fileID: 1125327128}
+  clickHeldSeconds: 2
+  clickHeldCounter: 0
+  slider: {fileID: 1125327128}
 --- !u!1 &1857752866
 GameObject:
   m_ObjectHideFlags: 0
@@ -16995,10 +16918,6 @@ PrefabInstance:
       propertyPath: chimera
       value: 
       objectReference: {fileID: 855878291477086151, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-    - target: {fileID: 5277278586155273493, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
-      propertyPath: _chimera
-      value: 
-      objectReference: {fileID: 855878291477086151, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
     m_RemovedComponents:
     - {fileID: 748089614685564884, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b29d890449f268e478dcfd44f4e9e903, type: 3}
@@ -17055,7 +16974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_Name
-      value: Terrain Tier 3
+      value: TerrainTier3
       objectReference: {fileID: 0}
     - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_IsActive
@@ -17213,7 +17132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_Name
-      value: Terrain Tier 2
+      value: TerrainTier2
       objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_IsActive
@@ -17379,7 +17298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_Name
-      value: Terrain Tier 1
+      value: TerrainTier1
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_IsActive

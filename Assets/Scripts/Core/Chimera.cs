@@ -157,10 +157,12 @@ public class Chimera : MonoBehaviour
     // If so, LevelUp is called with specific stat enumerator.
     private void AllocateExperience()
     {
+        bool levelUp = false;
 
         if (_enduranceExperience >= _enduranceThreshold)
         {
             _enduranceExperience -= _enduranceThreshold;
+            levelUp = true;
             LevelUp(StatType.Endurance);
 
             _enduranceThreshold += (int)(Mathf.Sqrt(_enduranceThreshold) * 1.2f);
@@ -169,6 +171,7 @@ public class Chimera : MonoBehaviour
         if (_intelligenceExperience >= _intelligenceThreshold)
         {
             _intelligenceExperience -= _intelligenceThreshold;
+            levelUp = true;
             LevelUp(StatType.Intelligence);
 
             _intelligenceThreshold += (int)(Mathf.Sqrt(_intelligenceThreshold) * 1.2f);
@@ -177,9 +180,15 @@ public class Chimera : MonoBehaviour
         if (_strengthExperience >= _strengthThreshold)
         {
             _strengthExperience -= _strengthThreshold;
+            levelUp = true;
             LevelUp(StatType.Strength);
 
             _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
+        }
+
+        if (levelUp)
+        {
+            _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength);
         }
     }
 
@@ -204,8 +213,6 @@ public class Chimera : MonoBehaviour
                 Debug.LogError("Default Level Up Please Change!");
                 break;
         }
-
-        _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength);
 
         GameManager.Instance.UpdateDetailsUI();
         ++_levelUpTracker;

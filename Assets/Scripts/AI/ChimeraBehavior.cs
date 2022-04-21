@@ -21,7 +21,7 @@ namespace AI.Behavior
         [Header("References")]
         [SerializeField] private List<Transform> _nodes;
         [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private ChimeraBaseState _currentState;
+        [SerializeField] private ChimeraBaseState currentState;
 
         private float _heightOffset = 2f;
         private int _patrolIndex = 0;
@@ -57,18 +57,18 @@ namespace AI.Behavior
         {
             if(_isActive)
             {
-                _currentState.Update();
+                currentState.Update();
             }
         }
 
         public void ChangeState(ChimeraBaseState state)
         {
-            if (_currentState != null)
+            if (currentState != null)
             {
-                _currentState.Exit();
+                currentState.Exit();
             }
-            _currentState = state;
-            _currentState.Enter(this);
+            currentState = state;
+            currentState.Enter(this);
         }
 
         IEnumerator OnMouseDown()
@@ -88,7 +88,7 @@ namespace AI.Behavior
                 yield return new WaitForFixedUpdate();
             }
         }
-
+        
         IEnumerator OnMouseUp()
         {
             GetComponent<NavMeshAgent>().baseOffset = 0;
@@ -98,7 +98,6 @@ namespace AI.Behavior
             yield return new WaitForFixedUpdate();
         }
 
-        #region Getters & Setters
         public int GetPatrolIndex() { return _wanderIndex; }
         public int GetWanderIndex() { return _wanderIndex; }
         public float GetTimer() { return _timer; }
@@ -113,6 +112,5 @@ namespace AI.Behavior
         public void AddToTimer(float amount) { _timer += amount; }
         public void ResetTimer() { _timer = 0; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
-        #endregion
     }
 }

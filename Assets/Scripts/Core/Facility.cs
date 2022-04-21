@@ -4,26 +4,26 @@ using UnityEngine.AI;
 public class Facility : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private FacilityType _facilityType = FacilityType.None;
-    [SerializeField] private StatType _statType = StatType.None;
-    [SerializeField] private int _currentTier = 0;
-    [SerializeField] private int _statModifier = 1;
-    [SerializeField] private int _price = 50;
-    [SerializeField] private bool _isActive = false;
+    [SerializeField] private FacilityType facilityType = FacilityType.None;
+    [SerializeField] private StatType statType = StatType.None;
+    [SerializeField] private int currentTier = 0;
+    [SerializeField] private int statModifier = 1;
+    [SerializeField] private int price = 100;
+    [SerializeField] private bool isActive = false;
 
     [Header("References")]
-    [SerializeField] private Chimera _storedChimera = null;
+    [SerializeField] private Chimera storedChimera = null;
 
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
     {
-        _price = (int)(_price * 7.5);
-        ++_currentTier;
+        price = (int)(price * 7.5);
+        ++currentTier;
 
-        if (_currentTier == 1)
+        if (currentTier == 1)
         {
-            _isActive = true;
-            Debug.Log(_facilityType + " was purchased!");
+            isActive = true;
+            Debug.Log(facilityType + " was purchased!");
 
             // If it has a child, activate the fancy model, otherwise use the primative mesh.
             if(transform.childCount != 0)
@@ -37,60 +37,60 @@ public class Facility : MonoBehaviour
         }
         else
         {
-            ++_statModifier;
-            Debug.Log(_facilityType + " was increased to Tier " + _currentTier + "!");
+            ++statModifier;
+            Debug.Log(facilityType + " was increased to Tier " + currentTier + "!");
         }
 
-        int newMod = _statModifier + 1;
+        int newMod = statModifier + 1;
 
-        Debug.Log(_facilityType + " now generates " + newMod + " " + _statType + " for Chimeras per tick!");
+        Debug.Log(facilityType + " now generates " + newMod + " " + statType + " for Chimeras per tick!");
     }
 
     // Called to properly link a chimera to a facility and adjust its states properly.
     public bool PlaceChimera(Chimera chimera)
     {
-        if(_storedChimera != null) // Something is already in the facility.
+        if(storedChimera != null) // Something is already in the facility.
         {
-            Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
+            Debug.Log("Cannot add " + chimera + ". " + storedChimera + " is already in this facility.");
             return false;
         }
 
-        _storedChimera = chimera;
-        _storedChimera.SetInFacility(true);
+        storedChimera = chimera;
+        storedChimera.SetInFacility(true);
         chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
 
-        Debug.Log(_storedChimera + " added to the facility.");
+        Debug.Log(storedChimera + " added to the facility.");
         return true;
     }
 
     // Removes Chimera from facility and cleans up chimera and facility logic.
     public bool RemoveChimera()
     {
-        if(_storedChimera == null) // Facility is empty.
+        if(storedChimera == null) // Facility is empty.
         {
             Debug.Log("Cannot remove Chimera, facility is empty.");
             return false;
         }
 
-        Debug.Log(_storedChimera + " has been removed from the facility.");
-        _storedChimera.SetInFacility(false);
+        Debug.Log(storedChimera + " has been removed from the facility.");
+        storedChimera.SetInFacility(false);
         NavMeshHit myNavHit;
 
         // Find nearby walkable position.
         if (NavMesh.SamplePosition(transform.position, out myNavHit, 100, -1))
         {
-            _storedChimera.transform.position = myNavHit.position;
+            storedChimera.transform.position = myNavHit.position;
         }
-        _storedChimera = null;
+        storedChimera = null;
 
         return true;
     }
 
     public void FacilityTick()
     {
-        if(_storedChimera != null)
+        if(storedChimera != null)
         {
-            _storedChimera.ExperienceTick(_statType, _statModifier);
+            storedChimera.ExperienceTick(statType, statModifier);
             FlatStatBoost();
             HappinessCheck();
         }
@@ -98,44 +98,40 @@ public class Facility : MonoBehaviour
 
     private void FlatStatBoost()
     {
-        _storedChimera.ExperienceTick(StatType.Endurance, 1);
-        _storedChimera.ExperienceTick(StatType.Intelligence, 1);
-        _storedChimera.ExperienceTick(StatType.Strength, 1);
+        storedChimera.ExperienceTick(StatType.Endurance, 1);
+        storedChimera.ExperienceTick(StatType.Intelligence, 1);
+        storedChimera.ExperienceTick(StatType.Strength, 1);
     }
 
     private void HappinessCheck()
     {
-        if(_storedChimera.GetStatPreference() == _statType)
+        if(storedChimera.GetStatPreference() == statType)
         {
             int happinessAmount = 1;
-            if(_storedChimera.GetPassive() == Passives.WorkMotivated)
+            if(storedChimera.GetPassive() == Passives.WorkMotivated)
             {
                 happinessAmount = 2;
-                _storedChimera.ChangeHappiness(happinessAmount);
+                storedChimera.ChangeHappiness(happinessAmount);
             }
-            _storedChimera.ChangeHappiness(happinessAmount);
+            storedChimera.ChangeHappiness(happinessAmount);
         }
     }
 
     #region Getters & Setters
-    public FacilityType GetFacilityType() { return _facilityType; }
-    public int GetTier() { return _currentTier; }
-    public int GetPrice() { return _price; }
-    public bool IsActive() { return _isActive; }
+    public FacilityType GetFacilityType() { return facilityType; }
+    public StatType GetStatType() { return statType; }
+    public int GetStatModifier() { return statModifier; }
+    public int GetTier() { return currentTier; }
+    public int GetPrice() { return price; }
+    public bool IsActive() { return isActive; }
     public bool IsChimeraStored()
     {
-        if (_isActive == false)
+        if (isActive == false)
         {
             Debug.Log("This Facility is not active!");
-            return false;
+            return isActive;
         }
-
-        if(_storedChimera == null)
-        {
-            return false;
-        }
-
-        return true;
+        return storedChimera != null;
     }
     #endregion
 }
