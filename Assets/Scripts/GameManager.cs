@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
     {
         if (_persistentData != null)
         {
-            currentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
-            Debug.Log($"Loaded Essense: {currentEssence}");
+            _currentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
+            Debug.Log($"Loaded Essense: {_currentEssence}");
         }
     }
 
@@ -72,13 +72,13 @@ public class GameManager : MonoBehaviour
         UpdateWallets();
         if (_persistentData != null)
         {
-            Debug.Log("<color=lime>Saving Essence</color>");
-            _persistentData.SaveData(GameConsts.GameSaveKeys.ESSENCE, currentEssence);
+            //Debug.Log("<color=lime>Saving Essence</color>");
+            _persistentData.SaveData(GameConsts.GameSaveKeys.ESSENCE, _currentEssence);
         }
         else if(_persistentData == null)
         {
             _persistentData = ServiceLocator.Get<IPersistentData>() as PersistentData;
-            Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
+            //Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
         }
     }
 

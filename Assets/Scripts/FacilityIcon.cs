@@ -1,25 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FacilityIcon : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer icon;
-    void Start()
-    {
-        icon.sprite = null;
-    }
+    [SerializeField] private SpriteRenderer _icon = null;
+
     private void Update()
     {
-        this.transform.LookAt(Camera.main.transform);
+        transform.LookAt(Camera.main.transform);
     }
-    public void setIcon(Sprite s)
+    public void SetIcon(Sprite sprite)
     {
-        icon.sprite = s;
+        _icon.sprite = sprite;
     }
-    public void removeIcon()
+    public void RemoveIcon()
     {
-        icon.sprite = null;
+        _icon.sprite = null;
     }
-    
 }
