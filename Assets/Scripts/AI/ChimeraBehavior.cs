@@ -21,7 +21,7 @@ namespace AI.Behavior
         [Header("References")]
         [SerializeField] private List<Transform> _nodes;
         [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private ChimeraBaseState currentState;
+        [SerializeField] private ChimeraBaseState _currentState;
 
         private float _heightOffset = 2f;
         private int _patrolIndex = 0;
@@ -57,18 +57,18 @@ namespace AI.Behavior
         {
             if(_isActive)
             {
-                currentState.Update();
+                _currentState.Update();
             }
         }
 
         public void ChangeState(ChimeraBaseState state)
         {
-            if (currentState != null)
+            if (_currentState != null)
             {
-                currentState.Exit();
+                _currentState.Exit();
             }
-            currentState = state;
-            currentState.Enter(this);
+            _currentState = state;
+            _currentState.Enter(this);
         }
 
         IEnumerator OnMouseDown()

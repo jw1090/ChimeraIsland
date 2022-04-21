@@ -8,7 +8,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private Passives _passive = Passives.None;
-    [SerializeField] private int _price = 200;
+    [SerializeField] private int _price = 50;
     [SerializeField] private bool _inFacility = false;
 
     [Header("Stats")]
