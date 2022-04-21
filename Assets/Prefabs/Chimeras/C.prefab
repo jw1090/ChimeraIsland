@@ -46,35 +46,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5262b90ea4b7344b58b1a57c12e068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementalType: 1
-  statPreference: 3
-  currentChimeraModel: {fileID: 3590851974544981161}
-  price: 200
-  level: 1
-  levelCap: 99
-  endurance: 1
-  intelligence: 1
-  strength: 1
-  happiness: 0
-  happinessMod: 1
-  enduranceGrowth: 3
-  intelligenceGrowth: 4
-  strengthGrowth: 3
-  enduranceExperience: 0
-  intelligenceExperience: 0
-  strengthExperience: 0
-  enduranceThreshold: 2
-  intelligenceThreshold: 2
-  strengthThreshold: 2
-  levelUpTracker: 0
-  storedEnduranceExperience: 0
-  storedIntelligenceExperience: 0
-  storedStrengthExperience: 0
-  experienceCap: 500
-  baseEssenceRate: 5
-  storedEssence: 0
-  essenceModifier: 1
-  essenceCap: 150
+  _elementalType: 1
+  _statPreference: 4
+  _passive: -1
+  _price: 200
+  _inFacility: 0
+  _level: 1
+  _levelCap: 99
+  _endurance: 0
+  _intelligence: 0
+  _strength: 0
+  _happiness: 0
+  _happinessMod: 1
+  _enduranceGrowth: 1
+  _intelligenceGrowth: 1
+  _strengthGrowth: 1
+  _enduranceExperience: 0
+  _intelligenceExperience: 0
+  _strengthExperience: 0
+  _enduranceThreshold: 5
+  _intelligenceThreshold: 5
+  _strengthThreshold: 5
+  _levelUpTracker: 0
+  _baseEssenceRate: 5
+  _essenceModifier: 1
+  _currentEvolution: {fileID: 0}
+  _habitat: {fileID: 0}
 --- !u!114 &1502805493311229590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,12 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b612cb9490da51b4e9d0d8de7520af34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
-  WanderIndex: 0
-  patrolTime: 0.2
-  timer: 0
-  navMeshAgent: {fileID: 2155796668323405218}
-  patrolPoints: []
+  _isActive: 0
+  _nodes: []
+  _navMeshAgent: {fileID: 0}
 --- !u!195 &2155796668323405218
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -177,14 +171,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 45327997127275479, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
   m_PrefabInstance: {fileID: 2058772062214823168}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3590851974544981161 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3262715612498190761, guid: 5d8beabb5251b8f41b5f6f8ac4cfd153, type: 3}
-  m_PrefabInstance: {fileID: 2058772062214823168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818941f77a401d943944bdce340c8a4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -5,16 +5,16 @@ using UnityEngine.EventSystems;
 public class BuyChimera : MonoBehaviour, IPointerClickHandler
 {
     [Header("General Info")]
-    [SerializeField] Chimera chimera;
+    [SerializeField] Chimera _chimera;
 
     private void Start()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = chimera.GetPrice().ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text = _chimera.GetPrice().ToString();
     }
 
     // Adds a chimera based on the assigned chimera prefab.
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Instance.GetActiveHabitat().BuyChimera(chimera);
+        GameManager.Instance.GetActiveHabitat().BuyChimera(_chimera);
     }
 }
