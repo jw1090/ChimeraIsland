@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class FacilityShop : MonoBehaviour
@@ -9,13 +8,13 @@ public class FacilityShop : MonoBehaviour
 
     private void Start()
     {
-        facility = GameManager.Instance.GetActiveHabitat().FacilitySearch(facilityType);
+        ServiceLocator.Get<Habitat>().FacilitySearch(facilityType);
     }
 
     // Handles the facility purchasing. Typically called by the BuyFacility script.
     public void PurchaseFacility()
     {
-        GameManager.Instance.GetActiveHabitat().AddFacility(facilityType);
+        ServiceLocator.Get<Habitat>().AddFacility(facilityType);
     }
 
     #region Getters & Setters

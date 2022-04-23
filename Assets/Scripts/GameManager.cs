@@ -7,14 +7,6 @@ public class GameManager : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private int _currentEssence = 0;
 
-    [Header("Habitat")]
-    [SerializeField] private Habitat _activeHabitat = null;
-
-    [Header("References")]
-    [SerializeField] private Camera _cam = null;
-    [SerializeField] private ChimeraDetailsFolder _chimeraDetailsFolder = null;
-    [SerializeField] private TextMeshProUGUI[] _essenceWallets = null;
-
     [Header("Chimera Remove")]
     [SerializeField] private float _clickHeldSeconds = 2.0f;
     [SerializeField] private float _clickHeldCounter = 0.0f;
@@ -23,6 +15,8 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
     private IPersistentData _persistentData = null;
+
+    public int GetEssence() { return _currentEssence; }
 
     // - Basic Singleton Implementation
     private void Initialize()
@@ -56,10 +50,6 @@ public class GameManager : MonoBehaviour
         GameLoader.CallOnComplete(Initialize);
     }
 
-    private void Start()
-    {
-        UpdateWallets();
-    }
     private void Update()
     {
         CheckRemove();
@@ -69,7 +59,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseEssence(int amount)
     {
         _currentEssence += amount;
-        UpdateWallets();
+        ServiceLocator.Get<MenuManager>().UpdateWallets();
         if (_persistentData != null)
         {
             //Debug.Log("<color=lime>Saving Essence</color>");
@@ -91,40 +81,9 @@ public class GameManager : MonoBehaviour
         }
 
         _currentEssence -= amount;
-        UpdateWallets();
+        ServiceLocator.Get<MenuManager>().UpdateWallets();
 
         return true;
-    }
-
-    private void UpdateWallets()
-    {
-        foreach (var wallet in _essenceWallets)
-        {
-            wallet.text = _currentEssence.ToString();
-        }
-    }
-
-    public void UpdateDetailsUI()
-    {
-        _chimeraDetailsFolder.UpdateDetailsList();
-    }
-
-    private void ChimeraMouseTap()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector2 mouse_pos = Input.mousePosition;
-            Ray ray = _cam.ScreenPointToRay(mouse_pos);
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit);
-
-            if (hit.collider.CompareTag("Chimera"))
-            {
-                //Debug.Log("Tap on a chimera.");
-                Transform chimera = hit.collider.gameObject.transform.parent;
-                //chimera.GetComponent<Chimera>().ChimeraTap();
-            }
-        }
     }
 
     private void CheckRemove()
@@ -163,8 +122,4 @@ public class GameManager : MonoBehaviour
         }
         else _slider.SetActive(false);
     }
-    #region Getters & Setters
-    public int GetEssence() { return _currentEssence; }
-    public Habitat GetActiveHabitat() { return _activeHabitat; }
-    #endregion
 }

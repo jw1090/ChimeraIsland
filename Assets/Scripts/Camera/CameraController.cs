@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraLogic : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _speed = 20.0f;
@@ -12,14 +12,15 @@ public class CameraLogic : MonoBehaviour
     [SerializeField] private float _minZoom = 40.0f;
     [SerializeField] private float _maxZoom = 90.0f;
 
-    [Header("References")]
-    [SerializeField] private Camera cameraGO = null;
+    public Camera CameraCO { get; private set; }
 
-    public void Initialize()
+    public CameraController Initialize()
     {
         Debug.Log("<color=Orange> Initializing CameraLogic ... </color>");
-        cameraGO = GetComponent<Camera>();
+        CameraCO = GetComponent<Camera>();
         _pos = transform.position;
+
+        return this;
     }
 
     private void Update()
@@ -59,7 +60,7 @@ public class CameraLogic : MonoBehaviour
         {
             _zoom -= Input.GetAxis("Mouse ScrollWheel") * _zoomAmount;
             _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
-            cameraGO.fieldOfView = _zoom;
+            CameraCO.fieldOfView = _zoom;
         }
     }
 }

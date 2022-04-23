@@ -117,7 +117,7 @@ public class Chimera : MonoBehaviour
 
             if(_passive == Passives.GreenThumb)
             {
-                List<Chimera> chimeras = GameManager.Instance.GetActiveHabitat().GetChimeras();
+                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().GetChimeras();
 
                 foreach (Chimera chimera in chimeras)
                 {
@@ -129,7 +129,7 @@ public class Chimera : MonoBehaviour
                 }
             }
             ChangeHappiness(happinessAmount);
-            GameManager.Instance.UpdateDetailsUI();
+            ServiceLocator.Get<MenuManager>().UpdateDetails();
         }
     }
 
@@ -214,7 +214,7 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        GameManager.Instance.UpdateDetailsUI();
+        ServiceLocator.Get<MenuManager>().UpdateDetails();
         ++_levelUpTracker;
 
         if (_levelUpTracker % 3 == 0)

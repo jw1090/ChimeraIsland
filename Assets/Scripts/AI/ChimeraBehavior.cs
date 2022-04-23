@@ -110,7 +110,7 @@ namespace AI.Behavior
             currentState.Enter(this);
         }
 
-        public int GetPatrolIndex() { return _wanderIndex; }
+        public int GetPatrolIndex() { return _patrolIndex; }
         public int GetWanderIndex() { return _wanderIndex; }
         public float GetTimer() { return _timer; }
         public float GetPatrolTime() { return _patrolTime; }
