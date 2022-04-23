@@ -117,7 +117,7 @@ public class Chimera : MonoBehaviour
 
             if(_passive == Passives.GreenThumb)
             {
-                List<Chimera> chimeras = GameManager.Instance.GetActiveHabitat().GetChimeras();
+                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().GetChimeras();
 
                 foreach (Chimera chimera in chimeras)
                 {

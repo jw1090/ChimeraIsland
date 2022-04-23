@@ -7,9 +7,6 @@ public class GameManager : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private int _currentEssence = 0;
 
-    [Header("Habitat")]
-    [SerializeField] private Habitat _activeHabitat = null;
-
     [Header("References")]
     [SerializeField] private Camera _cam = null;
     [SerializeField] private ChimeraDetailsFolder _chimeraDetailsFolder = null;
@@ -23,6 +20,8 @@ public class GameManager : MonoBehaviour
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
     private IPersistentData _persistentData = null;
+
+    public int GetEssence() { return _currentEssence; }
 
     // - Basic Singleton Implementation
     private void Initialize()
@@ -163,8 +162,4 @@ public class GameManager : MonoBehaviour
         }
         else _slider.SetActive(false);
     }
-    #region Getters & Setters
-    public int GetEssence() { return _currentEssence; }
-    public Habitat GetActiveHabitat() { return _activeHabitat; }
-    #endregion
 }

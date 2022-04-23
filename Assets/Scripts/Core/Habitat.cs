@@ -24,7 +24,7 @@ public class Habitat : MonoBehaviour
     public List<Chimera> GetChimeras() { return _chimeras; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 
-    public void Initialize()
+    public Habitat Initialize()
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
         _isActive = true;
@@ -32,9 +32,10 @@ public class Habitat : MonoBehaviour
         _patrolNodes = GetComponentInChildren<PatrolNodes>();
         _patrolNodes.Initialize();
 
+        InitializeChimeras();
         StartCoroutine(TickTimer());
 
-        InitializeChimeras();
+        return this;
     }
 
     private void InitializeChimeras()

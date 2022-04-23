@@ -22,13 +22,13 @@ public class ChimeraDetails : MonoBehaviour
 
     public void UpdateDetails()
     {
-        if (GameManager.Instance.GetActiveHabitat().GetChimeras().Count <= chimeraSpot)
+        if (ServiceLocator.Get<Habitat>().GetChimeras().Count <= chimeraSpot)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        chimera = GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot];
+        chimera = ServiceLocator.Get<Habitat>().GetChimeras()[chimeraSpot];
 
         //Debug.Log("Chimera: " + GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot]);
 

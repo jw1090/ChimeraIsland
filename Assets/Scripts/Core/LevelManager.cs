@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
         }
         if (_habitat != null)
         {
-            _habitat.Initialize();
+            ServiceLocator.Register <Habitat>(_habitat.Initialize());
         }
         if (_menuManager != null)
         {
