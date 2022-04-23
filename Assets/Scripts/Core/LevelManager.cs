@@ -25,11 +25,11 @@ public class LevelManager : MonoBehaviour
         }
         if (_habitat != null)
         {
-            ServiceLocator.Register <Habitat>(_habitat.Initialize());
+            ServiceLocator.Register<Habitat>(_habitat.Initialize());
         }
         if (_menuManager != null)
         {
-            _menuManager.Initialize();
+            ServiceLocator.Register<MenuManager>(_menuManager.Initialize());
         }
     }
 }

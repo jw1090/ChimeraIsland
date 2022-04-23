@@ -1,37 +1,56 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject OpenChimerasButton;
-    [SerializeField] private GameObject DetailsPanel;
-    [SerializeField] private GameObject CloseChimerasButton;
-    [SerializeField] private GameObject Marketplace;
+    [SerializeField] private GameObject _marketplace;
+    [SerializeField] private Button _openChimerasButton;
+    [SerializeField] private Button _closeChimerasButton;
+    [SerializeField] private ChimeraDetailsFolder _detailsFolder;
+    [SerializeField] private UIWallet[] _essenceWallets = null;
 
-    public void Initialize()
+    public MenuManager Initialize()
     {
+        Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
+        UpdateWallets();
+
+        return this;
     }
 
     public void CloseAll()
     {
-        OpenChimerasButton.SetActive(true);
-        CloseChimerasButton.SetActive(false);
-        DetailsPanel.SetActive(false);
-        Marketplace.SetActive(false);
+        _marketplace.SetActive(false);
+        _openChimerasButton.gameObject.SetActive(true);
+        _closeChimerasButton.gameObject.SetActive(false);
+        _detailsFolder.gameObject.SetActive(false);
     }
 
     public void OpenChimeraPanel()
     {
         CloseAll();
-        OpenChimerasButton.SetActive(false);
-        DetailsPanel.SetActive(true);
-        CloseChimerasButton.SetActive(true);
+        _openChimerasButton.gameObject.SetActive(false);
+        _closeChimerasButton.gameObject.SetActive(true);
+        _detailsFolder.gameObject.SetActive(true);
     }
 
     public void OpenMarketplace()
     {
         CloseAll();
-        Marketplace.SetActive(true);
+        _marketplace.SetActive(true);
+    }
+
+    public void UpdateDetails()
+    {
+        _detailsFolder.UpdateDetailsList();
+    }
+
+    public void UpdateWallets()
+    {
+        foreach (var wallet in _essenceWallets)
+        {
+            wallet.UpdateWallet();
+        }
     }
 }

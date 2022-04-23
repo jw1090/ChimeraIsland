@@ -961,10 +961,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 955814888}
-  - {fileID: 209325691}
   - {fileID: 1838690947}
+  - {fileID: 209325691}
   m_Father: {fileID: 1283837429}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -2150,7 +2150,7 @@ RectTransform:
   - {fileID: 1324845088}
   - {fileID: 503087017}
   m_Father: {fileID: 107895150}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4920,7 +4920,7 @@ RectTransform:
   - {fileID: 443946036}
   - {fileID: 1187867951}
   m_Father: {fileID: 1283837429}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5736,6 +5736,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627259136}
   m_CullTransparentMesh: 1
+--- !u!114 &661509509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9053513636831995192, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+  m_PrefabInstance: {fileID: 3788780336505227094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afd30aa1367e644c97338f1e8005d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &674330411
 GameObject:
   m_ObjectHideFlags: 0
@@ -5861,7 +5872,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702410791
 GameObject:
@@ -6050,7 +6061,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &734796598
 GameObject:
@@ -6392,7 +6403,7 @@ RectTransform:
   m_Children:
   - {fileID: 2077903637}
   m_Father: {fileID: 1283837429}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -7916,7 +7927,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 40, y: 180, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -10732,9 +10743,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2131325067}
-  - {fileID: 107895150}
   - {fileID: 760508435}
   - {fileID: 532682774}
+  - {fileID: 107895150}
   - {fileID: 1125327129}
   m_Father: {fileID: 1418420239}
   m_RootOrder: 0
@@ -12241,7 +12252,7 @@ RectTransform:
   - {fileID: 977075017}
   - {fileID: 377004311}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -12260,10 +12271,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227920f732abd754d982d8dcbb99f5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenChimerasButton: {fileID: 955814887}
-  DetailsPanel: {fileID: 209325690}
-  CloseChimerasButton: {fileID: 1838690946}
-  Marketplace: {fileID: 532682773}
+  _marketplace: {fileID: 532682773}
+  _openChimerasButton: {fileID: 955814889}
+  _closeChimerasButton: {fileID: 1838690948}
+  _detailsFolder: {fileID: 209325695}
+  _essenceWallets:
+  - {fileID: 1664936736}
+  - {fileID: 661509509}
 --- !u!114 &1418420241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13864,6 +13878,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Size.x
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Size.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Size.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Center.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 626574667, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: m_Center.z
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 5780250189174645, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_Name
       value: Cave Exploring - Str
@@ -14336,6 +14374,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
+--- !u!114 &1664936736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9053513636831995192, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+  m_PrefabInstance: {fileID: 2131325066}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afd30aa1367e644c97338f1e8005d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1694805262
 GameObject:
   m_ObjectHideFlags: 0
@@ -15880,7 +15929,7 @@ RectTransform:
   m_Children:
   - {fileID: 1853838085}
   m_Father: {fileID: 107895150}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -16351,11 +16400,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentEssence: 0
-  _cam: {fileID: 963194227}
-  _chimeraDetailsFolder: {fileID: 209325695}
-  _essenceWallets:
-  - {fileID: 2131325068}
-  - {fileID: 2079950359}
   _clickHeldSeconds: 2
   _clickHeldCounter: 0
   _slider: {fileID: 1125327128}
@@ -17836,17 +17880,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077903636}
   m_CullTransparentMesh: 1
---- !u!114 &2079950359 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3788780335049244993, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-  m_PrefabInstance: {fileID: 3788780336505227094}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2081889512
 GameObject:
   m_ObjectHideFlags: 0
@@ -18249,10 +18282,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1283837429}
     m_Modifications:
-    - target: {fileID: 3788780335383683905, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3788780336560262400, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_Name
       value: Essence Wallet
@@ -18348,17 +18377,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
   m_PrefabInstance: {fileID: 2131325066}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2131325068 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3788780335049244993, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-  m_PrefabInstance: {fileID: 2131325066}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2138889761
 GameObject:
   m_ObjectHideFlags: 0
