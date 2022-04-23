@@ -15,7 +15,7 @@ namespace AI.Behavior
         {
             _mainCamera = Camera.main;
             _chimeraBehavior = chimeraBehavior;
-            Debug.Log("Enter Held");
+            //Debug.Log("Enter Held");
         }
 
         public override void Update()

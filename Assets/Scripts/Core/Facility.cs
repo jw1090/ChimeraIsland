@@ -8,12 +8,12 @@ public class Facility : MonoBehaviour
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _currentTier = 0;
     [SerializeField] private int _statModifier = 1;
-    [SerializeField] private int _price = 100;
+    [SerializeField] private int _price = 50;
     [SerializeField] private bool _isActive = false;
 
     [Header("Chimera Info")]
     [SerializeField] private Chimera _storedChimera = null;
-    [SerializeField] private FacilityIcon _icon;
+    [SerializeField] private FacilityIcon _icon = null;
 
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()

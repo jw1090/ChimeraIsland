@@ -624,6 +624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneStone - Int
       objectReference: {fileID: 0}
+    - target: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: _price
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
 --- !u!4 &35383057 stripped
@@ -7936,7 +7940,7 @@ MonoBehaviour:
   _zoomAmount: 20
   _minZoom: 40
   _maxZoom: 90
-  cameraGO: {fileID: 963194227}
+  cameraCO: {fileID: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12080,6 +12084,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 387865945}
     m_Modifications:
     - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: _price
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -3574371952117081727, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: _statType
       value: 2
       objectReference: {fileID: 0}
@@ -13876,6 +13884,10 @@ PrefabInstance:
     - target: {fileID: 5780250189174645, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_Name
       value: Cave Exploring - Str
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: _price
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: _statType
@@ -16798,15 +16810,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294741, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.539703
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294741, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -25.038406
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294741, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -45.46518
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294741, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17487,7 +17499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a011e41a057ad44094dec65031ecf8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 963194229}
+  _cameraController: {fileID: 963194229}
   _habitat: {fileID: 674330413}
   _menuManager: {fileID: 1418420240}
 --- !u!114 &2037036157 stripped
