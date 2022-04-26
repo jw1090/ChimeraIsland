@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject _marketplace;
@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private ChimeraDetailsFolder _detailsFolder;
     [SerializeField] private UIWallet[] _essenceWallets = null;
 
-    public MenuManager Initialize()
+    public UIManager Initialize()
     {
         Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
