@@ -23,7 +23,16 @@ public class PersistentData : MonoBehaviour, IPersistentData
     {
         Debug.Log("<color=cyan> Saving Game Data ... </color>");
         PlayerPrefs.SetInt(GameConsts.GameSaveKeys.LEVEL_TO_LOAD, 2);
+        
     }
+
+    public void SaveData(string key, int val){PlayerPrefs.SetInt(key, val);}
+    public void SaveData(string key, float val) {PlayerPrefs.SetFloat(key, val);}
+    public void SaveData(string key, string val) {PlayerPrefs.SetString(key, val);}
+
+    public int LoadDataInt(string key) { return PlayerPrefs.GetInt(key, 0); }
+    public float LoadDataFloat(string key) { return PlayerPrefs.GetFloat(key, 0.0f); }
+    public string LoadDataString(string key) { return PlayerPrefs.GetString(key, "default"); }
 
     public int GetLevelToLoad()
     {

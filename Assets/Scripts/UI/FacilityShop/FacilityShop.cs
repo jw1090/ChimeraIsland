@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class FacilityShop : MonoBehaviour
@@ -7,20 +6,15 @@ public class FacilityShop : MonoBehaviour
     [SerializeField] private FacilityType facilityType = FacilityType.None;
     [SerializeField] private Facility facility;
 
-    [Header("References")]
-    [SerializeField] private TextMeshProUGUI tierText;
-
     private void Start()
     {
-        facility = GameManager.Instance.GetActiveHabitat().FacilitySearch(facilityType);
-        tierText.text = "T" + (facility.GetTier() + 1).ToString();
+        ServiceLocator.Get<Habitat>().FacilitySearch(facilityType);
     }
 
     // Handles the facility purchasing. Typically called by the BuyFacility script.
     public void PurchaseFacility()
     {
-        GameManager.Instance.GetActiveHabitat().AddFacility(facilityType);
-        tierText.text = "T" + (facility.GetTier() + 1).ToString();
+        ServiceLocator.Get<Habitat>().AddFacility(facilityType);
     }
 
     #region Getters & Setters

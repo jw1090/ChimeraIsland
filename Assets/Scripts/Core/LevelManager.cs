@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private MenuManager _menuManager = null;
+    [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private MenuManager _menuManager = null;
 
     private IPersistentData _persistentData;
     private ISessionData _sessionData;
@@ -18,13 +19,17 @@ public class LevelManager : MonoBehaviour
         _persistentData = ServiceLocator.Get<IPersistentData>();
         _sessionData = ServiceLocator.Get<ISessionData>();
 
-        if(_habitat != null)
+        if (_cameraController != null)
         {
-            _habitat.Initialize();
+            ServiceLocator.Register<CameraController>(_cameraController.Initialize());
+        }
+        if (_habitat != null)
+        {
+            ServiceLocator.Register<Habitat>(_habitat.Initialize());
         }
         if (_menuManager != null)
         {
-            _menuManager.Initialize();
+            ServiceLocator.Register<MenuManager>(_menuManager.Initialize());
         }
     }
 }

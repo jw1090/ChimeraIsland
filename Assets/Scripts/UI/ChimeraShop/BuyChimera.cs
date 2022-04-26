@@ -15,6 +15,6 @@ public class BuyChimera : MonoBehaviour, IPointerClickHandler
     // Adds a chimera based on the assigned chimera prefab.
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Instance.GetActiveHabitat().BuyChimera(chimera);
+        ServiceLocator.Get<Habitat>().BuyChimera(chimera);
     }
 }

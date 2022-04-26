@@ -8,7 +8,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     private void OnEnable()
     {
-        chimerasList = GameManager.Instance.GetActiveHabitat().GetChimeras();
+        chimerasList = ServiceLocator.Get<Habitat>().GetChimeras();
 
         if(chimeraDetailsList != null)
         {

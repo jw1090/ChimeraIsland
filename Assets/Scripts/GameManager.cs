@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,27 +5,25 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Header("Resources")]
-    [SerializeField] private int currentEssence = 0;
-
-    [Header("Habitat")]
-    [SerializeField] private Habitat _ActiveHabitat = null;
-
-    [Header("References")]
-    [SerializeField] private Camera cam = null;
-    [SerializeField] private ChimeraDetailsFolder chimeraDetailsFolder = null;
-    [SerializeField] private TextMeshProUGUI[] essenceWallets = null;
+    [SerializeField] private int _currentEssence = 0;
 
     [Header("Chimera Remove")]
-    [SerializeField] private float clickHeldSeconds = 2.0f;
-    [SerializeField] private float clickHeldCounter = 0.0f;
-    [SerializeField] private GameObject slider;
+    [SerializeField] private float _clickHeldSeconds = 2.0f;
+    [SerializeField] private float _clickHeldCounter = 0.0f;
+    [SerializeField] private GameObject _slider;
 
     private static GameManager gameManagerInstance;
     public static GameManager Instance { get { return gameManagerInstance; } }
+    private IPersistentData _persistentData = null;
+
+    public int GetEssence() { return _currentEssence; }
 
     // - Basic Singleton Implementation
     private void Initialize()
     {
+        Debug.Log("<color=cyan>GameManager Init</color>");
+        _persistentData = ServiceLocator.Get<IPersistentData>();
+        Debug.Log($"{(_persistentData == null ? "NULL" : "OK")}");
         if (gameManagerInstance != null && gameManagerInstance != this)
         {
             Destroy(this.gameObject);
@@ -35,17 +32,24 @@ public class GameManager : MonoBehaviour
         {
             gameManagerInstance = this;
         }
+
+        LoadSavedData();
+    }
+
+    private void LoadSavedData()
+    {
+        if (_persistentData != null)
+        {
+            _currentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
+            Debug.Log($"Loaded Essense: {_currentEssence}");
+        }
     }
 
     void Awake()
     {
-        Initialize();
+        GameLoader.CallOnComplete(Initialize);
     }
 
-    private void Start()
-    {
-        UpdateWallets();
-    }
     private void Update()
     {
         CheckRemove();
@@ -54,53 +58,32 @@ public class GameManager : MonoBehaviour
     // Increases your essence.
     public void IncreaseEssence(int amount)
     {
-        currentEssence += amount;
-        UpdateWallets();
+        _currentEssence += amount;
+        ServiceLocator.Get<MenuManager>().UpdateWallets();
+        if (_persistentData != null)
+        {
+            //Debug.Log("<color=lime>Saving Essence</color>");
+            _persistentData.SaveData(GameConsts.GameSaveKeys.ESSENCE, _currentEssence);
+        }
+        else if(_persistentData == null)
+        {
+            _persistentData = ServiceLocator.Get<IPersistentData>() as PersistentData;
+            //Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
+        }
     }
 
     // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
     public bool SpendEssence(int amount)
     {
-        if(currentEssence - amount < 0)
+        if(_currentEssence - amount < 0)
         {
             return false;
         }
 
-        currentEssence -= amount;
-        UpdateWallets();
+        _currentEssence -= amount;
+        ServiceLocator.Get<MenuManager>().UpdateWallets();
 
         return true;
-    }
-
-    private void UpdateWallets()
-    {
-        foreach (var wallet in essenceWallets)
-        {
-            wallet.text = currentEssence.ToString();
-        }
-    }
-
-    public void UpdateDetailsUI()
-    {
-        chimeraDetailsFolder.UpdateDetailsList();
-    }
-
-    private void ChimeraMouseTap()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector2 mouse_pos = Input.mousePosition;
-            Ray ray = cam.ScreenPointToRay(mouse_pos);
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit);
-
-            if (hit.collider.CompareTag("Chimera"))
-            {
-                //Debug.Log("Tap on a chimera.");
-                Transform chimera = hit.collider.gameObject.transform.parent;
-                //chimera.GetComponent<Chimera>().ChimeraTap();
-            }
-        }
     }
 
     private void CheckRemove()
@@ -119,28 +102,24 @@ public class GameManager : MonoBehaviour
 
             if (hit.collider.CompareTag("Facility") && hit.collider.GetComponent<Facility>().IsChimeraStored())
             {
-                clickHeldCounter += Time.deltaTime;
-                if (clickHeldCounter >= clickHeldSeconds)
+                _clickHeldCounter += Time.deltaTime;
+                if (_clickHeldCounter >= _clickHeldSeconds)
                 {
                     hit.collider.GetComponent<Facility>().RemoveChimera();
-                    clickHeldCounter = 0.0f;
+                    _clickHeldCounter = 0.0f;
                 }
             }
-            else clickHeldCounter = 0.0f;
+            else _clickHeldCounter = 0.0f;
         }
-        else clickHeldCounter = 0.0f;
+        else _clickHeldCounter = 0.0f;
 
         // Control remove slider
-        if (clickHeldCounter > 0.0f)
+        if (_clickHeldCounter > 0.0f)
         {
-            slider.SetActive(true);
-            slider.transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
-            slider.gameObject.GetComponent<Slider>().value = clickHeldCounter / 2.0f;
+            _slider.SetActive(true);
+            _slider.transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
+            _slider.gameObject.GetComponent<Slider>().value = _clickHeldCounter / 2.0f;
         }
-        else slider.SetActive(false);
+        else _slider.SetActive(false);
     }
-    #region Getters & Setters
-    public int GetEssence() { return currentEssence; }
-    public Habitat GetActiveHabitat() { return _ActiveHabitat; }
-    #endregion
 }

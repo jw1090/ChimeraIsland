@@ -23,17 +23,25 @@ namespace AI.Behavior
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private ChimeraBaseState currentState;
 
-        private float _heightOffset = 2f;
+        private float _heightOffset = 1.2f;
         private int _patrolIndex = 0;
         private int _wanderIndex = 0;
         private float _timer = 0; // Timer
         private float _patrolTime = 1f; // Wait time
+        private bool _isClick;
+        private Transform _dragGameObject;
+        private LayerMask _canDrag;
+        private Vector3 _targetScreenPoint;
+        private Camera _mainCamera = null;
+        Ray _ray;
+        RaycastHit _hit;
 
         // Mapping of state to state object instance.
         public Dictionary<StateEnum, ChimeraBaseState> states = new Dictionary<StateEnum, ChimeraBaseState>();
 
         public void Initialize()
         {
+            _mainCamera = Camera.main;
             _patrolIndex = 0;
             _wanderIndex = 0;
             _timer = 0;
@@ -49,6 +57,7 @@ namespace AI.Behavior
             states.Add(StateEnum.Held, new HeldState());
 
             _isActive = true;
+            _canDrag = 1 << LayerMask.NameToLayer("Chimera");
 
             ChangeState(states[StateEnum.Patrol]);
         }
@@ -59,6 +68,36 @@ namespace AI.Behavior
             {
                 currentState.Update();
             }
+            CheckGameObject();
+            if (Input.GetMouseButton(0) && _isClick)
+            {
+                _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(_ray, out _hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
+                {
+                    transform.position = _hit.point + (Vector3.up * _heightOffset);
+                    _navMeshAgent.enabled = false;
+                    ChangeState(states[StateEnum.Held]);
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                _navMeshAgent.enabled = true;
+                ChangeState(states[StateEnum.Patrol]);
+            }
+        }
+
+        bool CheckGameObject()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, 100f, _canDrag))
+            {
+                _isClick = true;
+                _dragGameObject = hitInfo.collider.gameObject.transform;
+                _targetScreenPoint = _mainCamera.WorldToScreenPoint(_dragGameObject.position);
+                return true;
+            }
+            return false;
         }
 
         public void ChangeState(ChimeraBaseState state)
@@ -71,34 +110,7 @@ namespace AI.Behavior
             currentState.Enter(this);
         }
 
-        IEnumerator OnMouseDown()
-        {
-            Vector3 screenSpace = Camera.main.WorldToScreenPoint(transform.position);//3D obj pos to world pos,mouse screen pos to Vector3£¬calculate the distance between mouse and obj
-            var offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
-            // Debug.Log("down");
-            ChangeState(states[StateEnum.Held]);
-            while (Input.GetMouseButton(0))
-            {
-                GetComponent<NavMeshAgent>().baseOffset = _heightOffset;
-                GetComponent<NavMeshAgent>().isStopped = true;
-                Vector3 curScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
-                Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenSpace) + offset;
-                transform.position = curPosition;
-
-                yield return new WaitForFixedUpdate();
-            }
-        }
-        
-        IEnumerator OnMouseUp()
-        {
-            GetComponent<NavMeshAgent>().baseOffset = 0;
-            GetComponent<NavMeshAgent>().isStopped = false;
-            // Debug.Log("up");
-            ChangeState(states[StateEnum.Patrol]);
-            yield return new WaitForFixedUpdate();
-        }
-
-        public int GetPatrolIndex() { return _wanderIndex; }
+        public int GetPatrolIndex() { return _patrolIndex; }
         public int GetWanderIndex() { return _wanderIndex; }
         public float GetTimer() { return _timer; }
         public float GetPatrolTime() { return _patrolTime; }
