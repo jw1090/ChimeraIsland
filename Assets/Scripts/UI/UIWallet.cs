@@ -7,6 +7,6 @@ public class UIWallet : MonoBehaviour
 
     public void UpdateWallet()
     {
-        _walletText.text = GameManager.Instance.GetEssence().ToString();
+        _walletText.text = ServiceLocator.Get<EssenceManager>().CurrentEssence.ToString();
     }
 }

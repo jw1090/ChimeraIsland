@@ -39,11 +39,13 @@ public class Chimera : MonoBehaviour
     [Header("References")]
     [SerializeField] private EvolutionLogic _currentEvolution = null;
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private EssenceManager _essenceManager = null;
 
-    public void Initialize(Habitat habitat)
+    public void Initialize(Habitat habitat, EssenceManager essenceManager)
     {
         Debug.Log("<color=Orange> Initializing Chimera " + this + " ... </color>");
         _habitat = habitat;
+        _essenceManager = essenceManager;
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
     }
@@ -100,14 +102,14 @@ public class Chimera : MonoBehaviour
         // Sqrt is used to gain diminishing returns on levels.
         // EssenceModifier is used to tune the level scaling
         int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(_level * _essenceModifier));
-        GameManager.Instance.IncreaseEssence(essenceGain);
+        _essenceManager.IncreaseEssence(essenceGain);
 
         // Debug.Log(chimeraType + "gained: " + essenceGain + " Essence.");
     }
     private void MultitaskingTick()
     {
         int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(_level * _essenceModifier) * 0.5f);
-        GameManager.Instance.IncreaseEssence(essenceGain);
+        _essenceManager.IncreaseEssence(essenceGain);
     }
     public void HappinessTick()
     {
@@ -129,7 +131,7 @@ public class Chimera : MonoBehaviour
                 }
             }
             ChangeHappiness(happinessAmount);
-            ServiceLocator.Get<MenuManager>().UpdateDetails();
+            ServiceLocator.Get<UIManager>().UpdateDetails();
         }
     }
 
@@ -214,7 +216,7 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        ServiceLocator.Get<MenuManager>().UpdateDetails();
+        ServiceLocator.Get<UIManager>().UpdateDetails();
         ++_levelUpTracker;
 
         if (_levelUpTracker % 3 == 0)

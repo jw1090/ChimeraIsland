@@ -19,7 +19,8 @@ public class Habitat : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder;
     [SerializeField] private GameObject _spawnPoint;
-     private PatrolNodes _patrolNodes;
+    [SerializeField] private PatrolNodes _patrolNodes;
+    [SerializeField] private EssenceManager _essenceManager;
 
     public List<Chimera> GetChimeras() { return _chimeras; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
@@ -28,6 +29,8 @@ public class Habitat : MonoBehaviour
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
         _isActive = true;
+
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
 
         _patrolNodes = GetComponentInChildren<PatrolNodes>();
         _patrolNodes.Initialize();
@@ -43,7 +46,7 @@ public class Habitat : MonoBehaviour
         foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
         {
             _chimeras.Add(chimera);
-            chimera.Initialize(this);
+            chimera.Initialize(this, _essenceManager);
         }
     }
 
@@ -101,13 +104,13 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.SpendEssence(toBuyFacility.GetPrice()) == false)
+        if (_essenceManager.SpendEssence(toBuyFacility.GetPrice()) == false)
         {
             Debug.Log
             (
                 "Can't afford this facility. It costs " + 
-                toBuyFacility.GetPrice() + " Essence and you only have " + 
-                GameManager.Instance.GetEssence() + " Essence."
+                toBuyFacility.GetPrice() + " Essence and you only have " +
+                _essenceManager.CurrentEssence + " Essence."
             );
             return;
         }
@@ -128,13 +131,13 @@ public class Habitat : MonoBehaviour
 
         int price = chimeraPrefab.GetPrice();
 
-        if (GameManager.Instance.SpendEssence(price) == false)
+        if (_essenceManager.SpendEssence(price) == false)
         {
             Debug.Log
             (
                 "Can't afford this chimera. It costs " +
                 price + " Essence and you only have " +
-                GameManager.Instance.GetEssence() + " Essence."
+                _essenceManager.CurrentEssence + " Essence."
             );
             return;
         }
@@ -142,7 +145,7 @@ public class Habitat : MonoBehaviour
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
         _chimeras.Add(newChimera);
-        newChimera.Initialize(this);
+        newChimera.Initialize(this, _essenceManager);
     }
 
     // Look through array to find Facility.
