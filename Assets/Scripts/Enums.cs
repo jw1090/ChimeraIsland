@@ -5,6 +5,28 @@ public enum ElementalType
     Bio,
     Fira,
 }
+public enum ChimeraType
+{
+    A,
+    A1,
+    A2,
+    A3,
+    B,
+    B1,
+    B2,
+    B3,
+    C,
+    C1,
+    C2,
+    C3
+}
+
+public enum HabitatType
+{
+    StonePlains,
+    TreeOfLife
+}
+
 
 public enum FacilityType
 {

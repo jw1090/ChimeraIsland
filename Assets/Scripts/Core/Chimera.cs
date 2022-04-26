@@ -31,7 +31,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _intelligenceThreshold = 5;
     [SerializeField] private int _strengthThreshold = 5;
     [SerializeField] private int _levelUpTracker = 0;
-
     [Header("Essence")]
     [SerializeField] private float _baseEssenceRate = 5;
     [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
@@ -270,4 +269,9 @@ public class Chimera : MonoBehaviour
         _happiness += amount;
     }
     #endregion
+    public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
+    public int GetIntelligence() { return _intelligence; }
+    public int GetEndurance() { return _endurance; }
+    public int GetStrength() { return _strength; }
+    public int GetHappiness() { return _happiness; }
 }
