@@ -50,12 +50,11 @@ public class Facility : MonoBehaviour
     // Called to properly link a chimera to a facility and adjust its states properly.
     public bool PlaceChimera(Chimera chimera)
     {
-        if(_storedChimera != null) // Something is already in the facility.
+        if (_storedChimera != null) // Something is already in the facility.
         {
             Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
             return false;
         }
-
         _icon.gameObject.SetActive(true);
         _icon.GetComponent<FacilityIcon>().SetIcon(chimera.GetIcon());
         _storedChimera = chimera;
@@ -69,11 +68,13 @@ public class Facility : MonoBehaviour
     // Removes Chimera from facility and cleans up chimera and facility logic.
     public bool RemoveChimera()
     {
-        if(_storedChimera == null) // Facility is empty.
+        if (_storedChimera == null) // Facility is empty.
         {
             Debug.Log("Cannot remove Chimera, facility is empty.");
             return false;
         }
+
+        _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>().ChangeState(_storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>().states[AI.Behavior.StateEnum.Patrol]);
 
         _icon.RemoveIcon();
         _icon.gameObject.SetActive(false);
