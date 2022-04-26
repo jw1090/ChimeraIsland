@@ -35,6 +35,9 @@ namespace AI.Behavior
         private Camera _mainCamera = null;
         Ray _ray;
         RaycastHit _hit;
+        bool Isheld;
+        bool IsTraining;
+        private Vector3 trainingPos;
 
         // Mapping of state to state object instance.
         public Dictionary<StateEnum, ChimeraBaseState> states = new Dictionary<StateEnum, ChimeraBaseState>();
@@ -55,32 +58,44 @@ namespace AI.Behavior
             states.Add(StateEnum.Patrol, new PatrolState());
             states.Add(StateEnum.Wander, new WanderState());
             states.Add(StateEnum.Held, new HeldState());
+            states.Add(StateEnum.Training, new TrainingState());
 
             _isActive = true;
-            _canDrag = 1 << LayerMask.NameToLayer("Chimera");
 
             ChangeState(states[StateEnum.Patrol]);
+            _canDrag = 1 << LayerMask.NameToLayer("Chimera");
         }
 
         void Update()
         {
-            if(_isActive)
+
+            if (_isActive)
             {
                 currentState.Update();
             }
-            CheckGameObject();
-            if (Input.GetMouseButton(0) && _isClick)
+            //Debug.Log(currentState);
+            //Debug.Log(GetIsHeld());
+            if (IsTraining)
             {
-                _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(_ray, out _hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
+                return;
+            }
+            if (Input.GetMouseButton(0))
+            {
+                CheckGameObject();
+                if (_isClick)
                 {
-                    transform.position = _hit.point + (Vector3.up * _heightOffset);
-                    _navMeshAgent.enabled = false;
-                    ChangeState(states[StateEnum.Held]);
+                    _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(_ray, out _hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
+                    {
+                        transform.position = _hit.point + (Vector3.up * _heightOffset);
+                        _navMeshAgent.enabled = false;
+                        ChangeState(states[StateEnum.Held]);
+                    }
                 }
             }
             if (Input.GetMouseButtonUp(0))
             {
+                _isClick = false;
                 _navMeshAgent.enabled = true;
                 ChangeState(states[StateEnum.Patrol]);
             }
@@ -110,7 +125,7 @@ namespace AI.Behavior
             currentState.Enter(this);
         }
 
-        public int GetPatrolIndex() { return _patrolIndex; }
+        public int GetPatrolIndex() { return _wanderIndex; }
         public int GetWanderIndex() { return _wanderIndex; }
         public float GetTimer() { return _timer; }
         public float GetPatrolTime() { return _patrolTime; }
@@ -124,5 +139,29 @@ namespace AI.Behavior
         public void AddToTimer(float amount) { _timer += amount; }
         public void ResetTimer() { _timer = 0; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
+        public void SetIsHeld(bool b)
+        {
+            Isheld = b;
+        }
+        public bool GetIsHeld()
+        {
+            return Isheld;
+        }
+        public void SetIsTraining(bool b)
+        {
+            IsTraining = b;
+        }
+        public bool GetIsTraining()
+        {
+            return IsTraining;
+        }
+        public void SetTrainingPos(Vector3 v)
+        {
+            trainingPos = v;
+        }
+        public Vector3 GetTrainingPos()
+        {
+            return trainingPos;
+        }
     }
 }
