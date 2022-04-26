@@ -11,6 +11,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private float _unhappyRate = 10;
     [SerializeField] private List<Chimera> _chimeras;
     [SerializeField] private List<Facility> _facilities;
+    [SerializeField] private HabitatType _habitatType;
 
     [Header("Tick Info")]
     [SerializeField] private float _tickTimer = 0.2f;
@@ -161,7 +162,7 @@ public class Habitat : MonoBehaviour
 
         return null;
     }
-
+    public HabitatType GetHabitatType(){return _habitatType;}
     // Coints how many facilities are active in the Habitat
     private int ActiveFacilitiesCount()
     {
