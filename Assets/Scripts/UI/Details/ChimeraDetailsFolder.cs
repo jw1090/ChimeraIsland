@@ -3,27 +3,39 @@ using UnityEngine;
 
 public class ChimeraDetailsFolder : MonoBehaviour
 {
-    [SerializeField] List<ChimeraDetails> chimeraDetailsList;
-    [SerializeField] List<Chimera> chimerasList;
+    [SerializeField] private List<Chimera> _chimerasList;
+    [SerializeField] private List<ChimeraDetails> _chimeraDetailsList;
 
-    private void OnEnable()
+    public void Initialize(Habitat habitat)
     {
-        chimerasList = ServiceLocator.Get<Habitat>().GetChimeras();
+        _chimerasList = habitat.GetChimeras();
 
-        if(chimeraDetailsList != null)
+        int chimeraSpot = 0;
+        foreach (Transform child in transform)
         {
-            for(int i = 0; i < chimerasList.Count; ++i)
-            {
-                chimeraDetailsList[i].gameObject.SetActive(true);
-            }
+            ChimeraDetails details = child.GetComponent<ChimeraDetails>();
+
+            _chimeraDetailsList.Add(details);
+            details.Initialize(habitat, chimeraSpot++);
         }
+
+        CheckDetails();
     }
 
     public void UpdateDetailsList()
     {
-        foreach(var detail in chimeraDetailsList)
+        foreach(var detail in _chimeraDetailsList)
         {
             detail.UpdateDetails();
         }
+    }
+
+    public void CheckDetails()
+    {
+        for (int i = 0; i < _chimerasList.Count; ++i)
+        {
+            _chimeraDetailsList[i].gameObject.SetActive(true);
+        }
+        UpdateDetailsList();
     }
 }

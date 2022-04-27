@@ -46,7 +46,7 @@ public class Chimera : MonoBehaviour
         _habitat = habitat;
         _essenceManager = essenceManager;
         InitializeEvolution();
-        GetComponent<ChimeraBehavior>().Initialize();
+        GetComponent<ChimeraBehavior>().Initialize(habitat);
     }
 
     private void InitializeEvolution()
@@ -226,23 +226,28 @@ public class Chimera : MonoBehaviour
     }
 
     #region Getters & Setters
-    public int GetStatByType(StatType statType)
+    public bool GetStatByType(StatType statType, out int amount )
     {
+        amount = 0;
         switch (statType)
         {
             case StatType.Endurance:
-                return _endurance;
+                amount = _endurance;
+                return true;
             case StatType.Intelligence:
-                return _intelligence;
+                amount = _intelligence;
+                return true;
             case StatType.Strength:
-                return _strength;
+                amount = _strength;
+                return true;
             case StatType.Happiness:
-                return _happiness;
+                amount = _happiness;
+                return true;
             default:
                 Debug.LogError("Default StatType please change!");
                 break;
         }
-        return -1;
+        return false;
     }
     public int GetLevel() { return _level; }
     public int GetPrice() { return _price; }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2261,11 +2261,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8d842918597234381e0b805bb6fee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chimeraDetailsList:
-  - {fileID: 2123415204}
-  - {fileID: 483385885}
-  - {fileID: 2037036157}
-  chimerasList: []
+  _chimerasList: []
+  _chimeraDetailsList: []
+--- !u!114 &220086334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 458289499, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
+  m_PrefabInstance: {fileID: 1875589437}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64393487c6156a64c96a9fec84104706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222191663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2458,24 +2466,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
---- !u!1 &241253665 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-  m_PrefabInstance: {fileID: 928165734}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &241253668
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 241253665}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &250652201
 GameObject:
   m_ObjectHideFlags: 0
@@ -4348,17 +4338,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
---- !u!114 &483385885 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-  m_PrefabInstance: {fileID: 1324845087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &491943001
 GameObject:
   m_ObjectHideFlags: 0
@@ -5880,7 +5859,7 @@ MonoBehaviour:
   _tickTracker: 0
   _chimeraFolder: {fileID: 93296134}
   _spawnPoint: {fileID: 500444165}
-  _patrolNodes: {fileID: 0}
+  _patrolNodes: {fileID: 220086334}
   _essenceManager: {fileID: 0}
 --- !u!1 &678461791
 GameObject:
@@ -7473,21 +7452,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 93296135}
     m_Modifications:
-    - target: {fileID: 1700650493192610771, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
       propertyPath: m_Name
       value: A
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5834947763061098189, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
       propertyPath: m_RootOrder
@@ -7912,8 +7879,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1418420240}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: OpenChimeraPanel
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OpenDetailsPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17732,17 +17699,6 @@ MonoBehaviour:
   _uiManager: {fileID: 1418420240}
   _habitat: {fileID: 674330413}
   _fileManager: {fileID: 341075466}
---- !u!114 &2037036157 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-  m_PrefabInstance: {fileID: 503087016}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2054088783
 GameObject:
   m_ObjectHideFlags: 0
@@ -18473,17 +18429,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
---- !u!114 &2123415204 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1574459908703696428, guid: f75d1e57180b40940a7ba297463936ad, type: 3}
-  m_PrefabInstance: {fileID: 1574459907507595226}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfa1a853c70be2409349411587bf5a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2131325066
 PrefabInstance:
   m_ObjectHideFlags: 0

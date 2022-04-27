@@ -4,11 +4,11 @@ using UnityEngine;
 public class IslandFade : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] float delay = 0.5f;
+    [SerializeField] float _delay = 0.5f;
 
     [Header("References")]
-    [SerializeField] GameObject islandView;
-    [SerializeField] GameObject crossfade;
+    [SerializeField] private GameObject islandView;
+    [SerializeField] private GameObject crossfade;
 
     public void FadeOnClick()
     {
@@ -18,7 +18,7 @@ public class IslandFade : MonoBehaviour
 
     private IEnumerator DisableDelay()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(_delay);
         islandView.gameObject.SetActive(false);
     }
 

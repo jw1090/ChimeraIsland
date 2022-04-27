@@ -6,6 +6,9 @@ public class FacilityShop : MonoBehaviour
     [SerializeField] private FacilityType facilityType = FacilityType.None;
     [SerializeField] private Facility facility;
 
+    public FacilityType GetFacilityType() { return facilityType; }
+    public Facility GetFacility() { return facility; }
+
     private void Start()
     {
         ServiceLocator.Get<Habitat>().FacilitySearch(facilityType);
@@ -16,9 +19,4 @@ public class FacilityShop : MonoBehaviour
     {
         ServiceLocator.Get<Habitat>().AddFacility(facilityType);
     }
-
-    #region Getters & Setters
-    public FacilityType GetFacilityType() { return facilityType; }
-    public Facility GetFacility() { return facility; }
-    #endregion
 }

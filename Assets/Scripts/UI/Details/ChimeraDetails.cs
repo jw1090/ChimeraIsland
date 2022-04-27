@@ -5,39 +5,51 @@ using UnityEngine.UI;
 public class ChimeraDetails : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private int chimeraSpot;
-    [SerializeField] private Chimera chimera;
-    [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI level;
-    [SerializeField] private TextMeshProUGUI intelligence;
-    [SerializeField] private TextMeshProUGUI stamina;
-    [SerializeField] private TextMeshProUGUI strength;
-    [SerializeField] private TextMeshProUGUI happiness;
-    [SerializeField] private TextMeshProUGUI element;
+    [SerializeField] private int _chimeraSpot = 0;
+    [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private Chimera _chimera = null;
+    [SerializeField] private Image _icon = null;
+    [SerializeField] private TextMeshProUGUI _level = null;
+    [SerializeField] private TextMeshProUGUI _element = null;
+    [SerializeField] private TextMeshProUGUI _endurance = null;
+    [SerializeField] private TextMeshProUGUI _intelligence = null;
+    [SerializeField] private TextMeshProUGUI _strength = null;
+    [SerializeField] private TextMeshProUGUI _happiness = null;
 
-    void OnEnable()
+    public void Initialize(Habitat habitat, int chimeraSpot)
     {
+        _habitat = habitat;
+        _chimeraSpot = chimeraSpot;
         UpdateDetails();
     }
 
     public void UpdateDetails()
     {
-        if (ServiceLocator.Get<Habitat>().GetChimeras().Count <= chimeraSpot)
+        if (_habitat == null)
+        {
+            return;
+        }
+
+        if (_habitat.GetChimeras().Count <= _chimeraSpot)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        chimera = ServiceLocator.Get<Habitat>().GetChimeras()[chimeraSpot];
+        _chimera = _habitat.GetChimeras()[_chimeraSpot];
 
-        //Debug.Log("Chimera: " + GameManager.Instance.GetActiveHabitat().GetChimeras()[chimeraSpot]);
+        _icon.sprite = _chimera.GetIcon();
+        _level.text = "Level: " + _chimera.GetLevel();
+        _element.text = "Element: " + _chimera.GetElementalType().ToString();
 
-        level.text = "Level: " + chimera.GetLevel();
-        stamina.text = chimera.GetStatByType(StatType.Endurance).ToString();
-        intelligence.text = chimera.GetStatByType(StatType.Intelligence).ToString();
-        strength.text = chimera.GetStatByType(StatType.Strength).ToString();
-        happiness.text = chimera.GetStatByType(StatType.Happiness).ToString();
-        element.text = "Element: " + chimera.GetElementalType().ToString();
-        icon.sprite = chimera.GetIcon();
+        int amount;
+        string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";
+        _endurance.text = enduranceText;
+        string intelligenceText = _chimera.GetStatByType(StatType.Intelligence, out amount) ? amount.ToString() : "Invalid!";
+        _intelligence.text = intelligenceText;
+        string strengthText = _chimera.GetStatByType(StatType.Strength, out amount) ? amount.ToString() : "Invalid!";
+        _strength.text = strengthText;
+        string happinessText = _chimera.GetStatByType(StatType.Happiness, out amount) ? amount.ToString() : "Invalid!";
+        _happiness.text = happinessText;
     }
 }

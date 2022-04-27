@@ -74,7 +74,8 @@ public class Facility : MonoBehaviour
             return false;
         }
 
-        _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>().ChangeState(_storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>().states[AI.Behavior.StateEnum.Patrol]);
+        AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
+        chimeraBehavior.ChangeState(chimeraBehavior.States[AI.Behavior.StateEnum.Patrol]);
 
         _icon.RemoveIcon();
         _icon.gameObject.SetActive(false);

@@ -27,7 +27,7 @@ namespace AI.Behavior
             if (_totalTimer <= 0f)
             {
                 _isOver = true;
-                _chimeraBehavior.ChangeState(_chimeraBehavior.states[StateEnum.Patrol]);
+                _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
             }
             if (_partTimer <= 0f && !_isOver)
             {

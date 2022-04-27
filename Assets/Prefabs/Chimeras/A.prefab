@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 855878291477086151}
   - component: {fileID: 6408947515153461123}
   - component: {fileID: 6986084506952480713}
-  m_Layer: 0
+  - component: {fileID: 241253668}
+  m_Layer: 6
   m_Name: A
   m_TagString: Chimera
   m_Icon: {fileID: 0}
@@ -72,6 +73,7 @@ MonoBehaviour:
   _essenceModifier: 1
   _currentEvolution: {fileID: 0}
   _habitat: {fileID: 0}
+  _essenceManager: {fileID: 0}
 --- !u!114 &6408947515153461123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,9 +86,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b612cb9490da51b4e9d0d8de7520af34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _heightOffset: 1.2
+  _clicked: 0
   _isActive: 0
+  _chimeraLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _nodes: []
-  _navMeshAgent: {fileID: 0}
+  _navMeshAgent: {fileID: 6986084506952480713}
+  _mainCamera: {fileID: 0}
 --- !u!195 &6986084506952480713
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -109,6 +117,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &241253668
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4192189018358709760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7096979794104110399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,6 +140,10 @@ PrefabInstance:
     - target: {fileID: 8495025957330349804, guid: afade473005507644895e3d1e0ecca14, type: 3}
       propertyPath: m_Name
       value: A Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495025957330349804, guid: afade473005507644895e3d1e0ecca14, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9128714759147205718, guid: afade473005507644895e3d1e0ecca14, type: 3}
       propertyPath: m_RootOrder
