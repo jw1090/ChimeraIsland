@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class BuyChimera : MonoBehaviour, IPointerClickHandler
 {
     [Header("General Info")]
-    [SerializeField] Chimera chimera;
+    [SerializeField] private Chimera chimera;
 
     private void Start()
     {

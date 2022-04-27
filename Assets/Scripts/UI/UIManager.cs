@@ -19,6 +19,11 @@ public class UIManager : MonoBehaviour
         return this;
     }
 
+    public void InitializeDetails(Habitat habitat)
+    {
+        _detailsFolder.Initialize(habitat);
+    }
+
     public void CloseAll()
     {
         _marketplace.SetActive(false);
@@ -27,8 +32,10 @@ public class UIManager : MonoBehaviour
         _detailsFolder.gameObject.SetActive(false);
     }
 
-    public void OpenChimeraPanel()
+    public void OpenDetailsPanel()
     {
+        _detailsFolder.CheckDetails();
+
         CloseAll();
         _openChimerasButton.gameObject.SetActive(false);
         _closeChimerasButton.gameObject.SetActive(true);
