@@ -33,7 +33,6 @@ public class Habitat : MonoBehaviour
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
 
-        _patrolNodes = GetComponentInChildren<PatrolNodes>();
         _patrolNodes.Initialize();
 
         InitializeChimeras();

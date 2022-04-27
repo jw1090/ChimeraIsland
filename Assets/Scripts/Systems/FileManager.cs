@@ -10,7 +10,6 @@ public class FileManager : MonoBehaviour
         Debug.Log("<color=Orange> Initializing File Manager ... </color>");
 
         _persistentData = ServiceLocator.Get<IPersistentData>();
-        Debug.Log($"{(_persistentData == null ? "NULL" : "OK")}");
 
         LoadSavedData();
 

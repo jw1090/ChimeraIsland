@@ -46,7 +46,7 @@ public class Chimera : MonoBehaviour
         _habitat = habitat;
         _essenceManager = essenceManager;
         InitializeEvolution();
-        GetComponent<ChimeraBehavior>().Initialize();
+        GetComponent<ChimeraBehavior>().Initialize(habitat);
     }
 
     private void InitializeEvolution()

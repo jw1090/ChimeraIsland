@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2266,6 +2266,17 @@ MonoBehaviour:
   - {fileID: 483385885}
   - {fileID: 2037036157}
   chimerasList: []
+--- !u!114 &220086334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 458289499, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
+  m_PrefabInstance: {fileID: 1875589437}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64393487c6156a64c96a9fec84104706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222191663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,6 +2472,11 @@ MeshCollider:
 --- !u!1 &241253665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4192189018358709760, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+  m_PrefabInstance: {fileID: 928165734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &241253666 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 6986084506952480713, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
   m_PrefabInstance: {fileID: 928165734}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &241253668
@@ -5880,7 +5896,7 @@ MonoBehaviour:
   _tickTracker: 0
   _chimeraFolder: {fileID: 93296134}
   _spawnPoint: {fileID: 500444165}
-  _patrolNodes: {fileID: 0}
+  _patrolNodes: {fileID: 220086334}
   _essenceManager: {fileID: 0}
 --- !u!1 &678461791
 GameObject:
@@ -7533,6 +7549,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6408947515153461123, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
+      propertyPath: _navMeshAgent
+      value: 
+      objectReference: {fileID: 241253666}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35a3eff497117014c8a8419c23e77737, type: 3}
 --- !u!4 &928165735 stripped

@@ -17,23 +17,23 @@ namespace AI.Behavior
             {
                 _chimeraBehavior.AddToTimer(Time.deltaTime);
 
-                if (_chimeraBehavior.GetTimer() >= _chimeraBehavior.GetPatrolTime())
+                if (_chimeraBehavior.Timer >= _chimeraBehavior.PatrolWaitTime)
                 {
                     _chimeraBehavior.IncreasePatrolIndex(1);
                     _chimeraBehavior.IncreaseWanderIndex(1);
                     _chimeraBehavior.ResetTimer();
 
-                    if (_chimeraBehavior.GetPatrolIndex() > _chimeraBehavior.GetNodeCount() - 1)
+                    if (_chimeraBehavior.PatrolIndex > _chimeraBehavior.GetNodeCount() - 1)
                     {
                         _chimeraBehavior.ResetPatrolIndex();
                     }
 
-                    if (_chimeraBehavior.GetWanderIndex() > _chimeraBehavior.GetNodeCount() - 1)
+                    if (_chimeraBehavior.WanderIndex > _chimeraBehavior.GetNodeCount() - 1)
                     {
                         _chimeraBehavior.ResetWanderIndex();
                     }
 
-                    _chimeraBehavior.ChangeState(_chimeraBehavior.states[StateEnum.Wander]);
+                    _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Wander]);
                 }
             }
         }

@@ -16,9 +16,8 @@ namespace AI.Behavior
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _chimeraBehavior.SetIsTraining(true);
             _partTimer = 2.0f;
-            _patrolPos = _chimeraBehavior.GetTrainingPos();
+            _patrolPos = _chimeraBehavior.TrainingPosition;
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_patrolPos.y));
         }
 
@@ -35,7 +34,6 @@ namespace AI.Behavior
         public override void Exit()
         {
             _partTimer = 0.0f;
-            _chimeraBehavior.SetIsTraining(false);
         }
 
         public Vector3 GetNewWayPoint(float positionY)
