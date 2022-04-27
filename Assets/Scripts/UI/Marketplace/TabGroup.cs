@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +8,8 @@ public class TabGroup : MonoBehaviour
     [SerializeField] private Color tabIdle;
     [SerializeField] private Color tabHover;
     [SerializeField] private Color tabActive;
-    [SerializeField] TabPress selectedTab;
-    [SerializeField] List<GameObject> objectToSwap;
+    [SerializeField] private TabPress selectedTab;
+    [SerializeField] private List<GameObject> objectToSwap;
 
     public void Subscribe(TabPress button)
     {
