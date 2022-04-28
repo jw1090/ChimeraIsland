@@ -5,7 +5,7 @@ namespace AI.Behavior
     public class TrainingState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private float _patrolRange = 0.1f;
+        private float _patrolRange = 3f;
         private float _partTimer = 0.0f; // Time of wander point.
         private Vector3 _patrolPos;
 

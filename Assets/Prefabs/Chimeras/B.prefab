@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1315713857991367192}
   - component: {fileID: 9048984839478593403}
   - component: {fileID: 4236402809445838332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: B
   m_TagString: Chimera
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chimeraLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   _heightOffset: 1.2
   _clicked: 0
   _isActive: 0
@@ -125,11 +125,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7415709988698984522}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &7273853706829733036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +184,10 @@ PrefabInstance:
     - target: {fileID: 7080417140762820778, guid: bb814369f2c679a45b63456d3a569111, type: 3}
       propertyPath: m_Name
       value: B Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080417140762820778, guid: bb814369f2c679a45b63456d3a569111, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb814369f2c679a45b63456d3a569111, type: 3}

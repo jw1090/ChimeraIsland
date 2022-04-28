@@ -99,10 +99,13 @@ namespace AI.Behavior
         private bool CheckGameObject()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, 100f, _chimeraLayer))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
             {
-                _clicked = true;
-                return true;
+                if(hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
+                {
+                    _clicked = true;
+                    return true;
+                }
             }
             return false;
         }
