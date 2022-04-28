@@ -9,6 +9,8 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int _chimeraCapacity = 3;
     [SerializeField] private int _facilityCapacity = 3;
     [SerializeField] private float _unhappyRate = 5;
+    [SerializeField] private List<Chimera> _chimeras = null;
+    [SerializeField] private List<Facility> _facilities = null;
 
     [Header("Tick Info")]
     [SerializeField] private float _tickTimer = 0.2f;
@@ -18,8 +20,6 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
-    [SerializeField] private List<Chimera> _chimeras = null;
-    private List<Facility> _facilities = null;
     private EssenceManager _essenceManager = null;
     private int _tickTracker = 0;
     private bool _isActive = false;
@@ -31,6 +31,7 @@ public class Habitat : MonoBehaviour
     public Habitat Initialize()
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
+        _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         if (_patrolNodes == null)
@@ -44,7 +45,6 @@ public class Habitat : MonoBehaviour
 
         StartCoroutine(TickTimer());
 
-        _isActive = true;
         return this;
     }
 
