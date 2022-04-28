@@ -9,7 +9,6 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int _chimeraCapacity = 3;
     [SerializeField] private int _facilityCapacity = 3;
     [SerializeField] private float _unhappyRate = 5;
-    [SerializeField] private List<Chimera> _chimeras = null;
     [SerializeField] private List<Facility> _facilities = null;
 
     [Header("Tick Info")]
@@ -24,8 +23,9 @@ public class Habitat : MonoBehaviour
     private int _tickTracker = 0;
     private bool _isActive = false;
 
+    public List<Chimera> Chimeras { get; private set; } = new List<Chimera>();
+
     public HabitatType GetHabitatType() { return _habitatType; }
-    public List<Chimera> GetChimeras() { return _chimeras; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 
     public Habitat Initialize()
@@ -52,7 +52,7 @@ public class Habitat : MonoBehaviour
     {
         foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
         {
-            _chimeras.Add(chimera);
+            Chimeras.Add(chimera);
             chimera.Initialize(this, _essenceManager);
         }
     }
@@ -67,7 +67,7 @@ public class Habitat : MonoBehaviour
 
             ++_tickTracker;
 
-            foreach(Chimera chimera in _chimeras)
+            foreach(Chimera chimera in Chimeras)
             {
                 if(chimera.isActiveAndEnabled)
                 {
@@ -91,7 +91,6 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    // Buy Facility using GameManager to pay.
     // Instantiate a Facility prefab on a map at some set of xyz coordinates.
     // Make sure only one can be active at a time.
     public void AddFacility(FacilityType facilityType)
@@ -129,8 +128,7 @@ public class Habitat : MonoBehaviour
     // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
-        // Return if no room for another Chimera.
-        if (_chimeraCapacity == _chimeras.Count)
+        if (_chimeraCapacity == Chimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
             return;
@@ -151,7 +149,7 @@ public class Habitat : MonoBehaviour
 
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
-        _chimeras.Add(newChimera);
+        Chimeras.Add(newChimera);
         newChimera.Initialize(this, _essenceManager);
     }
 

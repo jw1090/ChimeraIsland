@@ -9,7 +9,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     public void Initialize()
     {
         Habitat habitat = ServiceLocator.Get<Habitat>();
-        _chimerasList = habitat.GetChimeras();
+        _chimerasList = habitat.Chimeras;
 
         int chimeraSpot = 0;
         foreach (Transform child in transform)
