@@ -6,8 +6,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private List<Chimera> _chimerasList;
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList;
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
+        Habitat habitat = ServiceLocator.Get<Habitat>();
         _chimerasList = habitat.GetChimeras();
 
         int chimeraSpot = 0;

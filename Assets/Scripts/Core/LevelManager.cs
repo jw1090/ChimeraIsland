@@ -34,13 +34,13 @@ public class LevelManager : MonoBehaviour
         {
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize());
         }
-        if (_uiManager != null)
-        {
-            ServiceLocator.Register<UIManager>(_uiManager.Initialize());
-        }
         if (_habitat != null)
         {
             ServiceLocator.Register<Habitat>(_habitat.Initialize());
+        }
+        if (_uiManager != null)
+        {
+            ServiceLocator.Register<UIManager>(_uiManager.Initialize());
         }
         if (_fileManager)
         {
