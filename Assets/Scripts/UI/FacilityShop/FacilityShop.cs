@@ -11,7 +11,7 @@ public class FacilityShop : MonoBehaviour
 
     private void Start()
     {
-        ServiceLocator.Get<Habitat>().FacilitySearch(facilityType);
+        ServiceLocator.Get<Habitat>().GetFacility(facilityType);
     }
 
     // Handles the facility purchasing. Typically called by the BuyFacility script.
