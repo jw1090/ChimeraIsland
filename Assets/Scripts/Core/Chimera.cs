@@ -118,7 +118,7 @@ public class Chimera : MonoBehaviour
 
             if(_passive == Passives.GreenThumb)
             {
-                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().GetChimeras();
+                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().Chimeras;
 
                 foreach (Chimera chimera in chimeras)
                 {

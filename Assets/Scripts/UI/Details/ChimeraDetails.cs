@@ -30,13 +30,13 @@ public class ChimeraDetails : MonoBehaviour
             return;
         }
 
-        if (_habitat.GetChimeras().Count <= _chimeraSpot)
+        if (_habitat.Chimeras.Count <= _chimeraSpot)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        _chimera = _habitat.GetChimeras()[_chimeraSpot];
+        _chimera = _habitat.Chimeras[_chimeraSpot];
 
         _icon.sprite = _chimera.GetIcon();
         _level.text = "Level: " + _chimera.GetLevel();
