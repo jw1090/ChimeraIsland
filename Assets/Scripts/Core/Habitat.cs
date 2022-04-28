@@ -5,38 +5,46 @@ using UnityEngine;
 public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private bool _isActive = false;
+    [SerializeField] private HabitatType _habitatType = HabitatType.None;
     [SerializeField] private int _chimeraCapacity = 3;
     [SerializeField] private int _facilityCapacity = 3;
-    [SerializeField] private float _unhappyRate = 10;
-    [SerializeField] private List<Chimera> _chimeras;
-    [SerializeField] private List<Facility> _facilities;
-    [SerializeField] private HabitatType _habitatType;
+    [SerializeField] private float _unhappyRate = 5;
 
     [Header("Tick Info")]
     [SerializeField] private float _tickTimer = 0.2f;
-    [SerializeField] private int _tickTracker = 0;
 
     [Header("References")]
-    [SerializeField] private GameObject _chimeraFolder;
-    [SerializeField] private GameObject _spawnPoint;
-    [SerializeField] private PatrolNodes _patrolNodes;
-    [SerializeField] private EssenceManager _essenceManager;
+    [SerializeField] private GameObject _chimeraFolder = null;
+    [SerializeField] private GameObject _spawnPoint = null;
+    [SerializeField] private PatrolNodes _patrolNodes = null;
 
+    [SerializeField] private List<Chimera> _chimeras = null;
+    private List<Facility> _facilities = null;
+    private EssenceManager _essenceManager = null;
+    private int _tickTracker = 0;
+    private bool _isActive = false;
+
+    public HabitatType GetHabitatType() { return _habitatType; }
     public List<Chimera> GetChimeras() { return _chimeras; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
 
     public Habitat Initialize()
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
-        _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        if (_patrolNodes == null)
+        {
+            Debug.LogError(gameObject + "'s PatrolNodes ref is null. Please assign it from the list of Habitat's children in the hierarchy!");
+            Debug.Break();
+        }
 
         _patrolNodes.Initialize();
-
         InitializeChimeras();
+
         StartCoroutine(TickTimer());
+
+        _isActive = true;
         return this;
     }
 
@@ -147,8 +155,7 @@ public class Habitat : MonoBehaviour
         newChimera.Initialize(this, _essenceManager);
     }
 
-    // Look through array to find Facility.
-    private Facility GetFacility(FacilityType facilityType)
+    public Facility GetFacility(FacilityType facilityType)
     {
         foreach (Facility facility in _facilities)
         {
@@ -160,7 +167,7 @@ public class Habitat : MonoBehaviour
 
         return null;
     }
-    public HabitatType GetHabitatType(){return _habitatType;}
+
     // Coints how many facilities are active in the Habitat
     private int ActiveFacilitiesCount()
     {
@@ -175,18 +182,5 @@ public class Habitat : MonoBehaviour
         }
 
         return facilityCount;
-    }
-
-    public Facility FacilitySearch(FacilityType facilityType)
-    {
-        foreach(Facility facility in _facilities)
-        {
-            if(facility.GetFacilityType() == facilityType)
-            {
-                return facility;
-            }
-        }
-
-        return null;
     }
 }

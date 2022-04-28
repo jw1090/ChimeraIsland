@@ -954,7 +954,7 @@ Transform:
   m_Children:
   - {fileID: 928165735}
   m_Father: {fileID: 674330412}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &97110615 stripped
 RectTransform:
@@ -3826,7 +3826,7 @@ Transform:
   - {fileID: 35383057}
   - {fileID: 1573628765}
   m_Father: {fileID: 674330412}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &411274736
 GameObject:
@@ -4558,7 +4558,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 674330412}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &503087016
 PrefabInstance:
@@ -5023,7 +5023,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   serializedVersion: 3
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -5825,10 +5825,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 981150756}
   - {fileID: 387865945}
   - {fileID: 93296135}
   - {fileID: 500444166}
-  - {fileID: 981150756}
   - {fileID: 19827497}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -5845,22 +5845,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc75f9953695204ca3455f2c91c24dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 0
+  _habitatType: 0
   _chimeraCapacity: 3
   _facilityCapacity: 3
   _unhappyRate: 10
-  _chimeras: []
-  _facilities:
-  - {fileID: 1414356755}
-  - {fileID: 35383058}
-  - {fileID: 449551239}
-  _habitatType: 0
   _tickTimer: 0.2
-  _tickTracker: 0
   _chimeraFolder: {fileID: 93296134}
   _spawnPoint: {fileID: 500444165}
   _patrolNodes: {fileID: 220086334}
-  _essenceManager: {fileID: 0}
+  _chimeras: []
 --- !u!1 &678461791
 GameObject:
   m_ObjectHideFlags: 0
@@ -16732,7 +16725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8587840177527771491, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8587840177527771491, guid: b4e078403dfa07e4d896ba1cbdcc0dc6, type: 3}
       propertyPath: m_LocalPosition.x
