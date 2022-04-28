@@ -37,8 +37,6 @@ public class Habitat : MonoBehaviour
 
         InitializeChimeras();
         StartCoroutine(TickTimer());
-
-        ServiceLocator.Get<UIManager>().InitializeDetails(this);
         return this;
     }
 

@@ -15,13 +15,13 @@ public class UIManager : MonoBehaviour
         Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
         UpdateWallets();
-
+        InitializeDetails();
         return this;
     }
 
-    public void InitializeDetails(Habitat habitat)
+    public void InitializeDetails()
     {
-        _detailsFolder.Initialize(habitat);
+        _detailsFolder.Initialize();
     }
 
     public void CloseAll()
