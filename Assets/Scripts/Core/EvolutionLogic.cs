@@ -10,9 +10,23 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
     [SerializeField] private ChimeraType _myType;
-
     [Header("References")]
     [SerializeField] private Chimera _chimeraBrain;
+    public void LoadEvolution()
+    {
+        if (_evolutionPaths == null)
+        {
+            return;
+        }
+
+        foreach (var evolution in _evolutionPaths)
+        {
+            if (_myType == evolution._myType)
+            {
+                Evolve(evolution);
+            }
+        }
+    }
     public void CheckEvolution(int endurance, int intelligence, int strength)
     {
         if(_evolutionPaths == null)
@@ -56,4 +70,5 @@ public class EvolutionLogic : MonoBehaviour
     public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
     #endregion
     public ChimeraType GetChimeraType() { return _myType; }
+    public void SetChimeraType(ChimeraType type) { _myType = type; }
 }

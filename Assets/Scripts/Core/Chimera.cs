@@ -31,6 +31,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _intelligenceThreshold = 5;
     [SerializeField] private int _strengthThreshold = 5;
     [SerializeField] private int _levelUpTracker = 0;
+    [SerializeField] private ChimeraType _myType;
     [Header("Essence")]
     [SerializeField] private float _baseEssenceRate = 5;
     [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
@@ -53,6 +54,8 @@ public class Chimera : MonoBehaviour
     {
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _currentEvolution.SetChimeraBrain(this);
+        _currentEvolution.SetChimeraType(_myType);
+        _currentEvolution.LoadEvolution();
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -279,4 +282,10 @@ public class Chimera : MonoBehaviour
     public int GetEndurance() { return _endurance; }
     public int GetStrength() { return _strength; }
     public int GetHappiness() { return _happiness; }
+    public void SetIntelligence(int num) { _intelligence = num; }
+    public void SetEndurance(int num) { _endurance = num; }
+    public void SetStrength(int num) { _strength = num; }
+    public void SetHappiness(int num) { _happiness = num; }
+    public void SetLevel(int num) { _level = num; }
+    public void SetChimeraType(ChimeraType type) {  _myType = type; }
 }
