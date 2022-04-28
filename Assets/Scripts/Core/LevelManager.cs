@@ -24,27 +24,27 @@ public class LevelManager : MonoBehaviour
 
         if(_inputManager)
         {
-            ServiceLocator.Register<InputManager>(_inputManager.Initialize());
+            ServiceLocator.Register<InputManager>(_inputManager.Initialize(), true);
         }
         if (_cameraController != null)
         {
-            ServiceLocator.Register<CameraController>(_cameraController.Initialize());
+            ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
         }
         if(_essenceManager != null)
         {
-            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize());
+            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
         }
         if (_habitat != null)
         {
-            ServiceLocator.Register<Habitat>(_habitat.Initialize());
+            ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
         }
         if (_uiManager != null)
         {
-            ServiceLocator.Register<UIManager>(_uiManager.Initialize());
+            ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
         }
         if (_fileManager)
         {
-            ServiceLocator.Register<FileManager>(_fileManager.Initialize());
+            ServiceLocator.Register<FileManager>(_fileManager.Initialize(), true);
         }
     }
 }
