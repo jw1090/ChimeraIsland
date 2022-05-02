@@ -40,9 +40,9 @@ public class Chimera : MonoBehaviour
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private EssenceManager _essenceManager = null;
 
-    public void Initialize(Habitat habitat, EssenceManager essenceManager)
+    public void CreateChimera(Habitat habitat, EssenceManager essenceManager)
     {
-        Debug.Log("<color=Orange> Initializing Chimera " + this + " ... </color>");
+        Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
         _habitat = habitat;
         _essenceManager = essenceManager;
         InitializeEvolution();
@@ -200,15 +200,15 @@ public class Chimera : MonoBehaviour
         {
             case StatType.Endurance:
                 _endurance += _enduranceGrowth;
-                Debug.Log("New " + statType + " stat = " + _endurance);
+                Debug.Log(this + " gained " + statType + " stat = " + _endurance);
                 break;
             case StatType.Intelligence:
                 _intelligence += _intelligenceGrowth;
-                Debug.Log("New " + statType + " stat = " + _intelligence);
+                Debug.Log(this + " gained " + statType + " stat = " + _intelligence);
                 break;
             case StatType.Strength:
                 _strength += _strengthGrowth;
-                Debug.Log("New " + statType + " stat = " + _strength);
+                Debug.Log(this + " gained " + statType + " stat = " + _strength);
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -225,7 +225,6 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    #region Getters & Setters
     public bool GetStatByType(StatType statType, out int amount )
     {
         amount = 0;
@@ -273,7 +272,6 @@ public class Chimera : MonoBehaviour
 
         _happiness += amount;
     }
-    #endregion
     public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
     public int GetIntelligence() { return _intelligence; }
     public int GetEndurance() { return _endurance; }

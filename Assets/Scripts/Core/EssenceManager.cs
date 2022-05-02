@@ -10,7 +10,6 @@ public class EssenceManager : MonoBehaviour
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
 
         _persistentData = ServiceLocator.Get<IPersistentData>();
-        Debug.Log($"{(_persistentData == null ? "NULL" : "OK")}");
 
         return this;
     }

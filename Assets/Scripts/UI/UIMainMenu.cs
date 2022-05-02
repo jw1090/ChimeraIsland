@@ -7,7 +7,7 @@ public class UIMainMenu : MonoBehaviour
 
     private void Awake()
     {
-        GameLoader.CallOnComplete(Initialize);    
+        GameLoader.CallOnComplete(Initialize);
     }
 
     public void Initialize()
