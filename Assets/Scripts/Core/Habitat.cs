@@ -104,13 +104,13 @@ public class Habitat : MonoBehaviour
     public void AddFacility(Facility facility)
     {
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= _facilityCapacity && facility.GetTier() == 0)
+        if (ActiveFacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
         }
 
-        if(facility.GetTier() == 3)
+        if(facility.CurrentTier == 3)
         {
             Debug.Log("Facility is already at max tier.");
             return;
