@@ -24,7 +24,13 @@ public class FileManager : MonoBehaviour
         SaveJsonList sjl = new SaveJsonList { };
         foreach (Chimera chimera in ServiceLocator.Get<Habitat>().Chimeras)
         {
-            ChimeraJson temp = new ChimeraJson(chimera.GetInstanceID(), chimera.GetChimeraType(), chimera.GetLevel(), chimera.GetIntelligence(), chimera.GetStrength(), chimera.GetEndurance(), chimera.GetHappiness(), ServiceLocator.Get<Habitat>().GetHabitatType());
+            ChimeraJson temp = new ChimeraJson
+            (
+                chimera.GetInstanceID(), chimera.GetChimeraType(),
+                chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness,
+                ServiceLocator.Get<Habitat>().GetHabitatType()
+            );
+
             sjl.addToChimeraList(temp);
         }
         return sjl;

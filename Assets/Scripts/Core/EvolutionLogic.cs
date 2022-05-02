@@ -13,6 +13,14 @@ public class EvolutionLogic : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Chimera _chimeraBrain;
+
+    public Sprite GetIcon() { return _profileIcon; }
+    public int GetReqEnd() { return _reqEndurance; }
+    public int GetReqInt() { return _reqIntelligence; }
+    public int GetReqStr() { return _reqStrength; }
+    public ChimeraType GetChimeraType() { return _myType; }
+    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
+
     public void CheckEvolution(int endurance, int intelligence, int strength)
     {
         if(_evolutionPaths == null)
@@ -47,13 +55,4 @@ public class EvolutionLogic : MonoBehaviour
         _chimeraBrain.SetModel(newEvolution);
         Destroy(gameObject);
     }
-
-    #region Getters & Setters
-    public Sprite GetIcon() { return _profileIcon; }
-    public int GetReqEnd() { return _reqEndurance; }
-    public int GetReqInt() { return _reqIntelligence; }
-    public int GetReqStr() { return _reqStrength; }
-    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
-    #endregion
-    public ChimeraType GetChimeraType() { return _myType; }
 }
