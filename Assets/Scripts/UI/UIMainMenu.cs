@@ -15,9 +15,13 @@ public class UIMainMenu : MonoBehaviour
         _persistentData = ServiceLocator.Get<IPersistentData>();
     }
 
+    public void NewGameClicked()
+    {
+        SceneManager.LoadSceneAsync(2);
+    }
+
     public void LoadGameClicked()
     {
-        int sceneIndex = _persistentData.GetLevelToLoad();
-        SceneManager.LoadSceneAsync(sceneIndex);
+        SceneManager.LoadSceneAsync(3);
     }
 }
