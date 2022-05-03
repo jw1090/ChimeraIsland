@@ -6,20 +6,17 @@ public class FileManager : MonoBehaviour
     [SerializeField] Chimera ChimeraPrefabA;
     [SerializeField] Chimera ChimeraPrefabB;
     [SerializeField] Chimera ChimeraPrefabC;
-    private IPersistentData _persistentData = null;
+
+    public Habitat CurrentHabitat { get; set; } = null;
 
     public FileManager Initialize()
     {
         Debug.Log("<color=Orange> Initializing File Manager ... </color>");
 
-        _persistentData = ServiceLocator.Get<IPersistentData>();
-
-        LoadSavedData();
-
         return this;
     }
 
-    private Chimera getPrefab(ChimeraType type)
+    private Chimera GetPrefab(ChimeraType type)
     {
         switch (type)
         {
@@ -51,54 +48,65 @@ public class FileManager : MonoBehaviour
         return ChimeraPrefabC;
     }
 
-    private void LoadSavedData()
+    public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
-        List<ChimeraJson> list = FileHandler.ReadListFromJSON<ChimeraJson>("myChimerasList" + ServiceLocator.Get<Habitat>().gameObject.name);
-        int cap = FileHandler.ReadFromJSON<int>("myChimerasList" + ServiceLocator.Get<Habitat>().gameObject.name);
-        if (list == null)
+        List<ChimeraJson> jList = FileHandler.ReadListFromJSON<ChimeraJson>("myChimerasList" + CurrentHabitat.gameObject.name);
+        //List<ChimeraJson> list = jList.getChimeraList();
+
+        if (jList == null || jList.Count == 0)
         {
             Debug.Log("Chimera Save not found");
-            return;
+            return false;
         }
-        if(ServiceLocator.Get<Habitat>().Chimeras.Count < cap) ServiceLocator.Get<Habitat>().SetChimeraCapacity(cap);
-        ServiceLocator.Get<Habitat>().Massacre();
-        foreach (ChimeraJson chimeraJson in list)
+
+        int cap = 3;
+
+        if (cap > CurrentHabitat.GetCapacity())
         {
-            Chimera prefab = getPrefab(chimeraJson.cType);
-            prefab.SetEndurance(chimeraJson.endurance);
-            prefab.SetHappiness(chimeraJson.happiness);
-            prefab.SetIntelligence(chimeraJson.intelligence);
-            prefab.SetLevel(chimeraJson.level);
-            prefab.SetChimeraType(chimeraJson.cType);
-            prefab.SetStrength(chimeraJson.strength); 
-            ServiceLocator.Get<Habitat>().AddChimera(prefab);
+            CurrentHabitat.SetChimeraCapacity(cap);
         }
-        ServiceLocator.Get<Habitat>().KillCap();
+
+        CurrentHabitat.ClearChimeras();
+
+        foreach (ChimeraJson chimeraJson in jList)
+        {
+            Chimera newChimera = CurrentHabitat.AddChimera(GetPrefab(chimeraJson.cType));
+            newChimera.Endurance = chimeraJson.endurance;
+            newChimera.Happiness = chimeraJson.happiness;
+            newChimera.Intelligence = chimeraJson.intelligence;
+            newChimera.Level = chimeraJson.level;
+            newChimera.SetChimeraType(chimeraJson.cType);
+            newChimera.Strength = chimeraJson.strength;
+        }
+
+        return true;
     }
+
     public SaveJsonList GetChimeraJsonList()
     {
         SaveJsonList sjl = new SaveJsonList { };
-        sjl.setChimeraCapacity(ServiceLocator.Get<Habitat>().Chimeras.Count);
-        foreach (Chimera chimera in ServiceLocator.Get<Habitat>().Chimeras)
+        sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
+        foreach (Chimera chimera in CurrentHabitat.Chimeras)
         {
             ChimeraJson temp = new ChimeraJson
             (
                 chimera.GetInstanceID(), chimera.GetChimeraType(),
                 chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness,
-                ServiceLocator.Get<Habitat>().GetHabitatType()
+                CurrentHabitat.GetHabitatType()
             );
 
-            sjl.addToChimeraList(temp);
+            sjl.AddToChimeraList(temp);
         }
         return sjl;
     }
+
     public void SaveChimeras()
     {
         SaveJsonList myData = GetChimeraJsonList();
-        FileHandler.SaveToJSON(myData.getChimeraList(), "myChimerasList" + ServiceLocator.Get<Habitat>().gameObject.name);
-        FileHandler.SaveToJSON(myData.getChimeraCapacity(), "myChimerasCapacity" + ServiceLocator.Get<Habitat>().gameObject.name);
+        FileHandler.SaveToJSON(myData.GetChimeraList(), "myChimerasList" + CurrentHabitat.gameObject.name);
     }
+
     public void OnApplicationQuit()
     {
         SaveChimeras();

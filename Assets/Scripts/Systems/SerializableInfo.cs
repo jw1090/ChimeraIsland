@@ -2,20 +2,14 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
- public class SaveJsonList
- {
-     int currentChimeraCapacity;
-     List<ChimeraJson> chimeraList;
-     public SaveJsonList() 
-     {
-         chimeraList = new List<ChimeraJson> { };
-     }
-     public void setChimeraCapacity(int ChimeraCapacity) { currentChimeraCapacity = ChimeraCapacity; }
-     public void setChimeraList(List<ChimeraJson> ChimeraList) { chimeraList = ChimeraList; }
-     public void addToChimeraList(ChimeraJson chimera) { chimeraList.Add(chimera); }
+public class SaveJsonList
+{
+    private List<ChimeraJson> _chimeraList = new List<ChimeraJson>();
 
-    public List<ChimeraJson> getChimeraList() { return chimeraList; }
-    public int getChimeraCapacity() { return currentChimeraCapacity; }
+    public int CurrentChimeraCapacity { get; set; } = 3;
+
+    public List<ChimeraJson> GetChimeraList() { return _chimeraList; }
+    public void AddToChimeraList(ChimeraJson chimera) { _chimeraList.Add(chimera); }
  }
 
  [Serializable]
@@ -40,7 +34,4 @@ using System.Collections.Generic;
          happiness = Happiness;
          hType = HType;
      }
-
  }
-
-

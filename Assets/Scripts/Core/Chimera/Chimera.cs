@@ -45,9 +45,9 @@ public class Chimera : MonoBehaviour
     public StatType GetStatPreference() { return _statPreference; }
     public Passives GetPassive() { return _passive; }
     public int GetPrice() { return _price; }
-    public bool GetStatByType(StatType statType, out int amount)
 	public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
-	public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
+    public void SetChimeraType(ChimeraType type) { _currentEvolution.SetChimeraType(type); }
+    public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
 	public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
@@ -101,7 +101,7 @@ public class Chimera : MonoBehaviour
     {
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _currentEvolution.SetChimeraBrain(this);
-        _currentEvolution.SetChimeraType(_myType);
+        _currentEvolution.SetChimeraType(GetChimeraType());
         _currentEvolution.LoadEvolution();
     }
 

@@ -4,12 +4,12 @@ using UnityEngine;
 public class EvolutionLogic : MonoBehaviour
 {
     [Header("Evolution Info")]
+    [SerializeField] private ChimeraType _myType;
     [SerializeField] private Sprite _profileIcon = null;
     [SerializeField] private List<EvolutionLogic> _evolutionPaths;
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
-    [SerializeField] private ChimeraType _myType;
 	
     [Header("References")]
     [SerializeField] private Chimera _chimeraBrain;
