@@ -14,19 +14,21 @@ public class UIWorldMap : MonoBehaviour
     {
         _persistentData = ServiceLocator.Get<IPersistentData>();
     }
+
     public void LoadWorldMap()
     {
-        _persistentData.GetLevelToLoad();
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(3);
     }
+
     public void LoadStonePlains()
     {
         _persistentData.GetLevelToLoad();
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadSceneAsync(4);
     }
+
     public void LoadTreeOfLife()
     {
         _persistentData.GetLevelToLoad();
-        SceneManager.LoadSceneAsync(4);
+        SceneManager.LoadSceneAsync(5);
     }
 }

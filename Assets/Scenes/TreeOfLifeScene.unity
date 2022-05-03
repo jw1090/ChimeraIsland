@@ -2049,8 +2049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a32a00b1e92d1469f946045011ae55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 1622857458}
-  startSelected: 1
+  _tabGroup: {fileID: 0}
+  _startSelected: 0
 --- !u!1 &870711884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,8 +2814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a32a00b1e92d1469f946045011ae55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabGroup: {fileID: 1622857458}
-  startSelected: 0
+  _tabGroup: {fileID: 0}
+  _startSelected: 0
 --- !u!1 &1079876442
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294742, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: sceneIndexToLoad
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3297812044064294743, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: m_Name
@@ -3306,7 +3306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227920f732abd754d982d8dcbb99f5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _marketplace: {fileID: 1902896064}
+  _marketplace: {fileID: 0}
   _openChimerasButton: {fileID: 1079876446}
   _closeChimerasButton: {fileID: 236818556}
   _detailsFolder: {fileID: 1316182648}
@@ -4920,14 +4920,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d4fc47cf0aab54684d8ab741075a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabButtons: []
-  tabIdle: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
-  tabHover: {r: 1, g: 1, b: 0.8066038, a: 1}
-  tabActive: {r: 0.9607843, g: 0.9607843, b: 0.6039216, a: 1}
-  selectedTab: {fileID: 0}
-  objectToSwap:
-  - {fileID: 624332273}
-  - {fileID: 1823021690}
+  _tabButtons: []
+  _tabIdle: {r: 0, g: 0, b: 0, a: 0}
+  _tabHover: {r: 0, g: 0, b: 0, a: 0}
+  _tabActive: {r: 0, g: 0, b: 0, a: 0}
+  _objectToSwap: []
 --- !u!114 &1622857459
 MonoBehaviour:
   m_ObjectHideFlags: 0
