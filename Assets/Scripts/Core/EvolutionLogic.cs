@@ -10,9 +10,18 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
     [SerializeField] private ChimeraType _myType;
+	
     [Header("References")]
     [SerializeField] private Chimera _chimeraBrain;
-    public void LoadEvolution()
+
+    public Sprite GetIcon() { return _profileIcon; }
+    public int GetReqEnd() { return _reqEndurance; }
+    public int GetReqInt() { return _reqIntelligence; }
+    public int GetReqStr() { return _reqStrength; }
+    public ChimeraType GetChimeraType() { return _myType; }
+    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
+    public void SetChimeraType(ChimeraType type) { _myType = type; }
+	public void LoadEvolution()
     {
         if (_evolutionPaths == null)
         {
@@ -27,6 +36,7 @@ public class EvolutionLogic : MonoBehaviour
             }
         }
     }
+
     public void CheckEvolution(int endurance, int intelligence, int strength)
     {
         if(_evolutionPaths == null)
@@ -61,14 +71,4 @@ public class EvolutionLogic : MonoBehaviour
         _chimeraBrain.SetModel(newEvolution);
         Destroy(gameObject);
     }
-
-    #region Getters & Setters
-    public Sprite GetIcon() { return _profileIcon; }
-    public int GetReqEnd() { return _reqEndurance; }
-    public int GetReqInt() { return _reqIntelligence; }
-    public int GetReqStr() { return _reqStrength; }
-    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
-    #endregion
-    public ChimeraType GetChimeraType() { return _myType; }
-    public void SetChimeraType(ChimeraType type) { _myType = type; }
 }

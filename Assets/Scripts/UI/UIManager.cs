@@ -3,11 +3,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private GameObject _marketplace;
-    [SerializeField] private Button _openChimerasButton;
-    [SerializeField] private Button _closeChimerasButton;
-    [SerializeField] private ChimeraDetailsFolder _detailsFolder;
+    [SerializeField] private Marketplace _marketplace = null;
+    [SerializeField] private Button _openChimerasButton = null;
+    [SerializeField] private Button _closeChimerasButton = null;
+    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
 
     public UIManager Initialize()
@@ -15,18 +14,22 @@ public class UIManager : MonoBehaviour
         Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
         UpdateWallets();
-        InitializeDetails();
         return this;
     }
 
-    public void InitializeDetails()
+    public void LoadMarketplace(Habitat habitat)
     {
-        _detailsFolder.Initialize();
+        _marketplace.Initialize(habitat);
+    }
+
+    public void LoadDetails(Habitat habitat)
+    {
+        _detailsFolder.Initialize(habitat);
     }
 
     public void CloseAll()
     {
-        _marketplace.SetActive(false);
+        _marketplace.gameObject.SetActive(false);
         _openChimerasButton.gameObject.SetActive(true);
         _closeChimerasButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
@@ -45,7 +48,7 @@ public class UIManager : MonoBehaviour
     public void OpenMarketplace()
     {
         CloseAll();
-        _marketplace.SetActive(true);
+        _marketplace.gameObject.SetActive(true);
     }
 
     public void UpdateDetails()

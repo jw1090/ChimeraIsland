@@ -6,7 +6,6 @@ public class Facility : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
     [SerializeField] private StatType _statType = StatType.None;
-    [SerializeField] private int _currentTier = 0;
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 50;
     [SerializeField] private bool _isActive = false;
@@ -15,13 +14,34 @@ public class Facility : MonoBehaviour
     [SerializeField] private Chimera _storedChimera = null;
     [SerializeField] private FacilityIcon _icon = null;
 
+    public int CurrentTier { get; private set; } = 0;
+
+    public FacilityType GetFacilityType() { return _facilityType; }
+    public int GetPrice() { return _price; }
+    public bool IsActive() { return _isActive; }
+    public bool IsChimeraStored()
+    {
+        if (_isActive == false)
+        {
+            Debug.Log("This Facility is not active!");
+            return false;
+        }
+
+        if (_storedChimera == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
     {
         _price = (int)(_price * 7.5);
-        ++_currentTier;
+        ++CurrentTier;
 
-        if (_currentTier == 1)
+        if (CurrentTier == 1)
         {
             _isActive = true;
             Debug.Log(_facilityType + " was purchased!");
@@ -39,7 +59,7 @@ public class Facility : MonoBehaviour
         else
         {
             ++_statModifier;
-            Debug.Log(_facilityType + " was increased to Tier " + _currentTier + "!");
+            Debug.Log(_facilityType + " was increased to Tier " + CurrentTier + "!");
         }
 
         int newMod = _statModifier + 1;
@@ -127,26 +147,4 @@ public class Facility : MonoBehaviour
             _storedChimera.ChangeHappiness(happinessAmount);
         }
     }
-
-    #region Getters & Setters
-    public FacilityType GetFacilityType() { return _facilityType; }
-    public int GetTier() { return _currentTier; }
-    public int GetPrice() { return _price; }
-    public bool IsActive() { return _isActive; }
-    public bool IsChimeraStored()
-    {
-        if (_isActive == false)
-        {
-            Debug.Log("This Facility is not active!");
-            return false;
-        }
-
-        if(_storedChimera == null)
-        {
-            return false;
-        }
-
-        return true;
-    }
-    #endregion
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SubmarineCamera : MonoBehaviour
 {
@@ -17,17 +15,6 @@ public class SubmarineCamera : MonoBehaviour
     private float xcream;
     private float ycream;
 
-    private void CreamView()
-    {
-        float x = Input.GetAxis("Mouse X");
-        float y = Input.GetAxis("Mouse Y");
-        if(x != 0  || y != 0)
-        {
-            LimitAngleUandD(60);
-            this.transform.Rotate(-y * speed, 0, 0);
-            this.transform.Rotate(0, x * speed, 0);
-        }
-    }
     //Limit camera up and down
     private void LimitAngleUandD(float angle)
     {
@@ -41,14 +28,6 @@ public class SubmarineCamera : MonoBehaviour
         {
             this.transform.rotation = Quaternion.Euler(vect.x, -angle, 0);
         }
-    }
-
-    private float IsPosNum(float x)
-    {
-        x -= 180;
-        if (x < 0)
-            return x + 180;
-        else return x - 180;
     }
 
     private void Update()

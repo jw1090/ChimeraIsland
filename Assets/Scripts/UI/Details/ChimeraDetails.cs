@@ -39,7 +39,7 @@ public class ChimeraDetails : MonoBehaviour
         _chimera = _habitat.Chimeras[_chimeraSpot];
 
         _icon.sprite = _chimera.GetIcon();
-        _level.text = "Level: " + _chimera.GetLevel();
+        _level.text = "Level: " + _chimera.Level;
         _element.text = "Element: " + _chimera.GetElementalType().ToString();
 
         int amount;

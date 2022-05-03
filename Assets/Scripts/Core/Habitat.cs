@@ -9,7 +9,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private int _chimeraCapacity = 3;
     [SerializeField] private int _facilityCapacity = 3;
     [SerializeField] private float _unhappyRate = 5;
-    [SerializeField] private List<Facility> _facilities = null;
+    [SerializeField] private List<Facility> _facilities = new List<Facility>();
 
     [Header("Tick Info")]
     [SerializeField] private float _tickTimer = 0.2f;
@@ -34,6 +34,7 @@ public class Habitat : MonoBehaviour
         _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+
         if (_patrolNodes == null)
         {
             Debug.LogError(gameObject + "'s PatrolNodes ref is null. Please assign it from the list of Habitat's children in the hierarchy!");
@@ -41,19 +42,26 @@ public class Habitat : MonoBehaviour
         }
 
         _patrolNodes.Initialize();
-        InitializeChimeras();
+        LoadChimeras();
+
+        UIManager uIManager = ServiceLocator.Get<UIManager>();
+        if(uIManager != null)
+        {
+            uIManager.LoadMarketplace(this);
+            uIManager.LoadDetails(this);
+        }
 
         StartCoroutine(TickTimer());
 
         return this;
     }
 
-    private void InitializeChimeras()
+    private void LoadChimeras()
     {
         foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
         {
             Chimeras.Add(chimera);
-            chimera.Initialize(this, _essenceManager);
+            chimera.CreateChimera(this, _essenceManager);
         }
     }
 
@@ -93,35 +101,33 @@ public class Habitat : MonoBehaviour
 
     // Instantiate a Facility prefab on a map at some set of xyz coordinates.
     // Make sure only one can be active at a time.
-    public void AddFacility(FacilityType facilityType)
+    public void AddFacility(Facility facility)
     {
-        Facility toBuyFacility = GetFacility(facilityType);
-
         // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= _facilityCapacity && toBuyFacility.GetTier() == 0)
+        if (ActiveFacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
             return;
         }
 
-        if(toBuyFacility.GetTier() == 3)
+        if(facility.CurrentTier == 3)
         {
             Debug.Log("Facility is already at max tier.");
             return;
         }
 
-        if (_essenceManager.SpendEssence(toBuyFacility.GetPrice()) == false)
+        if (_essenceManager.SpendEssence(facility.GetPrice()) == false)
         {
             Debug.Log
             (
-                "Can't afford this facility. It costs " + 
-                toBuyFacility.GetPrice() + " Essence and you only have " +
+                "Can't afford this facility. It costs " +
+                facility.GetPrice() + " Essence and you only have " +
                 _essenceManager.CurrentEssence + " Essence."
             );
             return;
         }
 
-        toBuyFacility.BuyFacility();
+        facility.BuyFacility();
     }
 
     // Called by the BuyChimera Script on a button to check price nad purchase an egg on the active habitat.
@@ -150,7 +156,7 @@ public class Habitat : MonoBehaviour
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
         Chimeras.Add(newChimera);
-        newChimera.Initialize(this, _essenceManager);
+        newChimera.CreateChimera(this, _essenceManager);
     }
 
     public Facility GetFacility(FacilityType facilityType)

@@ -3,30 +3,31 @@ using UnityEngine.EventSystems;
 
 public class TabPress : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    [SerializeField] private TabGroup tabGroup;
-    [SerializeField] private bool startSelected;
+    [SerializeField] private TabGroup _tabGroup = null;
+    [SerializeField] private bool _startSelected = false;
 
-    private void Start()
+    public void Initialize(TabGroup tabGroup)
     {
-        tabGroup.Subscribe(this);
-        if(startSelected)
+        _tabGroup = tabGroup;
+
+        if (_startSelected)
         {
-            tabGroup.OnTabSelected(this);
+            _tabGroup.OnTabSelected(this);
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tabGroup.OnTabEnter(this);
+        _tabGroup.OnTabEnter(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        tabGroup.OnTabSelected(this);
+        _tabGroup.OnTabSelected(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tabGroup.OnTabExit(this);
+        _tabGroup.OnTabExit();
     }
 }
