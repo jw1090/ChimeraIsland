@@ -35,17 +35,20 @@ public class Chimera : MonoBehaviour
     [SerializeField] private EvolutionLogic _currentEvolution = null;
     [SerializeField] private EssenceManager _essenceManager = null;
 
-    public int Level { get; private set; } = 1;
-    public int Endurance { get; private set; } = 0;
-    public int Intelligence { get; private set; } = 0;
-    public int Strength { get; private set; } =  0;
-    public int Happiness { get; private set; } = 0;
+    public int Level { get; set; } = 1;
+    public int Endurance { get; set; } = 0;
+    public int Intelligence { get; set; } = 0;
+    public int Strength { get; set; } =  0;
+    public int Happiness { get; set; } = 0;
 
     public ElementalType GetElementalType() { return _elementalType; }
     public StatType GetStatPreference() { return _statPreference; }
     public Passives GetPassive() { return _passive; }
     public int GetPrice() { return _price; }
-    public bool GetStatByType(StatType statType, out int amount)
+	public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
+    public void SetChimeraType(ChimeraType type) { _currentEvolution.SetChimeraType(type); }
+    public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
+	public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
         switch (statType)
@@ -68,8 +71,6 @@ public class Chimera : MonoBehaviour
         }
         return false;
     }
-    public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
-    public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
     public void ChangeHappiness(int amount)
     {
         if (Happiness + amount >= 100)
@@ -100,6 +101,8 @@ public class Chimera : MonoBehaviour
     {
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _currentEvolution.SetChimeraBrain(this);
+        _currentEvolution.SetChimeraType(GetChimeraType());
+        _currentEvolution.LoadEvolution();
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
