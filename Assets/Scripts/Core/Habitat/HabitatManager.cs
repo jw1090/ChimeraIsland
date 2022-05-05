@@ -25,7 +25,7 @@ public class HabitatManager : MonoBehaviour
     private void InitializeChimeraData()
     {
         // Get your data from the save system
-        List<ChimeraJson> saveData = new List<ChimeraJson>();
+        List<ChimeraSaveData> saveData = new List<ChimeraSaveData>();
 
         // Add chimeras to the dictionary
         foreach(var data in saveData)
@@ -41,7 +41,7 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    private Chimera AllocateStats(ChimeraJson data)
+    private Chimera AllocateStats(ChimeraSaveData data)
     {
         Chimera chimera = new Chimera();
 

@@ -91,8 +91,14 @@ public class FileManager : MonoBehaviour
         {
             ChimeraSaveData temp = new ChimeraSaveData
             (
-                CurrentHabitat.GetHabitatType(), chimera.GetChimeraType(), chimera.GetInstanceID(),
-                chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness                
+                chimera.GetInstanceID(),
+                chimera.GetChimeraType(),
+                chimera.Level,
+                chimera.Endurance,
+                chimera.Intelligence,
+                chimera.Strength,
+                chimera.Happiness,
+                CurrentHabitat.GetHabitatType()
             );
 
             sjl.AddToChimeraList(temp);
