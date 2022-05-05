@@ -70,6 +70,11 @@ public class GameLoader : AsyncLoader
         var sessionDataComp = sessionDataGO.AddComponent<SessionData>().Initialize();
         ServiceLocator.Register<ISessionData>(sessionDataComp);
 
+        var HabitatManagerGO = new GameObject("Habitat Manager");
+        HabitatManagerGO.transform.SetParent(systemsParent);
+        var HabitatManagerComp = HabitatManagerGO.AddComponent<PersistentData>().Initialize();
+        ServiceLocator.Register<IPersistentData>(HabitatManagerComp);
+
         yield return null;
 	}
 

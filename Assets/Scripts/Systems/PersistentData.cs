@@ -1,9 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PersistentData : MonoBehaviour, IPersistentData
 {
     private bool _isLoaded = false;
     private int _levelToLoad = 2;
+    private static readonly Dictionary<string, object> _saveGameData = new Dictionary<string, object>();
 
     public PersistentData Initialize()
     {
@@ -15,14 +17,18 @@ public class PersistentData : MonoBehaviour, IPersistentData
     public void LoadGameData()
     {
         Debug.Log("<color=cyan> Loading Game Data ... </color>");
-        _levelToLoad = PlayerPrefs.GetInt(GameConsts.GameSaveKeys.LEVEL_TO_LOAD, 2);
+        _levelToLoad = PlayerPrefs.GetInt(GameConsts.GameSaveKeys.LEVEL_TO_LOAD, 3);
+
+        // parse the save game file
+        // populate dictionary here with data.
+
         _isLoaded = true;
     }
 
     public void SaveGameData()
     {
         Debug.Log("<color=cyan> Saving Game Data ... </color>");
-        PlayerPrefs.SetInt(GameConsts.GameSaveKeys.LEVEL_TO_LOAD, 2);
+        PlayerPrefs.SetInt(GameConsts.GameSaveKeys.LEVEL_TO_LOAD, 3);
         
     }
 
