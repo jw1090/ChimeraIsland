@@ -4,16 +4,16 @@ using System.Collections.Generic;
 [Serializable]
 public class SaveJsonList
 {
-    private List<ChimeraJson> _chimeraList = new List<ChimeraJson>();
+    private List<ChimeraSaveData> _chimeraList = new List<ChimeraSaveData>();
 
     public int CurrentChimeraCapacity { get; set; } = 3;
 
-    public List<ChimeraJson> GetChimeraList() { return _chimeraList; }
-    public void AddToChimeraList(ChimeraJson chimera) { _chimeraList.Add(chimera); }
+    public List<ChimeraSaveData> GetChimeraList() { return _chimeraList; }
+    public void AddToChimeraList(ChimeraSaveData chimera) { _chimeraList.Add(chimera); }
  }
 
  [Serializable]
- public class ChimeraJson
+ public class ChimeraSaveData
  {
      public int id = 0;
      public ChimeraType cType;
@@ -23,7 +23,7 @@ public class SaveJsonList
      public int endurance = 0;
      public int happiness = 0;
      public HabitatType hType;
-     public ChimeraJson(int Id, ChimeraType CType,int Level,int Intelligence, int Strength, int Endurance, int Happiness, HabitatType HType)
+     public ChimeraSaveData(int Id, ChimeraType CType,int Level,int Intelligence, int Strength, int Endurance, int Happiness, HabitatType HType)
      {
          id = Id;
          cType = CType;
@@ -35,3 +35,20 @@ public class SaveJsonList
          hType = HType;
      }
  }
+
+//will fill in later
+[Serializable]
+public class HabitatSaveData
+{
+}
+
+//will add more later
+[Serializable]
+public class GlobalSaveData
+{
+    public int currentEssence { get; set; } = 0;
+    public GlobalSaveData(int essence) 
+    {
+        currentEssence = essence;
+    }
+}

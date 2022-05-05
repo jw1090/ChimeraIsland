@@ -51,7 +51,7 @@ public class FileManager : MonoBehaviour
     public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
-        List<ChimeraJson> jList = FileHandler.ReadListFromJSON<ChimeraJson>("myChimerasList" + CurrentHabitat.gameObject.name);
+        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>("myChimerasList" + CurrentHabitat.gameObject.name);
         //List<ChimeraJson> list = jList.getChimeraList();
 
         if (jList == null || jList.Count == 0)
@@ -69,7 +69,7 @@ public class FileManager : MonoBehaviour
 
         CurrentHabitat.ClearChimeras();
 
-        foreach (ChimeraJson chimeraJson in jList)
+        foreach (ChimeraSaveData chimeraJson in jList)
         {
             Chimera newChimera = CurrentHabitat.AddChimera(GetPrefab(chimeraJson.cType));
             newChimera.Endurance = chimeraJson.endurance;
@@ -89,7 +89,7 @@ public class FileManager : MonoBehaviour
         sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
         foreach (Chimera chimera in CurrentHabitat.Chimeras)
         {
-            ChimeraJson temp = new ChimeraJson
+            ChimeraSaveData temp = new ChimeraSaveData
             (
                 chimera.GetInstanceID(), chimera.GetChimeraType(),
                 chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness,
