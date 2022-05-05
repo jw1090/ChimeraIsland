@@ -15,11 +15,13 @@ namespace AI.Behavior
 
         public override void Update()
         {
-
+            _chimeraBehavior.ObjFollowMouse();
+            _chimeraBehavior.HeldEnterPatrol();
         }
 
         public override void Exit()
         {
+            _chimeraBehavior.HeldExit();
             _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = true;
         }
     }

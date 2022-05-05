@@ -66,48 +66,46 @@ namespace AI.Behavior
 
         private void Update()
         {
-            if(_isActive == false)
+            if (_isActive == false)
             {
                 return;
             }
-
             _currentState.Update();
 
-            if (Input.GetMouseButton(0))
-            {
-                CheckGameObject();
-                if (_clicked)
-                {
-                    Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
-                    {
-                        transform.position = hit.point + (Vector3.up * _heightOffset);
-                        _navMeshAgent.enabled = false;
-                        ChangeState(States[StateEnum.Held]);
-                    }
-                }
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                _clicked = false;
-                _navMeshAgent.enabled = true;
-                ChangeState(States[StateEnum.Patrol]);
-            }
         }
 
-        private bool CheckGameObject()
+        public void PatrolEnterHeld()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
+            if (_clicked)
+                ChangeState(States[StateEnum.Held]);
+        }
+
+        public void WanderEnterHeld()
+        {
+            if (_clicked)
+                ChangeState(States[StateEnum.Held]);
+        }
+
+        public void HeldEnterPatrol()
+        {
+            if (!_clicked)
+                ChangeState(States[StateEnum.Patrol]);
+        }
+
+        public void HeldExit()
+        {
+            _navMeshAgent.enabled = true;
+        }
+
+        public void ObjFollowMouse()
+        {
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
             {
-                if(hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
-                {
-                    _clicked = true;
-                    return true;
-                }
+                transform.position = hit.point + (Vector3.up * _heightOffset);
+                _navMeshAgent.enabled = false;
             }
-            return false;
         }
 
         public void ChangeState(ChimeraBaseState state)
@@ -118,6 +116,11 @@ namespace AI.Behavior
             }
             _currentState = state;
             _currentState.Enter(this);
+        }
+
+        public void ChimeraSelect(bool i)
+        {
+            _clicked = i;
         }
     }
 }
