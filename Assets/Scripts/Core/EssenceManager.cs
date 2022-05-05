@@ -3,13 +3,13 @@ using UnityEngine;
 public class EssenceManager : MonoBehaviour
 {
     public int CurrentEssence { get; private set; } = 0;
-    private IPersistentData _persistentData = null;
+    //private IPersistentData _persistentData = null;
 
     public EssenceManager Initialize()
     {
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
 
-        _persistentData = ServiceLocator.Get<IPersistentData>();
+        //_persistentData = ServiceLocator.Get<IPersistentData>();
 
         return this;
     }
@@ -18,16 +18,18 @@ public class EssenceManager : MonoBehaviour
     {
         CurrentEssence += amount;
         ServiceLocator.Get<UIManager>().UpdateWallets();
+        FileHandler.SaveToJSON(CurrentEssence, GameConsts.GameSaveKeys.ESSENCE.ToString());
+        /*
         if (_persistentData != null)
         {
             // Debug.Log("<color=lime>Saving Essence</color>");
-            _persistentData.SaveData(GameConsts.GameSaveKeys.ESSENCE, CurrentEssence);
         }
         else if (_persistentData == null)
         {
             _persistentData = ServiceLocator.Get<IPersistentData>() as PersistentData;
             // Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
         }
+        */
     }
 
     // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
@@ -47,10 +49,14 @@ public class EssenceManager : MonoBehaviour
     // Loads essence from 
     public void LoadEssence()
     {
+
+        CurrentEssence = FileHandler.ReadFromJSON<int>(GameConsts.GameSaveKeys.ESSENCE.ToString());
+        /*
         if (_persistentData != null)
         {
             CurrentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
-            Debug.Log($"Loaded Essense: {CurrentEssence}");
         }
+        */
+        Debug.Log($"Loaded Essense: {CurrentEssence}");
     }
 }
