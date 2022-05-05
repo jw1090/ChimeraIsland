@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 855878291477086151}
   - component: {fileID: 6408947515153461123}
   - component: {fileID: 6986084506952480713}
-  - component: {fileID: 241253668}
+  - component: {fileID: 856136477}
   m_Layer: 6
   m_Name: A
   m_TagString: Chimera
@@ -111,7 +111,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &241253668
+--- !u!65 &856136477
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,8 +122,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.5, y: 2.5, z: 3}
+  m_Center: {x: -0.00000000833779, y: 1.1750574, z: -0.3050698}
 --- !u!1001 &2841868487406037501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,7 +179,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5721971624999254196, guid: 90f74b5319791cc45885faf0f3a453c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 90f74b5319791cc45885faf0f3a453c5, type: 3}
 --- !u!4 &8323164904999350268 stripped
 Transform:
