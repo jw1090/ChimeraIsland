@@ -47,7 +47,10 @@ public class FileManager : MonoBehaviour
         }
         return ChimeraPrefabC;
     }
-
+    public List<ChimeraSaveData> getChimeraList()
+    {
+        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+    }
     public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
