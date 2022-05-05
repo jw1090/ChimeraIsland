@@ -21,6 +21,7 @@ namespace AI.Behavior
 
         public override void Update()
         {
+            _chimeraBehavior.WanderEnterHeld();
             _totalTimer -= Time.deltaTime;
             _partTimer -= Time.deltaTime;
 
@@ -53,7 +54,6 @@ namespace AI.Behavior
                 positionY,
                 agentPos.z + randomZ
             );
-
             return randomPoint;
         }
     }
