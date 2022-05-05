@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using AI.Behavior;
 
 public class InputManager : MonoBehaviour
 {
@@ -8,7 +9,11 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float _clickHeldCounter = 0.0f;
 
     [Header("References")]
-    [SerializeField] private Slider _releaseSlider;
+    [SerializeField] private Slider _releaseSlider = null;
+    [SerializeField] private LayerMask _chimeraLayer;
+
+    public GameObject CurrObj { get; private set; } = null;
+    public bool IsInput { get; private set; } = false;
 
     public InputManager Initialize()
     {
@@ -20,6 +25,7 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         CheckRemove();
+        SelectHeldState();
     }
 
     private void CheckRemove()
@@ -27,7 +33,8 @@ public class InputManager : MonoBehaviour
         // Check remove held down.
         if (Input.GetMouseButton(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
+            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Physics.Raycast(ray, out hit, 200.0f);
 
@@ -62,6 +69,31 @@ public class InputManager : MonoBehaviour
         else
         {
             _releaseSlider.gameObject.SetActive(false);
+        }
+    }
+
+    public void SelectHeldState()
+    {
+        if (Input.GetMouseButtonDown(0) && IsInput == false)
+        {
+            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
+            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
+            {
+                hit.transform.gameObject.GetComponent<ChimeraBehavior>().ChimeraSelect(true);
+                if (CurrObj != hit.transform.gameObject)
+                {
+                    CurrObj = hit.transform.gameObject;
+                }
+                IsInput = true;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0) && IsInput)
+        {
+            CurrObj.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
+            IsInput = false;
+            CurrObj = null;
         }
     }
 }

@@ -22,6 +22,7 @@ public class UIMainMenu : MonoBehaviour
 
     public void LoadGameClicked()
     {
-        SceneManager.LoadSceneAsync(3);
+        int sceneIndex = _persistentData.GetLevelToLoad();
+        SceneManager.LoadSceneAsync(sceneIndex);
     }
 }

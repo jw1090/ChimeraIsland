@@ -14,24 +14,34 @@ public class SaveJsonList
  [Serializable]
  public class ChimeraSaveData
  {
+     public HabitatType habitatType;
+     public ChimeraType chimeraType;
      public int id = 0;
-     public ChimeraType cType;
      public int level = 0;
      public int intelligence = 0;
      public int strength = 0;
      public int endurance = 0;
      public int happiness = 0;
-     public HabitatType hType;
-     public ChimeraSaveData(int Id, ChimeraType CType,int Level,int Intelligence, int Strength, int Endurance, int Happiness, HabitatType HType)
+
+
+     public ChimeraSaveData(
+         int newId, 
+         ChimeraType newChimeraType, 
+         int newLevel, 
+         int newEndurance, 
+         int newIntelligence, 
+         int newSrength, 
+         int newHappiness, 
+         HabitatType newHabitatType)
      {
-         id = Id;
-         cType = CType;
-         level = Level;
-         intelligence = Intelligence;
-         strength = Strength;
-         endurance = Endurance;
-         happiness = Happiness;
-         hType = HType;
+        id = newId;
+        chimeraType = newChimeraType;
+        level = newLevel;
+        endurance = newEndurance;
+        intelligence = newIntelligence;
+        strength = newSrength;
+        happiness = newHappiness;
+        habitatType = newHabitatType;
      }
  }
 

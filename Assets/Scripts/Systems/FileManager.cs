@@ -71,13 +71,13 @@ public class FileManager : MonoBehaviour
 
         foreach (ChimeraSaveData chimeraJson in jList)
         {
-            Chimera newChimera = CurrentHabitat.AddChimera(GetPrefab(chimeraJson.cType));
-            newChimera.Endurance = chimeraJson.endurance;
-            newChimera.Happiness = chimeraJson.happiness;
-            newChimera.Intelligence = chimeraJson.intelligence;
+            Chimera newChimera = CurrentHabitat.AddChimera(GetPrefab(chimeraJson.chimeraType));
+            newChimera.SetChimeraType(chimeraJson.chimeraType);
             newChimera.Level = chimeraJson.level;
-            newChimera.SetChimeraType(chimeraJson.cType);
+            newChimera.Endurance = chimeraJson.endurance;
+            newChimera.Intelligence = chimeraJson.intelligence;
             newChimera.Strength = chimeraJson.strength;
+            newChimera.Happiness = chimeraJson.happiness;
         }
 
         return true;
@@ -91,9 +91,8 @@ public class FileManager : MonoBehaviour
         {
             ChimeraSaveData temp = new ChimeraSaveData
             (
-                chimera.GetInstanceID(), chimera.GetChimeraType(),
-                chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness,
-                CurrentHabitat.GetHabitatType()
+                CurrentHabitat.GetHabitatType(), chimera.GetChimeraType(), chimera.GetInstanceID(),
+                chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness                
             );
 
             sjl.AddToChimeraList(temp);
