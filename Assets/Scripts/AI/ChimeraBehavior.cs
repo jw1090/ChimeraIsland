@@ -74,40 +74,37 @@ namespace AI.Behavior
 
         }
 
-        private bool CheckGameObject()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
-            {
-                if (InputController.Instance.CurrObj != this.gameObject)
-                {
-                    InputController.Instance.CurrObj = this.gameObject;
-                }
-                InputController.Instance.IsInput = true;
+        //Move the method to InputController.cs
+        //private bool CheckGameObject()
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
+        //    {
+        //        if (InputController.Instance.CurrObj != this.gameObject)
+        //        {
+        //            InputController.Instance.CurrObj = this.gameObject;
+        //        }
+        //        InputController.Instance.IsInput = true;
 
-                if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
-                {
-                    _clicked = true;
-                    return true;
-                }
-            }
-            return false;
-        }
+        //        if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
+        //        {
+        //            _clicked = true;
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         public void PatrolEnterHeld()
         {
             if (_clicked)
-            {
                 ChangeState(States[StateEnum.Held]);
-            }
         }
 
         public void WanderEnterHeld()
         {
             if (_clicked)
-            {
                 ChangeState(States[StateEnum.Held]);
-            }
         }
 
         public void HeldEnterPatrol()
@@ -142,7 +139,7 @@ namespace AI.Behavior
             _currentState.Enter(this);
         }
 
-        public void Select(bool i)
+        public void ChimeraSelect(bool i)
         {
             _clicked = i;
         }

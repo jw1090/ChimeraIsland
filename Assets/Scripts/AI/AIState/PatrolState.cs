@@ -13,6 +13,7 @@ namespace AI.Behavior
 
         public override void Update()
         {
+            _chimeraBehavior.PatrolEnterHeld();
             if (_chimeraBehavior.GetAgentDistance() < 1.5f)
             {
                 _chimeraBehavior.AddToTimer(Time.deltaTime);
