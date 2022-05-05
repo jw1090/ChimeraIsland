@@ -74,27 +74,6 @@ namespace AI.Behavior
 
         }
 
-        //Move the method to InputController.cs
-        //private bool CheckGameObject()
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
-        //    {
-        //        if (InputController.Instance.CurrObj != this.gameObject)
-        //        {
-        //            InputController.Instance.CurrObj = this.gameObject;
-        //        }
-        //        InputController.Instance.IsInput = true;
-
-        //        if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
-        //        {
-        //            _clicked = true;
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
         public void PatrolEnterHeld()
         {
             if (_clicked)
