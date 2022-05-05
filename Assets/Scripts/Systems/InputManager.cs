@@ -1,6 +1,6 @@
+using AI.Behavior;
 using UnityEngine;
 using UnityEngine.UI;
-using AI.Behavior;
 
 public class InputManager : MonoBehaviour
 {
