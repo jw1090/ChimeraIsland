@@ -51,7 +51,7 @@ public class FileManager : MonoBehaviour
     public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
-        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>("myChimerasList" + CurrentHabitat.gameObject.name);
+        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
         //List<ChimeraJson> list = jList.getChimeraList();
 
         if (jList == null || jList.Count == 0)
@@ -104,7 +104,7 @@ public class FileManager : MonoBehaviour
     public void SaveChimeras()
     {
         SaveJsonList myData = GetChimeraJsonList();
-        FileHandler.SaveToJSON(myData.GetChimeraList(), "myChimerasList" + CurrentHabitat.gameObject.name);
+        FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
 
     public void OnApplicationQuit()

@@ -7,6 +7,7 @@ public class EssenceManager : MonoBehaviour
 
     public EssenceManager Initialize()
     {
+        LoadEssence();
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
         //_persistentData = ServiceLocator.Get<IPersistentData>();
 
@@ -18,8 +19,7 @@ public class EssenceManager : MonoBehaviour
         CurrentEssence += amount;
         ServiceLocator.Get<UIManager>().UpdateWallets();
         GlobalSaveData data = new GlobalSaveData(CurrentEssence);
-        Debug.Log(data.currentEssence);
-        FileHandler.SaveToJSON(data, "Essence");
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
         /*
         if (_persistentData != null)
         {
@@ -50,14 +50,8 @@ public class EssenceManager : MonoBehaviour
     // Loads essence from 
     public void LoadEssence()
     {
-        GlobalSaveData temp = FileHandler.ReadFromJSON<GlobalSaveData>("Essence");
+        GlobalSaveData temp = FileHandler.ReadFromJSON<GlobalSaveData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
         CurrentEssence = temp == null ? 0 : temp.currentEssence;
-        /*
-        if (_persistentData != null)
-        {
-            CurrentEssence = _persistentData.LoadDataInt(GameConsts.GameSaveKeys.ESSENCE);
-        }
-        */
         Debug.Log($"Loaded Essense: {CurrentEssence}");
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 [Serializable]
 public class SaveJsonList
 {
@@ -46,7 +45,7 @@ public class HabitatSaveData
 [Serializable]
 public class GlobalSaveData
 {
-    public int currentEssence { get; set; } = 0;
+    public int currentEssence = 0;
     public GlobalSaveData(int essence) 
     {
         currentEssence = essence;
