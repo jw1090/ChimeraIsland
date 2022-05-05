@@ -85,7 +85,6 @@ public class InputManager : MonoBehaviour
                 {
                     CurrObj = hit.transform.gameObject;
                 }
-
                 IsInput = true;
             }
         }
