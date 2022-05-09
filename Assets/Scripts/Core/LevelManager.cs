@@ -5,7 +5,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private InputManager _inputManager = null;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private EssenceManager _essenceManager = null;
-    [SerializeField] private FileManager _fileManager = null;
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private Habitat _habitat = null;
 
@@ -33,10 +32,6 @@ public class LevelManager : MonoBehaviour
         if (_essenceManager != null)
         {
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
-        }
-        if (_fileManager)
-        {
-            ServiceLocator.Register<FileManager>(_fileManager.Initialize(), true);
         }
         if (_uiManager != null)
         {
