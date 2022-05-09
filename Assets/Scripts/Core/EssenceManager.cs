@@ -1,16 +1,19 @@
+using System;
 using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
     public int CurrentEssence { get; private set; } = 0;
-    //private IPersistentData _persistentData = null;
+    private IPersistentData _persistentData = null;
+    public bool IsInitialized { get; set; } = false;
 
     public EssenceManager Initialize()
     {
         LoadEssence();
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
-        //_persistentData = ServiceLocator.Get<IPersistentData>();
-
+        
+        _persistentData = ServiceLocator.Get<IPersistentData>();
+        IsInitialized = true;
         return this;
     }
 
@@ -20,17 +23,6 @@ public class EssenceManager : MonoBehaviour
         ServiceLocator.Get<UIManager>().UpdateWallets();
         GlobalSaveData data = new GlobalSaveData(CurrentEssence);
         FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-        /*
-        if (_persistentData != null)
-        {
-            // Debug.Log("<color=lime>Saving Essence</color>");
-        }
-        else if (_persistentData == null)
-        {
-            _persistentData = ServiceLocator.Get<IPersistentData>() as PersistentData;
-            // Debug.Log("<color=lime>PERSISTANT DATA IS NULL AAAAAAA</color>");
-        }
-        */
     }
 
     // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.

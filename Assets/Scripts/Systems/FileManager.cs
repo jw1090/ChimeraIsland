@@ -3,59 +3,66 @@ using System.Collections.Generic;
 
 public class FileManager : MonoBehaviour
 {
-    [SerializeField] Chimera ChimeraPrefabA;
-    [SerializeField] Chimera ChimeraPrefabB;
-    [SerializeField] Chimera ChimeraPrefabC;
+    private Chimera _chimeraPrefabA = null;
+    private Chimera _chimeraPrefabB = null;
+    private Chimera _chimeraPrefabC = null;
 
     public Habitat CurrentHabitat { get; set; } = null;
 
     public FileManager Initialize()
     {
-        Debug.Log("<color=Orange> Initializing File Manager ... </color>");
+        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
+
+        _chimeraPrefabA = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
+        _chimeraPrefabB = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
+        _chimeraPrefabC = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
 
         return this;
     }
 
-    private Chimera GetPrefab(ChimeraType type)
+    private Chimera FindPrefab(ChimeraType type)
     {
         switch (type)
         {
             case ChimeraType.A:
-                return ChimeraPrefabA;
+                return _chimeraPrefabA;
             case ChimeraType.A1:
-                return ChimeraPrefabA;
+                return _chimeraPrefabA;
             case ChimeraType.A2:
-                return ChimeraPrefabA;
+                return _chimeraPrefabA;
             case ChimeraType.A3:
-                return ChimeraPrefabA;
+                return _chimeraPrefabA;
             case ChimeraType.B:
-                return ChimeraPrefabB;
+                return _chimeraPrefabB;
             case ChimeraType.B1:
-                return ChimeraPrefabB;
+                return _chimeraPrefabB;
             case ChimeraType.B2:
-                return ChimeraPrefabB;
+                return _chimeraPrefabB;
             case ChimeraType.B3:
-                return ChimeraPrefabB;
+                return _chimeraPrefabB;
             case ChimeraType.C:
-                return ChimeraPrefabC;
+                return _chimeraPrefabC;
             case ChimeraType.C1:
-                return ChimeraPrefabC;
+                return _chimeraPrefabC;
             case ChimeraType.C2:
-                return ChimeraPrefabC;
+                return _chimeraPrefabC;
             case ChimeraType.C3:
-                return ChimeraPrefabC;
+                return _chimeraPrefabC;
+            default:
+                Debug.LogWarning($"Unhandled prefab type {type}");
+                return null;
         }
-        return ChimeraPrefabC;
     }
+    
     public List<ChimeraSaveData> getChimeraList()
     {
         return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
+    
     public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
         List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-        //List<ChimeraJson> list = jList.getChimeraList();
 
         if (jList == null || jList.Count == 0)
         {
@@ -74,7 +81,7 @@ public class FileManager : MonoBehaviour
 
         foreach (ChimeraSaveData chimeraJson in jList)
         {
-            Chimera newChimera = CurrentHabitat.AddChimera(GetPrefab(chimeraJson.chimeraType));
+            Chimera newChimera = CurrentHabitat.AddChimera(FindPrefab(chimeraJson.chimeraType));
             newChimera.SetChimeraType(chimeraJson.chimeraType);
             newChimera.Level = chimeraJson.level;
             newChimera.Endurance = chimeraJson.endurance;
