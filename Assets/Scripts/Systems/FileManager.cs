@@ -53,11 +53,16 @@ public class FileManager : MonoBehaviour
                 return null;
         }
     }
-
+    
+    public List<ChimeraSaveData> getChimeraList()
+    {
+        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+    }
+    
     public bool LoadSavedData()
     {
         ServiceLocator.Get<EssenceManager>().LoadEssence();
-        List<ChimeraJson> jList = FileHandler.ReadListFromJSON<ChimeraJson>("myChimerasList" + CurrentHabitat.gameObject.name);
+        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
 
         if (jList == null || jList.Count == 0)
         {
@@ -74,7 +79,7 @@ public class FileManager : MonoBehaviour
 
         CurrentHabitat.ClearChimeras();
 
-        foreach (ChimeraJson chimeraJson in jList)
+        foreach (ChimeraSaveData chimeraJson in jList)
         {
             Chimera newChimera = CurrentHabitat.AddChimera(FindPrefab(chimeraJson.chimeraType));
             newChimera.SetChimeraType(chimeraJson.chimeraType);
@@ -94,10 +99,16 @@ public class FileManager : MonoBehaviour
         sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
         foreach (Chimera chimera in CurrentHabitat.Chimeras)
         {
-            ChimeraJson temp = new ChimeraJson
+            ChimeraSaveData temp = new ChimeraSaveData
             (
-                CurrentHabitat.GetHabitatType(), chimera.GetChimeraType(), chimera.GetInstanceID(),
-                chimera.Level, chimera.Endurance, chimera.Intelligence, chimera.Strength, chimera.Happiness
+                chimera.GetInstanceID(),
+                chimera.GetChimeraType(),
+                chimera.Level,
+                chimera.Endurance,
+                chimera.Intelligence,
+                chimera.Strength,
+                chimera.Happiness,
+                CurrentHabitat.GetHabitatType()
             );
 
             sjl.AddToChimeraList(temp);
@@ -108,7 +119,7 @@ public class FileManager : MonoBehaviour
     public void SaveChimeras()
     {
         SaveJsonList myData = GetChimeraJsonList();
-        FileHandler.SaveToJSON(myData.GetChimeraList(), "myChimerasList" + CurrentHabitat.gameObject.name);
+        FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
 
     public void OnApplicationQuit()

@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-
 [Serializable]
 public class SaveJsonList
 {
-    private List<ChimeraJson> _chimeraList = new List<ChimeraJson>();
+    private List<ChimeraSaveData> _chimeraList = new List<ChimeraSaveData>();
 
     public int CurrentChimeraCapacity { get; set; } = 3;
 
-    public List<ChimeraJson> GetChimeraList() { return _chimeraList; }
-    public void AddToChimeraList(ChimeraJson chimera) { _chimeraList.Add(chimera); }
+    public List<ChimeraSaveData> GetChimeraList() { return _chimeraList; }
+    public void AddToChimeraList(ChimeraSaveData chimera) { _chimeraList.Add(chimera); }
  }
 
  [Serializable]
- public class ChimeraJson
+ public class ChimeraSaveData
  {
      public HabitatType habitatType;
      public ChimeraType chimeraType;
@@ -24,15 +23,41 @@ public class SaveJsonList
      public int endurance = 0;
      public int happiness = 0;
 
-     public ChimeraJson(HabitatType newHabitatType, ChimeraType newChimeraType, int newId, int newLevel, int newIntelligence, int newSrength, int newEndurance, int newHappiness)
+
+     public ChimeraSaveData(
+         int newId, 
+         ChimeraType newChimeraType, 
+         int newLevel, 
+         int newEndurance, 
+         int newIntelligence, 
+         int newSrength, 
+         int newHappiness, 
+         HabitatType newHabitatType)
      {
-        habitatType = newHabitatType;
-        chimeraType = newChimeraType;
         id = newId;
+        chimeraType = newChimeraType;
         level = newLevel;
+        endurance = newEndurance;
         intelligence = newIntelligence;
         strength = newSrength;
-        endurance = newEndurance;
         happiness = newHappiness;
+        habitatType = newHabitatType;
      }
  }
+
+//will fill in later
+[Serializable]
+public class HabitatSaveData
+{
+}
+
+//will add more later
+[Serializable]
+public class GlobalSaveData
+{
+    public int currentEssence = 0;
+    public GlobalSaveData(int essence) 
+    {
+        currentEssence = essence;
+    }
+}

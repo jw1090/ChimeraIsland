@@ -49,7 +49,7 @@ public class HabitatManager : MonoBehaviour
     private bool InitializeChimeraData()
     {
         // Get your data from the save system
-        List<ChimeraJson> saveData = new List<ChimeraJson>();
+        List<ChimeraSaveData> saveData = new List<ChimeraSaveData>();
 
         if(saveData == null)
         {
@@ -73,7 +73,7 @@ public class HabitatManager : MonoBehaviour
         return true;
     }
 
-    private Chimera LoadChimeraFromJson(ChimeraJson data)
+    private Chimera AllocateStats(ChimeraSaveData data)
     {
         Chimera chimera = new Chimera();
 
