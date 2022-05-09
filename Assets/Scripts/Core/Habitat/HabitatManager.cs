@@ -42,8 +42,8 @@ public class HabitatManager : MonoBehaviour
         {
             return _chimerasByHabitat[habitatType];
         }
-        Debug.LogError($"No entry for habitat: {habitatType}");
-        return null;
+        Debug.Log($"No entry for habitat: {habitatType}");
+        return new List<Chimera>();
     }
 
     private bool InitializeChimeraData()
@@ -73,7 +73,7 @@ public class HabitatManager : MonoBehaviour
         return true;
     }
 
-    private Chimera AllocateStats(ChimeraSaveData data)
+    private Chimera LoadChimeraFromJson(ChimeraSaveData data)
     {
         Chimera chimera = new Chimera();
 
