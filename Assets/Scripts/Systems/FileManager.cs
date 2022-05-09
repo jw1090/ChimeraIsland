@@ -9,6 +9,11 @@ public class FileManager : MonoBehaviour
 
     public Habitat CurrentHabitat { get; set; } = null;
 
+    public List<ChimeraSaveData> GetChimeraList()
+    {
+        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+    }
+
     public FileManager Initialize()
     {
         Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
@@ -53,15 +58,9 @@ public class FileManager : MonoBehaviour
                 return null;
         }
     }
-    
-    public List<ChimeraSaveData> getChimeraList()
-    {
-        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-    }
-    
+
     public bool LoadSavedData()
     {
-        ServiceLocator.Get<EssenceManager>().LoadEssence();
         List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
 
         if (jList == null || jList.Count == 0)
@@ -77,6 +76,7 @@ public class FileManager : MonoBehaviour
             CurrentHabitat.SetChimeraCapacity(cap);
         }
 
+        /* TODO load chimera data into HabitatManager dictionary
         CurrentHabitat.ClearChimeras();
 
         foreach (ChimeraSaveData chimeraJson in jList)
@@ -88,7 +88,7 @@ public class FileManager : MonoBehaviour
             newChimera.Intelligence = chimeraJson.intelligence;
             newChimera.Strength = chimeraJson.strength;
             newChimera.Happiness = chimeraJson.happiness;
-        }
+        }*/
 
         return true;
     }
