@@ -86,4 +86,17 @@ public class HabitatManager : MonoBehaviour
 
         return chimera;
     }
+
+    public void TransferChimera(HabitatType currentHabitat, HabitatType habitatToTransfer, Chimera chimeraToTransfer)
+    {
+        foreach(Chimera chimera in GetChimerasForHabitat(currentHabitat))
+        {
+            if(chimera == chimeraToTransfer)
+            {
+                _chimerasByHabitat[currentHabitat].Remove(chimera);
+                _chimerasByHabitat[habitatToTransfer].Add(chimera);
+                return;
+            }
+        }
+    }
 }

@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _closeChimerasButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
+    [SerializeField] private GameObject _transferWorldMap = null;
 
     public UIManager Initialize()
     {
@@ -70,5 +71,17 @@ public class UIManager : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
+    }
+
+    public void OpenTransferWorldMap()
+    {
+        CloseAll();
+        _transferWorldMap.SetActive(true);
+    }
+
+    public void CloseTransferWorldMap()
+    {
+        _transferWorldMap.SetActive(false);
+        OpenDetailsPanel();
     }
 }
