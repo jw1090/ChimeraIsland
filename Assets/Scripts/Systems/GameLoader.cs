@@ -63,7 +63,7 @@ public class GameLoader : AsyncLoader
         var persistentDataGO = new GameObject("Persistent Data Manager");
         persistentDataGO.transform.SetParent(systemsParent);
         var persistentDataComp = persistentDataGO.AddComponent<PersistentData>().Initialize();
-        ServiceLocator.Register<IPersistentData>(persistentDataComp);
+        ServiceLocator.Register<PersistentData>(persistentDataComp);
 
         var sessionDataGO = new GameObject("Session Data Manager");
         sessionDataGO.transform.SetParent(systemsParent);
@@ -72,8 +72,8 @@ public class GameLoader : AsyncLoader
 
         var HabitatManagerGO = new GameObject("Habitat Manager");
         HabitatManagerGO.transform.SetParent(systemsParent);
-        var HabitatManagerComp = HabitatManagerGO.AddComponent<PersistentData>().Initialize();
-        ServiceLocator.Register<IPersistentData>(HabitatManagerComp);
+        var HabitatManagerComp = HabitatManagerGO.AddComponent<HabitatManager>().Initialize();
+        ServiceLocator.Register<HabitatManager>(HabitatManagerComp);
 
         yield return null;
 	}
