@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class UIWorldMap : MonoBehaviour
 {
-    private IPersistentData _persistentData = null;
-
     private void Awake()
     {
         GameLoader.CallOnComplete(Initialize);
@@ -12,7 +10,7 @@ public class UIWorldMap : MonoBehaviour
 
     public void Initialize()
     {
-        _persistentData = ServiceLocator.Get<IPersistentData>();
+
     }
 
     public void LoadWorldMap()
@@ -22,13 +20,11 @@ public class UIWorldMap : MonoBehaviour
 
     public void LoadStonePlains()
     {
-        _persistentData.GetLevelToLoad();
         SceneManager.LoadSceneAsync(4);
     }
 
     public void LoadTreeOfLife()
     {
-        _persistentData.GetLevelToLoad();
         SceneManager.LoadSceneAsync(5);
     }
 }

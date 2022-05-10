@@ -8,7 +8,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private IPersistentData _persistentData;
     private ISessionData _sessionData;
 
     private void Awake()
@@ -18,7 +17,6 @@ public class LevelManager : MonoBehaviour
 
     private void Initialize()
     {
-        _persistentData = ServiceLocator.Get<IPersistentData>();
         _sessionData = ServiceLocator.Get<ISessionData>();
 
         if(_inputManager)
