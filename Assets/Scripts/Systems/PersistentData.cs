@@ -93,7 +93,7 @@ public class PersistentData : MonoBehaviour
         return true;
     }
 
-    public SaveJsonList GetChimeraJsonList()
+    private SaveJsonList GetChimeraJsonList()
     {
         SaveJsonList sjl = new SaveJsonList { };
         sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();

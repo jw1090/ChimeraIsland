@@ -47,7 +47,7 @@ public enum Passives
 
 public enum StatType
 {
-    None = 1,
+    None = -1,
     Endurance,
     Intelligence,
     Strength,

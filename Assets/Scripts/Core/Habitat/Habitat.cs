@@ -77,9 +77,9 @@ public class Habitat : MonoBehaviour
 
     private void SpawnChimeras()
     {
-        foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
+        foreach(Chimera chimera in Chimeras)
         {
-            Chimeras.Add(chimera);
+            Chimera newChimera = Instantiate(chimera, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
             chimera.CreateChimera(this, _essenceManager);
         }
     }
