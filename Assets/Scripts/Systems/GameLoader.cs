@@ -63,17 +63,12 @@ public class GameLoader : AsyncLoader
         var persistentDataGO = new GameObject("Persistent Data Manager");
         persistentDataGO.transform.SetParent(systemsParent);
         var persistentDataComp = persistentDataGO.AddComponent<PersistentData>().Initialize();
-        ServiceLocator.Register<IPersistentData>(persistentDataComp);
+        ServiceLocator.Register<PersistentData>(persistentDataComp);
 
         var sessionDataGO = new GameObject("Session Data Manager");
         sessionDataGO.transform.SetParent(systemsParent);
         var sessionDataComp = sessionDataGO.AddComponent<SessionData>().Initialize();
         ServiceLocator.Register<ISessionData>(sessionDataComp);
-
-        var FileManagerGO = new GameObject("File Manager");
-        FileManagerGO.transform.SetParent(systemsParent);
-        var FileManagerComp = FileManagerGO.AddComponent<FileManager>().Initialize();
-        ServiceLocator.Register<FileManager>(FileManagerComp);
 
         var HabitatManagerGO = new GameObject("Habitat Manager");
         HabitatManagerGO.transform.SetParent(systemsParent);

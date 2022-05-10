@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
     public int CurrentEssence { get; private set; } = 0;
-    private IPersistentData _persistentData = null;
     public bool IsInitialized { get; set; } = false;
 
     public EssenceManager Initialize()
@@ -12,7 +10,6 @@ public class EssenceManager : MonoBehaviour
         LoadEssence();
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
         
-        _persistentData = ServiceLocator.Get<IPersistentData>();
         IsInitialized = true;
         return this;
     }

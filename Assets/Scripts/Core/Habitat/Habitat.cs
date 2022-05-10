@@ -43,11 +43,11 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        FileManager fileManager = ServiceLocator.Get<FileManager>();
-        if (fileManager != null)
+        PersistentData persistentData = ServiceLocator.Get<PersistentData>();
+        if (persistentData != null)
         {
-            fileManager.CurrentHabitat = this;
-            fileManager.LoadSavedData();
+            persistentData.CurrentHabitat = this;
+            persistentData.LoadSavedData();
         }
 
         LoadChimeras();
