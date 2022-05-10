@@ -10,13 +10,17 @@ public class UIWallet : MonoBehaviour
 
     private void Awake()
     {
+        /* TODO: Ask Craig about this. Does not load by default.
         _walletText.gameObject.SetActive(false);
         GameLoader.CallOnComplete(Initialize);
+        */
     }
 
-    private void Initialize()
+    public void Initialize()
     {
-        StartCoroutine("WaitForEssenceManagerInit");
+        //StartCoroutine("WaitForEssenceManagerInit");
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
+        UpdateWallet();
     }
 
     private IEnumerator WaitForEssenceManagerInit()
@@ -38,10 +42,11 @@ public class UIWallet : MonoBehaviour
 
     public void UpdateWallet()
     {
+        /*
         if (!_initialized)
         {
             return;
-        }
-        _walletText.text = ServiceLocator.Get<EssenceManager>().CurrentEssence.ToString();
+        }*/
+        _walletText.text = _essenceManager.CurrentEssence.ToString();
     }
 }
