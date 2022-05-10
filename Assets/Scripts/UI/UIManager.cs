@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
-        UpdateWallets();
+        InitializeWallets();
         return this;
     }
 
@@ -54,6 +54,14 @@ public class UIManager : MonoBehaviour
     public void UpdateDetails()
     {
         _detailsFolder.UpdateDetailsList();
+    }
+
+    private void InitializeWallets()
+    {
+        foreach (var wallet in _essenceWallets)
+        {
+            wallet.Initialize();
+        }
     }
 
     public void UpdateWallets()

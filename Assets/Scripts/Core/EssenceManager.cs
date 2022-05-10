@@ -7,8 +7,8 @@ public class EssenceManager : MonoBehaviour
 
     public EssenceManager Initialize()
     {
-        LoadEssence();
         Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
+        LoadEssence();
         
         IsInitialized = true;
         return this;
