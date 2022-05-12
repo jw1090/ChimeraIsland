@@ -78,8 +78,8 @@ public class HabitatManager : MonoBehaviour
 
     private Chimera LoadChimeraFromJson(ChimeraSaveData data)
     {
-        GameObject chimera = _resourceManager.GetChimeraBasePrefab(data.chimeraType);
-        chimera.(_resourceManager.GetChimeraEvolution(data.chimeraType));
+        GameObject chimeraGO = _resourceManager.GetChimeraBasePrefab(data.chimeraType);
+        Chimera chimera = chimeraGO.GetComponent<Chimera>();
         chimera.SetChimeraType(data.chimeraType);
         chimera.Level = data.level;
         chimera.Endurance = data.endurance;

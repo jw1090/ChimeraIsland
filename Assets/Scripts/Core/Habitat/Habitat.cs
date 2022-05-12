@@ -73,7 +73,7 @@ public class Habitat : MonoBehaviour
     {
         foreach (var chimera in chimerasToSpawn)
         {
-            var chimeraPrefab = _resourceManager.GetChimeraPrefab(chimera.GetChimeraType());
+            var chimeraPrefab = _resourceManager.GetChimeraBasePrefab(chimera.GetChimeraType());
             var newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
             newChimera.name = $"Craig's {chimera.GetChimeraType().ToString()}";
             Chimera newChimeraComp = newChimera.GetComponent<Chimera>();
