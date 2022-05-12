@@ -60,6 +60,11 @@ public class GameLoader : AsyncLoader
 	{
         Debug.Log("Loading Core Systems");
 
+        var monoUtilGO = new GameObject("Monobehaviour Utility");
+        monoUtilGO.transform.SetParent(systemsParent);
+        var monoUtilComp = monoUtilGO.AddComponent<MonoUtil>().Initialize();
+        ServiceLocator.Register<MonoUtil>(monoUtilComp);
+
         var persistentDataGO = new GameObject("Persistent Data Manager");
         persistentDataGO.transform.SetParent(systemsParent);
         var persistentDataComp = persistentDataGO.AddComponent<PersistentData>().Initialize();

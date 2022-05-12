@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,26 +7,30 @@ public class UIWallet : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _walletText = null;
     private EssenceManager _essenceManager = null;
+    private MonoUtil _monoUtil = null;
     private bool _initialized = false;
 
     private void Awake()
     {
-        /* TODO: Ask Craig about this. Does not load by default.
         _walletText.gameObject.SetActive(false);
         GameLoader.CallOnComplete(Initialize);
-        */
     }
 
     public void Initialize()
     {
-        //StartCoroutine("WaitForEssenceManagerInit");
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
-        UpdateWallet();
+        _monoUtil = ServiceLocator.Get<MonoUtil>();
+        _monoUtil.StartCoroutine(WaitForEssenceManagerInit(() =>
+        {
+            _essenceManager = ServiceLocator.Get<EssenceManager>();
+            _walletText.gameObject.SetActive(true);
+            _initialized = true;
+            UpdateWallet();
+        }));
     }
 
-    private IEnumerator WaitForEssenceManagerInit()
+    private IEnumerator WaitForEssenceManagerInit(Action callback)
     {
-        while (_essenceManager == null) 
+        while (_essenceManager == null)
         {
             _essenceManager = ServiceLocator.Get<EssenceManager>();
             yield return null;
@@ -36,17 +41,15 @@ public class UIWallet : MonoBehaviour
             yield return null;
         }
 
-        _walletText.gameObject.SetActive(true);
-        _initialized = true;
+        callback?.Invoke();
     }
 
     public void UpdateWallet()
     {
-        /*
         if (!_initialized)
         {
             return;
-        }*/
+        }
         _walletText.text = _essenceManager.CurrentEssence.ToString();
     }
 }
