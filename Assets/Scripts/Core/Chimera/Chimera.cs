@@ -38,17 +38,15 @@ public class Chimera : MonoBehaviour
     public int Level { get; set; } = 1;
     public int Endurance { get; set; } = 0;
     public int Intelligence { get; set; } = 0;
-    public int Strength { get; set; } =  0;
+    public int Strength { get; set; } = 0;
     public int Happiness { get; set; } = 0;
 
     public ElementalType GetElementalType() { return _elementalType; }
     public StatType GetStatPreference() { return _statPreference; }
     public Passives GetPassive() { return _passive; }
     public int GetPrice() { return _price; }
-	public ChimeraType GetChimeraType() { return _currentEvolution.GetChimeraType(); }
-    public void SetChimeraType(ChimeraType type) { _currentEvolution.SetChimeraType(type); }
-    public Sprite GetIcon() { return _currentEvolution.GetIcon(); }
-	public bool GetStatByType(StatType statType, out int amount)
+    
+    public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
         switch (statType)
@@ -87,6 +85,45 @@ public class Chimera : MonoBehaviour
         Happiness += amount;
     }
 
+    public Sprite GetIcon() 
+    {
+        if(_currentEvolution == null)
+        {
+            Debug.Log("<color=magenta>HOMEWORK</color>: Handle this case with a default icon, or better yet ensure that a Chimera _must_ have a non-null currentEvolution");
+            var dummySprite = Sprite.Create(new Texture2D(64, 64), new Rect(0, 0, 64, 64), Vector2.zero);
+            return dummySprite;
+        }
+
+        return _currentEvolution.GetIcon(); 
+    }
+
+    public ChimeraType GetChimeraType() 
+    {
+        if (_currentEvolution != null)
+        {
+            return _currentEvolution.GetChimeraType();
+        }
+
+        // HOMEWORK: If a Chimera has a type, it should always have a type regardless of whether or not it has a 'currentEvolution'
+        // Look at making the 'type' a property of the Chimera itself. The Evolution logic can access/modify that value as necessary.
+        Debug.Log("<color=magenta>HOMEWORK</color>: Fix the situation in which trying to GET the type fails because '_currentEvolution' is null");
+        Debug.Log($"Returning default type because Chimear {gameObject.name} has no currentEvolution");
+        return ChimeraType.A;
+    }
+
+    public void SetChimeraType(ChimeraType type)
+    {
+        if (_currentEvolution != null)
+        {
+            _currentEvolution.SetChimeraType(type);
+            return;
+        }
+
+        // HOMEWORK: If a Chimera has a type, it should always have a type regardless of whether or not it has a 'currentEvolution'
+        // Look at making the 'type' a property of the Chimera itself. The Evolution logic can access/modify that value as necessary.
+        Debug.Log("<color=magenta>HOMEWORK</color>: Fix the situation in which trying to SET the type fails because '_currentEvolution' is null");
+    }
+
     public void SetStatsFromSaveData(Chimera rhs)
     {
         Level = rhs.Level;
@@ -116,9 +153,9 @@ public class Chimera : MonoBehaviour
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
-    public void ExperienceTick (StatType statType, int amount)
+    public void ExperienceTick(StatType statType, int amount)
     {
-        if(Level >= _levelCap)
+        if (Level >= _levelCap)
         {
             return;
         }
@@ -146,13 +183,18 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
+        if(_essenceManager == null)
+        {
+            return;
+        }
+
         _happinessMod = HappinessModifierCalc();
 
         if (_inFacility)
         {
             if (_passive == Passives.Multitasking)
             {
-               MultitaskingTick();
+                MultitaskingTick();
             }
             return;
         }
@@ -175,13 +217,13 @@ public class Chimera : MonoBehaviour
         {
             int happinessAmount = -1;
 
-            if(_passive == Passives.GreenThumb)
+            if (_passive == Passives.GreenThumb)
             {
                 List<Chimera> chimeras = ServiceLocator.Get<Habitat>().ActiveChimeras;
 
                 foreach (Chimera chimera in chimeras)
                 {
-                    if(chimera.GetElementalType() == ElementalType.Bio)
+                    if (chimera.GetElementalType() == ElementalType.Bio)
                     {
                         happinessAmount = 1;
                         ChangeHappiness(happinessAmount);
