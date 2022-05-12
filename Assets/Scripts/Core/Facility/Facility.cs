@@ -14,6 +14,10 @@ public class Facility : MonoBehaviour
     [SerializeField] private Chimera _storedChimera = null;
     [SerializeField] private FacilityIcon _icon = null;
 
+    [Header("Reference")]
+    [SerializeField] private GameObject _rubbleObject = null;
+    [SerializeField] private GameObject _tier1Object = null;
+
     public int CurrentTier { get; private set; } = 0;
 
     public FacilityType GetFacilityType() { return _facilityType; }
@@ -46,15 +50,9 @@ public class Facility : MonoBehaviour
             _isActive = true;
             Debug.Log(_facilityType + " was purchased!");
 
-            // If it has a child, activate the fancy model, otherwise use the primative mesh.
-            if(transform.childCount != 0)
-            {
-                transform.GetChild(0).gameObject.SetActive(true);
-            }
-            else
-            {
-                GetComponent<MeshRenderer>().enabled = true;
-            }
+            _rubbleObject.SetActive(false);
+            _tier1Object.SetActive(true);
+
         }
         else
         {
