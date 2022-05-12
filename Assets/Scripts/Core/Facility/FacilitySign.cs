@@ -43,8 +43,8 @@ public class FacilitySign : MonoBehaviour
 
     private void ResetIcons()
     {
-        _enduranceIcon.gameObject.SetActive(true);
-        _intelligenceIcon.gameObject.SetActive(true);
-        _strengthIcon.gameObject.SetActive(true);
+        _enduranceIcon.gameObject.SetActive(false);
+        _intelligenceIcon.gameObject.SetActive(false);
+        _strengthIcon.gameObject.SetActive(false);
     }
 }
