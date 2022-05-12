@@ -76,25 +76,17 @@ public class PersistentData : MonoBehaviour
             CurrentHabitat.SetChimeraCapacity(cap);
         }
 
-        /* TODO load chimera data into HabitatManager dictionary
-        CurrentHabitat.ClearChimeras();
-
-        foreach (ChimeraSaveData chimeraJson in jList)
-        {
-            Chimera newChimera = CurrentHabitat.AddChimera(FindPrefab(chimeraJson.chimeraType));
-            newChimera.SetChimeraType(chimeraJson.chimeraType);
-            newChimera.Level = chimeraJson.level;
-            newChimera.Endurance = chimeraJson.endurance;
-            newChimera.Intelligence = chimeraJson.intelligence;
-            newChimera.Strength = chimeraJson.strength;
-            newChimera.Happiness = chimeraJson.happiness;
-        }*/
-
         return true;
     }
 
     public SaveJsonList GetChimeraJsonList()
     {
+        if(CurrentHabitat == null)
+        {
+            Debug.Log("Current Habitat is null, cannot save!");
+            return null;
+        }
+
         SaveJsonList sjl = new SaveJsonList { };
         sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
         foreach (Chimera chimera in CurrentHabitat.Chimeras)
