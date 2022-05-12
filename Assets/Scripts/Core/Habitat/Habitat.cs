@@ -32,10 +32,10 @@ public class Habitat : MonoBehaviour
     private List<Chimera> _activeChimeras = new List<Chimera>();
 
     public int GetCapacity() { return _chimeraCapacity; }
-
     public HabitatType GetHabitatType() { return _habitatType; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
     public void SetChimeraCapacity(int cap) { _chimeraCapacity = cap; }
+
     public Habitat Initialize()
     {
         Debug.Log("<color=Orange> Initializing Habitat ... </color>");
@@ -91,7 +91,7 @@ public class Habitat : MonoBehaviour
             Destroy(chimera.gameObject);
         }
 
-        ChimeraPrefabs.Clear();
+        _activeChimeras.Clear();
     }
 
     // Coroutine in the start loop. If active, do the following.
@@ -104,7 +104,7 @@ public class Habitat : MonoBehaviour
 
             ++_tickTracker;
 
-            foreach(Chimera chimera in ChimeraPrefabs)
+            foreach(Chimera chimera in _activeChimeras)
             {
                 if(chimera.isActiveAndEnabled)
                 {
@@ -163,7 +163,7 @@ public class Habitat : MonoBehaviour
     // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
-        if (_chimeraCapacity == ChimeraPrefabs.Count)
+        if (_chimeraCapacity == _activeChimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
             return;
@@ -183,24 +183,26 @@ public class Habitat : MonoBehaviour
         }
         AddChimera(chimeraPrefab);
     }
+
     public Chimera AddChimera(Chimera chimeraPrefab)
     {
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
-        ChimeraPrefabs.Add(newChimera);
+        _activeChimeras.Add(newChimera);
         newChimera.CreateChimera(this, _essenceManager);
 
         return newChimera;
     }
-    
+
     public void KillCap()
     {
-        for (int i = _chimeraCapacity; i < ChimeraPrefabs.Count; ++i)
+        for (int i = _chimeraCapacity; i < _activeChimeras.Count; ++i)
         {
-            Destroy(ChimeraPrefabs[i].gameObject);
-            ChimeraPrefabs.RemoveAt(i);
+            Destroy(_activeChimeras[i].gameObject);
+            _activeChimeras.RemoveAt(i);
         }
     }
+
     public Facility GetFacility(FacilityType facilityType)
     {
         foreach (Facility facility in _facilities)

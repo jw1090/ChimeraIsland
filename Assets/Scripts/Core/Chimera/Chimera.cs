@@ -96,7 +96,7 @@ public class Chimera : MonoBehaviour
         Happiness = rhs.Happiness;
     }
 
-    public void SetModel(EvolutionLogic evolution) { _currentEvolution = evolution; }
+    public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
 
     public void CreateChimera(Habitat habitat, EssenceManager essenceManager)
@@ -147,7 +147,6 @@ public class Chimera : MonoBehaviour
     public void EssenceTick()
     {
         _happinessMod = HappinessModifierCalc();
-        // Debug.Log("Current Happiness Modifier: " + happinessMod);
 
         if (_inFacility)
         {
@@ -163,11 +162,13 @@ public class Chimera : MonoBehaviour
         int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(Level * _essenceModifier));
         _essenceManager.IncreaseEssence(essenceGain);
     }
+
     private void MultitaskingTick()
     {
         int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(Level * _essenceModifier) * 0.5f);
         _essenceManager.IncreaseEssence(essenceGain);
     }
+
     public void HappinessTick()
     {
         if (!_inFacility)
@@ -176,7 +177,7 @@ public class Chimera : MonoBehaviour
 
             if(_passive == Passives.GreenThumb)
             {
-                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().ChimeraPrefabs;
+                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().ActiveChimeras;
 
                 foreach (Chimera chimera in chimeras)
                 {

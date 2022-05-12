@@ -68,7 +68,7 @@ public class EvolutionLogic : MonoBehaviour
         Debug.Log("This creature is evolving into " + newModel + "!");
 
         EvolutionLogic newEvolution = Instantiate(newModel, _chimeraBrain.transform);
-        _chimeraBrain.SetModel(newEvolution);
+        _chimeraBrain.SetEvolutionLogic(newEvolution);
         Destroy(gameObject);
     }
 }

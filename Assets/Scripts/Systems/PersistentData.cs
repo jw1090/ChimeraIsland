@@ -71,10 +71,7 @@ public class PersistentData : MonoBehaviour
 
         int cap = 3;
 
-        if (cap > CurrentHabitat.GetCapacity())
-        {
-            CurrentHabitat.SetChimeraCapacity(cap);
-        }
+        CurrentHabitat.SetChimeraCapacity(cap);
 
         return true;
     }
