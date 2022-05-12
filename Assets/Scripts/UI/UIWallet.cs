@@ -10,14 +10,13 @@ public class UIWallet : MonoBehaviour
     private MonoUtil _monoUtil = null;
     private bool _initialized = false;
 
-
     private void Awake()
     {
         _walletText.gameObject.SetActive(false);
         GameLoader.CallOnComplete(Initialize);
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         _monoUtil = ServiceLocator.Get<MonoUtil>();
         _monoUtil.StartCoroutine(WaitForEssenceManagerInit(() =>

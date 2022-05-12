@@ -43,14 +43,14 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        FileManager fileManager = ServiceLocator.Get<FileManager>();
-        if(fileManager != null)
+        PersistentData persistentData = ServiceLocator.Get<PersistentData>();
+        if (persistentData != null)
         {
-            LoadChimeras();
-
-            fileManager.CurrentHabitat = this;
-            fileManager.LoadSavedData();
+            persistentData.CurrentHabitat = this;
+            persistentData.LoadSavedData();
         }
+
+        LoadChimeras();
 
         UIManager uIManager = ServiceLocator.Get<UIManager>();
         if(uIManager != null)
@@ -65,6 +65,17 @@ public class Habitat : MonoBehaviour
     }
 
     private void LoadChimeras()
+    {
+        HabitatManager habitatManager = ServiceLocator.Get<HabitatManager>();
+
+        if (habitatManager != null)
+        {
+            Chimeras = habitatManager.GetChimerasForHabitat(_habitatType);
+            SpawnChimeras();
+        }
+    } 
+
+    private void SpawnChimeras()
     {
         foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
         {
