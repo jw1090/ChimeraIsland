@@ -55,21 +55,25 @@ namespace AI.Behavior
 
         private IEnumerator InitializeAsync(Habitat habitat)
         {
-            var levelManager = ServiceLocator.Get<LevelManager>();
-            while(levelManager == null)
-            {
-                levelManager = ServiceLocator.Get<LevelManager>();
-            }
+            //var levelManager = ServiceLocator.Get<LevelManager>();
+            //while(levelManager == null)
+            //{
+            //    levelManager = ServiceLocator.Get<LevelManager>();
+            //}
 
-            bool isInititialized = levelManager.IsInitialized;
-            while (!isInititialized)
+            //while (!levelManager.IsInitialized)
+            //{
+            //    yield return null;
+            //}
+
+            _nodes = habitat.GetPatrolNodes();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+
+            while (_navMeshAgent.isOnNavMesh == false)
             {
                 yield return null;
             }
 
-            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
-            _nodes = habitat.GetPatrolNodes();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
@@ -81,11 +85,13 @@ namespace AI.Behavior
 
             ChangeState(States[StateEnum.Patrol]);
 
+            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
             _isActive = true;
         }
+
         private void Update()
         {
-            if (_isActive == false)
+            if (_isActive == false || _currentState == null)
             {
                 return;
             }
