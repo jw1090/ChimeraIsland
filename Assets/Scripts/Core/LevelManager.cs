@@ -7,9 +7,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private LevelManager _levelManager = null;
 
     private ISessionData _sessionData;
 
+    public bool IsInitialized { get; private set; }
     private void Awake()
     {
         GameLoader.CallOnComplete(Initialize);
@@ -39,5 +41,8 @@ public class LevelManager : MonoBehaviour
         {
             ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
         }
+
+        ServiceLocator.Register<LevelManager>(this, true);
+        IsInitialized = true;
     }
 }

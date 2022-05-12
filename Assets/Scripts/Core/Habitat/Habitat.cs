@@ -22,6 +22,7 @@ public class Habitat : MonoBehaviour
     private EssenceManager _essenceManager = null;
     private int _tickTracker = 0;
     private bool _isActive = false;
+    
 
     public List<Chimera> Chimeras { get; private set; } = new List<Chimera>();
     public int GetCapacity() { return _chimeraCapacity; }
@@ -60,7 +61,6 @@ public class Habitat : MonoBehaviour
         }
 
         StartCoroutine(TickTimer());
-
         return this;
     }
 
