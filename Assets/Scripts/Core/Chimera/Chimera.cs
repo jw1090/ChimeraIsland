@@ -86,6 +86,16 @@ public class Chimera : MonoBehaviour
 
         Happiness += amount;
     }
+
+    public void SetStatsFromSaveData(Chimera rhs)
+    {
+        Level = rhs.Level;
+        Endurance = rhs.Endurance;
+        Intelligence = rhs.Intelligence;
+        Strength = rhs.Strength;
+        Happiness = rhs.Happiness;
+    }
+
     public void SetModel(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
 
@@ -166,7 +176,7 @@ public class Chimera : MonoBehaviour
 
             if(_passive == Passives.GreenThumb)
             {
-                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().Chimeras;
+                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().ChimeraPrefabs;
 
                 foreach (Chimera chimera in chimeras)
                 {

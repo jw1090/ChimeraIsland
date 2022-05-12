@@ -10,7 +10,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     {
         Debug.Log("<color=Yellow> Loading Details ... </color>");
 
-        _chimerasList = habitat.Chimeras;
+        _chimerasList = habitat.ChimeraPrefabs;
 
         int chimeraSpot = 0;
         foreach (Transform child in transform)

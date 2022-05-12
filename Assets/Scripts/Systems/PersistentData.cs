@@ -89,7 +89,7 @@ public class PersistentData : MonoBehaviour
 
         SaveJsonList sjl = new SaveJsonList { };
         sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
-        foreach (Chimera chimera in CurrentHabitat.Chimeras)
+        foreach (Chimera chimera in CurrentHabitat.ActiveChimeras)
         {
             ChimeraSaveData temp = new ChimeraSaveData
             (

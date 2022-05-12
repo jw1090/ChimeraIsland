@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _chimeraBasePrefabA = null;
     [SerializeField] private Chimera _chimeraBrainA = null;
     [SerializeField] private Chimera _chimeraBrainB = null;
     [SerializeField] private Chimera _chimeraBrainC = null;
@@ -17,11 +18,11 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private EvolutionLogic _chimeraEvolutionPrefabC1 = null;
     [SerializeField] private EvolutionLogic _chimeraEvolutionPrefabC2 = null;
     [SerializeField] private EvolutionLogic _chimeraEvolutionPrefabC3 = null;
-
     public ResourceManager Initialize()
     {
         Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
 
+        _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");
         _chimeraBrainA = Resources.Load<Chimera>("Chimera/A");
         _chimeraBrainB = Resources.Load<Chimera>("Chimera/B");
         _chimeraBrainC = Resources.Load<Chimera>("Chimera/C");
@@ -60,6 +61,29 @@ public class ResourceManager : MonoBehaviour
             case ChimeraType.C2:
             case ChimeraType.C3:
                 return _chimeraBrainC;
+            default:
+                Debug.LogWarning($"Unhandled prefab type {type}");
+                return null;
+        }
+    }
+
+    public GameObject GetChimeraPrefab(ChimeraType type)
+    {
+        switch (type)
+        {
+            case ChimeraType.A:
+            case ChimeraType.A1:
+            case ChimeraType.A2:
+            case ChimeraType.A3:
+                return _chimeraBasePrefabA;
+            case ChimeraType.B:
+            case ChimeraType.B1:
+            case ChimeraType.B2:
+            case ChimeraType.B3:
+            case ChimeraType.C:
+            case ChimeraType.C1:
+            case ChimeraType.C2:
+            case ChimeraType.C3:
             default:
                 Debug.LogWarning($"Unhandled prefab type {type}");
                 return null;

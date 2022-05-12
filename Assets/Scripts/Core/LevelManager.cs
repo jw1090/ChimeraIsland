@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private Habitat _habitat = null;
 
+    private HabitatManager habitatManager = null;
+
     private ISessionData _sessionData;
 
     public bool IsInitialized { get; private set; }
@@ -41,6 +43,10 @@ public class LevelManager : MonoBehaviour
         {
             ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
         }
+
+        habitatManager = ServiceLocator.Get<HabitatManager>();
+        var chimerasToSpawn = habitatManager.GetChimerasForHabitat(_habitat.GetHabitatType());
+        _habitat.SpawnChimeras(chimerasToSpawn);
 
         IsInitialized = true;
     }
