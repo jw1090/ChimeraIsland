@@ -78,20 +78,9 @@ public class Habitat : MonoBehaviour
             newChimera.name = $"Craig's {chimera.GetChimeraType().ToString()}";
             Chimera newChimeraComp = newChimera.GetComponent<Chimera>();
 
-<<<<<<< Updated upstream
-    private void SpawnChimeras()
-    {
-        for(int i = 0; i< Chimeras.Count; i++)
-        {
-            Chimera newChimera = Instantiate(Chimeras[i], _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
-            newChimera.CreateChimera(this, _essenceManager);
-            Chimeras[i] = newChimera;
-
-=======
             newChimeraComp.SetStatsFromSaveData(chimera);
 
             _activeChimeras.Add(newChimeraComp);
->>>>>>> Stashed changes
         }
     }
 
