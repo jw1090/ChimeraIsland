@@ -15,16 +15,21 @@ public class UIWorldMap : MonoBehaviour
 
     public void LoadWorldMap()
     {
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.WORLD_MAP_SCENE);
     }
 
     public void LoadStonePlains()
     {
-        SceneManager.LoadSceneAsync(4);
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
     }
 
     public void LoadTreeOfLife()
     {
-        SceneManager.LoadSceneAsync(5);
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TREE_OF_LIFE_SCENE);
+    }
+
+    public void LoadAshlands()
+    {
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.ASHLANDS_SCENE);
     }
 }
