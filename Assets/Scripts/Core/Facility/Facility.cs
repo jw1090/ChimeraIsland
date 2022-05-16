@@ -27,7 +27,6 @@ public class Facility : MonoBehaviour
     {
         if (_isActive == false)
         {
-            Debug.Log("This Facility is not active!");
             return false;
         }
 
