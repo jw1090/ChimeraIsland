@@ -7,7 +7,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _openChimerasButton = null;
     [SerializeField] private Button _closeChimerasButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
+    [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
+
+    public ReleaseSlider GetReleaseSlider() { return _releaseSlider; }
 
     public UIManager Initialize()
     {

@@ -21,7 +21,6 @@ public class UIWallet : MonoBehaviour
         _monoUtil = ServiceLocator.Get<MonoUtil>();
         _monoUtil.StartCoroutine(WaitForEssenceManagerInit(() =>
         {
-            _essenceManager = ServiceLocator.Get<EssenceManager>();
             _walletText.gameObject.SetActive(true);
             _initialized = true;
             UpdateWallet();
