@@ -13,8 +13,8 @@ namespace AI.Behavior
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _totalTimer = 10.0f;
-            _partTimer = 2.0f;
+            _totalTimer = 10000.0f;
+            _partTimer = 10.0f;
             _isOver = false;
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
         }

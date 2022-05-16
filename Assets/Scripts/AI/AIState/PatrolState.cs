@@ -23,7 +23,7 @@ namespace AI.Behavior
                     _chimeraBehavior.IncreasePatrolIndex(1);
                     _chimeraBehavior.IncreaseWanderIndex(1);
                     _chimeraBehavior.ResetTimer();
-
+                    int range = _chimeraBehavior.RandomPatrol();
                     if (_chimeraBehavior.PatrolIndex > _chimeraBehavior.GetNodeCount() - 1)
                     {
                         _chimeraBehavior.ResetPatrolIndex();
