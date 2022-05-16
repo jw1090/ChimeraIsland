@@ -73,11 +73,13 @@ public class Facility : MonoBehaviour
             Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
             return false;
         }
+
         _icon.gameObject.SetActive(true);
         _icon.GetComponent<FacilityIcon>().SetIcon(chimera.GetIcon());
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
-        chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
+
+        chimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         Debug.Log(_storedChimera + " added to the facility.");
         return true;
@@ -97,8 +99,9 @@ public class Facility : MonoBehaviour
 
         _icon.RemoveIcon();
         _icon.gameObject.SetActive(false);
-        Debug.Log(_storedChimera + " has been removed from the facility.");
         _storedChimera.SetInFacility(false);
+
+        Debug.Log(_storedChimera + " has been removed from the facility.");
 
         NavMeshHit myNavHit;
 

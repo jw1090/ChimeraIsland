@@ -16,8 +16,9 @@ public class CameraController : MonoBehaviour
 
     public CameraController Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Camera Logic ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
         CameraCO = GetComponent<Camera>();
+
         _pos = transform.position;
 
         return this;
