@@ -31,13 +31,13 @@ public class LevelManager : MonoBehaviour
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
         }
-        if (_essenceManager != null)
-        {
-            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
-        }
         if (_uiManager != null)
         {
             ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
+        }
+        if (_essenceManager != null)
+        {
+            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
         }
         if (_habitat != null)
         {
