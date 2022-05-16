@@ -21,7 +21,7 @@ public class ResourceManager : MonoBehaviour
 
     public ResourceManager Initialize()
     {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _defaultChimeraSprite = Resources.Load<Sprite>("Icons/DefaultChimera-Icon");
         _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");

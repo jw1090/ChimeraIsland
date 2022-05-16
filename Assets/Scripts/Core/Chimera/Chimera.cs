@@ -135,7 +135,7 @@ public class Chimera : MonoBehaviour
         Happiness = rhs.Happiness;
     }
 
-    public void CreateChimera()
+    public void Initialize()
     {
         Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
         _habitat = ServiceLocator.Get<Habitat>();

@@ -8,7 +8,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Initialize(Habitat habitat)
     {
-        Debug.Log("<color=Yellow> Loading Details ... </color>");
+        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
 
         _chimerasList = habitat.ActiveChimeras;
 

@@ -24,9 +24,6 @@ public class Habitat : MonoBehaviour
     private int _tickTracker = 0;
     private bool _isActive = false;
 
-    // TODO: This should be reevaluated, and probably replaced by ActiveChimeras where necessary.
-    public List<Chimera> ChimeraPrefabs { get; private set; } = new List<Chimera>();
-
     // The active chimeras in the scene.
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     private List<Chimera> _activeChimeras = new List<Chimera>();
@@ -189,7 +186,7 @@ public class Habitat : MonoBehaviour
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
         _activeChimeras.Add(newChimera);
-        newChimera.CreateChimera();
+        newChimera.Initialize();
 
         return newChimera;
     }
