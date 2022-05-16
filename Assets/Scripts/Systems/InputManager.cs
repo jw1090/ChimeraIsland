@@ -6,8 +6,8 @@ public class InputManager : MonoBehaviour
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
-    private bool _grabbedChimera = false;
-    public GameObject _currObject = null;
+    private bool _isHolding = false;
+    public ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
     private Camera _cameraMain = null;
 
@@ -68,7 +68,6 @@ public class InputManager : MonoBehaviour
         _releaseSlider.Hold(hit);
         _releaseSlider.UpdateSliderUI();
         _sliderUpdated = true;
-
     }
 
     private void ResetSliderInfo()
@@ -85,7 +84,7 @@ public class InputManager : MonoBehaviour
 
     private void EnterHeldState()
     {
-        if(_grabbedChimera == true)
+        if(_isHolding == true)
         {
             return;
         }
@@ -93,25 +92,21 @@ public class InputManager : MonoBehaviour
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
-            hit.transform.gameObject.GetComponent<ChimeraBehavior>().ChimeraSelect(true);
-            if (_currObject != hit.transform.gameObject)
-            {
-                _currObject = hit.transform.gameObject;
-            }
-
-            _grabbedChimera = true;
+            _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
+            _heldChimera.ChimeraSelect(true);
+            _isHolding = true;
         }
     }
 
     private void ExitHeldState()
     {
-        if (_grabbedChimera == false)
+        if (_isHolding == false)
         {
             return;
         }
 
-        _currObject.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
-        _grabbedChimera = false;
-        _currObject = null;
+        _heldChimera.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
+        _isHolding = false;
+        _heldChimera = null;
     }
 }

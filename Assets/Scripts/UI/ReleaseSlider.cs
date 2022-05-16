@@ -17,14 +17,22 @@ public class ReleaseSlider : MonoBehaviour
 
     public void Hold(RaycastHit hit)
     {
-        if (hit.collider.CompareTag("Facility") && hit.collider.GetComponent<Facility>().IsChimeraStored())
+        if (hit.collider.CompareTag("Facility") == false)
         {
-            _heldCounter += Time.deltaTime;
-            if (_heldCounter >= _heldSeconds)
-            {
-                hit.collider.GetComponent<Facility>().RemoveChimera();
-                ResetSlider();
-            }
+            return;
+        }
+
+        Facility facility = hit.collider.GetComponent<Facility>();
+        if(facility.IsChimeraStored() == false)
+        {
+            return;
+        }
+
+        _heldCounter += Time.deltaTime;
+        if (_heldCounter >= _heldSeconds)
+        {
+            facility.RemoveChimera();
+            ResetSlider();
         }
     }
 
@@ -40,7 +48,7 @@ public class ReleaseSlider : MonoBehaviour
         {
             gameObject.SetActive(true);
             transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
-            _slider.value = _heldCounter / 2.0f;
+            _slider.value = _heldCounter * 0.5f;
         }
         else
         {
