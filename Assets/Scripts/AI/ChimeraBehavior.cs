@@ -43,6 +43,7 @@ namespace AI.Behavior
         public void ResetWanderIndex() { WanderIndex = 0; }
         public void AddToTimer(float amount) { Timer += amount; }
         public void ResetTimer() { Timer = 0; }
+        public Animator animator;
 
         public void Initialize(Habitat habitat)
         {
@@ -58,6 +59,7 @@ namespace AI.Behavior
             States.Add(StateEnum.Wander, new WanderState());
             States.Add(StateEnum.Held, new HeldState());
             States.Add(StateEnum.Training, new TrainingState());
+            animator = GetComponentInChildren<Animator>();
 
             ChangeState(States[StateEnum.Patrol]);
 
