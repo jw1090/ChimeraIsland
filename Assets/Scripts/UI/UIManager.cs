@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     public UIManager Initialize()
     {
-        Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
         CloseAll();
         InitializeWallets();
         return this;

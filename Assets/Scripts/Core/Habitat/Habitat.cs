@@ -29,9 +29,10 @@ public class Habitat : MonoBehaviour
     public HabitatType GetHabitatType() { return _habitatType; }
     public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
     public void SetChimeraCapacity(int cap) { _chimeraCapacity = cap; }
+
     public Habitat Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Habitat ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
         _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();

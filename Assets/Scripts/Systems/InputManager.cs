@@ -10,20 +10,32 @@ public class InputManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Slider _releaseSlider = null;
-    [SerializeField] private LayerMask _chimeraLayer;
+    [SerializeField] private Camera _cameraMain = null;
+    [SerializeField] private LayerMask _chimeraLayer = new LayerMask();
+
+    private bool _isInitialized = false;
 
     public GameObject CurrObj { get; private set; } = null;
     public bool IsInput { get; private set; } = false;
 
     public InputManager Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Input Manager ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+
+        _cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
+
+        _isInitialized = true;
 
         return this;
     }
 
     private void Update()
     {
+        if(_isInitialized == false)
+        {
+            return;
+        }
+
         CheckRemove();
         SelectHeldState();
     }
@@ -33,8 +45,7 @@ public class InputManager : MonoBehaviour
         // Check remove held down.
         if (Input.GetMouseButton(0))
         {
-            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
-            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Physics.Raycast(ray, out hit, 200.0f);
 
@@ -52,7 +63,10 @@ public class InputManager : MonoBehaviour
                     _clickHeldCounter = 0.0f;
                 }
             }
-            else _clickHeldCounter = 0.0f;
+            else
+            {
+                _clickHeldCounter = 0.0f;
+            }
         }
         else
         {
@@ -76,8 +90,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && IsInput == false)
         {
-            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
-            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
             {
                 hit.transform.gameObject.GetComponent<ChimeraBehavior>().ChimeraSelect(true);
