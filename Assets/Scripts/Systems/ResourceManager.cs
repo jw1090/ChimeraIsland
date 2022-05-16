@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    private Sprite _defaultChimeraSprite = null;
     private GameObject _chimeraBasePrefabA = null;
     private GameObject _chimeraBasePrefabB = null;
     private GameObject _chimeraBasePrefabC = null;
@@ -22,6 +23,7 @@ public class ResourceManager : MonoBehaviour
     {
         Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
 
+        _defaultChimeraSprite = Resources.Load<Sprite>("Icons/DefaultChimera-Icon");
         _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");
         _chimeraBasePrefabB = Resources.Load<GameObject>("Chimera/B");
         _chimeraBasePrefabC = Resources.Load<GameObject>("Chimera/C");
@@ -98,5 +100,10 @@ public class ResourceManager : MonoBehaviour
                 Debug.LogWarning($"Unhandled prefab type {type}");
                 return null;
         }
+    }
+
+    public Sprite GetDefaultChimeraSprite()
+    {
+        return _defaultChimeraSprite;
     }
 }

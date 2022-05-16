@@ -33,6 +33,8 @@ public class Chimera : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private EvolutionLogic _currentEvolution = null;
+    [SerializeField] private ResourceManager _resourceManager = null;
+    [SerializeField] private Habitat _habitat = null;
     [SerializeField] private EssenceManager _essenceManager = null;
 
     public int Level { get; set; } = 1;
@@ -45,7 +47,6 @@ public class Chimera : MonoBehaviour
     public StatType GetStatPreference() { return _statPreference; }
     public Passives GetPassive() { return _passive; }
     public int GetPrice() { return _price; }
-    
     public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
@@ -84,14 +85,12 @@ public class Chimera : MonoBehaviour
 
         Happiness += amount;
     }
-
     public Sprite GetIcon() 
     {
         if(_currentEvolution == null)
         {
-            Debug.Log("<color=magenta>HOMEWORK</color>: Handle this case with a default icon, or better yet ensure that a Chimera _must_ have a non-null currentEvolution");
-            var dummySprite = Sprite.Create(new Texture2D(64, 64), new Rect(0, 0, 64, 64), Vector2.zero);
-            return dummySprite;
+            var defaultSprite = _resourceManager.GetDefaultChimeraSprite();
+            return defaultSprite;
         }
 
         return _currentEvolution.GetIcon(); 
@@ -124,6 +123,9 @@ public class Chimera : MonoBehaviour
         Debug.Log("<color=magenta>HOMEWORK</color>: Fix the situation in which trying to SET the type fails because '_currentEvolution' is null");
     }
 
+    public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
+    public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
+
     public void SetStatsFromSaveData(Chimera rhs)
     {
         Level = rhs.Level;
@@ -133,15 +135,13 @@ public class Chimera : MonoBehaviour
         Happiness = rhs.Happiness;
     }
 
-    public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
-    public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
-
-    public void CreateChimera(Habitat habitat, EssenceManager essenceManager)
+    public void CreateChimera()
     {
         Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
-        _essenceManager = essenceManager;
+        _habitat = ServiceLocator.Get<Habitat>();
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
         InitializeEvolution();
-        GetComponent<ChimeraBehavior>().Initialize(habitat);
+        GetComponent<ChimeraBehavior>().Initialize(_habitat);
     }
 
     private void InitializeEvolution()

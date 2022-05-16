@@ -189,7 +189,7 @@ public class Habitat : MonoBehaviour
         Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
         _activeChimeras.Add(newChimera);
-        newChimera.CreateChimera(this, _essenceManager);
+        newChimera.CreateChimera();
 
         return newChimera;
     }
