@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private InputManager _inputManager = null;
-    [SerializeField] private CameraController _cameraController = null;
-    [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private UIManager _uiManager = null;
+    [SerializeField] private CameraController _cameraController = null;
+    [SerializeField] private InputManager _inputManager = null;
+    [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
     private HabitatManager habitatManager = null;
@@ -23,17 +23,17 @@ public class LevelManager : MonoBehaviour
         ServiceLocator.Register<LevelManager>(this, true);
         _sessionData = ServiceLocator.Get<ISessionData>();
 
-        if(_inputManager)
+        if (_uiManager != null)
         {
-            ServiceLocator.Register<InputManager>(_inputManager.Initialize(), true);
+            ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
         }
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
         }
-        if (_uiManager != null)
+        if (_inputManager != null)
         {
-            ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
+            ServiceLocator.Register<InputManager>(_inputManager.Initialize(), true);
         }
         if (_essenceManager != null)
         {

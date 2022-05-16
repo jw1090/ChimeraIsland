@@ -38,7 +38,7 @@ public class Habitat : MonoBehaviour
 
     public Habitat Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Habitat ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
         _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
