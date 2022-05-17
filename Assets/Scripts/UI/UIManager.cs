@@ -7,14 +7,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _openChimerasButton = null;
     [SerializeField] private Button _closeChimerasButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
-    [SerializeField] private ReleaseSlider _releaseSlider = null;
+    [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
-
-    public ReleaseSlider GetReleaseSlider() { return _releaseSlider; }
 
     public UIManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+        Debug.Log("<color=Orange> Initializing MenuManager ... </color>");
         CloseAll();
         InitializeWallets();
         return this;
@@ -73,5 +71,18 @@ public class UIManager : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
+    }
+
+    public void OpenTransferMap(Chimera chimera)
+    {
+        CloseAll();
+        _transferMap.Load(chimera);
+        _transferMap.gameObject.SetActive(true);
+    }
+
+    public void CloseTransferMap()
+    {
+        _transferMap.gameObject.SetActive(false);
+        OpenDetailsPanel();
     }
 }

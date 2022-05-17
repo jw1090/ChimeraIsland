@@ -409,7 +409,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: F
+  m_text: 'T
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
@@ -1875,7 +1877,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chimeraSpot: 0
   _habitat: {fileID: 0}
-  _chimera: {fileID: 0}
   _icon: {fileID: 1574459907118034913}
   _level: {fileID: 1574459907613342050}
   _element: {fileID: 2368091031396807662}
@@ -1883,6 +1884,7 @@ MonoBehaviour:
   _intelligence: {fileID: 1574459907841301114}
   _strength: {fileID: 1574459907757063346}
   _happiness: {fileID: 1574459907892048633}
+  _openTransferMapButton: {fileID: 415899150765442146}
 --- !u!1 &1574459908815496616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,8 +1897,9 @@ GameObject:
   - component: {fileID: 1574459908815496620}
   - component: {fileID: 1574459908815496623}
   - component: {fileID: 1574459908815496622}
+  - component: {fileID: 415899150765442146}
   m_Layer: 5
-  m_Name: SubCamera Button
+  m_Name: Transfer Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,6 +2019,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &415899150765442146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574459908815496616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0167c55ea5a173e47b4144bbd202155c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1574459908883177995
 GameObject:
   m_ObjectHideFlags: 0
