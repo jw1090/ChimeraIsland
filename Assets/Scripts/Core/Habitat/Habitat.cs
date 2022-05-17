@@ -48,12 +48,6 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        PersistentData persistentData = ServiceLocator.Get<PersistentData>();
-        if (persistentData != null)
-        {
-            persistentData.LoadSavedData();
-        }
-
         UIManager uIManager = ServiceLocator.Get<UIManager>();
         if(uIManager != null)
         {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class PersistentData : MonoBehaviour
 {
@@ -19,34 +20,63 @@ public class PersistentData : MonoBehaviour
         return this;
     }
 
-    public bool LoadSavedData()
-    {
-        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-
-        if (jList == null || jList.Count == 0)
-        {
-            Debug.Log("Chimera Save not found");
-            return false;
-        }
-
-        return true;
-    }
-
     public void LoadChimerasToDictionary(Dictionary<HabitatType, List<Chimera>> keyValuePairs)
     {
-        // TODO: Get JSON data and add it to dictionary
+        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        var resourceManager = ServiceLocator.Get<ResourceManager>();
+        List<Chimera> PlainsChimeras = new List<Chimera>();
+        List<Chimera> IslandChimeras = new List<Chimera>();
+        foreach (ChimeraSaveData data in jList)
+        {
+            GameObject chimeraGO = resourceManager.GetChimeraBasePrefab(data.chimeraType);
+            Chimera chimera = chimeraGO.GetComponent<Chimera>();
+            chimera.SetChimeraType(data.chimeraType);
+            chimera.Level = data.level;
+            chimera.Endurance = data.endurance;
+            chimera.Intelligence = data.intelligence;
+            chimera.Strength = data.strength;
+            chimera.Happiness = data.happiness;
+            if(data.habitatType.Equals(HabitatType.StonePlains))
+            {
+                PlainsChimeras.Add(chimera);
+            }
+            else if (data.habitatType.Equals(HabitatType.TreeOfLife))
+            {
+                IslandChimeras.Add(chimera);
+            }
+        }
+        keyValuePairs.Add(HabitatType.StonePlains, PlainsChimeras);
+        keyValuePairs.Add(HabitatType.TreeOfLife, IslandChimeras);
     }
-
     public void SaveChimeras()
     {
         SaveJsonList myData = ChimerasToJson();
         FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
-
     private SaveJsonList ChimerasToJson()
     {
-        // TODO: Grab chimeras from each habitat key in dictionary and turn them into JSON
-        return null;
+        SaveJsonList sjl = new SaveJsonList { };
+        Dictionary<HabitatType, List<Chimera>> d = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
+        foreach (HabitatType type in (HabitatType[]) Enum.GetValues(typeof(HabitatType)))
+        { 
+            foreach (Chimera chimera in d[type])
+            {
+                ChimeraSaveData temp = new ChimeraSaveData
+                (
+                    chimera.GetInstanceID(),
+                    chimera.GetChimeraType(),
+                    chimera.Level,
+                    chimera.Endurance,
+                    chimera.Intelligence,
+                    chimera.Strength,
+                    chimera.Happiness,
+                    type
+                );
+
+                sjl.AddToChimeraList(temp);
+            }
+        }
+        return sjl;
     }
 
     public void OnApplicationQuit()
