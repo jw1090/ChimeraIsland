@@ -19,19 +19,15 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
+    private List<Chimera> _activeChimeras = new List<Chimera>();
     private EssenceManager _essenceManager = null;
-    private ResourceManager _resourceManager = null;
+    private ChimeraCreator _chimeraCreator = null;
     private int _tickTracker = 0;
     private bool _isActive = false;
 
-    // The active chimeras in the scene.
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
-    private List<Chimera> _activeChimeras = new List<Chimera>();
-
-    public int GetCapacity() { return _chimeraCapacity; }
-    public HabitatType GetHabitatType() { return _habitatType; }
-    public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
-    public void SetChimeraCapacity(int cap) { _chimeraCapacity = cap; }
+    public List<Transform> PatrolNodes { get => _patrolNodes.GetNodes(); }
+    public HabitatType Type { get => _habitatType; }
 
     public Habitat Initialize()
     {
@@ -39,7 +35,6 @@ public class Habitat : MonoBehaviour
         _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
 
         if (_patrolNodes == null)
         {
@@ -55,22 +50,19 @@ public class Habitat : MonoBehaviour
             uIManager.LoadDetails(this);
         }
 
+        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
+
         StartCoroutine(TickTimer());
         return this;
     }
 
     public void SpawnChimeras(List<Chimera> chimerasToSpawn)
     {
-        foreach (var chimera in chimerasToSpawn)
+        foreach (var chimeraInfo in chimerasToSpawn)
         {
-            var chimeraPrefab = _resourceManager.GetChimeraBasePrefab(chimera.GetChimeraType());
-            var newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
-            newChimera.name = $"Chimera {chimera.GetChimeraType().ToString()}";
-            Chimera newChimeraComp = newChimera.GetComponent<Chimera>();
+            var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-            newChimeraComp.SetStatsFromSaveData(chimera);
-
-            _activeChimeras.Add(newChimeraComp);
+            AddChimera(newChimera);
         }
     }
 
@@ -171,17 +163,15 @@ public class Habitat : MonoBehaviour
             );
             return;
         }
-        AddChimera(chimeraPrefab);
+        //AddChimera(chimeraPrefab);
     }
 
-    public Chimera AddChimera(Chimera chimeraPrefab)
+    public void AddChimera(GameObject chimera)
     {
-        Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
-
-        _activeChimeras.Add(newChimera);
-        newChimera.Initialize();
-
-        return newChimera;
+        Instantiate(chimera, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
+        Chimera chimeraComp = chimera.GetComponent<Chimera>();
+        _activeChimeras.Add(chimeraComp);
+        chimeraComp.Initialize();
     }
 
     public void KillCap()

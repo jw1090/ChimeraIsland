@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ToolsManager : MonoBehaviour
 {
-    public ChimeraCreator ChimeraCreator { get => _chimeraCreator; }
     private ChimeraCreator _chimeraCreator = null;
+    public ChimeraCreator ChimeraCreator { get => _chimeraCreator; }
 
     public ToolsManager Initialize()
     {

@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour
 
     private void LoadChimeras()
     {
-        var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.GetHabitatType());
+        var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.Type);
         _habitat.SpawnChimeras(chimerasToSpawn);
     }
 }

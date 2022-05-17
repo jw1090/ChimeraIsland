@@ -13,13 +13,24 @@ public class ChimeraCreator : MonoBehaviour
         return this;
     }
 
-    public GameObject CreateChimera(ChimeraType chimeraType)
+    public GameObject CreateChimera(Chimera chimeraInfo)
     {
-        var chimeraGO = _resourceManager.GetChimeraBasePrefab(chimeraType);
-        var chimeraEvolutionGO = _resourceManager.GetChimeraEvolution(chimeraType);
+        var chimeraGO = _resourceManager.GetChimeraBasePrefab(chimeraInfo.Type);
+        var chimeraEvolutionGO = _resourceManager.GetChimeraEvolution(chimeraInfo.Type);
 
         chimeraEvolutionGO.transform.parent = chimeraGO.transform;
 
+        LoadChimeraStats(chimeraGO.GetComponent<Chimera>(), chimeraInfo);
+
         return chimeraGO;
+    }
+
+    private void LoadChimeraStats(Chimera newChimera, Chimera chimeraInfo)
+    {
+        newChimera.Level        = chimeraInfo.Level;
+        newChimera.Endurance    = chimeraInfo.Endurance;
+        newChimera.Intelligence = chimeraInfo.Intelligence;
+        newChimera.Strength     = chimeraInfo.Strength;
+        newChimera.Happiness    = chimeraInfo.Happiness;
     }
 }

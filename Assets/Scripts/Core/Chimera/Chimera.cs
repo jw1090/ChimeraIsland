@@ -37,6 +37,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private EssenceManager _essenceManager = null;
 
+    public ChimeraType Type { get; set; } = ChimeraType.None;
     public int Level { get; set; } = 1;
     public int Endurance { get; set; } = 0;
     public int Intelligence { get; set; } = 0;
@@ -125,15 +126,6 @@ public class Chimera : MonoBehaviour
 
     public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
-
-    public void SetStatsFromSaveData(Chimera rhs)
-    {
-        Level = rhs.Level;
-        Endurance = rhs.Endurance;
-        Intelligence = rhs.Intelligence;
-        Strength = rhs.Strength;
-        Happiness = rhs.Happiness;
-    }
 
     public void Initialize()
     {

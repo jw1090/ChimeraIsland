@@ -49,7 +49,7 @@ namespace AI.Behavior
 
         public void Initialize(Habitat habitat)
         {
-            _nodes = habitat.GetPatrolNodes();
+            _nodes = habitat.PatrolNodes;
             _navMeshAgent = GetComponent<NavMeshAgent>();
 
             _navMeshAgent.isStopped = false;
