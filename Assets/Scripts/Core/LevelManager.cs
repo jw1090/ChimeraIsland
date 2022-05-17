@@ -8,9 +8,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private HabitatManager habitatManager = null;
-
-    private ISessionData _sessionData;
+    private HabitatManager _habitatManager = null;
+    private PersistentData _persistentData = null;
 
     public bool IsInitialized { get; private set; }
     private void Awake()
@@ -21,7 +20,8 @@ public class LevelManager : MonoBehaviour
     private void Initialize()
     {
         ServiceLocator.Register<LevelManager>(this, true);
-        _sessionData = ServiceLocator.Get<ISessionData>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         if (_uiManager != null)
         {
@@ -38,16 +38,21 @@ public class LevelManager : MonoBehaviour
         if (_essenceManager != null)
         {
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
+            _persistentData.SetEssenceManager(_essenceManager);
         }
         if (_habitat != null)
         {
             ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
         }
 
-        habitatManager = ServiceLocator.Get<HabitatManager>();
-        var chimerasToSpawn = habitatManager.GetChimerasForHabitat(_habitat.GetHabitatType());
-        _habitat.SpawnChimeras(chimerasToSpawn);
-
         IsInitialized = true;
+
+        LoadChimeras();
+    }
+
+    private void LoadChimeras()
+    {
+        var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.GetHabitatType());
+        _habitat.SpawnChimeras(chimerasToSpawn);
     }
 }

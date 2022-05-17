@@ -3,11 +3,9 @@ using System.Collections.Generic;
 
 public class PersistentData : MonoBehaviour
 {
-    private Chimera _chimeraPrefabA = null;
-    private Chimera _chimeraPrefabB = null;
-    private Chimera _chimeraPrefabC = null;
+    private EssenceManager _essenceManager = null;
 
-    public Habitat CurrentHabitat { get; set; } = null;
+    public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
 
     public List<ChimeraSaveData> GetChimeraList()
     {
@@ -16,47 +14,9 @@ public class PersistentData : MonoBehaviour
 
     public PersistentData Initialize()
     {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
-
-        _chimeraPrefabA = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
-        _chimeraPrefabB = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
-        _chimeraPrefabC = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
+        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
 
         return this;
-    }
-
-    private Chimera FindPrefab(ChimeraType type)
-    {
-        switch (type)
-        {
-            case ChimeraType.A:
-                return _chimeraPrefabA;
-            case ChimeraType.A1:
-                return _chimeraPrefabA;
-            case ChimeraType.A2:
-                return _chimeraPrefabA;
-            case ChimeraType.A3:
-                return _chimeraPrefabA;
-            case ChimeraType.B:
-                return _chimeraPrefabB;
-            case ChimeraType.B1:
-                return _chimeraPrefabB;
-            case ChimeraType.B2:
-                return _chimeraPrefabB;
-            case ChimeraType.B3:
-                return _chimeraPrefabB;
-            case ChimeraType.C:
-                return _chimeraPrefabC;
-            case ChimeraType.C1:
-                return _chimeraPrefabC;
-            case ChimeraType.C2:
-                return _chimeraPrefabC;
-            case ChimeraType.C3:
-                return _chimeraPrefabC;
-            default:
-                Debug.LogWarning($"Unhandled prefab type {type}");
-                return null;
-        }
     }
 
     public bool LoadSavedData()
@@ -69,50 +29,29 @@ public class PersistentData : MonoBehaviour
             return false;
         }
 
-        int cap = 3;
-
-        CurrentHabitat.SetChimeraCapacity(cap);
-
         return true;
     }
 
-    public SaveJsonList GetChimeraJsonList()
+    public void LoadChimerasToDictionary(Dictionary<HabitatType, List<Chimera>> keyValuePairs)
     {
-        if(CurrentHabitat == null)
-        {
-            Debug.Log("Current Habitat is null, cannot save!");
-            return null;
-        }
-
-        SaveJsonList sjl = new SaveJsonList { };
-        sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
-        foreach (Chimera chimera in CurrentHabitat.ActiveChimeras)
-        {
-            ChimeraSaveData temp = new ChimeraSaveData
-            (
-                chimera.GetInstanceID(),
-                chimera.GetChimeraType(),
-                chimera.Level,
-                chimera.Endurance,
-                chimera.Intelligence,
-                chimera.Strength,
-                chimera.Happiness,
-                CurrentHabitat.GetHabitatType()
-            );
-
-            sjl.AddToChimeraList(temp);
-        }
-        return sjl;
+        // TODO: Get JSON data and add it to dictionary
     }
 
     public void SaveChimeras()
     {
-        SaveJsonList myData = GetChimeraJsonList();
+        SaveJsonList myData = ChimerasToJson();
         FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+    }
+
+    private SaveJsonList ChimerasToJson()
+    {
+        // TODO: Grab chimeras from each habitat key in dictionary and turn them into JSON
+        return null;
     }
 
     public void OnApplicationQuit()
     {
         SaveChimeras();
+        _essenceManager.SaveEssence();
     }
 }

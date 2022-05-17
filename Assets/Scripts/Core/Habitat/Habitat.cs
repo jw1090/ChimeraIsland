@@ -51,7 +51,6 @@ public class Habitat : MonoBehaviour
         PersistentData persistentData = ServiceLocator.Get<PersistentData>();
         if (persistentData != null)
         {
-            persistentData.CurrentHabitat = this;
             persistentData.LoadSavedData();
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType,List<Chimera>>();
-    [SerializeField] private List<HabitatData> displayDictionary = new List<HabitatData>();
+    [SerializeField] private List<HabitatData> _displayDictionary = new List<HabitatData>();
     private ResourceManager _resourceManager = null;
 
     [Serializable]
@@ -31,7 +31,7 @@ public class HabitatManager : MonoBehaviour
     {
         foreach (var entry in _chimerasByHabitat)
         {
-            displayDictionary.Add(new HabitatData()
+            _displayDictionary.Add(new HabitatData()
             {
                 key = entry.Key,
                 value = entry.Value
