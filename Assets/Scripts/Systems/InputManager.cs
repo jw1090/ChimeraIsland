@@ -1,99 +1,112 @@
 using AI.Behavior;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
-    [Header("Interact Stats")]
-    [SerializeField] private float _clickHeldSeconds = 2.0f;
-    [SerializeField] private float _clickHeldCounter = 0.0f;
-
-    [Header("References")]
-    [SerializeField] private Slider _releaseSlider = null;
-    [SerializeField] private LayerMask _chimeraLayer;
-
-    public GameObject CurrObj { get; private set; } = null;
-    public bool IsInput { get; private set; } = false;
+    private LayerMask _chimeraLayer = new LayerMask();
+    private bool _isInitialized = false;
+    private bool _sliderUpdated = false;
+    private bool _isHolding = false;
+    public ChimeraBehavior _heldChimera = null;
+    private ReleaseSlider _releaseSlider = null;
+    private Camera _cameraMain = null;
 
     public InputManager Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Input Manager ... </color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+
+        _releaseSlider = ServiceLocator.Get<UIManager>().GetReleaseSlider();
+        _cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
+
+        _chimeraLayer = LayerMask.GetMask("Chimera");
+
+        _isInitialized = true;
 
         return this;
     }
 
     private void Update()
     {
-        CheckRemove();
-        SelectHeldState();
-    }
+        if (_isInitialized == false)
+        {
+            return;
+        }
 
-    private void CheckRemove()
-    {
-        // Check remove held down.
         if (Input.GetMouseButton(0))
         {
-            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
-            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit, 200.0f);
-
-            if (hit.collider == null)
-            {
-                return;
-            }
-
-            if (hit.collider.CompareTag("Facility") && hit.collider.GetComponent<Facility>().IsChimeraStored())
-            {
-                _clickHeldCounter += Time.deltaTime;
-                if (_clickHeldCounter >= _clickHeldSeconds)
-                {
-                    hit.collider.GetComponent<Facility>().RemoveChimera();
-                    _clickHeldCounter = 0.0f;
-                }
-            }
-            else _clickHeldCounter = 0.0f;
-        }
-        else
-        {
-            _clickHeldCounter = 0.0f;
+            RemoveFromFacility();
         }
 
-        // Control remove slider
-        if (_clickHeldCounter > 0.0f)
+        if ((Input.GetMouseButtonDown(0)))
         {
-            _releaseSlider.gameObject.SetActive(true);
-            _releaseSlider.transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
-            _releaseSlider.value = _clickHeldCounter / 2.0f;
+            EnterHeldState();
         }
-        else
+        else if (Input.GetMouseButtonUp(0))
         {
-            _releaseSlider.gameObject.SetActive(false);
+            ResetSliderInfo();
+            ExitHeldState();
         }
     }
 
-    public void SelectHeldState()
+    private void RemoveFromFacility()
     {
-        if (Input.GetMouseButtonDown(0) && IsInput == false)
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, 200.0f);
+
+        if (hit.collider == null)
         {
-            Camera cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
-            Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
-            {
-                hit.transform.gameObject.GetComponent<ChimeraBehavior>().ChimeraSelect(true);
-                if (CurrObj != hit.transform.gameObject)
-                {
-                    CurrObj = hit.transform.gameObject;
-                }
-                IsInput = true;
-            }
+            return;
         }
 
-        if (Input.GetMouseButtonUp(0) && IsInput)
+        if (hit.collider.CompareTag("Facility") == false)
         {
-            CurrObj.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
-            IsInput = false;
-            CurrObj = null;
+            ResetSliderInfo();
+            return;
         }
+
+        _releaseSlider.Hold(hit);
+        _releaseSlider.UpdateSliderUI();
+        _sliderUpdated = true;
+    }
+
+    private void ResetSliderInfo()
+    {
+        if (_sliderUpdated == false)
+        {
+            return;
+        }
+
+        _releaseSlider.ResetSlider();
+        _releaseSlider.UpdateSliderUI();
+        _sliderUpdated = false;
+    }
+
+    private void EnterHeldState()
+    {
+        if(_isHolding == true)
+        {
+            return;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
+        {
+            _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
+            _heldChimera.ChimeraSelect(true);
+            _isHolding = true;
+        }
+    }
+
+    private void ExitHeldState()
+    {
+        if (_isHolding == false)
+        {
+            return;
+        }
+
+        _heldChimera.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
+        _isHolding = false;
+        _heldChimera = null;
     }
 }

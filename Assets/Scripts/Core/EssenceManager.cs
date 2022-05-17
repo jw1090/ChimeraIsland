@@ -2,14 +2,22 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
-    public int CurrentEssence { get; private set; } = 0;
+    private UIManager _uIManager = null;
+
+    public int CurrentEssence { get; private set; } = 100;
     public bool IsInitialized { get; set; } = false;
 
     public EssenceManager Initialize()
     {
-        Debug.Log("<color=Orange> Initializing Essence Manager ... </color>");
+        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
         LoadEssence();
-        
+
+        _uIManager = ServiceLocator.Get<UIManager>();
+        if(_uIManager != null)
+        {
+            _uIManager.UpdateWallets();
+        }
+
         IsInitialized = true;
         return this;
     }
@@ -17,9 +25,7 @@ public class EssenceManager : MonoBehaviour
     public void IncreaseEssence(int amount)
     {
         CurrentEssence += amount;
-        ServiceLocator.Get<UIManager>().UpdateWallets();
-        GlobalSaveData data = new GlobalSaveData(CurrentEssence);
-        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
+        _uIManager.UpdateWallets();
     }
 
     // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
@@ -31,16 +37,21 @@ public class EssenceManager : MonoBehaviour
         }
 
         CurrentEssence -= amount;
-        ServiceLocator.Get<UIManager>().UpdateWallets();
+        _uIManager.UpdateWallets();
 
         return true;
     }
 
-    // Loads essence from 
+    public void SaveEssence()
+    {
+        GlobalSaveData data = new GlobalSaveData(CurrentEssence);
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
+    }
+
     public void LoadEssence()
     {
         GlobalSaveData temp = FileHandler.ReadFromJSON<GlobalSaveData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-        CurrentEssence = temp == null ? 0 : temp.currentEssence;
+        CurrentEssence = temp == null ? CurrentEssence : temp.currentEssence;
         Debug.Log($"Loaded Essense: {CurrentEssence}");
     }
 }

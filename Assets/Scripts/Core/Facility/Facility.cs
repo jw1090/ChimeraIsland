@@ -14,6 +14,10 @@ public class Facility : MonoBehaviour
     [SerializeField] private Chimera _storedChimera = null;
     [SerializeField] private FacilityIcon _icon = null;
 
+    [Header("Reference")]
+    [SerializeField] private GameObject _rubbleObject = null;
+    [SerializeField] private GameObject _tier1Object = null;
+
     public int CurrentTier { get; private set; } = 0;
 
     public FacilityType GetFacilityType() { return _facilityType; }
@@ -23,7 +27,6 @@ public class Facility : MonoBehaviour
     {
         if (_isActive == false)
         {
-            Debug.Log("This Facility is not active!");
             return false;
         }
 
@@ -46,15 +49,9 @@ public class Facility : MonoBehaviour
             _isActive = true;
             Debug.Log(_facilityType + " was purchased!");
 
-            // If it has a child, activate the fancy model, otherwise use the primative mesh.
-            if(transform.childCount != 0)
-            {
-                transform.GetChild(0).gameObject.SetActive(true);
-            }
-            else
-            {
-                GetComponent<MeshRenderer>().enabled = true;
-            }
+            _rubbleObject.SetActive(false);
+            _tier1Object.SetActive(true);
+
         }
         else
         {
@@ -75,11 +72,13 @@ public class Facility : MonoBehaviour
             Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
             return false;
         }
+
         _icon.gameObject.SetActive(true);
         _icon.GetComponent<FacilityIcon>().SetIcon(chimera.GetIcon());
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
-        chimera.gameObject.transform.localPosition = this.gameObject.transform.localPosition;
+
+        chimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         Debug.Log(_storedChimera + " added to the facility.");
         return true;
@@ -99,8 +98,9 @@ public class Facility : MonoBehaviour
 
         _icon.RemoveIcon();
         _icon.gameObject.SetActive(false);
-        Debug.Log(_storedChimera + " has been removed from the facility.");
         _storedChimera.SetInFacility(false);
+
+        Debug.Log(_storedChimera + " has been removed from the facility.");
 
         NavMeshHit myNavHit;
 
