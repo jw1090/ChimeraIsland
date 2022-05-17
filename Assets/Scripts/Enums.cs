@@ -36,7 +36,6 @@ public enum HabitatType
     None = -1,
     StonePlains,
     TreeOfLife,
-    Ashlands,
 }
 
 

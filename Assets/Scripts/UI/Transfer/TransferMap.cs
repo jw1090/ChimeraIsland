@@ -1,13 +1,19 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TransferMap : MonoBehaviour
 {
-    private Chimera _chimeraToTransfer = null;
-    private List<TransferIcon> _facilityShopItems = new List<TransferIcon>();
+    private List<TransferIcon> _transferIcons = new List<TransferIcon>();
 
-    public void Load(Chimera chimera)
+    public void Initialize(Habitat habitat)
     {
-        _chimeraToTransfer = chimera;
+        foreach (Transform child in transform)
+        {
+            TransferIcon transferIcon = child.GetComponent<TransferIcon>();
+
+            _transferIcons.Add(transferIcon);
+            transferIcon.Initialize(habitat);
+        }
     }
 }
