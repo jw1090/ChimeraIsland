@@ -85,6 +85,11 @@ public class GameLoader : AsyncLoader
         var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
         ServiceLocator.Register<ToolsManager>(toolsManagerComp);
 
+        var inputManagerGO = new GameObject("Input Manager");
+        inputManagerGO.transform.SetParent(systemsParent);
+        var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
+        ServiceLocator.Register<InputManager>(inputManagerComp);
+
         var habitatManagerGO = new GameObject("Habitat Manager");
         habitatManagerGO.transform.SetParent(systemsParent);
         var habitatManagerComp = habitatManagerGO.AddComponent<HabitatManager>().Initialize();

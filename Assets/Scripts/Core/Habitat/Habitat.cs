@@ -23,7 +23,7 @@ public class Habitat : MonoBehaviour
     private EssenceManager _essenceManager = null;
     private ChimeraCreator _chimeraCreator = null;
     private int _tickTracker = 0;
-    private bool _isActive = false;
+    private bool _isInitialized = false;
 
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Transform> PatrolNodes { get => _patrolNodes.GetNodes(); }
@@ -32,9 +32,9 @@ public class Habitat : MonoBehaviour
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-        _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
 
         if (_patrolNodes == null)
         {
@@ -43,16 +43,8 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        UIManager uIManager = ServiceLocator.Get<UIManager>();
-        if(uIManager != null)
-        {
-            uIManager.LoadMarketplace(this);
-            uIManager.LoadDetails(this);
-        }
+        _isInitialized = true;
 
-        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
-
-        StartCoroutine(TickTimer());
         return this;
     }
 
@@ -76,11 +68,16 @@ public class Habitat : MonoBehaviour
         _activeChimeras.Clear();
     }
 
+    public void StartTickTimer()
+    {
+        StartCoroutine(TickTimer());
+    }
+
     // Coroutine in the start loop. If active, do the following.
     // Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
     private IEnumerator TickTimer()
     {
-        while (_isActive)
+        while (_isInitialized)
         {
             yield return new WaitForSeconds(_tickTimer);
 
@@ -172,15 +169,6 @@ public class Habitat : MonoBehaviour
         Chimera chimeraComp = chimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
         chimeraComp.Initialize();
-    }
-
-    public void KillCap()
-    {
-        for (int i = _chimeraCapacity; i < _activeChimeras.Count; ++i)
-        {
-            Destroy(_activeChimeras[i].gameObject);
-            _activeChimeras.RemoveAt(i);
-        }
     }
 
     public Facility GetFacility(FacilityType facilityType)

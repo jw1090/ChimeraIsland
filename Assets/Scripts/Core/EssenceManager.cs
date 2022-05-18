@@ -3,9 +3,10 @@ using UnityEngine;
 public class EssenceManager : MonoBehaviour
 {
     private UIManager _uIManager = null;
+    private bool _isInitialized = false;
 
     public int CurrentEssence { get; private set; } = 100;
-    public bool IsInitialized { get; set; } = false;
+    public bool IsInitialized { get => _isInitialized; }
 
     public EssenceManager Initialize()
     {
@@ -18,7 +19,7 @@ public class EssenceManager : MonoBehaviour
             _uIManager.UpdateWallets();
         }
 
-        IsInitialized = true;
+        _isInitialized = true;
         return this;
     }
 
