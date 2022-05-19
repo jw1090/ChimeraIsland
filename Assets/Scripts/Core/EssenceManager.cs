@@ -10,7 +10,7 @@ public class EssenceManager : MonoBehaviour
 
     public EssenceManager Initialize()
     {
-        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
         LoadEssence();
 
         _uIManager = ServiceLocator.Get<UIManager>();
