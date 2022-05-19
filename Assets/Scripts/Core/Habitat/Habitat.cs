@@ -160,14 +160,21 @@ public class Habitat : MonoBehaviour
             );
             return;
         }
-        //AddChimera(chimeraPrefab);
+
+        GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
+
+        AddChimera(newChimera);
     }
 
-    public void AddChimera(GameObject chimera)
+    public void AddChimera(GameObject newChimera)
     {
-        Instantiate(chimera, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
-        Chimera chimeraComp = chimera.GetComponent<Chimera>();
+        newChimera.transform.position = _spawnPoint.transform.localPosition;
+        newChimera.transform.rotation = Quaternion.identity;
+        newChimera.transform.parent = _chimeraFolder.transform;
+
+        Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
+
         chimeraComp.Initialize();
     }
 

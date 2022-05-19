@@ -15,12 +15,17 @@ public class ChimeraCreator : MonoBehaviour
 
     public GameObject CreateChimera(Chimera chimeraInfo)
     {
-        var chimeraGO = _resourceManager.GetChimeraBasePrefab(chimeraInfo.Type);
-        var chimeraEvolutionGO = _resourceManager.GetChimeraEvolution(chimeraInfo.Type);
+        var newChimera = CreateChimeraByType(chimeraInfo.ChimeraType);
 
-        chimeraEvolutionGO.transform.parent = chimeraGO.transform;
+        LoadChimeraStats(newChimera.GetComponent<Chimera>(), chimeraInfo);
 
-        LoadChimeraStats(chimeraGO.GetComponent<Chimera>(), chimeraInfo);
+        return newChimera;
+    }
+
+    public GameObject CreateChimeraByType(ChimeraType chimeraType)
+    {
+        var chimeraGO = Instantiate(_resourceManager.GetChimeraBasePrefab(chimeraType));
+        Instantiate(_resourceManager.GetChimeraEvolution(chimeraType), chimeraGO.transform);
 
         return chimeraGO;
     }
