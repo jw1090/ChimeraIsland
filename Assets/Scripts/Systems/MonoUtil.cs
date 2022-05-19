@@ -5,7 +5,7 @@ public class MonoUtil : MonoBehaviour
 {
     public MonoUtil Initialize()
     {
-        Debug.Log($"<color=Lime> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         return this;
     }
