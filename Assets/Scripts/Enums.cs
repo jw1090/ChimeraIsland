@@ -58,7 +58,7 @@ public enum SignType
 
 public enum StatType
 {
-    None = 1,
+    None = -1,
     Endurance,
     Intelligence,
     Strength,
