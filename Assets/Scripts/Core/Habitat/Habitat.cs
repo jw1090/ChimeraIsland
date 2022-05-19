@@ -99,7 +99,7 @@ public class Habitat : MonoBehaviour
 
             foreach(Facility facility in _facilities)
             {
-                if(facility.IsActive())
+                if(facility.IsInitialized)
                 {
                     facility.FacilityTick();
                 }
@@ -148,21 +148,19 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        int price = chimeraPrefab.GetPrice();
+        int price = chimeraPrefab.Price;
 
         if (_essenceManager.SpendEssence(price) == false)
         {
             Debug.Log
             (
-                "Can't afford this chimera. It costs " +
-                price + " Essence and you only have " +
-                _essenceManager.CurrentEssence + " Essence."
+                $"Can't afford this chimera. It costs {price} " +
+                $"Essence and you only have {_essenceManager.CurrentEssence} Essence."
             );
             return;
         }
 
         GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
-
         AddChimera(newChimera);
     }
 
@@ -198,7 +196,7 @@ public class Habitat : MonoBehaviour
 
         foreach (Facility facility in _facilities)
         {
-            if (facility.IsActive())
+            if (facility.IsInitialized)
             {
                 ++facilityCount;
             }
