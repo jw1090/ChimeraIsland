@@ -19,23 +19,22 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
+    private List<Chimera> _activeChimeras = new List<Chimera>();
     private EssenceManager _essenceManager = null;
+    private ChimeraCreator _chimeraCreator = null;
     private int _tickTracker = 0;
-    private bool _isActive = false;
+    private bool _isInitialized = false;
 
-    public List<Chimera> Chimeras { get; private set; } = new List<Chimera>();
-    public int GetCapacity() { return _chimeraCapacity; }
-
-    public HabitatType GetHabitatType() { return _habitatType; }
-    public List<Transform> GetPatrolNodes() { return _patrolNodes.GetNodes(); }
-    public void SetChimeraCapacity(int cap) { _chimeraCapacity = cap; }
+    public List<Chimera> ActiveChimeras { get => _activeChimeras; }
+    public List<Transform> PatrolNodes { get => _patrolNodes.GetNodes(); }
+    public HabitatType Type { get => _habitatType; }
 
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-        _isActive = true;
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
 
         if (_patrolNodes == null)
         {
@@ -44,44 +43,18 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        PersistentData persistentData = ServiceLocator.Get<PersistentData>();
-        if (persistentData != null)
-        {
-            persistentData.CurrentHabitat = this;
-            persistentData.LoadSavedData();
-        }
-
-        LoadChimeras();
-
-        UIManager uIManager = ServiceLocator.Get<UIManager>();
-        if(uIManager != null)
-        {
-            uIManager.LoadMarketplace(this);
-            uIManager.LoadDetails(this);
-        }
-
-        StartCoroutine(TickTimer());
+        _isInitialized = true;
 
         return this;
     }
 
-    private void LoadChimeras()
+    public void SpawnChimeras(List<Chimera> chimerasToSpawn)
     {
-        HabitatManager habitatManager = ServiceLocator.Get<HabitatManager>();
-
-        if (habitatManager != null)
+        foreach (var chimeraInfo in chimerasToSpawn)
         {
-            Chimeras = habitatManager.GetChimerasForHabitat(_habitatType);
-            SpawnChimeras();
-        }
-    } 
+            var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-    private void SpawnChimeras()
-    {
-        foreach(Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
-        {
-            Chimeras.Add(chimera);
-            chimera.CreateChimera(this, _essenceManager);
+            AddChimera(newChimera);
         }
     }
 
@@ -92,20 +65,25 @@ public class Habitat : MonoBehaviour
             Destroy(chimera.gameObject);
         }
 
-        Chimeras.Clear();
+        _activeChimeras.Clear();
+    }
+
+    public void StartTickTimer()
+    {
+        StartCoroutine(TickTimer());
     }
 
     // Coroutine in the start loop. If active, do the following.
     // Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
     private IEnumerator TickTimer()
     {
-        while (_isActive)
+        while (_isInitialized)
         {
             yield return new WaitForSeconds(_tickTimer);
 
             ++_tickTracker;
 
-            foreach(Chimera chimera in Chimeras)
+            foreach(Chimera chimera in _activeChimeras)
             {
                 if(chimera.isActiveAndEnabled)
                 {
@@ -164,7 +142,7 @@ public class Habitat : MonoBehaviour
     // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
-        if (_chimeraCapacity == Chimeras.Count)
+        if (_chimeraCapacity == _activeChimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
             return;
@@ -182,26 +160,17 @@ public class Habitat : MonoBehaviour
             );
             return;
         }
-        AddChimera(chimeraPrefab);
+        //AddChimera(chimeraPrefab);
     }
-    public Chimera AddChimera(Chimera chimeraPrefab)
-    {
-        Chimera newChimera = Instantiate(chimeraPrefab, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
 
-        Chimeras.Add(newChimera);
-        newChimera.CreateChimera(this, _essenceManager);
-
-        return newChimera;
-    }
-    
-    public void KillCap()
+    public void AddChimera(GameObject chimera)
     {
-        for (int i = _chimeraCapacity; i < Chimeras.Count; ++i)
-        {
-            Destroy(Chimeras[i].gameObject);
-            Chimeras.RemoveAt(i);
-        }
+        Instantiate(chimera, _spawnPoint.transform.localPosition, Quaternion.identity, _chimeraFolder.transform);
+        Chimera chimeraComp = chimera.GetComponent<Chimera>();
+        _activeChimeras.Add(chimeraComp);
+        chimeraComp.Initialize();
     }
+
     public Facility GetFacility(FacilityType facilityType)
     {
         foreach (Facility facility in _facilities)

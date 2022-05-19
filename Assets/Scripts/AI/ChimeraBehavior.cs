@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -45,12 +46,12 @@ namespace AI.Behavior
         public void ResetTimer() { Timer = 0; }
         public Animator animator;
 
+
         public void Initialize(Habitat habitat)
         {
-            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
-            _nodes = habitat.GetPatrolNodes();
-
+            _nodes = habitat.PatrolNodes;
             _navMeshAgent = GetComponent<NavMeshAgent>();
+
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
@@ -63,12 +64,13 @@ namespace AI.Behavior
 
             ChangeState(States[StateEnum.Patrol]);
 
+            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
             _isActive = true;
         }
 
         private void Update()
         {
-            if (_isActive == false)
+            if (_isActive == false || _currentState == null)
             {
                 return;
             }

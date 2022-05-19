@@ -6,7 +6,7 @@ public class SessionData : MonoBehaviour, ISessionData
 
     public SessionData Initialize()
     {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> {this.GetType()} Initialized!</color>");
         return this;
     }
 }
