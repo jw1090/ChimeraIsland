@@ -14,6 +14,11 @@ public class HabitatManager : MonoBehaviour
     {
         public HabitatType key = HabitatType.None;
         public List<Chimera> value = new List<Chimera>();
+        public HabitatData(HabitatType Key, List<Chimera> Value)
+        {
+            key = Key;
+            value = Value;
+        }
     }
     public Dictionary<HabitatType, List<Chimera>> GetChimerasDictionary() { return _chimerasByHabitat; }
     public HabitatManager Initialize()
@@ -33,11 +38,7 @@ public class HabitatManager : MonoBehaviour
     {
         foreach (var entry in _chimerasByHabitat)
         {
-            _displayDictionary.Add(new HabitatData()
-            {
-                key = entry.Key,
-                value = entry.Value
-            });
+            _displayDictionary.Add(new HabitatData(entry.Key, entry.Value));
         }
     }
 
@@ -63,6 +64,10 @@ public class HabitatManager : MonoBehaviour
         }
 
         _persistentData.LoadChimerasToDictionary(_chimerasByHabitat);
+        foreach (KeyValuePair<HabitatType, List<Chimera>> kvp in _chimerasByHabitat)
+        {
+            _displayDictionary.Add(new HabitatData(kvp.Key, kvp.Value));
+        }
         return true;
     }
 

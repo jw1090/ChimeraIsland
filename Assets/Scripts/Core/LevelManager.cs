@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
@@ -27,7 +26,8 @@ public class LevelManager : AsyncLoader
         StartHabitatTickTimer();
 
         // Set completion callback
-        CallOnComplete(OnComplete);
+        LevelManager.ResetStaticVariables();
+        LevelManager.CallOnComplete(OnComplete);
     }
 
     private void Initialize()
