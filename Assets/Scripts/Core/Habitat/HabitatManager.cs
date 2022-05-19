@@ -23,7 +23,7 @@ public class HabitatManager : MonoBehaviour
     public Dictionary<HabitatType, List<Chimera>> GetChimerasDictionary() { return _chimerasByHabitat; }
     public HabitatManager Initialize()
     {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();

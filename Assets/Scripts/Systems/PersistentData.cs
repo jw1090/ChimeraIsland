@@ -15,7 +15,7 @@ public class PersistentData : MonoBehaviour
 
     public PersistentData Initialize()
     {
-        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         return this;
     }
