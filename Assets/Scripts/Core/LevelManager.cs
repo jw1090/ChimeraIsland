@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
