@@ -6,7 +6,6 @@ public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType,List<Chimera>>();
     [SerializeField] private List<HabitatData> _displayDictionary = new List<HabitatData>();
-    private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
 
     [Serializable]
@@ -25,7 +24,6 @@ public class HabitatManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         HabitatDataDisplayInit();
@@ -70,5 +68,4 @@ public class HabitatManager : MonoBehaviour
         }
         return true;
     }
-
 }

@@ -38,15 +38,16 @@ public class Chimera : MonoBehaviour
     [SerializeField] private EssenceManager _essenceManager = null;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
+    public ElementalType ElementalType { get => _elementalType; }
+    public StatType StatPreference { get => _statPreference; }
+
     public int Level { get; set; } = 1;
     public int Endurance { get; set; } = 0;
     public int Intelligence { get; set; } = 0;
     public int Strength { get; set; } = 0;
     public int Happiness { get; set; } = 0;
+    public int Price { get => _price; }
 
-    public ElementalType GetElementalType() { return _elementalType; }
-    public StatType GetStatPreference() { return _statPreference; }
-    public int GetPrice() { return _price; }
     public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
@@ -71,22 +72,6 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void ChangeHappiness(int amount)
-    {
-        if (Happiness + amount >= 100)
-        {
-            Happiness = 100;
-            return;
-        }
-        else if (Happiness + amount <= -100)
-        {
-            Happiness = -100;
-            return;
-        }
-
-        Happiness += amount;
-    }
-
     public Sprite GetIcon() 
     {
         if(_currentEvolution == null)
@@ -95,36 +80,10 @@ public class Chimera : MonoBehaviour
             return defaultSprite;
         }
 
-        return _currentEvolution.GetIcon(); 
+        return _currentEvolution.Icon; 
     }
 
-    public ChimeraType GetChimeraType() 
-    {
-        if (_currentEvolution != null)
-        {
-            return _currentEvolution.GetChimeraType();
-        }
-
-        // HOMEWORK: If a Chimera has a type, it should always have a type regardless of whether or not it has a 'currentEvolution'
-        // Look at making the 'type' a property of the Chimera itself. The Evolution logic can access/modify that value as necessary.
-        Debug.Log("<color=magenta>HOMEWORK</color>: Fix the situation in which trying to GET the type fails because '_currentEvolution' is null");
-        Debug.Log($"Returning default type because Chimear {gameObject.name} has no currentEvolution");
-        return ChimeraType.A;
-    }
-
-    public void SetChimeraType(ChimeraType type)
-    {
-        if (_currentEvolution != null)
-        {
-            _currentEvolution.SetChimeraType(type);
-            return;
-        }
-
-        // HOMEWORK: If a Chimera has a type, it should always have a type regardless of whether or not it has a 'currentEvolution'
-        // Look at making the 'type' a property of the Chimera itself. The Evolution logic can access/modify that value as necessary.
-        Debug.Log("<color=magenta>HOMEWORK</color>: Fix the situation in which trying to SET the type fails because '_currentEvolution' is null");
-    }
-
+    public void SetChimeraType(ChimeraType type) { _chimeraType = type; }
     public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
 
@@ -144,8 +103,6 @@ public class Chimera : MonoBehaviour
     {
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _currentEvolution.SetChimeraBrain(this);
-        _currentEvolution.SetChimeraType(GetChimeraType());
-        _currentEvolution.LoadEvolution();
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -197,12 +154,6 @@ public class Chimera : MonoBehaviour
         _essenceManager.IncreaseEssence(essenceGain);
     }
 
-    private void MultitaskingTick()
-    {
-        int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(Level * _essenceModifier) * 0.5f);
-        _essenceManager.IncreaseEssence(essenceGain);
-    }
-
     public void HappinessTick()
     {
         if (!_inFacility)
@@ -232,6 +183,22 @@ public class Chimera : MonoBehaviour
             int hapMod = (1 * (int)Mathf.Sqrt(Happiness + 100) / 15) + (1 / 3);
             return hapMod;
         }
+    }
+
+    public void ChangeHappiness(int amount)
+    {
+        if (Happiness + amount >= 100)
+        {
+            Happiness = 100;
+            return;
+        }
+        else if (Happiness + amount <= -100)
+        {
+            Happiness = -100;
+            return;
+        }
+
+        Happiness += amount;
     }
 
     // Transfer experience stored by the chimera and see if each stat's threshold is met.

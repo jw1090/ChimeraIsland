@@ -8,7 +8,6 @@ public class Facility : MonoBehaviour
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 50;
-    [SerializeField] private bool _isActive = false;
 
     [Header("Chimera Info")]
     [SerializeField] private Chimera _storedChimera = null;
@@ -18,14 +17,18 @@ public class Facility : MonoBehaviour
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
 
-    public int CurrentTier { get; private set; } = 0;
+    private bool _isInitialized = false;
+    private int _currentTier = 0;
+
+    public bool IsInitialized { get => _isInitialized; }
+    public int CurrentTier { get => _currentTier; }
 
     public FacilityType GetFacilityType() { return _facilityType; }
     public int GetPrice() { return _price; }
-    public bool IsActive() { return _isActive; }
+
     public bool IsChimeraStored()
     {
-        if (_isActive == false)
+        if (_isInitialized == false)
         {
             return false;
         }
@@ -42,11 +45,11 @@ public class Facility : MonoBehaviour
     public void BuyFacility()
     {
         _price = (int)(_price * 7.5);
-        ++CurrentTier;
+        ++_currentTier;
 
-        if (CurrentTier == 1)
+        if (_currentTier == 1)
         {
-            _isActive = true;
+            _isInitialized = true;
             Debug.Log(_facilityType + " was purchased!");
 
             _rubbleObject.SetActive(false);
@@ -136,7 +139,7 @@ public class Facility : MonoBehaviour
 
     private void HappinessCheck()
     {
-        if(_storedChimera.GetStatPreference() == _statType)
+        if(_storedChimera.StatPreference == _statType)
         {
             int happinessAmount = 1;
 

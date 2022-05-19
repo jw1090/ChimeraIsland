@@ -64,7 +64,7 @@ public class PersistentData : MonoBehaviour
                 ChimeraSaveData temp = new ChimeraSaveData
                 (
                     chimera.GetInstanceID(),
-                    chimera.GetChimeraType(),
+                    chimera.ChimeraType,
                     chimera.Level,
                     chimera.Endurance,
                     chimera.Intelligence,

@@ -16,8 +16,6 @@ public class ToolsManager : MonoBehaviour
 
     private void InitializeToolsSystems()
     {
-        Debug.Log("Loading Tools");
-
         var chimeraCreatorGO = new GameObject("Chimera Creator");
         chimeraCreatorGO.transform.SetParent(transform);
         _chimeraCreator = chimeraCreatorGO.AddComponent<ChimeraCreator>().Initialize();

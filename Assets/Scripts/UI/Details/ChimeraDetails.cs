@@ -40,7 +40,7 @@ public class ChimeraDetails : MonoBehaviour
 
         _icon.sprite = _chimera.GetIcon();
         _level.text = "Level: " + _chimera.Level;
-        _element.text = "Element: " + _chimera.GetElementalType().ToString();
+        _element.text = "Element: " + _chimera.ElementalType.ToString();
 
         int amount;
         string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";
