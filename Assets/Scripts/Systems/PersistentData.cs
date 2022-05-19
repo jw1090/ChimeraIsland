@@ -50,12 +50,12 @@ public class PersistentData : MonoBehaviour
     }
     public void SaveChimeras()
     {
-        SaveJsonList myData = ChimerasToJson();
-        FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        List<ChimeraSaveData> myData = ChimerasToJson();
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
-    private SaveJsonList ChimerasToJson()
+    private List<ChimeraSaveData> ChimerasToJson()
     {
-        SaveJsonList sjl = new SaveJsonList { };
+        List<ChimeraSaveData> chimeraList = new List<ChimeraSaveData> { };
         Dictionary<HabitatType, List<Chimera>> d = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
         foreach (HabitatType type in (HabitatType[]) Enum.GetValues(typeof(HabitatType)))
         { 
@@ -73,10 +73,10 @@ public class PersistentData : MonoBehaviour
                     type
                 );
 
-                sjl.AddToChimeraList(temp);
+                chimeraList.Add(temp);
             }
         }
-        return sjl;
+        return chimeraList;
     }
 
     public void OnApplicationQuit()
