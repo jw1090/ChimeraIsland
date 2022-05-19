@@ -2873,6 +2873,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
+--- !u!114 &1920377866 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1713399923628506475, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+  m_PrefabInstance: {fileID: 231081782210189353}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57f3c62fde5dc84aac55671e14a651d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1987716712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ecfd7fbcc86fdb54992035cae6960b68, type: 3}
@@ -3036,9 +3047,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 151865427246165156, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 151865427246165156, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Colors.m_PressedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 151865427246165156, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 151865427246165156, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 178189284917797749, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Name
+      value: TutorialOveraly
+      objectReference: {fileID: 0}
     - target: {fileID: 178189284917797749, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 231081782940317730, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
       propertyPath: m_Name
@@ -3136,10 +3167,30 @@ PrefabInstance:
       propertyPath: _textManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 231081782940317753, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: _tutorialOverlay
+      value: 
+      objectReference: {fileID: 1920377866}
     - target: {fileID: 231081783855975215, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 1631592953697507745, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_Name
+      value: Overlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713399923628506475, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: _tutorialJson
+      value: 
+      objectReference: {fileID: 4900000, guid: 704b3fa17171ff14f8c675876e5ba358, type: 3}
+    - target: {fileID: 1713399923628506475, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: _tutorialJsonPath
+      value: 
+      objectReference: {fileID: 4900000, guid: 704b3fa17171ff14f8c675876e5ba358, type: 3}
+    - target: {fileID: 1819842658045181680, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3306817876920053994, guid: f8b0bb7060153e44993a7229bdd39345, type: 3}
       propertyPath: m_Name
       value: Text Manager

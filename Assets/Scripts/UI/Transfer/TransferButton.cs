@@ -12,14 +12,14 @@ public class TransferButton : MonoBehaviour, IPointerClickHandler
 
     public void Initialize(Habitat habitat, HabitatType habitatType)
     {
-        _currentHabitat = habitat.GetHabitatType();
+        //_currentHabitat = habitat.GetHabitatType();
         _habitatToTransfer = habitatType;
-        _chimera = habitat.Chimeras[_chimeraSpot];
+        //_chimera = habitat.Chimeras[_chimeraSpot];
     }
 
     // Adds a facility based on the assigned facilityType.
     public void OnPointerClick(PointerEventData eventData)
     {
-        _habitatManager.TransferChimera(_currentHabitat, _habitatToTransfer, _chimera);
+        //_habitatManager.TransferChimera(_currentHabitat, _habitatToTransfer, _chimera);
     }
 }
