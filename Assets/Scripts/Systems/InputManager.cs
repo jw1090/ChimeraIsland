@@ -7,16 +7,16 @@ public class InputManager : MonoBehaviour
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
-    public ChimeraBehavior _heldChimera = null;
+    private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
     private Camera _cameraMain = null;
 
+    public void SetReleaseSlider(ReleaseSlider releaseSlider) { _releaseSlider = releaseSlider; }
+    public void SetCameraMain(Camera cameraMain) { _cameraMain = cameraMain; }
+
     public InputManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-
-        _releaseSlider = ServiceLocator.Get<UIManager>().GetReleaseSlider();
-        _cameraMain = ServiceLocator.Get<CameraController>().CameraCO;
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
 
@@ -50,6 +50,11 @@ public class InputManager : MonoBehaviour
 
     private void RemoveFromFacility()
     {
+        if(_cameraMain == null)
+        {
+            return;
+        }
+
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Physics.Raycast(ray, out hit, 200.0f);
@@ -84,7 +89,12 @@ public class InputManager : MonoBehaviour
 
     private void EnterHeldState()
     {
-        if(_isHolding == true)
+        if (_cameraMain == null)
+        {
+            return;
+        }
+
+        if (_isHolding == true)
         {
             return;
         }

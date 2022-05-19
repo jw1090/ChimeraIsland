@@ -75,10 +75,25 @@ public class GameLoader : AsyncLoader
         var sessionDataComp = sessionDataGO.AddComponent<SessionData>().Initialize();
         ServiceLocator.Register<ISessionData>(sessionDataComp);
 
-        var HabitatManagerGO = new GameObject("Habitat Manager");
-        HabitatManagerGO.transform.SetParent(systemsParent);
-        var HabitatManagerComp = HabitatManagerGO.AddComponent<HabitatManager>().Initialize();
-        ServiceLocator.Register<HabitatManager>(HabitatManagerComp);
+        var resourceManagerGO = new GameObject("Resource Manager");
+        resourceManagerGO.transform.SetParent(systemsParent);
+        var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
+        ServiceLocator.Register<ResourceManager>(resourceManagerComp);
+
+        var toolsManagerGO = new GameObject("Tools Manager");
+        toolsManagerGO.transform.SetParent(systemsParent);
+        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
+        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
+
+        var inputManagerGO = new GameObject("Input Manager");
+        inputManagerGO.transform.SetParent(systemsParent);
+        var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
+        ServiceLocator.Register<InputManager>(inputManagerComp);
+
+        var habitatManagerGO = new GameObject("Habitat Manager");
+        habitatManagerGO.transform.SetParent(systemsParent);
+        var habitatManagerComp = habitatManagerGO.AddComponent<HabitatManager>().Initialize();
+        ServiceLocator.Register<HabitatManager>(habitatManagerComp);
 
         yield return null;
 	}

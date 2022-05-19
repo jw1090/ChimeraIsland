@@ -8,7 +8,7 @@ public class Marketplace : MonoBehaviour
 
     public void Initialize(Habitat habitat)
     {
-        Debug.Log("<color=Yellow> Loading Marketplace ... </color>");
+        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
 
         _tabGroup.Initialize();
         _chimeraShop.Initialize(habitat);
