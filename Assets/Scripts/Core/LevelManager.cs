@@ -1,6 +1,5 @@
 using UnityEngine;
-
-public class LevelManager : MonoBehaviour
+public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private CameraController _cameraController = null;
@@ -14,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     public bool IsInitialized { get => _isInitialized; }
 
-    private void Awake()
+    protected override void Awake()
     {
         GameLoader.CallOnComplete(LevelSetup);
     }
@@ -25,6 +24,10 @@ public class LevelManager : MonoBehaviour
         LoadUI();
         LoadChimeras();
         StartHabitatTickTimer();
+
+        // Set completion callback
+        LevelManager.ResetStaticVariables();
+        LevelManager.CallOnComplete(OnComplete);
     }
 
     private void Initialize()
@@ -77,5 +80,10 @@ public class LevelManager : MonoBehaviour
     private void StartHabitatTickTimer()
     {
         _habitat.StartTickTimer();
+    }
+
+    private void OnComplete()
+    {
+        Debug.Log("LevelManager Finished Setup");
     }
 }

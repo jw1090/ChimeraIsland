@@ -52,8 +52,8 @@ public class GameLoader : AsyncLoader
         Enqueue(IntializeCoreSystems(systemsParent), 1);
 		Enqueue(InitializeModularSystems(systemsParent), 2);
 
-		// Set completion callback
-		CallOnComplete(OnComplete);
+        // Set completion callback
+        GameLoader.CallOnComplete(OnComplete);
 	}
 
 	private IEnumerator IntializeCoreSystems(Transform systemsParent)

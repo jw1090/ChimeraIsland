@@ -46,10 +46,9 @@ namespace AI.Behavior
         public void ResetTimer() { Timer = 0; }
         public Animator animator;
 
-
-        public void Initialize(Habitat habitat)
+        public void Initialize()
         {
-            _nodes = habitat.PatrolNodes;
+            _nodes = ServiceLocator.Get<Habitat>().PatrolNodes;
             _navMeshAgent = GetComponent<NavMeshAgent>();
 
             _navMeshAgent.isStopped = false;

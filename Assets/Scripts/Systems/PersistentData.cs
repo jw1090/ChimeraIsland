@@ -15,7 +15,7 @@ public class PersistentData : MonoBehaviour
 
     public PersistentData Initialize()
     {
-        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         return this;
     }
@@ -56,10 +56,10 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraSaveData> ChimerasToJson()
     {
         List<ChimeraSaveData> chimeraList = new List<ChimeraSaveData> { };
-        Dictionary<HabitatType, List<Chimera>> d = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
-        foreach (HabitatType type in (HabitatType[]) Enum.GetValues(typeof(HabitatType)))
-        { 
-            foreach (Chimera chimera in d[type])
+        Dictionary<HabitatType, List<Chimera>> chimerasByHabitat = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
+        foreach (KeyValuePair<HabitatType, List<Chimera>> kvp in chimerasByHabitat)
+        {
+            foreach (var chimera in kvp.Value)
             {
                 ChimeraSaveData temp = new ChimeraSaveData
                 (
@@ -70,7 +70,7 @@ public class PersistentData : MonoBehaviour
                     chimera.Intelligence,
                     chimera.Strength,
                     chimera.Happiness,
-                    type
+                    kvp.Key
                 );
 
                 chimeraList.Add(temp);
