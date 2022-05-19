@@ -5,9 +5,9 @@ using UnityEngine;
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
+    [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
-    [SerializeField] private Passives _passive = Passives.None;
     [SerializeField] private int _price = 50;
     [SerializeField] private bool _inFacility = false;
 
@@ -34,10 +34,10 @@ public class Chimera : MonoBehaviour
     [Header("References")]
     [SerializeField] private EvolutionLogic _currentEvolution = null;
     [SerializeField] private ResourceManager _resourceManager = null;
-    [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private EssenceManager _essenceManager = null;
 
-    public ChimeraType Type { get; set; } = ChimeraType.None;
+    public ChimeraType ChimeraType { get => _chimeraType; }
     public int Level { get; set; } = 1;
     public int Endurance { get; set; } = 0;
     public int Intelligence { get; set; } = 0;
@@ -46,7 +46,6 @@ public class Chimera : MonoBehaviour
 
     public ElementalType GetElementalType() { return _elementalType; }
     public StatType GetStatPreference() { return _statPreference; }
-    public Passives GetPassive() { return _passive; }
     public int GetPrice() { return _price; }
     public bool GetStatByType(StatType statType, out int amount)
     {
@@ -71,6 +70,7 @@ public class Chimera : MonoBehaviour
         }
         return false;
     }
+
     public void ChangeHappiness(int amount)
     {
         if (Happiness + amount >= 100)
@@ -86,6 +86,7 @@ public class Chimera : MonoBehaviour
 
         Happiness += amount;
     }
+
     public Sprite GetIcon() 
     {
         if(_currentEvolution == null)
@@ -130,10 +131,13 @@ public class Chimera : MonoBehaviour
     public void Initialize()
     {
         Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
-        _habitat = ServiceLocator.Get<Habitat>();
+
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
+
         InitializeEvolution();
-        GetComponent<ChimeraBehavior>().Initialize(_habitat);
+
+        GetComponent<ChimeraBehavior>().Initialize();
     }
 
     private void InitializeEvolution()
@@ -184,10 +188,6 @@ public class Chimera : MonoBehaviour
 
         if (_inFacility)
         {
-            if (_passive == Passives.Multitasking)
-            {
-                MultitaskingTick();
-            }
             return;
         }
 
@@ -209,21 +209,8 @@ public class Chimera : MonoBehaviour
         {
             int happinessAmount = -1;
 
-            if (_passive == Passives.GreenThumb)
-            {
-                List<Chimera> chimeras = ServiceLocator.Get<Habitat>().ActiveChimeras;
-
-                foreach (Chimera chimera in chimeras)
-                {
-                    if (chimera.GetElementalType() == ElementalType.Bio)
-                    {
-                        happinessAmount = 1;
-                        ChangeHappiness(happinessAmount);
-                    }
-                }
-            }
             ChangeHappiness(happinessAmount);
-            ServiceLocator.Get<UIManager>().UpdateDetails();
+            _uiManager.UpdateDetails();
         }
     }
 
@@ -308,9 +295,9 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        ServiceLocator.Get<UIManager>().UpdateDetails();
-        ++_levelUpTracker;
+        _uiManager.UpdateDetails();
 
+        ++_levelUpTracker;
         if (_levelUpTracker % 3 == 0)
         {
             ++Level;
