@@ -68,6 +68,8 @@ public class LevelManager : AsyncLoader
 
     private void LoadChimeras()
     {
+        // TODO: Update this so that chimera spawning is done from the HabitatManager.
+        // something like _habitatManager.SpawnChimerasForHabitat(_habitat.Type);
         var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.Type);
         _habitat.SpawnChimeras(chimerasToSpawn);
     }
