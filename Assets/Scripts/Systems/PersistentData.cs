@@ -30,11 +30,11 @@ public class PersistentData : MonoBehaviour
             GameObject chimeraGO = resourceManager.GetChimeraBasePrefab(data.chimeraType);
             Chimera chimera = chimeraGO.GetComponent<Chimera>();
             chimera.SetChimeraType(data.chimeraType);
-            chimera.Level = data.level;
-            chimera.Endurance = data.endurance;
-            chimera.Intelligence = data.intelligence;
-            chimera.Strength = data.strength;
-            chimera.Happiness = data.happiness;
+            chimera.SetLevel(data.level);
+            chimera.SetEndurance(data.endurance);
+            chimera.SetIntelligence(data.intelligence);
+            chimera.SetStrength(data.strength);
+            chimera.SetHappiness(data.happiness);
             if(data.habitatType.Equals(HabitatType.StonePlains))
             {
                 PlainsChimeras.Add(chimera);

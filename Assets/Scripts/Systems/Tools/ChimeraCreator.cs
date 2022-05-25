@@ -32,10 +32,10 @@ public class ChimeraCreator : MonoBehaviour
 
     private void LoadChimeraStats(Chimera newChimera, Chimera chimeraInfo)
     {
-        newChimera.Level        = chimeraInfo.Level;
-        newChimera.Endurance    = chimeraInfo.Endurance;
-        newChimera.Intelligence = chimeraInfo.Intelligence;
-        newChimera.Strength     = chimeraInfo.Strength;
-        newChimera.Happiness    = chimeraInfo.Happiness;
+        newChimera.SetLevel(chimeraInfo.Level);
+        newChimera.SetEndurance(chimeraInfo.Endurance);
+        newChimera.SetIntelligence(chimeraInfo.Intelligence);
+        newChimera.SetStrength(chimeraInfo.Strength);
+        newChimera.SetHappiness(chimeraInfo.Happiness);
     }
 }
