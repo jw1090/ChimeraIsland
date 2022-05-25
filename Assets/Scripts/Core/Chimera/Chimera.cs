@@ -8,11 +8,16 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
-    [SerializeField] private int _price = 50;
     [SerializeField] private bool _inFacility = false;
+    [SerializeField] private int _price = 50;
 
     [Header("Stats")]
+    [SerializeField] private int _level = 0;
     [SerializeField] private int _levelCap = 99;
+    [SerializeField] private int _endurance = 1;
+    [SerializeField] private int _intelligence = 1;
+    [SerializeField] private int _strength = 1;
+    [SerializeField] private int _happiness = 0;
     [SerializeField] private int _happinessMod = 1;
 
     [Header("Stat Growth")]
@@ -41,11 +46,11 @@ public class Chimera : MonoBehaviour
     public ElementalType ElementalType { get => _elementalType; }
     public StatType StatPreference { get => _statPreference; }
 
-    public int Level { get; set; } = 1;
-    public int Endurance { get; set; } = 0;
-    public int Intelligence { get; set; } = 0;
-    public int Strength { get; set; } = 0;
-    public int Happiness { get; set; } = 0;
+    public int Level { get => _level; }
+    public int Endurance { get => _endurance; }
+    public int Intelligence { get => _intelligence; }
+    public int Strength { get => _strength; }
+    public int Happiness { get => _happiness; }
     public int Price { get => _price; }
 
     public bool GetStatByType(StatType statType, out int amount)
@@ -54,16 +59,16 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                amount = Endurance;
+                amount = _endurance;
                 return true;
             case StatType.Intelligence:
-                amount = Intelligence;
+                amount = _intelligence;
                 return true;
             case StatType.Strength:
-                amount = Strength;
+                amount = _strength;
                 return true;
             case StatType.Happiness:
-                amount = Happiness;
+                amount = _happiness;
                 return true;
             default:
                 Debug.LogError("Default StatType please change!");
@@ -83,9 +88,14 @@ public class Chimera : MonoBehaviour
         return _currentEvolution.Icon; 
     }
 
-    public void SetChimeraType(ChimeraType type) { _chimeraType = type; }
+    public void SetChimeraType(ChimeraType type){ _chimeraType = type; }
     public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
+    public void SetLevel(int level) { _level = level; }
+    public void SetEndurance(int endurance) { _endurance = endurance; }
+    public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
+    public void SetStrength(int strength) { _strength = strength; }
+    public void SetHappiness(int happiness) { _happiness = happiness; }
 
     public void Initialize()
     {
@@ -93,6 +103,7 @@ public class Chimera : MonoBehaviour
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
 
         InitializeEvolution();
 
@@ -187,18 +198,18 @@ public class Chimera : MonoBehaviour
 
     public void ChangeHappiness(int amount)
     {
-        if (Happiness + amount >= 100)
+        if (_happiness + amount >= 100)
         {
-            Happiness = 100;
+            _happiness = 100;
             return;
         }
-        else if (Happiness + amount <= -100)
+        else if (_happiness + amount <= -100)
         {
-            Happiness = -100;
+            _happiness = -100;
             return;
         }
 
-        Happiness += amount;
+        _happiness += amount;
     }
 
     // Transfer experience stored by the chimera and see if each stat's threshold is met.
@@ -246,15 +257,15 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Endurance:
-                Endurance += _enduranceGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + Endurance);
+                _endurance += _enduranceGrowth;
+                Debug.Log(this + " gained " + statType + " stat = " + _endurance);
                 break;
             case StatType.Intelligence:
-                Intelligence += _intelligenceGrowth;
+                _intelligence += _intelligenceGrowth;
                 Debug.Log(this + " gained " + statType + " stat = " + Intelligence);
                 break;
             case StatType.Strength:
-                Strength += _strengthGrowth;
+                _strength += _strengthGrowth;
                 Debug.Log(this + " gained " + statType + " stat = " + Strength);
                 break;
             default:
@@ -267,8 +278,8 @@ public class Chimera : MonoBehaviour
         ++_levelUpTracker;
         if (_levelUpTracker % 3 == 0)
         {
-            ++Level;
-            Debug.Log("LEVEL UP! " + gameObject + " is now level " + Level + " !");
+            ++_level;
+            Debug.Log("LEVEL UP! " + gameObject + " is now level " + _level + " !");
         }
     }
 }
