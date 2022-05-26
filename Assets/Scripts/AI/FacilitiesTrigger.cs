@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class FacilitiesTrigger : MonoBehaviour
 {
+    private void Start()
+    {
+        BoxCollider _collider = GetComponent<BoxCollider>();
+        _collider.enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Chimera") == false)
