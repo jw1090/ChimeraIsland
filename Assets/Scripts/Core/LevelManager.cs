@@ -33,8 +33,6 @@ public class LevelManager : AsyncLoader
         _persistentData = ServiceLocator.Get<PersistentData>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        
-        _habitatManager.SetCurrentHabitat(_habitat);
 
         if (_uiManager != null)
         {
@@ -51,6 +49,9 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
             _persistentData.SetEssenceManager(_essenceManager);
         }
+
+        _habitat.Initialize();
+        _habitatManager.SetCurrentHabitat(_habitat);
     }
 
     private void LoadUI()

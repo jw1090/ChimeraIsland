@@ -23,6 +23,7 @@ public class Habitat : MonoBehaviour
     private EssenceManager _essenceManager = null;
     private ChimeraCreator _chimeraCreator = null;
     private HabitatManager _habitatManager = null;
+
     private int _tickTracker = 0;
     private bool _isInitialized = false;
 
@@ -50,24 +51,14 @@ public class Habitat : MonoBehaviour
         return this;
     }
 
-    public void SpawnChimeras(List<ChimeraSaveData> chimerasToSpawn)
+    public void SpawnChimeras(List<ChimeraData> chimerasToSpawn)
     {
         foreach (var chimeraInfo in chimerasToSpawn)
         {
             var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-            AddChimera(newChimera);
+            AddChimera(newChimera.transform);
         }
-    }
-
-    public void ClearChimeras()
-    {
-        foreach (Chimera chimera in _chimeraFolder.GetComponentsInChildren<Chimera>())
-        {
-            Destroy(chimera.gameObject);
-        }
-
-        _activeChimeras.Clear();
     }
 
     public void StartTickTimer()
@@ -163,15 +154,16 @@ public class Habitat : MonoBehaviour
         }
 
         GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
-        AddChimera(newChimera);
-        _habitatManager.AddChimeraToHabitat(newChimera.GetComponent<Chimera>(), _habitatType);
+        AddChimera(newChimera.transform);
+
+        _habitatManager.AddNewChimera(newChimera.GetComponent<Chimera>());
     }
 
-    public void AddChimera(GameObject newChimera)
+    public void AddChimera(Transform newChimera)
     {
-        newChimera.transform.position = _spawnPoint.transform.localPosition;
-        newChimera.transform.rotation = Quaternion.identity;
-        newChimera.transform.parent = _chimeraFolder.transform;
+        newChimera.position = _spawnPoint.transform.localPosition;
+        newChimera.rotation = Quaternion.identity;
+        newChimera.parent = _chimeraFolder.transform;
 
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
