@@ -14,8 +14,8 @@ public class CameraController : MonoBehaviour
 
     [Header("CameraFollow")]
     [SerializeField] private bool _isUseMoveOnScreenEdge = true;
-    [SerializeField] private float _moveSpeed = 1f;
-    [SerializeField] private int _ScreenEdgeSize = 20;
+    [SerializeField] private float _moveSpeed = 12f;
+    [SerializeField] private int _ScreenEdgeSize = 50;
 
     private bool _MoveUp;
     private bool _MoveDown;
