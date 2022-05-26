@@ -4,6 +4,7 @@ public class EssenceManager : MonoBehaviour
 {
     private UIManager _uIManager = null;
     private bool _isInitialized = false;
+    private PersistentData _persistentData = null;
 
     public int CurrentEssence { get; private set; } = 100;
     public bool IsInitialized { get => _isInitialized; }
@@ -14,7 +15,8 @@ public class EssenceManager : MonoBehaviour
         LoadEssence();
 
         _uIManager = ServiceLocator.Get<UIManager>();
-        if(_uIManager != null)
+        _persistentData = ServiceLocator.Get<PersistentData>();
+        if (_uIManager != null)
         {
             _uIManager.UpdateWallets();
         }
@@ -51,8 +53,7 @@ public class EssenceManager : MonoBehaviour
 
     public void LoadEssence()
     {
-        GlobalSaveData temp = FileHandler.ReadFromJSON<GlobalSaveData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-        CurrentEssence = temp == null ? CurrentEssence : temp.currentEssence;
+        CurrentEssence = _persistentData.GetEssenceData();
         Debug.Log($"Loaded Essense: {CurrentEssence}");
     }
 }
