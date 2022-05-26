@@ -5,15 +5,23 @@ namespace AI.Behavior
     public class PatrolState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private string _animationState = "Walk";
+
         public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
             _chimeraBehavior = chimeraBehaviors;
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
+
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, false);
+            }
         }
 
         public override void Update()
         {
             _chimeraBehavior.PatrolEnterHeld();
+
             if (_chimeraBehavior.GetAgentDistance() < 1.5f)
             {
                 _chimeraBehavior.AddToTimer(Time.deltaTime);
@@ -23,7 +31,7 @@ namespace AI.Behavior
                     _chimeraBehavior.IncreasePatrolIndex(1);
                     _chimeraBehavior.IncreaseWanderIndex(1);
                     _chimeraBehavior.ResetTimer();
-                    int range = _chimeraBehavior.RandomPatrol();
+
                     if (_chimeraBehavior.PatrolIndex > _chimeraBehavior.GetNodeCount() - 1)
                     {
                         _chimeraBehavior.ResetPatrolIndex();
@@ -41,7 +49,10 @@ namespace AI.Behavior
 
         public override void Exit()
         {
-
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, false);
+            }
         }
     }
 }

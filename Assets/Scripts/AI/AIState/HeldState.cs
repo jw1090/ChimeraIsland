@@ -1,18 +1,20 @@
-using UnityEngine;
-
 namespace AI.Behavior
 {
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private string _animationState = "Held";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = false;
-            if (_chimeraBehavior.animator != null)
-                _chimeraBehavior.animator.SetBool("Walk", false);
-            Debug.Log("Enter Held");
+            _chimeraBehavior.BoxCollider.enabled = false;
+            _chimeraBehavior.CameraController.IsHolding = true;
+
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, true);
+            }
         }
 
         public override void Update()
@@ -23,10 +25,14 @@ namespace AI.Behavior
 
         public override void Exit()
         {
-            if (_chimeraBehavior.animator != null)
-                _chimeraBehavior.animator.SetBool("Walk", true);
-            _chimeraBehavior.HeldExit();
-            _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = true;
+            _chimeraBehavior.Agent.enabled = true;
+            _chimeraBehavior.BoxCollider.enabled = true;
+            _chimeraBehavior.CameraController.IsHolding = false;
+
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, false);
+            }
         }
     }
 }

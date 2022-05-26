@@ -42,7 +42,7 @@ public class LevelManager : AsyncLoader
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
-            _inputManager.SetCameraMain(_cameraController.CameraCO);
+            _inputManager.SetCamera(_cameraController.CameraCO);
         }
         if (_essenceManager != null)
         {

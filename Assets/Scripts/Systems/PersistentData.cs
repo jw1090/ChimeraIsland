@@ -16,6 +16,11 @@ public class PersistentData : MonoBehaviour
 
     public int GetEssenceData()
     {
+        if(_globalSaveData == null)
+        {
+            return 100;
+        }
+
         return _globalSaveData.currentEssence;
     }
 
