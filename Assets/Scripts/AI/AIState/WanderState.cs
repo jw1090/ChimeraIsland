@@ -9,6 +9,7 @@ namespace AI.Behavior
         private float _totalTimer = 0.0f; // Total wander time.
         private float _partTimer = 0.0f; // Time of wander point.
         private bool _isOver = false; // Wander over.
+        private string _animationState = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -17,6 +18,11 @@ namespace AI.Behavior
             _partTimer = 10.0f;
             _isOver = false;
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
+
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, true);
+            }
         }
 
         public override void Update()
@@ -30,6 +36,7 @@ namespace AI.Behavior
                 _isOver = true;
                 _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
             }
+
             if (_partTimer <= 0f && !_isOver)
             {
                 _partTimer = 2f;
@@ -41,9 +48,14 @@ namespace AI.Behavior
         {
             _totalTimer = 0.0f;
             _partTimer = 0.0f;
+
+            if (_chimeraBehavior.Animator != null)
+            {
+                _chimeraBehavior.Animator.SetBool(_animationState, false);
+            }
         }
 
-        public Vector3 GetNewWayPoint(float positionY)
+        private Vector3 GetNewWayPoint(float positionY)
         {
             float randomX = Random.Range(-_patrolRange, _patrolRange);
             float randomZ = Random.Range(-_patrolRange, _patrolRange);
@@ -54,6 +66,7 @@ namespace AI.Behavior
                 positionY,
                 agentPos.z + randomZ
             );
+
             return randomPoint;
         }
     }

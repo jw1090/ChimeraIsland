@@ -3,24 +3,23 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    private Camera _cameraMain = null;
+    private ChimeraBehavior _heldChimera = null;
+    private ReleaseSlider _releaseSlider = null;
     private LayerMask _chimeraLayer = new LayerMask();
-    private LayerMask _facilityLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
-    private ChimeraBehavior _heldChimera = null;
-    private ReleaseSlider _releaseSlider = null;
-    private Camera _cameraMain = null;
 
     public void SetReleaseSlider(ReleaseSlider releaseSlider) { _releaseSlider = releaseSlider; }
-    public void SetCameraMain(Camera cameraMain) { _cameraMain = cameraMain; }
+
+    public void SetCamera(Camera camera) { _cameraMain = camera; }
 
     public InputManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
-        _facilityLayer = LayerMask.GetMask("Facility");
 
         _isInitialized = true;
 
@@ -57,9 +56,14 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        if (_heldChimera == true)
+        {
+            return;
+        }
+
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, 200.0f, _facilityLayer);
+        Physics.Raycast(ray, out hit, 200.0f);
 
         if (hit.collider == null)
         {

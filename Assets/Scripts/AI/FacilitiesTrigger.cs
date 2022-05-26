@@ -3,10 +3,19 @@ using UnityEngine;
 
 public class FacilitiesTrigger : MonoBehaviour
 {
-    private void Start()
+    BoxCollider _boxCollider = null;
+    Facility _facility = null;
+
+    private void Awake()
     {
-        BoxCollider _collider = GetComponent<BoxCollider>();
-        _collider.enabled = false;
+        LevelManager.CallOnComplete(Initialize);
+    }
+
+    private void Initialize()
+    {
+        _boxCollider = GetComponent<BoxCollider>();
+        _facility = GetComponent<Facility>();
+        _boxCollider.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -16,19 +25,17 @@ public class FacilitiesTrigger : MonoBehaviour
             return;
         }
 
-        Facility facility = GetComponent<Facility>();
-        if (facility.IsChimeraStored() == true)
+        if (_facility.IsChimeraStored() == true)
         {
             return;
         }
 
-        Chimera chimera = other.gameObject.GetComponent<Chimera>();
+        Chimera chimera = other.GetComponent<Chimera>();
+        ChimeraBehavior chimeraBehaviour = chimera.GetComponent<ChimeraBehavior>();
 
-        facility.PlaceChimera(chimera);
+        _facility.PlaceChimera(chimera);
 
-        ChimeraBehavior chimeraBehaviour = chimera.gameObject.transform.GetComponent<ChimeraBehavior>();
         chimeraBehaviour.TrainingPosition = transform.position;
-        Debug.Log(chimeraBehaviour.TrainingPosition);
         chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
     }
 }

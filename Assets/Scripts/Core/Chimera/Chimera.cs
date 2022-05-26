@@ -105,7 +105,6 @@ public class Chimera : MonoBehaviour
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-
         _habitatType = ServiceLocator.Get<HabitatManager>().CurrentHabitat.Type;
 
         InitializeEvolution();

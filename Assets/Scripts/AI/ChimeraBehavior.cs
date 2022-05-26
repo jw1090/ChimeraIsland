@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,24 +14,26 @@ namespace AI.Behavior
 
     public class ChimeraBehavior : MonoBehaviour
     {
-        [Header("General Info")]
-        [SerializeField] private LayerMask _chimeraLayer;
-        [SerializeField] private float _heightOffset = 1.2f;
-        [SerializeField] private bool _clicked = false;
-        [SerializeField] private bool _isActive = false;
+        private List<Transform> _nodes = null;
+        private Animator _animator = null;
+        private BoxCollider _boxCollider = null;
+        private Camera _mainCamera = null;
+        private ChimeraBaseState _currentState = null;
+        private NavMeshAgent _navMeshAgent = null;
+        private float _heightOffset = 1.2f;
+        private bool _clicked = false;
+        private bool _isActive = false;
 
-        [Header("References")]
-        [SerializeField] private List<Transform> _nodes = null;
-        [SerializeField] private NavMeshAgent _navMeshAgent = null;
-        [SerializeField] private ChimeraBaseState _currentState = null;
-        [SerializeField] private Camera _mainCamera = null;
-
-        public Dictionary<StateEnum, ChimeraBaseState> States { get; private set; } = null;
+        public Dictionary<StateEnum, ChimeraBaseState> States { get; private set; } = new Dictionary<StateEnum, ChimeraBaseState>();
+        public Animator Animator { get => _animator; }
+        public NavMeshAgent Agent { get => _navMeshAgent; }
+        public BoxCollider BoxCollider { get => _boxCollider; }
+        public CameraController CameraController { get; set; }
+        public Vector3 TrainingPosition { get; set; } = Vector3.zero;
         public int PatrolIndex { get; private set; } = 0;
         public int WanderIndex { get; private set; } = 0;
         public float PatrolWaitTime { get; private set; } = 1.0f;
         public float Timer { get; private set; } = 0;
-        public Vector3 TrainingPosition { get; set; } = Vector3.zero;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
         public int GetNodeCount() { return _nodes.Count; }
@@ -44,26 +45,26 @@ namespace AI.Behavior
         public void ResetWanderIndex() { WanderIndex = 0; }
         public void AddToTimer(float amount) { Timer += amount; }
         public void ResetTimer() { Timer = 0; }
-        public Animator animator;
 
         public void Initialize()
         {
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
+            CameraController = ServiceLocator.Get<CameraController>();
+            _mainCamera = CameraController.CameraCO;
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _boxCollider = GetComponent<BoxCollider>();
 
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
-            States = new Dictionary<StateEnum, ChimeraBaseState>();
             States.Add(StateEnum.Patrol, new PatrolState());
             States.Add(StateEnum.Wander, new WanderState());
             States.Add(StateEnum.Held, new HeldState());
             States.Add(StateEnum.Training, new TrainingState());
-            animator = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
 
             ChangeState(States[StateEnum.Patrol]);
 
-            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
             _isActive = true;
         }
 
@@ -80,30 +81,32 @@ namespace AI.Behavior
         public void PatrolEnterHeld()
         {
             if (_clicked)
+            {
                 ChangeState(States[StateEnum.Held]);
+            }
         }
 
         public void WanderEnterHeld()
         {
             if (_clicked)
+            {
                 ChangeState(States[StateEnum.Held]);
+            }
         }
 
         public void HeldEnterPatrol()
         {
             if (!_clicked)
+            {
                 ChangeState(States[StateEnum.Patrol]);
-        }
-
-        public void HeldExit()
-        {
-            _navMeshAgent.enabled = true;
+            }
         }
 
         public void ObjFollowMouse()
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
             {
                 transform.position = hit.point + (Vector3.up * _heightOffset);
@@ -117,6 +120,7 @@ namespace AI.Behavior
             {
                 _currentState.Exit();
             }
+
             _currentState = state;
             _currentState.Enter(this);
         }

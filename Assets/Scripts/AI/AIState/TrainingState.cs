@@ -7,12 +7,13 @@ namespace AI.Behavior
         private ChimeraBehavior _chimeraBehavior = null;
         private float _patrolRange = 2f;
         private float _partTimer = 0.0f; // Time of wander point.
-        private Vector3 _patrolPos;
+        private Vector3 _patrolPos = new Vector3();
 
         public void SetPos(Vector3 pos)
         {
             _patrolPos = pos;
         }
+
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
@@ -46,6 +47,7 @@ namespace AI.Behavior
                 positionY,
                 _patrolPos.z + randomZ
             );
+
             return randomPoint;
         }
     }

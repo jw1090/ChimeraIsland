@@ -175,9 +175,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1865579845439662283}
   - component: {fileID: -3574371952117081727}
+  - component: {fileID: 5411779016165357027}
   - component: {fileID: 81764737}
   - component: {fileID: 5411779016165357026}
-  - component: {fileID: 5411779016165357027}
   m_Layer: 7
   m_Name: Waterfall
   m_TagString: Facility
@@ -219,11 +219,22 @@ MonoBehaviour:
   _statType: 0
   _statModifier: 1
   _price: 50
-  _isActive: 0
   _storedChimera: {fileID: 0}
   _icon: {fileID: 8944782610774198338}
   _rubbleObject: {fileID: 8809651079318361311}
   _tier1Object: {fileID: 8899598707092396344}
+--- !u!114 &5411779016165357027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509396852312259999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8fcf63b73ce2f4a98f7c72a382fc17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &81764737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,18 +264,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &5411779016165357027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5509396852312259999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de8fcf63b73ce2f4a98f7c72a382fc17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8028788481001019898
 GameObject:
   m_ObjectHideFlags: 0
