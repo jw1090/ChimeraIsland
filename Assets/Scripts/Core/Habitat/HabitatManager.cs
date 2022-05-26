@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
@@ -7,13 +8,14 @@ public class HabitatManager : MonoBehaviour
     [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType, List<Chimera>>();
     [SerializeField] private List<HabitatData> _displayDictionary = new List<HabitatData>();
     private PersistentData _persistentData = null;
+    private List<ChimeraSaveData> _chimeraSaveData = null;
 
     [Serializable]
     public class HabitatData
     {
         public HabitatType key = HabitatType.None;
-        public List<Chimera> value = new List<Chimera>();
-        public HabitatData(HabitatType Key, List<Chimera> Value)
+        public List<string> value = new List<string>();
+        public HabitatData(HabitatType Key, List<string> Value)
         {
             key = Key;
             value = Value;
@@ -27,9 +29,10 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-
-        HabitatDataDisplayInit();
-        InitializeChimeraData();
+        if (InitializeChimeraData())
+        {
+            HabitatDataDisplayInit();
+        }
 
         return this;
     }
@@ -38,7 +41,8 @@ public class HabitatManager : MonoBehaviour
     {
         foreach (var entry in _chimerasByHabitat)
         {
-            _displayDictionary.Add(new HabitatData(entry.Key, entry.Value));
+            var names = entry.Value.Select(c => c.name).ToList();
+            _displayDictionary.Add(new HabitatData(entry.Key, names));
         }
     }
 
@@ -79,18 +83,12 @@ public class HabitatManager : MonoBehaviour
     private bool InitializeChimeraData()
     {
         // Get your data from the save system
-        List<ChimeraSaveData> saveData = ServiceLocator.Get<PersistentData>().GetChimeraList();
+         _chimeraSaveData = _persistentData.GetChimeraList();
 
-        if (saveData == null)
+        if (_chimeraSaveData == null)
         {
             Debug.LogError("Save data is null!");
             return false;
-        }
-
-        _persistentData.LoadChimerasToDictionary(_chimerasByHabitat);
-        foreach (KeyValuePair<HabitatType, List<Chimera>> kvp in _chimerasByHabitat)
-        {
-            _displayDictionary.Add(new HabitatData(kvp.Key, kvp.Value));
         }
         return true;
     }

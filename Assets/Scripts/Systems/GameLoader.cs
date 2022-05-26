@@ -95,6 +95,11 @@ public class GameLoader : AsyncLoader
         var habitatManagerComp = habitatManagerGO.AddComponent<HabitatManager>().Initialize();
         ServiceLocator.Register<HabitatManager>(habitatManagerComp);
 
+        var tutorialGO = new GameObject("Tutorial Manager");
+        tutorialGO.transform.SetParent(systemsParent);
+        var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
+        ServiceLocator.Register<TutorialManager>(tutorialComp);
+
         yield return null;
 	}
 
