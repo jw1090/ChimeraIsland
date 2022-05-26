@@ -109,7 +109,7 @@ public class InputManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
             _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
-            _heldChimera.ChimeraSelect(true);
+            _heldChimera.Clicked = true;
             _isHolding = true;
         }
     }
@@ -121,7 +121,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        _heldChimera.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
+        _heldChimera.GetComponent<ChimeraBehavior>().Clicked = false;
         _isHolding = false;
         _heldChimera = null;
     }
