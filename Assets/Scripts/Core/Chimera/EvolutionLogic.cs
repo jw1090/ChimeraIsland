@@ -30,21 +30,21 @@ public class EvolutionLogic : MonoBehaviour
 
         foreach(var evolution in _evolutionPaths)
         {
-            if (endurance >= evolution.ReqEndurance)
+            if (endurance < evolution.ReqEndurance)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
-            else if (intelligence >= evolution.ReqIntelligence)
+            else if (intelligence < evolution.ReqIntelligence)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
-            else if(strength >= evolution.ReqStrength)
+            if(strength < evolution.ReqStrength)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
+
+            Evolve(evolution);
+            return true;
         }
 
         return false;
