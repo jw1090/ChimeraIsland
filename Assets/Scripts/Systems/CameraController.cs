@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     private Rect _DownRect;
     private Rect _LeftRect;
 
-    private Material _mat;
+    //private Material _mat;
     private Vector3 _dir = Vector3.zero;
 
     public Camera CameraCO { get; private set; }
@@ -37,13 +37,14 @@ public class CameraController : MonoBehaviour
         Debug.Log("<color=Orange> Initializing Camera Logic ... </color>");
         CameraCO = GetComponent<Camera>();
         _pos = transform.position;
-        CreateLineMaterial();
+        //CreateLineMaterial();
 
         return this;
     }
 
     private void Update()
     {
+        _pos = transform.position;
         ScreenMove();
         CameraMovement();
         CameraZoom();
@@ -92,14 +93,11 @@ public class CameraController : MonoBehaviour
         {
             _UpRect = new Rect(1f, Screen.height - _ScreenEdgeSize, Screen.width, _ScreenEdgeSize);
             _DownRect = new Rect(1f, 1f, Screen.width, _ScreenEdgeSize);
-
             _RightRect = new Rect(1f, 1f, _ScreenEdgeSize, Screen.height);
             _LeftRect = new Rect(Screen.width - _ScreenEdgeSize, 1f, _ScreenEdgeSize, Screen.height);
 
-
             _MoveDown = (_UpRect.Contains(Input.mousePosition));
             _MoveUp = (_DownRect.Contains(Input.mousePosition));
-
             _MoveLeft = (_LeftRect.Contains(Input.mousePosition));
             _MoveRight = (_RightRect.Contains(Input.mousePosition));
 
@@ -110,19 +108,19 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void CreateLineMaterial()
-    {
-        if (!_mat)
-        {
-            Shader shader = Shader.Find("Hidden/Internal-Colored");
-            _mat = new Material(shader);
-            _mat.hideFlags = HideFlags.HideAndDontSave;
-            _mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            _mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            _mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-            _mat.SetInt("_ZWrite", 0);
-        }
-    }
+    //void CreateLineMaterial()
+    //{
+    //    if (!_mat)
+    //    {
+    //        Shader shader = Shader.Find("Hidden/Internal-Colored");
+    //        _mat = new Material(shader);
+    //        _mat.hideFlags = HideFlags.HideAndDontSave;
+    //        _mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+    //        _mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+    //        _mat.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+    //        _mat.SetInt("_ZWrite", 0);
+    //    }
+    //}
 
     //void OnPostRender()
     //{
@@ -135,37 +133,37 @@ public class CameraController : MonoBehaviour
     //    }
     //}
 
-    private void DrawRect(Rect rect, bool isMouseEnter, Color normalColor, Color HeighLightColor)
-    {
-        if (isMouseEnter)
-        {
-            DrawScreenRect(rect, HeighLightColor);
-        }
-        else
-        {
-            DrawScreenRect(rect, normalColor);
-        }
-    }
+    //private void DrawRect(Rect rect, bool isMouseEnter, Color normalColor, Color HeighLightColor)
+    //{
+    //    if (isMouseEnter)
+    //    {
+    //        DrawScreenRect(rect, HeighLightColor);
+    //    }
+    //    else
+    //    {
+    //        DrawScreenRect(rect, normalColor);
+    //    }
+    //}
 
-    private void DrawScreenRect(Rect rect, Color color)
-    {
-        GL.LoadOrtho();
-        GL.Begin(GL.LINES);
-        {
-            _mat.SetPass(0);
-            GL.Color(color);
-            GL.Vertex3(rect.xMin / Screen.width, rect.yMin / Screen.height, 0);
-            GL.Vertex3(rect.xMin / Screen.width, rect.yMax / Screen.height, 0);
+    //private void DrawScreenRect(Rect rect, Color color)
+    //{
+    //    GL.LoadOrtho();
+    //    GL.Begin(GL.LINES);
+    //    {
+    //        _mat.SetPass(0);
+    //        GL.Color(color);
+    //        GL.Vertex3(rect.xMin / Screen.width, rect.yMin / Screen.height, 0);
+    //        GL.Vertex3(rect.xMin / Screen.width, rect.yMax / Screen.height, 0);
 
-            GL.Vertex3(rect.xMin / Screen.width, rect.yMax / Screen.height, 0);
-            GL.Vertex3(rect.xMax / Screen.width, rect.yMax / Screen.height, 0);
+    //        GL.Vertex3(rect.xMin / Screen.width, rect.yMax / Screen.height, 0);
+    //        GL.Vertex3(rect.xMax / Screen.width, rect.yMax / Screen.height, 0);
 
-            GL.Vertex3(rect.xMax / Screen.width, rect.yMax / Screen.height, 0);
-            GL.Vertex3(rect.xMax / Screen.width, rect.yMin / Screen.height, 0);
+    //        GL.Vertex3(rect.xMax / Screen.width, rect.yMax / Screen.height, 0);
+    //        GL.Vertex3(rect.xMax / Screen.width, rect.yMin / Screen.height, 0);
 
-            GL.Vertex3(rect.xMax / Screen.width, rect.yMin / Screen.height, 0);
-            GL.Vertex3(rect.xMin / Screen.width, rect.yMin / Screen.height, 0);
-        }
-        GL.End();
-    }
+    //        GL.Vertex3(rect.xMax / Screen.width, rect.yMin / Screen.height, 0);
+    //        GL.Vertex3(rect.xMin / Screen.width, rect.yMin / Screen.height, 0);
+    //    }
+    //    GL.End();
+    //}
 }

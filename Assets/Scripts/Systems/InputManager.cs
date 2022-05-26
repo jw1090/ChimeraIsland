@@ -63,7 +63,6 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider == null)
         {
-            Debug.Log("Hit nothing");
             return;
         }
 
