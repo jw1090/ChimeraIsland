@@ -1,11 +1,11 @@
 using AI.Behavior;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
+    [SerializeField] private HabitatType _habitatType = HabitatType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private bool _inFacility = false;
@@ -43,15 +43,16 @@ public class Chimera : MonoBehaviour
     [SerializeField] private EssenceManager _essenceManager = null;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
+    public HabitatType HabitatType { get => _habitatType; }
     public ElementalType ElementalType { get => _elementalType; }
     public StatType StatPreference { get => _statPreference; }
-
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
     public int Intelligence { get => _intelligence; }
     public int Strength { get => _strength; }
     public int Happiness { get => _happiness; }
     public int Price { get => _price; }
+
 
     public bool GetStatByType(StatType statType, out int amount)
     {
@@ -104,6 +105,8 @@ public class Chimera : MonoBehaviour
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+
+        _habitatType = ServiceLocator.Get<HabitatManager>().CurrentHabitat.Type;
 
         InitializeEvolution();
 

@@ -49,10 +49,9 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
             _persistentData.SetEssenceManager(_essenceManager);
         }
-        if (_habitat != null)
-        {
-            ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
-        }
+
+        _habitat.Initialize();
+        _habitatManager.SetCurrentHabitat(_habitat);
     }
 
     private void LoadUI()
@@ -68,10 +67,7 @@ public class LevelManager : AsyncLoader
 
     private void LoadChimeras()
     {
-        // TODO: Update this so that chimera spawning is done from the HabitatManager.
-        // something like _habitatManager.SpawnChimerasForHabitat(_habitat.Type);
-        var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.Type);
-        _habitat.SpawnChimeras(chimerasToSpawn);
+        _habitatManager.SpawnChimerasForHabitat();
     }
 
     private void StartHabitatTickTimer()
