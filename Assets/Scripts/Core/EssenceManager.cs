@@ -12,10 +12,10 @@ public class EssenceManager : MonoBehaviour
     public EssenceManager Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-        LoadEssence();
-
-        _uIManager = ServiceLocator.Get<UIManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _uIManager = ServiceLocator.Get<UIManager>();
+
+        LoadEssence();
         if (_uIManager != null)
         {
             _uIManager.UpdateWallets();
