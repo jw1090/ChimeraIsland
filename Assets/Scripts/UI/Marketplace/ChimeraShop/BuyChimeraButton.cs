@@ -12,7 +12,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
         _chimera = chimera;
         _habitat = habitat;
 
-        GetComponentInChildren<TextMeshProUGUI>().text = _chimera.GetPrice().ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text = _chimera.Price.ToString();
     }
 
     // Adds a chimera based on the assigned chimera prefab.

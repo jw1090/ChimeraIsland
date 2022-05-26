@@ -22,6 +22,7 @@ public class Habitat : MonoBehaviour
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private EssenceManager _essenceManager = null;
     private ChimeraCreator _chimeraCreator = null;
+    private HabitatManager _habitatManager = null;
     private int _tickTracker = 0;
     private bool _isInitialized = false;
 
@@ -35,6 +36,7 @@ public class Habitat : MonoBehaviour
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         if (_patrolNodes == null)
         {
@@ -83,12 +85,12 @@ public class Habitat : MonoBehaviour
 
             ++_tickTracker;
 
-            foreach(Chimera chimera in _activeChimeras)
+            foreach (Chimera chimera in _activeChimeras)
             {
-                if(chimera.isActiveAndEnabled)
+                if (chimera.isActiveAndEnabled)
                 {
                     chimera.EssenceTick();
-                    
+
                     if (_tickTracker % _unhappyRate == 0)
                     {
                         chimera.HappinessTick();
@@ -97,9 +99,9 @@ public class Habitat : MonoBehaviour
                 }
             }
 
-            foreach(Facility facility in _facilities)
+            foreach (Facility facility in _facilities)
             {
-                if(facility.IsActive())
+                if (facility.IsInitialized)
                 {
                     facility.FacilityTick();
                 }
@@ -118,7 +120,7 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        if(facility.CurrentTier == 3)
+        if (facility.CurrentTier == 3)
         {
             Debug.Log("Facility is already at max tier.");
             return;
@@ -138,7 +140,7 @@ public class Habitat : MonoBehaviour
         facility.BuyFacility();
     }
 
-    // Called by the BuyChimera Script on a button to check price nad purchase an egg on the active habitat.
+    // Called by the BuyChimera Script on a button to check price and purchase an egg on the active habitat.
     // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
@@ -148,22 +150,21 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        int price = chimeraPrefab.GetPrice();
+        int price = chimeraPrefab.Price;
 
         if (_essenceManager.SpendEssence(price) == false)
         {
             Debug.Log
             (
-                "Can't afford this chimera. It costs " +
-                price + " Essence and you only have " +
-                _essenceManager.CurrentEssence + " Essence."
+                $"Can't afford this chimera. It costs {price} " +
+                $"Essence and you only have {_essenceManager.CurrentEssence} Essence."
             );
             return;
         }
 
         GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
-
         AddChimera(newChimera);
+        _habitatManager.AddChimeraToHabitat(newChimera.GetComponent<Chimera>(), _habitatType);
     }
 
     public void AddChimera(GameObject newChimera)
@@ -174,7 +175,6 @@ public class Habitat : MonoBehaviour
 
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
-
         chimeraComp.Initialize();
     }
 
@@ -198,7 +198,7 @@ public class Habitat : MonoBehaviour
 
         foreach (Facility facility in _facilities)
         {
-            if (facility.IsActive())
+            if (facility.IsInitialized)
             {
                 ++facilityCount;
             }

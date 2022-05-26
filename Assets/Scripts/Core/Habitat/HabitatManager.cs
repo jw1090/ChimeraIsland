@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
 {
-    [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType,List<Chimera>>();
+    [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType, List<Chimera>>();
     [SerializeField] private List<HabitatData> _displayDictionary = new List<HabitatData>();
-    private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
 
     [Serializable]
@@ -20,12 +19,13 @@ public class HabitatManager : MonoBehaviour
             value = Value;
         }
     }
+
     public Dictionary<HabitatType, List<Chimera>> GetChimerasDictionary() { return _chimerasByHabitat; }
+
     public HabitatManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         HabitatDataDisplayInit();
@@ -39,6 +39,30 @@ public class HabitatManager : MonoBehaviour
         foreach (var entry in _chimerasByHabitat)
         {
             _displayDictionary.Add(new HabitatData(entry.Key, entry.Value));
+        }
+    }
+
+    public void AddChimeraToHabitat(Chimera chimeraToAdd, HabitatType habitat)
+    {
+        if (_chimerasByHabitat.ContainsKey(habitat) == false)
+        {
+            _chimerasByHabitat.Add(habitat, new List<Chimera>());
+        }
+        _chimerasByHabitat[habitat].Add(chimeraToAdd);
+    }
+
+    public void RemoveChimeraFromHabitat(Chimera chimeraToRemove, HabitatType habitat)
+    {
+        if (!_chimerasByHabitat.ContainsKey(habitat))
+        {
+            Debug.LogError("Cannot remove chimera. Habitat key not found");
+            return;
+        }
+
+        var chimeras = _chimerasByHabitat[habitat];
+        if (chimeras.Remove(chimeraToRemove))
+        {
+            Debug.Log($"Successfully removed chimera {chimeraToRemove.name} from habitat {habitat}");
         }
     }
 
@@ -70,5 +94,4 @@ public class HabitatManager : MonoBehaviour
         }
         return true;
     }
-
 }

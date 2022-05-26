@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
@@ -9,9 +10,6 @@ public class LevelManager : AsyncLoader
     private PersistentData _persistentData = null;
     private InputManager _inputManager = null;
     private HabitatManager _habitatManager = null;
-    private bool _isInitialized = false;
-
-    public bool IsInitialized { get => _isInitialized; }
 
     protected override void Awake()
     {
@@ -25,7 +23,6 @@ public class LevelManager : AsyncLoader
         LoadChimeras();
         StartHabitatTickTimer();
 
-        // Set completion callback
         LevelManager.ResetStaticVariables();
         LevelManager.CallOnComplete(OnComplete);
     }
@@ -56,8 +53,6 @@ public class LevelManager : AsyncLoader
         {
             ServiceLocator.Register<Habitat>(_habitat.Initialize(), true);
         }
-
-        _isInitialized = true;
     }
 
     private void LoadUI()
@@ -73,6 +68,8 @@ public class LevelManager : AsyncLoader
 
     private void LoadChimeras()
     {
+        // TODO: Update this so that chimera spawning is done from the HabitatManager.
+        // something like _habitatManager.SpawnChimerasForHabitat(_habitat.Type);
         var chimerasToSpawn = _habitatManager.GetChimerasForHabitat(_habitat.Type);
         _habitat.SpawnChimeras(chimerasToSpawn);
     }

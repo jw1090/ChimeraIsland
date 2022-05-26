@@ -4,38 +4,22 @@ using UnityEngine;
 public class EvolutionLogic : MonoBehaviour
 {
     [Header("Evolution Info")]
-    [SerializeField] private ChimeraType _myType;
-    [SerializeField] private Sprite _profileIcon = null;
+    [SerializeField] private ChimeraType _evolutionType;
+    [SerializeField] private Sprite _icon = null;
     [SerializeField] private List<EvolutionLogic> _evolutionPaths;
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
-	
-    [Header("References")]
-    [SerializeField] private Chimera _chimeraBrain;
 
-    public Sprite GetIcon() { return _profileIcon; }
-    public int GetReqEnd() { return _reqEndurance; }
-    public int GetReqInt() { return _reqIntelligence; }
-    public int GetReqStr() { return _reqStrength; }
-    public ChimeraType GetChimeraType() { return _myType; }
+    private Chimera _chimeraBrain = null;
+
+    public ChimeraType Type { get => _evolutionType; }
+    public Sprite Icon { get => _icon; }
+    public int ReqEndurance { get => _reqEndurance; }
+    public int ReqIntelligence { get => _reqIntelligence; }
+    public int ReqStrength { get => _reqStrength; }
+
     public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
-    public void SetChimeraType(ChimeraType type) { _myType = type; }
-	public void LoadEvolution()
-    {
-        if (_evolutionPaths == null)
-        {
-            return;
-        }
-
-        foreach (var evolution in _evolutionPaths)
-        {
-            if (_myType == evolution._myType)
-            {
-                Evolve(evolution);
-            }
-        }
-    }
 
     public void CheckEvolution(int endurance, int intelligence, int strength)
     {
@@ -46,15 +30,15 @@ public class EvolutionLogic : MonoBehaviour
 
         foreach(var evolution in _evolutionPaths)
         {
-            if (endurance < evolution.GetReqEnd())
+            if (endurance < evolution.ReqEndurance)
             {
                 continue;
             }
-            if (intelligence < evolution.GetReqInt())
+            if (intelligence < evolution.ReqIntelligence)
             {
                 continue;
             }
-            if (strength < evolution.GetReqStr())
+            if (strength < evolution.ReqStrength)
             {
                 continue;
             }
@@ -69,6 +53,8 @@ public class EvolutionLogic : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(newModel, _chimeraBrain.transform);
         _chimeraBrain.SetEvolutionLogic(newEvolution);
+        _chimeraBrain.SetChimeraType(newEvolution.Type);
+
         Destroy(gameObject);
     }
 }
