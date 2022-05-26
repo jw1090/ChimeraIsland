@@ -10,6 +10,7 @@ public class LevelManager : AsyncLoader
     private PersistentData _persistentData = null;
     private InputManager _inputManager = null;
     private HabitatManager _habitatManager = null;
+    private TutorialManager _tutorialManager = null;
 
     protected override void Awake()
     {
@@ -25,6 +26,9 @@ public class LevelManager : AsyncLoader
 
         LevelManager.ResetStaticVariables();
         LevelManager.CallOnComplete(OnComplete);
+
+        _tutorialManager.Initialize();
+        _tutorialManager.ShowTutorial();
     }
 
     private void Initialize()
@@ -33,6 +37,7 @@ public class LevelManager : AsyncLoader
         _persistentData = ServiceLocator.Get<PersistentData>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         if (_uiManager != null)
         {

@@ -8,11 +8,6 @@ public class TutorialManager : MonoBehaviour
     private UIManager _uiManager = null;
     private UITutorialOverlay _tutorialOverlay = null;
 
-    private void Awake()
-    {
-        //LevelManager.CallOnComplete(Initialize);
-    }
-
     public TutorialManager Initialize()
     {
         _uiManager = ServiceLocator.Get<UIManager>();
