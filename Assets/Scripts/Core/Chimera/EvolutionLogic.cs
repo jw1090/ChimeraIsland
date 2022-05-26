@@ -21,30 +21,33 @@ public class EvolutionLogic : MonoBehaviour
 
     public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
 
-    public void CheckEvolution(int endurance, int intelligence, int strength)
+    public bool CheckEvolution(int endurance, int intelligence, int strength)
     {
         if(_evolutionPaths == null)
         {
-            return;
+            return false;
         }
 
         foreach(var evolution in _evolutionPaths)
         {
-            if (endurance < evolution.ReqEndurance)
+            if (endurance >= evolution.ReqEndurance)
             {
-                continue;
+                Evolve(evolution);
+                return true;
             }
-            if (intelligence < evolution.ReqIntelligence)
+            else if (intelligence >= evolution.ReqIntelligence)
             {
-                continue;
+                Evolve(evolution);
+                return true;
             }
-            if (strength < evolution.ReqStrength)
+            else if(strength >= evolution.ReqStrength)
             {
-                continue;
+                Evolve(evolution);
+                return true;
             }
-
-            Evolve(evolution);
         }
+
+        return false;
     }
 
     private void Evolve(EvolutionLogic newModel)

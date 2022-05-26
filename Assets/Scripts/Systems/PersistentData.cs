@@ -4,76 +4,44 @@ using UnityEngine;
 public class PersistentData : MonoBehaviour
 {
     private EssenceManager _essenceManager = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+    private GlobalData _globalSaveData = null;
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
 
-    public List<ChimeraSaveData> GetChimeraList()
+    public List<ChimeraData> GetChimeraList()
     {
-        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        return _chimeraSaveData;
+    }
+
+    public int GetEssenceData()
+    {
+        return _globalSaveData.currentEssence;
     }
 
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _chimeraSaveData = FileHandler.ReadListFromJSON<ChimeraData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        _globalSaveData = FileHandler.ReadFromJSON<GlobalData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
+
         return this;
     }
 
-    public void LoadChimerasToDictionary(Dictionary<HabitatType, List<Chimera>> keyValuePairs)
-    {
-        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-        var resourceManager = ServiceLocator.Get<ResourceManager>();
-        List<Chimera> PlainsChimeras = new List<Chimera>();
-        List<Chimera> IslandChimeras = new List<Chimera>();
-        foreach (ChimeraSaveData data in jList)
-        {
-            GameObject chimeraGO = resourceManager.GetChimeraBasePrefab(data.chimeraType);
-            Chimera chimera = chimeraGO.GetComponent<Chimera>();
-            chimera.SetChimeraType(data.chimeraType);
-            chimera.SetLevel(data.level);
-            chimera.SetEndurance(data.endurance);
-            chimera.SetIntelligence(data.intelligence);
-            chimera.SetStrength(data.strength);
-            chimera.SetHappiness(data.happiness);
-            if(data.habitatType.Equals(HabitatType.StonePlains))
-            {
-                PlainsChimeras.Add(chimera);
-            }
-            else if (data.habitatType.Equals(HabitatType.TreeOfLife))
-            {
-                IslandChimeras.Add(chimera);
-            }
-        }
-        keyValuePairs.Add(HabitatType.StonePlains, PlainsChimeras);
-        keyValuePairs.Add(HabitatType.TreeOfLife, IslandChimeras);
-    }
     public void SaveChimeras()
     {
-        List<ChimeraSaveData> myData = ChimerasToJson();
+        List<ChimeraData> myData = ChimerasToJson();
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
     }
-    private List<ChimeraSaveData> ChimerasToJson()
-    {
-        List<ChimeraSaveData> chimeraList = new List<ChimeraSaveData> { };
-        Dictionary<HabitatType, List<Chimera>> chimerasByHabitat = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
-        foreach (KeyValuePair<HabitatType, List<Chimera>> kvp in chimerasByHabitat)
-        {
-            foreach (var chimera in kvp.Value)
-            {
-                ChimeraSaveData temp = new ChimeraSaveData
-                (
-                    chimera.GetInstanceID(),
-                    chimera.ChimeraType,
-                    chimera.Level,
-                    chimera.Endurance,
-                    chimera.Intelligence,
-                    chimera.Strength,
-                    chimera.Happiness,
-                    kvp.Key
-                );
 
-                chimeraList.Add(temp);
-            }
+    private List<ChimeraData> ChimerasToJson()
+    {
+        List<ChimeraData> chimeraList = new List<ChimeraData> { };
+        Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
+        foreach (KeyValuePair<HabitatType, List<ChimeraData>> kvp in chimerasByHabitat)
+        {
+            chimeraList.AddRange(kvp.Value);
         }
         return chimeraList;
     }

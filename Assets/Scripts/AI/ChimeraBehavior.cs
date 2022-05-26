@@ -48,7 +48,7 @@ namespace AI.Behavior
 
         public void Initialize()
         {
-            _nodes = ServiceLocator.Get<Habitat>().PatrolNodes;
+            _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _navMeshAgent = GetComponent<NavMeshAgent>();
 
             _navMeshAgent.isStopped = false;

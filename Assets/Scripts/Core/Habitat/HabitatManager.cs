@@ -1,26 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
 {
-    [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType, List<Chimera>>();
+    [SerializeField] private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     [SerializeField] private List<HabitatData> _displayDictionary = new List<HabitatData>();
     private PersistentData _persistentData = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+    private Habitat _currentHabitat = null;
+
+    public Habitat CurrentHabitat { get => _currentHabitat; }
+
+    public Dictionary<HabitatType, List<ChimeraData>> GetChimerasDictionary() { return _chimerasByHabitat; }
+
+    private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
+    {
+        if (_chimerasByHabitat.ContainsKey(habitatType))
+        {
+            return _chimerasByHabitat[habitatType];
+        }
+
+        Debug.Log($"No entry for habitat: {habitatType}");
+        return new List<ChimeraData>();
+    }
+
+    public void SetCurrentHabitat(Habitat habitat) { _currentHabitat = habitat; }
 
     [Serializable]
     public class HabitatData
     {
         public HabitatType key = HabitatType.None;
-        public List<Chimera> value = new List<Chimera>();
-        public HabitatData(HabitatType Key, List<Chimera> Value)
+        public List<string> value = new List<string>();
+        public HabitatData(HabitatType Key, List<string> Value)
         {
             key = Key;
             value = Value;
         }
     }
-
-    public Dictionary<HabitatType, List<Chimera>> GetChimerasDictionary() { return _chimerasByHabitat; }
 
     public HabitatManager Initialize()
     {
@@ -28,8 +46,11 @@ public class HabitatManager : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
 
-        HabitatDataDisplayInit();
-        InitializeChimeraData();
+        if (InitializeChimeraData())
+        {
+            StoreChimeraDataByHabitat();
+            HabitatDataDisplayInit();
+        }
 
         return this;
     }
@@ -38,20 +59,27 @@ public class HabitatManager : MonoBehaviour
     {
         foreach (var entry in _chimerasByHabitat)
         {
-            _displayDictionary.Add(new HabitatData(entry.Key, entry.Value));
+            var names = entry.Value.Select(c => c.chimeraType.ToString()).ToList();
+            _displayDictionary.Add(new HabitatData(entry.Key, names));
         }
     }
 
-    public void AddChimeraToHabitat(Chimera chimeraToAdd, HabitatType habitat)
+    private void AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
     {
         if (_chimerasByHabitat.ContainsKey(habitat) == false)
         {
-            _chimerasByHabitat.Add(habitat, new List<Chimera>());
+            _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
         }
         _chimerasByHabitat[habitat].Add(chimeraToAdd);
     }
 
-    public void RemoveChimeraFromHabitat(Chimera chimeraToRemove, HabitatType habitat)
+    public void AddNewChimera(Chimera chimeraToSave)
+    {
+        ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
+        AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType);
+    }
+
+    public void RemoveChimeraFromHabitat(ChimeraData chimeraToRemove, HabitatType habitat)
     {
         if (!_chimerasByHabitat.ContainsKey(habitat))
         {
@@ -62,36 +90,35 @@ public class HabitatManager : MonoBehaviour
         var chimeras = _chimerasByHabitat[habitat];
         if (chimeras.Remove(chimeraToRemove))
         {
-            Debug.Log($"Successfully removed chimera {chimeraToRemove.name} from habitat {habitat}");
+            Debug.Log($"Successfully removed chimera {chimeraToRemove.chimeraType} from habitat {habitat}");
         }
     }
 
-    public List<Chimera> GetChimerasForHabitat(HabitatType habitatType)
+    public void SpawnChimerasForHabitat()
     {
-        if (_chimerasByHabitat.ContainsKey(habitatType))
-        {
-            return _chimerasByHabitat[habitatType];
-        }
-        Debug.Log($"No entry for habitat: {habitatType}");
-        return new List<Chimera>();
+        var chimerasToSpawn = GetChimerasForHabitat(_currentHabitat.Type);
+        _currentHabitat.SpawnChimeras(chimerasToSpawn);
     }
 
     private bool InitializeChimeraData()
     {
         // Get your data from the save system
-        List<ChimeraSaveData> saveData = ServiceLocator.Get<PersistentData>().GetChimeraList();
+         _chimeraSaveData = _persistentData.GetChimeraList();
 
-        if (saveData == null)
+        if (_chimeraSaveData == null)
         {
             Debug.LogError("Save data is null!");
             return false;
         }
 
-        _persistentData.LoadChimerasToDictionary(_chimerasByHabitat);
-        foreach (KeyValuePair<HabitatType, List<Chimera>> kvp in _chimerasByHabitat)
-        {
-            _displayDictionary.Add(new HabitatData(kvp.Key, kvp.Value));
-        }
         return true;
+    }
+
+    private void StoreChimeraDataByHabitat()
+    {
+        foreach(var chimera in _chimeraSaveData)
+        {
+            AddChimeraToHabitat(chimera, chimera.habitatType);
+        }
     }
 }
