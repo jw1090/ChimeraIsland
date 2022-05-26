@@ -50,7 +50,7 @@ public class Habitat : MonoBehaviour
         return this;
     }
 
-    public void SpawnChimeras(List<Chimera> chimerasToSpawn)
+    public void SpawnChimeras(List<ChimeraSaveData> chimerasToSpawn)
     {
         foreach (var chimeraInfo in chimerasToSpawn)
         {

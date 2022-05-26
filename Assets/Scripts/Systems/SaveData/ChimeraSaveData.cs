@@ -1,4 +1,5 @@
 ﻿using System;
+
 [Serializable]
 public class ChimeraSaveData
 {
@@ -11,14 +12,13 @@ public class ChimeraSaveData
     public int endurance = 0;
     public int happiness = 0;
 
-
     public ChimeraSaveData(
         int newId,
         ChimeraType newChimeraType,
         int newLevel,
         int newEndurance,
         int newIntelligence,
-        int newSrength,
+        int newStrength,
         int newHappiness,
         HabitatType newHabitatType)
     {
@@ -27,7 +27,7 @@ public class ChimeraSaveData
         level = newLevel;
         endurance = newEndurance;
         intelligence = newIntelligence;
-        strength = newSrength;
+        strength = newStrength;
         happiness = newHappiness;
         habitatType = newHabitatType;
     }
