@@ -53,7 +53,6 @@ public class Chimera : MonoBehaviour
     public int Happiness { get => _happiness; }
     public int Price { get => _price; }
 
-
     public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
@@ -89,8 +88,6 @@ public class Chimera : MonoBehaviour
         return _currentEvolution.Icon; 
     }
 
-    public void SetChimeraType(ChimeraType type){ _chimeraType = type; }
-    public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
@@ -100,22 +97,16 @@ public class Chimera : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
+        Debug.Log($"<color=Green> Initializing {this.GetType()} ... </color>");
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatType = ServiceLocator.Get<HabitatManager>().CurrentHabitat.Type;
 
-        InitializeEvolution();
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
         GetComponent<ChimeraBehavior>().Initialize();
-    }
-
-    private void InitializeEvolution()
-    {
-        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
-        _currentEvolution.SetChimeraBrain(this);
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -169,7 +160,7 @@ public class Chimera : MonoBehaviour
 
     public void HappinessTick()
     {
-        if (!_inFacility)
+        if (_inFacility == false)
         {
             int happinessAmount = -1;
 
@@ -247,9 +238,15 @@ public class Chimera : MonoBehaviour
             _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
         }
 
-        if (levelUp)
+        if (levelUp == true)
         {
-            _currentEvolution.CheckEvolution(Endurance, Intelligence, Strength);
+            bool canEvolve = _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength, out EvolutionLogic evolution);
+
+            if (canEvolve == true)
+            {
+                Evolve(evolution);
+                _uiManager.UpdateDetails();
+            }
         }
     }
 
@@ -260,15 +257,15 @@ public class Chimera : MonoBehaviour
         {
             case StatType.Endurance:
                 _endurance += _enduranceGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + _endurance);
+                Debug.Log($"{gameObject.name} now has {_endurance} {statType}");
                 break;
             case StatType.Intelligence:
                 _intelligence += _intelligenceGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + Intelligence);
+                Debug.Log($"{gameObject.name} now has {_intelligence} {statType}");
                 break;
             case StatType.Strength:
                 _strength += _strengthGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + Strength);
+                Debug.Log($"{gameObject.name} now has {_strength} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -281,7 +278,18 @@ public class Chimera : MonoBehaviour
         if (_levelUpTracker % 3 == 0)
         {
             ++_level;
-            Debug.Log("LEVEL UP! " + gameObject + " is now level " + _level + " !");
+            Debug.Log($"LEVEL UP! {gameObject.name} is now level {_level} !");
         }
+    }
+
+    private void Evolve(EvolutionLogic evolution)
+    {
+        Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
+
+        EvolutionLogic newEvolution = Instantiate(evolution, transform);
+
+        Destroy(_currentEvolution.gameObject);
+        _currentEvolution = newEvolution;
+        _chimeraType = newEvolution.Type;
     }
 }
