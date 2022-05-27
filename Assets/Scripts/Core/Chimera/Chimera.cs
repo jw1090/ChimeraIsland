@@ -97,8 +97,6 @@ public class Chimera : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log($"<color=Green> Initializing {this.GetType()} ... </color>");
-
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
@@ -106,6 +104,9 @@ public class Chimera : MonoBehaviour
 
         _habitatType = _habitatManager.CurrentHabitat.Type;
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
+        _chimeraType = _currentEvolution.Type;
+
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
 
         GetComponent<ChimeraBehavior>().Initialize();
     }
@@ -258,15 +259,15 @@ public class Chimera : MonoBehaviour
         {
             case StatType.Endurance:
                 _endurance += _enduranceGrowth;
-                Debug.Log($"{gameObject.name} now has {_endurance} {statType}");
+                Debug.Log($"{_currentEvolution} now has {_endurance} {statType}");
                 break;
             case StatType.Intelligence:
                 _intelligence += _intelligenceGrowth;
-                Debug.Log($"{gameObject.name} now has {_intelligence} {statType}");
+                Debug.Log($"{_currentEvolution} now has {_intelligence} {statType}");
                 break;
             case StatType.Strength:
                 _strength += _strengthGrowth;
-                Debug.Log($"{gameObject.name} now has {_strength} {statType}");
+                Debug.Log($"{_currentEvolution} now has {_strength} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -279,7 +280,7 @@ public class Chimera : MonoBehaviour
         if (_levelUpTracker % 3 == 0)
         {
             ++_level;
-            Debug.Log($"LEVEL UP! {gameObject.name} is now level {_level} !");
+            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
     }
 

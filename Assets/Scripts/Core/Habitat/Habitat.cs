@@ -41,7 +41,7 @@ public class Habitat : MonoBehaviour
 
         if (_patrolNodes == null)
         {
-            Debug.LogError(gameObject + "'s PatrolNodes ref is null. Please assign it from the list of Habitat's children in the hierarchy!");
+            Debug.LogError($"{this.GetType()}'s PatrolNodes ref is null. Please assign it from the list of Habitat's children in the hierarchy!");
             Debug.Break();
         }
         _patrolNodes.Initialize();
