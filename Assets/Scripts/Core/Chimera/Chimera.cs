@@ -36,11 +36,11 @@ public class Chimera : MonoBehaviour
     [SerializeField] private float _baseEssenceRate = 5;
     [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
 
-    [Header("References")]
-    [SerializeField] private EvolutionLogic _currentEvolution = null;
-    [SerializeField] private ResourceManager _resourceManager = null;
-    [SerializeField] private UIManager _uiManager = null;
-    [SerializeField] private EssenceManager _essenceManager = null;
+    private EvolutionLogic _currentEvolution = null;
+    private HabitatManager _habitatManager = null;
+    private ResourceManager _resourceManager = null;
+    private UIManager _uiManager = null;
+    private EssenceManager _essenceManager = null;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
     public HabitatType HabitatType { get => _habitatType; }
@@ -100,10 +100,11 @@ public class Chimera : MonoBehaviour
         Debug.Log($"<color=Green> Initializing {this.GetType()} ... </color>");
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _habitatType = ServiceLocator.Get<HabitatManager>().CurrentHabitat.Type;
 
+        _habitatType = _habitatManager.CurrentHabitat.Type;
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
         GetComponent<ChimeraBehavior>().Initialize();
@@ -291,5 +292,7 @@ public class Chimera : MonoBehaviour
         Destroy(_currentEvolution.gameObject);
         _currentEvolution = newEvolution;
         _chimeraType = newEvolution.Type;
+
+        _habitatManager.UpdateCurrentHabitatChimeras();
     }
 }

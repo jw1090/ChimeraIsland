@@ -64,33 +64,40 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    private void AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
-    {
-        if (_chimerasByHabitat.ContainsKey(habitat) == false)
-        {
-            _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
-        }
-        _chimerasByHabitat[habitat].Add(chimeraToAdd);
-    }
-
     public void AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
         AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType);
     }
 
-    public void RemoveChimeraFromHabitat(ChimeraData chimeraToRemove, HabitatType habitat)
+    private void AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
     {
-        if (!_chimerasByHabitat.ContainsKey(habitat))
+        if (_chimerasByHabitat.ContainsKey(habitat) == false)
         {
-            Debug.LogError("Cannot remove chimera. Habitat key not found");
+            _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
+        }
+
+        _chimerasByHabitat[habitat].Add(chimeraToAdd);
+    }
+
+    public void UpdateCurrentHabitatChimeras()
+    {
+        UpdateHabitatChimeras(_currentHabitat);
+    }
+
+    public void UpdateHabitatChimeras(Habitat habitat)
+    {
+        if (_chimerasByHabitat.ContainsKey(habitat.Type) == false)
+        {
+            Debug.LogError("Cannot update chimeras. Habitat key not found");
             return;
         }
 
-        var chimeras = _chimerasByHabitat[habitat];
-        if (chimeras.Remove(chimeraToRemove))
+        _chimerasByHabitat.Remove(habitat.Type);
+
+        foreach (Chimera chimera in habitat.ActiveChimeras)
         {
-            Debug.Log($"Successfully removed chimera {chimeraToRemove.chimeraType} from habitat {habitat}");
+            AddNewChimera(chimera);
         }
     }
 
