@@ -39,8 +39,8 @@ public class ChimeraDetails : MonoBehaviour
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
         _icon.sprite = _chimera.GetIcon();
-        _level.text = "Level: " + _chimera.Level;
-        _element.text = "Element: " + _chimera.ElementalType.ToString();
+        _level.text = $"Level: {_chimera.Level}";
+        _element.text = $"Element: {_chimera.ElementalType}";
 
         int amount = 0;
         string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";

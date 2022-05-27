@@ -104,8 +104,9 @@ public class Chimera : MonoBehaviour
 
         _habitatType = _habitatManager.CurrentHabitat.Type;
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
+        _chimeraType = _currentEvolution.Type;
 
-        Debug.Log($"<color=Green> Initializing Chimera: {_currentEvolution}.</color>");
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
 
         GetComponent<ChimeraBehavior>().Initialize();
     }
