@@ -45,7 +45,7 @@ public class UIWallet : MonoBehaviour
 
     public void UpdateWallet()
     {
-        if (!_initialized)
+        if (_initialized == false)
         {
             return;
         }

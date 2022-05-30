@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class FacilitiesTrigger : MonoBehaviour
 {
-    BoxCollider _boxCollider = null;
-    Facility _facility = null;
+    private BoxCollider _boxCollider = null;
+    private Facility _facility = null;
 
     private void Awake()
     {

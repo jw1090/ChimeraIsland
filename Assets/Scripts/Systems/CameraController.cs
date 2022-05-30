@@ -16,29 +16,32 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 12.0f;
     [SerializeField] private int _screenEdgeSize = 50;
 
-    private bool _moveUp = false;
-    private bool _moveDown = false;
-    private bool _moveRight = false;
-    private bool _moveLeft = false;
+    private Camera _cameraCO = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect= new Rect();
     private Rect _leftRect = new Rect();
     private Vector3 _dir = Vector3.zero;
+    private bool _moveUp = false;
+    private bool _moveDown = false;
+    private bool _moveRight = false;
+    private bool _moveLeft = false;
 
     public bool IsHolding { get; set; }
-    public Camera CameraCO { get; private set; }
+    public Camera CameraCO { get => _cameraCO; }
 
     public CameraController Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-        CameraCO = GetComponent<Camera>();
-        _pos = transform.position;
+
+        _cameraCO = GetComponent<Camera>();
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
         _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
         _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
         _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
+
+        _pos = transform.position;
 
         return this;
     }
@@ -107,5 +110,6 @@ public class CameraController : MonoBehaviour
         _dir.x = _moveLeft ? -1 : _moveRight ? 1 : 0;
 
         transform.position = Vector3.Lerp(transform.position, transform.position + _dir * _moveSpeed, Time.deltaTime);
+        _pos = transform.position;
     }
 }

@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
-    [Header("Evolution Info")]
-    [SerializeField] private ChimeraType _evolutionType;
+    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private Sprite _icon = null;
-    [SerializeField] private List<EvolutionLogic> _evolutionPaths;
+    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;

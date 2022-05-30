@@ -4,25 +4,15 @@ using UnityEngine;
 public class PersistentData : MonoBehaviour
 {
     private EssenceManager _essenceManager = null;
-    private List<ChimeraData> _chimeraSaveData = null;
     private GlobalData _globalSaveData = null;
+    private HabitatManager _habitatManager = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+
+    public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
+    public int EssenceData { get => CurrentEssence(); }
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
-
-    public List<ChimeraData> GetChimeraList()
-    {
-        return _chimeraSaveData;
-    }
-
-    public int GetEssenceData()
-    {
-        if(_globalSaveData == null)
-        {
-            return 100;
-        }
-
-        return _globalSaveData.currentEssence;
-    }
+    public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
 
     public PersistentData Initialize()
     {
@@ -42,13 +32,25 @@ public class PersistentData : MonoBehaviour
 
     private List<ChimeraData> ChimerasToJson()
     {
-        List<ChimeraData> chimeraList = new List<ChimeraData> { };
-        Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = ServiceLocator.Get<HabitatManager>().GetChimerasDictionary();
+        List<ChimeraData> chimeraList = new List<ChimeraData>();
+        Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = _habitatManager.ChimerasDictionary;
+
         foreach (KeyValuePair<HabitatType, List<ChimeraData>> kvp in chimerasByHabitat)
         {
             chimeraList.AddRange(kvp.Value);
         }
+
         return chimeraList;
+    }
+
+    private int CurrentEssence()
+    {
+        if (_globalSaveData == null)
+        {
+            return 100;
+        }
+
+        return _globalSaveData.currentEssence;
     }
 
     public void OnApplicationQuit()

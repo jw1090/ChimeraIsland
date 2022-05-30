@@ -6,10 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameLoader : AsyncLoader
 {
     [SerializeField] private int sceneIndexToLoad = 1;
-    public List<Component> GameModules;
-
+    public List<Component> GameModules = new List<Component>();
+    private static GameLoader _instance = null;
     private static int _sceneIndex = 1;
-    private static GameLoader _instance;
     
 	protected override void Awake()
 	{
@@ -94,6 +93,7 @@ public class GameLoader : AsyncLoader
         habitatManagerGO.transform.SetParent(systemsParent);
         var habitatManagerComp = habitatManagerGO.AddComponent<HabitatManager>().Initialize();
         ServiceLocator.Register<HabitatManager>(habitatManagerComp);
+        persistentDataComp.SetHabitatManager(habitatManagerComp);
 
         var tutorialGO = new GameObject("Tutorial Manager");
         tutorialGO.transform.SetParent(systemsParent);

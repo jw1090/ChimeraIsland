@@ -5,6 +5,7 @@ namespace AI.Behavior
     public class PatrolState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private float _waitTime = 1.0f;
         private string _animIdle = "Idle";
         private string _animWalk = "Walk";
 
@@ -28,7 +29,7 @@ namespace AI.Behavior
             _chimeraBehavior.AddToTimer(Time.deltaTime);
             _chimeraBehavior.EnterAnim(_animIdle);
 
-            if (_chimeraBehavior.Timer < _chimeraBehavior.PatrolWaitTime)
+            if (_chimeraBehavior.Timer < _waitTime)
             {
                 return;
             }
