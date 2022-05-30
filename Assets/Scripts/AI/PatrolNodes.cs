@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PatrolNodes : MonoBehaviour
 {
-    [SerializeField] private List<Transform> _nodes;
-
+    private List<Transform> _nodes = new List<Transform>();
     private bool _initialized = false;
 
+    public List<Transform> Nodes { get => _nodes; }
     public bool Initialized { get => _initialized; }
 
     public void Initialize()
@@ -17,6 +17,4 @@ public class PatrolNodes : MonoBehaviour
         }
         _initialized = true;
     }
-
-    public List<Transform> GetNodes() { return _nodes; }
 }

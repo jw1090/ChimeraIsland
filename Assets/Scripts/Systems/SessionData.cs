@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SessionData : MonoBehaviour, ISessionData
 {
-    public string CurrentHabitat { get; set; }
+    public Habitat CurrentHabitat { get; set; } = null;
 
     public SessionData Initialize()
     {

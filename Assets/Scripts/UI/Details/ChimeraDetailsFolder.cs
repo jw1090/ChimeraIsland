@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ChimeraDetailsFolder : MonoBehaviour
 {
-    [SerializeField] private List<Chimera> _chimerasList;
-    [SerializeField] private List<ChimeraDetails> _chimeraDetailsList;
+    private List<Chimera> _chimerasList = new List<Chimera>();
+    private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
 
     public void Initialize(Habitat habitat)
     {

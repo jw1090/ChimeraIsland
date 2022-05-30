@@ -5,11 +5,11 @@ namespace AI.Behavior
     public class WanderState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private string _animWalk = "Walk";
         private bool _isOver = false;
         private float _patrolRange = 10.0f;
         private float _totalTimer = 0.0f;
         private float _patrolTimer = 0.0f;
+        private string _animWalk = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {

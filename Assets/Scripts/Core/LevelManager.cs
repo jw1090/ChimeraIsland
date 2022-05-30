@@ -7,9 +7,9 @@ public class LevelManager : AsyncLoader
     [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private PersistentData _persistentData = null;
-    private InputManager _inputManager = null;
     private HabitatManager _habitatManager = null;
+    private InputManager _inputManager = null;
+    private PersistentData _persistentData = null;
 
     protected override void Awake()
     {
@@ -30,9 +30,10 @@ public class LevelManager : AsyncLoader
     private void Initialize()
     {
         ServiceLocator.Register<LevelManager>(this, true);
-        _persistentData = ServiceLocator.Get<PersistentData>();
-        _inputManager = ServiceLocator.Get<InputManager>();
+
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
         if (_uiManager != null)
         {

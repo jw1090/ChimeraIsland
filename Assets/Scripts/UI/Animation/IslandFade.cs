@@ -7,8 +7,8 @@ public class IslandFade : MonoBehaviour
     [SerializeField] float _delay = 0.5f;
 
     [Header("References")]
-    [SerializeField] private GameObject islandView;
-    [SerializeField] private GameObject crossfade;
+    [SerializeField] private GameObject islandView = null;
+    [SerializeField] private GameObject crossfade = null;
 
     public void FadeOnClick()
     {

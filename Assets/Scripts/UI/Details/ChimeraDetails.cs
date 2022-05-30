@@ -4,10 +4,6 @@ using UnityEngine.UI;
 
 public class ChimeraDetails : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private int _chimeraSpot = 0;
-    [SerializeField] private Habitat _habitat = null;
-    [SerializeField] private Chimera _chimera = null;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _element = null;
@@ -15,6 +11,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
     [SerializeField] private TextMeshProUGUI _happiness = null;
+    private int _chimeraSpot = 0;
+    private Habitat _habitat = null;
+    private Chimera _chimera = null;
 
     public void Initialize(Habitat habitat, int chimeraSpot)
     {

@@ -5,11 +5,10 @@ using UnityEngine;
 public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private HabitatType _habitatType = HabitatType.None;
-    [SerializeField] private int _chimeraCapacity = 3;
-    [SerializeField] private int _facilityCapacity = 3;
-    [SerializeField] private float _unhappyRate = 5;
     [SerializeField] private List<Facility> _facilities = new List<Facility>();
+    [SerializeField] private HabitatType _habitatType = HabitatType.None;
+    [SerializeField] private float _unhappyRate = 5;
+    [SerializeField] private int _facilityCapacity = 3;
 
     [Header("Tick Info")]
     [SerializeField] private float _tickTimer = 0.2f;
@@ -19,24 +18,23 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
-    private List<Chimera> _activeChimeras = new List<Chimera>();
-    private EssenceManager _essenceManager = null;
     private ChimeraCreator _chimeraCreator = null;
+    private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
-
-    private int _tickTracker = 0;
+    private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
+    private int _tickTracker = 0;
 
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
-    public List<Transform> PatrolNodes { get => _patrolNodes.GetNodes(); }
+    public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
     public HabitatType Type { get => _habitatType; }
 
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
         _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         if (_patrolNodes == null)
@@ -66,8 +64,6 @@ public class Habitat : MonoBehaviour
         StartCoroutine(TickTimer());
     }
 
-    // Coroutine in the start loop. If active, do the following.
-    // Go into each Chimera in the Chimera Array and call its ChimeraTap function. Pass the experience rates.
     private IEnumerator TickTimer()
     {
         while (_isInitialized)
@@ -100,8 +96,6 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    // Instantiate a Facility prefab on a map at some set of xyz coordinates.
-    // Make sure only one can be active at a time.
     public void AddFacility(Facility facility)
     {
         // Return if no room for another Facility.
@@ -135,7 +129,7 @@ public class Habitat : MonoBehaviour
     // Adds it to the chimera list of that habitat and instantiates it as well
     public void BuyChimera(Chimera chimeraPrefab)
     {
-        if (_chimeraCapacity == _activeChimeras.Count)
+        if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
             return;
@@ -183,7 +177,6 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    // Coints how many facilities are active in the Habitat
     private int ActiveFacilitiesCount()
     {
         int facilityCount = 0;

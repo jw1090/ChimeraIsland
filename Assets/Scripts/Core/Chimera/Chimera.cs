@@ -4,8 +4,6 @@ using UnityEngine;
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
-    [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
-    [SerializeField] private HabitatType _habitatType = HabitatType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private bool _inFacility = false;
@@ -18,7 +16,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _intelligence = 1;
     [SerializeField] private int _strength = 1;
     [SerializeField] private int _happiness = 0;
-    [SerializeField] private int _happinessMod = 1;
 
     [Header("Stat Growth")]
     [SerializeField] private int _enduranceGrowth = 1;
@@ -33,18 +30,19 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private float _baseEssenceRate = 5;
-    [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
+    [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
 
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private EssenceManager _essenceManager = null;
+    private ChimeraType _chimeraType = ChimeraType.None;
+    private HabitatType _habitatType = HabitatType.None;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
-    public HabitatType HabitatType { get => _habitatType; }
     public ElementalType ElementalType { get => _elementalType; }
+    public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
@@ -56,6 +54,7 @@ public class Chimera : MonoBehaviour
     public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
+
         switch (statType)
         {
             case StatType.Endurance:
@@ -74,6 +73,7 @@ public class Chimera : MonoBehaviour
                 Debug.LogError("Default StatType please change!");
                 break;
         }
+
         return false;
     }
 
@@ -101,9 +101,9 @@ public class Chimera : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
         _habitatType = _habitatManager.CurrentHabitat.Type;
-        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _chimeraType = _currentEvolution.Type;
 
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
@@ -114,7 +114,7 @@ public class Chimera : MonoBehaviour
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick(StatType statType, int amount)
     {
-        if (Level >= _levelCap)
+        if (_level >= _levelCap)
         {
             return;
         }
@@ -147,16 +147,13 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        _happinessMod = HappinessModifierCalc();
-
-        if (_inFacility)
+        if (_inFacility == true)
         {
             return;
         }
 
-        // Sqrt is used to gain diminishing returns on levels.
-        // EssenceModifier is used to tune the level scaling
-        int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(Level * _essenceModifier));
+        int happinessModifier = HappinessModifierCalc(); // The happiness of a Chimera affects how much Essence it will generate.
+        int essenceGain = (int)((happinessModifier * _baseEssenceRate) + Mathf.Sqrt(_level));
         _essenceManager.IncreaseEssence(essenceGain);
     }
 
@@ -175,18 +172,18 @@ public class Chimera : MonoBehaviour
     // At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
     private int HappinessModifierCalc()
     {
-        if (Happiness == 0)
+        if (_happiness == 0)
         {
             return 1;
         }
-        else if (Happiness > 0)
+        else if (_happiness > 0)
         {
-            int hapMod = (Happiness) / 50 + 1;
+            int hapMod = (_happiness) / 50 + 1;
             return hapMod;
         }
         else
         {
-            int hapMod = (1 * (int)Mathf.Sqrt(Happiness + 100) / 15) + (1 / 3);
+            int hapMod = (1 * (int)Mathf.Sqrt(_happiness + 100) / 15) + (1 / 3);
             return hapMod;
         }
     }

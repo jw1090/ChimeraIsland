@@ -3,12 +3,12 @@
 [Serializable]
 public class ChimeraData
 {
-    public HabitatType habitatType;
-    public ChimeraType chimeraType;
+    public ChimeraType chimeraType = ChimeraType.None;
+    public HabitatType habitatType = HabitatType.None;
     public int level = 0;
+    public int endurance = 0;
     public int intelligence = 0;
     public int strength = 0;
-    public int endurance = 0;
     public int happiness = 0;
 
     public ChimeraData(Chimera chimera)
