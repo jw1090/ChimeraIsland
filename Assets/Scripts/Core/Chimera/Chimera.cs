@@ -4,6 +4,7 @@ using UnityEngine;
 public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
+    [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private bool _inFacility = false;
@@ -37,7 +38,6 @@ public class Chimera : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private EssenceManager _essenceManager = null;
-    private ChimeraType _chimeraType = ChimeraType.None;
     private HabitatType _habitatType = HabitatType.None;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
