@@ -16,8 +16,11 @@ public class UIManager : MonoBehaviour
     public UIManager Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+
         CloseAll();
         InitializeWallets();
+        _tutorialOverlay.Initialize();
+
         return this;
     }
 
@@ -30,7 +33,7 @@ public class UIManager : MonoBehaviour
     {
         _detailsFolder.Initialize(habitat);
     }
-    public UITutorialOverlay GetTutorialOveraly()
+    public UITutorialOverlay GetTutorialOverlay()
     {
         return _tutorialOverlay;
     }
