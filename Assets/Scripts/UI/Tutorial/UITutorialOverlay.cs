@@ -4,14 +4,15 @@ public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
     [SerializeField] private TextAsset _tutorialJsonPath = null;
-    [SerializeField] private int stepNumber = 0;
+    private ResourceManager _resourceManager = null;
+    private int stepNumber = 0;
 
     [System.Serializable]
     public class DialogInfo
     {
         public string description;
         public string info;
-        public string icon;
+        public ChimeraType type;
     }
 
     [System.Serializable]
@@ -19,17 +20,27 @@ public class UITutorialOverlay : MonoBehaviour
     {
         public DialogInfo[] Steps;
     }
+
+    public void Initialize()
+    {
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+    }
+
     public void NextStep()
     {
         stepNumber++;
         Debug.Log($"Current Tutorial Step: { stepNumber}");
         ShowOverlay();
     }
+
     public void ShowOverlay()
     {
         DialogSteps loadedTutorial = JsonUtility.FromJson<DialogSteps>(_tutorialJsonPath.text);
-        Debug.Log($"Descrpition: {loadedTutorial.Steps[stepNumber].description}  Icon:{loadedTutorial.Steps[stepNumber].icon}");
-        var icon = Resources.Load<Sprite>(loadedTutorial.Steps[stepNumber].icon);
+        DialogInfo loadedStep = loadedTutorial.Steps[stepNumber];
+        Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
+
+        Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
+
        _textInfo.Load(loadedTutorial.Steps[stepNumber].description, icon);
     }
 }

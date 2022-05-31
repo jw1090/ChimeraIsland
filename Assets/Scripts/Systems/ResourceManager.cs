@@ -155,7 +155,7 @@ public class ResourceManager : MonoBehaviour
             case ChimeraType.C3:
                 return _chimeraC3Sprite;
             default:
-                Debug.LogWarning($"Unhandled chimera type: {type}");
+                Debug.Log($"Returning Default Sprite, please change.");
                 return _defaultChimeraSprite;
         }
     }
