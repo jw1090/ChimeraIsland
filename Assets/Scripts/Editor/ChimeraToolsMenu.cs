@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-
 public class ChimeraToolsMenu
 {
     [MenuItem("Chimera Tools/Clear Player Prefs", priority = 50)]

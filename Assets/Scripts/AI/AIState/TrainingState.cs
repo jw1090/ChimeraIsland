@@ -5,47 +5,45 @@ namespace AI.Behavior
     public class TrainingState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private float _patrolRange = 2f;
-        private float _partTimer = 0.0f; // Time of wander point.
-        private Vector3 _patrolPos;
+        private Vector3 _patrolPos = new Vector3();
+        private float _wanderRange = 2f;
+        private float _wanderTimer = 0.0f;
 
-        public void SetPos(Vector3 pos)
-        {
-            _patrolPos = pos;
-        }
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _partTimer = 2.0f;
+            _wanderTimer = 2.0f;
             _patrolPos = _chimeraBehavior.TrainingPosition;
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_patrolPos.y));
         }
 
         public override void Update()
         {
-            _partTimer -= Time.deltaTime;
-            if (_partTimer <= 0f)
+            _wanderTimer -= Time.deltaTime;
+            if (_wanderTimer <= 0f)
             {
-                _partTimer = 2f;
+                _wanderTimer = 2f;
                 _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_patrolPos.y));
             }
         }
 
         public override void Exit()
         {
-            _partTimer = 0.0f;
+            _wanderTimer = 0.0f;
         }
 
-        public Vector3 GetNewWayPoint(float positionY)
+        private Vector3 GetNewWayPoint(float positionY)
         {
-            float randomX = Random.Range(-_patrolRange, _patrolRange);
-            float randomZ = Random.Range(-_patrolRange, _patrolRange);
+            float randomX = Random.Range(-_wanderRange, _wanderRange);
+            float randomZ = Random.Range(-_wanderRange, _wanderRange);
+
             Vector3 randomPoint = new Vector3
             (
                 _patrolPos.x + randomX,
                 positionY,
                 _patrolPos.z + randomZ
             );
+
             return randomPoint;
         }
     }

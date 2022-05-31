@@ -7,10 +7,9 @@ public class LevelManager : AsyncLoader
     [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private PersistentData _persistentData = null;
-    private InputManager _inputManager = null;
     private HabitatManager _habitatManager = null;
-    private TutorialManager _tutorialManager = null;
+    private InputManager _inputManager = null;
+    private PersistentData _persistentData = null;
 
     protected override void Awake()
     {
@@ -26,18 +25,15 @@ public class LevelManager : AsyncLoader
 
         LevelManager.ResetStaticVariables();
         LevelManager.CallOnComplete(OnComplete);
-
-        _tutorialManager.Initialize();
-        _tutorialManager.ShowTutorial();
     }
 
     private void Initialize()
     {
         ServiceLocator.Register<LevelManager>(this, true);
-        _persistentData = ServiceLocator.Get<PersistentData>();
-        _inputManager = ServiceLocator.Get<InputManager>();
+
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
         if (_uiManager != null)
         {
@@ -47,7 +43,7 @@ public class LevelManager : AsyncLoader
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
-            _inputManager.SetCameraMain(_cameraController.CameraCO);
+            _inputManager.SetCamera(_cameraController.CameraCO);
         }
         if (_essenceManager != null)
         {

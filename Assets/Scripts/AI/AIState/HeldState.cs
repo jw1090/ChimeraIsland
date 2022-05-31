@@ -5,28 +5,46 @@ namespace AI.Behavior
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private float _heightOffset = 1.2f;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = false;
-            if (_chimeraBehavior.animator != null)
-                _chimeraBehavior.animator.SetBool("Walk", false);
-            Debug.Log("Enter Held");
+            _chimeraBehavior.BoxCollider.enabled = false;
+            _chimeraBehavior.CameraController.IsHolding = true;
         }
 
         public override void Update()
         {
-            _chimeraBehavior.ObjFollowMouse();
-            _chimeraBehavior.HeldEnterPatrol();
+            ObjFollowMouse();
+            HeldReleaseCheck();
         }
 
         public override void Exit()
         {
-            if (_chimeraBehavior.animator != null)
-                _chimeraBehavior.animator.SetBool("Walk", true);
-            _chimeraBehavior.HeldExit();
-            _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = true;
+            _chimeraBehavior.Agent.enabled = true;
+            _chimeraBehavior.BoxCollider.enabled = true;
+            _chimeraBehavior.CameraController.IsHolding = false;
+        }
+
+        private void ObjFollowMouse()
+        {
+            Ray ray = _chimeraBehavior.MainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                _chimeraBehavior.transform.position = hit.point + (Vector3.up * _heightOffset);
+                _chimeraBehavior.Agent.enabled = false;
+            }
+        }
+
+        private void HeldReleaseCheck()
+        {
+            if (_chimeraBehavior.Clicked == false)
+            {
+                _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
+            }
         }
     }
 }

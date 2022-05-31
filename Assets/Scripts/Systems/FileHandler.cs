@@ -47,7 +47,7 @@ public static class FileHandler
 
     private static string GetPath(string filename)
     {
-        return System.IO.Path.Combine(Application.dataPath, "Saves", $"{filename}");
+        return System.IO.Path.Combine(Application.dataPath, "JSON", $"{filename}");
     }
 
     private static void WriteFile(string path, string content)

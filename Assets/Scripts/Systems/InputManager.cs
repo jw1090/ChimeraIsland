@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    private Camera _cameraMain = null;
+    private ChimeraBehavior _heldChimera = null;
+    private ReleaseSlider _releaseSlider = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
-    private ChimeraBehavior _heldChimera = null;
-    private ReleaseSlider _releaseSlider = null;
-    private Camera _cameraMain = null;
 
     public void SetReleaseSlider(ReleaseSlider releaseSlider) { _releaseSlider = releaseSlider; }
-    public void SetCameraMain(Camera cameraMain) { _cameraMain = cameraMain; }
+
+    public void SetCamera(Camera camera) { _cameraMain = camera; }
 
     public InputManager Initialize()
     {
@@ -51,6 +52,11 @@ public class InputManager : MonoBehaviour
     private void RemoveFromFacility()
     {
         if(_cameraMain == null)
+        {
+            return;
+        }
+
+        if (_heldChimera == true)
         {
             return;
         }
@@ -103,7 +109,7 @@ public class InputManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
             _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
-            _heldChimera.ChimeraSelect(true);
+            _heldChimera.Clicked = true;
             _isHolding = true;
         }
     }
@@ -115,7 +121,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        _heldChimera.GetComponent<ChimeraBehavior>().ChimeraSelect(false);
+        _heldChimera.GetComponent<ChimeraBehavior>().Clicked = false;
         _isHolding = false;
         _heldChimera = null;
     }

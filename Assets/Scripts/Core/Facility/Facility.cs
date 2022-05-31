@@ -44,6 +44,7 @@ public class Facility : MonoBehaviour
     // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuyFacility()
     {
+        BoxCollider _collider = GetComponent<BoxCollider>();
         _price = (int)(_price * 7.5);
         ++_currentTier;
 
@@ -53,8 +54,8 @@ public class Facility : MonoBehaviour
             Debug.Log(_facilityType + " was purchased!");
 
             _rubbleObject.SetActive(false);
+            _collider.enabled = true;
             _tier1Object.SetActive(true);
-
         }
         else
         {

@@ -97,9 +97,7 @@ public abstract class AsyncLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Reset all static variables.  To be used when the game is resetting.
-    /// </summary>
+    // Reset all static variables. To be used when the game is resetting.
     public static void ResetStaticVariables()
     {
         OnLoadingCompleted = null;

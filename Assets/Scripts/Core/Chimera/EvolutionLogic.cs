@@ -3,15 +3,12 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
-    [Header("Evolution Info")]
-    [SerializeField] private ChimeraType _evolutionType;
+    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private Sprite _icon = null;
-    [SerializeField] private List<EvolutionLogic> _evolutionPaths;
+    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
-
-    private Chimera _chimeraBrain = null;
 
     public ChimeraType Type { get => _evolutionType; }
     public Sprite Icon { get => _icon; }
@@ -19,45 +16,34 @@ public class EvolutionLogic : MonoBehaviour
     public int ReqIntelligence { get => _reqIntelligence; }
     public int ReqStrength { get => _reqStrength; }
 
-    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
-
-    public bool CheckEvolution(int endurance, int intelligence, int strength)
+    public bool CheckEvolution(int endurance, int intelligence, int strength, out EvolutionLogic newEvolution)
     {
-        if(_evolutionPaths == null)
+        newEvolution = null;
+
+        if (_evolutionPaths == null)
         {
             return false;
         }
 
-        foreach(var evolution in _evolutionPaths)
+        foreach(var possibleEvolution in _evolutionPaths)
         {
-            if (endurance >= evolution.ReqEndurance)
+            if (endurance < possibleEvolution.ReqEndurance)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
-            else if (intelligence >= evolution.ReqIntelligence)
+            else if (intelligence < possibleEvolution.ReqIntelligence)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
-            else if(strength >= evolution.ReqStrength)
+            if(strength < possibleEvolution.ReqStrength)
             {
-                Evolve(evolution);
-                return true;
+                continue;
             }
+
+            newEvolution = possibleEvolution;
+            return true;
         }
 
         return false;
-    }
-
-    private void Evolve(EvolutionLogic newModel)
-    {
-        Debug.Log("This creature is evolving into " + newModel + "!");
-
-        EvolutionLogic newEvolution = Instantiate(newModel, _chimeraBrain.transform);
-        _chimeraBrain.SetEvolutionLogic(newEvolution);
-        _chimeraBrain.SetChimeraType(newEvolution.Type);
-
-        Destroy(gameObject);
     }
 }

@@ -5,7 +5,6 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
-    [SerializeField] private HabitatType _habitatType = HabitatType.None;
     [SerializeField] private ElementalType _elementalType = ElementalType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private bool _inFacility = false;
@@ -18,7 +17,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _intelligence = 1;
     [SerializeField] private int _strength = 1;
     [SerializeField] private int _happiness = 0;
-    [SerializeField] private int _happinessMod = 1;
 
     [Header("Stat Growth")]
     [SerializeField] private int _enduranceGrowth = 1;
@@ -33,18 +31,18 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private float _baseEssenceRate = 5;
-    [SerializeField] private float _essenceModifier = 1.0f; // Tuning knob for essence gain
+    [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
 
-    [Header("References")]
-    [SerializeField] private EvolutionLogic _currentEvolution = null;
-    [SerializeField] private ResourceManager _resourceManager = null;
-    [SerializeField] private UIManager _uiManager = null;
-    [SerializeField] private EssenceManager _essenceManager = null;
+    private EvolutionLogic _currentEvolution = null;
+    private HabitatManager _habitatManager = null;
+    private ResourceManager _resourceManager = null;
+    private UIManager _uiManager = null;
+    private EssenceManager _essenceManager = null;
+    private HabitatType _habitatType = HabitatType.None;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
-    public HabitatType HabitatType { get => _habitatType; }
     public ElementalType ElementalType { get => _elementalType; }
+    public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
@@ -53,10 +51,10 @@ public class Chimera : MonoBehaviour
     public int Happiness { get => _happiness; }
     public int Price { get => _price; }
 
-
     public bool GetStatByType(StatType statType, out int amount)
     {
         amount = 0;
+
         switch (statType)
         {
             case StatType.Endurance:
@@ -75,6 +73,7 @@ public class Chimera : MonoBehaviour
                 Debug.LogError("Default StatType please change!");
                 break;
         }
+
         return false;
     }
 
@@ -89,8 +88,6 @@ public class Chimera : MonoBehaviour
         return _currentEvolution.Icon; 
     }
 
-    public void SetChimeraType(ChimeraType type){ _chimeraType = type; }
-    public void SetEvolutionLogic(EvolutionLogic evolution) { _currentEvolution = evolution; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
@@ -100,29 +97,24 @@ public class Chimera : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("<color=Green> Creating Chimera: " + this + " </color>");
-
         _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
-        _habitatType = ServiceLocator.Get<HabitatManager>().CurrentHabitat.Type;
+        _habitatType = _habitatManager.CurrentHabitat.Type;
+        _chimeraType = _currentEvolution.Type;
 
-        InitializeEvolution();
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
 
         GetComponent<ChimeraBehavior>().Initialize();
-    }
-
-    private void InitializeEvolution()
-    {
-        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
-        _currentEvolution.SetChimeraBrain(this);
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick(StatType statType, int amount)
     {
-        if (Level >= _levelCap)
+        if (_level >= _levelCap)
         {
             return;
         }
@@ -155,22 +147,19 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        _happinessMod = HappinessModifierCalc();
-
-        if (_inFacility)
+        if (_inFacility == true)
         {
             return;
         }
 
-        // Sqrt is used to gain diminishing returns on levels.
-        // EssenceModifier is used to tune the level scaling
-        int essenceGain = (int)((_happinessMod * _baseEssenceRate) + Mathf.Sqrt(Level * _essenceModifier));
+        int happinessModifier = HappinessModifierCalc(); // The happiness of a Chimera affects how much Essence it will generate.
+        int essenceGain = (int)((happinessModifier * _baseEssenceRate) + Mathf.Sqrt(_level));
         _essenceManager.IncreaseEssence(essenceGain);
     }
 
     public void HappinessTick()
     {
-        if (!_inFacility)
+        if (_inFacility == false)
         {
             int happinessAmount = -1;
 
@@ -183,18 +172,18 @@ public class Chimera : MonoBehaviour
     // At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
     private int HappinessModifierCalc()
     {
-        if (Happiness == 0)
+        if (_happiness == 0)
         {
             return 1;
         }
-        else if (Happiness > 0)
+        else if (_happiness > 0)
         {
-            int hapMod = (Happiness) / 50 + 1;
+            int hapMod = (_happiness) / 50 + 1;
             return hapMod;
         }
         else
         {
-            int hapMod = (1 * (int)Mathf.Sqrt(Happiness + 100) / 15) + (1 / 3);
+            int hapMod = (1 * (int)Mathf.Sqrt(_happiness + 100) / 15) + (1 / 3);
             return hapMod;
         }
     }
@@ -248,9 +237,15 @@ public class Chimera : MonoBehaviour
             _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
         }
 
-        if (levelUp)
+        if (levelUp == true)
         {
-            _currentEvolution.CheckEvolution(Endurance, Intelligence, Strength);
+            bool canEvolve = _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength, out EvolutionLogic evolution);
+
+            if (canEvolve == true)
+            {
+                Evolve(evolution);
+                _uiManager.UpdateDetails();
+            }
         }
     }
 
@@ -261,15 +256,15 @@ public class Chimera : MonoBehaviour
         {
             case StatType.Endurance:
                 _endurance += _enduranceGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + _endurance);
+                Debug.Log($"{_currentEvolution} now has {_endurance} {statType}");
                 break;
             case StatType.Intelligence:
                 _intelligence += _intelligenceGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + Intelligence);
+                Debug.Log($"{_currentEvolution} now has {_intelligence} {statType}");
                 break;
             case StatType.Strength:
                 _strength += _strengthGrowth;
-                Debug.Log(this + " gained " + statType + " stat = " + Strength);
+                Debug.Log($"{_currentEvolution} now has {_strength} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -282,7 +277,20 @@ public class Chimera : MonoBehaviour
         if (_levelUpTracker % 3 == 0)
         {
             ++_level;
-            Debug.Log("LEVEL UP! " + gameObject + " is now level " + _level + " !");
+            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
+    }
+
+    private void Evolve(EvolutionLogic evolution)
+    {
+        Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
+
+        EvolutionLogic newEvolution = Instantiate(evolution, transform);
+
+        Destroy(_currentEvolution.gameObject);
+        _currentEvolution = newEvolution;
+        _chimeraType = newEvolution.Type;
+
+        _habitatManager.UpdateCurrentHabitatChimeras();
     }
 }
