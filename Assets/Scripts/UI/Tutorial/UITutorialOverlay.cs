@@ -7,20 +7,6 @@ public class UITutorialOverlay : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private int stepNumber = 0;
 
-    [System.Serializable]
-    public class DialogInfo
-    {
-        public string description;
-        public string info;
-        public ChimeraType type;
-    }
-
-    [System.Serializable]
-    public class DialogSteps
-    {
-        public DialogInfo[] Steps;
-    }
-
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
