@@ -58,6 +58,16 @@ public class Habitat : MonoBehaviour
             AddChimera(newChimera.transform);
         }
     }
+    public void SpawnFacilities(FacilityData[] facilities)
+    {
+        foreach (Facility facility in _facilities)
+        {
+            for (int i = 0; i < facilities[(int)facility.GetFacilityType()].currentTier; i++)
+            {
+                facility.BuildFacility();
+            }
+        }
+    }
 
     public void StartTickTimer()
     {
@@ -122,7 +132,8 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        facility.BuyFacility();
+        facility.BuildFacility();
+        _habitatManager.UpdateCurrentHabitatFacilities(facility);
     }
 
     // Called by the BuyChimera Script on a button to check price and purchase an egg on the active habitat.

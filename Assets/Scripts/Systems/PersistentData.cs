@@ -7,8 +7,10 @@ public class PersistentData : MonoBehaviour
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
     private List<ChimeraData> _chimeraSaveData = null;
+    private List<HabitatData> _habitatSaveData = null;
 
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
+    public List<HabitatData> HabitatData { get => _habitatSaveData; }
     public int EssenceData { get => CurrentEssence(); }
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
@@ -18,6 +20,7 @@ public class PersistentData : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _habitatSaveData = FileHandler.ReadListFromJSON<HabitatData>(GameConsts.JsonSaveKeys.HABITAT_SAVE_DATA_FILE);
         _chimeraSaveData = FileHandler.ReadListFromJSON<ChimeraData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
         _globalSaveData = FileHandler.ReadFromJSON<GlobalData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
 
@@ -28,6 +31,11 @@ public class PersistentData : MonoBehaviour
     {
         List<ChimeraData> myData = ChimerasToJson();
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+    }
+    public void SaveHabitats()
+    {
+        List<HabitatData> myData = _habitatManager.HabitatList;
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.HABITAT_SAVE_DATA_FILE);
     }
 
     private List<ChimeraData> ChimerasToJson()
@@ -56,6 +64,7 @@ public class PersistentData : MonoBehaviour
     public void OnApplicationQuit()
     {
         SaveChimeras();
+        SaveHabitats();
         _essenceManager.SaveEssence();
     }
 }
