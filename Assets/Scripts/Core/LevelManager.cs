@@ -21,6 +21,7 @@ public class LevelManager : AsyncLoader
     {
         Initialize();
         LoadUI();
+        LoadFacilities();
         LoadChimeras();
         StartHabitatTickTimer();
 
@@ -55,9 +56,11 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
             _persistentData.SetEssenceManager(_essenceManager);
         }
-
-        _habitat.Initialize();
-        _habitatManager.SetCurrentHabitat(_habitat);
+        if(_habitat != null)
+        {
+            _habitat.Initialize();
+            _habitatManager.SetCurrentHabitat(_habitat);
+        }
     }
 
     private void LoadUI()
@@ -75,7 +78,10 @@ public class LevelManager : AsyncLoader
     {
         _habitatManager.SpawnChimerasForHabitat();
     }
-
+    private void LoadFacilities()
+    {
+        _habitatManager.SpawnFacilitiesForHabitat();
+    }
     private void StartHabitatTickTimer()
     {
         _habitat.StartTickTimer();
