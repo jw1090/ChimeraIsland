@@ -35,7 +35,6 @@ public class Chimera : MonoBehaviour
 
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
-    private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private EssenceManager _essenceManager = null;
     private HabitatType _habitatType = HabitatType.None;
@@ -44,6 +43,7 @@ public class Chimera : MonoBehaviour
     public ElementalType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
+    public Sprite Icon { get => _currentEvolution.Icon; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
     public int Intelligence { get => _intelligence; }
@@ -77,17 +77,6 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public Sprite GetIcon() 
-    {
-        if(_currentEvolution == null)
-        {
-            var defaultSprite = _resourceManager.GetDefaultChimeraSprite();
-            return defaultSprite;
-        }
-
-        return _currentEvolution.Icon; 
-    }
-
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
@@ -100,15 +89,21 @@ public class Chimera : MonoBehaviour
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
         _habitatType = _habitatManager.CurrentHabitat.Type;
-        _chimeraType = _currentEvolution.Type;
+
+        InitializeEvolution();
 
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
 
         GetComponent<ChimeraBehavior>().Initialize();
+    }
+
+    private void InitializeEvolution()
+    {
+        _currentEvolution.Initialize();
+        _chimeraType = _currentEvolution.Type;
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -288,8 +283,9 @@ public class Chimera : MonoBehaviour
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
         Destroy(_currentEvolution.gameObject);
+
         _currentEvolution = newEvolution;
-        _chimeraType = newEvolution.Type;
+        InitializeEvolution();
 
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
