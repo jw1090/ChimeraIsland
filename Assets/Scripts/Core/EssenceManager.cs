@@ -49,12 +49,6 @@ public class EssenceManager : MonoBehaviour
         return true;
     }
 
-    public void SaveEssence()
-    {
-        GlobalData data = new GlobalData(_currentEssence);
-        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-    }
-
     public void LoadEssence()
     {
         _currentEssence = _persistentData.EssenceData;

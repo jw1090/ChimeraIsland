@@ -12,8 +12,6 @@ public static class GameConsts
 
     public class JsonSaveKeys
     {
-        public static readonly string GLOBAL_SAVE_DATA_FILE = "Saves/GlobalSaveData.json";
-        public static readonly string CHIMERA_SAVE_DATA_FILE = "Saves/ChimeraSaveData.json";
-        public static readonly string FACILITY_SAVE_DATA_FILE = "Saves/FacilitySaveData.json";
+        public static readonly string GAME_SAVE_DATA_FILE = "Saves/GameSaveData.json";
     }
 }

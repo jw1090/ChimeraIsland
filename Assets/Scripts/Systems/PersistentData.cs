@@ -19,24 +19,25 @@ public class PersistentData : MonoBehaviour
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
-
-        _globalSaveData = FileHandler.ReadFromJSON<GlobalData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-        _chimeraSaveData = FileHandler.ReadListFromJSON<ChimeraData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-        _facilitySaveData = FileHandler.ReadListFromJSON<FacilityData>(GameConsts.JsonSaveKeys.FACILITY_SAVE_DATA_FILE);
-
+        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        if(myData == null)
+        {
+            Debug.Log($"No Save Data found");
+            myData = new GameSaveData();
+        }
+        _globalSaveData = myData.globalData;
+        _chimeraSaveData = myData.chimeras;
+        _facilitySaveData = myData.facilities;
         return this;
     }
 
-    private void SaveChimeras()
+    private void SaveData()
     {
-        List<ChimeraData> myData = ChimerasToJson();
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-    }
-
-    private void SaveFacilities()
-    {
-        List<FacilityData> myData = FacilitiesToJson();
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.FACILITY_SAVE_DATA_FILE);
+        List<ChimeraData> myChimeraData = ChimerasToJson();
+        List<FacilityData> myFacilityData = FacilitiesToJson();
+        GlobalData myGlobalData = new GlobalData(_globalSaveData.currentEssence);
+        GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
 
     private List<ChimeraData> ChimerasToJson()
@@ -77,8 +78,6 @@ public class PersistentData : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        SaveChimeras();
-        SaveFacilities();
-        _essenceManager.SaveEssence();
+        SaveData();
     }
 }
