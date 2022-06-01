@@ -26,8 +26,22 @@ public class Habitat : MonoBehaviour
     private int _tickTracker = 0;
 
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
+    public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
     public HabitatType Type { get => _habitatType; }
+
+    public Facility GetFacility(FacilityType facilityType)
+    {
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.Type == facilityType)
+            {
+                return facility;
+            }
+        }
+
+        return null;
+    }
 
     public Habitat Initialize()
     {
@@ -49,7 +63,7 @@ public class Habitat : MonoBehaviour
         return this;
     }
 
-    public void SpawnChimeras(List<ChimeraData> chimerasToSpawn)
+    public void CreateChimerasFromData(List<ChimeraData> chimerasToSpawn)
     {
         foreach (var chimeraInfo in chimerasToSpawn)
         {
@@ -58,13 +72,16 @@ public class Habitat : MonoBehaviour
             AddChimera(newChimera.transform);
         }
     }
-    public void SpawnFacilities(FacilityData[] facilities)
+
+    public void CreateFacilitiesData(List<FacilityData> facilitiesToBuild)
     {
-        foreach (Facility facility in _facilities)
+        foreach (var facilityInfo in facilitiesToBuild)
         {
-            for (int i = 0; i < facilities[(int)facility.GetFacilityType()].currentTier; i++)
+            Facility building = GetFacility(facilityInfo.facilityType);
+
+            for (int i = 0; i < facilityInfo.currentTier; ++i)
             {
-                facility.BuildFacility();
+                building.BuildFacility();
             }
         }
     }
@@ -121,19 +138,19 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        if (_essenceManager.SpendEssence(facility.GetPrice()) == false)
+        if (_essenceManager.SpendEssence(facility.Price) == false)
         {
             Debug.Log
             (
-                "Can't afford this facility. It costs " +
-                facility.GetPrice() + " Essence and you only have " +
-                _essenceManager.CurrentEssence + " Essence."
+                $"Can't afford this facility." +
+                $"It costs {facility.Price} Essence and you" +
+                $"only have {_essenceManager.CurrentEssence} Essence."
             );
             return;
         }
 
         facility.BuildFacility();
-        _habitatManager.UpdateCurrentHabitatFacilities(facility);
+        _habitatManager.AddNewFacility(facility);
     }
 
     // Called by the BuyChimera Script on a button to check price and purchase an egg on the active habitat.
@@ -173,19 +190,6 @@ public class Habitat : MonoBehaviour
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
         chimeraComp.Initialize();
-    }
-
-    public Facility GetFacility(FacilityType facilityType)
-    {
-        foreach (Facility facility in _facilities)
-        {
-            if (facility.GetFacilityType() == facilityType)
-            {
-                return facility;
-            }
-        }
-
-        return null;
     }
 
     private int ActiveFacilitiesCount()
