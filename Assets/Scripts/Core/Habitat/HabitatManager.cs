@@ -8,16 +8,16 @@ public class HabitatManager : MonoBehaviour
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 3;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
-    private readonly List<HabitatData> _habitatList = new List<HabitatData>();
+    private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private PersistentData _persistentData = null;
-    private List<ChimeraData> _chimeraSaveData = null;
-    private List<HabitatData> _habitatSaveData = null;
     private Habitat _currentHabitat = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+    private List<FacilityData> _facilitySaveData = null;
 
+    public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
+    public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
-    public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
-    public List<HabitatData> HabitatList { get => _habitatList; }
 
     private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
     {
@@ -26,13 +26,21 @@ public class HabitatManager : MonoBehaviour
             return _chimerasByHabitat[habitatType];
         }
 
-        Debug.Log($"No entry for habitat: {habitatType}");
+        Debug.Log($"No Chimera entry for habitat: {habitatType}");
         return new List<ChimeraData>();
     }
-    private FacilityData[] GetFacilityData(HabitatType habitatType)
+
+    private List<FacilityData> GetFaclitiesForHabitat(HabitatType habitatType)
     {
-        return _habitatList[(int)habitatType].facilities;
+        if (_facilitiesByHabitat.ContainsKey(habitatType))
+        {
+            return _facilitiesByHabitat[habitatType];
+        }
+
+        Debug.Log($"No Facility entry for habitat: {habitatType}");
+        return new List<FacilityData>();
     }
+
     public void SetCurrentHabitat(Habitat habitat) { _currentHabitat = habitat; }
 
     [Serializable]
@@ -56,12 +64,14 @@ public class HabitatManager : MonoBehaviour
         if (InitializeChimeraData())
         {
             StoreChimeraDataByHabitat();
-            HabitatDataDisplayInit();
+            ChimeraDataDisplayInit();
         }
-        if(InitializeHabitatData())
+
+        if (InitializeFacilityData())
         {
-            StoreHabitatDataByHabitat();
+            StoreFacilityDataByHabitat();
         }
+
         return this;
     }
 
@@ -78,53 +88,22 @@ public class HabitatManager : MonoBehaviour
 
         return true;
     }
-    private bool InitializeHabitatData()
+
+    private bool InitializeFacilityData()
     {
-        for(int i = 1; i < Enum.GetValues(typeof(HabitatType)).Length; i++)
-        {
-            _habitatList.Add(new HabitatData());
-        }
-        //Initialize _habitatList
-        foreach (HabitatType habitatType in (HabitatType[])Enum.GetValues(typeof(HabitatType)))
-        {
-            if (habitatType != HabitatType.None)
-            {
-                _habitatList[(int)habitatType].type = habitatType;
-                FacilityData temp = new FacilityData();
-                _habitatList[(int)habitatType].facilities = new FacilityData[]{temp,temp,temp};
-            }
-        }
-
         // Get your data from the save system
-        _habitatSaveData = _persistentData.HabitatData;
+        _facilitySaveData = _persistentData.FacilityData;
 
-        if (_habitatSaveData == null)
+        if (_facilitySaveData == null)
         {
-            Debug.LogError("Habitat Save data is null!");
+            Debug.LogError("Facility Save data is null!");
             return false;
         }
+
         return true;
     }
-    private void StoreHabitatDataByHabitat()
-    {
-        foreach (var habitat in _habitatSaveData)
-        {
-            if (_chimerasByHabitat.ContainsKey(habitat.type) == false)
-            {
-                _chimerasByHabitat.Add(habitat.type, new List<ChimeraData>());
-            }
-            _habitatList[(int)habitat.type] = habitat;
-        }
-    }
-    private void StoreChimeraDataByHabitat()
-    {
-        foreach (var chimera in _chimeraSaveData)
-        {
-            AddChimeraToHabitat(chimera, chimera.habitatType);
-        }
-    }
 
-    public void HabitatDataDisplayInit()
+    public void ChimeraDataDisplayInit()
     {
         foreach (var entry in _chimerasByHabitat)
         {
@@ -133,10 +112,20 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    public void AddNewChimera(Chimera chimeraToSave)
+    private void StoreChimeraDataByHabitat()
     {
-        ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
-        AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType);
+        foreach (var chimera in _chimeraSaveData)
+        {
+            AddChimeraToHabitat(chimera, chimera.habitatType);
+        }
+    }
+
+    private void StoreFacilityDataByHabitat()
+    {
+        foreach (var faciliy in _facilitySaveData)
+        {
+            AddFacilityToHabitat(faciliy, faciliy.habitatType);
+        }
     }
 
     private void AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
@@ -147,6 +136,16 @@ public class HabitatManager : MonoBehaviour
         }
 
         _chimerasByHabitat[habitat].Add(chimeraToAdd);
+    }
+
+    private void AddFacilityToHabitat(FacilityData facilityToAdd, HabitatType habitat)
+    {
+        if (_facilitiesByHabitat.ContainsKey(habitat) == false)
+        {
+            _facilitiesByHabitat.Add(habitat, new List<FacilityData>());
+        }
+
+        _facilitiesByHabitat[habitat].Add(facilityToAdd);
     }
 
     public void UpdateCurrentHabitatChimeras()
@@ -165,23 +164,27 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    public void UpdateCurrentHabitatFacilities(Facility facility)
+    public void AddNewChimera(Chimera chimeraToSave)
     {
-        int habitatType = (int)_currentHabitat.Type;
-        int facilityType = (int)facility.GetFacilityType();
+        ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
+        AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType);
+    }
 
-        _habitatSaveData[habitatType].facilities[facilityType].currentTier = facility.CurrentTier;
+    public void AddNewFacility(Facility facilityToSave)
+    {
+        FacilityData facilitySavedData = new FacilityData(facilityToSave, _currentHabitat.Type);
+        AddFacilityToHabitat(facilitySavedData, facilitySavedData.habitatType);
     }
 
     public void SpawnChimerasForHabitat()
     {
         var chimerasToSpawn = GetChimerasForHabitat(_currentHabitat.Type);
-        _currentHabitat.SpawnChimeras(chimerasToSpawn);
+        _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
     }
 
-    public void SpawnFacilitiesForHabitat()
+    public void BuildFacilitiesForHabitat()
     {
-        FacilityData[] facilitiesInfo = GetFacilityData(_currentHabitat.Type);
-        _currentHabitat.SpawnFacilities(facilitiesInfo);
+        var facilitiesToBuild = GetFaclitiesForHabitat(_currentHabitat.Type);
+        _currentHabitat.CreateFacilitiesData(facilitiesToBuild);
     }
 }

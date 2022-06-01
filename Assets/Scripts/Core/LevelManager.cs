@@ -78,10 +78,12 @@ public class LevelManager : AsyncLoader
     {
         _habitatManager.SpawnChimerasForHabitat();
     }
+
     private void LoadFacilities()
     {
-        _habitatManager.SpawnFacilitiesForHabitat();
+        _habitatManager.BuildFacilitiesForHabitat();
     }
+
     private void StartHabitatTickTimer()
     {
         _habitat.StartTickTimer();

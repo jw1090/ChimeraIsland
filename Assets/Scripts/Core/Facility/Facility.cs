@@ -20,11 +20,10 @@ public class Facility : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 0;
 
+    public FacilityType Type { get => _facilityType; }
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
-
-    public FacilityType GetFacilityType() { return _facilityType; }
-    public int GetPrice() { return _price; }
+    public int Price { get => _price; }
 
     public bool IsChimeraStored()
     {
