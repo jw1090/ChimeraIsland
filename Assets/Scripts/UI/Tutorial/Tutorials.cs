@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class DialogSteps
+public class Tutorials
 {
     public DialogInfo[] Steps;
 }

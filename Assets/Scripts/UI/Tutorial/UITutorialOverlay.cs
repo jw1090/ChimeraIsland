@@ -5,6 +5,13 @@ public class UITutorialOverlay : MonoBehaviour
     [SerializeField] private TextInfo _textInfo = null;
     private ResourceManager _resourceManager = null;
     private int stepNumber = 0;
+    private bool stop = false;
+
+    [System.Serializable]
+    public class GlobalTutorial
+    {
+        Tutorials[] Tutorials;
+    }
 
     public void Initialize()
     {
@@ -13,25 +20,37 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void NextStep()
     {
+        if(stop == true)
+        {
+            this.gameObject.SetActive(false);
+            Debug.Log("You have reached the total steps");
+        }
         stepNumber++;
-        Debug.Log($"Current Tutorial Step: { stepNumber}");
         ShowOverlay();
+ 
     }
 
     public void ShowOverlay()
     {
-        DialogSteps tutorialData = FileHandler.ReadFromJSON<DialogSteps>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+        GlobalTutorial tutorialData = FileHandler.ReadFromJSON<GlobalTutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
         if (tutorialData == null)
         {
             Debug.Log($"No tutorial Data found");
-            tutorialData = new DialogSteps();
+            //tutorialData = new DialogSteps();
         }
 
-        DialogInfo loadedStep = tutorialData.Steps[stepNumber];
-        Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
+        //if(stepNumber < tutorialData.Steps.Length)
+        //{ 
+        //    DialogInfo loadedStep = tutorialData.Steps[stepNumber];
+        //    Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
-        Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
-
-       _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
+        //    Debug.Log($"Current Tutorial Step: { stepNumber}");
+        //    Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
+        //    _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
+        //}
+        //else
+        //{
+        //    stop = true;
+        //}
     }
 }
