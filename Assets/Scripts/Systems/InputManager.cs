@@ -55,6 +55,11 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        if(_heldChimera == true)
+        {
+            return;
+        }
+
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Physics.Raycast(ray, out hit, 200.0f);
