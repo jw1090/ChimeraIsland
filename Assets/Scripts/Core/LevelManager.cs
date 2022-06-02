@@ -19,7 +19,9 @@ public class LevelManager : AsyncLoader
 
     private void LevelSetup()
     {
+
         Initialize();
+        _persistentData.LoadData();
         LoadUI();
         LoadFacilities();
         LoadChimeras();
