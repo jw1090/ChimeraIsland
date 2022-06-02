@@ -56,10 +56,9 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            //_boxCollider = GetComponent<BoxCollider>();
+            _boxCollider = GetComponent<Chimera>().BoxCollider;
 
             _mainCamera = CameraController.CameraCO;
-
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
@@ -73,11 +72,6 @@ namespace AI.Behavior
             ChangeState(_states[StateEnum.Patrol]);
 
             _isActive = true;
-        }
-
-        public void SetBoxCollider(BoxCollider box)
-        {
-            _boxCollider = box;
         }
 
         private void Update()

@@ -7,13 +7,11 @@ public class InputManager : MonoBehaviour
     private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
     private LayerMask _chimeraLayer = new LayerMask();
-    private LayerMask _facilityLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
 
     public void SetReleaseSlider(ReleaseSlider releaseSlider) { _releaseSlider = releaseSlider; }
-
     public void SetCamera(Camera camera) { _cameraMain = camera; }
 
     public InputManager Initialize()
@@ -21,7 +19,6 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
-        _facilityLayer = LayerMask.GetMask("Facility");
 
         _isInitialized = true;
 
@@ -60,7 +57,7 @@ public class InputManager : MonoBehaviour
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, 200.0f, _facilityLayer);
+        Physics.Raycast(ray, out hit, 200.0f);
 
         if (hit.collider == null)
         {
@@ -105,7 +102,8 @@ public class InputManager : MonoBehaviour
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
-            _heldChimera = hit.transform.gameObject.GetComponent<BoxColliderEvolution>()._heldChimera;
+            Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
+            _heldChimera = chimera.GetComponent<ChimeraBehavior>();
             _heldChimera.Clicked = true;
             _isHolding = true;
         }
