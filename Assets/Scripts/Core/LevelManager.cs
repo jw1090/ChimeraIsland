@@ -20,6 +20,9 @@ public class LevelManager : AsyncLoader
     private void LevelSetup()
     {
         Initialize();
+        _persistentData.LoadData();
+
+        LoadEssence();
         LoadUI();
         LoadFacilities();
         LoadChimeras();
@@ -63,6 +66,11 @@ public class LevelManager : AsyncLoader
         }
     }
 
+    private void LoadEssence()
+    {
+        _persistentData.LoadEssence();
+    }
+
     private void LoadUI()
     {
         if (_uiManager == null)
@@ -86,6 +94,11 @@ public class LevelManager : AsyncLoader
 
     private void StartHabitatTickTimer()
     {
+        if (_habitat == null)
+        {
+            return;
+        }
+
         _habitat.StartTickTimer();
     }
 

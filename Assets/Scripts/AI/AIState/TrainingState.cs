@@ -15,6 +15,7 @@ namespace AI.Behavior
             _wanderTimer = 2.0f;
             _patrolPos = _chimeraBehavior.TrainingPosition;
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_patrolPos.y));
+            _chimeraBehavior.BoxCollider.enabled = false;
         }
 
         public override void Update()
@@ -30,6 +31,7 @@ namespace AI.Behavior
         public override void Exit()
         {
             _wanderTimer = 0.0f;
+            _chimeraBehavior.BoxCollider.enabled = true;
         }
 
         private Vector3 GetNewWayPoint(float positionY)
