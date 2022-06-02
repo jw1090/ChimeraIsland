@@ -13,6 +13,11 @@ public class PersistentData : MonoBehaviour
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
     public int EssenceData { get => CurrentEssence(); }
 
+    public Habitat GetCurrentHabitat() 
+    { 
+        return _globalSaveData.lastUsedHabitat; 
+    }
+    public void SetCurrentHabitat(Habitat habitat) { _globalSaveData.lastUsedHabitat = habitat; }
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
 
@@ -38,7 +43,7 @@ public class PersistentData : MonoBehaviour
     {
         List<ChimeraData> myChimeraData = ChimerasToJson();
         List<FacilityData> myFacilityData = FacilitiesToJson();
-        GlobalData myGlobalData = new GlobalData(_essenceManager.CurrentEssence);
+        GlobalData myGlobalData = new GlobalData(_essenceManager.CurrentEssence, _globalSaveData.lastUsedHabitat);
 
         GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
 

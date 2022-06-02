@@ -41,7 +41,11 @@ public class HabitatManager : MonoBehaviour
         return new List<FacilityData>();
     }
 
-    public void SetCurrentHabitat(Habitat habitat) { _currentHabitat = habitat; }
+    public void SetCurrentHabitat(Habitat habitat) 
+    { 
+        _currentHabitat = habitat;
+        _persistentData.SetCurrentHabitat(habitat);
+    }
 
     [Serializable]
     public class HabitatInfo

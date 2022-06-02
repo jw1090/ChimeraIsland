@@ -6,7 +6,7 @@ public class GameSaveData
 {
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
-    public GlobalData globalData = new GlobalData(100);
+    public GlobalData globalData = new GlobalData(100, null);
 
     public GameSaveData(List<ChimeraData> cd, List<FacilityData> fd, GlobalData gd)
     {

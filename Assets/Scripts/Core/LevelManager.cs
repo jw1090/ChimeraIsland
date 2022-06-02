@@ -40,6 +40,13 @@ public class LevelManager : AsyncLoader
         _persistentData = ServiceLocator.Get<PersistentData>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
+        Habitat current = _persistentData.GetCurrentHabitat();
+        if(current != null)
+        {
+            _habitat = current;
+        }
+
+
         if (_uiManager != null)
         {
             ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
