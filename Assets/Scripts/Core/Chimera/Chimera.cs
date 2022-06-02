@@ -137,7 +137,7 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
-        if(_essenceManager == null)
+        if (_essenceManager == null)
         {
             return;
         }
