@@ -11,7 +11,6 @@ public class PersistentData : MonoBehaviour
 
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
-    public int EssenceData { get => CurrentEssence(); }
 
     public Habitat GetCurrentHabitat() 
     { 
@@ -25,18 +24,26 @@ public class PersistentData : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        return this;
+    }
+
+    public void LoadData()
+    {
         GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
-        if(myData == null)
+        if (myData == null)
         {
             Debug.Log($"No Save Data found");
             myData = new GameSaveData();
         }
 
         _globalSaveData = myData.globalData;
-        _chimeraSaveData = myData.chimeras;
         _facilitySaveData = myData.facilities;
-		
-        return this;
+        _chimeraSaveData = myData.chimeras;
+    }
+
+    public void LoadEssence()
+    {
+        _essenceManager.UpdateEssence(_globalSaveData.currentEssence);
     }
 
     public void SaveSessionData()
@@ -45,7 +52,7 @@ public class PersistentData : MonoBehaviour
         List<FacilityData> myFacilityData = FacilitiesToJson();
         GlobalData myGlobalData = new GlobalData(_essenceManager.CurrentEssence, _globalSaveData.lastUsedHabitat);
 
-        GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
+        GameSaveData myData = new GameSaveData(myGlobalData, myFacilityData, myChimeraData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
@@ -74,16 +81,6 @@ public class PersistentData : MonoBehaviour
         }
 
         return facilityList;
-    }
-
-    private int CurrentEssence()
-    {
-        if (_globalSaveData == null)
-        {
-            return 100;
-        }
-
-        return _globalSaveData.currentEssence;
     }
 
     public void OnApplicationQuit()

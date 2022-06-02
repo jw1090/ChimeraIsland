@@ -9,13 +9,13 @@ public static class FileHandler
     public static void SaveToJSON<T>(List<T> toSave, string filename)
     {
         Debug.Log(GetPath(filename));
-        string content = JsonHelper.ToJson<T>(toSave.ToArray());
+        string content = JsonHelper.ToJson<T>(toSave.ToArray(), true);
         WriteFile(GetPath(filename), content);
     }
 
     public static void SaveToJSON<T>(T toSave, string filename)
     {
-        string content = JsonUtility.ToJson(toSave);
+        string content = JsonUtility.ToJson(toSave, true);
         WriteFile(GetPath(filename), content);
     }
 

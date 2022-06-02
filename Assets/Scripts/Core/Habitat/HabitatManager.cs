@@ -64,6 +64,7 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _persistentData.LoadData();
 
         if (InitializeChimeraData())
         {

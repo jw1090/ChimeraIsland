@@ -38,7 +38,8 @@ namespace AI.Behavior
         public int WanderIndex { get => _wanderIndex; }
 
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
-        public bool Clicked { get; set; } = false;
+        public bool WasClicked { get; set; } = false;
+        public bool Dropped { get; set; } = false;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
         public int GetNodeCount() { return _nodes.Count; }
@@ -56,10 +57,9 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            //_boxCollider = GetComponent<BoxCollider>();
+            _boxCollider = GetComponent<Chimera>().BoxCollider;
 
             _mainCamera = CameraController.CameraCO;
-
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
@@ -73,11 +73,6 @@ namespace AI.Behavior
             ChangeState(_states[StateEnum.Patrol]);
 
             _isActive = true;
-        }
-
-        public void SetBoxCollider(BoxCollider box)
-        {
-            _boxCollider = box;
         }
 
         private void Update()
@@ -102,7 +97,7 @@ namespace AI.Behavior
 
         public void HeldEnterCheck()
         {
-            if (Clicked == true)
+            if (WasClicked == true)
             {
                 ChangeState(_states[StateEnum.Held]);
             }
