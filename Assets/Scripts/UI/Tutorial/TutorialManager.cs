@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
 
     public void ShowTutorial()
     {
-        _tutorialOverlay = _uiManager.GetTutorialOverlay();
+        _tutorialOverlay = _uiManager.TutorialOverlay;
         _tutorialOverlay.ShowOverlay();
     }
 }

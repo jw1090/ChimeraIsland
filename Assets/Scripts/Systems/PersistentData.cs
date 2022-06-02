@@ -39,6 +39,12 @@ public class PersistentData : MonoBehaviour
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.FACILITY_SAVE_DATA_FILE);
     }
 
+    private void SaveEssence()
+    {
+        GlobalData data = new GlobalData(_essenceManager.CurrentEssence);
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
+    }
+
     private List<ChimeraData> ChimerasToJson()
     {
         List<ChimeraData> chimeraList = new List<ChimeraData>();
@@ -75,10 +81,15 @@ public class PersistentData : MonoBehaviour
         return _globalSaveData.currentEssence;
     }
 
-    public void OnApplicationQuit()
+    public void SaveSessionData()
     {
         SaveChimeras();
         SaveFacilities();
-        _essenceManager.SaveEssence();
+        SaveEssence();
+    }
+
+    public void OnApplicationQuit()
+    {
+        SaveSessionData();
     }
 }

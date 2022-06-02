@@ -43,7 +43,7 @@ public class LevelManager : AsyncLoader
         if (_uiManager != null)
         {
             ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
-            _inputManager.SetReleaseSlider(_uiManager.GetReleaseSlider());
+            _inputManager.SetReleaseSlider(_uiManager.ReleaseSlider);
             _tutorialManager.SetUIManager(_uiManager);
         }
         if (_cameraController != null)
