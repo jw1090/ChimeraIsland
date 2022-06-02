@@ -4,7 +4,8 @@ public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
     private ResourceManager _resourceManager = null;
-    private int stepNumber = 0;
+    private int _tutorialStep = 0;
+    private int _tutorialId = 0;
 
     public void Initialize()
     {
@@ -13,25 +14,34 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void NextStep()
     {
-        stepNumber++;
-        Debug.Log($"Current Tutorial Step: { stepNumber}");
+        _tutorialStep++;
+        if(_tutorialStep >= 3)
+        {
+            _tutorialId++;
+        }
+        Debug.Log($"Current Tutorial Step: { _tutorialStep}");
         ShowOverlay();
     }
 
     public void ShowOverlay()
     {
-        DialogSteps tutorialData = FileHandler.ReadFromJSON<DialogSteps>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        Tutorial tutorialData = FileHandler.ReadFromJSON<Tutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
         if (tutorialData == null)
         {
             Debug.Log($"No tutorial Data found");
-            tutorialData = new DialogSteps();
+            tutorialData = new Tutorial();
         }
 
-        DialogInfo loadedStep = tutorialData.Steps[stepNumber];
+
+        _tutorialStep = _tutorialStep % tutorialData.Tutorials.Length;
+        _tutorialId = _tutorialId % tutorialData.Tutorials[_tutorialStep].StepData.Length;
+
+        TutorialStepData loadedStep = tutorialData.Tutorials[_tutorialId].StepData[_tutorialStep];
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
         Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
 
-       _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
+       _textInfo.Load(tutorialData.Tutorials[_tutorialId].StepData[_tutorialStep].description, icon);
     }
 }
