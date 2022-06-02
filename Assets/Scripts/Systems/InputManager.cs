@@ -109,7 +109,7 @@ public class InputManager : MonoBehaviour
         {
             Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
             _heldChimera = chimera.GetComponent<ChimeraBehavior>();
-            _heldChimera.Clicked = true;
+            _heldChimera.WasClicked = true;
             _isHolding = true;
         }
     }
@@ -121,7 +121,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        _heldChimera.GetComponent<ChimeraBehavior>().Clicked = false;
+        _heldChimera.GetComponent<ChimeraBehavior>().WasClicked = false;
         _isHolding = false;
         _heldChimera = null;
     }

@@ -38,7 +38,8 @@ namespace AI.Behavior
         public int WanderIndex { get => _wanderIndex; }
 
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
-        public bool Clicked { get; set; } = false;
+        public bool WasClicked { get; set; } = false;
+        public bool Dropped { get; set; } = false;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
         public int GetNodeCount() { return _nodes.Count; }
@@ -96,7 +97,7 @@ namespace AI.Behavior
 
         public void HeldEnterCheck()
         {
-            if (Clicked == true)
+            if (WasClicked == true)
             {
                 ChangeState(_states[StateEnum.Held]);
             }

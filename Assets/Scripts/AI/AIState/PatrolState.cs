@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace AI.Behavior
@@ -15,6 +16,8 @@ namespace AI.Behavior
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
 
             _chimeraBehavior.EnterAnim(_animWalk);
+
+            ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
         }
 
         public override void Update()
@@ -53,7 +56,13 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            _chimeraBehavior.Dropped = false;
+        }
 
+        private IEnumerator DroppedReset()
+        {
+            yield return new WaitForSeconds(0.1f);
+            _chimeraBehavior.Dropped = false;
         }
     }
 }
