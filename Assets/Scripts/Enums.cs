@@ -64,3 +64,8 @@ public enum StatType
     Strength,
     Happiness,
 }
+
+public enum TutorialIcons
+{
+    None = -1,
+}

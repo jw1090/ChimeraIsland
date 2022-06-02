@@ -9,17 +9,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
+    [SerializeField] private UIWorldMap _worldMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
 
-    public ReleaseSlider GetReleaseSlider() { return _releaseSlider; }
+    public ReleaseSlider ReleaseSlider{ get => _releaseSlider; }
+    public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
 
     public UIManager Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         CloseAll();
+
         InitializeWallets();
         _tutorialOverlay.Initialize();
+        _worldMap.Initialize();
 
         return this;
     }
@@ -32,10 +36,6 @@ public class UIManager : MonoBehaviour
     public void LoadDetails(Habitat habitat)
     {
         _detailsFolder.Initialize(habitat);
-    }
-    public UITutorialOverlay GetTutorialOverlay()
-    {
-        return _tutorialOverlay;
     }
 
     public void CloseAll()
