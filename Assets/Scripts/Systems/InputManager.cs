@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
     private LayerMask _chimeraLayer = new LayerMask();
+    private LayerMask _facilityLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
@@ -20,6 +21,7 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
+        _facilityLayer = LayerMask.GetMask("Facility");
 
         _isInitialized = true;
 
@@ -51,19 +53,14 @@ public class InputManager : MonoBehaviour
 
     private void RemoveFromFacility()
     {
-        if(_cameraMain == null)
-        {
-            return;
-        }
-
-        if (_heldChimera == true)
+        if (_cameraMain == null)
         {
             return;
         }
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, 200.0f);
+        Physics.Raycast(ray, out hit, 200.0f, _facilityLayer);
 
         if (hit.collider == null)
         {
@@ -108,7 +105,7 @@ public class InputManager : MonoBehaviour
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
-            _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
+            _heldChimera = hit.transform.gameObject.GetComponent<BoxColliderEvolution>()._heldChimera;
             _heldChimera.Clicked = true;
             _isHolding = true;
         }

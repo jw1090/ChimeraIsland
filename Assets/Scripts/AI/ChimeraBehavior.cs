@@ -10,6 +10,7 @@ namespace AI.Behavior
         Wander,
         Held,
         Training,
+        //Idle,
     }
 
     public class ChimeraBehavior : MonoBehaviour
@@ -55,7 +56,7 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _boxCollider = GetComponent<BoxCollider>();
+            //_boxCollider = GetComponent<BoxCollider>();
 
             _mainCamera = CameraController.CameraCO;
 
@@ -66,11 +67,17 @@ namespace AI.Behavior
             _states.Add(StateEnum.Wander, new WanderState());
             _states.Add(StateEnum.Held, new HeldState());
             _states.Add(StateEnum.Training, new TrainingState());
+            //_states.Add(StateEnum.Idle, new IdleState());
             _animator = GetComponentInChildren<Animator>();
 
             ChangeState(_states[StateEnum.Patrol]);
 
             _isActive = true;
+        }
+
+        public void SetBoxCollider(BoxCollider box)
+        {
+            _boxCollider = box;
         }
 
         private void Update()
