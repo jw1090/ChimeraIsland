@@ -8,6 +8,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
+
     private Sprite _icon = null;
 
     public ChimeraType Type { get => _evolutionType; }
@@ -30,7 +31,7 @@ public class EvolutionLogic : MonoBehaviour
             return false;
         }
 
-        foreach(var possibleEvolution in _evolutionPaths)
+        foreach (var possibleEvolution in _evolutionPaths)
         {
             if (endurance < possibleEvolution.ReqEndurance)
             {
@@ -40,7 +41,7 @@ public class EvolutionLogic : MonoBehaviour
             {
                 continue;
             }
-            if(strength < possibleEvolution.ReqStrength)
+            if (strength < possibleEvolution.ReqStrength)
             {
                 continue;
             }
