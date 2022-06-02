@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
-    private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
     private bool _isInitialized = false;
     private int _currentEssence = 100;
@@ -14,15 +13,7 @@ public class EssenceManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        _persistentData = ServiceLocator.Get<PersistentData>();
         _uiManager = ServiceLocator.Get<UIManager>();
-
-        LoadEssence();
-
-        if (_uiManager != null)
-        {
-            _uiManager.UpdateWallets();
-        }
 
         _isInitialized = true;
 
@@ -43,14 +34,22 @@ public class EssenceManager : MonoBehaviour
         }
 
         _currentEssence -= amount;
-        _uiManager.UpdateWallets();
+
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
 
         return true;
     }
 
-    public void LoadEssence()
+    public void UpdateEssence(int amount)
     {
-        _currentEssence = _persistentData.EssenceData;
-        Debug.Log($"Loaded Essense: {_currentEssence}");
+        _currentEssence = amount;
+
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
     }
 }

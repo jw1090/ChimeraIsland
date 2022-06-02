@@ -11,7 +11,6 @@ public class PersistentData : MonoBehaviour
 
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
-    public int EssenceData { get => LoadEssence(); }
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
@@ -19,8 +18,6 @@ public class PersistentData : MonoBehaviour
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
-
-        LoadData();
 
         return this;
     }
@@ -39,14 +36,9 @@ public class PersistentData : MonoBehaviour
         _chimeraSaveData = myData.chimeras;
     }
 
-    private int LoadEssence()
+    public void LoadEssence()
     {
-        if (_globalSaveData == null)
-        {
-            return 100;
-        }
-
-        return _globalSaveData.currentEssence;
+        _essenceManager.UpdateEssence(_globalSaveData.currentEssence);
     }
 
     public void SaveSessionData()
