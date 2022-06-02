@@ -28,6 +28,7 @@ public class PersistentData : MonoBehaviour
         _globalSaveData = myData.globalData;
         _chimeraSaveData = myData.chimeras;
         _facilitySaveData = myData.facilities;
+		
         return this;
     }
 
@@ -38,6 +39,12 @@ public class PersistentData : MonoBehaviour
         GlobalData myGlobalData = new GlobalData(_globalSaveData.currentEssence);
         GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+    }
+
+    private void SaveEssence()
+    {
+        GlobalData data = new GlobalData(_essenceManager.CurrentEssence);
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
     }
 
     private List<ChimeraData> ChimerasToJson()
@@ -76,8 +83,15 @@ public class PersistentData : MonoBehaviour
         return _globalSaveData.currentEssence;
     }
 
+    public void SaveSessionData()
+    {
+        SaveChimeras();
+        SaveFacilities();
+        SaveEssence();
+    }
+
     public void OnApplicationQuit()
     {
-        SaveData();
+        SaveSessionData();
     }
 }

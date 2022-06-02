@@ -3,7 +3,7 @@ using UnityEngine;
 public class EssenceManager : MonoBehaviour
 {
     private PersistentData _persistentData = null;
-    private UIManager _uIManager = null;
+    private UIManager _uiManager = null;
     private bool _isInitialized = false;
     private int _currentEssence = 100;
 
@@ -15,13 +15,13 @@ public class EssenceManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _uIManager = ServiceLocator.Get<UIManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
 
         LoadEssence();
 
-        if (_uIManager != null)
+        if (_uiManager != null)
         {
-            _uIManager.UpdateWallets();
+            _uiManager.UpdateWallets();
         }
 
         _isInitialized = true;
@@ -32,10 +32,9 @@ public class EssenceManager : MonoBehaviour
     public void IncreaseEssence(int amount)
     {
         _currentEssence += amount;
-        _uIManager.UpdateWallets();
+        _uiManager.UpdateWallets();
     }
 
-    // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
     public bool SpendEssence(int amount)
     {
         if (_currentEssence - amount < 0)
@@ -44,7 +43,7 @@ public class EssenceManager : MonoBehaviour
         }
 
         _currentEssence -= amount;
-        _uIManager.UpdateWallets();
+        _uiManager.UpdateWallets();
 
         return true;
     }
