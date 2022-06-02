@@ -19,12 +19,14 @@ public class PersistentData : MonoBehaviour
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+
         GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
         if(myData == null)
         {
             Debug.Log($"No Save Data found");
             myData = new GameSaveData();
         }
+
         _globalSaveData = myData.globalData;
         _chimeraSaveData = myData.chimeras;
         _facilitySaveData = myData.facilities;
@@ -32,19 +34,15 @@ public class PersistentData : MonoBehaviour
         return this;
     }
 
-    private void SaveData()
+    public void SaveSessionData()
     {
         List<ChimeraData> myChimeraData = ChimerasToJson();
         List<FacilityData> myFacilityData = FacilitiesToJson();
-        GlobalData myGlobalData = new GlobalData(_globalSaveData.currentEssence);
-        GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
-    }
+        GlobalData myGlobalData = new GlobalData(_essenceManager.CurrentEssence);
 
-    private void SaveEssence()
-    {
-        GlobalData data = new GlobalData(_essenceManager.CurrentEssence);
-        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
+        GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
+
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
 
     private List<ChimeraData> ChimerasToJson()
@@ -81,13 +79,6 @@ public class PersistentData : MonoBehaviour
         }
 
         return _globalSaveData.currentEssence;
-    }
-
-    public void SaveSessionData()
-    {
-        SaveChimeras();
-        SaveFacilities();
-        SaveEssence();
     }
 
     public void OnApplicationQuit()
