@@ -13,7 +13,7 @@ public class UIWallet : MonoBehaviour
     private void Awake()
     {
         _walletText.gameObject.SetActive(false);
-        GameLoader.CallOnComplete(Initialize);
+        LevelManager.CallOnComplete(Initialize);
     }
 
     public void Initialize()
