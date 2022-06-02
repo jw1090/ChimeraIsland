@@ -13,5 +13,6 @@ public static class GameConsts
     public class JsonSaveKeys
     {
         public static readonly string GAME_SAVE_DATA_FILE = "Saves/GameSaveData.json";
+        public static readonly string TUTORIAL_DATA_FILE = "Tutorial/TutorialInfo.json";
     }
 }

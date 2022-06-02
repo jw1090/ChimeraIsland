@@ -3,7 +3,6 @@ using UnityEngine;
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
-    [SerializeField] private TextAsset _tutorialJsonPath = null;
     private ResourceManager _resourceManager = null;
     private int stepNumber = 0;
 
@@ -21,12 +20,18 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowOverlay()
     {
-        DialogSteps loadedTutorial = JsonUtility.FromJson<DialogSteps>(_tutorialJsonPath.text);
-        DialogInfo loadedStep = loadedTutorial.Steps[stepNumber];
+        DialogSteps tutorialData = FileHandler.ReadFromJSON<DialogSteps>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+        if (tutorialData == null)
+        {
+            Debug.Log($"No tutorial Data found");
+            tutorialData = new DialogSteps();
+        }
+
+        DialogInfo loadedStep = tutorialData.Steps[stepNumber];
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
         Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
 
-       _textInfo.Load(loadedTutorial.Steps[stepNumber].description, icon);
+       _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
     }
 }
