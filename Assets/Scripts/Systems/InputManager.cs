@@ -57,6 +57,7 @@ public class InputManager : MonoBehaviour
 
         if(_heldChimera == true)
         {
+            ResetSliderInfo();
             return;
         }
 
