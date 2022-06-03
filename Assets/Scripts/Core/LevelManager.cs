@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : AsyncLoader
 {
@@ -21,6 +22,8 @@ public class LevelManager : AsyncLoader
     {
         Initialize();
         _persistentData.LoadData();
+
+        LastSessionHabitatCheck();
 
         LoadEssence();
         LoadUI();
@@ -64,6 +67,37 @@ public class LevelManager : AsyncLoader
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
         }
+    }
+
+    void LastSessionHabitatCheck()
+    {
+        HabitatType lastSessionHabitat = _persistentData.GetLastSessionHabitat();
+
+
+        switch (lastSessionHabitat)    
+        {
+            case HabitatType.StonePlains:
+            case HabitatType.TreeOfLife:
+            case HabitatType.Ashlands:
+                LoadLastSessionScene(lastSessionHabitat);
+                break;
+            default:
+                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
+                break;
+        }
+    }
+
+    void LoadLastSessionScene(HabitatType habitatType)
+    {
+        if(habitatType == _habitatManager.CurrentHabitat.Type)
+        {
+            return;
+        }
+
+        Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
+
+        int loadNum = (int)habitatType + 4;
+        SceneManager.LoadSceneAsync(loadNum);
     }
 
     private void LoadEssence()

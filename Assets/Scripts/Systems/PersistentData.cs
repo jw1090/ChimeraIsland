@@ -12,6 +12,8 @@ public class PersistentData : MonoBehaviour
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
 
+    public HabitatType GetLastSessionHabitat() => _globalSaveData.lastSessionHabitat;
+
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
 
@@ -45,7 +47,18 @@ public class PersistentData : MonoBehaviour
     {
         List<ChimeraData> myChimeraData = ChimerasToJson();
         List<FacilityData> myFacilityData = FacilitiesToJson();
-        GlobalData myGlobalData = new GlobalData(_essenceManager.CurrentEssence);
+        GlobalData myGlobalData = new GlobalData(HabitatType.None, _essenceManager.CurrentEssence, 0);
+
+        GameSaveData myData = new GameSaveData(myGlobalData, myFacilityData, myChimeraData);
+
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+    }
+
+    public void SaveSessionDataOnQuit()
+    {
+        List<ChimeraData> myChimeraData = ChimerasToJson();
+        List<FacilityData> myFacilityData = FacilitiesToJson();
+        GlobalData myGlobalData = new GlobalData(_habitatManager.CurrentHabitat.Type, _essenceManager.CurrentEssence, 0);
 
         GameSaveData myData = new GameSaveData(myGlobalData, myFacilityData, myChimeraData);
 
@@ -80,6 +93,6 @@ public class PersistentData : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        SaveSessionData();
+        SaveSessionDataOnQuit();
     }
 }
