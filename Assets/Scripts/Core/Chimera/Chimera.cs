@@ -93,7 +93,6 @@ public class Chimera : MonoBehaviour
         _uiManager = ServiceLocator.Get<UIManager>();
 
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
-        _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
         InitializeEvolution();
@@ -104,6 +103,7 @@ public class Chimera : MonoBehaviour
 
     private void InitializeEvolution()
     {
+        _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _currentEvolution.Initialize(this);
         _chimeraType = _currentEvolution.Type;
     }
@@ -288,6 +288,7 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
+        _boxCollider.enabled = false;
 
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
