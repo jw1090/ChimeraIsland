@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIWorldMap _worldMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
 
-    public ReleaseSlider ReleaseSlider{ get => _releaseSlider; }
+    public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
 
     public UIManager Initialize()

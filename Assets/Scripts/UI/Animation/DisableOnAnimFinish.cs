@@ -7,7 +7,7 @@ public class DisableOnAnimFinish : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(_islandFade == null)
+        if (_islandFade == null)
         {
             _islandFade = animator.gameObject.GetComponentInParent<IslandFade>();
         }

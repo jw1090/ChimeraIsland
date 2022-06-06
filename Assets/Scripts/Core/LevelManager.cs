@@ -20,19 +20,20 @@ public class LevelManager : AsyncLoader
 
     private void LevelSetup()
     {
+        LevelManager.ResetStaticVariables();
+
         Initialize();
         _persistentData.LoadData();
 
-        LastSessionHabitatCheck();
-
-        LoadEssence();
-        LoadUI();
-        LoadFacilities();
-        LoadChimeras();
-        StartHabitatTickTimer();
-
-        LevelManager.ResetStaticVariables();
-        LevelManager.CallOnComplete(OnComplete);
+        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
+        {
+            LoadEssence();
+            LoadUI();
+            LoadFacilities();
+            LoadChimeras();
+            StartHabitatTickTimer();
+            LevelManager.CallOnComplete(OnComplete);
+        }
     }
 
     private void Initialize()
@@ -57,41 +58,48 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
         }
-        if(_habitat != null)
+        if (_habitat != null)
         {
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
         }
     }
 
-    void LastSessionHabitatCheck()
+    private bool LastSessionHabitatCheck()
     {
         HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
 
-        switch (lastSessionHabitat)    
+        switch (lastSessionHabitat)
         {
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
             case HabitatType.Ashlands:
-                LoadLastSessionScene(lastSessionHabitat);
+                if(LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
+                {
+                    return true;
+                }
+                
                 break;
             default:
                 Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
                 break;
         }
+
+        return false;
     }
 
-    void LoadLastSessionScene(HabitatType habitatType)
+    private bool LoadLastSessionScene(HabitatType habitatType)
     {
-        if(habitatType == _habitatManager.CurrentHabitat.Type)
+        if (habitatType == _habitatManager.CurrentHabitat.Type)
         {
-            return;
+            return false;
         }
 
         Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
 
         int loadNum = (int)habitatType + 4;
         SceneManager.LoadSceneAsync(loadNum);
+        return true;
     }
 
     private void LoadEssence()

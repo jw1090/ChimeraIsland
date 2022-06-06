@@ -32,6 +32,6 @@ public class UITutorialOverlay : MonoBehaviour
 
         Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
 
-       _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
+        _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
     }
 }
