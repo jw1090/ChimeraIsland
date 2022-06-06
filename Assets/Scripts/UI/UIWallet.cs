@@ -7,20 +7,14 @@ public class UIWallet : MonoBehaviour
     private EssenceManager _essenceManager = null;
     private bool _initialized = false;
 
-    private void Awake()
-    {
-        _walletText.gameObject.SetActive(false);
-        LevelManager.CallOnComplete(Initialize);
-    }
-
     public void Initialize()
     {
         _essenceManager = ServiceLocator.Get<EssenceManager>();
-        _walletText.gameObject.SetActive(true);
 
         _initialized = true;
-
         UpdateWallet();
+
+        _walletText.gameObject.SetActive(true);
     }
 
     public void UpdateWallet()

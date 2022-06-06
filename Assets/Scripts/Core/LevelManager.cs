@@ -23,12 +23,11 @@ public class LevelManager : AsyncLoader
         LevelManager.ResetStaticVariables();
 
         Initialize();
-        _persistentData.LoadData();
 
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
-            LoadEssence();
-            LoadUI();
+            _essenceManager.LoadEssence();
+            InitializeUIElements();
             LoadFacilities();
             LoadChimeras();
             StartHabitatTickTimer();
@@ -78,14 +77,12 @@ public class LevelManager : AsyncLoader
                 {
                     return true;
                 }
-                
-                break;
+
+                return false;
             default:
                 Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
-                break;
+                return false;
         }
-
-        return false;
     }
 
     private bool LoadLastSessionScene(HabitatType habitatType)
@@ -102,20 +99,16 @@ public class LevelManager : AsyncLoader
         return true;
     }
 
-    private void LoadEssence()
-    {
-        _persistentData.LoadEssence();
-    }
-
-    private void LoadUI()
+    private void InitializeUIElements()
     {
         if (_uiManager == null)
         {
             return;
         }
 
-        _uiManager.LoadDetails(_habitat);
-        _uiManager.LoadMarketplace(_habitat);
+        _uiManager.InitializeDetails(_habitat);
+        _uiManager.InitializeMarketplace(_habitat);
+        _uiManager.InitializeWallets();
     }
 
     private void LoadChimeras()
