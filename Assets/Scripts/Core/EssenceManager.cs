@@ -3,19 +3,15 @@ using UnityEngine;
 public class EssenceManager : MonoBehaviour
 {
     private UIManager _uiManager = null;
-    private bool _isInitialized = false;
     private int _currentEssence = 100;
 
     public int CurrentEssence { get => _currentEssence; }
-    public bool IsInitialized { get => _isInitialized; }
+
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public EssenceManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-
-        _uiManager = ServiceLocator.Get<UIManager>();
-
-        _isInitialized = true;
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         return this;
     }
