@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIWorldMap : MonoBehaviour
+public class UISceneChange : MonoBehaviour
 {
     HabitatManager _habitatManager = null;
     PersistentData _persistentData = null;

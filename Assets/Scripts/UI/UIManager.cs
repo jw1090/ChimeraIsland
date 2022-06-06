@@ -9,8 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private UIWorldMap _worldMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
+    private UISceneChange _sceneChange = null;
 
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -19,10 +19,12 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _sceneChange = GetComponent<UISceneChange>();
+
         CloseAll();
 
         _tutorialOverlay.Initialize();
-        _worldMap.Initialize();
+        _sceneChange.Initialize();
 
         return this;
     }
