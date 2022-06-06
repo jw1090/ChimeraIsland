@@ -40,7 +40,6 @@ public class Facility : MonoBehaviour
         return true;
     }
 
-    // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuildFacility()
     {
         BoxCollider _collider = GetComponent<BoxCollider>();
