@@ -10,7 +10,7 @@ public class FacilitySign : MonoBehaviour
 
     private void Awake()
     {
-        GameLoader.CallOnComplete(Initialize);
+        LevelManager.CallOnComplete(Initialize);
     }
 
     private void Initialize()

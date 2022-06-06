@@ -9,7 +9,7 @@ public class GameLoader : AsyncLoader
     public List<Component> GameModules = new List<Component>();
     private static GameLoader _instance = null;
     private static int _sceneIndex = 1;
-    
+
 	protected override void Awake()
 	{
 		Debug.Log("GameLoader Starting");
@@ -45,7 +45,7 @@ public class GameLoader : AsyncLoader
 		DontDestroyOnLoad(systemsGO);
 
         // Because Unity can hold onto static values between sessions.
-        ResetStaticVariables();
+        GameLoader.ResetStaticVariables();
 
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
@@ -53,7 +53,7 @@ public class GameLoader : AsyncLoader
 
         // Set completion callback
         GameLoader.CallOnComplete(OnComplete);
-	}
+    }
 
 	private IEnumerator IntializeCoreSystems(Transform systemsParent)
 	{
@@ -88,6 +88,12 @@ public class GameLoader : AsyncLoader
         inputManagerGO.transform.SetParent(systemsParent);
         var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
         ServiceLocator.Register<InputManager>(inputManagerComp);
+
+        var essenceManagerGO = new GameObject("Essence Manager");
+        essenceManagerGO.transform.SetParent(systemsParent);
+        var essenceManagerComp = essenceManagerGO.AddComponent<EssenceManager>().Initialize();
+        ServiceLocator.Register<EssenceManager>(essenceManagerComp);
+        persistentDataComp.SetEssenceManager(essenceManagerComp);
 
         var habitatManagerGO = new GameObject("Habitat Manager");
         habitatManagerGO.transform.SetParent(systemsParent);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +5,6 @@ public class UIWallet : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _walletText = null;
     private EssenceManager _essenceManager = null;
-    private MonoUtil _monoUtil = null;
     private bool _initialized = false;
 
     private void Awake()
@@ -18,29 +15,12 @@ public class UIWallet : MonoBehaviour
 
     public void Initialize()
     {
-        _monoUtil = ServiceLocator.Get<MonoUtil>();
-        _monoUtil.StartCoroutine(WaitForEssenceManagerInit(() =>
-        {
-            _walletText.gameObject.SetActive(true);
-            _initialized = true;
-            UpdateWallet();
-        }));
-    }
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _walletText.gameObject.SetActive(true);
 
-    private IEnumerator WaitForEssenceManagerInit(Action callback)
-    {
-        while (_essenceManager == null)
-        {
-            _essenceManager = ServiceLocator.Get<EssenceManager>();
-            yield return null;
-        }
+        _initialized = true;
 
-        while(_essenceManager.IsInitialized == false)
-        {
-            yield return null;
-        }
-
-        callback?.Invoke();
+        UpdateWallet();
     }
 
     public void UpdateWallet()
@@ -49,6 +29,7 @@ public class UIWallet : MonoBehaviour
         {
             return;
         }
+
         _walletText.text = _essenceManager.CurrentEssence.ToString();
     }
 }

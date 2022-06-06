@@ -5,9 +5,9 @@ public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private CameraController _cameraController = null;
-    [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
+    private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private PersistentData _persistentData = null;
@@ -33,14 +33,13 @@ public class LevelManager : AsyncLoader
 
         LevelManager.ResetStaticVariables();
         LevelManager.CallOnComplete(OnComplete);
-
-        _tutorialManager.ShowTutorial();
     }
 
     private void Initialize()
     {
         ServiceLocator.Register<LevelManager>(this, true);
 
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
@@ -50,17 +49,13 @@ public class LevelManager : AsyncLoader
         {
             ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
             _inputManager.SetReleaseSlider(_uiManager.ReleaseSlider);
+            _essenceManager.SetUIManager(_uiManager);
             _tutorialManager.SetUIManager(_uiManager);
         }
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
-        }
-        if (_essenceManager != null)
-        {
-            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
-            _persistentData.SetEssenceManager(_essenceManager);
         }
         if(_habitat != null)
         {
@@ -71,8 +66,7 @@ public class LevelManager : AsyncLoader
 
     void LastSessionHabitatCheck()
     {
-        HabitatType lastSessionHabitat = _persistentData.GetLastSessionHabitat();
-
+        HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
 
         switch (lastSessionHabitat)    
         {

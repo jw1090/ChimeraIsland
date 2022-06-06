@@ -11,8 +11,7 @@ public class PersistentData : MonoBehaviour
 
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
-
-    public HabitatType GetLastSessionHabitat() => _globalSaveData.lastSessionHabitat;
+    public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
