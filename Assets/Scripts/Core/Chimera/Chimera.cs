@@ -98,7 +98,7 @@ public class Chimera : MonoBehaviour
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
 
-        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
     }
 
     private void InitializeEvolution()

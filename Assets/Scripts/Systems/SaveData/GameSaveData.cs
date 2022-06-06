@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public class GameSaveData
 {
     public GlobalData globalData = new GlobalData(HabitatType.None, 100, 0);
-    public List<FacilityData> facilities = new List<FacilityData>();
     public List<ChimeraData> chimeras = new List<ChimeraData>();
+    public List<FacilityData> facilities = new List<FacilityData>();
 
-    public GameSaveData(GlobalData newGlobalData, List<FacilityData> newFacilityData, List<ChimeraData> newChimeraData)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData)
     {
         globalData = newGlobalData;
-        facilities = newFacilityData;
         chimeras = newChimeraData;
+        facilities = newFacilityData;
     }
 
     public GameSaveData() { }

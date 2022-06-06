@@ -119,7 +119,7 @@ public class Facility : MonoBehaviour
 
     public void FacilityTick()
     {
-        if(_storedChimera != null)
+        if (_storedChimera != null)
         {
             _icon.SetIcon(_storedChimera.Icon);
             _storedChimera.ExperienceTick(_statType, _statModifier);
@@ -139,7 +139,7 @@ public class Facility : MonoBehaviour
 
     private void HappinessCheck()
     {
-        if(_storedChimera.StatPreference == _statType)
+        if (_storedChimera.StatPreference == _statType)
         {
             int happinessAmount = 1;
 

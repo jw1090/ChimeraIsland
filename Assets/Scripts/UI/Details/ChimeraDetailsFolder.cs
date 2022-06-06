@@ -26,7 +26,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void UpdateDetailsList()
     {
-        foreach(var detail in _chimeraDetailsList)
+        foreach (var detail in _chimeraDetailsList)
         {
             detail.UpdateDetails();
         }

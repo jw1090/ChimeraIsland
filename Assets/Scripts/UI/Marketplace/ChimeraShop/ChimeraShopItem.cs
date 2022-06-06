@@ -12,6 +12,6 @@ public class ChimeraShopItem : MonoBehaviour
     public void Initialize(Habitat habitat)
     {
         _habitat = habitat;
-        _buyChimeraButton.Initialize( _chimera, _habitat);
+        _buyChimeraButton.Initialize(_chimera, _habitat);
     }
 }

@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
+    private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
+    private bool _essenceLoaded = false;
     private int _currentEssence = 100;
 
     public int CurrentEssence { get => _currentEssence; }
@@ -13,7 +15,19 @@ public class EssenceManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _persistentData = ServiceLocator.Get<PersistentData>();
+
         return this;
+    }
+
+    // TODO: Ask Craig about LevelManager beating Initialize in this function when Load Essence is called inside it.
+    public void LoadEssence()
+    {
+        if (_persistentData != null && _essenceLoaded == false)
+        {
+            _currentEssence = _persistentData.EssenceData;
+            _essenceLoaded = true;
+        }
     }
 
     public void IncreaseEssence(int amount)

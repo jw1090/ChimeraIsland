@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIWorldMap _worldMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
 
-    public ReleaseSlider ReleaseSlider{ get => _releaseSlider; }
+    public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
 
     public UIManager Initialize()
@@ -21,21 +21,28 @@ public class UIManager : MonoBehaviour
 
         CloseAll();
 
-        InitializeWallets();
         _tutorialOverlay.Initialize();
         _worldMap.Initialize();
 
         return this;
     }
 
-    public void LoadMarketplace(Habitat habitat)
+    public void InitializeMarketplace(Habitat habitat)
     {
         _marketplace.Initialize(habitat);
     }
 
-    public void LoadDetails(Habitat habitat)
+    public void InitializeDetails(Habitat habitat)
     {
         _detailsFolder.Initialize(habitat);
+    }
+
+    public void InitializeWallets()
+    {
+        foreach (var wallet in _essenceWallets)
+        {
+            wallet.Initialize();
+        }
     }
 
     public void CloseAll()
@@ -65,14 +72,6 @@ public class UIManager : MonoBehaviour
     public void UpdateDetails()
     {
         _detailsFolder.UpdateDetailsList();
-    }
-
-    private void InitializeWallets()
-    {
-        foreach (var wallet in _essenceWallets)
-        {
-            wallet.Initialize();
-        }
     }
 
     public void UpdateWallets()

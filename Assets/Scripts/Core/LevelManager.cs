@@ -20,19 +20,19 @@ public class LevelManager : AsyncLoader
 
     private void LevelSetup()
     {
-        Initialize();
-        _persistentData.LoadData();
-
-        LastSessionHabitatCheck();
-
-        LoadEssence();
-        LoadUI();
-        LoadFacilities();
-        LoadChimeras();
-        StartHabitatTickTimer();
-
         LevelManager.ResetStaticVariables();
-        LevelManager.CallOnComplete(OnComplete);
+
+        Initialize();
+
+        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
+        {
+            _essenceManager.LoadEssence();
+            InitializeUIElements();
+            LoadFacilities();
+            LoadChimeras();
+            StartHabitatTickTimer();
+            LevelManager.CallOnComplete(OnComplete);
+        }
     }
 
     private void Initialize()
@@ -57,57 +57,58 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
         }
-        if(_habitat != null)
+        if (_habitat != null)
         {
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
         }
     }
 
-    void LastSessionHabitatCheck()
+    private bool LastSessionHabitatCheck()
     {
         HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
 
-        switch (lastSessionHabitat)    
+        switch (lastSessionHabitat)
         {
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
             case HabitatType.Ashlands:
-                LoadLastSessionScene(lastSessionHabitat);
-                break;
+                if(LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
+                {
+                    return true;
+                }
+
+                return false;
             default:
                 Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
-                break;
+                return false;
         }
     }
 
-    void LoadLastSessionScene(HabitatType habitatType)
+    private bool LoadLastSessionScene(HabitatType habitatType)
     {
-        if(habitatType == _habitatManager.CurrentHabitat.Type)
+        if (habitatType == _habitatManager.CurrentHabitat.Type)
         {
-            return;
+            return false;
         }
 
         Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
 
         int loadNum = (int)habitatType + 4;
         SceneManager.LoadSceneAsync(loadNum);
+        return true;
     }
 
-    private void LoadEssence()
-    {
-        _persistentData.LoadEssence();
-    }
-
-    private void LoadUI()
+    private void InitializeUIElements()
     {
         if (_uiManager == null)
         {
             return;
         }
 
-        _uiManager.LoadDetails(_habitat);
-        _uiManager.LoadMarketplace(_habitat);
+        _uiManager.InitializeDetails(_habitat);
+        _uiManager.InitializeMarketplace(_habitat);
+        _uiManager.InitializeWallets();
     }
 
     private void LoadChimeras()

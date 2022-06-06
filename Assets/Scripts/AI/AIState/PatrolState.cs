@@ -24,7 +24,7 @@ namespace AI.Behavior
         {
             _chimeraBehavior.HeldEnterCheck();
 
-            if(_chimeraBehavior.GetAgentDistance() >= 1.5f)
+            if (_chimeraBehavior.GetAgentDistance() >= 1.5f)
             {
                 return;
             }

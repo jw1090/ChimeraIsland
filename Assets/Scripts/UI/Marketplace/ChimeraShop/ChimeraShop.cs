@@ -7,7 +7,7 @@ public class ChimeraShop : MonoBehaviour
 
     public void Initialize(Habitat habitat)
     {
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             ChimeraShopItem shopItem = child.GetComponent<ChimeraShopItem>();
 
