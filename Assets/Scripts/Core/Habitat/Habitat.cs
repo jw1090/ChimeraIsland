@@ -125,17 +125,18 @@ public class Habitat : MonoBehaviour
         chimeraComp.Initialize();
     }
 
-    public void TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
+    public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
     {
         chimeraToTransfer.SetHabitatType(habitatType);
 
         if(_habitatManager.AddNewChimera(chimeraToTransfer) == false)
         {
             chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not succeful, reset habitatType.
-            return;
+            return false;
         }
 
         RemoveChimera(chimeraToTransfer);
+        return true;
     }
 
     private void RemoveChimera(Chimera chimeraToRemove)

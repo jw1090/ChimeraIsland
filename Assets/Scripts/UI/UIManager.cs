@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
-    [SerializeField] private GameObject _transferMap = null;
+    [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
@@ -30,17 +30,15 @@ public class UIManager : MonoBehaviour
         return this;
     }
 
-    public void InitializeMarketplace(Habitat habitat)
+    public void InitializeUIElements()
     {
-        _marketplace.Initialize(habitat);
+        _marketplace.Initialize();
+        _detailsFolder.Initialize();
+        InitializeWallets();
+        _transferMap.Initialize();
     }
 
-    public void InitializeDetails(Habitat habitat)
-    {
-        _detailsFolder.Initialize(habitat);
-    }
-
-    public void InitializeWallets()
+    private void InitializeWallets()
     {
         foreach (var wallet in _essenceWallets)
         {
@@ -73,10 +71,10 @@ public class UIManager : MonoBehaviour
         _marketplace.gameObject.SetActive(true);
     }
 
-    public void OpenTransferMap()
+    public void OpenTransferMap(Chimera chimera)
     {
         CloseAll();
-        _transferMap.gameObject.SetActive(true);
+        _transferMap.Open(chimera);
     }
 
     public void UpdateDetails()
