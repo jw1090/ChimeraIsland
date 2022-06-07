@@ -10,7 +10,7 @@ namespace AI.Behavior
         Wander,
         Held,
         Training,
-        //Idle,
+        Idle,
     }
 
     public class ChimeraBehavior : MonoBehaviour
@@ -38,6 +38,7 @@ namespace AI.Behavior
         public int WanderIndex { get => _wanderIndex; }
 
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
+        public Vector3 WanderingPosition { get; set; } = Vector3.zero;
         public bool WasClicked { get; set; } = false;
         public bool Dropped { get; set; } = false;
 
@@ -68,7 +69,7 @@ namespace AI.Behavior
             _states.Add(StateEnum.Wander, new WanderState());
             _states.Add(StateEnum.Held, new HeldState());
             _states.Add(StateEnum.Training, new TrainingState());
-            //_states.Add(StateEnum.Idle, new IdleState());
+            _states.Add(StateEnum.Idle, new IdleState());
             _animator = GetComponentInChildren<Animator>();
 
             ChangeState(_states[StateEnum.Patrol]);
