@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelManager : AsyncLoader
 {
@@ -23,7 +22,7 @@ public class LevelManager : AsyncLoader
         LevelManager.ResetStaticVariables();
 
         Initialize();
-
+        
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
             _essenceManager.LoadEssence();
@@ -95,7 +94,7 @@ public class LevelManager : AsyncLoader
         Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
 
         int loadNum = (int)habitatType + 4;
-        SceneManager.LoadSceneAsync(loadNum);
+            
         return true;
     }
 
