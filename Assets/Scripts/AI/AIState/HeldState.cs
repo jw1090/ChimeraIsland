@@ -5,8 +5,8 @@ namespace AI.Behavior
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private float _heightOffset = 1.2f;
-        private string _animWalk = "Walk";
+        private float _heightOffset = 1.0f;
+        private string _animIdle = "Idle";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -14,7 +14,7 @@ namespace AI.Behavior
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraController.IsHolding = true;
 
-            _chimeraBehavior.EnterAnim(_animWalk);
+            _chimeraBehavior.EnterAnim(_animIdle);
         }
 
         public override void Update()
