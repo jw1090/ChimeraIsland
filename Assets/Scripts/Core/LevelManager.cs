@@ -105,9 +105,7 @@ public class LevelManager : AsyncLoader
             return;
         }
 
-        _uiManager.InitializeDetails(_habitat);
-        _uiManager.InitializeMarketplace(_habitat);
-        _uiManager.InitializeWallets();
+        _uiManager.InitializeUIElements();
     }
 
     private void LoadChimeras()

@@ -9,9 +9,9 @@ public class ChimeraShopItem : MonoBehaviour
     [Header("References")]
     [SerializeField] private BuyChimeraButton _buyChimeraButton = null;
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
-        _habitat = habitat;
+        _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
         _buyChimeraButton.Initialize(_chimera, _habitat);
     }
 }

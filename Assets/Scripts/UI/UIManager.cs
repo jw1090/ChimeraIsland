@@ -4,13 +4,14 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Marketplace _marketplace = null;
-    [SerializeField] private Button _openChimerasButton = null;
-    [SerializeField] private Button _closeChimerasButton = null;
+    [SerializeField] private Button _openDetailsButton = null;
+    [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
+    [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private UIWorldMap _worldMap = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
+    private UISceneChange _sceneChange = null;
 
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -19,25 +20,25 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _sceneChange = GetComponent<UISceneChange>();
+
         CloseAll();
 
         _tutorialOverlay.Initialize();
-        _worldMap.Initialize();
+        _sceneChange.Initialize();
 
         return this;
     }
 
-    public void InitializeMarketplace(Habitat habitat)
+    public void InitializeUIElements()
     {
-        _marketplace.Initialize(habitat);
+        _marketplace.Initialize();
+        _detailsFolder.Initialize();
+        InitializeWallets();
+        _transferMap.Initialize();
     }
 
-    public void InitializeDetails(Habitat habitat)
-    {
-        _detailsFolder.Initialize(habitat);
-    }
-
-    public void InitializeWallets()
+    private void InitializeWallets()
     {
         foreach (var wallet in _essenceWallets)
         {
@@ -47,10 +48,11 @@ public class UIManager : MonoBehaviour
 
     public void CloseAll()
     {
+        _openDetailsButton.gameObject.SetActive(true);
         _marketplace.gameObject.SetActive(false);
-        _openChimerasButton.gameObject.SetActive(true);
-        _closeChimerasButton.gameObject.SetActive(false);
+        _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
+        _transferMap.gameObject.SetActive(false);
     }
 
     public void OpenDetailsPanel()
@@ -58,8 +60,8 @@ public class UIManager : MonoBehaviour
         _detailsFolder.CheckDetails();
 
         CloseAll();
-        _openChimerasButton.gameObject.SetActive(false);
-        _closeChimerasButton.gameObject.SetActive(true);
+        _openDetailsButton.gameObject.SetActive(false);
+        _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
     }
 
@@ -67,6 +69,12 @@ public class UIManager : MonoBehaviour
     {
         CloseAll();
         _marketplace.gameObject.SetActive(true);
+    }
+
+    public void OpenTransferMap(Chimera chimera)
+    {
+        CloseAll();
+        _transferMap.Open(chimera);
     }
 
     public void UpdateDetails()

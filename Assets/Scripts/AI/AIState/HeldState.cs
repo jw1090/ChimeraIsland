@@ -6,7 +6,7 @@ namespace AI.Behavior
     {
         private ChimeraBehavior _chimeraBehavior = null;
         private float _heightOffset = 1.0f;
-        private string _animIdle = "Idle";
+        private string _animWalk = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -14,7 +14,7 @@ namespace AI.Behavior
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraController.IsHolding = true;
 
-            _chimeraBehavior.EnterAnim(_animIdle);
+            _chimeraBehavior.EnterAnim(_animWalk);
         }
 
         public override void Update()
