@@ -79,6 +79,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
