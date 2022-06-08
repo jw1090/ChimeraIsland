@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
-        if(_settingsMenu.activeInHierarchy == true)
+        if (_settingsMenu.activeInHierarchy == true)
         {
             CloseAll();
         }
@@ -97,6 +97,7 @@ public class UIManager : MonoBehaviour
 
     private void OpenSettingsMenu()
     {
+        CloseAll();
         _settingsMenu.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
