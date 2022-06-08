@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : AsyncLoader
 {
@@ -22,14 +23,19 @@ public class LevelManager : AsyncLoader
         LevelManager.ResetStaticVariables();
 
         Initialize();
-        
+
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
             _essenceManager.LoadEssence();
             InitializeUIElements();
-            LoadFacilities();
-            LoadChimeras();
-            StartHabitatTickTimer();
+
+            if(_habitat != null)
+            {
+                LoadFacilities();
+                LoadChimeras();
+                StartHabitatTickTimer();
+            }
+
             LevelManager.CallOnComplete(OnComplete);
         }
     }
@@ -72,11 +78,10 @@ public class LevelManager : AsyncLoader
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
             case HabitatType.Ashlands:
-                if(LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
+                if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
                 {
                     return true;
                 }
-
                 return false;
             default:
                 Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
@@ -88,13 +93,16 @@ public class LevelManager : AsyncLoader
     {
         if (habitatType == _habitatManager.CurrentHabitat.Type)
         {
+            Debug.Log($"Habitat is already {habitatType}. No need to move.");
             return false;
         }
 
         Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
 
+        _persistentData.ResetLastSessionHabitat();
+
         int loadNum = (int)habitatType + 4;
-            
+        SceneManager.LoadSceneAsync(loadNum);
         return true;
     }
 

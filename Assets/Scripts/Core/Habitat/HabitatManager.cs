@@ -26,7 +26,7 @@ public class HabitatManager : MonoBehaviour
             return _chimerasByHabitat[habitatType];
         }
 
-        Debug.Log($"No Chimera entry for habitat: {habitatType}");
+        Debug.Log($"No Chimera entry for {habitatType}.");
         return new List<ChimeraData>();
     }
 
@@ -37,7 +37,7 @@ public class HabitatManager : MonoBehaviour
             return _facilitiesByHabitat[habitatType];
         }
 
-        Debug.Log($"No Facility entry for habitat: {habitatType}");
+        Debug.Log($"No Facility entry for {habitatType}.");
         return new List<FacilityData>();
     }
 
@@ -83,7 +83,7 @@ public class HabitatManager : MonoBehaviour
 
         if (_chimeraSaveData == null)
         {
-            Debug.LogError("Chimera Save data is null!");
+            Debug.LogError("Chimera save data is null!");
             return false;
         }
 
@@ -97,7 +97,7 @@ public class HabitatManager : MonoBehaviour
 
         if (_facilitySaveData == null)
         {
-            Debug.LogError("Facility Save data is null!");
+            Debug.LogError("Facility save data is null!");
             return false;
         }
 
