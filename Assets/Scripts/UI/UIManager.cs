@@ -3,10 +3,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Marketplace _marketplace = null;
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
+    [SerializeField] private Button _marketplaceButton = null;
+    [SerializeField] private Marketplace _marketplace = null;
+    [SerializeField] private GameObject _settingsMenu = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -32,9 +34,9 @@ public class UIManager : MonoBehaviour
 
     public void InitializeUIElements()
     {
+        InitializeWallets();
         _marketplace.Initialize();
         _detailsFolder.Initialize();
-        InitializeWallets();
         _transferMap.Initialize();
     }
 
@@ -49,9 +51,12 @@ public class UIManager : MonoBehaviour
     public void CloseAll()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _marketplace.gameObject.SetActive(false);
+        _marketplaceButton.gameObject.SetActive(true);
+
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
+        _marketplace.gameObject.SetActive(false);
+        _settingsMenu.gameObject.SetActive(false);
         _transferMap.gameObject.SetActive(false);
     }
 
@@ -68,6 +73,7 @@ public class UIManager : MonoBehaviour
     public void OpenMarketplace()
     {
         CloseAll();
+        _openDetailsButton.gameObject.SetActive(false);
         _marketplace.gameObject.SetActive(true);
     }
 
@@ -75,6 +81,26 @@ public class UIManager : MonoBehaviour
     {
         CloseAll();
         _transferMap.Open(chimera);
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        if(_settingsMenu.activeInHierarchy == true)
+        {
+            CloseAll();
+        }
+        else
+        {
+            OpenSettingsMenu();
+        }
+    }
+
+    private void OpenSettingsMenu()
+    {
+        _settingsMenu.gameObject.SetActive(true);
+
+        _openDetailsButton.gameObject.SetActive(false);
+        _marketplaceButton.gameObject.SetActive(false);
     }
 
     public void UpdateDetails()

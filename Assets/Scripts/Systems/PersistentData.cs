@@ -86,7 +86,7 @@ public class PersistentData : MonoBehaviour
         return facilityList;
     }
 
-    public void OnApplicationQuit()
+    public void QuitGameSave()
     {
         SaveSessionData(_habitatManager.CurrentHabitat.Type);
     }

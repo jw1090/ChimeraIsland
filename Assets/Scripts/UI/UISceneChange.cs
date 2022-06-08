@@ -12,6 +12,12 @@ public class UISceneChange : MonoBehaviour
         _persistentData = ServiceLocator.Get<PersistentData>();
     }
 
+    public void LoadMainMenu()
+    {
+        QuitGameSave();
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU_SCENE);
+    }
+
     public void LoadWorldMap()
     {
         UpdateHabitatInfo();
@@ -37,5 +43,22 @@ public class UISceneChange : MonoBehaviour
     {
         _habitatManager.UpdateCurrentHabitatChimeras();
         _persistentData.SaveSessionData();
+    }
+
+    private void QuitGameSave()
+    {
+        _habitatManager.UpdateCurrentHabitatChimeras();
+        _persistentData.QuitGameSave();
+    }
+
+    public void QuitGame()
+    {
+        QuitGameSave();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+      Application.Quit();
+#endif
     }
 }
