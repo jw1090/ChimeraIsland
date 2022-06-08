@@ -6,13 +6,18 @@ public class InputManager : MonoBehaviour
     private Camera _cameraMain = null;
     private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
+    private UIManager _uiManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
 
-    public void SetReleaseSlider(ReleaseSlider releaseSlider) { _releaseSlider = releaseSlider; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
+    public void SetUIManager(UIManager uiManager)
+    {
+        _uiManager = uiManager;
+        _releaseSlider = _uiManager.ReleaseSlider;
+    }
 
     public InputManager Initialize()
     {
@@ -46,12 +51,26 @@ public class InputManager : MonoBehaviour
             ResetSliderInfo();
             ExitHeldState();
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(_uiManager != null)
+            {
+                _uiManager.ToggleSettingsMenu();
+            }
+        }
     }
 
     private void RemoveFromFacility()
     {
         if (_cameraMain == null)
         {
+            return;
+        }
+
+        if (_releaseSlider == null)
+        {
+            Debug.LogError("Release slider is Null!");
             return;
         }
 

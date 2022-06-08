@@ -55,6 +55,11 @@ public class PersistentData : MonoBehaviour
         _facilitySaveData = myData.facilities;
     }
 
+    public void ResetLastSessionHabitat()
+    {
+        _globalSaveData.lastSessionHabitat = HabitatType.None;
+    }
+
     private List<ChimeraData> ChimerasToData()
     {
         List<ChimeraData> chimeraList = new List<ChimeraData>();
@@ -81,7 +86,7 @@ public class PersistentData : MonoBehaviour
         return facilityList;
     }
 
-    public void OnApplicationQuit()
+    public void QuitGameSave()
     {
         SaveSessionData(_habitatManager.CurrentHabitat.Type);
     }
