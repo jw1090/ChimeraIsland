@@ -9,6 +9,7 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
 
+    public int lastSessionTutorial { get => _globalSaveData.lastSessionTutorial; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
@@ -16,6 +17,7 @@ public class PersistentData : MonoBehaviour
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
+    public void SetLastSessionTutorial(int lst) { _globalSaveData.lastSessionTutorial = lst; }
 
     public PersistentData Initialize()
     {
@@ -51,7 +53,7 @@ public class PersistentData : MonoBehaviour
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
-        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence, 0);
+        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence, _globalSaveData.lastSessionTutorial);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
 
