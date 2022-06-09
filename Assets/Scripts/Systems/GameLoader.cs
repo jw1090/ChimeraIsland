@@ -79,11 +79,6 @@ public class GameLoader : AsyncLoader
         var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
         ServiceLocator.Register<ResourceManager>(resourceManagerComp);
 
-        var toolsManagerGO = new GameObject("Tools Manager");
-        toolsManagerGO.transform.SetParent(systemsParent);
-        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
-        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
-
         var inputManagerGO = new GameObject("Input Manager");
         inputManagerGO.transform.SetParent(systemsParent);
         var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
@@ -105,6 +100,11 @@ public class GameLoader : AsyncLoader
         tutorialGO.transform.SetParent(systemsParent);
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
+
+        var toolsManagerGO = new GameObject("Tools Manager");
+        toolsManagerGO.transform.SetParent(systemsParent);
+        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
+        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
 
         yield return null;
     }

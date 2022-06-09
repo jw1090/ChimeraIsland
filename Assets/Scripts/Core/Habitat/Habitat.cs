@@ -47,7 +47,7 @@ public class Habitat : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
+        _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
