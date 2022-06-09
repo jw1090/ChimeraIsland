@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ChimeraDetails : MonoBehaviour
 {
+    [SerializeField] private DetailsTransferButton _detailsTransferButton = null;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _element = null;
@@ -11,14 +12,19 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
     [SerializeField] private TextMeshProUGUI _happiness = null;
-    private int _chimeraSpot = 0;
-    private Habitat _habitat = null;
     private Chimera _chimera = null;
+    private Habitat _habitat = null;
+    private int _chimeraSpot = 0;
 
-    public void Initialize(Habitat habitat, int chimeraSpot)
+    public Chimera Chimera { get => _chimera; }
+
+    public void Initialize(int chimeraSpot)
     {
-        _habitat = habitat;
+        _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
         _chimeraSpot = chimeraSpot;
+
+        _detailsTransferButton.Initialize(this);
+
         UpdateDetails();
     }
 

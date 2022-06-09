@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private CameraController _cameraController = null;
-    [SerializeField] private EssenceManager _essenceManager = null;
     [SerializeField] private Habitat _habitat = null;
 
+    private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private PersistentData _persistentData = null;
@@ -19,22 +20,31 @@ public class LevelManager : AsyncLoader
 
     private void LevelSetup()
     {
-        Initialize();
-        LoadUI();
-        LoadFacilities();
-        LoadChimeras();
-        StartHabitatTickTimer();
-
         LevelManager.ResetStaticVariables();
-        LevelManager.CallOnComplete(OnComplete);
 
-        _tutorialManager.ShowTutorial();
+        Initialize();
+
+        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
+        {
+            _essenceManager.LoadEssence();
+            InitializeUIElements();
+
+            if(_habitat != null)
+            {
+                LoadFacilities();
+                LoadChimeras();
+                StartHabitatTickTimer();
+            }
+
+            LevelManager.CallOnComplete(OnComplete);
+        }
     }
 
     private void Initialize()
     {
         ServiceLocator.Register<LevelManager>(this, true);
 
+        _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
@@ -43,7 +53,8 @@ public class LevelManager : AsyncLoader
         if (_uiManager != null)
         {
             ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
-            _inputManager.SetReleaseSlider(_uiManager.ReleaseSlider);
+            _essenceManager.SetUIManager(_uiManager);
+            _inputManager.SetUIManager(_uiManager);
             _tutorialManager.SetUIManager(_uiManager);
         }
         if (_cameraController != null)
@@ -51,27 +62,58 @@ public class LevelManager : AsyncLoader
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
         }
-        if (_essenceManager != null)
-        {
-            ServiceLocator.Register<EssenceManager>(_essenceManager.Initialize(), true);
-            _persistentData.SetEssenceManager(_essenceManager);
-        }
-        if(_habitat != null)
+        if (_habitat != null)
         {
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
         }
     }
 
-    private void LoadUI()
+    private bool LastSessionHabitatCheck()
+    {
+        HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
+
+        switch (lastSessionHabitat)
+        {
+            case HabitatType.StonePlains:
+            case HabitatType.TreeOfLife:
+            case HabitatType.Ashlands:
+                if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
+                {
+                    return true;
+                }
+                return false;
+            default:
+                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
+                return false;
+        }
+    }
+
+    private bool LoadLastSessionScene(HabitatType habitatType)
+    {
+        if (habitatType == _habitatManager.CurrentHabitat.Type)
+        {
+            Debug.Log($"Habitat is already {habitatType}. No need to move.");
+            return false;
+        }
+
+        Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
+
+        _persistentData.ResetLastSessionHabitat();
+
+        int loadNum = (int)habitatType + 4;
+        SceneManager.LoadSceneAsync(loadNum);
+        return true;
+    }
+
+    private void InitializeUIElements()
     {
         if (_uiManager == null)
         {
             return;
         }
 
-        _uiManager.LoadDetails(_habitat);
-        _uiManager.LoadMarketplace(_habitat);
+        _uiManager.InitializeUIElements();
     }
 
     private void LoadChimeras()
@@ -86,6 +128,11 @@ public class LevelManager : AsyncLoader
 
     private void StartHabitatTickTimer()
     {
+        if (_habitat == null)
+        {
+            return;
+        }
+
         _habitat.StartTickTimer();
     }
 

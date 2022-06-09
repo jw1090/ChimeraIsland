@@ -43,9 +43,9 @@ public class TabGroup : MonoBehaviour
         button.GetComponent<Image>().color = _tabActive;
 
         int pos = button.transform.GetSiblingIndex();
-        for(int i = 0; i < _objectToSwap.Count; ++i)
+        for (int i = 0; i < _objectToSwap.Count; ++i)
         {
-            if(i == pos)
+            if (i == pos)
             {
                 _objectToSwap[i].SetActive(true);
             }
@@ -58,9 +58,9 @@ public class TabGroup : MonoBehaviour
 
     public void ResetTabs()
     {
-        foreach(var button in _tabButtons)
+        foreach (var button in _tabButtons)
         {
-            if( _selectedTab != null && button == _selectedTab)
+            if (_selectedTab != null && button == _selectedTab)
             {
                 continue;
             }

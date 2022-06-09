@@ -40,17 +40,18 @@ public class Facility : MonoBehaviour
         return true;
     }
 
-    // Logic for buying a facility. Enables mesh renderer which is used to visualize the game object.
     public void BuildFacility()
     {
         BoxCollider _collider = GetComponent<BoxCollider>();
         _price = (int)(_price * 7.5);
         ++_currentTier;
 
+        string debugString = "";
+
         if (_currentTier == 1)
         {
             _isInitialized = true;
-            Debug.Log(_facilityType + " was purchased!");
+            debugString += $"{_facilityType} was purchased";
 
             _rubbleObject.SetActive(false);
             _collider.enabled = true;
@@ -59,12 +60,12 @@ public class Facility : MonoBehaviour
         else
         {
             ++_statModifier;
-            Debug.Log(_facilityType + " was increased to Tier " + CurrentTier + "!");
+            debugString += $"{_facilityType} was increased to Tier {CurrentTier}";
         }
 
         int newMod = _statModifier + 1;
 
-        Debug.Log(_facilityType + " now generates " + newMod + " " + _statType + " for Chimeras per tick!");
+        Debug.Log($" {debugString} and now generates {newMod} {_statType}!");
     }
 
     // Called to properly link a chimera to a facility and adjust its states properly.
@@ -72,7 +73,7 @@ public class Facility : MonoBehaviour
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
-            Debug.Log("Cannot add " + chimera + ". " + _storedChimera + " is already in this facility.");
+            Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
 
@@ -83,7 +84,7 @@ public class Facility : MonoBehaviour
 
         chimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
-        Debug.Log(_storedChimera + " added to the facility.");
+        Debug.Log($"{_storedChimera} added to the facility.");
         return true;
     }
 
@@ -103,7 +104,7 @@ public class Facility : MonoBehaviour
         _icon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
-        Debug.Log(_storedChimera + " has been removed from the facility.");
+        Debug.Log($"{ _storedChimera} has been removed from the facility.");
 
         NavMeshHit myNavHit;
 
@@ -119,7 +120,7 @@ public class Facility : MonoBehaviour
 
     public void FacilityTick()
     {
-        if(_storedChimera != null)
+        if (_storedChimera != null)
         {
             _icon.SetIcon(_storedChimera.Icon);
             _storedChimera.ExperienceTick(_statType, _statModifier);
@@ -139,7 +140,7 @@ public class Facility : MonoBehaviour
 
     private void HappinessCheck()
     {
-        if(_storedChimera.StatPreference == _statType)
+        if (_storedChimera.StatPreference == _statType)
         {
             int happinessAmount = 1;
 

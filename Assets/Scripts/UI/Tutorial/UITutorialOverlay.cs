@@ -41,7 +41,6 @@ public class UITutorialOverlay : MonoBehaviour
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
         Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
-
        _textInfo.Load(tutorialData.Tutorials[_tutorialId].StepData[_tutorialStep].description, icon);
     }
 }

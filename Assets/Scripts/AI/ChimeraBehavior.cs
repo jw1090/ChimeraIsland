@@ -10,14 +10,15 @@ namespace AI.Behavior
         Wander,
         Held,
         Training,
+        Idle,
     }
 
     public class ChimeraBehavior : MonoBehaviour
     {
         private Animator _animator = null;
-        private BoxCollider _boxCollider = null;
         private Camera _mainCamera = null;
         private CameraController _cameraController = null;
+        private Chimera _chimera = null;
         private ChimeraBaseState _currentState = null;
         private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
         private List<Transform> _nodes = null;
@@ -27,7 +28,7 @@ namespace AI.Behavior
         private int _patrolIndex = 0;
         private int _wanderIndex = 0;
 
-        public BoxCollider BoxCollider { get => _boxCollider; }
+        public BoxCollider BoxCollider { get => GetChimeraCollider(); }
         public Camera MainCamera { get => _mainCamera; }
         public CameraController CameraController { get => _cameraController; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
@@ -37,9 +38,12 @@ namespace AI.Behavior
         public int WanderIndex { get => _wanderIndex; }
 
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
-        public bool Clicked { get; set; } = false;
+        public Vector3 WanderingPosition { get; set; } = Vector3.zero;
+        public bool WasClicked { get; set; } = false;
+        public bool Dropped { get; set; } = false;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
+        private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
@@ -55,10 +59,9 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _boxCollider = GetComponent<BoxCollider>();
+            _chimera = GetComponent<Chimera>();
 
             _mainCamera = CameraController.CameraCO;
-
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
@@ -66,6 +69,7 @@ namespace AI.Behavior
             _states.Add(StateEnum.Wander, new WanderState());
             _states.Add(StateEnum.Held, new HeldState());
             _states.Add(StateEnum.Training, new TrainingState());
+            _states.Add(StateEnum.Idle, new IdleState());
             _animator = GetComponentInChildren<Animator>();
 
             ChangeState(_states[StateEnum.Patrol]);
@@ -95,7 +99,7 @@ namespace AI.Behavior
 
         public void HeldEnterCheck()
         {
-            if (Clicked == true)
+            if (WasClicked == true)
             {
                 ChangeState(_states[StateEnum.Held]);
             }

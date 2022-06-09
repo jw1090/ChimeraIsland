@@ -73,7 +73,7 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    public void CreateFacilitiesData(List<FacilityData> facilitiesToBuild)
+    public void CreateFacilitiesFromData(List<FacilityData> facilitiesToBuild)
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
@@ -84,73 +84,6 @@ public class Habitat : MonoBehaviour
                 building.BuildFacility();
             }
         }
-    }
-
-    public void StartTickTimer()
-    {
-        StartCoroutine(TickTimer());
-    }
-
-    private IEnumerator TickTimer()
-    {
-        while (_isInitialized)
-        {
-            yield return new WaitForSeconds(_tickTimer);
-
-            ++_tickTracker;
-
-            foreach (Chimera chimera in _activeChimeras)
-            {
-                if (chimera.isActiveAndEnabled)
-                {
-                    chimera.EssenceTick();
-
-                    if (_tickTracker % _unhappyRate == 0)
-                    {
-                        chimera.HappinessTick();
-                        _tickTracker = 0;
-                    }
-                }
-            }
-
-            foreach (Facility facility in _facilities)
-            {
-                if (facility.IsInitialized)
-                {
-                    facility.FacilityTick();
-                }
-            }
-        }
-    }
-
-    public void AddFacility(Facility facility)
-    {
-        // Return if no room for another Facility.
-        if (ActiveFacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
-        {
-            Debug.Log("Facility capacity is too small to add another Facility.");
-            return;
-        }
-
-        if (facility.CurrentTier == 3)
-        {
-            Debug.Log("Facility is already at max tier.");
-            return;
-        }
-
-        if (_essenceManager.SpendEssence(facility.Price) == false)
-        {
-            Debug.Log
-            (
-                $"Can't afford this facility." +
-                $"It costs {facility.Price} Essence and you" +
-                $"only have {_essenceManager.CurrentEssence} Essence."
-            );
-            return;
-        }
-
-        facility.BuildFacility();
-        _habitatManager.AddNewFacility(facility);
     }
 
     // Called by the BuyChimera Script on a button to check price and purchase an egg on the active habitat.
@@ -192,7 +125,58 @@ public class Habitat : MonoBehaviour
         chimeraComp.Initialize();
     }
 
-    private int ActiveFacilitiesCount()
+    public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
+    {
+        chimeraToTransfer.SetHabitatType(habitatType);
+
+        if(_habitatManager.AddNewChimera(chimeraToTransfer) == false)
+        {
+            chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not succeful, reset habitatType.
+            return false;
+        }
+
+        RemoveChimera(chimeraToTransfer);
+        return true;
+    }
+
+    private void RemoveChimera(Chimera chimeraToRemove)
+    {
+        _activeChimeras.Remove(chimeraToRemove);
+        Destroy(chimeraToRemove.gameObject);
+        _habitatManager.UpdateCurrentHabitatChimeras();
+    }
+
+    public void AddFacility(Facility facility)
+    {
+        // Return if no room for another Facility.
+        if (FacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
+        {
+            Debug.Log("Facility capacity is too small to add another Facility.");
+            return;
+        }
+
+        if (facility.CurrentTier == 3)
+        {
+            Debug.Log("Facility is already at max tier.");
+            return;
+        }
+
+        if (_essenceManager.SpendEssence(facility.Price) == false)
+        {
+            Debug.Log
+            (
+                $"Can't afford this facility." +
+                $"It costs {facility.Price} Essence and you" +
+                $"only have {_essenceManager.CurrentEssence} Essence."
+            );
+            return;
+        }
+
+        facility.BuildFacility();
+        _habitatManager.AddNewFacility(facility);
+    }
+
+    private int FacilitiesCount()
     {
         int facilityCount = 0;
 
@@ -205,5 +189,42 @@ public class Habitat : MonoBehaviour
         }
 
         return facilityCount;
+    }
+
+    public void StartTickTimer()
+    {
+        StartCoroutine(TickTimer());
+    }
+
+    private IEnumerator TickTimer()
+    {
+        while (_isInitialized)
+        {
+            yield return new WaitForSeconds(_tickTimer);
+
+            ++_tickTracker;
+
+            foreach (Chimera chimera in _activeChimeras)
+            {
+                if (chimera.isActiveAndEnabled)
+                {
+                    chimera.EssenceTick();
+
+                    if (_tickTracker % _unhappyRate == 0)
+                    {
+                        chimera.HappinessTick();
+                        _tickTracker = 0;
+                    }
+                }
+            }
+
+            foreach (Facility facility in _facilities)
+            {
+                if (facility.IsInitialized)
+                {
+                    facility.FacilityTick();
+                }
+            }
+        }
     }
 }

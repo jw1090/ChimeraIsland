@@ -9,9 +9,10 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
 
+    public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
-    public int EssenceData { get => CurrentEssence(); }
+    public int EssenceData { get => _globalSaveData.lastSessionEssence; }
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
@@ -20,33 +21,47 @@ public class PersistentData : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        return this;
+    }
+
+    public void LoadData()
+    {
         GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
-        if(myData == null)
+        if (myData == null)
         {
             Debug.Log($"No Save Data found");
             myData = new GameSaveData();
         }
 
-        _globalSaveData = myData.globalData;
-        _chimeraSaveData = myData.chimeras;
-        _facilitySaveData = myData.facilities;
-		
-        return this;
+        UpdateGameSaveData(myData);
     }
 
-    public void SaveSessionData()
+    public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
         List<ChimeraData> myChimeraData = ChimerasToJson();
         List<FacilityData> myFacilityData = FacilitiesToJson();
         int essenceToSave = _essenceManager != null ? _essenceManager.CurrentEssence : 0;
         GlobalData myGlobalData = new GlobalData(essenceToSave);
 
-        GameSaveData myData = new GameSaveData(myChimeraData, myFacilityData, myGlobalData);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData);
+        UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
 
-    private List<ChimeraData> ChimerasToJson()
+    private void UpdateGameSaveData(GameSaveData myData)
+    {
+        _globalSaveData = myData.globalData;
+        _chimeraSaveData = myData.chimeras;
+        _facilitySaveData = myData.facilities;
+    }
+
+    public void ResetLastSessionHabitat()
+    {
+        _globalSaveData.lastSessionHabitat = HabitatType.None;
+    }
+
+    private List<ChimeraData> ChimerasToData()
     {
         List<ChimeraData> chimeraList = new List<ChimeraData>();
         Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = _habitatManager.ChimerasDictionary;
@@ -59,7 +74,7 @@ public class PersistentData : MonoBehaviour
         return chimeraList;
     }
 
-    private List<FacilityData> FacilitiesToJson()
+    private List<FacilityData> FacilitiesToData()
     {
         List<FacilityData> facilityList = new List<FacilityData>();
         Dictionary<HabitatType, List<FacilityData>> facilityByHabitat = _habitatManager.FacilityDictionary;
@@ -72,18 +87,8 @@ public class PersistentData : MonoBehaviour
         return facilityList;
     }
 
-    private int CurrentEssence()
+    public void QuitGameSave()
     {
-        if (_globalSaveData == null)
-        {
-            return 100;
-        }
-
-        return _globalSaveData.currentEssence;
-    }
-
-    public void OnApplicationQuit()
-    {
-        SaveSessionData();
+        SaveSessionData(_habitatManager.CurrentHabitat.Type);
     }
 }

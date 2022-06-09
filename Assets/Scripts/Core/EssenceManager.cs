@@ -4,29 +4,29 @@ public class EssenceManager : MonoBehaviour
 {
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
-    private bool _isInitialized = false;
+    private bool _essenceLoaded = false;
     private int _currentEssence = 100;
 
     public int CurrentEssence { get => _currentEssence; }
-    public bool IsInitialized { get => _isInitialized; }
+
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public EssenceManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _uiManager = ServiceLocator.Get<UIManager>();
-
-        LoadEssence();
-
-        if (_uiManager != null)
-        {
-            _uiManager.UpdateWallets();
-        }
-
-        _isInitialized = true;
-
         return this;
+    }
+
+    // TODO: Ask Craig about LevelManager beating Initialize in this function when Load Essence is called inside it.
+    public void LoadEssence()
+    {
+        if (_persistentData != null && _essenceLoaded == false)
+        {
+            _currentEssence = _persistentData.EssenceData;
+            _essenceLoaded = true;
+        }
     }
 
     public void IncreaseEssence(int amount)
@@ -43,14 +43,22 @@ public class EssenceManager : MonoBehaviour
         }
 
         _currentEssence -= amount;
-        _uiManager.UpdateWallets();
+
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
 
         return true;
     }
 
-    public void LoadEssence()
+    public void UpdateEssence(int amount)
     {
-        _currentEssence = _persistentData.EssenceData;
-        Debug.Log($"Loaded Essense: {_currentEssence}");
+        _currentEssence = amount;
+
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
     }
 }

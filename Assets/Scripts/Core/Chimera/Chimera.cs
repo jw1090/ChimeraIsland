@@ -33,6 +33,7 @@ public class Chimera : MonoBehaviour
     [Header("Essence")]
     [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
 
+    private BoxCollider _boxCollider = null;
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
@@ -43,6 +44,7 @@ public class Chimera : MonoBehaviour
     public ElementalType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
+    public BoxCollider BoxCollider { get => _boxCollider; }
     public Sprite Icon { get => _currentEvolution.Icon; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
@@ -77,6 +79,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
@@ -89,20 +92,20 @@ public class Chimera : MonoBehaviour
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
-        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
 
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
         InitializeEvolution();
-
-        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
-
         GetComponent<ChimeraBehavior>().Initialize();
+
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
     }
 
     private void InitializeEvolution()
     {
-        _currentEvolution.Initialize();
+        _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
+        _currentEvolution.Initialize(this);
         _chimeraType = _currentEvolution.Type;
     }
 
@@ -137,7 +140,7 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
-        if(_essenceManager == null)
+        if (_essenceManager == null)
         {
             return;
         }
@@ -286,6 +289,7 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
+        _boxCollider.enabled = false;
 
         _habitatManager.UpdateCurrentHabitatChimeras();
     }

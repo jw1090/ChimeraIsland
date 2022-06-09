@@ -30,8 +30,13 @@ public class FacilitiesTrigger : MonoBehaviour
             return;
         }
 
-        Chimera chimera = other.GetComponent<Chimera>();
+        Chimera chimera = other.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
         ChimeraBehavior chimeraBehaviour = chimera.GetComponent<ChimeraBehavior>();
+
+        if (chimeraBehaviour.Dropped == false)
+        {
+            return;
+        }
 
         _facility.PlaceChimera(chimera);
 
