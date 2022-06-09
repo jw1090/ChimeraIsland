@@ -16,15 +16,17 @@ public class EssenceManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+        LoadEssence();
         return this;
     }
 
     // TODO: Ask Craig about LevelManager beating Initialize in this function when Load Essence is called inside it.
     public void LoadEssence()
     {
+        Debug.Log("<color=magenta> LOADING ESSENCE </color>");
         if (_persistentData != null && _essenceLoaded == false)
         {
-            _currentEssence = _persistentData.EssenceData;
+            _currentEssence = _persistentData.EssenceData; // Craig's Note: be careful when using properties that implement 'get' calls that are not exception safe, like this one.
             _essenceLoaded = true;
         }
     }

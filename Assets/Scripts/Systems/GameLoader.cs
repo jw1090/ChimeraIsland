@@ -45,7 +45,7 @@ public class GameLoader : AsyncLoader
         DontDestroyOnLoad(systemsGO);
 
         // Because Unity can hold onto static values between sessions.
-        GameLoader.ResetStaticVariables();
+        ResetVariables();
 
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
@@ -139,6 +139,21 @@ public class GameLoader : AsyncLoader
             Debug.Log("GameLoader -> Skipping Scene Load: Scene is already active");
             yield break;
         }
+    }
+
+    protected override void ResetVariables()
+    {
+        base.ResetVariables();
+    }
+
+    public static void CallOnComplete(System.Action callback)
+    {
+        if (!_instance)
+        {
+            return;
+        }
+
+        _instance.CallOnComplete_Internal(callback);
     }
 
     // AsyncLoader completion callback
