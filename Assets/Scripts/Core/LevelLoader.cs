@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : AsyncLoader
+public class LevelLoader : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private static LevelManager _instance = null;
+    private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
 
     private EssenceManager _essenceManager = null;
@@ -22,17 +22,18 @@ public class LevelManager : AsyncLoader
     {
         // TODO: Craig is not happy with this <.< (It's all his fault though)
         _instance = this;
-        ProcessQueuedCallbacks();
-        ResetVariables();
-
         GameLoader.CallOnComplete(LevelSetup);
+    }
+
+    private void OnDestroy()
+    {
+        ResetVariables();
     }
 
     private void LevelSetup()
     {
-        ResetVariables();
-
         Initialize();
+        ProcessQueuedCallbacks();
 
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
@@ -47,11 +48,14 @@ public class LevelManager : AsyncLoader
 
             CallOnComplete(OnComplete);
         }
+
+        // Level should be finished loading.
+        //_tutorialManager.ShowTutorial(0);
     }
 
     private void Initialize()
     {
-        ServiceLocator.Register<LevelManager>(this, true);
+        ServiceLocator.Register<LevelLoader>(this, true);
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
@@ -66,11 +70,13 @@ public class LevelManager : AsyncLoader
             _inputManager.SetUIManager(_uiManager);
             _tutorialManager.SetUIManager(_uiManager);
         }
+
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
         }
+
         if (_habitat != null)
         {
             _habitat.Initialize();

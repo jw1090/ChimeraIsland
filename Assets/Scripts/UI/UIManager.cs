@@ -23,14 +23,13 @@ public class UIManager : MonoBehaviour
 
         ResetUI();
 
-        _tutorialOverlay.Initialize();
-
         return this;
     }
 
     public void InitializeUIElements()
     {
         InitializeWallets();
+        InitializeTutorialOverlay();
         _marketplace.Initialize();
         _detailsFolder.Initialize();
         _transferMap.Initialize();
@@ -41,6 +40,14 @@ public class UIManager : MonoBehaviour
         foreach (var wallet in _essenceWallets)
         {
             wallet.Initialize();
+        }
+    }
+
+    private void InitializeTutorialOverlay()
+    {
+        if (_tutorialOverlay != null)
+        {
+            _tutorialOverlay.Initialize();
         }
     }
 
@@ -111,5 +118,11 @@ public class UIManager : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
+    }
+
+    public void StartTutorial(TutorialSteps tutorialSteps)
+    {
+        _tutorialOverlay.gameObject.SetActive(true);
+        _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
 }
