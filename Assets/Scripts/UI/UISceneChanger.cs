@@ -2,43 +2,55 @@ using UnityEngine;
 
 public class UISceneChanger : MonoBehaviour
 {
+    private SceneChanger _sceneChanger = null;
+
+    private void Awake()
+    {
+        GameLoader.CallOnComplete(Initialize);
+    }
+
+    private void Initialize()
+    {
+        _sceneChanger = ServiceLocator.Get<SceneChanger>();
+    }
+
     public void NewGameClicked()
     {
-        ServiceLocator.Get<SceneChanger>().NewGame();
+        _sceneChanger.NewGame();
     }
 
     public void LoadGameClicked()
     {
-        ServiceLocator.Get<SceneChanger>().LoadGame();
+        _sceneChanger.LoadGame();
     }
 
     public void QuitGameClicked()
     {
-        ServiceLocator.Get<SceneChanger>().QuitGame();
+        _sceneChanger.QuitGame();
     }
 
     public void MainMenuClicked()
     {
-        ServiceLocator.Get<SceneChanger>().LoadMainMenu();
+        _sceneChanger.LoadMainMenu();
     }
 
     public void LoadWorldMap()
     {
-        ServiceLocator.Get<SceneChanger>().LoadWorldMap();
+        _sceneChanger.LoadWorldMap();
     }
 
     public void LoadStonePlains()
     {
-        ServiceLocator.Get<SceneChanger>().LoadStonePlains();
+        _sceneChanger.LoadStonePlains();
     }
 
     public void LoadTreeOfLife()
     {
-        ServiceLocator.Get<SceneChanger>().LoadTreeOfLife();
+        _sceneChanger.LoadTreeOfLife();
     }
 
     public void LoadAshlands()
     {
-        ServiceLocator.Get<SceneChanger>().LoadAshlands();
+        _sceneChanger.LoadAshlands();
     }
 }
