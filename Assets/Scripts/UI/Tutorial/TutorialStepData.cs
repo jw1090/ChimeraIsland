@@ -12,4 +12,3 @@ public class TutorialStepData
     public string description;
     public ChimeraType type;
 }
-

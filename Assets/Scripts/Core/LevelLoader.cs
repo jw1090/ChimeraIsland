@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : AsyncLoader
+public class LevelLoader : AsyncLoader
 {
     [SerializeField] private UIManager _uiManager = null;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
 
-    private static LevelManager _instance = null;
+    private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
 
     private EssenceManager _essenceManager = null;
@@ -50,13 +50,12 @@ public class LevelManager : AsyncLoader
         }
 
         // Level should be finished loading.
-        // Show first tutorial
-        _tutorialManager.ShowTutorial(0);
+        //_tutorialManager.ShowTutorial(0);
     }
 
     private void Initialize()
     {
-        ServiceLocator.Register<LevelManager>(this, true);
+        ServiceLocator.Register<LevelLoader>(this, true);
 
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
@@ -71,11 +70,13 @@ public class LevelManager : AsyncLoader
             _inputManager.SetUIManager(_uiManager);
             _tutorialManager.SetUIManager(_uiManager);
         }
+
         if (_cameraController != null)
         {
             ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
             _inputManager.SetCamera(_cameraController.CameraCO);
         }
+
         if (_habitat != null)
         {
             _habitat.Initialize();

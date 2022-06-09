@@ -3,8 +3,8 @@ using System;
 
 public class TutorialManager : MonoBehaviour
 {
-    private UIManager _uiManager = null;
     private Tutorial _tutorialData = null;
+    private UIManager _uiManager = null;
 
     public event Action OnTutorialComplete;
 

@@ -4,8 +4,7 @@ public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
     private ResourceManager _resourceManager = null;
-
-    private TutorialSteps _tutorialData;
+    private TutorialSteps _tutorialData = null;
     private int _tutorialStep = -1;
 
     public void Initialize()
