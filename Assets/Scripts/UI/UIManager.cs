@@ -23,10 +23,7 @@ public class UIManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _sceneChange = GetComponent<UISceneChange>();
-
         ResetUI();
-
-        _tutorialOverlay.Initialize();
         _sceneChange.Initialize();
 
         return this;
@@ -115,5 +112,10 @@ public class UIManager : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
+    }
+
+    public void StartTutorial(TutorialSteps tutorialSteps)
+    {
+        _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
 }

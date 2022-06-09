@@ -48,6 +48,10 @@ public class LevelManager : AsyncLoader
 
             CallOnComplete(OnComplete);
         }
+
+        // Level should be finished loading.
+        // Show first tutorial
+        _tutorialManager.ShowTutorial(0);
     }
 
     private void Initialize()
