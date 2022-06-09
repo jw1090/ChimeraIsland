@@ -20,7 +20,7 @@ public class PersistentData : MonoBehaviour
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
-
+        LoadData();
         return this;
     }
 
