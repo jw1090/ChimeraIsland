@@ -44,7 +44,6 @@ public class HabitatManager : MonoBehaviour
     public void SetCurrentHabitat(Habitat habitat) 
     { 
         _currentHabitat = habitat;
-        _persistentData.SetCurrentHabitat(habitat);
     }
 
     [Serializable]
