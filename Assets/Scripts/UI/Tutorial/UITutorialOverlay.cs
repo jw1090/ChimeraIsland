@@ -32,10 +32,8 @@ public class UITutorialOverlay : MonoBehaviour
         if(_tutorialStep >= _tutorialData.StepData.Length)
         {
             _tutorialStep = 0;
-        }
-        else
-        {
             _textInfo.gameObject.SetActive(false);
+            return;
         }
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];

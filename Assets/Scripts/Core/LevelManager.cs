@@ -22,17 +22,18 @@ public class LevelManager : AsyncLoader
     {
         // TODO: Craig is not happy with this <.< (It's all his fault though)
         _instance = this;
-        ProcessQueuedCallbacks();
-        ResetVariables();
-
         GameLoader.CallOnComplete(LevelSetup);
+    }
+
+    private void OnDestroy()
+    {
+        ResetVariables();
     }
 
     private void LevelSetup()
     {
-        ResetVariables();
-
         Initialize();
+        ProcessQueuedCallbacks();
 
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
