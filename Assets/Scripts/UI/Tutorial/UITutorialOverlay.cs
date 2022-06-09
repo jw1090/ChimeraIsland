@@ -8,12 +8,7 @@ public class UITutorialOverlay : MonoBehaviour
     private TutorialSteps _tutorialData;
     private int _tutorialStep = -1;
 
-    private void Awake()
-    {
-        LevelManager.CallOnComplete(Initialize);
-    }
-
-    private void Initialize()
+    public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
     }

@@ -22,6 +22,16 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        // Setup the Tutorial Overlay
+        if(_tutorialOverlay != null)
+        {
+            _tutorialOverlay.Initialize();
+        }
+        else
+        {
+            Debug.Log($"UITutorialOverlay is null. Check inspector reference");
+        }
+
         _sceneChange = GetComponent<UISceneChange>();
         ResetUI();
         _sceneChange.Initialize();
@@ -116,6 +126,7 @@ public class UIManager : MonoBehaviour
 
     public void StartTutorial(TutorialSteps tutorialSteps)
     {
+        _tutorialOverlay.gameObject.SetActive(true);
         _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
 }
