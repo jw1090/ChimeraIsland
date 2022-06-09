@@ -88,6 +88,20 @@ public class PersistentData : MonoBehaviour
 
     public void QuitGameSave()
     {
+        if(_habitatManager.CurrentHabitat == null)
+        {
+            return;
+        }
+
         SaveSessionData(_habitatManager.CurrentHabitat.Type);
+    }
+
+    private void OnApplicationQuit()
+    {
+#if UNITY_EDITOR
+        QuitGameSave();
+#else
+      Application.Quit();
+#endif
     }
 }
