@@ -38,10 +38,9 @@ public class PersistentData : MonoBehaviour
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
-        List<ChimeraData> myChimeraData = ChimerasToJson();
-        List<FacilityData> myFacilityData = FacilitiesToJson();
-        int essenceToSave = _essenceManager != null ? _essenceManager.CurrentEssence : 0;
-        GlobalData myGlobalData = new GlobalData(essenceToSave);
+        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence, 0);
+        List<FacilityData> myFacilityData = FacilitiesToData();
+        List<ChimeraData> myChimeraData = ChimerasToData();
 
         GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData);
         UpdateGameSaveData(myData);
