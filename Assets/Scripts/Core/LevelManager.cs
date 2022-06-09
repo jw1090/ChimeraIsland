@@ -37,7 +37,6 @@ public class LevelManager : AsyncLoader
 
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
-            _essenceManager.LoadEssence();
             InitializeUIElements();
 
             if(_habitat != null)

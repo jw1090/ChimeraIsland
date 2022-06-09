@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private UIWallet[] _essenceWallets = null;
-    private UISceneChange _sceneChange = null;
 
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -32,9 +31,9 @@ public class UIManager : MonoBehaviour
             Debug.Log($"UITutorialOverlay is null. Check inspector reference");
         }
 
-        _sceneChange = GetComponent<UISceneChange>();
         ResetUI();
-        _sceneChange.Initialize();
+
+        _tutorialOverlay.Initialize();
 
         return this;
     }
