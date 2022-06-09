@@ -15,7 +15,11 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
         GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
     }
 
-    // Adds a facility based on the assigned facilityType.
+    public void OnEnable()
+    {
+        GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.AddFacility(_facility);

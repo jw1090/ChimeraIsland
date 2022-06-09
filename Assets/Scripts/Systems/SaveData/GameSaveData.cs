@@ -4,17 +4,16 @@ using System.Collections.Generic;
 [Serializable]
 public class GameSaveData
 {
+    public GlobalData globalData = new GlobalData(HabitatType.None, 100, 0);
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
-    public GlobalData globalData = new GlobalData(100);
 
-    public GameSaveData(List<ChimeraData> cd, List<FacilityData> fd, GlobalData gd)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData)
     {
-        chimeras = cd;
-        facilities = fd;
-        globalData = gd;
+        globalData = newGlobalData;
+        chimeras = newChimeraData;
+        facilities = newFacilityData;
     }
 
     public GameSaveData() { }
 }
-

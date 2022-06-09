@@ -26,7 +26,7 @@ public class HabitatManager : MonoBehaviour
             return _chimerasByHabitat[habitatType];
         }
 
-        Debug.Log($"No Chimera entry for habitat: {habitatType}");
+        Debug.Log($"No Chimera entry for {habitatType}.");
         return new List<ChimeraData>();
     }
 
@@ -37,7 +37,7 @@ public class HabitatManager : MonoBehaviour
             return _facilitiesByHabitat[habitatType];
         }
 
-        Debug.Log($"No Facility entry for habitat: {habitatType}");
+        Debug.Log($"No Facility entry for {habitatType}.");
         return new List<FacilityData>();
     }
 
@@ -60,6 +60,7 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _persistentData.LoadData();
 
         if (InitializeChimeraData())
         {
@@ -82,7 +83,7 @@ public class HabitatManager : MonoBehaviour
 
         if (_chimeraSaveData == null)
         {
-            Debug.LogError("Chimera Save data is null!");
+            Debug.LogError("Chimera save data is null!");
             return false;
         }
 
@@ -96,7 +97,7 @@ public class HabitatManager : MonoBehaviour
 
         if (_facilitySaveData == null)
         {
-            Debug.LogError("Facility Save data is null!");
+            Debug.LogError("Facility save data is null!");
             return false;
         }
 
@@ -128,14 +129,32 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    private void AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
+    private bool AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
     {
         if (_chimerasByHabitat.ContainsKey(habitat) == false)
         {
             _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
         }
 
+        if(HabitatCapacityCheck(habitat) == false)
+        {
+            Debug.Log($"Cannot add {chimeraToAdd.chimeraType}, {habitat} is full.");
+            return false;
+        }
+
         _chimerasByHabitat[habitat].Add(chimeraToAdd);
+
+        return true;
+    }
+
+    public bool HabitatCapacityCheck(HabitatType habitat)
+    {
+        if (_chimerasByHabitat[habitat].Count < _chimeraCapacity)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void AddFacilityToHabitat(FacilityData facilityToAdd, HabitatType habitat)
@@ -152,7 +171,7 @@ public class HabitatManager : MonoBehaviour
     {
         if (_chimerasByHabitat.ContainsKey(_currentHabitat.Type) == false)
         {
-            Debug.LogError("Cannot update chimeras. Habitat key not found");
+            Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
             return;
         }
 
@@ -164,10 +183,16 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    public void AddNewChimera(Chimera chimeraToSave)
+    public bool AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
-        AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType);
+        
+        if(AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType) == true)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void AddNewFacility(Facility facilityToSave)
@@ -185,6 +210,6 @@ public class HabitatManager : MonoBehaviour
     public void BuildFacilitiesForHabitat()
     {
         var facilitiesToBuild = GetFaclitiesForHabitat(_currentHabitat.Type);
-        _currentHabitat.CreateFacilitiesData(facilitiesToBuild);
+        _currentHabitat.CreateFacilitiesFromData(facilitiesToBuild);
     }
 }

@@ -5,14 +5,14 @@ public class ChimeraShop : MonoBehaviour
 {
     private List<ChimeraShopItem> _chimeraShopItems = new List<ChimeraShopItem>();
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             ChimeraShopItem shopItem = child.GetComponent<ChimeraShopItem>();
 
             _chimeraShopItems.Add(shopItem);
-            shopItem.Initialize(habitat);
+            shopItem.Initialize();
         }
     }
 }

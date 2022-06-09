@@ -1,25 +1,52 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TransferButton : MonoBehaviour, IPointerClickHandler
 {
-    //private HabitatManager _habitatManager = null;
-    //private HabitatType _currentHabitat = HabitatType.None;
-    //private HabitatType _habitatToTransfer = HabitatType.None;
-    //private Chimera _chimera = null;
-    //private int _chimeraSpot = 0;
+    [SerializeField] private HabitatType _habitatType = HabitatType.None;
+    private TransferMap _transferMap = null;
+    private Habitat _habitat = null;
+    private UIManager _uiManager = null;
 
-    public void Initialize(Habitat habitat, HabitatType habitatType)
+    public void Initialize(TransferMap transferMap)
     {
-        //_currentHabitat = habitat.GetHabitatType();
-        //_habitatToTransfer = habitatType;
-        //_chimera = habitat.Chimeras[_chimeraSpot];
+        _transferMap = transferMap;
+        _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+        _uiManager = ServiceLocator.Get<UIManager>();
     }
 
-    // Adds a facility based on the assigned facilityType.
     public void OnPointerClick(PointerEventData eventData)
     {
-        //_habitatManager.TransferChimera(_currentHabitat, _habitatToTransfer, _chimera);
+        switch (_habitatType)
+        {
+            case HabitatType.StonePlains:
+            case HabitatType.TreeOfLife:
+            case HabitatType.Ashlands:
+                TransferChimera();
+                break;
+            default:
+                Debug.LogError($"Unhandled habitat type: {_habitatType}. Please change!");
+                return;
+        }
+    }
+
+    private void TransferChimera()
+    {
+        if(_habitatType == _habitat.Type)
+        {
+            Debug.Log("Transfer Failed - Cannot transfer to this current habitat!");
+            return;
+        }
+
+        if(_habitat.TransferChimera(_transferMap.ChimeraToTransfer, _habitatType) == false)
+        {
+            Debug.Log("Transfer Failed - Transfer to another habitat or close map!");
+            return;
+        }
+
+        _transferMap.ResetChimera();
+        _uiManager.CloseAll();
+
+        Debug.Log($"<color=Cyan> Transfer Success! {_transferMap.ChimeraToTransfer} is now in {_habitatType}!</color>");
     }
 }

@@ -14,13 +14,12 @@ namespace AI.Behavior
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _totalTimer = 10000.0f;
-            _patrolTimer = 10.0f;
+            _totalTimer = 5.0f;
+            _patrolTimer = 2.5f;
             _isOver = false;
 
-            _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
-
             _chimeraBehavior.EnterAnim(_animWalk);
+            _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
         }
 
         public override void Update()
@@ -37,7 +36,7 @@ namespace AI.Behavior
 
             if (_patrolTimer <= 0.0f && !_isOver)
             {
-                _patrolTimer = 2.0f;
+                _patrolTimer = 2.5f;
                 _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
             }
         }
@@ -53,7 +52,7 @@ namespace AI.Behavior
             float randomX = Random.Range(-_patrolRange, _patrolRange);
             float randomZ = Random.Range(-_patrolRange, _patrolRange);
 
-            Vector3 agentPos = _chimeraBehavior.GetCurrentNode().position;
+            Vector3 agentPos = _chimeraBehavior.gameObject.transform.position;
 
             Vector3 randomPoint = new Vector3
             (
