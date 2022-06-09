@@ -21,10 +21,12 @@ public class PersistentData : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        LoadData();
+
         return this;
     }
 
-    public void LoadData()
+    private void LoadData()
     {
         GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
         if (myData == null)
@@ -34,6 +36,17 @@ public class PersistentData : MonoBehaviour
         }
 
         UpdateGameSaveData(myData);
+    }
+
+    public void NewSaveData()
+    {
+        GameSaveData newData = new GameSaveData();
+        UpdateGameSaveData(newData);
+
+        _habitatManager.ResetDictionaries();
+        _habitatManager.LoadHabitatData();
+
+        FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
@@ -100,8 +113,6 @@ public class PersistentData : MonoBehaviour
     {
 #if UNITY_EDITOR
         QuitGameSave();
-#else
-      Application.Quit();
 #endif
     }
 }

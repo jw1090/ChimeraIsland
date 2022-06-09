@@ -60,8 +60,14 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _persistentData.LoadData();
 
+        LoadHabitatData();
+
+        return this;
+    }
+
+    public void LoadHabitatData()
+    {
         if (InitializeChimeraData())
         {
             StoreChimeraDataByHabitat();
@@ -72,8 +78,12 @@ public class HabitatManager : MonoBehaviour
         {
             StoreFacilityDataByHabitat();
         }
+    }
 
-        return this;
+    public void ResetDictionaries()
+    {
+        _chimerasByHabitat.Clear();
+        _facilitiesByHabitat.Clear();
     }
 
     private bool InitializeChimeraData()

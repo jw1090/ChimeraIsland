@@ -18,6 +18,7 @@ public class SceneChanger : MonoBehaviour
 
     public void NewGame()
     {
+        _persistentData.NewSaveData();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT_SCENE);
     }
 
