@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OpenSettingsMenu()
+    public void OpenSettingsMenu()
     {
         ResetUI();
         _settingsMenu.gameObject.SetActive(true);
