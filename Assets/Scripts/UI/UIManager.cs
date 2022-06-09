@@ -21,19 +21,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        // Setup the Tutorial Overlay
-        if(_tutorialOverlay != null)
-        {
-            _tutorialOverlay.Initialize();
-        }
-        else
-        {
-            Debug.Log($"UITutorialOverlay is null. Check inspector reference");
-        }
-
         ResetUI();
-
-        _tutorialOverlay.Initialize();
 
         return this;
     }
@@ -41,6 +29,7 @@ public class UIManager : MonoBehaviour
     public void InitializeUIElements()
     {
         InitializeWallets();
+        InitializeTutorialOverlay();
         _marketplace.Initialize();
         _detailsFolder.Initialize();
         _transferMap.Initialize();
@@ -51,6 +40,14 @@ public class UIManager : MonoBehaviour
         foreach (var wallet in _essenceWallets)
         {
             wallet.Initialize();
+        }
+    }
+
+    private void InitializeTutorialOverlay()
+    {
+        if (_tutorialOverlay != null)
+        {
+            _tutorialOverlay.Initialize();
         }
     }
 
