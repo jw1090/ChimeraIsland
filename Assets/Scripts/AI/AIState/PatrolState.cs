@@ -24,7 +24,7 @@ namespace AI.Behavior
         {
             _chimeraBehavior.HeldEnterCheck();
 
-            if(_chimeraBehavior.GetAgentDistance() >= 1.5f)
+            if (_chimeraBehavior.GetAgentDistance() >= 1.5f)
             {
                 return;
             }
@@ -51,7 +51,15 @@ namespace AI.Behavior
                 _chimeraBehavior.ResetWanderIndex();
             }
 
-            _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Wander]);
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Idle]);
+                    break;
+                case 1:
+                    _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Wander]);
+                    break;
+            }
         }
 
         public override void Exit()

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     private Camera _cameraCO = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
-    private Rect _rightRect= new Rect();
+    private Rect _rightRect = new Rect();
     private Rect _leftRect = new Rect();
     private Vector3 _dir = Vector3.zero;
     private bool _moveUp = false;

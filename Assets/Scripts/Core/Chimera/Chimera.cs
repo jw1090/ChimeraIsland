@@ -79,6 +79,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
     public void SetEndurance(int endurance) { _endurance = endurance; }
@@ -93,17 +94,17 @@ public class Chimera : MonoBehaviour
         _uiManager = ServiceLocator.Get<UIManager>();
 
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
-        _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
 
-        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}.</color>");
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
     }
 
     private void InitializeEvolution()
     {
+        _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _currentEvolution.Initialize(this);
         _chimeraType = _currentEvolution.Type;
     }
@@ -288,6 +289,7 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
+        _boxCollider.enabled = false;
 
         _habitatManager.UpdateCurrentHabitatChimeras();
     }

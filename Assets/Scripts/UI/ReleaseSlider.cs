@@ -23,7 +23,7 @@ public class ReleaseSlider : MonoBehaviour
         }
 
         Facility facility = hit.collider.GetComponent<Facility>();
-        if(facility.IsChimeraStored() == false)
+        if (facility.IsChimeraStored() == false)
         {
             return;
         }

@@ -9,24 +9,24 @@ public class GameLoader : AsyncLoader
     public List<Component> GameModules = new List<Component>();
     private static GameLoader _instance = null;
     private static int _sceneIndex = 1;
-    
-	protected override void Awake()
-	{
-		Debug.Log("GameLoader Starting");
 
-		// Saftey check
-		if (_instance != null && _instance != this)
-		{
-			Debug.Log("A duplicate instance of the GameLoader was found, and will be ignored. Only one instance is permitted");
-			Destroy(gameObject);
-			return;
-		}
+    protected override void Awake()
+    {
+        Debug.Log("GameLoader Starting");
 
-		// Set reference to this instance
-		_instance = this;
+        // Saftey check
+        if (_instance != null && _instance != this)
+        {
+            Debug.Log("A duplicate instance of the GameLoader was found, and will be ignored. Only one instance is permitted");
+            Destroy(gameObject);
+            return;
+        }
 
-		// Make persistent
-		DontDestroyOnLoad(gameObject);
+        // Set reference to this instance
+        _instance = this;
+
+        // Make persistent
+        DontDestroyOnLoad(gameObject);
 
         // Scene Index Check
         if (sceneIndexToLoad < 0 || sceneIndexToLoad >= SceneManager.sceneCountInBuildSettings)
@@ -39,24 +39,24 @@ public class GameLoader : AsyncLoader
             _sceneIndex = sceneIndexToLoad;
         }
 
-		// Setup System GameObject
-		GameObject systemsGO = new GameObject("[Services]");
-		Transform systemsParent = systemsGO.transform;
-		DontDestroyOnLoad(systemsGO);
+        // Setup System GameObject
+        GameObject systemsGO = new GameObject("[Services]");
+        Transform systemsParent = systemsGO.transform;
+        DontDestroyOnLoad(systemsGO);
 
         // Because Unity can hold onto static values between sessions.
-        ResetStaticVariables();
+        ResetVariables();
 
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
-		Enqueue(InitializeModularSystems(systemsParent), 2);
+        Enqueue(InitializeModularSystems(systemsParent), 2);
 
         // Set completion callback
         GameLoader.CallOnComplete(OnComplete);
-	}
+    }
 
-	private IEnumerator IntializeCoreSystems(Transform systemsParent)
-	{
+    private IEnumerator IntializeCoreSystems(Transform systemsParent)
+    {
         Debug.Log("Loading Core Systems");
 
         var monoUtilGO = new GameObject("Monobehaviour Utility");
@@ -79,15 +79,16 @@ public class GameLoader : AsyncLoader
         var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
         ServiceLocator.Register<ResourceManager>(resourceManagerComp);
 
-        var toolsManagerGO = new GameObject("Tools Manager");
-        toolsManagerGO.transform.SetParent(systemsParent);
-        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
-        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
-
         var inputManagerGO = new GameObject("Input Manager");
         inputManagerGO.transform.SetParent(systemsParent);
         var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
         ServiceLocator.Register<InputManager>(inputManagerComp);
+
+        var essenceManagerGO = new GameObject("Essence Manager");
+        essenceManagerGO.transform.SetParent(systemsParent);
+        var essenceManagerComp = essenceManagerGO.AddComponent<EssenceManager>().Initialize();
+        ServiceLocator.Register<EssenceManager>(essenceManagerComp);
+        persistentDataComp.SetEssenceManager(essenceManagerComp);
 
         var habitatManagerGO = new GameObject("Habitat Manager");
         habitatManagerGO.transform.SetParent(systemsParent);
@@ -100,11 +101,16 @@ public class GameLoader : AsyncLoader
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
 
-        yield return null;
-	}
+        var toolsManagerGO = new GameObject("Tools Manager");
+        toolsManagerGO.transform.SetParent(systemsParent);
+        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
+        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
 
-	private IEnumerator InitializeModularSystems(Transform systemsParent)
-	{
+        yield return null;
+    }
+
+    private IEnumerator InitializeModularSystems(Transform systemsParent)
+    {
         // Setup Additional Systems as needed
         Debug.Log("Loading Modular Systems");
         foreach (Component c in GameModules)
@@ -116,8 +122,8 @@ public class GameLoader : AsyncLoader
             }
         }
 
-		yield return null;
-	}
+        yield return null;
+    }
 
     private IEnumerator LoadInitialScene(int index)
     {
@@ -135,10 +141,25 @@ public class GameLoader : AsyncLoader
         }
     }
 
-	// AsyncLoader completion callback
-	private void OnComplete()
-	{
-		Debug.Log("GameLoader Finished Initializing");
+    protected override void ResetVariables()
+    {
+        base.ResetVariables();
+    }
+
+    public static void CallOnComplete(System.Action callback)
+    {
+        if (!_instance)
+        {
+            return;
+        }
+
+        _instance.CallOnComplete_Internal(callback);
+    }
+
+    // AsyncLoader completion callback
+    private void OnComplete()
+    {
+        Debug.Log("GameLoader Finished Initializing");
         StartCoroutine(LoadInitialScene(_sceneIndex));
     }
 }

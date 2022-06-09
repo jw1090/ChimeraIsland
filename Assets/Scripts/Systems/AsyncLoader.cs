@@ -25,10 +25,11 @@ public abstract class AsyncLoader : MonoBehaviour
 
     private Queue<RoutineInfo> _pending = new Queue<RoutineInfo>();
     private bool _completedWithoutError = true;
-    private static event Action OnLoadingCompleted;
 
-    public static bool Complete { get; private set; } = false;
-    public static float Progress { get; private set; } = 0.0f;
+    protected event Action OnLoadingCompleted;
+
+    protected bool Complete { get; private set; } = false;
+    protected float Progress { get; private set; } = 0.0f;
 
     protected void Enqueue(IEnumerator routine, int weight, Func<float> progress = null)
     {
@@ -97,15 +98,15 @@ public abstract class AsyncLoader : MonoBehaviour
         }
     }
 
-    // Reset all static variables. To be used when the game is resetting.
-    public static void ResetStaticVariables()
+    // Reset all variables. To be used when the game is resetting.
+    protected virtual void ResetVariables()
     {
         OnLoadingCompleted = null;
         Complete = false;
         Progress = 0.0f;
     }
 
-    public static void CallOnComplete(Action callback)
+    protected void CallOnComplete_Internal(Action callback)
     {
         if (Complete)
         {

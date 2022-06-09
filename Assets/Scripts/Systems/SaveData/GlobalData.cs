@@ -3,11 +3,14 @@
 [Serializable]
 public class GlobalData
 {
-    public int currentEssence = 0;
-    public GlobalData(int essence, Habitat LastUsedHabitat)
+    public HabitatType lastSessionHabitat = HabitatType.None;
+    public int lastSessionEssence = 0;
+    public int lastSessionTutorial = 0;
+
+    public GlobalData(HabitatType habitatToLoad, int essenceToLoad, int tutorialToLoad)
     {
-        currentEssence = essence;
-        lastUsedHabitat = LastUsedHabitat;
+        lastSessionHabitat = habitatToLoad;
+        lastSessionEssence = essenceToLoad;
+        lastSessionTutorial = tutorialToLoad;
     }
-    public Habitat lastUsedHabitat = null;
 }

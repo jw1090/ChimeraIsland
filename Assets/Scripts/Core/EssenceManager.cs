@@ -2,22 +2,32 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
+    private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
-    private bool _isInitialized = false;
+    private bool _essenceLoaded = false;
     private int _currentEssence = 100;
 
     public int CurrentEssence { get => _currentEssence; }
-    public bool IsInitialized { get => _isInitialized; }
+
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public EssenceManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _uiManager = ServiceLocator.Get<UIManager>();
-
-        _isInitialized = true;
+        _persistentData = ServiceLocator.Get<PersistentData>();
+        LoadEssence();
 
         return this;
+    }
+
+    public void LoadEssence()
+    {
+        if (_persistentData != null && _essenceLoaded == false)
+        {
+            _currentEssence = _persistentData.EssenceData; // Craig's Note: be careful when using properties that implement 'get' calls that are not exception safe, like this one.
+            _essenceLoaded = true;
+        }
     }
 
     public void IncreaseEssence(int amount)

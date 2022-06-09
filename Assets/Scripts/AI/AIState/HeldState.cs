@@ -5,7 +5,7 @@ namespace AI.Behavior
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private float _heightOffset = 1.2f;
+        private float _heightOffset = 1.0f;
         private string _animWalk = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
