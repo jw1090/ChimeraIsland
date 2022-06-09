@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 
         _sceneChange = GetComponent<UISceneChange>();
 
-        CloseAll();
+        ResetUI();
 
         _tutorialOverlay.Initialize();
         _sceneChange.Initialize();
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void CloseAll()
+    public void ResetUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
         _marketplaceButton.gameObject.SetActive(true);
@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
     {
         _detailsFolder.CheckDetails();
 
-        CloseAll();
+        ResetUI();
         _openDetailsButton.gameObject.SetActive(false);
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
@@ -72,14 +72,14 @@ public class UIManager : MonoBehaviour
 
     public void OpenMarketplace()
     {
-        CloseAll();
+        ResetUI();
         _openDetailsButton.gameObject.SetActive(false);
         _marketplace.gameObject.SetActive(true);
     }
 
     public void OpenTransferMap(Chimera chimera)
     {
-        CloseAll();
+        ResetUI();
         _transferMap.Open(chimera);
     }
 
@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
     {
         if (_settingsMenu.activeInHierarchy == true)
         {
-            CloseAll();
+            ResetUI();
         }
         else
         {
@@ -97,7 +97,7 @@ public class UIManager : MonoBehaviour
 
     private void OpenSettingsMenu()
     {
-        CloseAll();
+        ResetUI();
         _settingsMenu.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
