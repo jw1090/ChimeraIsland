@@ -40,7 +40,8 @@ public class FacilitiesTrigger : MonoBehaviour
 
         _facility.PlaceChimera(chimera);
 
+        chimera.SetInFacility(true);
         chimeraBehaviour.TrainingPosition = transform.position;
-        chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
+        chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Idle]);
     }
 }

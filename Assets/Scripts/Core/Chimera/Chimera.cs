@@ -46,6 +46,7 @@ public class Chimera : MonoBehaviour
     public StatType StatPreference { get => _statPreference; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public Sprite Icon { get => _currentEvolution.Icon; }
+    public bool InFacility { get => _inFacility; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
     public int Intelligence { get => _intelligence; }
