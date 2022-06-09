@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,9 @@ public class LevelManager : AsyncLoader
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
 
+    private static LevelManager _instance = null;
+    private readonly static List<Action> _queuedCallbacks = new List<Action>();
+
     private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
@@ -15,18 +20,22 @@ public class LevelManager : AsyncLoader
 
     protected override void Awake()
     {
+        // TODO: Craig is not happy with this <.< (It's all his fault though)
+        _instance = this;
+        ProcessQueuedCallbacks();
+        ResetVariables();
+
         GameLoader.CallOnComplete(LevelSetup);
     }
 
     private void LevelSetup()
     {
-        LevelManager.ResetStaticVariables();
+        ResetVariables();
 
         Initialize();
 
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
-            _essenceManager.LoadEssence();
             InitializeUIElements();
 
             if(_habitat != null)
@@ -36,7 +45,7 @@ public class LevelManager : AsyncLoader
                 StartHabitatTickTimer();
             }
 
-            LevelManager.CallOnComplete(OnComplete);
+            CallOnComplete(OnComplete);
         }
     }
 
@@ -134,6 +143,31 @@ public class LevelManager : AsyncLoader
         }
 
         _habitat.StartTickTimer();
+    }
+
+    private void ProcessQueuedCallbacks()
+    {
+        foreach(var callback in _queuedCallbacks)
+        {
+            CallOnComplete(callback);
+        }
+    }
+
+    protected override void ResetVariables()
+    {
+        base.ResetVariables();
+        _queuedCallbacks.Clear();
+    }
+
+    public static void CallOnComplete(Action callback)
+    {
+        if(_instance == null)
+        {
+            _queuedCallbacks.Add(callback);
+            return;
+        }
+
+        _instance.CallOnComplete_Internal(callback);
     }
 
     private void OnComplete()

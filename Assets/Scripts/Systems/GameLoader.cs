@@ -45,7 +45,7 @@ public class GameLoader : AsyncLoader
         DontDestroyOnLoad(systemsGO);
 
         // Because Unity can hold onto static values between sessions.
-        GameLoader.ResetStaticVariables();
+        ResetVariables();
 
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
@@ -79,11 +79,6 @@ public class GameLoader : AsyncLoader
         var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
         ServiceLocator.Register<ResourceManager>(resourceManagerComp);
 
-        var toolsManagerGO = new GameObject("Tools Manager");
-        toolsManagerGO.transform.SetParent(systemsParent);
-        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
-        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
-
         var inputManagerGO = new GameObject("Input Manager");
         inputManagerGO.transform.SetParent(systemsParent);
         var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
@@ -105,6 +100,11 @@ public class GameLoader : AsyncLoader
         tutorialGO.transform.SetParent(systemsParent);
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
+
+        var toolsManagerGO = new GameObject("Tools Manager");
+        toolsManagerGO.transform.SetParent(systemsParent);
+        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
+        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
 
         yield return null;
     }
@@ -139,6 +139,21 @@ public class GameLoader : AsyncLoader
             Debug.Log("GameLoader -> Skipping Scene Load: Scene is already active");
             yield break;
         }
+    }
+
+    protected override void ResetVariables()
+    {
+        base.ResetVariables();
+    }
+
+    public static void CallOnComplete(System.Action callback)
+    {
+        if (!_instance)
+        {
+            return;
+        }
+
+        _instance.CallOnComplete_Internal(callback);
     }
 
     // AsyncLoader completion callback

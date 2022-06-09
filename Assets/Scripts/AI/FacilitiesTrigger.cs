@@ -8,7 +8,7 @@ public class FacilitiesTrigger : MonoBehaviour
 
     private void Awake()
     {
-        LevelManager.CallOnComplete(Initialize);
+        GameLoader.CallOnComplete(Initialize);
     }
 
     private void Initialize()
