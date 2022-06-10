@@ -49,7 +49,6 @@ public class LevelLoader : AsyncLoader
             CallOnComplete(OnComplete);
         }
 
-        // Level should be finished loading.
         //_tutorialManager.ShowTutorial(0);
     }
 
@@ -129,6 +128,7 @@ public class LevelLoader : AsyncLoader
         }
 
         _uiManager.InitializeUIElements();
+        _uiManager.ShowHabitatUI();
     }
 
     private void LoadChimeras()
