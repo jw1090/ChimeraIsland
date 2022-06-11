@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _marketplaceButton = null;
     [SerializeField] private Marketplace _marketplace = null;
     [SerializeField] private GameObject _settingsMenu = null;
+    [SerializeField] private GameObject _habitatUIFolder = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private UIWallet[] _essenceWallets = null;
+    [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
 
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -50,6 +52,12 @@ public class UIManager : MonoBehaviour
             _tutorialOverlay.Initialize();
         }
     }
+
+    public void ShowHabitatUI()
+    {
+        _habitatUIFolder.gameObject.SetActive(true);
+    }
+
 
     public void ResetUI()
     {
