@@ -18,11 +18,11 @@ namespace AI.Behavior
             _stayPos = _chimeraBehavior.TrainingPosition;
             //_chimeraBehavior.SetAgentDestination(GetNewWayPoint(_patrolPos.y));
             _chimeraBehavior.BoxCollider.enabled = false;
+            _chimeraBehavior.Agent.enabled = false;
         }
 
         public override void Update()
         {
-
             //_wanderTimer -= Time.deltaTime;
             //if (_wanderTimer <= 0f)
             //{
@@ -35,6 +35,8 @@ namespace AI.Behavior
         {
             //_wanderTimer = 0.0f;
             _chimeraBehavior.BoxCollider.enabled = true;
+            _chimeraBehavior.Agent.enabled = true;
+
         }
 
         //private Vector3 GetNewWayPoint(float positionY)
