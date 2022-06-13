@@ -12,14 +12,16 @@ public class TutorialManager : MonoBehaviour
 
     public TutorialManager Initialize()
     {
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+
         LoadTutorialFromJson();
+
         return this;
     }
 
     private void LoadTutorialFromJson()
     { 
         _tutorialData = FileHandler.ReadFromJSON<Tutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
-        Debug.Log($"<color=yelow> Tutorial Data Loaded</color>");
     }
 
     public void ShowTutorial(int tutorialId)
