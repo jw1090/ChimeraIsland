@@ -6,12 +6,12 @@ public class Marketplace : MonoBehaviour
     [SerializeField] ChimeraShop _chimeraShop = null;
     [SerializeField] FacilityShop _facilityShop = null;
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
-        Debug.Log("<color=Yellow> Loading Marketplace ... </color>");
+        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
 
         _tabGroup.Initialize();
-        _chimeraShop.Initialize(habitat);
-        _facilityShop.Initialize(habitat);
+        _chimeraShop.Initialize();
+        _facilityShop.Initialize();
     }
 }

@@ -3,72 +3,56 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
-    [Header("Evolution Info")]
-    [SerializeField] private ChimeraType _myType;
-    [SerializeField] private Sprite _profileIcon = null;
-    [SerializeField] private List<EvolutionLogic> _evolutionPaths;
+    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
+    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
-	
-    [Header("References")]
-    [SerializeField] private Chimera _chimeraBrain;
+    private Chimera _chimeraBrain = null;
+    private Sprite _icon = null;
 
-    public Sprite GetIcon() { return _profileIcon; }
-    public int GetReqEnd() { return _reqEndurance; }
-    public int GetReqInt() { return _reqIntelligence; }
-    public int GetReqStr() { return _reqStrength; }
-    public ChimeraType GetChimeraType() { return _myType; }
-    public void SetChimeraBrain(Chimera chimera) { _chimeraBrain = chimera; }
-    public void SetChimeraType(ChimeraType type) { _myType = type; }
-	public void LoadEvolution()
+    public ChimeraType Type { get => _evolutionType; }
+    public Chimera ChimeraBrain { get => _chimeraBrain; }
+    public Sprite Icon { get => _icon; }
+    public int ReqEndurance { get => _reqEndurance; }
+    public int ReqIntelligence { get => _reqIntelligence; }
+    public int ReqStrength { get => _reqStrength; }
+
+    public void Initialize(Chimera chimera)
     {
+        _icon = ServiceLocator.Get<ResourceManager>().GetChimeraSprite(_evolutionType);
+
+        _chimeraBrain = chimera;
+    }
+
+    public bool CheckEvolution(int endurance, int intelligence, int strength, out EvolutionLogic newEvolution)
+    {
+        newEvolution = null;
+
         if (_evolutionPaths == null)
         {
-            return;
+            return false;
         }
 
-        foreach (var evolution in _evolutionPaths)
+        foreach (var possibleEvolution in _evolutionPaths)
         {
-            if (_myType == evolution._myType)
-            {
-                Evolve(evolution);
-            }
-        }
-    }
-
-    public void CheckEvolution(int endurance, int intelligence, int strength)
-    {
-        if(_evolutionPaths == null)
-        {
-            return;
-        }
-
-        foreach(var evolution in _evolutionPaths)
-        {
-            if (endurance < evolution.GetReqEnd())
+            if (endurance < possibleEvolution.ReqEndurance)
             {
                 continue;
             }
-            if (intelligence < evolution.GetReqInt())
+            else if (intelligence < possibleEvolution.ReqIntelligence)
             {
                 continue;
             }
-            if (strength < evolution.GetReqStr())
+            if (strength < possibleEvolution.ReqStrength)
             {
                 continue;
             }
 
-            Evolve(evolution);
+            newEvolution = possibleEvolution;
+            return true;
         }
-    }
 
-    private void Evolve(EvolutionLogic newModel)
-    {
-        Debug.Log("This creature is evolving into " + newModel + "!");
-
-        EvolutionLogic newEvolution = Instantiate(newModel, _chimeraBrain.transform);
-        _chimeraBrain.SetModel(newEvolution);
-        Destroy(gameObject);
+        return false;
     }
 }

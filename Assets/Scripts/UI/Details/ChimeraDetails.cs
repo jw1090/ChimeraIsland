@@ -4,10 +4,7 @@ using UnityEngine.UI;
 
 public class ChimeraDetails : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private int _chimeraSpot = 0;
-    [SerializeField] private Habitat _habitat = null;
-    [SerializeField] private Chimera _chimera = null;
+    [SerializeField] private DetailsTransferButton _detailsTransferButton = null;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _element = null;
@@ -15,11 +12,19 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
     [SerializeField] private TextMeshProUGUI _happiness = null;
+    private Chimera _chimera = null;
+    private Habitat _habitat = null;
+    private int _chimeraSpot = 0;
 
-    public void Initialize(Habitat habitat, int chimeraSpot)
+    public Chimera Chimera { get => _chimera; }
+
+    public void Initialize(int chimeraSpot)
     {
-        _habitat = habitat;
+        _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
         _chimeraSpot = chimeraSpot;
+
+        _detailsTransferButton.Initialize(this);
+
         UpdateDetails();
     }
 
@@ -30,19 +35,19 @@ public class ChimeraDetails : MonoBehaviour
             return;
         }
 
-        if (_habitat.Chimeras.Count <= _chimeraSpot)
+        if (_habitat.ActiveChimeras.Count <= _chimeraSpot)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        _chimera = _habitat.Chimeras[_chimeraSpot];
+        _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
-        _icon.sprite = _chimera.GetIcon();
-        _level.text = "Level: " + _chimera.Level;
-        _element.text = "Element: " + _chimera.GetElementalType().ToString();
+        _icon.sprite = _chimera.Icon;
+        _level.text = $"Level: {_chimera.Level}";
+        _element.text = $"Element: {_chimera.ElementalType}";
 
-        int amount;
+        int amount = 0;
         string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";
         _endurance.text = enduranceText;
         string intelligenceText = _chimera.GetStatByType(StatType.Intelligence, out amount) ? amount.ToString() : "Invalid!";

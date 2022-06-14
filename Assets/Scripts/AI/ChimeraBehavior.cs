@@ -10,104 +10,80 @@ namespace AI.Behavior
         Wander,
         Held,
         Training,
+        Idle,
     }
 
     public class ChimeraBehavior : MonoBehaviour
     {
-        [Header("General Info")]
-        [SerializeField] private LayerMask _chimeraLayer;
-        [SerializeField] private float _heightOffset = 1.2f;
-        [SerializeField] private bool _clicked = false;
-        [SerializeField] private bool _isActive = false;
+        private Animator _animator = null;
+        private Camera _mainCamera = null;
+        private CameraController _cameraController = null;
+        private Chimera _chimera = null;
+        private ChimeraBaseState _currentState = null;
+        private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
+        private List<Transform> _nodes = null;
+        private NavMeshAgent _navMeshAgent = null;
+        private bool _isActive = false;
+        private float _timer = 0.0f;
+        private int _patrolIndex = 0;
+        private int _wanderIndex = 0;
 
-        [Header("References")]
-        [SerializeField] private List<Transform> _nodes = null;
-        [SerializeField] private NavMeshAgent _navMeshAgent = null;
-        [SerializeField] private ChimeraBaseState _currentState = null;
-        [SerializeField] private Camera _mainCamera = null;
+        public BoxCollider BoxCollider { get => GetChimeraCollider(); }
+        public Camera MainCamera { get => _mainCamera; }
+        public CameraController CameraController { get => _cameraController; }
+        public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
+        public NavMeshAgent Agent { get => _navMeshAgent; }
+        public float Timer { get => _timer; }
+        public int PatrolIndex { get => _patrolIndex; }
+        public int WanderIndex { get => _wanderIndex; }
 
-        public Dictionary<StateEnum, ChimeraBaseState> States { get; private set; } = null;
-        public int PatrolIndex { get; private set; } = 0;
-        public int WanderIndex { get; private set; } = 0;
-        public float PatrolWaitTime { get; private set; } = 1.0f;
-        public float Timer { get; private set; } = 0;
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
+        public Vector3 WanderingPosition { get; set; } = Vector3.zero;
+        public bool WasClicked { get; set; } = false;
+        public bool Dropped { get; set; } = false;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
+        private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
-        public void IncreasePatrolIndex(int number) { PatrolIndex += number; }
-        public void ResetPatrolIndex() { PatrolIndex = 0; }
-        public void IncreaseWanderIndex(int number) { WanderIndex = number; }
-        public void ResetWanderIndex() { WanderIndex = 0; }
-        public void AddToTimer(float amount) { Timer += amount; }
-        public void ResetTimer() { Timer = 0; }
-        public Animator animator;
+        public void IncreasePatrolIndex(int number) { _patrolIndex += number; }
+        public void ResetPatrolIndex() { _patrolIndex = 0; }
+        public void IncreaseWanderIndex(int number) { _wanderIndex = number; }
+        public void ResetWanderIndex() { _wanderIndex = 0; }
+        public void AddToTimer(float amount) { _timer += amount; }
+        public void ResetTimer() { _timer = 0; }
 
-        public void Initialize(Habitat habitat)
+        public void Initialize()
         {
-            _mainCamera = ServiceLocator.Get<CameraController>().CameraCO;
-            _nodes = habitat.GetPatrolNodes();
-
+            _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
+            _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _chimera = GetComponent<Chimera>();
+
+            _mainCamera = CameraController.CameraCO;
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
-            States = new Dictionary<StateEnum, ChimeraBaseState>();
-            States.Add(StateEnum.Patrol, new PatrolState());
-            States.Add(StateEnum.Wander, new WanderState());
-            States.Add(StateEnum.Held, new HeldState());
-            States.Add(StateEnum.Training, new TrainingState());
-            animator = GetComponentInChildren<Animator>();
+            _states.Add(StateEnum.Patrol, new PatrolState());
+            _states.Add(StateEnum.Wander, new WanderState());
+            _states.Add(StateEnum.Held, new HeldState());
+            _states.Add(StateEnum.Training, new TrainingState());
+            _states.Add(StateEnum.Idle, new IdleState());
+            _animator = GetComponentInChildren<Animator>();
 
-            ChangeState(States[StateEnum.Patrol]);
+            ChangeState(_states[StateEnum.Patrol]);
 
             _isActive = true;
         }
 
         private void Update()
         {
-            if (_isActive == false)
+            if (_isActive == false || _currentState == null)
             {
                 return;
             }
             _currentState.Update();
-
-        }
-
-        public void PatrolEnterHeld()
-        {
-            if (_clicked)
-                ChangeState(States[StateEnum.Held]);
-        }
-
-        public void WanderEnterHeld()
-        {
-            if (_clicked)
-                ChangeState(States[StateEnum.Held]);
-        }
-
-        public void HeldEnterPatrol()
-        {
-            if (!_clicked)
-                ChangeState(States[StateEnum.Patrol]);
-        }
-
-        public void HeldExit()
-        {
-            _navMeshAgent.enabled = true;
-        }
-
-        public void ObjFollowMouse()
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                transform.position = hit.point + (Vector3.up * _heightOffset);
-                _navMeshAgent.enabled = false;
-            }
         }
 
         public void ChangeState(ChimeraBaseState state)
@@ -116,19 +92,27 @@ namespace AI.Behavior
             {
                 _currentState.Exit();
             }
+
             _currentState = state;
             _currentState.Enter(this);
         }
 
-        public void ChimeraSelect(bool i)
+        public void HeldEnterCheck()
         {
-            _clicked = i;
+            if (WasClicked == true)
+            {
+                ChangeState(_states[StateEnum.Held]);
+            }
         }
 
-        public int RandomPatrol()
+        public void EnterAnim(string _animationState)
         {
-            int i = Random.Range(0, GetNodeCount());
-            return i;
+            if (_animator == null)
+            {
+                return;
+            }
+
+            _animator.Play(_animationState);
         }
     }
 }

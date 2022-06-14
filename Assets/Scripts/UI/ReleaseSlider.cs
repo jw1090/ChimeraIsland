@@ -6,8 +6,8 @@ public class ReleaseSlider : MonoBehaviour
     [SerializeField] private float _heldSeconds = 2.0f;
 
     private Slider _slider = null;
-
     private float _heldCounter = 0.0f;
+
     public float HeldCounter { get => _heldCounter; }
 
     private void Awake()
@@ -23,7 +23,7 @@ public class ReleaseSlider : MonoBehaviour
         }
 
         Facility facility = hit.collider.GetComponent<Facility>();
-        if(facility.IsChimeraStored() == false)
+        if (facility.IsChimeraStored() == false)
         {
             return;
         }

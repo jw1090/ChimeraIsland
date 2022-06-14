@@ -36,8 +36,8 @@ public enum HabitatType
     None = -1,
     StonePlains,
     TreeOfLife,
+    Ashlands,
 }
-
 
 public enum Passives
 {
@@ -58,9 +58,14 @@ public enum SignType
 
 public enum StatType
 {
-    None = 1,
+    None = -1,
     Endurance,
     Intelligence,
     Strength,
     Happiness,
+}
+
+public enum TutorialIcons
+{
+    None = -1,
 }

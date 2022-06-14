@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
-    [SerializeField] private List<TabPress> _tabButtons = new List<TabPress>();
+    [SerializeField] private List<GameObject> _objectToSwap = new List<GameObject>();
     [SerializeField] private Color _tabIdle;
     [SerializeField] private Color _tabHover;
     [SerializeField] private Color _tabActive;
-    [SerializeField] private List<GameObject> _objectToSwap = new List<GameObject>();
+    private List<TabPress> _tabButtons = new List<TabPress>();
     private TabPress _selectedTab = null;
 
     public void Initialize()
@@ -43,9 +43,9 @@ public class TabGroup : MonoBehaviour
         button.GetComponent<Image>().color = _tabActive;
 
         int pos = button.transform.GetSiblingIndex();
-        for(int i = 0; i < _objectToSwap.Count; ++i)
+        for (int i = 0; i < _objectToSwap.Count; ++i)
         {
-            if(i == pos)
+            if (i == pos)
             {
                 _objectToSwap[i].SetActive(true);
             }
@@ -58,9 +58,9 @@ public class TabGroup : MonoBehaviour
 
     public void ResetTabs()
     {
-        foreach(var button in _tabButtons)
+        foreach (var button in _tabButtons)
         {
-            if( _selectedTab != null && button == _selectedTab)
+            if (_selectedTab != null && button == _selectedTab)
             {
                 continue;
             }

@@ -2,56 +2,64 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
-    private UIManager _uIManager = null;
+    private PersistentData _persistentData = null;
+    private UIManager _uiManager = null;
+    private bool _essenceLoaded = false;
+    private int _currentEssence = 100;
 
-    public int CurrentEssence { get; private set; } = 100;
-    public bool IsInitialized { get; set; } = false;
+    public int CurrentEssence { get => _currentEssence; }
+
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public EssenceManager Initialize()
     {
-        Debug.Log($"<color=Orange> {this.GetType()} Initialized!</color>");
-        LoadEssence();
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _uIManager = ServiceLocator.Get<UIManager>();
-        if(_uIManager != null)
-        {
-            _uIManager.UpdateWallets();
-        }
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
-        IsInitialized = true;
         return this;
+    }
+
+    // TODO: Ask Craig about LevelManager beating Initialize in this function when Load Essence is called inside it.
+    public void LoadEssence()
+    {
+        if (_persistentData != null && _essenceLoaded == false)
+        {
+            _currentEssence = _persistentData.EssenceData;
+            _essenceLoaded = true;
+        }
     }
 
     public void IncreaseEssence(int amount)
     {
-        CurrentEssence += amount;
-        _uIManager.UpdateWallets();
+        _currentEssence += amount;
+        _uiManager.UpdateWallets();
     }
 
-    // Spends Essence and detects if you can afford it. Return false if you cannot afford and return true if you can.
     public bool SpendEssence(int amount)
     {
-        if (CurrentEssence - amount < 0)
+        if (_currentEssence - amount < 0)
         {
             return false;
         }
 
-        CurrentEssence -= amount;
-        _uIManager.UpdateWallets();
+        _currentEssence -= amount;
+
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
 
         return true;
     }
 
-    public void SaveEssence()
+    public void UpdateEssence(int amount)
     {
-        GlobalSaveData data = new GlobalSaveData(CurrentEssence);
-        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-    }
+        _currentEssence = amount;
 
-    public void LoadEssence()
-    {
-        GlobalSaveData temp = FileHandler.ReadFromJSON<GlobalSaveData>(GameConsts.JsonSaveKeys.GLOBAL_SAVE_DATA_FILE);
-        CurrentEssence = temp == null ? CurrentEssence : temp.currentEssence;
-        Debug.Log($"Loaded Essense: {CurrentEssence}");
+        if (_uiManager != null)
+        {
+            _uiManager.UpdateWallets();
+        }
     }
 }

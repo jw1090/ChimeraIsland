@@ -1,102 +1,215 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
 {
-    [SerializeField] private readonly Dictionary<HabitatType, List<Chimera>> _chimerasByHabitat = new Dictionary<HabitatType,List<Chimera>>();
-    [SerializeField] private List<HabitatData> displayDictionary = new List<HabitatData>();
+    [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
+    [SerializeField] private int _chimeraCapacity = 3;
+    private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
+    private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
+    private PersistentData _persistentData = null;
+    private Habitat _currentHabitat = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+    private List<FacilityData> _facilitySaveData = null;
 
-    [Serializable]
-    public class HabitatData
-    {
-        public HabitatType key = HabitatType.None;
-        public List<Chimera> value = new List<Chimera>();
-    }
+    public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
+    public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
+    public Habitat CurrentHabitat { get => _currentHabitat; }
+    public int ChimeraCapacity { get => _chimeraCapacity; }
 
-    public HabitatManager Initialize()
-    {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
-
-        HabitatDataDisplayInit();
-        InitializeChimeraData();
-
-        return this;
-    }
-
-    public void HabitatDataDisplayInit()
-    {
-        foreach (var entry in _chimerasByHabitat)
-        {
-            displayDictionary.Add(new HabitatData()
-            {
-                key = entry.Key,
-                value = entry.Value
-            });
-        }
-    }
-
-    public List<Chimera> GetChimerasForHabitat(HabitatType habitatType)
+    private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
     {
         if (_chimerasByHabitat.ContainsKey(habitatType))
         {
             return _chimerasByHabitat[habitatType];
         }
-        Debug.Log($"No entry for habitat: {habitatType}");
-        return new List<Chimera>();
+
+        Debug.Log($"No Chimera entry for {habitatType}.");
+        return new List<ChimeraData>();
+    }
+
+    private List<FacilityData> GetFaclitiesForHabitat(HabitatType habitatType)
+    {
+        if (_facilitiesByHabitat.ContainsKey(habitatType))
+        {
+            return _facilitiesByHabitat[habitatType];
+        }
+
+        Debug.Log($"No Facility entry for {habitatType}.");
+        return new List<FacilityData>();
+    }
+
+    public void SetCurrentHabitat(Habitat habitat) { _currentHabitat = habitat; }
+
+    [Serializable]
+    public class HabitatInfo
+    {
+        public HabitatType key = HabitatType.None;
+        public List<string> value = new List<string>();
+        public HabitatInfo(HabitatType Key, List<string> Value)
+        {
+            key = Key;
+            value = Value;
+        }
+    }
+
+    public HabitatManager Initialize()
+    {
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+
+        _persistentData = ServiceLocator.Get<PersistentData>();
+        _persistentData.LoadData();
+
+        if (InitializeChimeraData())
+        {
+            StoreChimeraDataByHabitat();
+            ChimeraDataDisplayInit();
+        }
+
+        if (InitializeFacilityData())
+        {
+            StoreFacilityDataByHabitat();
+        }
+
+        return this;
     }
 
     private bool InitializeChimeraData()
     {
         // Get your data from the save system
-        List<ChimeraSaveData> saveData = new List<ChimeraSaveData>();
+        _chimeraSaveData = _persistentData.ChimeraData;
 
-        if(saveData == null)
+        if (_chimeraSaveData == null)
         {
-            Debug.LogError("Save data is null!");
+            Debug.LogError("Chimera save data is null!");
             return false;
-        }
-
-        // Add chimeras to the dictionary
-        foreach(var data in saveData)
-        {
-            if (_chimerasByHabitat.ContainsKey(data.habitatType) == false)
-            {
-                _chimerasByHabitat.Add(data.habitatType, new List<Chimera>());
-            }
-
-            Chimera chimera = LoadChimeraFromJson(data);
-
-            _chimerasByHabitat[data.habitatType].Add(chimera);
         }
 
         return true;
     }
 
-    private Chimera LoadChimeraFromJson(ChimeraSaveData data)
+    private bool InitializeFacilityData()
     {
-        Chimera chimera = new Chimera();
+        // Get your data from the save system
+        _facilitySaveData = _persistentData.FacilityData;
 
-        chimera.SetChimeraType(data.chimeraType);
-        chimera.Level = data.level;
-        chimera.Endurance = data.endurance;
-        chimera.Intelligence = data.intelligence;
-        chimera.Strength = data.strength;
-        chimera.Happiness = data.happiness;
+        if (_facilitySaveData == null)
+        {
+            Debug.LogError("Facility save data is null!");
+            return false;
+        }
 
-        return chimera;
+        return true;
     }
 
-    public void TransferChimera(HabitatType currentHabitat, HabitatType habitatToTransfer, Chimera chimeraToTransfer)
+    public void ChimeraDataDisplayInit()
     {
-        foreach(Chimera chimera in GetChimerasForHabitat(currentHabitat))
+        foreach (var entry in _chimerasByHabitat)
         {
-            if(chimera == chimeraToTransfer)
-            {
-                _chimerasByHabitat[currentHabitat].Remove(chimera);
-                _chimerasByHabitat[habitatToTransfer].Add(chimera);
-                return;
-            }
+            var names = entry.Value.Select(chimera => chimera.chimeraType.ToString()).ToList();
+            _displayDictionary.Add(new HabitatInfo(entry.Key, names));
         }
+    }
+
+    private void StoreChimeraDataByHabitat()
+    {
+        foreach (var chimera in _chimeraSaveData)
+        {
+            AddChimeraToHabitat(chimera, chimera.habitatType);
+        }
+    }
+
+    private void StoreFacilityDataByHabitat()
+    {
+        foreach (var faciliy in _facilitySaveData)
+        {
+            AddFacilityToHabitat(faciliy, faciliy.habitatType);
+        }
+    }
+
+    private bool AddChimeraToHabitat(ChimeraData chimeraToAdd, HabitatType habitat)
+    {
+        if (_chimerasByHabitat.ContainsKey(habitat) == false)
+        {
+            _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
+        }
+
+        if(HabitatCapacityCheck(habitat) == false)
+        {
+            Debug.Log($"Cannot add {chimeraToAdd.chimeraType}, {habitat} is full.");
+            return false;
+        }
+
+        _chimerasByHabitat[habitat].Add(chimeraToAdd);
+
+        return true;
+    }
+
+    public bool HabitatCapacityCheck(HabitatType habitat)
+    {
+        if (_chimerasByHabitat[habitat].Count < _chimeraCapacity)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void AddFacilityToHabitat(FacilityData facilityToAdd, HabitatType habitat)
+    {
+        if (_facilitiesByHabitat.ContainsKey(habitat) == false)
+        {
+            _facilitiesByHabitat.Add(habitat, new List<FacilityData>());
+        }
+
+        _facilitiesByHabitat[habitat].Add(facilityToAdd);
+    }
+
+    public void UpdateCurrentHabitatChimeras()
+    {
+        if (_chimerasByHabitat.ContainsKey(_currentHabitat.Type) == false)
+        {
+            Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
+            return;
+        }
+
+        _chimerasByHabitat.Remove(_currentHabitat.Type);
+
+        foreach (Chimera chimera in _currentHabitat.ActiveChimeras)
+        {
+            AddNewChimera(chimera);
+        }
+    }
+
+    public bool AddNewChimera(Chimera chimeraToSave)
+    {
+        ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
+        
+        if(AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType) == true)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void AddNewFacility(Facility facilityToSave)
+    {
+        FacilityData facilitySavedData = new FacilityData(facilityToSave, _currentHabitat.Type);
+        AddFacilityToHabitat(facilitySavedData, facilitySavedData.habitatType);
+    }
+
+    public void SpawnChimerasForHabitat()
+    {
+        var chimerasToSpawn = GetChimerasForHabitat(_currentHabitat.Type);
+        _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
+    }
+
+    public void BuildFacilitiesForHabitat()
+    {
+        var facilitiesToBuild = GetFaclitiesForHabitat(_currentHabitat.Type);
+        _currentHabitat.CreateFacilitiesFromData(facilitiesToBuild);
     }
 }

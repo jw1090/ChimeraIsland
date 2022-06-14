@@ -5,34 +5,38 @@ namespace AI.Behavior
     public class WanderState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private bool _isOver = false;
         private float _patrolRange = 10.0f;
-        private float _totalTimer = 0.0f; // Total wander time.
-        private float _partTimer = 0.0f; // Time of wander point.
-        private bool _isOver = false; // Wander over.
+        private float _totalTimer = 0.0f;
+        private float _patrolTimer = 0.0f;
+        private string _animWalk = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _chimeraBehavior = chimeraBehavior;
-            _totalTimer = 10000.0f;
-            _partTimer = 10.0f;
+            _totalTimer = 5.0f;
+            _patrolTimer = 2.5f;
             _isOver = false;
+
+            _chimeraBehavior.EnterAnim(_animWalk);
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
         }
 
         public override void Update()
         {
-            _chimeraBehavior.WanderEnterHeld();
+            _chimeraBehavior.HeldEnterCheck();
             _totalTimer -= Time.deltaTime;
-            _partTimer -= Time.deltaTime;
+            _patrolTimer -= Time.deltaTime;
 
-            if (_totalTimer <= 0f)
+            if (_totalTimer <= 0.0f)
             {
                 _isOver = true;
                 _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
             }
-            if (_partTimer <= 0f && !_isOver)
+
+            if (_patrolTimer <= 0.0f && !_isOver)
             {
-                _partTimer = 2f;
+                _patrolTimer = 2.5f;
                 _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
             }
         }
@@ -40,20 +44,23 @@ namespace AI.Behavior
         public override void Exit()
         {
             _totalTimer = 0.0f;
-            _partTimer = 0.0f;
+            _patrolTimer = 0.0f;
         }
 
-        public Vector3 GetNewWayPoint(float positionY)
+        private Vector3 GetNewWayPoint(float positionY)
         {
             float randomX = Random.Range(-_patrolRange, _patrolRange);
             float randomZ = Random.Range(-_patrolRange, _patrolRange);
-            Vector3 agentPos = _chimeraBehavior.GetCurrentNode().position;
+
+            Vector3 agentPos = _chimeraBehavior.gameObject.transform.position;
+
             Vector3 randomPoint = new Vector3
             (
                 agentPos.x + randomX,
                 positionY,
                 agentPos.z + randomZ
             );
+
             return randomPoint;
         }
     }

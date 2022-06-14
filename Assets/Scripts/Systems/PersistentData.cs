@@ -1,121 +1,93 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
-    private Chimera _chimeraPrefabA = null;
-    private Chimera _chimeraPrefabB = null;
-    private Chimera _chimeraPrefabC = null;
+    private EssenceManager _essenceManager = null;
+    private GlobalData _globalSaveData = null;
+    private HabitatManager _habitatManager = null;
+    private List<ChimeraData> _chimeraSaveData = null;
+    private List<FacilityData> _facilitySaveData = null;
 
-    public Habitat CurrentHabitat { get; set; } = null;
+    public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
+    public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
+    public List<FacilityData> FacilityData { get => _facilitySaveData; }
+    public int EssenceData { get => _globalSaveData.lastSessionEssence; }
 
-    public List<ChimeraSaveData> GetChimeraList()
-    {
-        return FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
-    }
+    public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
+    public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
 
     public PersistentData Initialize()
     {
-        Debug.Log($"<color=lime> {this.GetType()} Initialized!</color>");
-
-        _chimeraPrefabA = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
-        _chimeraPrefabB = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
-        _chimeraPrefabC = Resources.Load<Chimera>("Chimera/ChimeraPrefabA");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         return this;
     }
 
-    private Chimera FindPrefab(ChimeraType type)
+    public void LoadData()
     {
-        switch (type)
+        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        if (myData == null)
         {
-            case ChimeraType.A:
-                return _chimeraPrefabA;
-            case ChimeraType.A1:
-                return _chimeraPrefabA;
-            case ChimeraType.A2:
-                return _chimeraPrefabA;
-            case ChimeraType.A3:
-                return _chimeraPrefabA;
-            case ChimeraType.B:
-                return _chimeraPrefabB;
-            case ChimeraType.B1:
-                return _chimeraPrefabB;
-            case ChimeraType.B2:
-                return _chimeraPrefabB;
-            case ChimeraType.B3:
-                return _chimeraPrefabB;
-            case ChimeraType.C:
-                return _chimeraPrefabC;
-            case ChimeraType.C1:
-                return _chimeraPrefabC;
-            case ChimeraType.C2:
-                return _chimeraPrefabC;
-            case ChimeraType.C3:
-                return _chimeraPrefabC;
-            default:
-                Debug.LogWarning($"Unhandled prefab type {type}");
-                return null;
+            Debug.Log($"No Save Data found");
+            myData = new GameSaveData();
         }
+
+        UpdateGameSaveData(myData);
     }
 
-    public bool LoadSavedData()
+    public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
-        List<ChimeraSaveData> jList = FileHandler.ReadListFromJSON<ChimeraSaveData>(GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence, 0);
+        List<FacilityData> myFacilityData = FacilitiesToData();
+        List<ChimeraData> myChimeraData = ChimerasToData();
 
-        if (jList == null || jList.Count == 0)
-        {
-            Debug.Log("Chimera Save not found");
-            return false;
-        }
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData);
+        UpdateGameSaveData(myData);
 
-        int cap = 3;
-
-        if (cap > CurrentHabitat.GetCapacity())
-        {
-            CurrentHabitat.SetChimeraCapacity(cap);
-        }
-
-        return true;
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
     }
 
-    public SaveJsonList GetChimeraJsonList()
+    private void UpdateGameSaveData(GameSaveData myData)
     {
-        if(CurrentHabitat == null)
-        {
-            Debug.Log("Current Habitat is null, cannot save!");
-            return null;
-        }
-
-        SaveJsonList sjl = new SaveJsonList { };
-        sjl.CurrentChimeraCapacity = CurrentHabitat.GetCapacity();
-        foreach (Chimera chimera in CurrentHabitat.Chimeras)
-        {
-            ChimeraSaveData temp = new ChimeraSaveData
-            (
-                chimera.GetInstanceID(),
-                chimera.GetChimeraType(),
-                chimera.Level,
-                chimera.Endurance,
-                chimera.Intelligence,
-                chimera.Strength,
-                chimera.Happiness,
-                CurrentHabitat.GetHabitatType()
-            );
-
-            sjl.AddToChimeraList(temp);
-        }
-        return sjl;
+        _globalSaveData = myData.globalData;
+        _chimeraSaveData = myData.chimeras;
+        _facilitySaveData = myData.facilities;
     }
 
-    public void SaveChimeras()
+    public void ResetLastSessionHabitat()
     {
-        SaveJsonList myData = GetChimeraJsonList();
-        FileHandler.SaveToJSON(myData.GetChimeraList(), GameConsts.JsonSaveKeys.CHIMERA_SAVE_DATA_FILE);
+        _globalSaveData.lastSessionHabitat = HabitatType.None;
     }
 
-    public void OnApplicationQuit()
+    private List<ChimeraData> ChimerasToData()
     {
-        SaveChimeras();
+        List<ChimeraData> chimeraList = new List<ChimeraData>();
+        Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = _habitatManager.ChimerasDictionary;
+
+        foreach (KeyValuePair<HabitatType, List<ChimeraData>> kvp in chimerasByHabitat)
+        {
+            chimeraList.AddRange(kvp.Value);
+        }
+
+        return chimeraList;
+    }
+
+    private List<FacilityData> FacilitiesToData()
+    {
+        List<FacilityData> facilityList = new List<FacilityData>();
+        Dictionary<HabitatType, List<FacilityData>> facilityByHabitat = _habitatManager.FacilityDictionary;
+
+        foreach (KeyValuePair<HabitatType, List<FacilityData>> kvp in facilityByHabitat)
+        {
+            facilityList.AddRange(kvp.Value);
+        }
+
+        return facilityList;
+    }
+
+    public void QuitGameSave()
+    {
+        SaveSessionData(_habitatManager.CurrentHabitat.Type);
     }
 }

@@ -8,10 +8,12 @@ public class FacilityIcon : MonoBehaviour
     {
         transform.LookAt(Camera.main.transform);
     }
+
     public void SetIcon(Sprite sprite)
     {
         _icon.sprite = sprite;
     }
+
     public void RemoveIcon()
     {
         _icon.sprite = null;

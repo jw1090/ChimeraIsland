@@ -12,13 +12,17 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
         _habitat = habitat;
         _facility = _habitat.GetFacility(facilityType);
 
-        GetComponentInChildren<TextMeshProUGUI>().text = _facility.GetPrice().ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
     }
 
-    // Adds a facility based on the assigned facilityType.
+    public void OnEnable()
+    {
+        GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.AddFacility(_facility);
-        GetComponentInChildren<TextMeshProUGUI>().text = _facility.GetPrice().ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
     }
 }

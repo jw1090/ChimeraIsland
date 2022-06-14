@@ -1,19 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TransferMap : MonoBehaviour
 {
-    private List<TransferIcon> _transferIcons = new List<TransferIcon>();
+    [SerializeField] private List<TransferButton> _transferButtons = new List<TransferButton>();
+    private Chimera _chimeraToTransfer = null;
 
-    public void Initialize(Habitat habitat)
+    public Chimera ChimeraToTransfer { get => _chimeraToTransfer; }
+
+    public void ResetChimera() { _chimeraToTransfer = null; }
+
+    public void Initialize()
     {
-        foreach (Transform child in transform)
+        foreach(TransferButton transferButton in _transferButtons)
         {
-            TransferIcon transferIcon = child.GetComponent<TransferIcon>();
-
-            _transferIcons.Add(transferIcon);
-            transferIcon.Initialize(habitat);
+            transferButton.Initialize(this);
         }
+    }
+
+    public void Open(Chimera chimera)
+    {
+        _chimeraToTransfer = chimera;
+        gameObject.SetActive(true);
     }
 }
