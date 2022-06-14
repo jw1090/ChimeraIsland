@@ -33,7 +33,7 @@ namespace AI.Behavior
         public float Timer { get; private set; } = 0;
         public Vector3 TrainingPosition { get; set; } = Vector3.zero;
 
-        public Transform GetCurrentNode() { return _nodes[PatrolIndex]; }
+        public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
@@ -43,6 +43,7 @@ namespace AI.Behavior
         public void ResetWanderIndex() { WanderIndex = 0; }
         public void AddToTimer(float amount) { Timer += amount; }
         public void ResetTimer() { Timer = 0; }
+        public Animator animator;
 
         public void Initialize(Habitat habitat)
         {
@@ -58,6 +59,7 @@ namespace AI.Behavior
             States.Add(StateEnum.Wander, new WanderState());
             States.Add(StateEnum.Held, new HeldState());
             States.Add(StateEnum.Training, new TrainingState());
+            animator = GetComponentInChildren<Animator>();
 
             ChangeState(States[StateEnum.Patrol]);
 
@@ -121,6 +123,12 @@ namespace AI.Behavior
         public void ChimeraSelect(bool i)
         {
             _clicked = i;
+        }
+
+        public int RandomPatrol()
+        {
+            int i = Random.Range(0, GetNodeCount());
+            return i;
         }
     }
 }

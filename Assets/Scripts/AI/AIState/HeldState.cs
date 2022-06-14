@@ -10,7 +10,9 @@ namespace AI.Behavior
         {
             _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = false;
-            // Debug.Log("Enter Held");
+            if (_chimeraBehavior.animator != null)
+                _chimeraBehavior.animator.SetBool("Walk", false);
+            Debug.Log("Enter Held");
         }
 
         public override void Update()
@@ -21,6 +23,8 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            if (_chimeraBehavior.animator != null)
+                _chimeraBehavior.animator.SetBool("Walk", true);
             _chimeraBehavior.HeldExit();
             _chimeraBehavior.gameObject.GetComponent<BoxCollider>().enabled = true;
         }
