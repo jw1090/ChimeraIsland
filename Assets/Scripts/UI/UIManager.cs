@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _marketplaceButton = null;
     [SerializeField] private Marketplace _marketplace = null;
     [SerializeField] private GameObject _settingsMenu = null;
+    [SerializeField] private GameObject _habitatUIFolder = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private UIWallet[] _essenceWallets = null;
-    private UISceneChange _sceneChange = null;
+    [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
 
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -22,12 +23,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        _sceneChange = GetComponent<UISceneChange>();
-
         ResetUI();
-
-        _tutorialOverlay.Initialize();
-        _sceneChange.Initialize();
 
         return this;
     }
@@ -35,6 +31,7 @@ public class UIManager : MonoBehaviour
     public void InitializeUIElements()
     {
         InitializeWallets();
+        InitializeTutorialOverlay();
         _marketplace.Initialize();
         _detailsFolder.Initialize();
         _transferMap.Initialize();
@@ -47,6 +44,20 @@ public class UIManager : MonoBehaviour
             wallet.Initialize();
         }
     }
+
+    private void InitializeTutorialOverlay()
+    {
+        if (_tutorialOverlay != null)
+        {
+            _tutorialOverlay.Initialize();
+        }
+    }
+
+    public void ShowHabitatUI()
+    {
+        _habitatUIFolder.gameObject.SetActive(true);
+    }
+
 
     public void ResetUI()
     {
@@ -95,7 +106,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OpenSettingsMenu()
+    public void OpenSettingsMenu()
     {
         ResetUI();
         _settingsMenu.gameObject.SetActive(true);
@@ -115,5 +126,11 @@ public class UIManager : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
+    }
+
+    public void StartTutorial(TutorialSteps tutorialSteps)
+    {
+        _tutorialOverlay.gameObject.SetActive(true);
+        _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
 }

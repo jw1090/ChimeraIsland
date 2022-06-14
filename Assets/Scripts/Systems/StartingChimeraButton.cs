@@ -10,7 +10,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 
     public void Initialize()
     {
-        _chimeraCreator = ServiceLocator.Get<ToolsManager>().ChimeraCreator;
+        _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
     }
 

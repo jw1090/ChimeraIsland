@@ -4,53 +4,41 @@ public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
     private ResourceManager _resourceManager = null;
-    private int stepNumber = 0;
-    private bool stop = false;
-
-    [System.Serializable]
-    public class GlobalTutorial
-    {
-        Tutorials[] Tutorials;
-    }
+    private TutorialSteps _tutorialData = null;
+    private int _tutorialStep = -1;
 
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
     }
 
-    public void NextStep()
+    public void ShowOverlay(TutorialSteps tutorialSteps)
     {
-        if(stop == true)
-        {
-            this.gameObject.SetActive(false);
-            Debug.Log("You have reached the total steps");
-        }
-        stepNumber++;
-        ShowOverlay();
- 
+        _tutorialData = tutorialSteps; 
+        _textInfo.gameObject.SetActive(true);
+        NextStep();
     }
 
-    public void ShowOverlay()
+    public void NextStep()
     {
-        GlobalTutorial tutorialData = FileHandler.ReadFromJSON<GlobalTutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
-        if (tutorialData == null)
+        _tutorialStep++;
+        Debug.Log($"Current Tutorial Step: { _tutorialStep}");
+        ShowStep();
+    }
+
+    public void ShowStep()
+    {
+        if(_tutorialStep >= _tutorialData.StepData.Length)
         {
-            Debug.Log($"No tutorial Data found");
-            //tutorialData = new DialogSteps();
+            _tutorialStep = 0;
+            _textInfo.gameObject.SetActive(false);
+            return;
         }
 
-        //if(stepNumber < tutorialData.Steps.Length)
-        //{ 
-        //    DialogInfo loadedStep = tutorialData.Steps[stepNumber];
-        //    Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
+        TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
+        Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
-        //    Debug.Log($"Current Tutorial Step: { stepNumber}");
-        //    Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
-        //    _textInfo.Load(tutorialData.Steps[stepNumber].description, icon);
-        //}
-        //else
-        //{
-        //    stop = true;
-        //}
+        Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
+       _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
     }
 }

@@ -41,7 +41,10 @@ public class HabitatManager : MonoBehaviour
         return new List<FacilityData>();
     }
 
-    public void SetCurrentHabitat(Habitat habitat) { _currentHabitat = habitat; }
+    public void SetCurrentHabitat(Habitat habitat) 
+    { 
+        _currentHabitat = habitat;
+    }
 
     [Serializable]
     public class HabitatInfo
@@ -60,8 +63,14 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _persistentData.LoadData();
 
+        LoadHabitatData();
+
+        return this;
+    }
+
+    public void LoadHabitatData()
+    {
         if (InitializeChimeraData())
         {
             StoreChimeraDataByHabitat();
@@ -72,8 +81,12 @@ public class HabitatManager : MonoBehaviour
         {
             StoreFacilityDataByHabitat();
         }
+    }
 
-        return this;
+    public void ResetDictionaries()
+    {
+        _chimerasByHabitat.Clear();
+        _facilitiesByHabitat.Clear();
     }
 
     private bool InitializeChimeraData()

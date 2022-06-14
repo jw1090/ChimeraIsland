@@ -6,19 +6,19 @@ public class StartingLevelManager : MonoBehaviour
 {
     [SerializeField] private List<StartingChimeraButton> _startingChimeraButtons;
     
-    protected void Awake()
+    private void Awake()
     {
         //GameLoader.CallOnComplete(Initialize); TODO: This is not triggering correctly, ask Craig
-        StartCoroutine(Initialize());
+        StartCoroutine(InitializeAsync());
     }
 
-    private IEnumerator Initialize()
+    private IEnumerator InitializeAsync()
     {
         yield return new WaitForSeconds(0.1f);
 
         foreach (StartingChimeraButton button in _startingChimeraButtons)
         {
             button.Initialize();
-        }        
+        }
     }
 }
