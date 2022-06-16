@@ -30,7 +30,6 @@ namespace AI.Behavior
             }
 
             _chimeraBehavior.AddToTimer(Time.deltaTime);
-            _chimeraBehavior.EnterAnim(_animIdle);
 
             if (_chimeraBehavior.Timer < _waitTime)
             {
