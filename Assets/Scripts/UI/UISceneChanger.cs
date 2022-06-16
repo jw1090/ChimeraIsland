@@ -6,7 +6,7 @@ public class UISceneChanger : MonoBehaviour
 
     private void Awake()
     {
-        // GameLoader.CallOnComplete(Initialize); Not Working
+        GameLoader.CallOnComplete(Initialize);
     }
 
     private void Initialize()

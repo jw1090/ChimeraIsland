@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class GameLoader : AsyncLoader
     private static GameLoader _instance = null;
     private static int _sceneIndex = 1;
 
+    private readonly static List<Action> _queuedCallbacks = new List<Action>();
     protected override void Awake()
     {
         Debug.Log("GameLoader Starting");
@@ -44,12 +46,15 @@ public class GameLoader : AsyncLoader
         Transform systemsParent = systemsGO.transform;
         DontDestroyOnLoad(systemsGO);
 
-        // Because Unity can hold onto static values between sessions.
-        ResetVariables();
-
         // Queue up loading routines
         Enqueue(IntializeCoreSystems(systemsParent), 1);
         Enqueue(InitializeModularSystems(systemsParent), 2);
+
+        // Check for any CallOnComplete callbacks that were queued through Awake before this instance was made
+        ProcessQueuedCallbacks();
+
+        // Because Unity can hold onto static values between sessions.
+        ResetVariables();
 
         // Set completion callback
         GameLoader.CallOnComplete(OnComplete);
@@ -146,14 +151,24 @@ public class GameLoader : AsyncLoader
         base.ResetVariables();
     }
 
-    public static void CallOnComplete(System.Action callback)
+    public static void CallOnComplete(Action callback)
     {
         if (!_instance)
         {
+            _queuedCallbacks.Add(callback);
             return;
         }
 
         _instance.CallOnComplete_Internal(callback);
+    }
+
+    private void ProcessQueuedCallbacks()
+    {
+        foreach (var callback in _queuedCallbacks)
+        {
+            callback?.Invoke();
+        }
+        _queuedCallbacks.Clear();
     }
 
     // AsyncLoader completion callback

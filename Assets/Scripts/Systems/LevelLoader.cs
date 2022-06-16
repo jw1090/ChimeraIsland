@@ -155,7 +155,7 @@ public class LevelLoader : AsyncLoader
     {
         foreach(var callback in _queuedCallbacks)
         {
-            CallOnComplete(callback);
+            callback?.Invoke();
         }
     }
 
