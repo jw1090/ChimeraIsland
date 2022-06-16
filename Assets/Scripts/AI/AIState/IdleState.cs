@@ -7,14 +7,15 @@ namespace AI.Behavior
         private ChimeraBehavior _chimeraBehavior = null;
         private float _idleTimer = 0.0f;
         private float _idleDuration = 5.0f;
-        private string _animIdle = "Idle";
+        private string _idleAnim = "Idle";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
+            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehavior;
             _idleTimer = _idleDuration;
 
-            _chimeraBehavior.EnterAnim(_animIdle);
+            _chimeraBehavior.EnterAnim(_idleAnim);
         }
 
         public override void Update()
@@ -30,6 +31,7 @@ namespace AI.Behavior
         public override void Exit()
         {
             _idleTimer = 0.0f;
+            _chimeraBehavior.ExitAnim(_idleAnim);
         }
     }
 }
