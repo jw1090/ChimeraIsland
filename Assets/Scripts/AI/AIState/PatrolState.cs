@@ -7,7 +7,6 @@ namespace AI.Behavior
     {
         private ChimeraBehavior _chimeraBehavior = null;
         private float _waitTime = 1.0f;
-        private string _animIdle = "Idle";
         private string _animWalk = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehaviors)
@@ -30,7 +29,6 @@ namespace AI.Behavior
             }
 
             _chimeraBehavior.AddToTimer(Time.deltaTime);
-            _chimeraBehavior.EnterAnim(_animIdle);
 
             if (_chimeraBehavior.Timer < _waitTime)
             {
