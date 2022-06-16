@@ -7,14 +7,15 @@ namespace AI.Behavior
     {
         private ChimeraBehavior _chimeraBehavior = null;
         private float _waitTime = 1.0f;
-        private string _animWalk = "Walk";
+        private string _patrolAnim = "Walking";
 
         public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
+            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehaviors;
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
 
-            _chimeraBehavior.EnterAnim(_animWalk);
+            _chimeraBehavior.EnterAnim(_patrolAnim);
 
             ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
         }
@@ -63,6 +64,7 @@ namespace AI.Behavior
         public override void Exit()
         {
             _chimeraBehavior.Dropped = false;
+            _chimeraBehavior.ExitAnim(_patrolAnim);
         }
 
         private IEnumerator DroppedReset()

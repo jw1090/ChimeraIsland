@@ -9,16 +9,17 @@ namespace AI.Behavior
         private float _patrolRange = 10.0f;
         private float _totalTimer = 0.0f;
         private float _patrolTimer = 0.0f;
-        private string _animWalk = "Walk";
+        private string _wanderAnim = "Walking";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
+            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehavior;
             _totalTimer = 5.0f;
             _patrolTimer = 2.5f;
             _isOver = false;
 
-            _chimeraBehavior.EnterAnim(_animWalk);
+            _chimeraBehavior.EnterAnim(_wanderAnim);
             _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
         }
 
@@ -45,6 +46,7 @@ namespace AI.Behavior
         {
             _totalTimer = 0.0f;
             _patrolTimer = 0.0f;
+            _chimeraBehavior.ExitAnim(_wanderAnim);
         }
 
         private Vector3 GetNewWayPoint(float positionY)

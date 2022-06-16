@@ -112,7 +112,19 @@ namespace AI.Behavior
                 return;
             }
 
-            _animator.Play(_animationState);
+            Debug.Log($"[FSM] Setting {_animationState} to true");
+            _animator.SetBool(_animationState, true);
+        }
+
+        public void ExitAnim(string _animationState)
+        {
+            if (_animator == null)
+            {
+                return;
+            }
+
+            Debug.Log($"[FSM] Setting {_animationState} to false");
+            _animator.SetBool(_animationState, false);
         }
     }
 }
