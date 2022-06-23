@@ -24,18 +24,14 @@ namespace AI.Behavior
         private List<Transform> _nodes = null;
         private NavMeshAgent _navMeshAgent = null;
         private bool _isActive = false;
-        private float _timer = 0.0f;
         private int _patrolIndex = 0;
-        private int _wanderIndex = 0;
 
         public BoxCollider BoxCollider { get => GetChimeraCollider(); }
         public Camera MainCamera { get => _mainCamera; }
         public CameraController CameraController { get => _cameraController; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
         public NavMeshAgent Agent { get => _navMeshAgent; }
-        public float Timer { get => _timer; }
         public int PatrolIndex { get => _patrolIndex; }
-        public int WanderIndex { get => _wanderIndex; }
 
         public bool WasClicked { get; set; } = false;
         public bool Dropped { get; set; } = false;
@@ -45,12 +41,8 @@ namespace AI.Behavior
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
-        public void IncreasePatrolIndex(int number) { _patrolIndex += number; }
+        public void IncreasePatrolIndex() { _patrolIndex += 1; }
         public void ResetPatrolIndex() { _patrolIndex = 0; }
-        public void IncreaseWanderIndex(int number) { _wanderIndex = number; }
-        public void ResetWanderIndex() { _wanderIndex = 0; }
-        public void AddToTimer(float amount) { _timer += amount; }
-        public void ResetTimer() { _timer = 0; }
 
         public void Initialize()
         {
