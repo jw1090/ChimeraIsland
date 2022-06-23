@@ -5,61 +5,55 @@ namespace AI.Behavior
     public class WanderState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private bool _isOver = false;
-        private float _patrolRange = 10.0f;
-        private float _totalTimer = 0.0f;
-        private float _patrolTimer = 0.0f;
-        private string _wanderAnim = "Walking";
+        private Vector3 _wanderPoint = Vector3.zero;
+        private string _wanderAnim = "Walk";
+        private float _wanderRange = 5.0f;
+        private float _wanderTimer = 0.0f;
+        private float _wanderDuration = 5.0f;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
-            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehavior;
-            _totalTimer = 5.0f;
-            _patrolTimer = 2.5f;
-            _isOver = false;
+            _wanderTimer = _wanderDuration;
 
             _chimeraBehavior.EnterAnim(_wanderAnim);
-            _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
+
+            _wanderPoint = GetNewWayPoint();
+            _chimeraBehavior.SetAgentDestination(_wanderPoint);
         }
 
         public override void Update()
         {
             _chimeraBehavior.HeldEnterCheck();
-            _totalTimer -= Time.deltaTime;
-            _patrolTimer -= Time.deltaTime;
+            _wanderTimer -= Time.deltaTime;
 
-            if (_totalTimer <= 0.0f)
+            if (_wanderTimer <= 0.0f)
             {
-                _isOver = true;
                 _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
             }
-
-            if (_patrolTimer <= 0.0f && !_isOver)
+            else if (_chimeraBehavior.GetAgentDistance() < 1.5f)
             {
-                _patrolTimer = 2.5f;
-                _chimeraBehavior.SetAgentDestination(GetNewWayPoint(_chimeraBehavior.gameObject.transform.position.y));
+                _wanderPoint = GetNewWayPoint();
+                _chimeraBehavior.SetAgentDestination(_wanderPoint);
             }
         }
 
         public override void Exit()
         {
-            _totalTimer = 0.0f;
-            _patrolTimer = 0.0f;
             _chimeraBehavior.ExitAnim(_wanderAnim);
         }
 
-        private Vector3 GetNewWayPoint(float positionY)
+        private Vector3 GetNewWayPoint()
         {
-            float randomX = Random.Range(-_patrolRange, _patrolRange);
-            float randomZ = Random.Range(-_patrolRange, _patrolRange);
+            float randomX = Random.Range(-_wanderRange, _wanderRange);
+            float randomZ = Random.Range(-_wanderRange, _wanderRange);
 
             Vector3 agentPos = _chimeraBehavior.gameObject.transform.position;
 
             Vector3 randomPoint = new Vector3
             (
                 agentPos.x + randomX,
-                positionY,
+                agentPos.y,
                 agentPos.z + randomZ
             );
 

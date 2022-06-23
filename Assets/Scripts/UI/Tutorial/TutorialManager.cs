@@ -6,7 +6,7 @@ public class TutorialManager : MonoBehaviour
     private Tutorial _tutorialData = null;
     private UIManager _uiManager = null;
 
-    public event Action OnTutorialComplete;
+    // public event Action OnTutorialComplete;
 
     public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 

@@ -6,15 +6,14 @@ namespace AI.Behavior
     public class PatrolState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private string _patrolAnim = "Walk";
         private float _waitTime = 1.0f;
-        private string _patrolAnim = "Walking";
 
         public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
-            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehaviors;
-            _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
 
+            _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
             _chimeraBehavior.EnterAnim(_patrolAnim);
 
             ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());

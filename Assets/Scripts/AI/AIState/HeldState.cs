@@ -5,12 +5,11 @@ namespace AI.Behavior
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
+        private string _heldAnim = "Held";
         private float _heightOffset = 1.0f;
-        private string _heldAnim = "Walking";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
-            Debug.Log($"<color=green>[FSM] Enter {this.GetType()}</color>");
             _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraController.IsHolding = true;

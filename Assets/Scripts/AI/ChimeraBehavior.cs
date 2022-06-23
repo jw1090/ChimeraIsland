@@ -37,8 +37,6 @@ namespace AI.Behavior
         public int PatrolIndex { get => _patrolIndex; }
         public int WanderIndex { get => _wanderIndex; }
 
-        public Vector3 TrainingPosition { get; set; } = Vector3.zero;
-        public Vector3 WanderingPosition { get; set; } = Vector3.zero;
         public bool WasClicked { get; set; } = false;
         public bool Dropped { get; set; } = false;
 
@@ -70,7 +68,7 @@ namespace AI.Behavior
             _states.Add(StateEnum.Held, new HeldState());
             _states.Add(StateEnum.Training, new TrainingState());
             _states.Add(StateEnum.Idle, new IdleState());
-            _animator = GetComponentInChildren<Animator>();
+            _animator = _chimera.Animator;
 
             ChangeState(_states[StateEnum.Patrol]);
 
@@ -107,12 +105,8 @@ namespace AI.Behavior
 
         public void EnterAnim(string _animationState)
         {
-            if (_animator == null)
-            {
-                return;
-            }
+            _animator = _chimera.Animator;
 
-            Debug.Log($"[FSM] Setting {_animationState} to true");
             _animator.SetBool(_animationState, true);
         }
 
@@ -123,7 +117,6 @@ namespace AI.Behavior
                 return;
             }
 
-            Debug.Log($"[FSM] Setting {_animationState} to false");
             _animator.SetBool(_animationState, false);
         }
     }
