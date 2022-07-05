@@ -133,4 +133,9 @@ public class UIManager : MonoBehaviour
         _tutorialOverlay.gameObject.SetActive(true);
         _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
+    public void EndTutorial()
+    {
+        _tutorialOverlay.gameObject.SetActive(false);
+        ServiceLocator.Get<TutorialManager>().SaveTutorialProgress();
+    }
 }
