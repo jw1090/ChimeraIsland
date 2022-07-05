@@ -15,6 +15,7 @@ namespace AI.Behavior
             _idleTimer = _idleDuration;
 
             _chimeraBehavior.EnterAnim(_idleAnim);
+            _chimeraBehavior.Agent.isStopped = true;
         }
 
         public override void Update()
@@ -31,6 +32,7 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            _chimeraBehavior.Agent.isStopped = false;
             _idleTimer = 0.0f;
             _chimeraBehavior.ExitAnim(_idleAnim);
         }
