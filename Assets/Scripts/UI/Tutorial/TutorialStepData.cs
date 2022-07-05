@@ -4,6 +4,7 @@ using System;
 public class TutorialSteps
 {
     public TutorialStepData[] StepData;
+    public bool finished = false;
 }
 
 [Serializable]

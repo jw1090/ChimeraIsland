@@ -49,7 +49,7 @@ public class LevelLoader : AsyncLoader
             CallOnComplete(OnComplete);
         }
 
-        //_tutorialManager.ShowTutorial(0);
+        _tutorialManager.SetupTutorial();
     }
 
     private void Initialize()

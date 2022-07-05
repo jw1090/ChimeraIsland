@@ -14,7 +14,7 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowOverlay(TutorialSteps tutorialSteps)
     {
-        _tutorialData = tutorialSteps; 
+        _tutorialData = tutorialSteps;
         _textInfo.gameObject.SetActive(true);
         NextStep();
     }
@@ -30,8 +30,8 @@ public class UITutorialOverlay : MonoBehaviour
     {
         if(_tutorialStep >= _tutorialData.StepData.Length)
         {
-            _tutorialStep = 0;
-            _textInfo.gameObject.SetActive(false);
+            _tutorialData.finished = true;
+            ServiceLocator.Get<UIManager>().EndTutorial();
             return;
         }
 
