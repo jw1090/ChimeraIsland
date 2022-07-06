@@ -6,8 +6,6 @@ public class TutorialManager : MonoBehaviour
     private Tutorial _tutorialData = null;
     private UIManager _uiManager = null;
 
-    // public event Action OnTutorialComplete;
-
     public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public TutorialManager Initialize()
@@ -32,7 +30,7 @@ public class TutorialManager : MonoBehaviour
 
     public void SaveTutorialProgress()
     {
-        Debug.Log("tutorial progress saved");
+        Debug.Log("Tutorial progress saved.");
         FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
     }
 
@@ -50,7 +48,7 @@ public class TutorialManager : MonoBehaviour
         TutorialSteps tutorialStep = _tutorialData.Tutorials[tutorialId];
         if(tutorialStep.finished == true)
         {
-            Debug.Log("tutorial is finished!");
+            Debug.Log("Finished Tutorial");
             return;
         }
         if (tutorialStep == null)
