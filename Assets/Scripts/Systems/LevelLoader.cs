@@ -98,7 +98,7 @@ public class LevelLoader : AsyncLoader
                 }
                 return false;
             default:
-                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
+                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat.");
                 return false;
         }
     }
@@ -178,6 +178,6 @@ public class LevelLoader : AsyncLoader
 
     private void OnComplete()
     {
-        Debug.Log("LevelManager Finished Setup");
+        Debug.Log($"{this.GetType()} finished setup.");
     }
 }
