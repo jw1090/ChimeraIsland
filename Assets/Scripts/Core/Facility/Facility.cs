@@ -106,13 +106,6 @@ public class Facility : MonoBehaviour
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");
 
-        NavMeshHit myNavHit;
-
-        // Find nearby walkable position.
-        if (NavMesh.SamplePosition(transform.position, out myNavHit, 100, -1))
-        {
-            _storedChimera.transform.position = myNavHit.position;
-        }
         _storedChimera = null;
 
         return true;

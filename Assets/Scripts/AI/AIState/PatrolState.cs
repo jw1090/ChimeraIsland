@@ -6,16 +6,14 @@ namespace AI.Behavior
     public class PatrolState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private float _waitTime = 1.0f;
-        private string _animIdle = "Idle";
-        private string _animWalk = "Walk";
+        private string _patrolAnim = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
             _chimeraBehavior = chimeraBehaviors;
-            _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
 
-            _chimeraBehavior.EnterAnim(_animWalk);
+            _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
+            _chimeraBehavior.EnterAnim(_patrolAnim);
 
             ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
         }
@@ -29,26 +27,11 @@ namespace AI.Behavior
                 return;
             }
 
-            _chimeraBehavior.AddToTimer(Time.deltaTime);
-            _chimeraBehavior.EnterAnim(_animIdle);
-
-            if (_chimeraBehavior.Timer < _waitTime)
-            {
-                return;
-            }
-
-            _chimeraBehavior.IncreasePatrolIndex(1);
-            _chimeraBehavior.IncreaseWanderIndex(1);
-            _chimeraBehavior.ResetTimer();
+            _chimeraBehavior.IncreasePatrolIndex();
 
             if (_chimeraBehavior.PatrolIndex > _chimeraBehavior.GetNodeCount() - 1)
             {
                 _chimeraBehavior.ResetPatrolIndex();
-            }
-
-            if (_chimeraBehavior.WanderIndex > _chimeraBehavior.GetNodeCount() - 1)
-            {
-                _chimeraBehavior.ResetWanderIndex();
             }
 
             switch (Random.Range(0, 2))
@@ -65,6 +48,7 @@ namespace AI.Behavior
         public override void Exit()
         {
             _chimeraBehavior.Dropped = false;
+            _chimeraBehavior.ExitAnim(_patrolAnim);
         }
 
         private IEnumerator DroppedReset()

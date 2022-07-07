@@ -22,6 +22,8 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         chimera.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(newChimera.GetComponent<Chimera>());
 
+        ServiceLocator.Get<TutorialManager>().ResetTutorialProgress();
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
     }
 }

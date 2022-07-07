@@ -12,6 +12,7 @@ public class EvolutionLogic : MonoBehaviour
     private Sprite _icon = null;
 
     public ChimeraType Type { get => _evolutionType; }
+    public Animator Animator { get => GetComponent<Animator>(); }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite Icon { get => _icon; }
     public int ReqEndurance { get => _reqEndurance; }

@@ -5,6 +5,7 @@ public class FacilitiesTrigger : MonoBehaviour
 {
     private BoxCollider _boxCollider = null;
     private Facility _facility = null;
+    [SerializeField] private Transform _stayPos;
 
     private void Awake()
     {
@@ -40,7 +41,9 @@ public class FacilitiesTrigger : MonoBehaviour
 
         _facility.PlaceChimera(chimera);
 
-        chimeraBehaviour.TrainingPosition = transform.position;
+        chimera.SetInFacility(true);
+
         chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
+        chimeraBehaviour.gameObject.transform.position = _stayPos.transform.position;
     }
 }

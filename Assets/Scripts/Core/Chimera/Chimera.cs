@@ -32,7 +32,7 @@ public class Chimera : MonoBehaviour
 
     [Header("Essence")]
     [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
-
+    
     private BoxCollider _boxCollider = null;
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
@@ -44,8 +44,10 @@ public class Chimera : MonoBehaviour
     public ElementalType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
+    public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public Sprite Icon { get => _currentEvolution.Icon; }
+    public bool InFacility { get => _inFacility; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
     public int Intelligence { get => _intelligence; }

@@ -49,7 +49,7 @@ public class LevelLoader : AsyncLoader
             CallOnComplete(OnComplete);
         }
 
-        //_tutorialManager.ShowTutorial(0);
+        _tutorialManager.SetupTutorial();
     }
 
     private void Initialize()
@@ -98,7 +98,7 @@ public class LevelLoader : AsyncLoader
                 }
                 return false;
             default:
-                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat");
+                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat.");
                 return false;
         }
     }
@@ -155,7 +155,7 @@ public class LevelLoader : AsyncLoader
     {
         foreach(var callback in _queuedCallbacks)
         {
-            CallOnComplete(callback);
+            callback?.Invoke();
         }
     }
 
@@ -178,6 +178,6 @@ public class LevelLoader : AsyncLoader
 
     private void OnComplete()
     {
-        Debug.Log("LevelManager Finished Setup");
+        Debug.Log($"{this.GetType()} finished setup.");
     }
 }
