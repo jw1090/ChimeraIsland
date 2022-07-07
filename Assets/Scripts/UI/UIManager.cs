@@ -6,7 +6,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _openDetailsButton = null;
+    [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _marketplaceButton = null;
+    [SerializeField] private Button _worldMapButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private GameObject _buttonFolder = null;
     [SerializeField] private GameObject _expedition = null;
@@ -18,6 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
 
+    public Button MainMenuButton { get => _mainMenuButton; }
+    public Button WorldMapButton { get => _worldMapButton; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
 

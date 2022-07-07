@@ -16,6 +16,7 @@ public class LevelLoader : AsyncLoader
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private PersistentData _persistentData = null;
+    private SceneChanger _sceneChanger = null;
     private TutorialManager _tutorialManager = null;
 
     protected override void Awake()
@@ -60,6 +61,7 @@ public class LevelLoader : AsyncLoader
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         if (_uiManager != null)
@@ -68,6 +70,7 @@ public class LevelLoader : AsyncLoader
             _essenceManager.SetUIManager(_uiManager);
             _inputManager.SetUIManager(_uiManager);
             _tutorialManager.SetUIManager(_uiManager);
+            _sceneChanger.SetupUIListeners();
         }
 
         if (_cameraController != null)
