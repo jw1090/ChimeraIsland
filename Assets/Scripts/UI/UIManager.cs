@@ -4,13 +4,15 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
-    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
+    [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private Marketplace _marketplace = null;
-    [SerializeField] private GameObject _settingsMenu = null;
+    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
+    [SerializeField] private GameObject _buttonFolder = null;
+    [SerializeField] private GameObject _expedition = null;
     [SerializeField] private GameObject _habitatUIFolder = null;
+    [SerializeField] private GameObject _settingsMenu = null;
+    [SerializeField] private Marketplace _marketplace = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -62,12 +64,14 @@ public class UIManager : MonoBehaviour
     public void ResetUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
+        _buttonFolder.gameObject.SetActive(true);
         _marketplaceButton.gameObject.SetActive(true);
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
         _marketplace.gameObject.SetActive(false);
         _settingsMenu.gameObject.SetActive(false);
+        _expedition.gameObject.SetActive(false);
         _transferMap.gameObject.SetActive(false);
     }
 
@@ -76,16 +80,18 @@ public class UIManager : MonoBehaviour
         _detailsFolder.CheckDetails();
 
         ResetUI();
-        _openDetailsButton.gameObject.SetActive(false);
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
+
+        _openDetailsButton.gameObject.SetActive(false);
     }
 
     public void OpenMarketplace()
     {
         ResetUI();
-        _openDetailsButton.gameObject.SetActive(false);
         _marketplace.gameObject.SetActive(true);
+
+        _openDetailsButton.gameObject.SetActive(false);
     }
 
     public void OpenTransferMap(Chimera chimera)
@@ -112,7 +118,16 @@ public class UIManager : MonoBehaviour
         _settingsMenu.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
+        _buttonFolder.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
+    }
+
+    public void OpenExpedition()
+    {
+        ResetUI();
+        _expedition.gameObject.SetActive(true);
+
+        _openDetailsButton.gameObject.SetActive(false);
     }
 
     public void UpdateDetails()
