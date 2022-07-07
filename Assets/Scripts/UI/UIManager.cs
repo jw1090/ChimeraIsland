@@ -102,7 +102,9 @@ public class UIManager : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
-        if (_settingsMenu.activeInHierarchy == true)
+        if (_settingsMenu.activeInHierarchy == true ||
+            _marketplace.gameObject.activeInHierarchy == true ||
+            _expedition.gameObject.activeInHierarchy == true)
         {
             ResetUI();
         }
@@ -148,6 +150,7 @@ public class UIManager : MonoBehaviour
         _tutorialOverlay.gameObject.SetActive(true);
         _tutorialOverlay.ShowOverlay(tutorialSteps);
     }
+
     public void EndTutorial()
     {
         _tutorialOverlay.gameObject.SetActive(false);
