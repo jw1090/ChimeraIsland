@@ -18,6 +18,11 @@ public class ToolsManager : MonoBehaviour
         var chimeraCreatorComp = chimeraCreatorGO.AddComponent<ChimeraCreator>().Initialize();
         ServiceLocator.Register<ChimeraCreator>(chimeraCreatorComp);
 
+        var sceneChangerGO = new GameObject("Scene Changer");
+        sceneChangerGO.transform.SetParent(transform);
+        var sceneChangerComp = sceneChangerGO.AddComponent<SceneChanger>().Initialize();
+        ServiceLocator.Register<SceneChanger>(sceneChangerComp);
+
         Debug.Log("Tools Finished Initializing");
     }
 }

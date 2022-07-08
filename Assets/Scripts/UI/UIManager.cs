@@ -4,15 +4,28 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("UI Scene Types")]
+    [SerializeField] private GameObject _habitatUI = null;
+    [SerializeField] private GameObject _mainMenuUI = null;
+    [SerializeField] private GameObject _startingUI = null;
+    [SerializeField] private GameObject _worldMapUI = null;
+
+    [Header("Scene Change Buttons")]
+    [SerializeField] private Button _ashLandsButton = null;
+    [SerializeField] private Button _loadGameButton = null;
+    [SerializeField] private Button _newGameButton = null;
+    [SerializeField] private Button _mainMenuButton = null;
+    [SerializeField] private Button _stonePlainsButton = null;
+    [SerializeField] private Button _treeOfLifeButton = null;
+    [SerializeField] private Button _worldMapButton = null;
+
+    [Header("Standard Elements")]
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _openDetailsButton = null;
-    [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private Button _worldMapButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private GameObject _buttonFolder = null;
     [SerializeField] private GameObject _expedition = null;
-    [SerializeField] private GameObject _habitatUIFolder = null;
     [SerializeField] private GameObject _settingsMenu = null;
     [SerializeField] private Marketplace _marketplace = null;
     [SerializeField] private TransferMap _transferMap = null;
@@ -20,7 +33,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
 
+    public Button AshLandsButton { get => _ashLandsButton; }
+    public Button NewGameButton { get => _newGameButton; }
     public Button MainMenuButton { get => _mainMenuButton; }
+    public Button LoadGameButton { get => _loadGameButton; }
+    public Button StonePlainsButton { get => _stonePlainsButton; }
+    public Button TreeOfLifeButton { get => _treeOfLifeButton; }
     public Button WorldMapButton { get => _worldMapButton; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
@@ -59,11 +77,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowHabitatUI()
+    public void ShowUIByType(UISceneType uISceneType)
     {
-        _habitatUIFolder.gameObject.SetActive(true);
-    }
+        Debug.Log($"<color=Cyan> Show {uISceneType} UI.</color>");
 
+        switch (uISceneType)
+        {
+            case UISceneType.None:
+                _habitatUI.gameObject.SetActive(false);
+                _mainMenuUI.gameObject.SetActive(false);
+                _startingUI.gameObject.SetActive(false);
+                _worldMapUI.gameObject.SetActive(false);
+                break;
+            case UISceneType.Habitat:
+                _habitatUI.gameObject.SetActive(true);
+                break;
+            case UISceneType.MainMenu:
+                _mainMenuUI.gameObject.SetActive(true);
+                break;
+            case UISceneType.Starting:
+                _startingUI.gameObject.SetActive(true);
+                break;
+            case UISceneType.WorldMap:
+                _worldMapUI.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogError($"{uISceneType} is invalid. Please change!");
+                break;
+        }
+    }
 
     public void ResetUI()
     {

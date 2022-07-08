@@ -69,3 +69,12 @@ public enum TutorialIcons
 {
     None = -1,
 }
+
+public enum UISceneType
+{
+    None = -1,
+    Habitat,
+    MainMenu,
+    Starting,
+    WorldMap,
+}

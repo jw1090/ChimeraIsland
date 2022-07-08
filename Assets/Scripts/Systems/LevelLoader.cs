@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : AsyncLoader
 {
-    [SerializeField] private UIManager _uiManager = null;
+    [SerializeField] private UISceneType _uiSceneType = UISceneType.None;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private UIManager _uiManager = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -131,7 +132,7 @@ public class LevelLoader : AsyncLoader
         }
 
         _uiManager.InitializeUIElements();
-        _uiManager.ShowHabitatUI();
+        _uiManager.ShowUIByType(_uiSceneType);
     }
 
     private void LoadChimeras()

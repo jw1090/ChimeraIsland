@@ -111,11 +111,6 @@ public class GameLoader : AsyncLoader
         var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
         ServiceLocator.Register<ToolsManager>(toolsManagerComp);
 
-        var sceneChangerGO = new GameObject("Scene Changer");
-        sceneChangerGO.transform.SetParent(systemsParent);
-        var sceneChangerComp = sceneChangerGO.AddComponent<SceneChanger>().Initialize();
-        ServiceLocator.Register<SceneChanger>(sceneChangerComp);
-
         yield return null;
     }
 

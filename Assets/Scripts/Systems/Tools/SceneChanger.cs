@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -21,29 +23,52 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
-        NewGameDelagate();
-        LoadGameDelagate();
-        MainMenuDelagate();
-        WorldMapDelagate();
-        StonePlainsDelagate();
-        TreeOfLifeDelagate();
-        AshlandsDelagate();
+        if (_uiManager.NewGameButton != null)
+        {
+            CreateButtonListener(_uiManager.NewGameButton, NewGame);
+        }
+        if (_uiManager.LoadGameButton != null)
+        {
+            CreateButtonListener(_uiManager.LoadGameButton, LoadGame);
+        }
+        if (_uiManager.MainMenuButton != null)
+        {
+            CreateButtonListener(_uiManager.MainMenuButton, LoadMainMenu);
+        }
+        if (_uiManager.WorldMapButton != null)
+        {
+            CreateButtonListener(_uiManager.WorldMapButton, LoadWorldMap);
+        }
+        if (_uiManager.StonePlainsButton != null)
+        {
+            CreateButtonListener(_uiManager.StonePlainsButton, LoadStonePlains);
+        }
+        if (_uiManager.TreeOfLifeButton != null)
+        {
+            CreateButtonListener(_uiManager.TreeOfLifeButton, LoadTreeOfLife);
+        }
+        if (_uiManager.AshLandsButton != null)
+        {
+            CreateButtonListener(_uiManager.AshLandsButton, LoadAshlands);
+        }
     }
 
-    private void NewGameDelagate()
+    private void CreateButtonListener(Button button, Action action)
     {
-
+        if (button != null)
+        {
+            button.onClick.AddListener
+            (delegate
+            {
+                action();
+            });
+        }
     }
 
     public void NewGame()
     {
         _persistentData.NewSaveData();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT_SCENE);
-    }
-
-    private void LoadGameDelagate()
-    {
-
     }
 
     public void LoadGame()
@@ -62,34 +87,10 @@ public class SceneChanger : MonoBehaviour
 #endif
     }
 
-    private void MainMenuDelagate()
-    {
-        if (_uiManager.MainMenuButton != null)
-        {
-            _uiManager.MainMenuButton.onClick.AddListener
-            (delegate
-            {
-                LoadMainMenu();
-            });
-        }
-    }
-
     public void LoadMainMenu()
     {
         SaveSessionData(true);
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU_SCENE);
-    }
-
-    private void WorldMapDelagate()
-    {
-        if (_uiManager.WorldMapButton != null)
-        {
-            _uiManager.WorldMapButton.onClick.AddListener
-            (delegate
-            {
-                LoadWorldMap();
-            });
-        }
     }
 
     public void LoadWorldMap()
@@ -98,29 +99,14 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.WORLD_MAP_SCENE);
     }
 
-    private void StonePlainsDelagate()
-    {
-
-    }
-
     public void LoadStonePlains()
     {
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
     }
 
-    private void TreeOfLifeDelagate()
-    {
-
-    }
-
     public void LoadTreeOfLife()
     {
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TREE_OF_LIFE_SCENE);
-    }
-
-    private void AshlandsDelagate()
-    {
-
     }
 
     public void LoadAshlands()
