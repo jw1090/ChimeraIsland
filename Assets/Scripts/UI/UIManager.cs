@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("UI Scene Types")]
     [SerializeField] private GameObject _habitatUI = null;
     [SerializeField] private GameObject _mainMenuUI = null;
-    [SerializeField] private GameObject _startingUI = null;
+    [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private GameObject _worldMapUI = null;
 
     [Header("Scene Change Buttons")]
@@ -49,12 +49,14 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        ResetHabitatUI();
+        _startingUI.Initialize();
+
+        DisableAllSceneTypeUI();
 
         return this;
     }
 
-    public void InitializeUIElements()
+    public void InitializeHabitatUI()
     {
         InitializeWallets();
         InitializeTutorialOverlay();
@@ -86,10 +88,7 @@ public class UIManager : MonoBehaviour
         switch (uiSceneType)
         {
             case SceneType.None:
-                _habitatUI.gameObject.SetActive(false);
-                _mainMenuUI.gameObject.SetActive(false);
-                _startingUI.gameObject.SetActive(false);
-                _worldMapUI.gameObject.SetActive(false);
+                DisableAllSceneTypeUI();
                 break;
             case SceneType.Habitat:
                 _habitatUI.gameObject.SetActive(true);
@@ -107,6 +106,14 @@ public class UIManager : MonoBehaviour
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
                 break;
         }
+    }
+
+    public void DisableAllSceneTypeUI()
+    {
+        _habitatUI.gameObject.SetActive(false);
+        _mainMenuUI.gameObject.SetActive(false);
+        _startingUI.gameObject.SetActive(false);
+        _worldMapUI.gameObject.SetActive(false);
     }
 
     public void EnableUIByType(UIElementType uiElementType)

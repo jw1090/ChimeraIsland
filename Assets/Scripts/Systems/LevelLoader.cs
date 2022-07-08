@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : AsyncLoader
 {
-    [SerializeField] private SceneType _uiSceneType = SceneType.None;
+    [SerializeField] private SceneType _sceneType = SceneType.None;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private UIManager _uiManager = null;
@@ -37,21 +37,25 @@ public class LevelLoader : AsyncLoader
         Initialize();
         ProcessQueuedCallbacks();
 
-        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
+        InitializeUIElements();
+
+        switch (_sceneType)
         {
-            InitializeUIElements();
-
-            if(_habitat != null)
-            {
-                LoadFacilities();
-                LoadChimeras();
-                StartHabitatTickTimer();
-            }
-
-            CallOnComplete(OnComplete);
+            case SceneType.Habitat:
+                HabitatSceneSetup();
+                break;
+            case SceneType.MainMenu:
+                break;
+            case SceneType.Starting:
+                break;
+            case SceneType.WorldMap:
+                break;
+            default:
+                Debug.LogError($"{_sceneType} is invalid, please change!.");
+                break;
         }
 
-        _tutorialManager.SetupTutorial();
+        CallOnComplete(OnComplete);
     }
 
     private void Initialize()
@@ -85,6 +89,21 @@ public class LevelLoader : AsyncLoader
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
         }
+    }
+
+    private void HabitatSceneSetup()
+    {
+        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
+        {
+            if (_habitat != null)
+            {
+                LoadFacilities();
+                LoadChimeras();
+                StartHabitatTickTimer();
+            }
+        }
+
+        _tutorialManager.SetupTutorial();
     }
 
     private bool LastSessionHabitatCheck()
@@ -131,8 +150,12 @@ public class LevelLoader : AsyncLoader
             return;
         }
 
-        _uiManager.InitializeUIElements();
-        _uiManager.ShowUIByScene(_uiSceneType);
+        if(_sceneType == SceneType.Habitat)
+        {
+            _uiManager.InitializeHabitatUI();
+        }
+
+        _uiManager.ShowUIByScene(_sceneType);
     }
 
     private void LoadChimeras()

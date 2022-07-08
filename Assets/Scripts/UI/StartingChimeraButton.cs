@@ -1,29 +1,30 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] ChimeraType _chimeraType = ChimeraType.None;
     HabitatManager _habitatManager = null;
-    ChimeraCreator _chimeraCreator = null;
+    ResourceManager _resourceManager = null;
+    SceneChanger _sceneChanger = null;
 
     public void Initialize()
     {
-        _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _sceneChanger = ServiceLocator.Get<SceneChanger>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameObject newChimera = _chimeraCreator.CreateChimeraByType(_chimeraType);
-        Chimera chimera = newChimera.GetComponent<Chimera>();
+        var chimeraGO = _resourceManager.GetChimeraBasePrefab(_chimeraType);
+        Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
 
-        chimera.SetHabitatType(HabitatType.StonePlains);
-        _habitatManager.AddNewChimera(newChimera.GetComponent<Chimera>());
+        chimeraComp.SetHabitatType(HabitatType.StonePlains);
+        _habitatManager.AddNewChimera(chimeraComp);
 
         ServiceLocator.Get<TutorialManager>().ResetTutorialProgress();
 
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
+        _sceneChanger.LoadStonePlains();
     }
 }
