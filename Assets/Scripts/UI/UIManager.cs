@@ -15,9 +15,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _worldMapButton = null;
-    [SerializeField] private Button _ashLandsButton = null;
     [SerializeField] private Button _stonePlainsButton = null;
     [SerializeField] private Button _treeOfLifeButton = null;
+    [SerializeField] private Button _ashLandsButton = null;
 
     [Header("Standard Elements")]
     [SerializeField] private Button _closeDetailsButton = null;
