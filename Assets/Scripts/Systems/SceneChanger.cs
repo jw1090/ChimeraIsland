@@ -11,7 +11,7 @@ public class SceneChanger : MonoBehaviour
 
     public SceneChanger Initialize()
     {
-        Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();

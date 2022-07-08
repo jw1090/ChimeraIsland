@@ -11,23 +11,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _worldMapUI = null;
 
     [Header("Scene Change Buttons")]
-    [SerializeField] private Button _ashLandsButton = null;
-    [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _newGameButton = null;
+    [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _mainMenuButton = null;
+    [SerializeField] private Button _worldMapButton = null;
+    [SerializeField] private Button _ashLandsButton = null;
     [SerializeField] private Button _stonePlainsButton = null;
     [SerializeField] private Button _treeOfLifeButton = null;
-    [SerializeField] private Button _worldMapButton = null;
 
     [Header("Standard Elements")]
     [SerializeField] private Button _closeDetailsButton = null;
+    [SerializeField] private Button _expeditionButton = null;
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
+    [SerializeField] private Button _settingsButton = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private GameObject _buttonFolder = null;
-    [SerializeField] private GameObject _expedition = null;
-    [SerializeField] private GameObject _settingsMenu = null;
-    [SerializeField] private Marketplace _marketplace = null;
+    [SerializeField] private GameObject _expeditionPanel = null;
+    [SerializeField] private GameObject _settingsPanel = null;
+    [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -47,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        ResetUI();
+        ResetHabitatUI();
 
         return this;
     }
@@ -56,7 +58,7 @@ public class UIManager : MonoBehaviour
     {
         InitializeWallets();
         InitializeTutorialOverlay();
-        _marketplace.Initialize();
+        _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
         _transferMap.Initialize();
     }
@@ -77,37 +79,83 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowUIByType(UISceneType uISceneType)
+    public void ShowUIByScene(SceneType uiSceneType)
     {
-        Debug.Log($"<color=Cyan> Show {uISceneType} UI.</color>");
+        Debug.Log($"<color=Cyan> Show {uiSceneType} UI.</color>");
 
-        switch (uISceneType)
+        switch (uiSceneType)
         {
-            case UISceneType.None:
+            case SceneType.None:
                 _habitatUI.gameObject.SetActive(false);
                 _mainMenuUI.gameObject.SetActive(false);
                 _startingUI.gameObject.SetActive(false);
                 _worldMapUI.gameObject.SetActive(false);
                 break;
-            case UISceneType.Habitat:
+            case SceneType.Habitat:
                 _habitatUI.gameObject.SetActive(true);
                 break;
-            case UISceneType.MainMenu:
+            case SceneType.MainMenu:
                 _mainMenuUI.gameObject.SetActive(true);
                 break;
-            case UISceneType.Starting:
+            case SceneType.Starting:
                 _startingUI.gameObject.SetActive(true);
                 break;
-            case UISceneType.WorldMap:
+            case SceneType.WorldMap:
                 _worldMapUI.gameObject.SetActive(true);
                 break;
             default:
-                Debug.LogError($"{uISceneType} is invalid. Please change!");
+                Debug.LogError($"{uiSceneType} is invalid. Please change!");
                 break;
         }
     }
 
-    public void ResetUI()
+    public void EnableUIByType(UIElementType uiElementType)
+    {
+        switch (uiElementType)
+        {
+            case UIElementType.All:
+                _essenceWallets[0].gameObject.SetActive(true);
+                _expeditionButton.gameObject.SetActive(true);
+                _marketplaceButton.gameObject.SetActive(true);
+                _openDetailsButton.gameObject.SetActive(true);
+                _settingsButton.gameObject.SetActive(true);
+                _worldMapButton.gameObject.SetActive(true);
+                break;
+            case UIElementType.EssenceWallet:
+                _essenceWallets[0].gameObject.SetActive(true);
+                break;
+            case UIElementType.ExpeditionButton:
+                _expeditionButton.gameObject.SetActive(true);
+                break;
+            case UIElementType.MarketplaceButton:
+                _marketplaceButton.gameObject.SetActive(true);
+                break;
+            case UIElementType.OpenDetailsButton:
+                _openDetailsButton.gameObject.SetActive(true);
+                break;
+            case UIElementType.SettingsButton:
+                _settingsButton.gameObject.SetActive(true);
+                break;
+            case UIElementType.WorldMapIcon:
+                _worldMapButton.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogError($"{uiElementType} is invalid. Please change!");
+                break;
+        }
+    }
+
+    public void DisableHabitatUI()
+    {
+        _essenceWallets[0].gameObject.SetActive(false);
+        _expeditionButton.gameObject.SetActive(false);
+        _marketplaceButton.gameObject.SetActive(false);
+        _openDetailsButton.gameObject.SetActive(false);
+        _settingsButton.gameObject.SetActive(false);
+        _worldMapButton.gameObject.SetActive(false);
+    }
+
+    public void ResetHabitatUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
         _buttonFolder.gameObject.SetActive(true);
@@ -115,9 +163,9 @@ public class UIManager : MonoBehaviour
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
-        _marketplace.gameObject.SetActive(false);
-        _settingsMenu.gameObject.SetActive(false);
-        _expedition.gameObject.SetActive(false);
+        _marketplacePanel.gameObject.SetActive(false);
+        _settingsPanel.gameObject.SetActive(false);
+        _expeditionPanel.gameObject.SetActive(false);
         _transferMap.gameObject.SetActive(false);
     }
 
@@ -125,7 +173,7 @@ public class UIManager : MonoBehaviour
     {
         _detailsFolder.CheckDetails();
 
-        ResetUI();
+        ResetHabitatUI();
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
 
@@ -134,25 +182,25 @@ public class UIManager : MonoBehaviour
 
     public void OpenMarketplace()
     {
-        ResetUI();
-        _marketplace.gameObject.SetActive(true);
+        ResetHabitatUI();
+        _marketplacePanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
     }
 
     public void OpenTransferMap(Chimera chimera)
     {
-        ResetUI();
+        ResetHabitatUI();
         _transferMap.Open(chimera);
     }
 
     public void ToggleSettingsMenu()
     {
-        if (_settingsMenu.activeInHierarchy == true ||
-            _marketplace.gameObject.activeInHierarchy == true ||
-            _expedition.gameObject.activeInHierarchy == true)
+        if (_settingsPanel.activeInHierarchy == true ||
+            _marketplacePanel.gameObject.activeInHierarchy == true ||
+            _expeditionPanel.gameObject.activeInHierarchy == true)
         {
-            ResetUI();
+            ResetHabitatUI();
         }
         else
         {
@@ -162,8 +210,8 @@ public class UIManager : MonoBehaviour
 
     public void OpenSettingsMenu()
     {
-        ResetUI();
-        _settingsMenu.gameObject.SetActive(true);
+        ResetHabitatUI();
+        _settingsPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
         _buttonFolder.gameObject.SetActive(false);
@@ -172,8 +220,8 @@ public class UIManager : MonoBehaviour
 
     public void OpenExpedition()
     {
-        ResetUI();
-        _expedition.gameObject.SetActive(true);
+        ResetHabitatUI();
+        _expeditionPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
     }

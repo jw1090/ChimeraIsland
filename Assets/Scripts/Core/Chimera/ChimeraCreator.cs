@@ -6,7 +6,7 @@ public class ChimeraCreator : MonoBehaviour
 
     public ChimeraCreator Initialize()
     {
-        Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _resourceManager = ServiceLocator.Get<ResourceManager>();
 

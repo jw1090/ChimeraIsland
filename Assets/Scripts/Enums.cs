@@ -47,6 +47,15 @@ public enum Passives
     WorkMotivated,
 }
 
+public enum SceneType
+{
+    None = -1,
+    Habitat,
+    MainMenu,
+    Starting,
+    WorldMap,
+}
+
 public enum SignType
 {
     None = 1,
@@ -65,16 +74,19 @@ public enum StatType
     Happiness,
 }
 
-public enum TutorialIcons
+public enum TutorialIconType
 {
     None = -1,
 }
 
-public enum UISceneType
+public enum UIElementType
 {
     None = -1,
-    Habitat,
-    MainMenu,
-    Starting,
-    WorldMap,
+    All,
+    EssenceWallet,
+    ExpeditionButton,
+    MarketplaceButton,
+    OpenDetailsButton,
+    SettingsButton,
+    WorldMapIcon,
 }

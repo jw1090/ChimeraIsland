@@ -106,10 +106,15 @@ public class GameLoader : AsyncLoader
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
 
-        var toolsManagerGO = new GameObject("Tools Manager");
-        toolsManagerGO.transform.SetParent(systemsParent);
-        var toolsManagerComp = toolsManagerGO.AddComponent<ToolsManager>().Initialize();
-        ServiceLocator.Register<ToolsManager>(toolsManagerComp);
+        var chimeraCreatorGO = new GameObject("Chimera Creator");
+        chimeraCreatorGO.transform.SetParent(systemsParent);
+        var chimeraCreatorComp = chimeraCreatorGO.AddComponent<ChimeraCreator>().Initialize();
+        ServiceLocator.Register<ChimeraCreator>(chimeraCreatorComp);
+
+        var sceneChangerGO = new GameObject("Scene Changer");
+        sceneChangerGO.transform.SetParent(systemsParent);
+        var sceneChangerComp = sceneChangerGO.AddComponent<SceneChanger>().Initialize();
+        ServiceLocator.Register<SceneChanger>(sceneChangerComp);
 
         yield return null;
     }
