@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     public UIManager Initialize()
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _startingUI.Initialize();
 

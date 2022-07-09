@@ -30,6 +30,9 @@ public class ResourceManager : MonoBehaviour
     private GameObject _chimeraEvolutionPrefabC1 = null;
     private GameObject _chimeraEvolutionPrefabC2 = null;
     private GameObject _chimeraEvolutionPrefabC3 = null;
+    private GameObject _uiManager = null;
+
+    public GameObject UIManager { get => _uiManager;}
 
     public ResourceManager Initialize()
     {
@@ -63,6 +66,7 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC1 = Resources.Load<GameObject>("Chimera/Models/Family C/C1 Model");
         _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
+        _uiManager = Resources.Load<GameObject>("UI Manager");
 
         return this;
     }

@@ -60,6 +60,7 @@ public class SceneChanger : MonoBehaviour
             button.onClick.AddListener
             (delegate
             {
+                _uiManager.DisableAllSceneTypeUI();
                 action();
             });
         }
