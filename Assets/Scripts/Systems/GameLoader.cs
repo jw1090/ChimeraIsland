@@ -116,6 +116,15 @@ public class GameLoader : AsyncLoader
         var sceneChangerComp = sceneChangerGO.AddComponent<SceneChanger>().Initialize();
         ServiceLocator.Register<SceneChanger>(sceneChangerComp);
 
+        var uiManagerGO = Instantiate(resourceManagerComp.UIManager, systemsParent);
+        uiManagerGO.name = "UI Manager";
+        var uiManagerComp = uiManagerGO.GetComponent<UIManager>().Initialize();
+        ServiceLocator.Register<UIManager>(uiManagerComp);
+        inputManagerComp.SetUIManager(uiManagerComp);
+        essenceManagerComp.SetUIManager(uiManagerComp);
+        tutorialComp.SetUIManager(uiManagerComp);
+        sceneChangerComp.SetupUIListeners();
+
         yield return null;
     }
 

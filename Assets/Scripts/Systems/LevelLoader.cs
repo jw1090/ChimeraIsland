@@ -8,7 +8,6 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private SceneType _sceneType = SceneType.None;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
-    [SerializeField] private UIManager _uiManager = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -19,6 +18,7 @@ public class LevelLoader : AsyncLoader
     private PersistentData _persistentData = null;
     private SceneChanger _sceneChanger = null;
     private TutorialManager _tutorialManager = null;
+    private UIManager _uiManager = null;
 
     protected override void Awake()
     {
@@ -68,15 +68,7 @@ public class LevelLoader : AsyncLoader
         _persistentData = ServiceLocator.Get<PersistentData>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
-
-        if (_uiManager != null)
-        {
-            ServiceLocator.Register<UIManager>(_uiManager.Initialize(), true);
-            _essenceManager.SetUIManager(_uiManager);
-            _inputManager.SetUIManager(_uiManager);
-            _tutorialManager.SetUIManager(_uiManager);
-            _sceneChanger.SetupUIListeners();
-        }
+        _uiManager = ServiceLocator.Get<UIManager>();
 
         if (_cameraController != null)
         {
