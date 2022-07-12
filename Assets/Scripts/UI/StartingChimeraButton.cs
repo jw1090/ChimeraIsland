@@ -3,16 +3,20 @@ using UnityEngine.EventSystems;
 
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] ChimeraType _chimeraType = ChimeraType.None;
-    HabitatManager _habitatManager = null;
-    ResourceManager _resourceManager = null;
-    SceneChanger _sceneChanger = null;
+    [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
+    private HabitatManager _habitatManager = null;
+    private ResourceManager _resourceManager = null;
+    private SceneChanger _sceneChanger = null;
+    private TutorialManager _tutorialManager = null;
+    private UIManager _uiManager = null;
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _uiManager = uiManager;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -23,8 +27,9 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         chimeraComp.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(chimeraComp);
 
-        ServiceLocator.Get<TutorialManager>().ResetTutorialProgress();
-        ServiceLocator.Get<UIManager>().DisableHabitatUI();
+        _tutorialManager.ResetTutorialProgress();
+        _uiManager.DisableHabitatUI();
+        _uiManager.DisableAllSceneTypeUI();
         _sceneChanger.LoadStonePlains();
     }
 }

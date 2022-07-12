@@ -60,6 +60,7 @@ public class SceneChanger : MonoBehaviour
             button.onClick.AddListener
             (delegate
             {
+                _uiManager.DisableAllSceneTypeUI();
                 action();
             });
         }
@@ -67,20 +68,17 @@ public class SceneChanger : MonoBehaviour
 
     public void NewGame()
     {
-        _uiManager.DisableAllSceneTypeUI();
         _persistentData.NewSaveData();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT_SCENE);
     }
 
     public void LoadGame()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
     }
 
     public void QuitGame()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SaveSessionData(true);
 
 #if UNITY_EDITOR
@@ -92,33 +90,29 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        _uiManager.DisableAllSceneTypeUI();
+        _uiManager.ResetHabitatUI();
         SaveSessionData(true);
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU_SCENE);
     }
 
     public void LoadWorldMap()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SaveSessionData(false);
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.WORLD_MAP_SCENE);
     }
 
     public void LoadStonePlains()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES_SCENE);
     }
 
     public void LoadTreeOfLife()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TREE_OF_LIFE_SCENE);
     }
 
     public void LoadAshlands()
     {
-        _uiManager.DisableAllSceneTypeUI();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.ASHLANDS_SCENE);
     }
 

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Marketplace : MonoBehaviour
 {
-    [SerializeField] TabGroup _tabGroup = null;
-    [SerializeField] ChimeraShop _chimeraShop = null;
-    [SerializeField] FacilityShop _facilityShop = null;
+    [SerializeField] private TabGroup _tabGroup = null;
+    [SerializeField] private ChimeraShop _chimeraShop = null;
+    [SerializeField] private FacilityShop _facilityShop = null;
 
     public void Initialize()
     {
