@@ -468,8 +468,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
         m_MethodName: OpenSettingsMenu
         m_Mode: 1
         m_Arguments:
@@ -633,7 +633,7 @@ RectTransform:
   - {fileID: 4271030851373703847}
   - {fileID: 310609487}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1483,7 +1483,7 @@ RectTransform:
   - {fileID: 231081782043593757}
   - {fileID: 231081783179785478}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1805,7 +1805,7 @@ RectTransform:
   - {fileID: 1652096870205679135}
   - {fileID: 1652096871498191272}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -2007,19 +2007,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 231081782400414686}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UISceneChanger, Assembly-CSharp
-        m_MethodName: LoadWorldMap
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &231081782404602763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,12 +2018,12 @@ GameObject:
   m_Component:
   - component: {fileID: 231081782404602762}
   m_Layer: 5
-  m_Name: Buttons Folder
+  m_Name: Standard UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &231081782404602762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2052,6 +2040,7 @@ RectTransform:
   - {fileID: 231081782112256327}
   - {fileID: 231081783664939836}
   - {fileID: 2305801982808644348}
+  - {fileID: 4008348855519307170}
   m_Father: {fileID: 5674834463088570894}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2390,8 +2379,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
         m_MethodName: OpenDetailsPanel
         m_Mode: 1
         m_Arguments:
@@ -2594,33 +2583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227920f732abd754d982d8dcbb99f5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _habitatUI: {fileID: 8323282744538936979}
-  _mainMenuUI: {fileID: 6872279126892740253}
+  _habitatUI: {fileID: 6544680596328194654}
+  _mainMenuUI: {fileID: 7512032388644874240}
   _startingUI: {fileID: 7453303561301899140}
-  _worldMapUI: {fileID: 3257725857825812309}
-  _newGameButton: {fileID: 2541705572995894907}
-  _loadGameButton: {fileID: 3897282140420016069}
-  _mainMenuButton: {fileID: 1358811889}
-  _worldMapButton: {fileID: 231081782400414687}
-  _stonePlainsButton: {fileID: 4349326918077154693}
-  _treeOfLifeButton: {fileID: 8550539222752703626}
-  _ashLandsButton: {fileID: 8891343888426977016}
-  _closeDetailsButton: {fileID: 231081783895780013}
-  _expeditionButton: {fileID: 3797538574632568588}
-  _openDetailsButton: {fileID: 231081782605990848}
-  _marketplaceButton: {fileID: 231081783664939839}
-  _settingsButton: {fileID: 1238727954}
-  _detailsFolder: {fileID: 231081782278739542}
-  _buttonFolder: {fileID: 231081782404602763}
-  _expeditionPanel: {fileID: 932588008018163459}
-  _settingsPanel: {fileID: 1567368642}
-  _marketplacePanel: {fileID: 231081781987885104}
-  _transferMap: {fileID: 6785449645184139630}
-  _releaseSlider: {fileID: 231081783265917234}
-  _tutorialOverlay: {fileID: 907053049592271737}
-  _essenceWallets:
-  - {fileID: 9119926714665536923}
-  - {fileID: 5333403952414489159}
+  _worldMapUI: {fileID: 5883252587532253600}
 --- !u!1 &231081782957508681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2952,9 +2918,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ResetHabitatUI
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
+        m_MethodName: ResetUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2997,7 +2963,7 @@ RectTransform:
   - {fileID: 231081782275086820}
   - {fileID: 231081783770707238}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 3
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3457,8 +3423,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
         m_MethodName: OpenMarketplace
         m_Mode: 1
         m_Arguments:
@@ -3888,9 +3854,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ResetHabitatUI
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
+        m_MethodName: ResetUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4529,8 +4495,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
         m_MethodName: OpenExpedition
         m_Mode: 1
         m_Arguments:
@@ -4574,7 +4540,7 @@ RectTransform:
   - {fileID: 5866415766760176361}
   - {fileID: 1390967793011920826}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5007,9 +4973,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ResetHabitatUI
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
+        m_MethodName: ResetUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6242,6 +6208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4631432915926100687}
+  - component: {fileID: 5883252587532253600}
   m_Layer: 5
   m_Name: WorldMap UI
   m_TagString: Untagged
@@ -6271,6 +6238,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5883252587532253600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257725857825812309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27121e485357bfa489862c1198c69761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stonePlainsButton: {fileID: 4349326918077154693}
+  _treeOfLifeButton: {fileID: 8550539222752703626}
+  _ashLandsButton: {fileID: 8891343888426977016}
 --- !u!1 &3327177587306061927
 GameObject:
   m_ObjectHideFlags: 0
@@ -6605,9 +6587,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 231081782940317753}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ResetHabitatUI
+      - m_Target: {fileID: 6544680596328194654}
+        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
+        m_MethodName: ResetUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9094,6 +9076,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8185145827097606159}
+  - component: {fileID: 7512032388644874240}
   m_Layer: 5
   m_Name: Main Menu UI
   m_TagString: Untagged
@@ -9122,6 +9105,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7512032388644874240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6872279126892740253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011754b1d044eec4a8f09dbaf534a48c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _newGameButton: {fileID: 2541705572995894907}
+  _loadGameButton: {fileID: 3897282140420016069}
 --- !u!1 &6901779246525785428
 GameObject:
   m_ObjectHideFlags: 0
@@ -9659,7 +9656,7 @@ RectTransform:
   - {fileID: 6603679584059652931}
   - {fileID: 349657503853396729}
   m_Father: {fileID: 5674834463088570894}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10516,13 +10513,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5674834463088570894}
+  - component: {fileID: 6544680596328194654}
   m_Layer: 5
   m_Name: Habitat UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5674834463088570894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10535,14 +10533,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 231081782404602762}
-  - {fileID: 4008348855519307170}
   - {fileID: 231081782278739538}
-  - {fileID: 231081783265917232}
   - {fileID: 231081781987885119}
   - {fileID: 6217421619760880577}
+  - {fileID: 1567368643}
   - {fileID: 3252927215140378946}
   - {fileID: 957045605861023092}
-  - {fileID: 1567368643}
+  - {fileID: 231081783265917232}
   m_Father: {fileID: 231081782940317734}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10551,6 +10548,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6544680596328194654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323282744538936979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f876b028a6fed0046a2d6f796a759501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainMenuButton: {fileID: 1358811889}
+  _worldMapButton: {fileID: 231081782400414687}
+  _openDetailsButton: {fileID: 231081782605990848}
+  _closeDetailsButton: {fileID: 231081783895780013}
+  _expeditionButton: {fileID: 3797538574632568588}
+  _marketplaceButton: {fileID: 231081783664939839}
+  _settingsButton: {fileID: 1238727954}
+  _standardUI: {fileID: 231081782404602763}
+  _detailsFolder: {fileID: 231081782278739542}
+  _expeditionPanel: {fileID: 932588008018163459}
+  _settingsPanel: {fileID: 1567368642}
+  _marketplacePanel: {fileID: 231081781987885104}
+  _transferMap: {fileID: 6785449645184139630}
+  _tutorialOverlay: {fileID: 907053049592271737}
+  _releaseSlider: {fileID: 231081783265917234}
+  _essenceWallets:
+  - {fileID: 9119926714665536923}
+  - {fileID: 5333403952414489159}
 --- !u!1 &8461869832559671915
 GameObject:
   m_ObjectHideFlags: 0
@@ -12614,7 +12641,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5674834463088570894}
+    m_TransformParent: {fileID: 231081782404602762}
     m_Modifications:
     - target: {fileID: 3788780335049244995, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_IsActive
@@ -12638,7 +12665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12714,6 +12741,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+--- !u!224 &4008348855519307170 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+  m_PrefabInstance: {fileID: 231081783603144867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9119926714665536923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9053513636831995192, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
@@ -12725,11 +12757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afd30aa1367e644c97338f1e8005d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4008348855519307170 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-  m_PrefabInstance: {fileID: 231081783603144867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &672523030408871686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13125,7 +13152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3742301347361590754, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3742301347361590754, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13201,6 +13228,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
+--- !u!224 &957045605861023092 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3742301347361590754, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
+  m_PrefabInstance: {fileID: 4514657240132997270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &907053049592271737 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3616732613271880687, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
@@ -13212,11 +13244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57f3c62fde5dc84aac55671e14a651d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &957045605861023092 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3742301347361590754, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
-  m_PrefabInstance: {fileID: 4514657240132997270}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8533260373643277279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13330,13 +13357,13 @@ PrefabInstance:
       objectReference: {fileID: 2180264, guid: f04f302a3d64bcb49af933c135ccecba, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc4970e23cd05794980166e947e76ca6, type: 3}
---- !u!224 &231081783867580675 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8455733361968747228, guid: fc4970e23cd05794980166e947e76ca6, type: 3}
-  m_PrefabInstance: {fileID: 8533260373643277279}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &231081783867580672 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8455733361968747231, guid: fc4970e23cd05794980166e947e76ca6, type: 3}
+  m_PrefabInstance: {fileID: 8533260373643277279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &231081783867580675 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8455733361968747228, guid: fc4970e23cd05794980166e947e76ca6, type: 3}
   m_PrefabInstance: {fileID: 8533260373643277279}
   m_PrefabAsset: {fileID: 0}

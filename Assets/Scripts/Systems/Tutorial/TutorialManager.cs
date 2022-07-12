@@ -4,9 +4,9 @@ using System;
 public class TutorialManager : MonoBehaviour
 {
     private Tutorial _tutorialData = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
+    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
     public TutorialManager Initialize()
     {
@@ -56,6 +56,6 @@ public class TutorialManager : MonoBehaviour
             Debug.LogError($"Tutorial result is null!");
         }
 
-        _uiManager.StartTutorial(tutorialStep);
+        _habitatUI.StartTutorial(tutorialStep);
     }
 }

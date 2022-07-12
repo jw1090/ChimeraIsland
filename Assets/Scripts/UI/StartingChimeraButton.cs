@@ -28,7 +28,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _habitatManager.AddNewChimera(chimeraComp);
 
         _tutorialManager.ResetTutorialProgress();
-        _uiManager.DisableHabitatUI();
+        _uiManager.HabitatUI.DisableUI();
         _uiManager.DisableAllSceneTypeUI();
         _sceneChanger.LoadStonePlains();
     }

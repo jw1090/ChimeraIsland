@@ -37,7 +37,7 @@ public class LevelLoader : AsyncLoader
         Initialize();
         ProcessQueuedCallbacks();
 
-        InitializeUIElements();
+        LoadUIElements();
 
         switch (_sceneType)
         {
@@ -135,7 +135,7 @@ public class LevelLoader : AsyncLoader
         return true;
     }
 
-    private void InitializeUIElements()
+    private void LoadUIElements()
     {
         if (_uiManager == null)
         {
@@ -144,7 +144,7 @@ public class LevelLoader : AsyncLoader
 
         if(_sceneType == SceneType.Habitat)
         {
-            _uiManager.InitializeHabitatUI();
+            _uiManager.HabitatUI.LoadHabitatSpecificUI();
         }
 
         _uiManager.ShowUIByScene(_sceneType);

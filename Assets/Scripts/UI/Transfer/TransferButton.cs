@@ -6,13 +6,13 @@ public class TransferButton : MonoBehaviour, IPointerClickHandler
     [SerializeField] private HabitatType _habitatType = HabitatType.None;
     private TransferMap _transferMap = null;
     private Habitat _habitat = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
 
     public void Initialize(TransferMap transferMap)
     {
         _transferMap = transferMap;
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
-        _uiManager = ServiceLocator.Get<UIManager>();
+        _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -45,7 +45,7 @@ public class TransferButton : MonoBehaviour, IPointerClickHandler
         }
 
         _transferMap.ResetChimera();
-        _uiManager.ResetHabitatUI();
+        _habitatUI.ResetUI();
 
         Debug.Log($"<color=Cyan> Transfer Success! {_transferMap.ChimeraToTransfer} is now in {_habitatType}!</color>");
     }

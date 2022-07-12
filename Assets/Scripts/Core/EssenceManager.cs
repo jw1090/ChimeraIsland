@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class EssenceManager : MonoBehaviour
 {
+    private HabitatUI _habitatUI = null;
     private PersistentData _persistentData = null;
-    private UIManager _uiManager = null;
     private bool _essenceLoaded = false;
     private int _currentEssence = 100;
 
     public int CurrentEssence { get => _currentEssence; }
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
+    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
     public EssenceManager Initialize()
     {
@@ -33,7 +33,7 @@ public class EssenceManager : MonoBehaviour
     public void IncreaseEssence(int amount)
     {
         _currentEssence += amount;
-        _uiManager.UpdateWallets();
+        _habitatUI.UpdateWallets();
     }
 
     public bool SpendEssence(int amount)
@@ -45,9 +45,9 @@ public class EssenceManager : MonoBehaviour
 
         _currentEssence -= amount;
 
-        if (_uiManager != null)
+        if (_habitatUI != null)
         {
-            _uiManager.UpdateWallets();
+            _habitatUI.UpdateWallets();
         }
 
         return true;
@@ -57,9 +57,9 @@ public class EssenceManager : MonoBehaviour
     {
         _currentEssence = amount;
 
-        if (_uiManager != null)
+        if (_habitatUI != null)
         {
-            _uiManager.UpdateWallets();
+            _habitatUI.UpdateWallets();
         }
     }
 }
