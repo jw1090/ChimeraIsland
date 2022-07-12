@@ -3,19 +3,20 @@ using UnityEngine;
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
+    private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
-    private UIManager _uiManager = null;
     private TutorialSteps _tutorialData = null;
     private int _tutorialStep = -1;
 
-    public void Initialize()
+    public void Initialize(HabitatUI habitatUI)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
+        _habitatUI = habitatUI;
     }
 
     public void ShowOverlay(TutorialSteps tutorialSteps)
     {
+        _tutorialStep = -1;
         _tutorialData = tutorialSteps;
         _textInfo.gameObject.SetActive(true);
         NextStep();
@@ -24,8 +25,9 @@ public class UITutorialOverlay : MonoBehaviour
     public void NextStep()
     {
         _tutorialStep++;
-        Debug.Log($"Current Tutorial Step: { _tutorialStep}");
         ShowStep();
+
+        // Debug.Log($"Current Tutorial Step: { _tutorialStep}");
     }
 
     public void ShowStep()
@@ -33,17 +35,20 @@ public class UITutorialOverlay : MonoBehaviour
         if(_tutorialStep >= _tutorialData.StepData.Length)
         {
             _tutorialData.finished = true;
-            _uiManager.EndTutorial();
+            _habitatUI.EndTutorial();
             return;
         }
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
+
         if(loadedStep.activateElement != UIElementType.None)
         {
-            _uiManager.EnableUIByType(loadedStep.activateElement);
+            _habitatUI.EnableHabitatUIByType(loadedStep.activateElement);
         }
+
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
 
-        Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
        _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
+
+        // Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
     }
 }

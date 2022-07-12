@@ -37,7 +37,7 @@ public class LevelLoader : AsyncLoader
         Initialize();
         ProcessQueuedCallbacks();
 
-        InitializeUIElements();
+        LoadUIElements();
 
         switch (_sceneType)
         {
@@ -96,6 +96,11 @@ public class LevelLoader : AsyncLoader
         }
 
         _tutorialManager.SetupTutorial();
+
+        if(_tutorialManager.FirstStepCheck() == true)
+        {
+            _uiManager.HabitatUI.DisableUI();
+        }
     }
 
     private bool LastSessionHabitatCheck()
@@ -135,7 +140,7 @@ public class LevelLoader : AsyncLoader
         return true;
     }
 
-    private void InitializeUIElements()
+    private void LoadUIElements()
     {
         if (_uiManager == null)
         {
@@ -144,10 +149,12 @@ public class LevelLoader : AsyncLoader
 
         if(_sceneType == SceneType.Habitat)
         {
-            _uiManager.InitializeHabitatUI();
+            _uiManager.HabitatUI.LoadHabitatSpecificUI();
         }
 
         _uiManager.ShowUIByScene(_sceneType);
+
+
     }
 
     private void LoadChimeras()

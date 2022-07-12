@@ -23,34 +23,13 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
-        if (_uiManager.NewGameButton != null)
-        {
-            CreateButtonListener(_uiManager.NewGameButton, NewGame);
-        }
-        if (_uiManager.LoadGameButton != null)
-        {
-            CreateButtonListener(_uiManager.LoadGameButton, LoadGame);
-        }
-        if (_uiManager.MainMenuButton != null)
-        {
-            CreateButtonListener(_uiManager.MainMenuButton, LoadMainMenu);
-        }
-        if (_uiManager.WorldMapButton != null)
-        {
-            CreateButtonListener(_uiManager.WorldMapButton, LoadWorldMap);
-        }
-        if (_uiManager.StonePlainsButton != null)
-        {
-            CreateButtonListener(_uiManager.StonePlainsButton, LoadStonePlains);
-        }
-        if (_uiManager.TreeOfLifeButton != null)
-        {
-            CreateButtonListener(_uiManager.TreeOfLifeButton, LoadTreeOfLife);
-        }
-        if (_uiManager.AshLandsButton != null)
-        {
-            CreateButtonListener(_uiManager.AshLandsButton, LoadAshlands);
-        }
+        CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
+        CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
+        CreateButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
+        CreateButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
+        CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
+        CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
+        CreateButtonListener(_uiManager.WorldMapUI.AshLandsButton, LoadAshlands);
     }
 
     private void CreateButtonListener(Button button, Action action)
@@ -61,8 +40,12 @@ public class SceneChanger : MonoBehaviour
             (delegate
             {
                 _uiManager.DisableAllSceneTypeUI();
-                action();
+                action?.Invoke();
             });
+        }
+        else
+        {
+            Debug.LogError($"{button} is null! Please Fix");
         }
     }
 
@@ -90,7 +73,7 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        _uiManager.ResetHabitatUI();
+        _uiManager.HabitatUI.ResetUI();
         SaveSessionData(true);
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU_SCENE);
     }

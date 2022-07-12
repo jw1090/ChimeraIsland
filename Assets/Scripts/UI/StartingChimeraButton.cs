@@ -5,6 +5,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     private HabitatManager _habitatManager = null;
+    private PersistentData _persistentData = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
     private TutorialManager _tutorialManager = null;
@@ -13,6 +14,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
     public void Initialize(UIManager uiManager)
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
@@ -28,7 +30,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _habitatManager.AddNewChimera(chimeraComp);
 
         _tutorialManager.ResetTutorialProgress();
-        _uiManager.DisableHabitatUI();
+
         _uiManager.DisableAllSceneTypeUI();
         _sceneChanger.LoadStonePlains();
     }

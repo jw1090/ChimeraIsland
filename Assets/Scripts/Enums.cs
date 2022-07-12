@@ -89,4 +89,21 @@ public enum UIElementType
     OpenDetailsButton,
     SettingsButton,
     WorldMapIcon,
+    MarketplaceFacilityTab,
+    MarketplaceChimeraTab,
+}
+
+public enum TutorialIds
+{
+    StarterTutorial,
+    MarketplaceUnlock,
+    MarketplaceFacilitiesTutorial,
+    ChimeraAttributesUnlock,
+    AttributesTutorail,
+    ExpeditionsUnlock,
+    ExpeditionsExplenation,
+    ExpeditionsFailureTutorial,
+    ExpeditionsSuccessTutorial,
+    MarketplaceChimeraTutorial,
+    WorldMapUnlock,
 }

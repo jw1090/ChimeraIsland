@@ -3,12 +3,14 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private Tutorial _tutorialData = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
 
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
     private bool _tutorialsEnabled = true;
 
     public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
+    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
     public TutorialManager Initialize()
     {
@@ -45,10 +47,13 @@ public class TutorialManager : MonoBehaviour
 
     public void SetupTutorial()
     {
+        int tutorialId = 0;
+        ShowTutorial(tutorialId);
         if (!_tutorialsEnabled) { return; }
 
         int tutorialId = 0;
         ShowTutorial(tutorialId);
+        ShowTutorial((int)TutorialIds.StarterTutorial);
     }
 
     public void SaveTutorialProgress()
@@ -85,6 +90,16 @@ public class TutorialManager : MonoBehaviour
             Debug.LogError($"Tutorial result is null!");
         }
 
-        _uiManager.StartTutorial(tutorialStep);
+        _habitatUI.StartTutorial(tutorialStep);
+    }
+
+    public bool FirstStepCheck()
+    {
+        if(_tutorialData.Tutorials[(int)TutorialIds.StarterTutorial].finished == false)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
