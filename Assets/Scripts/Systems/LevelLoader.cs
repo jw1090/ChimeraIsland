@@ -89,6 +89,7 @@ public class LevelLoader : AsyncLoader
         {
             if (_habitat != null)
             {
+                SetupHabitatAudio();
                 LoadFacilities();
                 LoadChimeras();
                 StartHabitatTickTimer();
@@ -153,6 +154,11 @@ public class LevelLoader : AsyncLoader
     private void LoadChimeras()
     {
         _habitatManager.SpawnChimerasForHabitat();
+    }
+
+    private void SetupHabitatAudio()
+    {
+        _habitatManager.SetupHabitatAudio();
     }
 
     private void LoadFacilities()

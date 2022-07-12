@@ -220,6 +220,11 @@ public class HabitatManager : MonoBehaviour
         _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
     }
 
+    public void SetupHabitatAudio()
+    {
+        ServiceLocator.Get<AudioManager>().SetMusicForHabitat(_currentHabitat.Type);
+    }
+
     public void BuildFacilitiesForHabitat()
     {
         var facilitiesToBuild = GetFaclitiesForHabitat(_currentHabitat.Type);
