@@ -12,4 +12,5 @@ public class TutorialStepData
 {
     public string description;
     public ChimeraType type;
+    public UIElementType activateElement = UIElementType.None;
 }
