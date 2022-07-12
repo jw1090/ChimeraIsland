@@ -36,7 +36,7 @@ public class Chimera : MonoBehaviour
     private BoxCollider _boxCollider = null;
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private EssenceManager _essenceManager = null;
     private HabitatType _habitatType = HabitatType.None;
 
@@ -93,7 +93,7 @@ public class Chimera : MonoBehaviour
     {
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
+        _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
@@ -164,7 +164,7 @@ public class Chimera : MonoBehaviour
             int happinessAmount = -1;
 
             ChangeHappiness(happinessAmount);
-            _uiManager.UpdateDetails();
+            _habitatUI.UpdateDetails();
         }
     }
 
@@ -244,7 +244,7 @@ public class Chimera : MonoBehaviour
             if (canEvolve == true)
             {
                 Evolve(evolution);
-                _uiManager.UpdateDetails();
+                _habitatUI.UpdateDetails();
             }
         }
     }
@@ -271,7 +271,7 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        _uiManager.UpdateDetails();
+        _habitatUI.UpdateDetails();
 
         ++_levelUpTracker;
         if (_levelUpTracker % 3 == 0)
