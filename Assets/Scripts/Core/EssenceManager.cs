@@ -30,6 +30,15 @@ public class EssenceManager : MonoBehaviour
         }
     }
 
+    public void ResetEssence()
+    {
+        _currentEssence = 100;
+        if (_habitatUI != null)
+        {
+            _habitatUI.UpdateWallets();
+        }
+    }
+
     public void IncreaseEssence(int amount)
     {
         _currentEssence += amount;
@@ -51,15 +60,5 @@ public class EssenceManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void UpdateEssence(int amount)
-    {
-        _currentEssence = amount;
-
-        if (_habitatUI != null)
-        {
-            _habitatUI.UpdateWallets();
-        }
     }
 }
