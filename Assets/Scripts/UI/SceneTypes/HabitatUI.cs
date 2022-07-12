@@ -15,6 +15,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _marketplaceButton = null;
     [SerializeField] private Button _settingsButton = null;
     [SerializeField] private GameObject _standardUI = null;
+    [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private GameObject _expeditionPanel = null;
     [SerializeField] private GameObject _settingsPanel = null;
@@ -105,15 +106,16 @@ public class HabitatUI : MonoBehaviour
         _expeditionButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
-        _settingsButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
+        _closeDetailsButton.gameObject.SetActive(false);
+        _marketplaceButton.gameObject.SetActive(false);
+        _detailsButtons.gameObject.SetActive(false);
     }
 
     public void ResetUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
-        _marketplaceButton.gameObject.SetActive(true);
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
@@ -169,7 +171,6 @@ public class HabitatUI : MonoBehaviour
 
         _openDetailsButton.gameObject.SetActive(false);
         _standardUI.gameObject.SetActive(false);
-        _marketplaceButton.gameObject.SetActive(false);
     }
 
     public void OpenExpedition()

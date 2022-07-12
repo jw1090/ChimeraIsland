@@ -16,6 +16,7 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowOverlay(TutorialSteps tutorialSteps)
     {
+        _tutorialStep = -1;
         _tutorialData = tutorialSteps;
         _textInfo.gameObject.SetActive(true);
         NextStep();

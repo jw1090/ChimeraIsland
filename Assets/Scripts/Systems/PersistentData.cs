@@ -6,6 +6,7 @@ public class PersistentData : MonoBehaviour
     private EssenceManager _essenceManager = null;
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
+    private TutorialManager _tutorialManager = null;
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
 
@@ -17,12 +18,13 @@ public class PersistentData : MonoBehaviour
 
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
+    public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetLastSessionTutorial(int lst) { _globalSaveData.lastSessionTutorial = lst; }
+
 
     public PersistentData Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
-
         LoadData();
 
         return this;
@@ -45,6 +47,9 @@ public class PersistentData : MonoBehaviour
         GameSaveData newData = new GameSaveData();
         UpdateGameSaveData(newData);
 
+        _tutorialManager.ResetTutorialProgress();
+
+        _essenceManager.ResetEssence();
         _habitatManager.ResetDictionaries();
         _habitatManager.LoadHabitatData();
 

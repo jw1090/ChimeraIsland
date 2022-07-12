@@ -96,6 +96,11 @@ public class LevelLoader : AsyncLoader
         }
 
         _tutorialManager.SetupTutorial();
+
+        if(_tutorialManager.FirstStepCheck() == true)
+        {
+            _uiManager.HabitatUI.DisableUI();
+        }
     }
 
     private bool LastSessionHabitatCheck()
@@ -148,6 +153,8 @@ public class LevelLoader : AsyncLoader
         }
 
         _uiManager.ShowUIByScene(_sceneType);
+
+
     }
 
     private void LoadChimeras()

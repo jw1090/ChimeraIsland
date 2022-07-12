@@ -24,8 +24,7 @@ public class TutorialManager : MonoBehaviour
 
     public void SetupTutorial()
     {
-        int tutorialId = 0;
-        ShowTutorial(tutorialId);
+        ShowTutorial((int)TutorialIds.StarterTutorial);
     }
 
     public void SaveTutorialProgress()
@@ -57,5 +56,15 @@ public class TutorialManager : MonoBehaviour
         }
 
         _habitatUI.StartTutorial(tutorialStep);
+    }
+
+    public bool FirstStepCheck()
+    {
+        if(_tutorialData.Tutorials[(int)TutorialIds.StarterTutorial].finished == false)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
