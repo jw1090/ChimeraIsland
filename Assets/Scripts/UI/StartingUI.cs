@@ -1,15 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StartingUI : MonoBehaviour
 {
-    [SerializeField] private List<StartingChimeraButton> _startingChimeraButtons;
+    [SerializeField] private StartingChimeraButton _optionAChimeraButton;
+    [SerializeField] private StartingChimeraButton _optionBChimeraButton;
+    [SerializeField] private StartingChimeraButton _optionCChimeraButton;
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
-        foreach (StartingChimeraButton button in _startingChimeraButtons)
-        {
-            button.Initialize();
-        }
+        _optionAChimeraButton.Initialize(uiManager);
+        _optionBChimeraButton.Initialize(uiManager);
+        _optionCChimeraButton.Initialize(uiManager);
     }
 }

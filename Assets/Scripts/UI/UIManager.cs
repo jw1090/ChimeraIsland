@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _startingUI.Initialize();
+        _startingUI.Initialize(this);
 
         DisableAllSceneTypeUI();
 
