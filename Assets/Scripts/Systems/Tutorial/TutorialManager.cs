@@ -4,8 +4,8 @@ public class TutorialManager : MonoBehaviour
 {
     private Tutorial _tutorialData = null;
     private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
     private bool _tutorialsEnabled = true;
 
@@ -51,7 +51,6 @@ public class TutorialManager : MonoBehaviour
         ShowTutorial(tutorialId);
         if (!_tutorialsEnabled) { return; }
 
-        int tutorialId = 0;
         ShowTutorial(tutorialId);
         ShowTutorial((int)TutorialIds.StarterTutorial);
     }
