@@ -120,9 +120,9 @@ public class GameLoader : AsyncLoader
         uiManagerGO.name = "UI Manager";
         var uiManagerComp = uiManagerGO.GetComponent<UIManager>().Initialize();
         ServiceLocator.Register<UIManager>(uiManagerComp);
-        inputManagerComp.SetUIManager(uiManagerComp);
-        essenceManagerComp.SetUIManager(uiManagerComp);
-        tutorialComp.SetUIManager(uiManagerComp);
+        inputManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
+        essenceManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
+        tutorialComp.SetHabitatUI(uiManagerComp.HabitatUI);
         sceneChangerComp.SetupUIListeners();
 
         yield return null;
