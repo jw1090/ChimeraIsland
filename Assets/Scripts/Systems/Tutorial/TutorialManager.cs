@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
-    private Tutorial _tutorialData = null;
+    private TutorialData _tutorialData = null;
     private HabitatUI _habitatUI = null;
+    private TutorialStageType _currentStage = TutorialStageType.None;
 
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
     private bool _tutorialsEnabled = true;
@@ -18,17 +19,14 @@ public class TutorialManager : MonoBehaviour
 
         LoadTutorialFromJson();
 
+        CurrentStageInitialize();
+
         return this;
     }
 
     private void OnDestroy()
     {
         DebugConfig.DebugConfigLoaded -= OnDebugConfigLoaded;
-    }
-
-    private void LoadTutorialFromJson()
-    {
-        _tutorialData = FileHandler.ReadFromJSON<Tutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
     }
 
     private void OnDebugConfigLoaded()
@@ -40,19 +38,35 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    public void SetupTutorial()
+    private void LoadTutorialFromJson()
+    {
+        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+    }
+
+    private void CurrentStageInitialize()
     {
         if (_tutorialsEnabled == false) { return; }
 
-        ShowTutorial((int)TutorialIds.StarterTutorial);
+        foreach (TutorialStageData tutorialStage in _tutorialData.Tutorials)
+        {
+            if (tutorialStage.finished)
+            {
+                ++_currentStage;
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
     public void SaveTutorialProgress()
     {
         if (_tutorialsEnabled == false) { return; }
 
-        Debug.Log("Tutorial progress saved.");
         FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+
+        Debug.Log("Tutorial progress saved.");
     }
 
     public void ResetTutorialProgress()
@@ -63,34 +77,46 @@ public class TutorialManager : MonoBehaviour
         {
             tutorial.finished = false;
         }
+
+        _currentStage = 0;
+
         SaveTutorialProgress();
+
+        Debug.Log($"<color=Red> Tutorial progress reset. </color>");
     }
 
-    private void ShowTutorial(int tutorialId)
+    public void ShowTutorialStage(TutorialStageType tutorialType)
     {
         if (_tutorialsEnabled == false) { return; }
 
-        TutorialSteps tutorialStep = _tutorialData.Tutorials[tutorialId];
-        if (tutorialStep.finished == true)
-        {
-            Debug.Log("Finished Tutorial");
-            return;
-        }
-        if (tutorialStep == null)
-        {
-            Debug.LogError($"Tutorial result is null!");
-        }
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
-        _habitatUI.StartTutorial(tutorialStep);
+        Debug.Log($"Showing tutorial Stage {(int)_currentStage}: {_currentStage}");
+        _habitatUI.StartTutorial(tutorialStage);
     }
 
-    public bool FirstStepCheck()
+    public void TutorialStageCheck()
     {
-        if(_tutorialData.Tutorials[(int)TutorialIds.StarterTutorial].finished == false)
-        {
-            return true;
-        }
+        if (_tutorialsEnabled == false) { return; }
 
-        return false;
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
+
+        if (_currentStage == TutorialStageType.Intro && tutorialStage.finished == false)
+        {
+            _habitatUI.DisableUI();
+
+            ShowTutorialStage(TutorialStageType.Intro);
+        }
+        else
+        {
+            Debug.Log($"Last tutorial was Stage {(int)_currentStage}: {_currentStage}");
+
+            TutorialStageUILoad();
+        }
+    }
+
+    private void TutorialStageUILoad()
+    {
+
     }
 }
