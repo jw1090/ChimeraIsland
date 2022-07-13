@@ -4,19 +4,16 @@ public class TutorialManager : MonoBehaviour
 {
     private Tutorial _tutorialData = null;
     private HabitatUI _habitatUI = null;
-    private UIManager _uiManager = null;
 
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
     private bool _tutorialsEnabled = true;
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
     public TutorialManager Initialize()
     {
-#if CHIMERA_DEBUG
         DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
-#endif
+
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         LoadTutorialFromJson();
@@ -26,9 +23,7 @@ public class TutorialManager : MonoBehaviour
 
     private void OnDestroy()
     {
-#if CHIMERA_DEBUG
         DebugConfig.DebugConfigLoaded -= OnDebugConfigLoaded;
-#endif        
     }
 
     private void LoadTutorialFromJson()
@@ -39,7 +34,7 @@ public class TutorialManager : MonoBehaviour
     private void OnDebugConfigLoaded()
     {
         _tutorialsEnabled = ServiceLocator.Get<DebugConfig>().TutorialsEnabled;
-        if (!_tutorialsEnabled)
+        if (_tutorialsEnabled == false)
         {
             Debug.LogWarning("Tutorials are DISABLED");
         }
@@ -47,17 +42,14 @@ public class TutorialManager : MonoBehaviour
 
     public void SetupTutorial()
     {
-        int tutorialId = 0;
-        ShowTutorial(tutorialId);
-        if (!_tutorialsEnabled) { return; }
+        if (_tutorialsEnabled == false) { return; }
 
-        ShowTutorial(tutorialId);
         ShowTutorial((int)TutorialIds.StarterTutorial);
     }
 
     public void SaveTutorialProgress()
     {
-        if (!_tutorialsEnabled) { return; }
+        if (_tutorialsEnabled == false) { return; }
 
         Debug.Log("Tutorial progress saved.");
         FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
@@ -65,7 +57,7 @@ public class TutorialManager : MonoBehaviour
 
     public void ResetTutorialProgress()
     {
-        if (!_tutorialsEnabled) { return; }
+        if (_tutorialsEnabled == false) { return; }
 
         foreach (var tutorial in _tutorialData.Tutorials)
         {
@@ -76,7 +68,7 @@ public class TutorialManager : MonoBehaviour
 
     private void ShowTutorial(int tutorialId)
     {
-        if (!_tutorialsEnabled) { return; }
+        if (_tutorialsEnabled == false) { return; }
 
         TutorialSteps tutorialStep = _tutorialData.Tutorials[tutorialId];
         if (tutorialStep.finished == true)

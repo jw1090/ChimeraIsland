@@ -7,7 +7,7 @@ public class DebugConfig : MonoBehaviour, IGameModule
     public static event Action DebugConfigLoaded = null;
 
     [SerializeField] private bool _enableTutorials = true;
-    public bool TutorialsEnabled { get { return _enableTutorials; } }
+    public bool TutorialsEnabled { get => _enableTutorials; }
 
     public IEnumerator LoadModule()
     {
