@@ -108,6 +108,8 @@ public class GameLoader : AsyncLoader
         tutorialGO.transform.SetParent(systemsParent);
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
+        persistentDataComp.SetTutorialManager(tutorialComp);
+        inputManagerComp.SetTutorialManager(tutorialComp);
 
         var chimeraCreatorGO = new GameObject("Chimera Creator");
         chimeraCreatorGO.transform.SetParent(systemsParent);
@@ -123,6 +125,7 @@ public class GameLoader : AsyncLoader
         uiManagerGO.name = "UI Manager";
         var uiManagerComp = uiManagerGO.GetComponent<UIManager>().Initialize();
         ServiceLocator.Register<UIManager>(uiManagerComp);
+
         inputManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
         essenceManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
         tutorialComp.SetHabitatUI(uiManagerComp.HabitatUI);

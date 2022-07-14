@@ -79,14 +79,31 @@ public enum TutorialIconType
     None = -1,
 }
 
-public enum UIElementType
+public enum TutorialUIElementType
 {
     None = -1,
     All,
-    EssenceWallet,
-    ExpeditionButton,
     MarketplaceButton,
     OpenDetailsButton,
-    SettingsButton,
-    WorldMapIcon,
+    ExpeditionButton,
+    WorldMapButton,
+    MarketplaceFacilityTab,
+    MarketplaceChimeraTab,
+}
+
+public enum TutorialStageType
+{
+    None = -1,
+    Intro,
+    Marketplace,
+    PurchasingFacilities,
+    Details,
+    Expeditions,
+    NewFacilities,
+    Evolution,
+    Fossils,
+    WorldMap,
+    NewHabitats,
+    TreeOfLife,
+    AshLands,
 }

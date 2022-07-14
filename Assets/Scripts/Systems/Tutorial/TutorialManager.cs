@@ -1,61 +1,178 @@
 using UnityEngine;
-using System;
 
 public class TutorialManager : MonoBehaviour
 {
-    private Tutorial _tutorialData = null;
+    private TutorialData _tutorialData = null;
     private HabitatUI _habitatUI = null;
+    private TutorialStageType _currentStage = TutorialStageType.None;
+
+    public bool TutorialsEnabled { get => _tutorialsEnabled; }
+    private bool _tutorialsEnabled = true;
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
     public TutorialManager Initialize()
     {
+        DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
+
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         LoadTutorialFromJson();
 
+        CurrentStageInitialize();
+
         return this;
     }
 
-    private void LoadTutorialFromJson()
-    { 
-        _tutorialData = FileHandler.ReadFromJSON<Tutorial>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+    private void OnDestroy()
+    {
+        DebugConfig.DebugConfigLoaded -= OnDebugConfigLoaded;
     }
 
-    public void SetupTutorial()
+    private void OnDebugConfigLoaded()
     {
-        int tutorialId = 0;
-        ShowTutorial(tutorialId);
+        _tutorialsEnabled = ServiceLocator.Get<DebugConfig>().TutorialsEnabled;
+        if (_tutorialsEnabled == false)
+        {
+            Debug.LogWarning("Tutorials are DISABLED");
+        }
+    }
+
+    private void LoadTutorialFromJson()
+    {
+        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+    }
+
+    private void CurrentStageInitialize()
+    {
+        if (_tutorialsEnabled == false) { return; }
+
+        foreach (TutorialStageData tutorialStage in _tutorialData.Tutorials)
+        {
+            if (tutorialStage.finished)
+            {
+                ++_currentStage;
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
     public void SaveTutorialProgress()
     {
-        Debug.Log("Tutorial progress saved.");
+        if (_tutorialsEnabled == false) { return; }
+
         FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+
+        Debug.Log("Tutorial progress saved.");
     }
 
     public void ResetTutorialProgress()
     {
-        foreach(var tutorial in _tutorialData.Tutorials)
+        if (_tutorialsEnabled == false) { return; }
+
+        foreach (var tutorial in _tutorialData.Tutorials)
         {
             tutorial.finished = false;
         }
+
+        _currentStage = 0;
+
         SaveTutorialProgress();
+
+        Debug.Log($"<color=Red> Tutorial progress reset. </color>");
     }
 
-    private void ShowTutorial(int tutorialId)
+    public void ShowTutorialStage(TutorialStageType tutorialType)
     {
-        TutorialSteps tutorialStep = _tutorialData.Tutorials[tutorialId];
-        if(tutorialStep.finished == true)
-        {
-            Debug.Log("Finished Tutorial");
-            return;
-        }
-        if (tutorialStep == null)
-        {
-            Debug.LogError($"Tutorial result is null!");
-        }
+        if (_tutorialsEnabled == false) { return; }
 
-        _habitatUI.StartTutorial(tutorialStep);
+        _currentStage = tutorialType;
+
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
+
+        Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
+        _habitatUI.StartTutorial(tutorialStage);
+    }
+
+    public void TutorialStageCheck()
+    {
+        if (_tutorialsEnabled == false) { return; }
+
+        _habitatUI.DisableUI();
+
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
+
+        if (_currentStage == TutorialStageType.Intro && tutorialStage.finished == false)
+        {
+            ShowTutorialStage(TutorialStageType.Intro);
+        }
+        else
+        {
+            Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
+
+            EnableUIByProgress();
+        }
+    }
+
+    private void EnableUIByProgress()
+    {
+        switch (_currentStage)
+        {
+            case TutorialStageType.Intro:
+                break;
+            case TutorialStageType.Marketplace:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                break;
+            case TutorialStageType.PurchasingFacilities:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                break;
+            case TutorialStageType.Details:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                break;
+            case TutorialStageType.Expeditions:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+                break;
+            case TutorialStageType.NewFacilities:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+                break;
+            case TutorialStageType.Evolution:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+                break;
+            case TutorialStageType.Fossils:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+                // TODO: Fossil Currency UI Element
+                break;
+            case TutorialStageType.WorldMap:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+                // TODO: Fossil Currency UI Element
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
+                break;
+            case TutorialStageType.NewHabitats:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
+                break;
+            case TutorialStageType.TreeOfLife:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
+                break;
+            case TutorialStageType.AshLands:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
+                break;
+            default:
+                Debug.LogError($"{_currentStage} is invalid. Please change!");
+                break;
+        }
     }
 }

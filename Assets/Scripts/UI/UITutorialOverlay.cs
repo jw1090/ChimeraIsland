@@ -5,7 +5,7 @@ public class UITutorialOverlay : MonoBehaviour
     [SerializeField] private TextInfo _textInfo = null;
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
-    private TutorialSteps _tutorialData = null;
+    private TutorialStageData _tutorialData = null;
     private int _tutorialStep = -1;
 
     public void Initialize(HabitatUI habitatUI)
@@ -14,8 +14,9 @@ public class UITutorialOverlay : MonoBehaviour
         _habitatUI = habitatUI;
     }
 
-    public void ShowOverlay(TutorialSteps tutorialSteps)
+    public void ShowOverlay(TutorialStageData tutorialSteps)
     {
+        _tutorialStep = -1;
         _tutorialData = tutorialSteps;
         _textInfo.gameObject.SetActive(true);
         NextStep();
@@ -37,11 +38,11 @@ public class UITutorialOverlay : MonoBehaviour
             _habitatUI.EndTutorial();
             return;
         }
-        TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
 
-        if(loadedStep.activateElement != UIElementType.None)
+        TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
+        if(loadedStep.activateElement != TutorialUIElementType.None)
         {
-            _habitatUI.EnableHabitatUIByType(loadedStep.activateElement);
+            _habitatUI.EnableTutorialUIByType(loadedStep.activateElement);
         }
 
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);

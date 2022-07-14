@@ -379,11 +379,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 231081782404602762}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -25}
+  m_AnchoredPosition: {x: 40, y: -25}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1238727956
@@ -1916,15 +1916,15 @@ RectTransform:
   m_GameObject: {fileID: 231081782400414685}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.56049585, y: 2.7803037, z: 0.56049585}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 231081782404602762}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -25}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 170, y: -25}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &231081782400414673
 CanvasRenderer:
@@ -2035,8 +2035,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 231081782400414684}
   - {fileID: 1238727953}
+  - {fileID: 231081782400414684}
   - {fileID: 231081782112256327}
   - {fileID: 231081783664939836}
   - {fileID: 2305801982808644348}
@@ -10566,8 +10566,8 @@ MonoBehaviour:
   _closeDetailsButton: {fileID: 231081783895780013}
   _expeditionButton: {fileID: 3797538574632568588}
   _marketplaceButton: {fileID: 231081783664939839}
-  _settingsButton: {fileID: 1238727954}
   _standardUI: {fileID: 231081782404602763}
+  _detailsButtons: {fileID: 231081782112256324}
   _detailsFolder: {fileID: 231081782278739542}
   _expeditionPanel: {fileID: 932588008018163459}
   _settingsPanel: {fileID: 1567368642}
@@ -13158,6 +13158,10 @@ PrefabInstance:
     - target: {fileID: 2850498414916181489, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
       propertyPath: m_Name
       value: TutorialOverlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850498414916181489, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3742301347361590754, guid: 7866181fccbb37149bd20b7e5b6c4c36, type: 3}
       propertyPath: m_Pivot.x
