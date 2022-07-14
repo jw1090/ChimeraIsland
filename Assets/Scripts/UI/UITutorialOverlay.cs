@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private TextInfo _textInfo = null;
@@ -40,9 +40,9 @@ public class UITutorialOverlay : MonoBehaviour
         }
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
-        if(loadedStep.activateElement != TutorialUIElementType.None)
+        if(loadedStep.activateElement != TutorialUIElementType.None.ToString())
         {
-            _habitatUI.EnableTutorialUIByType(loadedStep.activateElement);
+            _habitatUI.EnableTutorialUIByType((TutorialUIElementType) Enum.Parse(typeof(TutorialUIElementType),loadedStep.activateElement));
         }
 
         Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);

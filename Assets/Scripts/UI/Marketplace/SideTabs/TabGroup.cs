@@ -8,8 +8,11 @@ public class TabGroup : MonoBehaviour
     [SerializeField] private Color _tabIdle;
     [SerializeField] private Color _tabHover;
     [SerializeField] private Color _tabActive;
+    [SerializeField] private TabPress _chimeraTab = null;
     private List<TabPress> _tabButtons = new List<TabPress>();
     private TabPress _selectedTab = null;
+
+    public TabPress ChimeraTab { get => _chimeraTab; }
 
     public void Initialize()
     {

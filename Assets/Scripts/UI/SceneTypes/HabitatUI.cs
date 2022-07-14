@@ -75,12 +75,16 @@ public class HabitatUI : MonoBehaviour
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
+                _marketplacePanel.ChimeraTabSetActive(true);
                 break;
             case TutorialUIElementType.ExpeditionButton:
                 _expeditionButton.gameObject.SetActive(true);
                 break;
             case TutorialUIElementType.MarketplaceButton:
                 _marketplaceButton.gameObject.SetActive(true);
+                break;
+            case TutorialUIElementType.MarketplaceChimeraTab:
+                _marketplacePanel.ChimeraTabSetActive(true);
                 break;
             case TutorialUIElementType.OpenDetailsButton:
                 _detailsButtons.gameObject.SetActive(true);
@@ -104,8 +108,10 @@ public class HabitatUI : MonoBehaviour
         _closeDetailsButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _detailsButtons.gameObject.SetActive(false);
+        _marketplacePanel.ChimeraTabSetActive(false);
     }
 
+    // Resetting to the standard UI when nothing has been disabled.
     public void ResetUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
