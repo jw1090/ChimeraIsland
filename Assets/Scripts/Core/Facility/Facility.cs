@@ -43,6 +43,7 @@ public class Facility : MonoBehaviour
     public void BuildFacility()
     {
         BoxCollider _collider = GetComponent<BoxCollider>();
+        ServiceLocator.Get<AudioManager>().SetSFXforFacilities(_facilityType);
         _price = (int)(_price * 7.5);
         ++_currentTier;
 

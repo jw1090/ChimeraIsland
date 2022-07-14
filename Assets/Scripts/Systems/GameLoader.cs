@@ -11,6 +11,9 @@ public class GameLoader : AsyncLoader
     private static GameLoader _instance = null;
     private static int _sceneIndex = 1;
 
+    public static Transform SystemsParent { get => _systemsParent; }
+    private static Transform _systemsParent = null;
+
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
     protected override void Awake()
     {
@@ -43,12 +46,12 @@ public class GameLoader : AsyncLoader
 
         // Setup System GameObject
         GameObject systemsGO = new GameObject("[Services]");
-        Transform systemsParent = systemsGO.transform;
+        _systemsParent = systemsGO.transform;
         DontDestroyOnLoad(systemsGO);
 
         // Queue up loading routines
-        Enqueue(IntializeCoreSystems(systemsParent), 1);
-        Enqueue(InitializeModularSystems(systemsParent), 2);
+        Enqueue(IntializeCoreSystems(_systemsParent), 1);
+        Enqueue(InitializeModularSystems(_systemsParent), 2);
 
         // Check for any CallOnComplete callbacks that were queued through Awake before this instance was made
         ProcessQueuedCallbacks();
