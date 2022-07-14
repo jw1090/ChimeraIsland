@@ -72,6 +72,7 @@ public class HabitatUI : MonoBehaviour
             case TutorialUIElementType.All:
                 _expeditionButton.gameObject.SetActive(true);
                 _marketplaceButton.gameObject.SetActive(true);
+                _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 break;
@@ -82,9 +83,10 @@ public class HabitatUI : MonoBehaviour
                 _marketplaceButton.gameObject.SetActive(true);
                 break;
             case TutorialUIElementType.OpenDetailsButton:
+                _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.WorldMapIcon:
+            case TutorialUIElementType.WorldMapButton:
                 _worldMapButton.gameObject.SetActive(true);
                 break;
             default:

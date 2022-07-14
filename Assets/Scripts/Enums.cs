@@ -84,9 +84,9 @@ public enum TutorialUIElementType
     None = -1,
     All,
     MarketplaceButton,
-    ExpeditionButton,
     OpenDetailsButton,
-    WorldMapIcon,
+    ExpeditionButton,
+    WorldMapButton,
     MarketplaceFacilityTab,
     MarketplaceChimeraTab,
 }
