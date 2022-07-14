@@ -13,7 +13,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _expeditionButton = null;
     [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private Button _settingsButton = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
@@ -64,34 +63,30 @@ public class HabitatUI : MonoBehaviour
         ResetUI();
     }
 
-    public void EnableHabitatUIByType(UIElementType uiElementType)
+    public void EnableTutorialUIByType(TutorialUIElementType uiElementType)
     {
         switch (uiElementType)
         {
-            case UIElementType.All:
-                _essenceWallets[0].gameObject.SetActive(true);
+            case TutorialUIElementType.None:
+                break;
+            case TutorialUIElementType.All:
                 _expeditionButton.gameObject.SetActive(true);
                 _marketplaceButton.gameObject.SetActive(true);
+                _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
-                _settingsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 break;
-            case UIElementType.EssenceWallet:
-                _essenceWallets[0].gameObject.SetActive(true);
-                break;
-            case UIElementType.ExpeditionButton:
+            case TutorialUIElementType.ExpeditionButton:
                 _expeditionButton.gameObject.SetActive(true);
                 break;
-            case UIElementType.MarketplaceButton:
+            case TutorialUIElementType.MarketplaceButton:
                 _marketplaceButton.gameObject.SetActive(true);
                 break;
-            case UIElementType.OpenDetailsButton:
+            case TutorialUIElementType.OpenDetailsButton:
+                _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 break;
-            case UIElementType.SettingsButton:
-                _settingsButton.gameObject.SetActive(true);
-                break;
-            case UIElementType.WorldMapIcon:
+            case TutorialUIElementType.WorldMapButton:
                 _worldMapButton.gameObject.SetActive(true);
                 break;
             default:
@@ -102,7 +97,6 @@ public class HabitatUI : MonoBehaviour
 
     public void DisableUI()
     {
-        _essenceWallets[0].gameObject.SetActive(false);
         _expeditionButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
@@ -194,7 +188,7 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void StartTutorial(TutorialSteps tutorialSteps)
+    public void StartTutorial(TutorialStageData tutorialSteps)
     {
         _tutorialOverlay.gameObject.SetActive(true);
         _tutorialOverlay.ShowOverlay(tutorialSteps);

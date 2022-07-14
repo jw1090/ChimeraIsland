@@ -12,11 +12,9 @@ public class LevelLoader : AsyncLoader
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
 
-    private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private PersistentData _persistentData = null;
-    private SceneChanger _sceneChanger = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
 
@@ -34,6 +32,8 @@ public class LevelLoader : AsyncLoader
 
     private void LevelSetup()
     {
+        Debug.Log($"<color=Lime> {this.GetType()} starting setup. </color>");
+
         Initialize();
         ProcessQueuedCallbacks();
 
@@ -62,11 +62,9 @@ public class LevelLoader : AsyncLoader
     {
         ServiceLocator.Register<LevelLoader>(this, true);
 
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
 
@@ -95,12 +93,7 @@ public class LevelLoader : AsyncLoader
             }
         }
 
-        _tutorialManager.SetupTutorial();
-
-        if(_tutorialManager.FirstStepCheck() == true)
-        {
-            _uiManager.HabitatUI.DisableUI();
-        }
+        _tutorialManager.TutorialStageCheck();
     }
 
     private bool LastSessionHabitatCheck()
@@ -204,6 +197,6 @@ public class LevelLoader : AsyncLoader
 
     private void OnComplete()
     {
-        Debug.Log($"{this.GetType()} finished setup.");
+        Debug.Log($"<color=Lime> {this.GetType()} finished setup. </color>");
     }
 }

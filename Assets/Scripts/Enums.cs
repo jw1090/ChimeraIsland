@@ -79,31 +79,31 @@ public enum TutorialIconType
     None = -1,
 }
 
-public enum UIElementType
+public enum TutorialUIElementType
 {
     None = -1,
     All,
-    EssenceWallet,
-    ExpeditionButton,
     MarketplaceButton,
     OpenDetailsButton,
-    SettingsButton,
-    WorldMapIcon,
+    ExpeditionButton,
+    WorldMapButton,
     MarketplaceFacilityTab,
     MarketplaceChimeraTab,
 }
 
-public enum TutorialIds
+public enum TutorialStageType
 {
-    StarterTutorial,
-    MarketplaceUnlock,
-    MarketplaceFacilitiesTutorial,
-    ChimeraAttributesUnlock,
-    AttributesTutorail,
-    ExpeditionsUnlock,
-    ExpeditionsExplenation,
-    ExpeditionsFailureTutorial,
-    ExpeditionsSuccessTutorial,
-    MarketplaceChimeraTutorial,
-    WorldMapUnlock,
+    None = -1,
+    Intro,
+    Marketplace,
+    PurchasingFacilities,
+    Details,
+    Expeditions,
+    NewFacilities,
+    Evolution,
+    Fossils,
+    WorldMap,
+    NewHabitats,
+    TreeOfLife,
+    AshLands,
 }

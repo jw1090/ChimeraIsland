@@ -106,6 +106,7 @@ public class GameLoader : AsyncLoader
         var tutorialComp = tutorialGO.AddComponent<TutorialManager>().Initialize();
         ServiceLocator.Register<TutorialManager>(tutorialComp);
         persistentDataComp.SetTutorialManager(tutorialComp);
+        inputManagerComp.SetTutorialManager(tutorialComp);
 
         var chimeraCreatorGO = new GameObject("Chimera Creator");
         chimeraCreatorGO.transform.SetParent(systemsParent);
