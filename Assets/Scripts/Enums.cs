@@ -86,19 +86,20 @@ public enum TutorialUIElementType
     MarketplaceButton,
     OpenDetailsButton,
     ExpeditionButton,
-    WorldMapButton,
-    MarketplaceFacilityTab,
     MarketplaceChimeraTab,
+    WorldMapButton,
 }
 
 public enum TutorialStageType
 {
     None = -1,
     Intro,
-    Marketplace,
+    MarketplaceButton,
     PurchasingFacilities,
-    Details,
-    Expeditions,
+    DetailsButton,
+    DetailsInfo,
+    ExpeditionsButton,
+    ExpeditionsInfo,
     NewFacilities,
     Evolution,
     Fossils,
