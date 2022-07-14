@@ -5,5 +5,5 @@ public class TutorialStepData
 {
     public string description;
     public ChimeraType type = ChimeraType.None;
-    public TutorialUIElementType activateElement = TutorialUIElementType.None;
+    public string activateElement = TutorialUIElementType.None.ToString();
 }

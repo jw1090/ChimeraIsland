@@ -123,26 +123,16 @@ public class TutorialManager : MonoBehaviour
         {
             case TutorialStageType.Intro:
                 break;
-            case TutorialStageType.Marketplace:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                break;
+            case TutorialStageType.MarketplaceButton:
             case TutorialStageType.PurchasingFacilities:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 break;
-            case TutorialStageType.Details:
+            case TutorialStageType.DetailsButton:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
                 break;
-            case TutorialStageType.Expeditions:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
-                break;
+            case TutorialStageType.ExpeditionsButton:
             case TutorialStageType.NewFacilities:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
-                break;
             case TutorialStageType.Evolution:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
@@ -153,20 +143,11 @@ public class TutorialManager : MonoBehaviour
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
                 // TODO: Fossil Currency UI Element
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
                 break;
             case TutorialStageType.WorldMap:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
-                // TODO: Fossil Currency UI Element
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
-                break;
             case TutorialStageType.NewHabitats:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
-                break;
             case TutorialStageType.TreeOfLife:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
-                break;
             case TutorialStageType.AshLands:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
                 break;

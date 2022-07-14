@@ -179,7 +179,7 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Marketplace);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.MarketplaceButton);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -187,11 +187,11 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Details);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.DetailsButton);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Expeditions);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionsButton);
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
