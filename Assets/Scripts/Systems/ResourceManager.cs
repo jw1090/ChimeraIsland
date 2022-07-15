@@ -3,11 +3,6 @@ using UnityEngine.Audio;
 
 public class ResourceManager : MonoBehaviour
 {
-    private AudioClip _stonePlainsMusic = null;
-    private AudioClip _ashlandsMusic = null;
-    private AudioClip _treeOfLifeMusic = null;
-    private AudioClip _waterfallSFX = null;
-    private AudioMixer _audioMixer = null;
     private Sprite _defaultChimeraSprite = null;
     private Sprite _chimeraASprite = null;
     private Sprite _chimeraA1Sprite = null;
@@ -39,17 +34,11 @@ public class ResourceManager : MonoBehaviour
     private GameObject _uiManagerPrefab = null;
 
     public GameObject UIManager { get => _uiManagerPrefab;}
-    public AudioMixer AudioMixer { get => _audioMixer;}
 
     public ResourceManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _stonePlainsMusic = Resources.Load<AudioClip>("Music/StonePlains");
-        _treeOfLifeMusic = Resources.Load<AudioClip>("Music/TreeOfLife");
-        _ashlandsMusic = Resources.Load<AudioClip>("Music/Ashlands");
-        _waterfallSFX = Resources.Load<AudioClip>("SFX/Facilities/Waterfall");
-        _audioMixer = Resources.Load<AudioMixer>("AudioMixer");
         _defaultChimeraSprite = Resources.Load<Sprite>("Icons/Chimera/DefaultChimera-Icon");
         _chimeraASprite = Resources.Load<Sprite>("Icons/Chimera/A-Icon");
         _chimeraA1Sprite = Resources.Load<Sprite>("Icons/Chimera/A1-Icon");
@@ -81,34 +70,6 @@ public class ResourceManager : MonoBehaviour
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
 
         return this;
-    }
-
-    public AudioClip GetHabitatMusic(HabitatType habitatType)
-    {
-        switch (habitatType)
-        {
-            case HabitatType.StonePlains:
-                return _stonePlainsMusic;
-            case HabitatType.TreeOfLife:
-                return _treeOfLifeMusic;
-            case HabitatType.Ashlands:
-                return _ashlandsMusic;
-            default:
-                Debug.LogError($"Unhandled habitat type: {habitatType}. Please change!");
-                return null;
-        }
-    }
-
-    public AudioClip GetFacilitySFX(FacilityType facilityType)
-    {
-        switch (facilityType)
-        {
-            case FacilityType.Waterfall:
-                return _waterfallSFX;
-            default:
-                Debug.LogError($"Unhandled facility type: {facilityType}. Please change!");
-                return null;
-        }
     }
 
     public GameObject GetChimeraBasePrefab(ChimeraType chimeraType)

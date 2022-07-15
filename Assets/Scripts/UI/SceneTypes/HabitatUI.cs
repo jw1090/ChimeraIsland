@@ -6,6 +6,7 @@ public class HabitatUI : MonoBehaviour
 {
     [Header("Scene Changing")]
     [SerializeField] private Button _mainMenuButton = null;
+    [SerializeField] private Button _quitGameButotn = null;
     [SerializeField] private Button _worldMapButton = null;
 
     [Header("Elements")]
@@ -28,6 +29,7 @@ public class HabitatUI : MonoBehaviour
     private TutorialManager _tutorialManager = null;
 
     public Button MainMenuButton { get => _mainMenuButton; }
+    public Button QuitGameButton { get => _quitGameButotn; }
     public Button WorldMapButton { get => _worldMapButton; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
 
@@ -36,7 +38,6 @@ public class HabitatUI : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         InitializeWallets();
-        _volumeSettings.Initialize();
         _tutorialOverlay.Initialize(this);
     }
 
@@ -46,6 +47,11 @@ public class HabitatUI : MonoBehaviour
         {
             wallet.Initialize();
         }
+    }
+
+    public void InitializeVolumeSettings()
+    {
+        _volumeSettings.Initialize();
     }
 
     public void LoadHabitatSpecificUI()

@@ -1911,7 +1911,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6544680596328194654}
         m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
-        m_MethodName: ResetUI
+        m_MethodName: ResetStandardUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2847,7 +2847,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6544680596328194654}
         m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
-        m_MethodName: ResetUI
+        m_MethodName: ResetStandardUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5137,7 +5137,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6544680596328194654}
         m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
-        m_MethodName: ResetUI
+        m_MethodName: ResetStandardUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8157,6 +8157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainMenuButton: {fileID: 1358811889}
+  _quitGameButotn: {fileID: 2138523756}
   _worldMapButton: {fileID: 231081782400414687}
   _openDetailsButton: {fileID: 231081782605990848}
   _closeDetailsButton: {fileID: 231081783895780013}
@@ -10300,11 +10301,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
---- !u!224 &4008348855519307170 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
-  m_PrefabInstance: {fileID: 231081783603144867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9119926714665536923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9053513636831995192, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
@@ -10316,6 +10312,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afd30aa1367e644c97338f1e8005d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4008348855519307170 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3788780336560262401, guid: 711e26dd81e684843a48c27ac3da6ae2, type: 3}
+  m_PrefabInstance: {fileID: 231081783603144867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &672523030408871686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10818,6 +10819,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6544680596328194654}
+    - target: {fileID: 1666439718672926174, guid: 53f62da522def4442ab45b7bfbe791e3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetStandardUI
+      objectReference: {fileID: 0}
     - target: {fileID: 2843287909641077545, guid: 53f62da522def4442ab45b7bfbe791e3, type: 3}
       propertyPath: m_Name
       value: Volume Settings
@@ -10944,6 +10949,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f62da522def4442ab45b7bfbe791e3, type: 3}
+--- !u!114 &2138523756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5916598022308278574, guid: 53f62da522def4442ab45b7bfbe791e3, type: 3}
+  m_PrefabInstance: {fileID: 5916598022082525506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1567368643 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5916598022811016321, guid: 53f62da522def4442ab45b7bfbe791e3, type: 3}

@@ -15,8 +15,10 @@ public class DebugConfig : MonoBehaviour, IGameModule
     public IEnumerator LoadModule()
     {
         Debug.Log($"<color=Yellow> Loading {this.GetType()} Module </color>");
+
         ServiceLocator.Register<DebugConfig>(this);
         DebugConfigLoaded?.Invoke();
+
         yield return null;
     }
 }

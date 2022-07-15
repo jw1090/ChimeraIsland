@@ -20,6 +20,8 @@ public class HabitatManager : MonoBehaviour
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
 
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+
     private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
     {
         if (_chimerasByHabitat.ContainsKey(habitatType))
@@ -64,7 +66,6 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _audioManager = ServiceLocator.Get<AudioManager>();
 
         LoadHabitatData();
 
@@ -224,7 +225,7 @@ public class HabitatManager : MonoBehaviour
 
     public void PlayCurrentHabitatMusic()
     {
-        _audioManager.SetHabitatAudioSources(_currentHabitat.HabitatSources);
+        _audioManager.SetHabitatSFXSources(_currentHabitat.HabitatSources);
         _audioManager.PlayHabitatMusic(_currentHabitat.Type);
     }
 

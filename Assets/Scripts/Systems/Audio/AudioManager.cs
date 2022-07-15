@@ -3,27 +3,34 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioMixer _mixer = null;
-    private AudioSource _habitatSource = null;
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer _mixer = null;
+
+    [Header("Source")]
+    [SerializeField] private AudioSource _musicSource = null;
+
+    [Header("Music")]
+    [SerializeField] private AudioClip _stonePlainsMusic = null;
+    [SerializeField] private AudioClip _treeOfLifeMusic = null;
+    [SerializeField] private AudioClip _ashlandsMusic = null;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip _waterfallSFX = null;
     private AudioSource _caveSource = null;
     private AudioSource _runeStoneSource = null;
     private AudioSource _waterfallSource = null;
-    private AudioClip _stonePlainsMusic = null;
-    private AudioClip _ashlandsMusic = null;
-    private AudioClip _treeOfLifeMusic = null;
-    private AudioClip _waterfallSFX = null;
-    private ResourceManager _resourceManager = null;
+    private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
     private float _sfxVolume = 0.0f;
 
+    public Vector3 Volumes { get => new Vector3(_masterVolume, _musicVolume, _sfxVolume); }
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
 
-    public void SetHabitatAudioSources(HabitatSources habitatSources)
+    public void SetHabitatSFXSources(HabitatSources habitatSources)
     {
-        _habitatSource = habitatSources.HabitatSource;
         _caveSource = habitatSources.CaveSource;
         _runeStoneSource = habitatSources.RuneStoneSource;
         _waterfallSource = habitatSources.WaterfallSource;
@@ -49,19 +56,15 @@ public class AudioManager : MonoBehaviour
 
     public AudioManager Initialize()
     {
-        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _masterVolume = _persistentData.Volumes.x;
+        _musicVolume = _persistentData.Volumes.y;
+        _sfxVolume = _persistentData.Volumes.z;
 
-        _mixer = _resourceManager.AudioMixer;
-        _stonePlainsMusic = _resourceManager.GetHabitatMusic(HabitatType.StonePlains);
-        _treeOfLifeMusic = _resourceManager.GetHabitatMusic(HabitatType.StonePlains);
-        _ashlandsMusic = _resourceManager.GetHabitatMusic(HabitatType.StonePlains);
-        _waterfallSFX = _resourceManager.GetFacilitySFX(FacilityType.Waterfall);
-
-        _masterVolume = PlayerPrefs.GetFloat(GameConsts.AudioMixerKeys.MASTER, 0.0f);
-        _musicVolume = PlayerPrefs.GetFloat(GameConsts.AudioMixerKeys.MUSIC, 0.0f);
-        _sfxVolume = PlayerPrefs.GetFloat(GameConsts.AudioMixerKeys.SFX, 0.0f);
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
 
         return this;
     }
@@ -78,16 +81,16 @@ public class AudioManager : MonoBehaviour
         switch (habitatType)
         {
             case HabitatType.StonePlains:
-                _habitatSource.clip = _stonePlainsMusic;
-                _habitatSource.Play();
+                _musicSource.clip = _stonePlainsMusic;
+                _musicSource.Play();
                 break;
             case HabitatType.Ashlands:
-                _habitatSource.clip = _ashlandsMusic;
-                _habitatSource.Play();
+                _musicSource.clip = _ashlandsMusic;
+                _musicSource.Play();
                 break;
             case HabitatType.TreeOfLife:
-                _habitatSource.clip = _treeOfLifeMusic;
-                _habitatSource.Play();
+                _musicSource.clip = _treeOfLifeMusic;
+                _musicSource.Play();
                 break;
             default:
                 Debug.LogError($"{habitatType} is invalid. Please change!");

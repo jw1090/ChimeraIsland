@@ -3,13 +3,21 @@ using UnityEngine;
 
 public class AudioManagerModule : MonoBehaviour, IGameModule
 {
-    [SerializeField] private GameObject _systemPrefab = null;
+    [SerializeField] private GameObject _audioManagerPrefab = null;
 
     public IEnumerator LoadModule()
     {
-        GameObject sysObj = Instantiate(_systemPrefab, GameLoader.SystemsParent);
+        Debug.Log($"<color=Yellow> Loading {this.GetType()}.</color>");
+
+        GameObject sysObj = Instantiate(_audioManagerPrefab, GameLoader.SystemsParent);
         sysObj.name = "Audio Manager";
-        ServiceLocator.Register<AudioManager>(sysObj.GetComponent<AudioManager>());
+        AudioManager audioManagerComp = sysObj.GetComponent<AudioManager>();
+        ServiceLocator.Register<AudioManager>(audioManagerComp.Initialize());
+
+        ServiceLocator.Get<PersistentData>().SetAudioManager(audioManagerComp);
+        ServiceLocator.Get<HabitatManager>().SetAudioManager(audioManagerComp);
+        ServiceLocator.Get<UIManager>().HabitatUI.InitializeVolumeSettings();
+
         yield return null;
     }
 }
