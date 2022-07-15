@@ -87,9 +87,9 @@ public class LevelLoader : AsyncLoader
         {
             if (_habitat != null)
             {
-                SetupHabitatAudio();
-                LoadFacilities();
-                LoadChimeras();
+                _habitatManager.PlayCurrentHabitatMusic();
+                _habitatManager.BuildFacilitiesForHabitat();
+                _habitatManager.SpawnChimerasForHabitat();
                 StartHabitatTickTimer();
             }
         }
@@ -149,21 +149,6 @@ public class LevelLoader : AsyncLoader
         _uiManager.ShowUIByScene(_sceneType);
 
 
-    }
-
-    private void LoadChimeras()
-    {
-        _habitatManager.SpawnChimerasForHabitat();
-    }
-
-    private void SetupHabitatAudio()
-    {
-        _habitatManager.SetupHabitatAudio();
-    }
-
-    private void LoadFacilities()
-    {
-        _habitatManager.BuildFacilitiesForHabitat();
     }
 
     private void StartHabitatTickTimer()

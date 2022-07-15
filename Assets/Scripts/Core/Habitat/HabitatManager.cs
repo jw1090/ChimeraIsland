@@ -9,6 +9,7 @@ public class HabitatManager : MonoBehaviour
     [SerializeField] private int _chimeraCapacity = 3;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
+    private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private List<ChimeraData> _chimeraSaveData = null;
@@ -63,6 +64,7 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         LoadHabitatData();
 
@@ -220,9 +222,10 @@ public class HabitatManager : MonoBehaviour
         _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
     }
 
-    public void SetupHabitatAudio()
+    public void PlayCurrentHabitatMusic()
     {
-        ServiceLocator.Get<AudioManager>().SetMusicForHabitat(_currentHabitat.Type);
+        _audioManager.SetHabitatAudioSources(_currentHabitat.HabitatSources);
+        _audioManager.PlayHabitatMusic(_currentHabitat.Type);
     }
 
     public void BuildFacilitiesForHabitat()

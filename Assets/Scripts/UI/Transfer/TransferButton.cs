@@ -45,7 +45,7 @@ public class TransferButton : MonoBehaviour, IPointerClickHandler
         }
 
         _transferMap.ResetChimera();
-        _habitatUI.ResetUI();
+        _habitatUI.ResetStandardUI();
 
         Debug.Log($"<color=Cyan> Transfer Success! {_transferMap.ChimeraToTransfer} is now in {_habitatType}!</color>");
     }

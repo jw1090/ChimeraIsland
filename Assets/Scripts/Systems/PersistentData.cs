@@ -32,7 +32,7 @@ public class PersistentData : MonoBehaviour
 
     private void LoadData()
     {
-        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_DATA);
         if (myData == null)
         {
             Debug.Log($"No Save Data found");
@@ -53,7 +53,7 @@ public class PersistentData : MonoBehaviour
         _habitatManager.ResetDictionaries();
         _habitatManager.LoadHabitatData();
 
-        FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_DATA);
     }
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
@@ -65,7 +65,7 @@ public class PersistentData : MonoBehaviour
         GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData);
         UpdateGameSaveData(myData);
 
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA);
     }
 
     private void UpdateGameSaveData(GameSaveData myData)

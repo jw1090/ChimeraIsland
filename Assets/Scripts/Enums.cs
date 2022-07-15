@@ -1,3 +1,10 @@
+public enum AudioMixerTypes
+{
+    Master,
+    Music,
+    SFX,
+}
+
 public enum ChimeraType
 {
     None = -1,
@@ -26,7 +33,7 @@ public enum ElementalType
 public enum FacilityType
 {
     None = -1,
-    CaveExploring,
+    Cave,
     RuneStone,
     Waterfall,
 }
@@ -58,11 +65,17 @@ public enum SceneType
 
 public enum SignType
 {
-    None = 1,
+    None = -1,
     Endurance,
     Intelligence,
     Strength,
     Expedition,
+}
+
+public enum SFXType
+{
+    None = -1,
+    Waterfall,
 }
 
 public enum StatType

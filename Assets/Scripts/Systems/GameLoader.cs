@@ -87,6 +87,11 @@ public class GameLoader : AsyncLoader
         var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
         ServiceLocator.Register<ResourceManager>(resourceManagerComp);
 
+        var audioManagerGO = new GameObject("Audio Manager");
+        audioManagerGO.transform.SetParent(systemsParent);
+        var audioManagerComp = audioManagerGO.AddComponent<AudioManager>().Initialize();
+        ServiceLocator.Register<AudioManager>(audioManagerComp);
+
         var inputManagerGO = new GameObject("Input Manager");
         inputManagerGO.transform.SetParent(systemsParent);
         var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
