@@ -7,7 +7,7 @@ public class AudioManagerModule : MonoBehaviour, IGameModule
 
     public IEnumerator LoadModule()
     {
-        Debug.Log($"<color=Yellow> Loading {this.GetType()}.</color>");
+        Debug.Log($"<color=Yellow> Loading Audio Manager Module</color>");
 
         GameObject sysObj = Instantiate(_audioManagerPrefab, GameLoader.SystemsParent);
         sysObj.name = "Audio Manager";
