@@ -3,24 +3,25 @@ using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
+    private AudioManager _audioManager = null;
     private EssenceManager _essenceManager = null;
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
     private TutorialManager _tutorialManager = null;
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
+    private Vector3 _volumes = Vector3.zero;
 
-    public int lastSessionTutorial { get => _globalSaveData.lastSessionTutorial; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
+    public Vector3 Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
 
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
-    public void SetLastSessionTutorial(int lst) { _globalSaveData.lastSessionTutorial = lst; }
-
 
     public PersistentData Initialize()
     {
@@ -32,7 +33,7 @@ public class PersistentData : MonoBehaviour
 
     private void LoadData()
     {
-        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        GameSaveData myData = FileHandler.ReadFromJSON<GameSaveData>(GameConsts.JsonSaveKeys.GAME_DATA);
         if (myData == null)
         {
             Debug.Log($"No Save Data found");
@@ -53,19 +54,19 @@ public class PersistentData : MonoBehaviour
         _habitatManager.ResetDictionaries();
         _habitatManager.LoadHabitatData();
 
-        FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_DATA);
     }
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
-        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence, _globalSaveData.lastSessionTutorial);
+        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
 
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, _audioManager.Volumes);
         UpdateGameSaveData(myData);
 
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_SAVE_DATA_FILE);
+        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA);
     }
 
     private void UpdateGameSaveData(GameSaveData myData)
@@ -73,6 +74,7 @@ public class PersistentData : MonoBehaviour
         _globalSaveData = myData.globalData;
         _chimeraSaveData = myData.chimeras;
         _facilitySaveData = myData.facilities;
+        _volumes = new Vector3(myData.masterVolume, myData.musicVolume, myData.sfxVolume);
     }
 
     public void ResetLastSessionHabitat()

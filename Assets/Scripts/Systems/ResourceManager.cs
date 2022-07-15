@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -30,9 +31,9 @@ public class ResourceManager : MonoBehaviour
     private GameObject _chimeraEvolutionPrefabC1 = null;
     private GameObject _chimeraEvolutionPrefabC2 = null;
     private GameObject _chimeraEvolutionPrefabC3 = null;
-    private GameObject _uiManager = null;
+    private GameObject _uiManagerPrefab = null;
 
-    public GameObject UIManager { get => _uiManager;}
+    public GameObject UIManager { get => _uiManagerPrefab;}
 
     public ResourceManager Initialize()
     {
@@ -66,14 +67,14 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC1 = Resources.Load<GameObject>("Chimera/Models/Family C/C1 Model");
         _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
-        _uiManager = Resources.Load<GameObject>("UI Manager");
+        _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
 
         return this;
     }
 
-    public GameObject GetChimeraBasePrefab(ChimeraType type)
+    public GameObject GetChimeraBasePrefab(ChimeraType chimeraType)
     {
-        switch (type)
+        switch (chimeraType)
         {
             case ChimeraType.A:
             case ChimeraType.A1:
@@ -91,7 +92,7 @@ public class ResourceManager : MonoBehaviour
             case ChimeraType.C3:
                 return _chimeraBasePrefabC;
             default:
-                Debug.LogWarning($"Unhandled chimera type: {type}");
+                Debug.LogError($"Unhandled chimera type: {chimeraType}. Please change!");
                 return null;
         }
     }
@@ -125,7 +126,7 @@ public class ResourceManager : MonoBehaviour
             case ChimeraType.C3:
                 return _chimeraEvolutionPrefabC3;
             default:
-                Debug.LogWarning($"Unhandled chimera type: {type}");
+                Debug.LogError($"Unhandled chimera type: {type}");
                 return null;
         }
     }
@@ -159,7 +160,7 @@ public class ResourceManager : MonoBehaviour
             case ChimeraType.C3:
                 return _chimeraC3Sprite;
             default:
-                Debug.Log($"Returning Default Sprite, please change.");
+                Debug.LogWarning($"Returning Default Sprite, please change.");
                 return _defaultChimeraSprite;
         }
     }

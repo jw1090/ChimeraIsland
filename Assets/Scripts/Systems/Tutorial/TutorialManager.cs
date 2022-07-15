@@ -40,7 +40,7 @@ public class TutorialManager : MonoBehaviour
 
     private void LoadTutorialFromJson()
     {
-        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA);
     }
 
     private void CurrentStageInitialize()
@@ -64,7 +64,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA_FILE);
+        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA);
 
         Debug.Log("Tutorial progress saved.");
     }
@@ -101,7 +101,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        _habitatUI.DisableUI();
+        _habitatUI.TutorialDisableUI();
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1691119459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1691119460}
+  m_Layer: 7
+  m_Name: TrainingPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1691119460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691119459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.06, y: 1.14, z: -0.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2792039016706888988}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1527280302240910996
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +147,7 @@ Transform:
   - {fileID: 4962070060218407679}
   - {fileID: 2121886002040097412}
   - {fileID: 6753863906364433551}
+  - {fileID: 1691119460}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -152,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8fcf63b73ce2f4a98f7c72a382fc17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stayPos: {fileID: 1691119460}
 --- !u!65 &297328860
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -163,8 +195,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.9685698, y: 2, z: 7.471017}
-  m_Center: {x: 0.04193163, y: 0.53, z: -0.325356}
+  m_Size: {x: 5, y: 2, z: 5}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &5411779016242407293
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -466,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5735053479993455152, guid: 2edc00cffd0e7e94abc8d05393486caf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5735053479993455152, guid: 2edc00cffd0e7e94abc8d05393486caf, type: 3}
       propertyPath: m_TagString
@@ -601,7 +633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307138307930329091, guid: 7d51bbdb4bb22d44ba139b6caca8d914, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4307138307930329091, guid: 7d51bbdb4bb22d44ba139b6caca8d914, type: 3}
       propertyPath: m_StaticEditorFlags

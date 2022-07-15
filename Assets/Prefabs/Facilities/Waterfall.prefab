@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1980002099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1980002100}
+  m_Layer: 7
+  m_Name: TrainingPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1980002100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980002099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.95, y: -12.53, z: -14.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1865579845439662283}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5030646212641108676
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +230,7 @@ Transform:
   - {fileID: 8899598707092396345}
   - {fileID: 2892468605744414511}
   - {fileID: 3803634236850252503}
+  - {fileID: 1980002100}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -235,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8fcf63b73ce2f4a98f7c72a382fc17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stayPos: {fileID: 1980002100}
 --- !u!65 &81764737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -276,7 +308,7 @@ GameObject:
   - component: {fileID: 676282963804365978}
   - component: {fileID: 8944782610774198338}
   m_Layer: 7
-  m_Name: Outer Border
+  m_Name: Training Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8028788481001019898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.87, y: -13.97, z: -20.54}
+  m_LocalPosition: {x: 12, y: -8, z: -20}
   m_LocalScale: {x: 1.1000001, y: 1.0999999, z: 1}
   m_Children:
   - {fileID: 570079940306841916}
@@ -502,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8899598706699993235, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8899598706699993235, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
       propertyPath: m_StaticEditorFlags

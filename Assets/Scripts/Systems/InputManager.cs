@@ -174,7 +174,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _habitatUI.DisableUI();
+            _habitatUI.TutorialDisableUI();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))

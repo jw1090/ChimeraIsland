@@ -6,6 +6,7 @@ public class HabitatUI : MonoBehaviour
 {
     [Header("Scene Changing")]
     [SerializeField] private Button _mainMenuButton = null;
+    [SerializeField] private Button _quitGameButotn = null;
     [SerializeField] private Button _worldMapButton = null;
 
     [Header("Elements")]
@@ -20,6 +21,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _settingsPanel = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
+    [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
@@ -27,6 +29,7 @@ public class HabitatUI : MonoBehaviour
     private TutorialManager _tutorialManager = null;
 
     public Button MainMenuButton { get => _mainMenuButton; }
+    public Button QuitGameButton { get => _quitGameButotn; }
     public Button WorldMapButton { get => _worldMapButton; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
 
@@ -35,7 +38,7 @@ public class HabitatUI : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         InitializeWallets();
-        InitializeTutorialOverlay();
+        _tutorialOverlay.Initialize(this);
     }
 
     private void InitializeWallets()
@@ -46,12 +49,9 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    private void InitializeTutorialOverlay()
+    public void InitializeVolumeSettings()
     {
-        if (_tutorialOverlay != null)
-        {
-            _tutorialOverlay.Initialize(this);
-        }
+        _volumeSettings.Initialize();
     }
 
     public void LoadHabitatSpecificUI()
@@ -60,7 +60,7 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.Initialize();
         _transferMap.Initialize();
 
-        ResetUI();
+        ResetStandardUI();
     }
 
     public void EnableTutorialUIByType(TutorialUIElementType uiElementType)
@@ -99,7 +99,8 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void DisableUI()
+    // Removes the basic UI so it can slowly be revealed by the Tutorial
+    public void TutorialDisableUI()
     {
         _expeditionButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
@@ -111,8 +112,8 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.ChimeraTabSetActive(false);
     }
 
-    // Resetting to the standard UI when nothing has been disabled.
-    public void ResetUI()
+    // Resets to the standard UI when nothing has been disabled.
+    public void ResetStandardUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
@@ -129,7 +130,7 @@ public class HabitatUI : MonoBehaviour
     {
         _detailsFolder.CheckDetails();
 
-        ResetUI();
+        ResetStandardUI();
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
 
@@ -138,7 +139,7 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenMarketplace()
     {
-        ResetUI();
+        ResetStandardUI();
         _marketplacePanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
@@ -146,7 +147,7 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenTransferMap(Chimera chimera)
     {
-        ResetUI();
+        ResetStandardUI();
         _transferMap.Open(chimera);
     }
 
@@ -156,7 +157,7 @@ public class HabitatUI : MonoBehaviour
             _marketplacePanel.gameObject.activeInHierarchy == true ||
             _expeditionPanel.gameObject.activeInHierarchy == true)
         {
-            ResetUI();
+            ResetStandardUI();
         }
         else
         {
@@ -166,7 +167,7 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenSettingsMenu()
     {
-        ResetUI();
+        ResetStandardUI();
         _settingsPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
@@ -175,7 +176,7 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedition()
     {
-        ResetUI();
+        ResetStandardUI();
         _expeditionPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
