@@ -28,64 +28,21 @@ public class UIVolumeSettings : MonoBehaviour
 
     private void SetMasterVolume(float masterValue)
     {
-        _audioManager.SetMasterVolume(Mathf.Log10(masterValue) * 20);
+        _audioManager.SetMasterVolume(40 * Mathf.Log10(masterValue) + 20);
     }
 
     private void SetMusicVolume(float musicValue)
     {
-        _audioManager.SetMusicVolume(Mathf.Log10(musicValue) * 20);
+        _audioManager.SetMusicVolume(40 * Mathf.Log10(musicValue) + 20);
     }
 
     private void SetSFXVolume(float sfxValue)
     {
-        _audioManager.SetSFXVolume(Mathf.Log10(sfxValue) * 20);
+        _audioManager.SetSFXVolume(40 * Mathf.Log10(sfxValue) + 20);
     }
 
-    private float DBToSliderVolume(float volume) // TODO: Get a better solution.
+    private float DBToSliderVolume(float volume)
     {
-        if (volume <= -51.0f)
-        {
-            return 0.0f;
-        }
-        else if(volume <= -30.8f)
-        {
-            return 0.1f;
-        }
-        else if (volume <= -22.47f)
-        {
-            return 0.2f;
-        }
-        else if (volume <= -17.111f)
-        {
-            return 0.3f;
-        }
-        else if (volume <= -13.152)
-        {
-            return 0.4f;
-        }
-        else if (volume <= -10.015f)
-        {
-            return 0.5f;
-        }
-        else if (volume <= -7.415f)
-        {
-            return 0.6f;
-        }
-        else if (volume <= -4.991f)
-        {
-            return 0.7f;
-        }
-        else if (volume <= -3.26f)
-        {
-            return 0.8f;
-        }
-        else if (volume <= -1.381f)
-        {
-            return 0.9f;
-        }
-        else
-        {
-            return 1.0f;
-        }
+        return Mathf.Pow(10.0f, (volume - 20) * 0.025f);
     }
 }
