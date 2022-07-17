@@ -91,6 +91,8 @@ public class Chimera : MonoBehaviour
 
     public void Initialize()
     {
+        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
+
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
@@ -100,8 +102,6 @@ public class Chimera : MonoBehaviour
 
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
-
-        Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
     }
 
     private void InitializeEvolution()
