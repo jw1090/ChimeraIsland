@@ -90,6 +90,13 @@ public enum StatType
 public enum TutorialIconType
 {
     None = -1,
+    Berries,
+    Happy,
+    LookingLeft,
+    LookingRight,
+    Normal,
+    Smile,
+    Speaking,
 }
 
 public enum TutorialUIElementType

@@ -4,6 +4,6 @@ using System;
 public class TutorialStepData
 {
     public string description;
-    public ChimeraType type = ChimeraType.None;
+    public TutorialIconType type = TutorialIconType.None;
     public string activateElement = TutorialUIElementType.None.ToString();
 }

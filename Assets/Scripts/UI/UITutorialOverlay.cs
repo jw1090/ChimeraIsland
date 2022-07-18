@@ -45,7 +45,7 @@ public class UITutorialOverlay : MonoBehaviour
             _habitatUI.EnableTutorialUIByType((TutorialUIElementType) Enum.Parse(typeof(TutorialUIElementType),loadedStep.activateElement));
         }
 
-        Sprite icon = _resourceManager.GetChimeraSprite(loadedStep.type);
+        Sprite icon = _resourceManager.GetTutorialSprite(loadedStep.type);
 
        _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
 
