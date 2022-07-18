@@ -32,13 +32,13 @@ public class ResourceManager : MonoBehaviour
     private GameObject _chimeraEvolutionPrefabC2 = null;
     private GameObject _chimeraEvolutionPrefabC3 = null;
     private GameObject _uiManagerPrefab = null;
-    private Sprite _TutorialImageBerries = null;
-    private Sprite _TutorialImageHappy = null;
-    private Sprite _TutorialImageLookingLeft = null;
-    private Sprite _TutorialImageLookingRight = null;
-    private Sprite _TutorialImageNormal = null;
-    private Sprite _TutorialImageSmile = null;
-    private Sprite _TutorialImageSpeaking = null;
+    private Sprite _tutorialImageBerries = null;
+    private Sprite _tutorialImageHappy = null;
+    private Sprite _tutorialImageLookingLeft = null;
+    private Sprite _tutorialImageLookingRight = null;
+    private Sprite _tutorialImageNormal = null;
+    private Sprite _tutorialImageSmile = null;
+    private Sprite _tutorialImageSpeaking = null;
 
     public GameObject UIManager { get => _uiManagerPrefab;}
 
@@ -75,13 +75,13 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
-        _TutorialImageBerries = Resources.Load<Sprite>("Icons/Tutorial/Berries");
-        _TutorialImageHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
-        _TutorialImageLookingLeft = Resources.Load<Sprite>("Icons/Tutorial/Looking_left");
-        _TutorialImageLookingRight = Resources.Load<Sprite>("Icons/Tutorial/Looking_right");
-        _TutorialImageNormal = Resources.Load<Sprite>("Icons/Tutorial/Normal");
-        _TutorialImageSmile = Resources.Load<Sprite>("Icons/Tutorial/Smile");
-        _TutorialImageSpeaking = Resources.Load<Sprite>("Icons/Tutorial/Speaking");
+        _tutorialImageBerries = Resources.Load<Sprite>("Icons/Tutorial/Berries");
+        _tutorialImageHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
+        _tutorialImageLookingLeft = Resources.Load<Sprite>("Icons/Tutorial/Looking_left");
+        _tutorialImageLookingRight = Resources.Load<Sprite>("Icons/Tutorial/Looking_right");
+        _tutorialImageNormal = Resources.Load<Sprite>("Icons/Tutorial/Normal");
+        _tutorialImageSmile = Resources.Load<Sprite>("Icons/Tutorial/Smile");
+        _tutorialImageSpeaking = Resources.Load<Sprite>("Icons/Tutorial/Speaking");
         return this;
     }
 
@@ -149,19 +149,19 @@ public class ResourceManager : MonoBehaviour
         switch (type)
         {
             case TutorialIconType.Berries:
-                return _TutorialImageBerries;
+                return _tutorialImageBerries;
             case TutorialIconType.Happy:
-                return _TutorialImageHappy;
+                return _tutorialImageHappy;
             case TutorialIconType.LookingRight:
-                return _TutorialImageLookingRight;
+                return _tutorialImageLookingRight;
             case TutorialIconType.LookingLeft:
-                return _TutorialImageLookingLeft;
+                return _tutorialImageLookingLeft;
             case TutorialIconType.Speaking:
-                return _TutorialImageSpeaking;
+                return _tutorialImageSpeaking;
             case TutorialIconType.Normal:
-                return _TutorialImageNormal;
+                return _tutorialImageNormal;
             case TutorialIconType.Smile:
-                return _TutorialImageSmile;
+                return _tutorialImageSmile;
             default:
                 Debug.LogError($"Unhandled chimera type: {type}");
                 return null;
