@@ -32,6 +32,13 @@ public class ResourceManager : MonoBehaviour
     private GameObject _chimeraEvolutionPrefabC2 = null;
     private GameObject _chimeraEvolutionPrefabC3 = null;
     private GameObject _uiManagerPrefab = null;
+    private Sprite _TutorialImageBerries = null;
+    private Sprite _TutorialImageHappy = null;
+    private Sprite _TutorialImageLookingLeft = null;
+    private Sprite _TutorialImageLookingRight = null;
+    private Sprite _TutorialImageNormal = null;
+    private Sprite _TutorialImageSmile = null;
+    private Sprite _TutorialImageSpeaking = null;
 
     public GameObject UIManager { get => _uiManagerPrefab;}
 
@@ -68,7 +75,13 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
-
+        _TutorialImageBerries = Resources.Load<Sprite>("Icons/Tutorial/Berries");
+        _TutorialImageHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
+        _TutorialImageLookingLeft = Resources.Load<Sprite>("Icons/Tutorial/Looking_left");
+        _TutorialImageLookingRight = Resources.Load<Sprite>("Icons/Tutorial/Looking_right");
+        _TutorialImageNormal = Resources.Load<Sprite>("Icons/Tutorial/Normal");
+        _TutorialImageSmile = Resources.Load<Sprite>("Icons/Tutorial/Smile");
+        _TutorialImageSpeaking = Resources.Load<Sprite>("Icons/Tutorial/Speaking");
         return this;
     }
 
@@ -125,6 +138,30 @@ public class ResourceManager : MonoBehaviour
                 return _chimeraEvolutionPrefabC2;
             case ChimeraType.C3:
                 return _chimeraEvolutionPrefabC3;
+            default:
+                Debug.LogError($"Unhandled chimera type: {type}");
+                return null;
+        }
+    }
+
+    public Sprite GetTutorialSprite(TutorialIconType type)
+    {
+        switch (type)
+        {
+            case TutorialIconType.Berries:
+                return _TutorialImageBerries;
+            case TutorialIconType.Happy:
+                return _TutorialImageHappy;
+            case TutorialIconType.LookingRight:
+                return _TutorialImageLookingRight;
+            case TutorialIconType.LookingLeft:
+                return _TutorialImageLookingLeft;
+            case TutorialIconType.Speaking:
+                return _TutorialImageSpeaking;
+            case TutorialIconType.Normal:
+                return _TutorialImageNormal;
+            case TutorialIconType.Smile:
+                return _TutorialImageSmile;
             default:
                 Debug.LogError($"Unhandled chimera type: {type}");
                 return null;
