@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace AI.Behavior
 {
@@ -44,8 +46,11 @@ namespace AI.Behavior
         public void IncreasePatrolIndex() { _patrolIndex += 1; }
         public void ResetPatrolIndex() { _patrolIndex = 0; }
 
+
         public void Initialize()
         {
+            ServiceLocator.Get<InputManager>().HeldStateChange += OnHeldStateChanged;
+
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -67,6 +72,15 @@ namespace AI.Behavior
             _isActive = true;
         }
 
+        private void OnDestroy()
+        {
+            var inputManager = ServiceLocator.Get<InputManager>();
+            if (inputManager != null)
+            {
+                inputManager.HeldStateChange -= OnHeldStateChanged;
+            }
+        }
+
         private void Update()
         {
             if (_isActive == false || _currentState == null)
@@ -74,6 +88,23 @@ namespace AI.Behavior
                 return;
             }
             _currentState.Update();
+        }
+
+        private void OnHeldStateChanged(bool wasClicked, int id)
+        {
+            if (transform.GetHashCode() == id)
+            {
+                if (wasClicked)
+                {
+                    // change state to held
+                    ChangeState(_states[StateEnum.Held]);
+                }
+                else
+                {
+                    // change state to patrol
+                    ChangeState(_states[StateEnum.Patrol]);
+                }
+            }
         }
 
         public void ChangeState(ChimeraBaseState state)

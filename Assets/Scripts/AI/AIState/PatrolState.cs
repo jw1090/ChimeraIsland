@@ -20,7 +20,11 @@ namespace AI.Behavior
 
         public override void Update()
         {
-            _chimeraBehavior.HeldEnterCheck();
+            // if it was just dropped, wait to update the state
+            if (_chimeraBehavior.Dropped)
+            {
+                return;
+            }
 
             if (_chimeraBehavior.GetAgentDistance() >= 1.5f)
             {

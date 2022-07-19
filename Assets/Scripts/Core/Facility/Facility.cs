@@ -90,7 +90,7 @@ public class Facility : MonoBehaviour
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
 
-        chimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
+        _storedChimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
         _facilitySFX.PlaySFX();
 
