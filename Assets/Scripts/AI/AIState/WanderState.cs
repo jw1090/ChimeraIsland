@@ -24,7 +24,6 @@ namespace AI.Behavior
 
         public override void Update()
         {
-            _chimeraBehavior.HeldEnterCheck();
             _wanderTimer -= Time.deltaTime;
 
             if (_wanderTimer <= 0.0f)
