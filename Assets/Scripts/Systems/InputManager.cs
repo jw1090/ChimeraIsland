@@ -1,4 +1,5 @@
 using AI.Behavior;
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class InputManager : MonoBehaviour
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
+
+    public event Action<bool, int> HeldStateChange = null;
 
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
@@ -153,7 +156,7 @@ public class InputManager : MonoBehaviour
         {
             Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
             _heldChimera = chimera.GetComponent<ChimeraBehavior>();
-            _heldChimera.WasClicked = true;
+            HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
             _isHolding = true;
         }
     }
@@ -165,7 +168,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        _heldChimera.GetComponent<ChimeraBehavior>().WasClicked = false;
+        HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
         _heldChimera = null;
     }

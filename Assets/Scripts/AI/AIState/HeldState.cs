@@ -23,7 +23,6 @@ namespace AI.Behavior
         public override void Update()
         {
             ObjFollowMouse();
-            HeldReleaseCheck();
         }
 
         public override void Exit()

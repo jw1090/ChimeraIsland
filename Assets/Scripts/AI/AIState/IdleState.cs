@@ -13,15 +13,12 @@ namespace AI.Behavior
         {
             _chimeraBehavior = chimeraBehavior;
             _idleTimer = _idleDuration;
-
             _chimeraBehavior.EnterAnim(_idleAnim);
             _chimeraBehavior.Agent.isStopped = true;
         }
 
         public override void Update()
         {
-            _chimeraBehavior.HeldEnterCheck();
-
             _idleTimer -= Time.deltaTime;
 
             if (_idleTimer <= 0.0f)
