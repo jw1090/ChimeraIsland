@@ -6,10 +6,11 @@ namespace AI.Behavior
     {
         private ChimeraBehavior _chimeraBehavior = null;
         private Vector3 _wanderPoint = Vector3.zero;
-        private string _wanderAnim = "Walk";
+        private bool _enabled = false;
         private float _wanderRange = 5.0f;
         private float _wanderTimer = 0.0f;
         private float _wanderDuration = 5.0f;
+        private string _wanderAnim = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -20,10 +21,17 @@ namespace AI.Behavior
 
             _wanderPoint = GetNewWayPoint();
             _chimeraBehavior.SetAgentDestination(_wanderPoint);
+
+            _enabled = true;
         }
 
         public override void Update()
         {
+            if(_enabled == false)
+            {
+                return;
+            }
+
             _wanderTimer -= Time.deltaTime;
 
             if (_wanderTimer <= 0.0f)
@@ -39,6 +47,8 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            _enabled = false;
+
             _chimeraBehavior.ExitAnim(_wanderAnim);
         }
 
