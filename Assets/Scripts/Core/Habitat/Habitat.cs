@@ -21,7 +21,6 @@ public class Habitat : MonoBehaviour
     private ChimeraCreator _chimeraCreator = null;
     private EssenceManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
-    private HabitatSources _habitatSources = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _tickTracker = 0;
@@ -29,7 +28,6 @@ public class Habitat : MonoBehaviour
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
-    public HabitatSources HabitatSources { get => _habitatSources; }
     public HabitatType Type { get => _habitatType; }
 
     public Facility GetFacility(FacilityType facilityType)
@@ -52,8 +50,6 @@ public class Habitat : MonoBehaviour
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _essenceManager = ServiceLocator.Get<EssenceManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-
-        _habitatSources = GetComponent<HabitatSources>();
 
         if (_patrolNodes == null)
         {

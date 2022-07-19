@@ -14,11 +14,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
 
-    [Header("SFX")]
-    [SerializeField] private AudioClip _waterfallSFX = null;
-    private AudioSource _caveSource = null;
-    private AudioSource _runeStoneSource = null;
-    private AudioSource _waterfallSource = null;
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
@@ -28,13 +23,6 @@ public class AudioManager : MonoBehaviour
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
-
-    public void SetHabitatSFXSources(HabitatSources habitatSources)
-    {
-        _caveSource = habitatSources.CaveSource;
-        _runeStoneSource = habitatSources.RuneStoneSource;
-        _waterfallSource = habitatSources.WaterfallSource;
-    }
 
     public void SetMasterVolume(float masterVolume)
     {
@@ -69,13 +57,6 @@ public class AudioManager : MonoBehaviour
         return this;
     }
 
-    public void SaveVolume()
-    {
-        PlayerPrefs.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
-        PlayerPrefs.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
-        PlayerPrefs.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
-    }
-
     public void PlayHabitatMusic(HabitatType habitatType)
     {
         switch (habitatType)
@@ -94,28 +75,6 @@ public class AudioManager : MonoBehaviour
                 break;
             default:
                 Debug.LogError($"{habitatType} is invalid. Please change!");
-                break;
-        }
-    }
-
-    public void PlayFacilitySFX(FacilityType facilityType)
-    {
-        switch (facilityType)
-        {
-            case FacilityType.Cave:
-                _caveSource.clip = _waterfallSFX; // TODO: Change to cave.
-                _caveSource.Play();
-                break;
-            case FacilityType.RuneStone:
-                _runeStoneSource.clip = _waterfallSFX; // TODO: Change to rune stone.
-                _runeStoneSource.Play();
-                break;
-            case FacilityType.Waterfall:
-                _waterfallSource.clip = _waterfallSFX;
-                _waterfallSource.Play();
-                break;
-            default:
-                Debug.LogError($"{facilityType} is invalid. Please change!");
                 break;
         }
     }

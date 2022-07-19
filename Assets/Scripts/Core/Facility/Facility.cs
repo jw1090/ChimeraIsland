@@ -17,6 +17,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
 
+    private FacilitySFX _facilitySFX = null;
+
+
     private bool _isInitialized = false;
     private int _currentTier = 0;
 
@@ -43,7 +46,6 @@ public class Facility : MonoBehaviour
     public void BuildFacility()
     {
         BoxCollider _collider = GetComponent<BoxCollider>();
-        ServiceLocator.Get<AudioManager>().PlayFacilitySFX(_facilityType);
         _price = (int)(_price * 7.5);
         ++_currentTier;
 
@@ -51,12 +53,17 @@ public class Facility : MonoBehaviour
 
         if (_currentTier == 1)
         {
-            _isInitialized = true;
             debugString += $"{_facilityType} was purchased";
 
             _rubbleObject.SetActive(false);
             _collider.enabled = true;
             _tier1Object.SetActive(true);
+
+            _facilitySFX = GetComponent<FacilitySFX>();
+            _facilitySFX.Initialize();
+            _facilitySFX.BuildSFX();
+
+            _isInitialized = true;
         }
         else
         {
@@ -85,6 +92,8 @@ public class Facility : MonoBehaviour
 
         chimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
+        _facilitySFX.PlaySFX();
+
         Debug.Log($"{_storedChimera} added to the facility.");
         return true;
     }
@@ -104,6 +113,8 @@ public class Facility : MonoBehaviour
         _icon.RemoveIcon();
         _icon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
+
+        _facilitySFX.StopSFX();
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");
 

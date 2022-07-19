@@ -225,7 +225,6 @@ public class HabitatManager : MonoBehaviour
 
     public void PlayCurrentHabitatMusic()
     {
-        _audioManager.SetHabitatSFXSources(_currentHabitat.HabitatSources);
         _audioManager.PlayHabitatMusic(_currentHabitat.Type);
     }
 
