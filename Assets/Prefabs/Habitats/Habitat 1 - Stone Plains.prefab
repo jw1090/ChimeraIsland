@@ -6084,7 +6084,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5411779016802924876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.81, y: 10.55, z: 3.61}
+  m_LocalPosition: {x: 21.121, y: 10.55, z: 2.272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5411779017660834405}
@@ -10122,7 +10122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5411779017660834405}
   - component: {fileID: 5411779017660834404}
-  - component: {fileID: 8093564968357593968}
   m_Layer: 0
   m_Name: Habitat 1 - Stone Plains
   m_TagString: Habitat
@@ -10172,21 +10171,6 @@ MonoBehaviour:
   _chimeraFolder: {fileID: 5411779016932246351}
   _spawnPoint: {fileID: 5411779016802924876}
   _patrolNodes: {fileID: 5411779016111463727}
---- !u!114 &8093564968357593968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5411779017660834402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9734ace277850564c820b08c83b738a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _caveSource: {fileID: 1385718358067043545}
-  _runeStoneSource: {fileID: 8314757988989679142}
-  _waterfallSource: {fileID: 1385718358067043545}
 --- !u!1 &5411779017675810158
 GameObject:
   m_ObjectHideFlags: 0
@@ -10500,6 +10484,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5411779016639711248}
     m_Modifications:
+    - target: {fileID: 2026057338, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
+      propertyPath: _trainingSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 12d553496c3effd42b5496adb3d38cf9, type: 3}
     - target: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -10561,11 +10549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8106c178ea50fa74d88f08603d65d666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &1385718358067043545 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 6350515101970781825, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
-  m_PrefabInstance: {fileID: 5411779015585958488}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5978914071819657875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1865579845439662283, guid: de77e8a67af27384f814f8fcadcddd54, type: 3}
@@ -10582,6 +10565,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cave Exploring - Str
       objectReference: {fileID: 0}
+    - target: {fileID: 216893246375736402, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: _ambientSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: c080a43439910fd4187301b9c4a240d1, type: 3}
+    - target: {fileID: 216893246375736402, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+      propertyPath: _trainingSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 00c8ebcdfaf1cad449fdba8f7276b670, type: 3}
     - target: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -10628,6 +10619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+--- !u!4 &3743344203481317624 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
+  m_PrefabInstance: {fileID: 5411779015728758293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6586131686891170891 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1187863470125306462, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
@@ -10639,11 +10635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8106c178ea50fa74d88f08603d65d666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3743344203481317624 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8712644418381381357, guid: 0b208ee80f6a0384cac8fff6adcd0e30, type: 3}
-  m_PrefabInstance: {fileID: 5411779015728758293}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5411779016500472948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10744,6 +10735,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5411779016639711248}
     m_Modifications:
+    - target: {fileID: 786502213, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+      propertyPath: _trainingSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 00f69ead06d7d8a4e969c5e9b60329a8, type: 3}
     - target: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10794,6 +10789,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+--- !u!4 &7900950809857550149 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
+  m_PrefabInstance: {fileID: 5411779016958718553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4537259061317317890 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8497471455850727259, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
@@ -10805,16 +10805,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8106c178ea50fa74d88f08603d65d666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &8314757988989679142 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4069411288964301951, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
-  m_PrefabInstance: {fileID: 5411779016958718553}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7900950809857550149 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2792039016706888988, guid: 0beeefb6908901345ad306fec12430c2, type: 3}
-  m_PrefabInstance: {fileID: 5411779016958718553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5987266098957762660
 PrefabInstance:
   m_ObjectHideFlags: 0
