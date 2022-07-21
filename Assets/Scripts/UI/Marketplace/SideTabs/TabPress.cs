@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 
 public class TabPress : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    [SerializeField] private TabGroup _tabGroup = null;
     [SerializeField] private bool _startSelected = false;
+    private TabGroup _tabGroup = null;
 
     public void Initialize(TabGroup tabGroup)
     {
