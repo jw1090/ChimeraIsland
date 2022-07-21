@@ -4,6 +4,6 @@ using System;
 public class TutorialStepData
 {
     public string description;
-    public TutorialIconType type = TutorialIconType.None;
+    public string type = TutorialIconType.None.ToString();
     public string activateElement = TutorialUIElementType.None.ToString();
 }
