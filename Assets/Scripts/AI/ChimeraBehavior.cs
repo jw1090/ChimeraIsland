@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 namespace AI.Behavior
 {
@@ -96,12 +94,10 @@ namespace AI.Behavior
             {
                 if (wasClicked)
                 {
-                    // change state to held
                     ChangeState(_states[StateEnum.Held]);
                 }
                 else
                 {
-                    // change state to patrol
                     ChangeState(_states[StateEnum.Patrol]);
                 }
             }
