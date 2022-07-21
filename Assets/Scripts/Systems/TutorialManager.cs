@@ -3,14 +3,14 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
-    private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private TutorialStageType _currentStage = TutorialStageType.None;
     private bool _tutorialsEnabled = true;
 
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
 
-    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public TutorialManager Initialize()
     {
@@ -93,14 +93,14 @@ public class TutorialManager : MonoBehaviour
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
         Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
-        _habitatUI.StartTutorial(tutorialStage);
+        _uiManager.StartTutorial(tutorialStage);
     }
 
     public void TutorialStageCheck()
     {
         if (_tutorialsEnabled == false) { return; }
 
-        _habitatUI.TutorialDisableUI();
+        _uiManager.TutorialDisableUI();
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
@@ -123,14 +123,14 @@ public class TutorialManager : MonoBehaviour
             case TutorialStageType.Intro:
                 break;
             case TutorialStageType.ExpeditionRequirements:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 break;
             case TutorialStageType.FacilityShop:
                 break;
             case TutorialStageType.Training:
                 break;
             case TutorialStageType.Details:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
                 break;
             case TutorialStageType.ExpeditionsInfo:
                 break;
@@ -141,12 +141,12 @@ public class TutorialManager : MonoBehaviour
             case TutorialStageType.Fossils:
                 break;
             case TutorialStageType.ChimeraShop:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
                 break;
             case TutorialStageType.TierThreeStonePlains:
                 break;
             case TutorialStageType.WorldMapButton:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
                 break;
             case TutorialStageType.WorldMapAndTheTreeOfLife:
                 break;
