@@ -12,7 +12,6 @@ public class HabitatUI : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
-    [SerializeField] private Button _expeditionButton = null;
     [SerializeField] private Button _marketplaceButton = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
@@ -70,15 +69,11 @@ public class HabitatUI : MonoBehaviour
             case TutorialUIElementType.None:
                 break;
             case TutorialUIElementType.All:
-                _expeditionButton.gameObject.SetActive(true);
                 _marketplaceButton.gameObject.SetActive(true);
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 _marketplacePanel.ChimeraTabSetActive(true);
-                break;
-            case TutorialUIElementType.ExpeditionButton:
-                _expeditionButton.gameObject.SetActive(true);
                 break;
             case TutorialUIElementType.MarketplaceButton:
                 _marketplaceButton.gameObject.SetActive(true);
@@ -102,7 +97,6 @@ public class HabitatUI : MonoBehaviour
     // Removes the basic UI so it can slowly be revealed by the Tutorial
     public void TutorialDisableUI()
     {
-        _expeditionButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
