@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     private Camera _cameraMain = null;
     private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
-    private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private TutorialManager _tutorialManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
@@ -19,10 +19,10 @@ public class InputManager : MonoBehaviour
 
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
-    public void SetHabitatUI(HabitatUI habitatUI)
+    public void SetUIManager(UIManager uiManager)
     {
-        _habitatUI = habitatUI;
-        _releaseSlider = _habitatUI.ReleaseSlider;
+        _uiManager = uiManager;
+        _releaseSlider = _uiManager.HabitatUI.ReleaseSlider;
     }
 
     public InputManager Initialize()
@@ -76,9 +76,9 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(_habitatUI != null)
+            if(_uiManager.HabitatUI != null)
             {
-                _habitatUI.ToggleSettingsMenu();
+                _uiManager.HabitatUI.ToggleSettingsMenu();
             }
         }
 
@@ -179,7 +179,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _habitatUI.TutorialDisableUI();
+            _uiManager.TutorialDisableUI();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))

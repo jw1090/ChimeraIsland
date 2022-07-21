@@ -1,17 +1,18 @@
 using UnityEngine;
 using System;
+
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private UITextInfo _textInfo = null;
-    private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private ResourceManager _resourceManager = null;
     private TutorialStageData _tutorialData = null;
     private int _tutorialStep = -1;
 
-    public void Initialize(HabitatUI habitatUI)
+    public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _habitatUI = habitatUI;
+        _uiManager = uiManager;
     }
 
     public void ShowOverlay(TutorialStageData tutorialSteps)
@@ -35,14 +36,14 @@ public class UITutorialOverlay : MonoBehaviour
         if(_tutorialStep >= _tutorialData.StepData.Length)
         {
             _tutorialData.finished = true;
-            _habitatUI.EndTutorial();
+            _uiManager.EndTutorial();
             return;
         }
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
         if(loadedStep.activateElement != TutorialUIElementType.None.ToString())
         {
-            _habitatUI.EnableTutorialUIByType((TutorialUIElementType) Enum.Parse(typeof(TutorialUIElementType),loadedStep.activateElement));
+            _uiManager.EnableTutorialUIByType((TutorialUIElementType) Enum.Parse(typeof(TutorialUIElementType),loadedStep.activateElement));
         }
 
         Sprite icon = _resourceManager.GetTutorialSprite((TutorialIconType)Enum.Parse(typeof(TutorialIconType), loadedStep.type));

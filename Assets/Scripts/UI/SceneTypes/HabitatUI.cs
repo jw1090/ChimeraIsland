@@ -21,11 +21,8 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
-    [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
-
-    private TutorialManager _tutorialManager = null;
 
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
@@ -34,10 +31,7 @@ public class HabitatUI : MonoBehaviour
 
     public void Initialize()
     {
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
-
         InitializeWallets();
-        _tutorialOverlay.Initialize(this);
     }
 
     private void InitializeWallets()
@@ -94,7 +88,7 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    // Removes the basic UI so it can slowly be revealed by the Tutorial
+    // Removes the basic UI so it can slowly be revealed by the Tutorial.
     public void TutorialDisableUI()
     {
         _marketplaceButton.gameObject.SetActive(false);
@@ -187,17 +181,5 @@ public class HabitatUI : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
-    }
-
-    public void StartTutorial(TutorialStageData tutorialSteps)
-    {
-        _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps);
-    }
-
-    public void EndTutorial()
-    {
-        _tutorialOverlay.gameObject.SetActive(false);
-        _tutorialManager.SaveTutorialProgress();
     }
 }
