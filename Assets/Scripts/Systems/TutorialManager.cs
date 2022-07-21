@@ -5,9 +5,10 @@ public class TutorialManager : MonoBehaviour
     private TutorialData _tutorialData = null;
     private HabitatUI _habitatUI = null;
     private TutorialStageType _currentStage = TutorialStageType.None;
-
-    public bool TutorialsEnabled { get => _tutorialsEnabled; }
     private bool _tutorialsEnabled = true;
+
+    public TutorialStageType CurrentStage { get => _currentStage; }
+    public bool TutorialsEnabled { get => _tutorialsEnabled; }
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
 
@@ -65,8 +66,6 @@ public class TutorialManager : MonoBehaviour
         if (_tutorialsEnabled == false) { return; }
 
         FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA);
-
-        Debug.Log("Tutorial progress saved.");
     }
 
     public void ResetTutorialProgress()
@@ -123,33 +122,39 @@ public class TutorialManager : MonoBehaviour
         {
             case TutorialStageType.Intro:
                 break;
-            case TutorialStageType.MarketplaceButton:
-            case TutorialStageType.PurchasingFacilities:
+            case TutorialStageType.ExpeditionRequirements:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 break;
-            case TutorialStageType.DetailsButton:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+            case TutorialStageType.FacilityShop:
+                break;
+            case TutorialStageType.Training:
+                break;
+            case TutorialStageType.Details:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
                 break;
-            case TutorialStageType.ExpeditionsButton:
-            case TutorialStageType.NewFacilities:
-            case TutorialStageType.Evolution:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
+            case TutorialStageType.ExpeditionsInfo:
+                break;
+            case TutorialStageType.TierTwoStonePlains:
+                break;
+            case TutorialStageType.UnlockExpeditionModifiers:
                 break;
             case TutorialStageType.Fossils:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.ExpeditionButton);
-                // TODO: Fossil Currency UI Element
+                break;
+            case TutorialStageType.ChimeraShop:
                 _habitatUI.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
                 break;
-            case TutorialStageType.WorldMap:
-            case TutorialStageType.NewHabitats:
+            case TutorialStageType.TierThreeStonePlains:
+                break;
+            case TutorialStageType.WorldMapButton:
+                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
+                break;
+            case TutorialStageType.WorldMapAndTheTreeOfLife:
+                break;
             case TutorialStageType.TreeOfLife:
-            case TutorialStageType.AshLands:
-                _habitatUI.EnableTutorialUIByType(TutorialUIElementType.All);
+                break;
+            case TutorialStageType.Transfers:
+                break;
+            case TutorialStageType.Ashlands:
                 break;
             default:
                 Debug.LogError($"{_currentStage} is invalid. Please change!");
