@@ -90,13 +90,13 @@ public enum StatType
 public enum TutorialIconType
 {
     None = -1,
-    Cute,
+    Berries,
     Happy,
     LookingLeft,
     LookingRight,
-    Shocked,
+    Normal,
+    Smile,
     Speaking,
-    Standard,
 }
 
 public enum TutorialUIElementType
@@ -114,19 +114,17 @@ public enum TutorialStageType
 {
     None = -1,
     Intro,
-    ExpeditionRequirements,
-    FacilityShop,
-    Training,
-    Details,
+    MarketplaceButton,
+    PurchasingFacilities,
+    DetailsButton,
+    DetailsInfo,
+    ExpeditionsButton,
     ExpeditionsInfo,
-    TierTwoStonePlains,
-    UnlockExpeditionModifiers,
+    NewFacilities,
+    Evolution,
     Fossils,
-    ChimeraShop,
-    TierThreeStonePlains,
-    WorldMapButton,
-    WorldMapAndTheTreeOfLife,
+    WorldMap,
+    NewHabitats,
     TreeOfLife,
-    Transfers,
-    Ashlands,
+    AshLands,
 }

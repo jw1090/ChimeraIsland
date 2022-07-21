@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 public class UITutorialOverlay : MonoBehaviour
 {
-    [SerializeField] private UITextInfo _textInfo = null;
+    [SerializeField] private TextInfo _textInfo = null;
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private TutorialStageData _tutorialData = null;

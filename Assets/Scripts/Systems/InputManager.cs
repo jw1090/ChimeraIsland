@@ -175,30 +175,46 @@ public class InputManager : MonoBehaviour
 
     private void DebugTutorialInput()
     {
-        int currentStageId = (int)_tutorialManager.CurrentStage;
-
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _habitatUI.TutorialDisableUI();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            int newStageId = ++currentStageId;
-
-            if(newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
-            {
-                _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
-            }
+            _tutorialManager.ShowTutorialStage(TutorialStageType.MarketplaceButton);
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            int newStageId = --currentStageId;
-
-            if (newStageId >= 0)
-            {
-                _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
-            }
+            _tutorialManager.ShowTutorialStage(TutorialStageType.PurchasingFacilities);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.DetailsButton);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionsButton);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.NewFacilities);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.Evolution);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.Fossils);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.WorldMap);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            _tutorialManager.ShowTutorialStage(TutorialStageType.NewHabitats);
         }
     }
 }

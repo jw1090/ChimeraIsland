@@ -28,21 +28,21 @@ public class UIVolumeSettings : MonoBehaviour
 
     private void SetMasterVolume(float masterValue)
     {
-        _audioManager.SetMasterVolume(40 * Mathf.Log10(masterValue));
+        _audioManager.SetMasterVolume(40 * Mathf.Log10(masterValue) + 20);
     }
 
     private void SetMusicVolume(float musicValue)
     {
-        _audioManager.SetMusicVolume(40 * Mathf.Log10(musicValue));
+        _audioManager.SetMusicVolume(40 * Mathf.Log10(musicValue) + 20);
     }
 
     private void SetSFXVolume(float sfxValue)
     {
-        _audioManager.SetSFXVolume(40 * Mathf.Log10(sfxValue));
+        _audioManager.SetSFXVolume(40 * Mathf.Log10(sfxValue) + 20);
     }
 
     private float DBToSliderVolume(float volume)
     {
-        return Mathf.Pow(10.0f, volume * 0.025f);
+        return Mathf.Pow(10.0f, (volume - 20) * 0.025f);
     }
 }
