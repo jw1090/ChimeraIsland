@@ -6,7 +6,6 @@ namespace AI.Behavior
     public class PatrolState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private bool _enabled = false;
         private string _patrolAnim = "Walk";
 
         public override void Enter(ChimeraBehavior chimeraBehaviors)
@@ -17,18 +16,11 @@ namespace AI.Behavior
             _chimeraBehavior.EnterAnim(_patrolAnim);
 
             ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
-
-            _enabled = true;
         }
 
         public override void Update()
         {
-            if (_enabled == false)
-            {
-                return;
-            }
-
-            // If it was just dropped, wait to update the state.
+            // if it was just dropped, wait to update the state
             if (_chimeraBehavior.Dropped)
             {
                 return;
@@ -59,8 +51,6 @@ namespace AI.Behavior
 
         public override void Exit()
         {
-            _enabled = false;
-
             _chimeraBehavior.Dropped = false;
             _chimeraBehavior.ExitAnim(_patrolAnim);
         }
