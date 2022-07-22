@@ -7,7 +7,6 @@ public class Habitat : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private List<Facility> _facilities = new List<Facility>();
     [SerializeField] private HabitatType _habitatType = HabitatType.None;
-    [SerializeField] private float _unhappyRate = 5;
     [SerializeField] private int _facilityCapacity = 3;
 
     [Header("Tick Info")]
@@ -23,7 +22,6 @@ public class Habitat : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
-    private int _tickTracker = 0;
 
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
@@ -202,19 +200,11 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_tickTimer);
 
-            ++_tickTracker;
-
             foreach (Chimera chimera in _activeChimeras)
             {
                 if (chimera.isActiveAndEnabled)
                 {
                     chimera.EssenceTick();
-
-                    if (_tickTracker % _unhappyRate == 0)
-                    {
-                        chimera.HappinessTick();
-                        _tickTracker = 0;
-                    }
                 }
             }
 

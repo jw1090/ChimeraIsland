@@ -11,7 +11,6 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _endurance = null;
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
-    [SerializeField] private TextMeshProUGUI _happiness = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private int _chimeraSpot = 0;
@@ -45,7 +44,7 @@ public class ChimeraDetails : MonoBehaviour
 
         _icon.sprite = _chimera.Icon;
         _level.text = $"Level: {_chimera.Level}";
-        _element.text = $"Element: {_chimera.ElementalType}";
+        _element.text = $"{_chimera.ElementalType}";
 
         int amount = 0;
         string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";
@@ -54,7 +53,5 @@ public class ChimeraDetails : MonoBehaviour
         _intelligence.text = intelligenceText;
         string strengthText = _chimera.GetStatByType(StatType.Strength, out amount) ? amount.ToString() : "Invalid!";
         _strength.text = strengthText;
-        string happinessText = _chimera.GetStatByType(StatType.Happiness, out amount) ? amount.ToString() : "Invalid!";
-        _happiness.text = happinessText;
     }
 }
