@@ -9,7 +9,6 @@ public class ChimeraData
     public int endurance = 0;
     public int intelligence = 0;
     public int strength = 0;
-    public int happiness = 0;
 
     public ChimeraData(Chimera chimera)
     {
@@ -19,6 +18,5 @@ public class ChimeraData
         endurance = chimera.Endurance;
         intelligence = chimera.Intelligence;
         strength = chimera.Strength;
-        happiness = chimera.Happiness;
     }
 }

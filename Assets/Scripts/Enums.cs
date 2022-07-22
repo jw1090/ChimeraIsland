@@ -84,7 +84,6 @@ public enum StatType
     Endurance,
     Intelligence,
     Strength,
-    Happiness,
 }
 
 public enum TutorialIconType

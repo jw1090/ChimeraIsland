@@ -132,7 +132,6 @@ public class Facility : MonoBehaviour
             _storedChimera.ExperienceTick(_statType, _statModifier);
 
             FlatStatBoost();
-            HappinessCheck();
         }
     }
 
@@ -141,15 +140,5 @@ public class Facility : MonoBehaviour
         _storedChimera.ExperienceTick(StatType.Endurance, 1);
         _storedChimera.ExperienceTick(StatType.Intelligence, 1);
         _storedChimera.ExperienceTick(StatType.Strength, 1);
-    }
-
-    private void HappinessCheck()
-    {
-        if (_storedChimera.StatPreference == _statType)
-        {
-            int happinessAmount = 1;
-
-            _storedChimera.ChangeHappiness(happinessAmount);
-        }
     }
 }

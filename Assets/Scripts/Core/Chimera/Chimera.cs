@@ -16,7 +16,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _endurance = 1;
     [SerializeField] private int _intelligence = 1;
     [SerializeField] private int _strength = 1;
-    [SerializeField] private int _happiness = 0;
 
     [Header("Stat Growth")]
     [SerializeField] private int _enduranceGrowth = 1;
@@ -52,7 +51,6 @@ public class Chimera : MonoBehaviour
     public int Endurance { get => _endurance; }
     public int Intelligence { get => _intelligence; }
     public int Strength { get => _strength; }
-    public int Happiness { get => _happiness; }
     public int Price { get => _price; }
 
     public bool GetStatByType(StatType statType, out int amount)
@@ -70,9 +68,6 @@ public class Chimera : MonoBehaviour
             case StatType.Strength:
                 amount = _strength;
                 return true;
-            case StatType.Happiness:
-                amount = _happiness;
-                return true;
             default:
                 Debug.LogError("Default StatType please change!");
                 break;
@@ -87,7 +82,6 @@ public class Chimera : MonoBehaviour
     public void SetEndurance(int endurance) { _endurance = endurance; }
     public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
     public void SetStrength(int strength) { _strength = strength; }
-    public void SetHappiness(int happiness) { _happiness = happiness; }
 
     public void Initialize()
     {
@@ -152,56 +146,8 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        int happinessModifier = HappinessModifierCalc(); // The happiness of a Chimera affects how much Essence it will generate.
-        int essenceGain = (int)((happinessModifier * _baseEssenceRate) + Mathf.Sqrt(_level));
+        int essenceGain = _baseEssenceRate + (int)Mathf.Sqrt(_level);
         _essenceManager.IncreaseEssence(essenceGain);
-    }
-
-    public void HappinessTick()
-    {
-        if (_inFacility == false)
-        {
-            int happinessAmount = -1;
-
-            ChangeHappiness(happinessAmount);
-            _habitatUI.UpdateDetails();
-        }
-    }
-
-    // Happiness can range between -100 and 100.
-    // At -100, happinessMod is 0.3. At 0, it is 1. At 100 it is 3.
-    private int HappinessModifierCalc()
-    {
-        if (_happiness == 0)
-        {
-            return 1;
-        }
-        else if (_happiness > 0)
-        {
-            int hapMod = (_happiness) / 50 + 1;
-            return hapMod;
-        }
-        else
-        {
-            int hapMod = (1 * (int)Mathf.Sqrt(_happiness + 100) / 15) + (1 / 3);
-            return hapMod;
-        }
-    }
-
-    public void ChangeHappiness(int amount)
-    {
-        if (_happiness + amount >= 100)
-        {
-            _happiness = 100;
-            return;
-        }
-        else if (_happiness + amount <= -100)
-        {
-            _happiness = -100;
-            return;
-        }
-
-        _happiness += amount;
     }
 
     // Transfer experience stored by the chimera and see if each stat's threshold is met.
