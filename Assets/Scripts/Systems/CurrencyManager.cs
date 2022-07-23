@@ -27,17 +27,21 @@ public class CurrencyManager : MonoBehaviour
     {
         if (_persistentData != null && _currencyLoaded == false)
         {
-            _essence = _persistentData.EssenceData; // Craig's Note: be careful when using properties that implement 'get' calls that are not exception safe, like this one.
+            // Craig's Note: be careful when using properties that implement 'get' calls that are not exception safe, like this one.
+            _essence = _persistentData.EssenceData;
+            _fossils = _persistentData.FossilData;
             _currencyLoaded = true;
         }
     }
 
-    public void ResetEssence()
+    public void ResetCurrency()
     {
         _essence = 100;
+        _fossils = 5;
         if (_habitatUI != null)
         {
             _habitatUI.UpdateEssenceWallets();
+            _habitatUI.UpdateFossilWallets();
         }
     }
 
@@ -59,6 +63,23 @@ public class CurrencyManager : MonoBehaviour
         if (_habitatUI != null)
         {
             _habitatUI.UpdateEssenceWallets();
+        }
+
+        return true;
+    }
+
+    public bool SpendFossils(int amount)
+    {
+        if (_fossils - amount < 0)
+        {
+            return false;
+        }
+
+        _fossils -= amount;
+
+        if (_habitatUI != null)
+        {
+            _habitatUI.UpdateFossilWallets();
         }
 
         return true;

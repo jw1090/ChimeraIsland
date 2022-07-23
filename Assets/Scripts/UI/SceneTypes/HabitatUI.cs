@@ -188,4 +188,12 @@ public class HabitatUI : MonoBehaviour
             wallet.UpdateWallet();
         }
     }
+
+    public void UpdateFossilWallets()
+    {
+        foreach (var wallet in _fossilWallets)
+        {
+            wallet.UpdateWallet();
+        }
+    }
 }
