@@ -4,7 +4,7 @@ using UnityEngine;
 public class PersistentData : MonoBehaviour
 {
     private AudioManager _audioManager = null;
-    private EssenceManager _essenceManager = null;
+    private CurrencyManager _currencyManager = null;
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
     private TutorialManager _tutorialManager = null;
@@ -17,9 +17,10 @@ public class PersistentData : MonoBehaviour
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
     public Vector3 Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
+    public int FossilData { get => _globalSaveData.lastSessionFossils; }
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
-    public void SetEssenceManager(EssenceManager essenceManager) { _essenceManager = essenceManager; }
+    public void SetEssenceManager(CurrencyManager essenceManager) { _currencyManager = essenceManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
 
@@ -50,7 +51,7 @@ public class PersistentData : MonoBehaviour
 
         _tutorialManager.ResetTutorialProgress();
 
-        _essenceManager.ResetEssence();
+        _currencyManager.ResetCurrency();
         _habitatManager.ResetDictionaries();
         _habitatManager.LoadHabitatData();
 
@@ -59,7 +60,7 @@ public class PersistentData : MonoBehaviour
 
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
-        GlobalData myGlobalData = new GlobalData(habitatType, _essenceManager.CurrentEssence);
+        GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
 

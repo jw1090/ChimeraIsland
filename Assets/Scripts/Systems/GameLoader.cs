@@ -94,8 +94,8 @@ public class GameLoader : AsyncLoader
 
         var essenceManagerGO = new GameObject("Essence Manager");
         essenceManagerGO.transform.SetParent(systemsParent);
-        var essenceManagerComp = essenceManagerGO.AddComponent<EssenceManager>().Initialize();
-        ServiceLocator.Register<EssenceManager>(essenceManagerComp);
+        var essenceManagerComp = essenceManagerGO.AddComponent<CurrencyManager>().Initialize();
+        ServiceLocator.Register<CurrencyManager>(essenceManagerComp);
         persistentDataComp.SetEssenceManager(essenceManagerComp);
 
         var habitatManagerGO = new GameObject("Habitat Manager");

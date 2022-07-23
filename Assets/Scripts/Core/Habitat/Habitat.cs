@@ -18,7 +18,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
     private ChimeraCreator _chimeraCreator = null;
-    private EssenceManager _essenceManager = null;
+    private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
@@ -46,7 +46,7 @@ public class Habitat : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         if (_patrolNodes == null)
@@ -94,14 +94,16 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        int price = chimeraPrefab.Price;
+        //int price = chimeraPrefab.Price;  TODO Update price logic
 
-        if (_essenceManager.SpendEssence(price) == false)
+        int price = 1;
+
+        if (_currencyManager.SpendFossils(price) == false)
         {
             Debug.Log
             (
                 $"Can't afford this chimera. It costs {price} " +
-                $"Essence and you only have {_essenceManager.CurrentEssence} Essence."
+                $"Fossil and you only have {_currencyManager.Fossils} Fossils."
             );
             return;
         }
@@ -159,13 +161,13 @@ public class Habitat : MonoBehaviour
             return;
         }
 
-        if (_essenceManager.SpendEssence(facility.Price) == false)
+        if (_currencyManager.SpendEssence(facility.Price) == false)
         {
             Debug.Log
             (
                 $"Can't afford this facility." +
                 $"It costs {facility.Price} Essence and you" +
-                $"only have {_essenceManager.CurrentEssence} Essence."
+                $"only have {_currencyManager.Essence} Essence."
             );
             return;
         }

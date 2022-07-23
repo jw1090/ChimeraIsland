@@ -22,6 +22,13 @@ public enum ChimeraType
     C3,
 }
 
+public enum CurrencyType
+{
+    None = -1,
+    Essence,
+    Fossils,
+}
+
 public enum ElementalType
 {
     None = -1,
