@@ -36,7 +36,7 @@ public class Chimera : MonoBehaviour
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
-    private EssenceManager _essenceManager = null;
+    private CurrencyManager _essenceManager = null;
     private HabitatType _habitatType = HabitatType.None;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
@@ -87,7 +87,7 @@ public class Chimera : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
 
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _essenceManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 

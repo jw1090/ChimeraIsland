@@ -18,7 +18,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
     private ChimeraCreator _chimeraCreator = null;
-    private EssenceManager _essenceManager = null;
+    private CurrencyManager _essenceManager = null;
     private HabitatManager _habitatManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
@@ -46,7 +46,7 @@ public class Habitat : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
-        _essenceManager = ServiceLocator.Get<EssenceManager>();
+        _essenceManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         if (_patrolNodes == null)
@@ -101,7 +101,7 @@ public class Habitat : MonoBehaviour
             Debug.Log
             (
                 $"Can't afford this chimera. It costs {price} " +
-                $"Essence and you only have {_essenceManager.CurrentEssence} Essence."
+                $"Essence and you only have {_essenceManager.Essence} Essence."
             );
             return;
         }
@@ -165,7 +165,7 @@ public class Habitat : MonoBehaviour
             (
                 $"Can't afford this facility." +
                 $"It costs {facility.Price} Essence and you" +
-                $"only have {_essenceManager.CurrentEssence} Essence."
+                $"only have {_essenceManager.Essence} Essence."
             );
             return;
         }

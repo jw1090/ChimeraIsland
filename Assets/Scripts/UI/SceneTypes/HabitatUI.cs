@@ -22,7 +22,8 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
-    [SerializeField] private List<UIWallet> _essenceWallets = new List<UIWallet>();
+    [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
+    [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
@@ -37,6 +38,11 @@ public class HabitatUI : MonoBehaviour
     private void InitializeWallets()
     {
         foreach (var wallet in _essenceWallets)
+        {
+            wallet.Initialize();
+        }
+
+        foreach (var wallet in _fossilWallets)
         {
             wallet.Initialize();
         }
@@ -175,7 +181,7 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.UpdateDetailsList();
     }
 
-    public void UpdateWallets()
+    public void UpdateEssenceWallets()
     {
         foreach (var wallet in _essenceWallets)
         {
