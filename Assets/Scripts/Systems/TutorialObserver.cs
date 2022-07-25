@@ -4,9 +4,8 @@ using UnityEngine.UI;
 
 public class TutorialObserver : MonoBehaviour
 { 
-    UIManager _uiManager = null;
-    TutorialManager _tutorialManager = null;
-    public UnityEvent _tutorialCalls = new UnityEvent();
+    private UIManager _uiManager = null;
+    private TutorialManager _tutorialManager = null;
     public TutorialObserver Initialize(UIManager ui)
     {
         _uiManager = ui;
