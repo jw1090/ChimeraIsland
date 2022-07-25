@@ -110,6 +110,7 @@ public enum TutorialUIElementType
     None = -1,
     All,
     MarketplaceButton,
+    OtherFacilityButtons,
     OpenDetailsButton,
     ExpeditionButton,
     MarketplaceChimeraTab,

@@ -8,12 +8,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private WorldMapUI _worldMapUI = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
+    [SerializeField] private TutorialObserver _tutorialObserver = null;
     private TutorialManager _tutorialManager = null;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
     public WorldMapUI WorldMapUI { get => _worldMapUI; }
+    public TutorialObserver TutorialObserver { get => _tutorialObserver; }
+
 
     public UIManager Initialize()
     {
@@ -25,6 +28,8 @@ public class UIManager : MonoBehaviour
         _habitatUI.Initialize();
 
         _tutorialOverlay.Initialize(this);
+
+        _tutorialObserver.Initialize(this);
 
         DisableAllSceneTypeUI();
 
@@ -68,6 +73,7 @@ public class UIManager : MonoBehaviour
             case TutorialUIElementType.ExpeditionButton:
             case TutorialUIElementType.MarketplaceChimeraTab:
             case TutorialUIElementType.WorldMapButton:
+            case TutorialUIElementType.OtherFacilityButtons:
                 _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
                 break;
             default:
