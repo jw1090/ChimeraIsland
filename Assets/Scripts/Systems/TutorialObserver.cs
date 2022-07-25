@@ -6,6 +6,7 @@ public class TutorialObserver : MonoBehaviour
 { 
     private UIManager _uiManager = null;
     private TutorialManager _tutorialManager = null;
+
     public TutorialObserver Initialize(UIManager ui)
     {
         _uiManager = ui;
@@ -15,6 +16,7 @@ public class TutorialObserver : MonoBehaviour
         CreateButtonTraining(_uiManager.HabitatUI.WaterfallButton);
         return this;
     }
+
     private void CreateButtonListenerExpeditionRequirements(Button button)
     {
         if (button != null)
@@ -31,6 +33,7 @@ public class TutorialObserver : MonoBehaviour
             Debug.LogError($"{button} is null! Please Fix");
         }
     }
+
     private void CreateButtonFacilityShop(Button button)
     {
         if (button != null)
@@ -47,6 +50,7 @@ public class TutorialObserver : MonoBehaviour
             Debug.LogError($"{button} is null! Please Fix");
         }
     }
+
     private void CreateButtonTraining(Button button)
     {
         if (button != null)
