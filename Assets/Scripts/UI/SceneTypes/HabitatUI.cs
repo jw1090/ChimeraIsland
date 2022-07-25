@@ -13,6 +13,10 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
+    [SerializeField] private Button _expeditionButton = null;
+    [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
+    [SerializeField] private GameObject _runeFacilityShopIcon = null;
+    [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
@@ -28,6 +32,9 @@ public class HabitatUI : MonoBehaviour
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
     public Button WorldMapButton { get => _worldMapButton; }
+    public Button MarketplaceButton { get => _marketplaceButton; }
+    public Button ExpeditionButton { get => _expeditionButton; }
+    public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
 
     public void Initialize()
@@ -74,6 +81,8 @@ public class HabitatUI : MonoBehaviour
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 _marketplacePanel.ChimeraTabSetActive(true);
+                _runeFacilityShopIcon.gameObject.SetActive(true);
+                _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case TutorialUIElementType.MarketplaceButton:
                 _marketplaceButton.gameObject.SetActive(true);
@@ -88,6 +97,10 @@ public class HabitatUI : MonoBehaviour
             case TutorialUIElementType.WorldMapButton:
                 _worldMapButton.gameObject.SetActive(true);
                 break;
+            case TutorialUIElementType.OtherFacilityButtons:
+                _runeFacilityShopIcon.gameObject.SetActive(true);
+                _caveFacilityShopIcon.gameObject.SetActive(true);
+                break;
             default:
                 Debug.LogError($"{uiElementType} is invalid. Please change!");
                 break;
@@ -97,6 +110,8 @@ public class HabitatUI : MonoBehaviour
     // Removes the basic UI so it can slowly be revealed by the Tutorial.
     public void TutorialDisableUI()
     {
+        _runeFacilityShopIcon.gameObject.SetActive(false);
+        _caveFacilityShopIcon.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
