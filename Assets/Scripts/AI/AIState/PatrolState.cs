@@ -20,7 +20,6 @@ namespace AI.Behavior
 
         public override void Update()
         {
-            // if it was just dropped, wait to update the state
             if (_chimeraBehavior.Dropped)
             {
                 return;
