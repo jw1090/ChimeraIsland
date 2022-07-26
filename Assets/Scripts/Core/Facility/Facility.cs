@@ -16,6 +16,7 @@ public class Facility : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
+    [SerializeField] private GameObject _glowObject = null;
 
     private FacilitySFX _facilitySFX = null;
 
@@ -27,6 +28,7 @@ public class Facility : MonoBehaviour
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
+    public GameObject GlowObject { get => _glowObject; }
 
     public bool IsChimeraStored()
     {
