@@ -92,8 +92,6 @@ public class TutorialManager : MonoBehaviour
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
-        //if(tutorialStage.finished == true) { return; }
-
         Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
         _uiManager.StartTutorial(tutorialStage);
     }
