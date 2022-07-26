@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Source")]
     [SerializeField] private AudioSource _musicSource = null;
+    [SerializeField] private AudioSource _sfxSource = null;
 
     [Header("Music")]
     [SerializeField] private AudioClip _stonePlainsMusic = null;
@@ -77,5 +78,10 @@ public class AudioManager : MonoBehaviour
                 Debug.LogError($"{habitatType} is invalid. Please change!");
                 break;
         }
+    }
+    public void PlaySFX(AudioClip sfx)
+    {
+        _sfxSource.clip = sfx;
+        _sfxSource.Play();
     }
 }

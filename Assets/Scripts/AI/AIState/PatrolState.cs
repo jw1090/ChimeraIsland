@@ -11,7 +11,7 @@ namespace AI.Behavior
         public override void Enter(ChimeraBehavior chimeraBehaviors)
         {
             _chimeraBehavior = chimeraBehaviors;
-
+            _chimeraBehavior.EnableNavAgent();
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
             _chimeraBehavior.EnterAnim(_patrolAnim);
 
