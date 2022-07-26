@@ -14,6 +14,7 @@ namespace AI.Behavior
             _chimeraBehavior = chimeraBehavior;
             _idleTimer = _idleDuration;
             _chimeraBehavior.EnterAnim(_idleAnim);
+            _chimeraBehavior.EnableNavAgent();
             _chimeraBehavior.Agent.isStopped = true;
         }
 

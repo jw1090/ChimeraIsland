@@ -17,7 +17,7 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
 
     public void OnEnable()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
+        GetComponentInChildren<TextMeshProUGUI>().text = _facility?.Price.ToString();
     }
 
     public void OnPointerClick(PointerEventData eventData)
