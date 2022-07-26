@@ -1,65 +1,32 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TutorialObserver : MonoBehaviour
 { 
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
 
-    public TutorialObserver Initialize(UIManager ui)
+    public TutorialObserver Initialize(UIManager uiManager)
     {
-        _uiManager = ui;
+        _habitatUI = uiManager.HabitatUI;
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
-        CreateButtonListenerExpeditionRequirements(_uiManager.HabitatUI.ExpeditionButton);
-        CreateButtonFacilityShop(_uiManager.HabitatUI.MarketplaceButton);
-        CreateButtonTraining(_uiManager.HabitatUI.WaterfallButton);
+
+        CreateTutorialListener(_habitatUI.ExpeditionButton, TutorialStageType.ExpeditionRequirements);
+        CreateTutorialListener(_habitatUI.MarketplaceButton, TutorialStageType.FacilityShop);
+        CreateTutorialListener(_habitatUI.WaterfallButton, TutorialStageType.Training);
+
         return this;
     }
 
-    private void CreateButtonListenerExpeditionRequirements(Button button)
+    private void CreateTutorialListener(Button button, TutorialStageType tutorialStageType)
     {
         if (button != null)
         {
             button.onClick.AddListener
             (delegate
             {
-                ActivateTutorial(TutorialStageType.ExpeditionRequirements);
-                button.onClick.RemoveListener(() => ActivateTutorial(TutorialStageType.ExpeditionRequirements));
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
-    }
-
-    private void CreateButtonFacilityShop(Button button)
-    {
-        if (button != null)
-        {
-            button.onClick.AddListener
-            (delegate
-            {
-                ActivateTutorial(TutorialStageType.FacilityShop);
-                button.onClick.RemoveListener(() => ActivateTutorial(TutorialStageType.FacilityShop));
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
-    }
-
-    private void CreateButtonTraining(Button button)
-    {
-        if (button != null)
-        {
-            button.onClick.AddListener
-            (delegate
-            {
-                ActivateTutorial(TutorialStageType.Training);
-                button.onClick.RemoveListener(() => ActivateTutorial(TutorialStageType.Training));
+                ActivateTutorial(tutorialStageType);
+                button.onClick.RemoveListener(() => ActivateTutorial(tutorialStageType));
             });
         }
         else
@@ -73,4 +40,3 @@ public class TutorialObserver : MonoBehaviour
         _tutorialManager.ShowTutorialStage(type);
     }
 }
-
