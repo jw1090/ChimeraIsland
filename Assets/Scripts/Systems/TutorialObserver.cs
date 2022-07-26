@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TutorialObserver : MonoBehaviour
-{ 
+{
     private UIManager _uiManager = null;
     private TutorialManager _tutorialManager = null;
 
@@ -19,19 +18,10 @@ public class TutorialObserver : MonoBehaviour
 
     private void CreateButtonListenerExpeditionRequirements(Button button)
     {
-        if (button != null)
+        button.onClick.AddListener(() =>
         {
-            button.onClick.AddListener
-            (delegate
-            {
-                ActivateTutorial(TutorialStageType.ExpeditionRequirements);
-                button.onClick.RemoveListener(() => ActivateTutorial(TutorialStageType.ExpeditionRequirements));
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
+            _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionRequirements);
+        });
     }
 
     private void CreateButtonFacilityShop(Button button)
@@ -73,4 +63,3 @@ public class TutorialObserver : MonoBehaviour
         _tutorialManager.ShowTutorialStage(type);
     }
 }
-

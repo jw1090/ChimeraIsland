@@ -22,13 +22,11 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
-
         _startingUI.Initialize(this);
         _habitatUI.Initialize();
 
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _tutorialOverlay.Initialize(this);
-
         _tutorialObserver.Initialize(this);
 
         DisableAllSceneTypeUI();

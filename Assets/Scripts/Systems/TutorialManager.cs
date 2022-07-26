@@ -88,12 +88,23 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
+        if (IsStageComplete(tutorialType))
+        {
+            return;
+        }
+
         _currentStage = tutorialType;
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
         if(tutorialStage.finished == true) { return; }
         Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
         _uiManager.StartTutorial(tutorialStage);
+    }
+
+    private bool IsStageComplete(TutorialStageType stage)
+    {
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
+        return tutorialStage.finished;
     }
 
     public void TutorialStageCheck()
