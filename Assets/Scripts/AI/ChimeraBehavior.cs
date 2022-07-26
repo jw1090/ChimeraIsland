@@ -18,6 +18,7 @@ namespace AI.Behavior
         private Animator _animator = null;
         private Camera _mainCamera = null;
         private CameraController _cameraController = null;
+
         private Chimera _chimera = null;
         private ChimeraBaseState _currentState = null;
         private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
@@ -52,11 +53,10 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _navMeshAgent.enabled = false;
             _chimera = GetComponent<Chimera>();
 
             _mainCamera = CameraController.CameraCO;
-            _navMeshAgent.isStopped = false;
-            _navMeshAgent.SetDestination(_nodes[PatrolIndex].position);
 
             _states.Add(StateEnum.Patrol, new PatrolState());
             _states.Add(StateEnum.Wander, new WanderState());
@@ -65,9 +65,14 @@ namespace AI.Behavior
             _states.Add(StateEnum.Idle, new IdleState());
             _animator = _chimera.Animator;
 
-            ChangeState(_states[StateEnum.Patrol]);
+            ChangeState(_states[StateEnum.Idle]);
 
             _isActive = true;
+        }
+
+        public void EnableNavAgent()
+        {
+            _navMeshAgent.enabled = true;
         }
 
         private void OnDestroy()

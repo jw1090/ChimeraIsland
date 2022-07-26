@@ -14,11 +14,13 @@ public class InputManager : MonoBehaviour
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
+    private HabitatManager _habitatManager = null;
 
     public event Action<bool, int> HeldStateChange = null;
 
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
+    public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -150,10 +152,10 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
+            _habitatManager.CurrentHabitat.ActivateGlow(true);
             Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
             _heldChimera = chimera.GetComponent<ChimeraBehavior>();
             HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
@@ -167,7 +169,7 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-
+        _habitatManager.CurrentHabitat.ActivateGlow(false);
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
         _heldChimera = null;
