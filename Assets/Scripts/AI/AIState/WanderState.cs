@@ -19,6 +19,7 @@ namespace AI.Behavior
             _chimeraBehavior.EnterAnim(_wanderAnim);
 
             _wanderPoint = GetNewWayPoint();
+            _chimeraBehavior.EnableNavAgent();
             _chimeraBehavior.SetAgentDestination(_wanderPoint);
         }
 
