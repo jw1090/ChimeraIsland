@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
+    private HabitatManager _habitatManager = null;
 
     public event Action<bool, int> HeldStateChange = null;
 
@@ -32,6 +33,8 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
+
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         _isInitialized = true;
 
@@ -153,7 +156,7 @@ public class InputManager : MonoBehaviour
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
-            ServiceLocator.Get<HabitatManager>().CurrentHabitat.activateGlow(true);
+            _habitatManager.CurrentHabitat.ActivateGlow(true);
             Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
             _heldChimera = chimera.GetComponent<ChimeraBehavior>();
             HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
@@ -167,7 +170,7 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-        ServiceLocator.Get<HabitatManager>().CurrentHabitat.activateGlow(false);
+        _habitatManager.CurrentHabitat.ActivateGlow(false);
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
         _heldChimera = null;

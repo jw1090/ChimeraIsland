@@ -191,7 +191,7 @@ public class Habitat : MonoBehaviour
         return facilityCount;
     }
 
-    public void activateGlow(bool value)
+    public void ActivateGlow(bool value)
     {
         foreach (Facility facility in _facilities)
         {
