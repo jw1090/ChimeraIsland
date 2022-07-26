@@ -79,8 +79,6 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-
-    // TODO: Use this
     public void PlaySFX(AudioClip sfx)
     {
         _sfxSource.clip = sfx;
