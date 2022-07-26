@@ -9,6 +9,7 @@ public class DetailsTransferButton : MonoBehaviour, IPointerClickHandler
     public void Initialize(ChimeraDetails chimeraDetails)
     {
         _uiManager = ServiceLocator.Get<UIManager>().HabitatUI;
+
         _chimeraDetails = chimeraDetails;
     }
 

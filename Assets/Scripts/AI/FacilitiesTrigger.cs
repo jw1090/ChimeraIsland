@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class FacilitiesTrigger : MonoBehaviour
 {
+    [SerializeField] private Transform _trainingPos;
     private BoxCollider _boxCollider = null;
     private Facility _facility = null;
-    [SerializeField] private Transform _stayPos;
 
     private void Awake()
     {
@@ -44,6 +44,6 @@ public class FacilitiesTrigger : MonoBehaviour
         chimera.SetInFacility(true);
 
         chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
-        chimeraBehaviour.gameObject.transform.position = _stayPos.transform.position;
+        chimeraBehaviour.gameObject.transform.position = _trainingPos.transform.position;
     }
 }

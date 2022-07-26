@@ -116,7 +116,11 @@ public class Habitat : MonoBehaviour
 
     public void AddChimera(Transform newChimera)
     {
-        newChimera.position = _spawnPoint.transform.localPosition;
+        Vector3 spawnPos = _spawnPoint.transform.localPosition;
+        float spawnPointX = spawnPos.x + Random.Range(-5, 5);
+        float spawnPointZ = spawnPos.z + Random.Range(-5, 5);
+
+        newChimera.position = new Vector3(spawnPointX, spawnPos.y, spawnPointZ);
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 
@@ -189,6 +193,17 @@ public class Habitat : MonoBehaviour
         }
 
         return facilityCount;
+    }
+
+    public void ActivateGlow(bool value)
+    {
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.CurrentTier > 0 && !facility.IsChimeraStored())
+            {
+                facility.GlowObject.SetActive(value);
+            }
+        }
     }
 
     public void StartTickTimer()

@@ -26,16 +26,18 @@ namespace AI.Behavior
         private NavMeshAgent _navMeshAgent = null;
         private bool _isActive = false;
         private int _patrolIndex = 0;
+        private bool _stateEnabled = false;
 
         public BoxCollider BoxCollider { get => GetChimeraCollider(); }
         public Camera MainCamera { get => _mainCamera; }
         public CameraController CameraController { get => _cameraController; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
         public NavMeshAgent Agent { get => _navMeshAgent; }
+        public bool StateEnabled { get => _stateEnabled; }
         public int PatrolIndex { get => _patrolIndex; }
 
-        public bool WasClicked { get; set; } = false;
         public bool Dropped { get; set; } = false;
+        public bool WasClicked { get; set; } = false;
 
         public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
         private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
@@ -44,7 +46,6 @@ namespace AI.Behavior
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
         public void IncreasePatrolIndex() { _patrolIndex += 1; }
         public void ResetPatrolIndex() { _patrolIndex = 0; }
-
 
         public void Initialize()
         {
@@ -65,7 +66,7 @@ namespace AI.Behavior
             _states.Add(StateEnum.Idle, new IdleState());
             _animator = _chimera.Animator;
 
-            ChangeState(_states[StateEnum.Idle]);
+            ChangeState(_states[StateEnum.Patrol]);
 
             _isActive = true;
         }
@@ -86,10 +87,11 @@ namespace AI.Behavior
 
         private void Update()
         {
-            if (_isActive == false || _currentState == null)
+            if (_isActive == false || _currentState == null || _stateEnabled == false)
             {
                 return;
             }
+
             _currentState.Update();
         }
 
@@ -113,10 +115,12 @@ namespace AI.Behavior
             if (_currentState != null)
             {
                 _currentState.Exit();
+                _stateEnabled = false;
             }
 
             _currentState = state;
             _currentState.Enter(this);
+            _stateEnabled = true;
         }
 
         public void HeldEnterCheck()

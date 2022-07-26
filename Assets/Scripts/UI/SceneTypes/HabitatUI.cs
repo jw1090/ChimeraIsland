@@ -19,15 +19,18 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
-    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
-    [SerializeField] private GameObject _expeditionPanel = null;
+    [SerializeField] private UIExpedition _expeditionPanel = null;
     [SerializeField] private GameObject _settingsPanel = null;
+    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
+    [SerializeField] private AudioClip _clickSFX = null;
+
+    private AudioManager _audioManager = null;
 
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
@@ -64,8 +67,9 @@ public class HabitatUI : MonoBehaviour
     {
         _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
+        _expeditionPanel.Initialization();
         _transferMap.Initialize();
-
+        _audioManager = ServiceLocator.Get<AudioManager>();
         ResetStandardUI();
     }
 
@@ -127,6 +131,9 @@ public class HabitatUI : MonoBehaviour
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
 
+        //Audio
+        _audioManager.PlaySFX(_clickSFX);
+
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
@@ -140,6 +147,9 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.CheckDetails();
 
         ResetStandardUI();
+
+        _audioManager.PlaySFX(_clickSFX);
+
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
 
@@ -149,6 +159,9 @@ public class HabitatUI : MonoBehaviour
     public void OpenMarketplace()
     {
         ResetStandardUI();
+
+        _audioManager.PlaySFX(_clickSFX);
+
         _marketplacePanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
@@ -157,6 +170,9 @@ public class HabitatUI : MonoBehaviour
     public void OpenTransferMap(Chimera chimera)
     {
         ResetStandardUI();
+
+        _audioManager.PlaySFX(_clickSFX);
+
         _transferMap.Open(chimera);
     }
 
@@ -177,14 +193,18 @@ public class HabitatUI : MonoBehaviour
     public void OpenSettingsMenu()
     {
         ResetStandardUI();
-        _settingsPanel.gameObject.SetActive(true);
 
+        _audioManager.PlaySFX(_clickSFX);
+
+        _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
         _standardUI.gameObject.SetActive(false);
     }
 
     public void OpenExpedition()
     {
+        _audioManager.PlaySFX(_clickSFX);
+
         ResetStandardUI();
         _expeditionPanel.gameObject.SetActive(true);
 

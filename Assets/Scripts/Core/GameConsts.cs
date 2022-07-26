@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class GameConsts
 {
     public class LevelToLoadInts
@@ -21,5 +23,12 @@ public static class GameConsts
         public const string MASTER = "MasterVolume";
         public const string MUSIC = "MusicVolume";
         public const string SFX = "SFXVolume";
+    }
+
+    public class Colors
+    {
+        public static Color IDLE = new Color(255, 255, 255, 255);
+        public static Color HOVER = new Color(222, 226, 178, 255);
+        public static Color Active = new Color(218, 226, 129, 255);
     }
 }

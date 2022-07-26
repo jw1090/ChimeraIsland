@@ -8,6 +8,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 50;
+    [SerializeField] private AudioClip _placeSFX = null;
+    [SerializeField] private AudioClip _removeSFX = null;
+
 
     [Header("Chimera Info")]
     [SerializeField] private Chimera _storedChimera = null;
@@ -16,9 +19,10 @@ public class Facility : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
+    [SerializeField] private GameObject _glowObject = null;
 
     private FacilitySFX _facilitySFX = null;
-
+    private AudioManager _audioManager = null;
 
     private bool _isInitialized = false;
     private int _currentTier = 0;
@@ -27,6 +31,7 @@ public class Facility : MonoBehaviour
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
+    public GameObject GlowObject { get => _glowObject; }
 
     public bool IsChimeraStored()
     {
@@ -58,6 +63,8 @@ public class Facility : MonoBehaviour
             _rubbleObject.SetActive(false);
             _collider.enabled = true;
             _tier1Object.SetActive(true);
+
+            _audioManager = ServiceLocator.Get<AudioManager>();
 
             _facilitySFX = GetComponent<FacilitySFX>();
             _facilitySFX.Initialize();
@@ -92,6 +99,8 @@ public class Facility : MonoBehaviour
 
         _storedChimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
+        _audioManager.PlaySFX(_placeSFX);
+
         _facilitySFX.PlaySFX();
 
         Debug.Log($"{_storedChimera} added to the facility.");
@@ -114,6 +123,7 @@ public class Facility : MonoBehaviour
         _icon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
+        _audioManager.PlaySFX(_removeSFX);
         _facilitySFX.StopSFX();
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");

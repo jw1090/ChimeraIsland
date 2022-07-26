@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _objectToSwap = new List<GameObject>();
+    [SerializeField] private TabPress _chimeraTab = null;
     [SerializeField] private Color _tabIdle;
     [SerializeField] private Color _tabHover;
     [SerializeField] private Color _tabActive;
-    [SerializeField] private TabPress _chimeraTab = null;
     private List<TabPress> _tabButtons = new List<TabPress>();
     private TabPress _selectedTab = null;
 
