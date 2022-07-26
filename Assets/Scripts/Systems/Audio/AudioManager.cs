@@ -15,10 +15,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
 
-    [Header("UI SFX")]
-    [SerializeField] private AudioClip _buttonClick = null;
-    [SerializeField] private AudioClip _purchaseClick = null;
-
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
@@ -84,16 +80,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayClickSFX()
+    // TODO: Use this
+    public void PlaySFX(AudioClip sfx)
     {
-        _sfxSource.clip = _buttonClick;
+        _sfxSource.clip = sfx;
         _sfxSource.Play();
-    }
-
-    public void PlayPurchaseSFX()
-    {
-        _sfxSource.clip = _purchaseClick;
-        _sfxSource.Play();
-
     }
 }
