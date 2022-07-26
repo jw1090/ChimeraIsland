@@ -45,7 +45,7 @@ namespace AI.Behavior
                 // Check if the desired world position is on the NavMesh
                 if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
                 {
-                    _lastValidPos = navMeshHit.position;
+                    _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y + _heightOffset, navMeshHit.position.z);
                 }
                 _chimeraBehavior.transform.position = _lastValidPos;
                 _chimeraBehavior.Agent.enabled = false;

@@ -4,15 +4,14 @@ using UnityEngine.UI;
 
 public class ButtonGlow : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    private Color _idle;
-    private Color _hover;
+    [SerializeField] private Color _idle;
+    [SerializeField] private Color _hover;
     private Image _buttonImage = null;
 
     public void Awake()
     {
         _buttonImage = GetComponent<Button>().image;
-        _idle = new Color(255, 255, 255, 255);
-        _hover = new Color(222, 226, 178, 255);
+        _buttonImage.color = _idle;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
