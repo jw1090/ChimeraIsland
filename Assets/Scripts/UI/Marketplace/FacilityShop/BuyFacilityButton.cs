@@ -24,5 +24,6 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
     {
         _habitat.AddFacility(_facility);
         GetComponentInChildren<TextMeshProUGUI>().text = _facility.Price.ToString();
+        ServiceLocator.Get<AudioManager>().PlayPurchaseSFX();
     }
 }

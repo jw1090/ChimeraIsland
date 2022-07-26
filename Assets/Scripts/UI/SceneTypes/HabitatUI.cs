@@ -127,6 +127,7 @@ public class HabitatUI : MonoBehaviour
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
 
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsFolder.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
@@ -140,6 +141,7 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.CheckDetails();
 
         ResetStandardUI();
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
         _closeDetailsButton.gameObject.SetActive(true);
         _detailsFolder.gameObject.SetActive(true);
 
@@ -149,6 +151,7 @@ public class HabitatUI : MonoBehaviour
     public void OpenMarketplace()
     {
         ResetStandardUI();
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
         _marketplacePanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
@@ -157,6 +160,7 @@ public class HabitatUI : MonoBehaviour
     public void OpenTransferMap(Chimera chimera)
     {
         ResetStandardUI();
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
         _transferMap.Open(chimera);
     }
 
@@ -177,14 +181,16 @@ public class HabitatUI : MonoBehaviour
     public void OpenSettingsMenu()
     {
         ResetStandardUI();
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
         _settingsPanel.gameObject.SetActive(true);
-
         _openDetailsButton.gameObject.SetActive(false);
         _standardUI.gameObject.SetActive(false);
     }
 
     public void OpenExpedition()
     {
+        ServiceLocator.Get<AudioManager>().PlayClickSFX();
+
         ResetStandardUI();
         _expeditionPanel.gameObject.SetActive(true);
 

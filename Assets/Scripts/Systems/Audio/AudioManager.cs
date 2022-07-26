@@ -8,11 +8,16 @@ public class AudioManager : MonoBehaviour
 
     [Header("Source")]
     [SerializeField] private AudioSource _musicSource = null;
+    [SerializeField] private AudioSource _sfxSource = null;
 
     [Header("Music")]
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
+
+    [Header("UI SFX")]
+    [SerializeField] private AudioClip _buttonClick = null;
+    [SerializeField] private AudioClip _purchaseClick = null;
 
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
@@ -77,5 +82,18 @@ public class AudioManager : MonoBehaviour
                 Debug.LogError($"{habitatType} is invalid. Please change!");
                 break;
         }
+    }
+
+    public void PlayClickSFX()
+    {
+        _sfxSource.clip = _buttonClick;
+        _sfxSource.Play();
+    }
+
+    public void PlayPurchaseSFX()
+    {
+        _sfxSource.clip = _purchaseClick;
+        _sfxSource.Play();
+
     }
 }

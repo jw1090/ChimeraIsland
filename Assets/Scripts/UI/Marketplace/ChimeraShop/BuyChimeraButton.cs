@@ -20,5 +20,6 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.BuyChimera(_chimera);
+        ServiceLocator.Get<AudioManager>().PlayPurchaseSFX();
     }
 }
