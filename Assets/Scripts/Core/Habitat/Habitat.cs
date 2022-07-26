@@ -191,6 +191,17 @@ public class Habitat : MonoBehaviour
         return facilityCount;
     }
 
+    public void activateGlow(bool value)
+    {
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.CurrentTier > 0 && !facility.IsChimeraStored())
+            {
+                facility.GlowObject.SetActive(value);
+            }
+        }
+    }
+
     public void StartTickTimer()
     {
         StartCoroutine(TickTimer());

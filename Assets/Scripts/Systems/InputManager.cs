@@ -150,10 +150,10 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
         {
+            ServiceLocator.Get<HabitatManager>().CurrentHabitat.activateGlow(true);
             Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
             _heldChimera = chimera.GetComponent<ChimeraBehavior>();
             HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
@@ -167,7 +167,7 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-
+        ServiceLocator.Get<HabitatManager>().CurrentHabitat.activateGlow(false);
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
         _heldChimera = null;
