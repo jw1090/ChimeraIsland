@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
 
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
+    public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -33,8 +34,6 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
-
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         _isInitialized = true;
 
