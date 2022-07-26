@@ -182,6 +182,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _uiManager.TutorialDisableUI();
+            _tutorialManager.ResetTutorialProgress();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -189,15 +190,6 @@ public class InputManager : MonoBehaviour
             int newStageId = ++currentStageId;
 
             if(newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
-            {
-                _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            int newStageId = --currentStageId;
-
-            if (newStageId >= 0)
             {
                 _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
             }

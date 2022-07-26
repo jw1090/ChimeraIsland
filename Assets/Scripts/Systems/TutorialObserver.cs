@@ -3,44 +3,29 @@ using UnityEngine.UI;
 
 public class TutorialObserver : MonoBehaviour
 {
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
 
     public TutorialObserver Initialize(UIManager uiManager)
     {
         _habitatUI = uiManager.HabitatUI;
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
-        
-        return this;
-    }
 
-    private void CreateButtonListenerExpeditionRequirements(Button button)
-    {
-        button.onClick.AddListener(() =>
-        {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionRequirements);
-        });
+        CreateTutorialListener(_habitatUI.ExpeditionButton, TutorialStageType.ExpeditionRequirements);
+        CreateTutorialListener(_habitatUI.MarketplaceButton, TutorialStageType.FacilityShop);
+        CreateTutorialListener(_habitatUI.WaterfallButton, TutorialStageType.FacilityShop);
+
+        return this;
     }
 
     private void CreateTutorialListener(Button button, TutorialStageType tutorialStageType)
     {
         if (button != null)
         {
-            button.onClick.AddListener
-            (delegate
+            button.onClick.AddListener(() =>
             {
-                ActivateTutorial(tutorialStageType);
-                button.onClick.RemoveListener(() => ActivateTutorial(tutorialStageType));
+                _tutorialManager.ShowTutorialStage(tutorialStageType);
             });
         }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
-    }
-
-    public void ActivateTutorial(TutorialStageType type)
-    {
-        _tutorialManager.ShowTutorialStage(type);
     }
 }
