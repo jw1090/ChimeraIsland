@@ -103,7 +103,7 @@ public class TutorialManager : MonoBehaviour
 
     private bool IsStageComplete(TutorialStageType stage)
     {
-        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)stage];
         return tutorialStage.finished;
     }
 
