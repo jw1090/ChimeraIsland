@@ -19,9 +19,9 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
-    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
-    [SerializeField] private GameObject _expeditionPanel = null;
+    [SerializeField] private UIExpedition _expeditionPanel = null;
     [SerializeField] private GameObject _settingsPanel = null;
+    [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
@@ -64,6 +64,7 @@ public class HabitatUI : MonoBehaviour
     {
         _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
+        _expeditionPanel.Initialization();
         _transferMap.Initialize();
 
         ResetStandardUI();
