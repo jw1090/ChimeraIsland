@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Facility : MonoBehaviour
 {
@@ -8,21 +7,23 @@ public class Facility : MonoBehaviour
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 50;
+
+    [Header("Audio")]
     [SerializeField] private AudioClip _placeSFX = null;
     [SerializeField] private AudioClip _removeSFX = null;
-
-
-    [Header("Chimera Info")]
-    [SerializeField] private Chimera _storedChimera = null;
-    [SerializeField] private FacilityIcon _icon = null;
 
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
     [SerializeField] private GameObject _glowObject = null;
+    [SerializeField] private FacilityIcon _icon = null;
+    [SerializeField] private BoxCollider _placeCollider = null;
+    [SerializeField] private BoxCollider _releaseCollider = null;
 
     private FacilitySFX _facilitySFX = null;
     private AudioManager _audioManager = null;
+    private CurrencyManager _currencyManager = null;
+    private Chimera _storedChimera = null;
 
     private bool _isInitialized = false;
     private int _currentTier = 0;
@@ -32,6 +33,15 @@ public class Facility : MonoBehaviour
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
     public GameObject GlowObject { get => _glowObject; }
+
+    public void Initialize()
+    {
+        Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
+
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
+
+        EnablePlaceCollider();
+    }
 
     public bool IsChimeraStored()
     {
@@ -50,7 +60,6 @@ public class Facility : MonoBehaviour
 
     public void BuildFacility()
     {
-        BoxCollider _collider = GetComponent<BoxCollider>();
         _price = (int)(_price * 7.5);
         ++_currentTier;
 
@@ -61,8 +70,9 @@ public class Facility : MonoBehaviour
             debugString += $"{_facilityType} was purchased";
 
             _rubbleObject.SetActive(false);
-            _collider.enabled = true;
             _tier1Object.SetActive(true);
+
+            EnablePlaceCollider();
 
             _audioManager = ServiceLocator.Get<AudioManager>();
 
@@ -99,8 +109,10 @@ public class Facility : MonoBehaviour
 
         _storedChimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
-        _audioManager.PlaySFX(_placeSFX);
+        EnableReleaseCollider();
+        RevealChimera(false);
 
+        _audioManager.PlaySFX(_placeSFX);
         _facilitySFX.PlaySFX();
 
         Debug.Log($"{_storedChimera} added to the facility.");
@@ -108,12 +120,11 @@ public class Facility : MonoBehaviour
     }
 
     // Removes Chimera from facility and cleans up chimera and facility logic.
-    public bool RemoveChimera()
+    public void RemoveChimera()
     {
         if (_storedChimera == null) // Facility is empty.
         {
             Debug.Log("Cannot remove Chimera, facility is empty.");
-            return false;
         }
 
         AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
@@ -123,26 +134,33 @@ public class Facility : MonoBehaviour
         _icon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
+        EnablePlaceCollider();
+        RevealChimera(true);
+
         _audioManager.PlaySFX(_removeSFX);
         _facilitySFX.StopSFX();
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
-
-        return true;
     }
 
     public void FacilityTick()
     {
-        if (_storedChimera != null)
+        if (_storedChimera == null)
         {
-            _icon.SetIcon(_storedChimera.Icon);
-            _storedChimera.ExperienceTick(_statType, _statModifier);
-            _storedChimera.ExperienceTick(_statType, _statModifier);
-
-            FlatStatBoost();
+            return;
         }
+
+        if (EssenceCost() == false) // Was kicked out.
+        {
+            return;
+        }
+
+        _icon.SetIcon(_storedChimera.Icon);
+
+        _storedChimera.ExperienceTick(_statType, _statModifier);
+        FlatStatBoost();
     }
 
     private void FlatStatBoost()
@@ -150,5 +168,41 @@ public class Facility : MonoBehaviour
         _storedChimera.ExperienceTick(StatType.Endurance, 1);
         _storedChimera.ExperienceTick(StatType.Intelligence, 1);
         _storedChimera.ExperienceTick(StatType.Strength, 1);
+    }
+
+    private bool EssenceCost()
+    {
+        int price = _statModifier * 5;
+
+        if (_currencyManager.SpendEssence(price) == false) // Can't afford training.
+        {
+            RemoveChimera();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void RevealChimera(bool reveal)
+    {
+        _storedChimera.CurrentEvolution.gameObject.SetActive(reveal);
+
+        if(reveal == true)
+        {
+            _storedChimera.Animator.SetBool("Walk", true);
+        }
+    }
+
+    private void EnablePlaceCollider()
+    {
+        _placeCollider.enabled = true;
+        _releaseCollider.enabled = false;
+    }
+
+    private void EnableReleaseCollider()
+    {
+        _placeCollider.enabled = false;
+        _releaseCollider.enabled = true;
     }
 }

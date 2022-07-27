@@ -9,9 +9,6 @@ public class Habitat : MonoBehaviour
     [SerializeField] private HabitatType _habitatType = HabitatType.None;
     [SerializeField] private int _facilityCapacity = 3;
 
-    [Header("Tick Info")]
-    [SerializeField] private float _tickTimer = 0.2f;
-
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private GameObject _spawnPoint = null;
@@ -56,6 +53,11 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
+        foreach  (Facility facility in _facilities)
+        {
+            facility.Initialize();
+        }
+
         _isInitialized = true;
 
         return this;
@@ -84,8 +86,7 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    // Called by the BuyChimera Script on a button to check price and purchase an egg on the active habitat.
-    // Adds it to the chimera list of that habitat and instantiates it as well
+
     public void BuyChimera(Chimera chimeraPrefab)
     {
         if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)
@@ -215,7 +216,7 @@ public class Habitat : MonoBehaviour
     {
         while (_isInitialized)
         {
-            yield return new WaitForSeconds(_tickTimer);
+            yield return new WaitForSeconds(_habitatManager.TickTimer);
 
             foreach (Chimera chimera in _activeChimeras)
             {

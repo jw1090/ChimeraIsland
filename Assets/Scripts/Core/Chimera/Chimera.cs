@@ -45,6 +45,7 @@ public class Chimera : MonoBehaviour
     public StatType StatPreference { get => _statPreference; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
+    public EvolutionLogic CurrentEvolution { get => _currentEvolution; }
     public Sprite Icon { get => _currentEvolution.Icon; }
     public bool InFacility { get => _inFacility; }
     public int Level { get => _level; }
@@ -240,5 +241,10 @@ public class Chimera : MonoBehaviour
         _boxCollider.enabled = false;
 
         _habitatManager.UpdateCurrentHabitatChimeras();
+
+        if(_inFacility == true)
+        {
+            _currentEvolution.gameObject.SetActive(false);
+        }
     }
 }
