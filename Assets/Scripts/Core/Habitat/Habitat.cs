@@ -77,11 +77,11 @@ public class Habitat : MonoBehaviour
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
-            Facility building = GetFacility(facilityInfo.facilityType);
+            Facility facility = GetFacility(facilityInfo.facilityType);
 
             for (int i = 0; i < facilityInfo.currentTier; ++i)
             {
-                building.BuildFacility();
+                facility.BuildFacility();
             }
         }
     }

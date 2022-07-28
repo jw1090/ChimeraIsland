@@ -46,7 +46,7 @@ public class ChimeraDetails : MonoBehaviour
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
         _icon.sprite = _chimera.Icon;
-        _level.text = $"Level: {_chimera.Level}";
+        _level.text = $"{_chimera.Level}";
         _element.text = $"{_chimera.ElementalType}";
 
         int amount = 0;

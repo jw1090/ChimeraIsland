@@ -347,10 +347,9 @@ GameObject:
   - component: {fileID: 2792039016706888988}
   - component: {fileID: 8497471455850727259}
   - component: {fileID: 4284032095934573644}
-  - component: {fileID: 297328860}
+  - component: {fileID: 786502213}
   - component: {fileID: 322234810896529683}
   - component: {fileID: 5411779016242407293}
-  - component: {fileID: 786502213}
   m_Layer: 7
   m_Name: Rune Stone
   m_TagString: Facility
@@ -395,13 +394,13 @@ MonoBehaviour:
   _statType: 1
   _statModifier: 1
   _price: 50
-  _placeSFX: {fileID: 0}
-  _removeSFX: {fileID: 0}
+  _placeSFX: {fileID: 8300000, guid: a5bcc5a16b2331f4080ad5deb75d7955, type: 3}
+  _removeSFX: {fileID: 8300000, guid: d26c127ecf9735e4f91ce8d5320a532e, type: 3}
   _rubbleObject: {fileID: 2727856121969084020}
   _tier1Object: {fileID: 5735053481075212357}
   _glowObject: {fileID: 5714561619215666432}
   _icon: {fileID: 6237340657855451817}
-  _placeCollider: {fileID: 297328860}
+  _placeCollider: {fileID: 89476253839643669}
   _releaseCollider: {fileID: 322234810896529683}
 --- !u!114 &4284032095934573644
 MonoBehaviour:
@@ -416,19 +415,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trainingPos: {fileID: 6283141613847093009}
---- !u!65 &297328860
-BoxCollider:
+--- !u!114 &786502213
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3606806664540392360}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a69794846ecaae46a9c78a6e8399f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ambientSource: {fileID: 5676750558958581678}
+  _ambientSFX: {fileID: 0}
+  _trainingSource: {fileID: 4937754833582307669}
+  _trainingSFX: {fileID: 8300000, guid: 00f69ead06d7d8a4e969c5e9b60329a8, type: 3}
 --- !u!65 &322234810896529683
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -458,22 +460,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &786502213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3606806664540392360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a69794846ecaae46a9c78a6e8399f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ambientSource: {fileID: 5676750558958581678}
-  _ambientSFX: {fileID: 0}
-  _trainingSource: {fileID: 4937754833582307669}
-  _trainingSFX: {fileID: 8300000, guid: e9eaca076bd48d44ea5ac115d3b4e5a0, type: 3}
 --- !u!1 &4539934659896406188
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6753863906364433551
 Transform:
   m_ObjectHideFlags: 0
@@ -957,7 +943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1151377914805274998, guid: 561311928e0823d4289ce38becb9c861, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1695187010966788967, guid: 561311928e0823d4289ce38becb9c861, type: 3}
       propertyPath: m_RootOrder
@@ -1025,6 +1011,11 @@ GameObject:
 --- !u!4 &6283141613847093009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1695187010966788967, guid: 561311928e0823d4289ce38becb9c861, type: 3}
+  m_PrefabInstance: {fileID: 4662553381965694070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &89476253839643669 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4722399921153331299, guid: 561311928e0823d4289ce38becb9c861, type: 3}
   m_PrefabInstance: {fileID: 4662553381965694070}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9205621146805524093
