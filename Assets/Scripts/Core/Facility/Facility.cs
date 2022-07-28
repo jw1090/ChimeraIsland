@@ -40,7 +40,7 @@ public class Facility : MonoBehaviour
 
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
 
-        EnablePlaceCollider();
+        FacilityColliderToggle(FacilityColliderType.None);
     }
 
     public bool IsChimeraStored()
@@ -72,7 +72,7 @@ public class Facility : MonoBehaviour
             _rubbleObject.SetActive(false);
             _tier1Object.SetActive(true);
 
-            EnablePlaceCollider();
+            FacilityColliderToggle(FacilityColliderType.Place);
 
             _audioManager = ServiceLocator.Get<AudioManager>();
 
@@ -109,7 +109,7 @@ public class Facility : MonoBehaviour
 
         _storedChimera.gameObject.transform.localPosition = gameObject.transform.localPosition;
 
-        EnableReleaseCollider();
+        FacilityColliderToggle(FacilityColliderType.release);
         RevealChimera(false);
 
         _audioManager.PlaySFX(_placeSFX);
@@ -134,7 +134,7 @@ public class Facility : MonoBehaviour
         _icon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
-        EnablePlaceCollider();
+        FacilityColliderToggle(FacilityColliderType.Place);
         RevealChimera(true);
 
         _audioManager.PlaySFX(_removeSFX);
@@ -194,15 +194,24 @@ public class Facility : MonoBehaviour
         }
     }
 
-    private void EnablePlaceCollider()
-    {
-        _placeCollider.enabled = true;
-        _releaseCollider.enabled = false;
-    }
-
-    private void EnableReleaseCollider()
+    private void FacilityColliderToggle(FacilityColliderType facilityColliderType)
     {
         _placeCollider.enabled = false;
-        _releaseCollider.enabled = true;
+        _releaseCollider.enabled = false;
+
+        switch (facilityColliderType)
+        {
+            case FacilityColliderType.None:
+                break;
+            case FacilityColliderType.Place:
+                _placeCollider.enabled = true;
+                break;
+            case FacilityColliderType.release:
+                _releaseCollider.enabled = true;
+                break;
+            default:
+                Debug.LogWarning($"{facilityColliderType} is not valid, please change!");
+                break;
+        }
     }
 }
