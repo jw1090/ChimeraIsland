@@ -549,7 +549,6 @@ GameObject:
   - component: {fileID: 231081782400414673}
   - component: {fileID: 231081782400414686}
   - component: {fileID: 231081782400414687}
-  - component: {fileID: 5082639230610943729}
   m_Layer: 5
   m_Name: World Map Button
   m_TagString: Untagged
@@ -658,35 +657,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5082639230610943729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231081782400414685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &231081782404602763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,7 +3357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chimeraType: 0
-  _clickSFX: {fileID: 8300000, guid: 2f152e4a1a4f3894697374809a36fc6f, type: 3}
 --- !u!1 &2617903995424726979
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,7 +3492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chimeraType: 4
-  _clickSFX: {fileID: 8300000, guid: 2f152e4a1a4f3894697374809a36fc6f, type: 3}
 --- !u!1 &2802139741381638553
 GameObject:
   m_ObjectHideFlags: 0
@@ -5084,7 +5052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chimeraType: 8
-  _clickSFX: {fileID: 8300000, guid: 2f152e4a1a4f3894697374809a36fc6f, type: 3}
 --- !u!1 &6744049481165685161
 GameObject:
   m_ObjectHideFlags: 0
@@ -6134,7 +6101,7 @@ MonoBehaviour:
   _fossilWallets:
   - {fileID: 8153046716315136690}
   - {fileID: 9212868368279651051}
-  _clickSFX: {fileID: 8300000, guid: ff293945cf5a79f45b483052f017aa84, type: 3}
+  _clickSFX: {fileID: 8300000, guid: 672f42a7ec8404042ba35949478b2ac8, type: 3}
 --- !u!1 &8517485017143710021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8670,23 +8637,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1033348166528451596, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1033348166528451596, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1033348166528451596, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1033348166528451596, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -540
       objectReference: {fileID: 0}
     - target: {fileID: 1385411271232861218, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_Name
       value: Details Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385411271232861218, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2249505555376834868, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8790,31 +8761,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844801492044385104, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844801492044385104, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844801492044385104, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4844801492044385104, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -270
       objectReference: {fileID: 0}
     - target: {fileID: 5408559972625513038, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5408559972625513038, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5408559972625513038, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6003026529829627817, guid: d36f6775724cdb8499af8794e7e70ad2, type: 3}
       propertyPath: m_AnchorMax.y
