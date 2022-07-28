@@ -16,6 +16,10 @@ public class ResourceManager : MonoBehaviour
     private Sprite _chimeraC2Sprite = null;
     private Sprite _chimeraC3Sprite = null;
 
+    private Sprite _aquaSprite = null;
+    private Sprite _bioSprite = null;
+    private Sprite _pyraSprite = null;
+
     private Sprite _tutorialCute = null;
     private Sprite _tutorialHappy = null;
     private Sprite _tutorialLookingLeft = null;
@@ -61,6 +65,10 @@ public class ResourceManager : MonoBehaviour
         _chimeraC2Sprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
         _chimeraC3Sprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
 
+        _pyraSprite = Resources.Load<Sprite>("Icons/Chimera/C1-Icon");
+        _aquaSprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
+        _bioSprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
+
         _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
         _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
         _tutorialLookingLeft = Resources.Load<Sprite>("Icons/Tutorial/Looking Left");
@@ -84,7 +92,9 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC1 = Resources.Load<GameObject>("Chimera/Models/Family C/C1 Model");
         _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
+
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
+
         return this;
     }
 
@@ -160,7 +170,7 @@ public class ResourceManager : MonoBehaviour
             case TutorialIconType.LookingRight:
                 return _tutorialLookingRight;
             case TutorialIconType.Shocked:
-                return _tutorialLookingRight;
+                return _tutorialShocked;
             case TutorialIconType.Speaking:
                 return _tutorialSpeaking;
             case TutorialIconType.Standard:
