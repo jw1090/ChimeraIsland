@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
+    [SerializeField] private AudioClip _clickSFX = null;
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
@@ -15,7 +16,6 @@ public class SceneChanger : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-
         return this;
     }
 

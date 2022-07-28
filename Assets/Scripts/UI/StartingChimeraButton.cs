@@ -4,10 +4,13 @@ using UnityEngine.EventSystems;
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
+    [SerializeField] private AudioClip _clickSFX = null;
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
     private UIManager _uiManager = null;
+
+    //private AudioManager _audioManager = null;
 
     public void Initialize(UIManager uiManager)
     {
@@ -21,6 +24,8 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
     {
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(_chimeraType);
         Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
+
+        ServiceLocator.Get<AudioManager>().PlaySFX(_clickSFX);
 
         chimeraComp.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(chimeraComp);

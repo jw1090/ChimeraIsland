@@ -223,6 +223,7 @@ public class Chimera : MonoBehaviour
         ++_levelUpTracker;
         if (_levelUpTracker % 3 == 0)
         {
+            ServiceLocator.Get<AudioManager>().PlayLevelUpSFX();
             ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
@@ -233,6 +234,8 @@ public class Chimera : MonoBehaviour
         Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
+
+        ServiceLocator.Get<AudioManager>().PlayEvolutionSFX();
 
         Destroy(_currentEvolution.gameObject);
 
