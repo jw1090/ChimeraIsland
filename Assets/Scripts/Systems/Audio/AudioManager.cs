@@ -15,6 +15,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
 
+    [SerializeField] private AudioClip _evolutionSFX= null;
+    [SerializeField] private AudioClip _levelSFX= null;
+
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
@@ -82,6 +85,17 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip sfx)
     {
         _sfxSource.clip = sfx;
+        _sfxSource.Play();
+    }
+
+    public void PlayEvolutionSFX()
+    {
+        _sfxSource.clip = _evolutionSFX;
+        _sfxSource.Play();
+    }
+    public void PlayLevelUpSFX()
+    {
+        _sfxSource.clip = _levelSFX;
         _sfxSource.Play();
     }
 }
