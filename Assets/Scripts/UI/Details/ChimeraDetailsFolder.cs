@@ -40,4 +40,12 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
         UpdateDetailsList();
     }
+
+    public void ToggleDetailsButtons(DetailsButtonType detailsButtonType)
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.ToggleButtons(detailsButtonType);
+        }
+    }
 }

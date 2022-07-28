@@ -14,11 +14,13 @@ public class HabitatManager : MonoBehaviour
     private Habitat _currentHabitat = null;
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
+    private float _tickTimer = 1.0f;
 
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
+    public float TickTimer { get => _tickTimer; }
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 

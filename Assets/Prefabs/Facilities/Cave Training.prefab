@@ -42,10 +42,11 @@ GameObject:
   - component: {fileID: 1187863470125306462}
   - component: {fileID: 5411779017444558996}
   - component: {fileID: 626574667}
+  - component: {fileID: 2431105710050899180}
   - component: {fileID: 5411779017444558999}
   - component: {fileID: 216893246375736402}
   m_Layer: 7
-  m_Name: Cave Exploring
+  m_Name: Cave Training
   m_TagString: Facility
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,11 +92,12 @@ MonoBehaviour:
   _price: 50
   _placeSFX: {fileID: 0}
   _removeSFX: {fileID: 0}
-  _storedChimera: {fileID: 0}
-  _icon: {fileID: 6291646713947501752}
   _rubbleObject: {fileID: 8090403893966141389}
   _tier1Object: {fileID: 1396333438937323935}
   _glowObject: {fileID: 1149666126798757493}
+  _icon: {fileID: 6291646713947501752}
+  _placeCollider: {fileID: 626574667}
+  _releaseCollider: {fileID: 2431105710050899180}
 --- !u!114 &5411779017444558996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +124,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: -4.5, y: 0, z: 9}
+--- !u!65 &2431105710050899180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780250189174645}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 20, y: 15, z: 20}
+  m_Center: {x: -7, y: 3, z: 0}
 --- !u!54 &5411779017444558999
 Rigidbody:
   m_ObjectHideFlags: 0

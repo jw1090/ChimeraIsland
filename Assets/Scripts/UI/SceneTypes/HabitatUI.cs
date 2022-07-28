@@ -21,6 +21,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private UIExpedition _expeditionPanel = null;
     [SerializeField] private GameObject _settingsPanel = null;
+    [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
@@ -67,7 +68,7 @@ public class HabitatUI : MonoBehaviour
     {
         _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
-        _expeditionPanel.Initialization();
+        _expeditionPanel.Initialize();
         _transferMap.Initialize();
         _audioManager = ServiceLocator.Get<AudioManager>();
         ResetStandardUI();
@@ -135,14 +136,14 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlaySFX(_clickSFX);
 
         _closeDetailsButton.gameObject.SetActive(false);
-        _detailsFolder.gameObject.SetActive(false);
+        _detailsPanel.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.gameObject.SetActive(false);
         _transferMap.gameObject.SetActive(false);
     }
 
-    public void OpenDetailsPanel()
+    private void OpenDetails(DetailsButtonType detailsButtonType)
     {
         _detailsFolder.CheckDetails();
 
@@ -150,10 +151,21 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlaySFX(_clickSFX);
 
-        _closeDetailsButton.gameObject.SetActive(true);
-        _detailsFolder.gameObject.SetActive(true);
+        _detailsPanel.gameObject.SetActive(true);
+        _detailsFolder.ToggleDetailsButtons(detailsButtonType);
 
         _openDetailsButton.gameObject.SetActive(false);
+    }
+
+    public void OpenStandardDetailsPanel()
+    {
+        OpenDetails(DetailsButtonType.Standard);
+        _closeDetailsButton.gameObject.SetActive(true);
+    }
+
+    private void OpenExpeditionDetailsPanel()
+    {
+        OpenDetails(DetailsButtonType.Expedition);
     }
 
     public void OpenMarketplace()
@@ -180,7 +192,9 @@ public class HabitatUI : MonoBehaviour
     {
         if (_settingsPanel.activeInHierarchy == true ||
             _marketplacePanel.gameObject.activeInHierarchy == true ||
-            _expeditionPanel.gameObject.activeInHierarchy == true)
+            _expeditionPanel.gameObject.activeInHierarchy == true ||
+            _detailsPanel.gameObject.activeInHierarchy
+            )
         {
             ResetStandardUI();
         }
@@ -203,12 +217,12 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedition()
     {
+        ResetStandardUI();
+
         _audioManager.PlaySFX(_clickSFX);
 
-        ResetStandardUI();
+        OpenExpeditionDetailsPanel();
         _expeditionPanel.gameObject.SetActive(true);
-
-        _openDetailsButton.gameObject.SetActive(false);
     }
 
     public void UpdateDetails()

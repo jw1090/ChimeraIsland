@@ -25,7 +25,7 @@ namespace AI.Behavior
                 return;
             }
 
-            if (_chimeraBehavior.GetAgentDistance() >= 1.5f)
+            if (_chimeraBehavior.GetAgentDistance() >= 1.5f || _chimeraBehavior.GetAgentDistance() == 0.0f)
             {
                 return;
             }

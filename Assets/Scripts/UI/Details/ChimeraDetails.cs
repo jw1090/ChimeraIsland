@@ -11,6 +11,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _endurance = null;
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
+    [SerializeField] private Button _transferButton = null;
+    [SerializeField] private Button _addButton = null;
+    [SerializeField] private Button _removeButton = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private int _chimeraSpot = 0;
@@ -53,5 +56,25 @@ public class ChimeraDetails : MonoBehaviour
         _intelligence.text = intelligenceText;
         string strengthText = _chimera.GetStatByType(StatType.Strength, out amount) ? amount.ToString() : "Invalid!";
         _strength.text = strengthText;
+    }
+
+    public void ToggleButtons(DetailsButtonType detailsButtonType)
+    {
+        _transferButton.gameObject.SetActive(false);
+        _addButton.gameObject.SetActive(false);
+        _removeButton.gameObject.SetActive(false);
+
+        switch (detailsButtonType)
+        {
+            case DetailsButtonType.Standard:
+                _transferButton.gameObject.SetActive(true);
+                break;
+            case DetailsButtonType.Expedition:
+                _addButton.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning($"{detailsButtonType} is not a valid type. Please fix!");
+                break;
+        }
     }
 }

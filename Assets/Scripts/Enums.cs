@@ -1,10 +1,3 @@
-public enum AudioMixerTypes
-{
-    Master,
-    Music,
-    SFX,
-}
-
 public enum ChimeraType
 {
     None = -1,
@@ -22,11 +15,11 @@ public enum ChimeraType
     C3,
 }
 
-public enum CurrencyType
+public enum DetailsButtonType
 {
     None = -1,
-    Essence,
-    Fossils,
+    Standard,
+    Expedition,
 }
 
 public enum ElementalType
@@ -45,20 +38,19 @@ public enum FacilityType
     Waterfall,
 }
 
+public enum FacilityColliderType
+{
+    None = -1,
+    Place,
+    release,
+}
+
 public enum HabitatType
 {
     None = -1,
     StonePlains,
     TreeOfLife,
     Ashlands,
-}
-
-public enum Passives
-{
-    None = -1,
-    GreenThumb,
-    Multitasking,
-    WorkMotivated,
 }
 
 public enum SceneType
@@ -77,12 +69,6 @@ public enum SignType
     Intelligence,
     Strength,
     Expedition,
-}
-
-public enum SFXType
-{
-    None = -1,
-    Waterfall,
 }
 
 public enum StatType
