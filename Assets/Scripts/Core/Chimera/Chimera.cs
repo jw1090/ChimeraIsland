@@ -53,6 +53,7 @@ public class Chimera : MonoBehaviour
     public int Intelligence { get => _intelligence; }
     public int Strength { get => _strength; }
     public int Price { get => _price; }
+    public string Name { get => _currentEvolution.Name; }
 
     public bool GetStatByType(StatType statType, out int amount)
     {

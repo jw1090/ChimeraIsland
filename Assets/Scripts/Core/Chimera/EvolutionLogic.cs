@@ -5,6 +5,7 @@ public class EvolutionLogic : MonoBehaviour
 {
     [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
+    [SerializeField] private string _chimeraName = "";
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
@@ -18,6 +19,7 @@ public class EvolutionLogic : MonoBehaviour
     public int ReqEndurance { get => _reqEndurance; }
     public int ReqIntelligence { get => _reqIntelligence; }
     public int ReqStrength { get => _reqStrength; }
+    public string Name { get => _chimeraName; }
 
     public void Initialize(Chimera chimera)
     {

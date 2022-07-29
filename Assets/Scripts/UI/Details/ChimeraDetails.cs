@@ -6,6 +6,7 @@ public class ChimeraDetails : MonoBehaviour
 {
     [SerializeField] private DetailsTransferButton _detailsTransferButton = null;
     [SerializeField] private Image _icon = null;
+    [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _element = null;
     [SerializeField] private TextMeshProUGUI _endurance = null;
@@ -46,6 +47,7 @@ public class ChimeraDetails : MonoBehaviour
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
         _icon.sprite = _chimera.Icon;
+        _name.text = $"{_chimera.Name}";
         _level.text = $"{_chimera.Level}";
         _element.text = $"{_chimera.ElementalType}";
 
