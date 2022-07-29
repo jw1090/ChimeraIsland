@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
-    [SerializeField] private AudioClip _clickSFX = null;
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
@@ -30,7 +29,6 @@ public class SceneChanger : MonoBehaviour
         CreateButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
         CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
         CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
-        CreateButtonListener(_uiManager.WorldMapUI.AshLandsButton, LoadAshlands);
     }
 
     private void CreateButtonListener(Button button, Action action)

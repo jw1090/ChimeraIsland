@@ -15,7 +15,7 @@ public class Facility : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
-    [SerializeField] private GameObject _glowObject = null;
+    [SerializeField] private MeshRenderer _glowObject = null;
     [SerializeField] private FacilityIcon _icon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
@@ -32,13 +32,16 @@ public class Facility : MonoBehaviour
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
-    public GameObject GlowObject { get => _glowObject; }
+    public MeshRenderer GlowObject { get => _glowObject; }
 
     public void Initialize()
     {
         Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
 
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
+
+        _glowObject.enabled = false;
 
         FacilityColliderToggle(FacilityColliderType.None);
     }
@@ -73,8 +76,6 @@ public class Facility : MonoBehaviour
             _tier1Object.SetActive(true);
 
             FacilityColliderToggle(FacilityColliderType.Place);
-
-            _audioManager = ServiceLocator.Get<AudioManager>();
 
             _facilitySFX = GetComponent<FacilitySFX>();
             _facilitySFX.Initialize();
