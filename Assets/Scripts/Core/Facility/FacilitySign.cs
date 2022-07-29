@@ -1,50 +1,36 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FacilitySign : MonoBehaviour
 {
-    [SerializeField] SignType _type = SignType.None;
-    [SerializeField] SpriteRenderer _enduranceIcon = null;
-    [SerializeField] SpriteRenderer _expeditionIcon = null;
-    [SerializeField] SpriteRenderer _intelligenceIcon = null;
-    [SerializeField] SpriteRenderer _strengthIcon = null;
+    [SerializeField] private Image _icon = null;
+    private StatType _statType = StatType.None;
+    private ResourceManager _resourceManager = null;
 
-    private void Awake()
+    public void Initialize(FacilityType facilityType)
     {
-        LevelLoader.CallOnComplete(Initialize);
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+
+        LoadIcon(facilityType);
     }
 
-    private void Initialize()
+    private void LoadIcon(FacilityType facilityType)
     {
-        ResetIcons();
-        SetSign();
-    }
-
-    private void SetSign()
-    {
-        switch (_type)
+        switch (facilityType)
         {
-            case SignType.Endurance:
-                _enduranceIcon.gameObject.SetActive(true);
-                return;
-            case SignType.Expedition:
-                _expeditionIcon.gameObject.SetActive(true);
-                return;
-            case SignType.Intelligence:
-                _intelligenceIcon.gameObject.SetActive(true);
-                return;
-            case SignType.Strength:
-                _strengthIcon.gameObject.SetActive(true);
-                return;
+            case FacilityType.Cave:
+                _statType = StatType.Strength;
+                break;
+            case FacilityType.RuneStone:
+                _statType = StatType.Intelligence;
+                break;
+            case FacilityType.Waterfall:
+                _statType = StatType.Endurance;
+                break;
             default:
-                Debug.LogError("Default StatType please change!");
                 break;
         }
-    }
 
-    private void ResetIcons()
-    {
-        _enduranceIcon.gameObject.SetActive(false);
-        _intelligenceIcon.gameObject.SetActive(false);
-        _strengthIcon.gameObject.SetActive(false);
+        _icon.sprite = _resourceManager.GetStatSprite(_statType);
     }
 }

@@ -19,6 +19,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilityIcon _icon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
+    [SerializeField] private FacilitySign _facilitySign = null;
 
     private FacilitySFX _facilitySFX = null;
     private AudioManager _audioManager = null;
@@ -42,8 +43,11 @@ public class Facility : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
 
         _glowObject.enabled = false;
+        _icon.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
+
+        _facilitySign.Initialize(_facilityType);
     }
 
     public bool IsChimeraStored()

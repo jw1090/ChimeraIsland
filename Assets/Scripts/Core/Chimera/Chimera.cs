@@ -56,7 +56,37 @@ public class Chimera : MonoBehaviour
     public int Intelligence { get => _intelligence; }
     public int Strength { get => _strength; }
     public int Price { get => _price; }
-    public string Name { get => _currentEvolution.Name; }
+    public string Name { get => GetName(); }
+
+    public string GetName()
+    {
+        if(_currentEvolution == null)
+        {
+            switch (_chimeraType)
+            {
+                case ChimeraType.A:
+                case ChimeraType.A1:
+                case ChimeraType.A2:
+                case ChimeraType.A3:
+                    return "Elephanto";
+                case ChimeraType.B:
+                case ChimeraType.B1:
+                case ChimeraType.B2:
+                case ChimeraType.B3:
+                    return "Waddlo";
+                case ChimeraType.C:
+                case ChimeraType.C1:
+                case ChimeraType.C2:
+                case ChimeraType.C3:
+                    return "Leafo";
+                default:
+                    Debug.LogError($"{_chimeraType} is invalid, please change!");
+                    return "";
+            }
+        }
+
+        return _currentEvolution.Name;
+    }
 
     public bool GetStatByType(StatType statType, out int amount)
     {

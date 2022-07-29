@@ -20,6 +20,10 @@ public class ResourceManager : MonoBehaviour
     private Sprite _bioSprite = null;
     private Sprite _firaSprite = null;
 
+    private Sprite _enduranceSprite = null;
+    private Sprite _intelligenceSprite = null;
+    private Sprite _strengthSprite = null;
+
     private Sprite _tutorialCute = null;
     private Sprite _tutorialHappy = null;
     private Sprite _tutorialLookingLeft = null;
@@ -68,6 +72,10 @@ public class ResourceManager : MonoBehaviour
         _aquaSprite = Resources.Load<Sprite>("Icons/Elements/aqua");
         _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
         _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
+
+        _enduranceSprite = Resources.Load<Sprite>("Icons/Stats/Endurance");
+        _intelligenceSprite = Resources.Load<Sprite>("Icons/Stats/Intelligence");
+        _strengthSprite = Resources.Load<Sprite>("Icons/Stats/Strength");
 
         _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
         _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
@@ -227,6 +235,38 @@ public class ResourceManager : MonoBehaviour
                 return _firaSprite;
             default:
                 Debug.LogWarning($"{elementalType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetStatSprite(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Endurance:
+                return _enduranceSprite;
+            case StatType.Intelligence:
+                return _intelligenceSprite;
+            case StatType.Strength:
+                return _strengthSprite;
+            default:
+                Debug.LogWarning($"{statType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetStatSprite(FacilityType facility)
+    {
+        switch (facility)
+        {
+            case FacilityType.Waterfall:
+                return _enduranceSprite;
+            case FacilityType.RuneStone:
+                return _intelligenceSprite;
+            case FacilityType.Cave:
+                return _strengthSprite;
+            default:
+                Debug.LogWarning($"{facility} is invalid, please change!");
                 return null;
         }
     }

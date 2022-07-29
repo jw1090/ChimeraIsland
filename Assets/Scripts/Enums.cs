@@ -61,16 +61,6 @@ public enum SceneType
     Starting,
     WorldMap,
 }
-
-public enum SignType
-{
-    None = -1,
-    Endurance,
-    Intelligence,
-    Strength,
-    Expedition,
-}
-
 public enum StatType
 {
     None = -1,

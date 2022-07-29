@@ -19,11 +19,6 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
         _tmpText.text = _facility.Price.ToString();
     }
 
-    public void OnEnable()
-    {
-        _tmpText.text = _facility?.Price.ToString();
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.AddFacility(_facility);
