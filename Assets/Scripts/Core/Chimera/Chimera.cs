@@ -5,7 +5,7 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
-    [SerializeField] private ElementalType _elementalType = ElementalType.None;
+    [SerializeField] private ElementType _elementalType = ElementType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
     [SerializeField] private bool _inFacility = false;
     [SerializeField] private int _price = 50;
@@ -37,16 +37,19 @@ public class Chimera : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
     private CurrencyManager _essenceManager = null;
+    private ResourceManager _resourceManager = null;
+    private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
-    public ElementalType ElementalType { get => _elementalType; }
+    public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
     public StatType StatPreference { get => _statPreference; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public EvolutionLogic CurrentEvolution { get => _currentEvolution; }
-    public Sprite Icon { get => _currentEvolution.Icon; }
+    public Sprite ChimeraIcon { get => _currentEvolution.ChimeraIcon; }
+    public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
     public int Level { get => _level; }
     public int Endurance { get => _endurance; }
@@ -91,10 +94,13 @@ public class Chimera : MonoBehaviour
 
         _essenceManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
+
+        _elementIcon = _resourceManager.GetElementSprite(_elementalType);
 
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();

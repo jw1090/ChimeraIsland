@@ -18,7 +18,7 @@ public class ResourceManager : MonoBehaviour
 
     private Sprite _aquaSprite = null;
     private Sprite _bioSprite = null;
-    private Sprite _pyraSprite = null;
+    private Sprite _firaSprite = null;
 
     private Sprite _tutorialCute = null;
     private Sprite _tutorialHappy = null;
@@ -65,9 +65,9 @@ public class ResourceManager : MonoBehaviour
         _chimeraC2Sprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
         _chimeraC3Sprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
 
-        _pyraSprite = Resources.Load<Sprite>("Icons/Chimera/C1-Icon");
-        _aquaSprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
-        _bioSprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
+        _aquaSprite = Resources.Load<Sprite>("Icons/Elements/aqua");
+        _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
+        _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
 
         _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
         _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
@@ -212,6 +212,22 @@ public class ResourceManager : MonoBehaviour
             default:
                 Debug.LogWarning($"Returning Default Sprite, please change.");
                 return _defaultChimeraSprite;
+        }
+    }
+
+    public Sprite GetElementSprite(ElementType elementalType)
+    {
+        switch (elementalType)
+        {
+            case ElementType.Aqua:
+                return _aquaSprite;
+            case ElementType.Bio:
+                return _bioSprite;
+            case ElementType.Fira:
+                return _firaSprite;
+            default:
+                Debug.LogWarning($"{elementalType} is invalid, please change!");
+                return null;
         }
     }
 }

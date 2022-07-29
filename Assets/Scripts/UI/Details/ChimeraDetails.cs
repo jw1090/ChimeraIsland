@@ -5,16 +5,17 @@ using UnityEngine.UI;
 public class ChimeraDetails : MonoBehaviour
 {
     [SerializeField] private DetailsTransferButton _detailsTransferButton = null;
-    [SerializeField] private Image _icon = null;
+    [SerializeField] private Image _chimeraIcon = null;
+    [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TextMeshProUGUI _level = null;
-    [SerializeField] private TextMeshProUGUI _element = null;
     [SerializeField] private TextMeshProUGUI _endurance = null;
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _addButton = null;
     [SerializeField] private Button _removeButton = null;
+    private ResourceManager _resourceManager = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private int _chimeraSpot = 0;
@@ -23,7 +24,9 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Initialize(int chimeraSpot)
     {
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+
         _chimeraSpot = chimeraSpot;
 
         _detailsTransferButton.Initialize(this);
@@ -46,10 +49,11 @@ public class ChimeraDetails : MonoBehaviour
 
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
-        _icon.sprite = _chimera.Icon;
         _name.text = $"{_chimera.Name}";
         _level.text = $"{_chimera.Level}";
-        _element.text = $"{_chimera.ElementalType}";
+        _chimeraIcon.sprite = _chimera.ChimeraIcon;
+        _elementIcon.sprite = _chimera.ElementIcon;
+
 
         int amount = 0;
         string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";

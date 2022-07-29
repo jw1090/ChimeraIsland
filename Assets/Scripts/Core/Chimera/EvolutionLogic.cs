@@ -9,13 +9,14 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqEndurance = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
+    private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
-    private Sprite _icon = null;
+    private Sprite _chimeraIcon = null;
 
     public ChimeraType Type { get => _evolutionType; }
     public Animator Animator { get => GetComponent<Animator>(); }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
-    public Sprite Icon { get => _icon; }
+    public Sprite ChimeraIcon { get => _chimeraIcon; }
     public int ReqEndurance { get => _reqEndurance; }
     public int ReqIntelligence { get => _reqIntelligence; }
     public int ReqStrength { get => _reqStrength; }
@@ -23,7 +24,9 @@ public class EvolutionLogic : MonoBehaviour
 
     public void Initialize(Chimera chimera)
     {
-        _icon = ServiceLocator.Get<ResourceManager>().GetChimeraSprite(_evolutionType);
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+
+        _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 
         _chimeraBrain = chimera;
     }

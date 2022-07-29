@@ -22,7 +22,7 @@ public enum DetailsButtonType
     Expedition,
 }
 
-public enum ElementalType
+public enum ElementType
 {
     None = -1,
     Aqua,

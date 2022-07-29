@@ -104,7 +104,7 @@ public class Facility : MonoBehaviour
         }
 
         _icon.gameObject.SetActive(true);
-        _icon.GetComponent<FacilityIcon>().SetIcon(chimera.Icon);
+        _icon.GetComponent<FacilityIcon>().SetIcon(chimera.ChimeraIcon);
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
 
@@ -158,7 +158,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _icon.SetIcon(_storedChimera.Icon);
+        _icon.SetIcon(_storedChimera.ChimeraIcon);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
         FlatStatBoost();
