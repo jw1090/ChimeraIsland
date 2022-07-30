@@ -45,7 +45,6 @@ public class Facility : MonoBehaviour
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _facilitySFX = GetComponent<FacilitySFX>();
-        _facilitySFX.Initialize();
 
         _glowObject.enabled = false;
         _icon.gameObject.SetActive(false);
@@ -86,6 +85,7 @@ public class Facility : MonoBehaviour
 
             FacilityColliderToggle(FacilityColliderType.Place);
 
+            _facilitySFX.Initialize();
             _facilitySFX.BuildSFX();
 
             _isInitialized = true;
