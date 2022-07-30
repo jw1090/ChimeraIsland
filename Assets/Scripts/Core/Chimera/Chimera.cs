@@ -13,18 +13,18 @@ public class Chimera : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int _level = 0;
     [SerializeField] private int _levelCap = 99;
-    [SerializeField] private int _endurance = 1;
+    [SerializeField] private int _agility = 1;
     [SerializeField] private int _intelligence = 1;
     [SerializeField] private int _strength = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int _enduranceGrowth = 1;
+    [SerializeField] private int _agilityGrowth = 1;
     [SerializeField] private int _intelligenceGrowth = 1;
     [SerializeField] private int _strengthGrowth = 1;
-    [SerializeField] private int _enduranceExperience = 0;
+    [SerializeField] private int _agilityExperience = 0;
     [SerializeField] private int _intelligenceExperience = 0;
     [SerializeField] private int _strengthExperience = 0;
-    [SerializeField] private int _enduranceThreshold = 5;
+    [SerializeField] private int _agilityThreshold = 5;
     [SerializeField] private int _intelligenceThreshold = 5;
     [SerializeField] private int _strengthThreshold = 5;
     [SerializeField] private int _levelUpTracker = 0;
@@ -52,7 +52,7 @@ public class Chimera : MonoBehaviour
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
     public int Level { get => _level; }
-    public int Endurance { get => _endurance; }
+    public int Agility { get => _agility; }
     public int Intelligence { get => _intelligence; }
     public int Strength { get => _strength; }
     public int Price { get => _price; }
@@ -94,8 +94,8 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Endurance:
-                amount = _endurance;
+            case StatType.Agility:
+                amount = _agility;
                 return true;
             case StatType.Intelligence:
                 amount = _intelligence;
@@ -114,7 +114,7 @@ public class Chimera : MonoBehaviour
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetLevel(int level) { _level = level; }
-    public void SetEndurance(int endurance) { _endurance = endurance; }
+    public void SetAgility(int agility) { _agility = agility; }
     public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
     public void SetStrength(int strength) { _strength = strength; }
 
@@ -153,8 +153,8 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Endurance:
-                _enduranceExperience += amount;
+            case StatType.Agility:
+                _agilityExperience += amount;
                 break;
             case StatType.Intelligence:
                 _intelligenceExperience += amount;
@@ -194,13 +194,13 @@ public class Chimera : MonoBehaviour
     {
         bool levelUp = false;
 
-        if (_enduranceExperience >= _enduranceThreshold)
+        if (_agilityExperience >= _agilityThreshold)
         {
-            _enduranceExperience -= _enduranceThreshold;
+            _agilityExperience -= _agilityThreshold;
             levelUp = true;
-            LevelUp(StatType.Endurance);
+            LevelUp(StatType.Agility);
 
-            _enduranceThreshold += (int)(Mathf.Sqrt(_enduranceThreshold) * 1.2f);
+            _agilityThreshold += (int)(Mathf.Sqrt(_agilityThreshold) * 1.2f);
         }
 
         if (_intelligenceExperience >= _intelligenceThreshold)
@@ -223,7 +223,7 @@ public class Chimera : MonoBehaviour
 
         if (levelUp == true)
         {
-            bool canEvolve = _currentEvolution.CheckEvolution(_endurance, _intelligence, _strength, out EvolutionLogic evolution);
+            bool canEvolve = _currentEvolution.CheckEvolution(_agility, _intelligence, _strength, out EvolutionLogic evolution);
 
             if (canEvolve == true)
             {
@@ -238,9 +238,9 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Endurance:
-                _endurance += _enduranceGrowth;
-                Debug.Log($"{_currentEvolution} now has {_endurance} {statType}");
+            case StatType.Agility:
+                _agility += _agilityGrowth;
+                Debug.Log($"{_currentEvolution} now has {_agility} {statType}");
                 break;
             case StatType.Intelligence:
                 _intelligence += _intelligenceGrowth;

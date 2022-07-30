@@ -25,7 +25,7 @@ public class FacilitySign : MonoBehaviour
                 _statType = StatType.Intelligence;
                 break;
             case FacilityType.Waterfall:
-                _statType = StatType.Endurance;
+                _statType = StatType.Agility;
                 break;
             default:
                 break;

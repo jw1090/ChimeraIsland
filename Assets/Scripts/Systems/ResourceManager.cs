@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     private Sprite _bioSprite = null;
     private Sprite _firaSprite = null;
 
-    private Sprite _enduranceSprite = null;
+    private Sprite _agilitySprite = null;
     private Sprite _intelligenceSprite = null;
     private Sprite _strengthSprite = null;
 
@@ -73,7 +73,7 @@ public class ResourceManager : MonoBehaviour
         _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
         _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
 
-        _enduranceSprite = Resources.Load<Sprite>("Icons/Stats/Endurance");
+        _agilitySprite = Resources.Load<Sprite>("Icons/Stats/Agility");
         _intelligenceSprite = Resources.Load<Sprite>("Icons/Stats/Intelligence");
         _strengthSprite = Resources.Load<Sprite>("Icons/Stats/Strength");
 
@@ -243,8 +243,8 @@ public class ResourceManager : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Endurance:
-                return _enduranceSprite;
+            case StatType.Agility:
+                return _agilitySprite;
             case StatType.Intelligence:
                 return _intelligenceSprite;
             case StatType.Strength:
@@ -260,7 +260,7 @@ public class ResourceManager : MonoBehaviour
         switch (facility)
         {
             case FacilityType.Waterfall:
-                return _enduranceSprite;
+                return _agilitySprite;
             case FacilityType.RuneStone:
                 return _intelligenceSprite;
             case FacilityType.Cave:

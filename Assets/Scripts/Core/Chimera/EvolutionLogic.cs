@@ -6,7 +6,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private string _chimeraName = "";
-    [SerializeField] private int _reqEndurance = 0;
+    [SerializeField] private int _reqAgilty = 0;
     [SerializeField] private int _reqIntelligence = 0;
     [SerializeField] private int _reqStrength = 0;
     private ResourceManager _resourceManager = null;
@@ -17,7 +17,7 @@ public class EvolutionLogic : MonoBehaviour
     public Animator Animator { get => GetComponent<Animator>(); }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
-    public int ReqEndurance { get => _reqEndurance; }
+    public int ReqAgility { get => _reqAgilty; }
     public int ReqIntelligence { get => _reqIntelligence; }
     public int ReqStrength { get => _reqStrength; }
     public string Name { get => _chimeraName; }
@@ -31,7 +31,7 @@ public class EvolutionLogic : MonoBehaviour
         _chimeraBrain = chimera;
     }
 
-    public bool CheckEvolution(int endurance, int intelligence, int strength, out EvolutionLogic newEvolution)
+    public bool CheckEvolution(int agility, int intelligence, int strength, out EvolutionLogic newEvolution)
     {
         newEvolution = null;
 
@@ -42,7 +42,7 @@ public class EvolutionLogic : MonoBehaviour
 
         foreach (var possibleEvolution in _evolutionPaths)
         {
-            if (endurance < possibleEvolution.ReqEndurance)
+            if (agility < possibleEvolution.ReqAgility)
             {
                 continue;
             }

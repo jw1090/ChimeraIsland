@@ -170,7 +170,7 @@ public class Facility : MonoBehaviour
 
     private void FlatStatBoost()
     {
-        _storedChimera.ExperienceTick(StatType.Endurance, 1);
+        _storedChimera.ExperienceTick(StatType.Agility, 1);
         _storedChimera.ExperienceTick(StatType.Intelligence, 1);
         _storedChimera.ExperienceTick(StatType.Strength, 1);
     }

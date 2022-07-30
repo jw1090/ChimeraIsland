@@ -64,7 +64,7 @@ public enum SceneType
 public enum StatType
 {
     None = -1,
-    Endurance,
+    Agility,
     Intelligence,
     Strength,
 }

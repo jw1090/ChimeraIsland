@@ -9,7 +9,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TextMeshProUGUI _level = null;
-    [SerializeField] private TextMeshProUGUI _endurance = null;
+    [SerializeField] private TextMeshProUGUI _agility = null;
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
     [SerializeField] private Button _transferButton = null;
@@ -56,8 +56,8 @@ public class ChimeraDetails : MonoBehaviour
 
 
         int amount = 0;
-        string enduranceText = _chimera.GetStatByType(StatType.Endurance, out amount) ? amount.ToString() : "Invalid!";
-        _endurance.text = enduranceText;
+        string agilityText = _chimera.GetStatByType(StatType.Agility, out amount) ? amount.ToString() : "Invalid!";
+        _agility.text = agilityText;
         string intelligenceText = _chimera.GetStatByType(StatType.Intelligence, out amount) ? amount.ToString() : "Invalid!";
         _intelligence.text = intelligenceText;
         string strengthText = _chimera.GetStatByType(StatType.Strength, out amount) ? amount.ToString() : "Invalid!";
