@@ -22,6 +22,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilitySign _facilitySign = null;
 
     private FacilitySFX _facilitySFX = null;
+    private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private Chimera _storedChimera = null;
@@ -41,6 +42,10 @@ public class Facility : MonoBehaviour
 
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
+
+        _facilitySFX = GetComponent<FacilitySFX>();
+        _facilitySFX.Initialize();
 
         _glowObject.enabled = false;
         _icon.gameObject.SetActive(false);
@@ -81,8 +86,6 @@ public class Facility : MonoBehaviour
 
             FacilityColliderToggle(FacilityColliderType.Place);
 
-            _facilitySFX = GetComponent<FacilitySFX>();
-            _facilitySFX.Initialize();
             _facilitySFX.BuildSFX();
 
             _isInitialized = true;
@@ -92,6 +95,8 @@ public class Facility : MonoBehaviour
             ++_statModifier;
             debugString += $"{_facilityType} was increased to Tier {CurrentTier}";
         }
+
+        _habitatUI.UpdateShopUI();
 
         int newMod = _statModifier + 1;
 

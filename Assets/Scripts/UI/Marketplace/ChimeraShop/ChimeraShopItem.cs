@@ -24,4 +24,9 @@ public class ChimeraShopItem : MonoBehaviour
         _chimeraIcon.sprite = _resourceManager.GetChimeraSprite(_chimera.ChimeraType);
         _buyChimeraButton.Initialize(_chimera, _habitat);
     }
+
+    public void UpdateUI()
+    {
+        _buyChimeraButton.UpdateUI();
+    }
 }

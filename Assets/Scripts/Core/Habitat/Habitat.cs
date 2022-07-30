@@ -86,7 +86,6 @@ public class Habitat : MonoBehaviour
         }
     }
 
-
     public void BuyChimera(Chimera chimeraPrefab)
     {
         if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)

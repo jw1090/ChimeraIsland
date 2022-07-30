@@ -12,17 +12,24 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
 
     public void Initialize(Habitat habitat, FacilityType facilityType)
     {
+        _audioManager = ServiceLocator.Get<AudioManager>();
+
+        _tmpText = GetComponentInChildren<TextMeshProUGUI>();
+
         _habitat = habitat;
         _facility = _habitat.GetFacility(facilityType);
-        _audioManager = ServiceLocator.Get<AudioManager>();
-        _tmpText = GetComponentInChildren<TextMeshProUGUI>();
+
+        UpdateUI();
+    }
+
+    public void UpdateUI()
+    {
         _tmpText.text = _facility.Price.ToString();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.AddFacility(_facility);
-        _tmpText.text = _facility.Price.ToString();
         _audioManager.PlaySFX(_purchaseClickSFX);
     }
 }

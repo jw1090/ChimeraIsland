@@ -40,4 +40,9 @@ public class FacilityShopItem : MonoBehaviour
                 return "Error";
         }
     }
+
+    public void UpdateUI()
+    {
+        _buyFacilityButton.UpdateUI();
+    }
 }
