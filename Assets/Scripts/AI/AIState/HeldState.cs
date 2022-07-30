@@ -47,16 +47,8 @@ namespace AI.Behavior
                 {
                     _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y + _heightOffset, navMeshHit.position.z);
                 }
-                _chimeraBehavior.transform.position = _lastValidPos;
+                _chimeraBehavior.transform.position = desiredWorldPos;
                 _chimeraBehavior.Agent.enabled = false;
-            }
-        }
-
-        private void HeldReleaseCheck()
-        {
-            if (_chimeraBehavior.WasClicked == false)
-            {
-                _chimeraBehavior.ChangeState(_chimeraBehavior.States[StateEnum.Patrol]);
             }
         }
     }
