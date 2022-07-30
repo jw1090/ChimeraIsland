@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4362745166761184371}
   - component: {fileID: 1315713857991367192}
   - component: {fileID: 9048984839478593403}
+  - component: {fileID: 9042125461926111130}
   m_Layer: 6
   m_Name: B
   m_TagString: Chimera
@@ -52,17 +53,16 @@ MonoBehaviour:
   _price: 50
   _level: 1
   _levelCap: 99
-  _endurance: 1
+  _agility: 1
   _intelligence: 1
   _strength: 1
-  _happiness: 0
-  _enduranceGrowth: 1
+  _agilityGrowth: 1
   _intelligenceGrowth: 1
   _strengthGrowth: 1
-  _enduranceExperience: 0
+  _agilityExperience: 0
   _intelligenceExperience: 0
   _strengthExperience: 0
-  _enduranceThreshold: 5
+  _agilityThreshold: 5
   _intelligenceThreshold: 5
   _strengthThreshold: 5
   _levelUpTracker: 0
@@ -100,3 +100,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &9042125461926111130
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415709988698984522}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

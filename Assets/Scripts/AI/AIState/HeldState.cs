@@ -38,15 +38,16 @@ namespace AI.Behavior
         {
             Ray ray = _chimeraBehavior.MainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("Ground")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 300f, 1 << LayerMask.NameToLayer("Ground")))
             {
+                // Check if the desired world position is on the NavMesh
+                //if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
+                //{
+                //    _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y + _heightOffset, navMeshHit.position.z);
+                //}
+
                 Vector3 desiredWorldPos = hit.point + (Vector3.up * _heightOffset);
 
-                // Check if the desired world position is on the NavMesh
-                if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
-                {
-                    _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y + _heightOffset, navMeshHit.position.z);
-                }
                 _chimeraBehavior.transform.position = desiredWorldPos;
                 _chimeraBehavior.Agent.enabled = false;
             }
