@@ -15,12 +15,14 @@ public class Facility : MonoBehaviour
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
-    [SerializeField] private GameObject _glowObject = null;
+    [SerializeField] private MeshRenderer _glowObject = null;
     [SerializeField] private FacilityIcon _icon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
+    [SerializeField] private FacilitySign _facilitySign = null;
 
     private FacilitySFX _facilitySFX = null;
+    private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private Chimera _storedChimera = null;
@@ -32,15 +34,25 @@ public class Facility : MonoBehaviour
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
-    public GameObject GlowObject { get => _glowObject; }
+    public MeshRenderer GlowObject { get => _glowObject; }
 
     public void Initialize()
     {
         Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
 
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
+        _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
+
+        _facilitySFX = GetComponent<FacilitySFX>();
+        _facilitySFX.Initialize();
+
+        _glowObject.enabled = false;
+        _icon.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
+
+        _facilitySign.Initialize(_facilityType);
     }
 
     public bool IsChimeraStored()
@@ -74,10 +86,6 @@ public class Facility : MonoBehaviour
 
             FacilityColliderToggle(FacilityColliderType.Place);
 
-            _audioManager = ServiceLocator.Get<AudioManager>();
-
-            _facilitySFX = GetComponent<FacilitySFX>();
-            _facilitySFX.Initialize();
             _facilitySFX.BuildSFX();
 
             _isInitialized = true;
@@ -87,6 +95,8 @@ public class Facility : MonoBehaviour
             ++_statModifier;
             debugString += $"{_facilityType} was increased to Tier {CurrentTier}";
         }
+
+        _habitatUI.UpdateShopUI();
 
         int newMod = _statModifier + 1;
 
@@ -103,7 +113,7 @@ public class Facility : MonoBehaviour
         }
 
         _icon.gameObject.SetActive(true);
-        _icon.GetComponent<FacilityIcon>().SetIcon(chimera.Icon);
+        _icon.GetComponent<FacilityIcon>().SetIcon(chimera.ChimeraIcon);
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
 
@@ -157,7 +167,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _icon.SetIcon(_storedChimera.Icon);
+        _icon.SetIcon(_storedChimera.ChimeraIcon);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
         FlatStatBoost();
@@ -165,7 +175,7 @@ public class Facility : MonoBehaviour
 
     private void FlatStatBoost()
     {
-        _storedChimera.ExperienceTick(StatType.Endurance, 1);
+        _storedChimera.ExperienceTick(StatType.Agility, 1);
         _storedChimera.ExperienceTick(StatType.Intelligence, 1);
         _storedChimera.ExperienceTick(StatType.Strength, 1);
     }

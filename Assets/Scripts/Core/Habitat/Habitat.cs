@@ -77,15 +77,14 @@ public class Habitat : MonoBehaviour
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
-            Facility building = GetFacility(facilityInfo.facilityType);
+            Facility facility = GetFacility(facilityInfo.facilityType);
 
             for (int i = 0; i < facilityInfo.currentTier; ++i)
             {
-                building.BuildFacility();
+                facility.BuildFacility();
             }
         }
     }
-
 
     public void BuyChimera(Chimera chimeraPrefab)
     {
@@ -118,8 +117,8 @@ public class Habitat : MonoBehaviour
     public void AddChimera(Transform newChimera)
     {
         Vector3 spawnPos = _spawnPoint.transform.localPosition;
-        float spawnPointX = spawnPos.x + Random.Range(-5, 5);
-        float spawnPointZ = spawnPos.z + Random.Range(-5, 5);
+        float spawnPointX = spawnPos.x + Random.Range(-3, 3);
+        float spawnPointZ = spawnPos.z + Random.Range(-3, 3);
 
         newChimera.position = new Vector3(spawnPointX, spawnPos.y, spawnPointZ);
         newChimera.rotation = Quaternion.identity;
@@ -202,7 +201,7 @@ public class Habitat : MonoBehaviour
         {
             if (facility.CurrentTier > 0 && !facility.IsChimeraStored())
             {
-                facility.GlowObject.SetActive(value);
+                facility.GlowObject.enabled = value;
             }
         }
     }

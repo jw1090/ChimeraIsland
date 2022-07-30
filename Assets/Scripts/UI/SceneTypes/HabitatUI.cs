@@ -245,4 +245,9 @@ public class HabitatUI : MonoBehaviour
             wallet.UpdateWallet();
         }
     }
+
+    public void UpdateShopUI()
+    {
+        _marketplacePanel.UpdateShopUI();
+    }
 }

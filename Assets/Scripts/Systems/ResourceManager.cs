@@ -18,7 +18,11 @@ public class ResourceManager : MonoBehaviour
 
     private Sprite _aquaSprite = null;
     private Sprite _bioSprite = null;
-    private Sprite _pyraSprite = null;
+    private Sprite _firaSprite = null;
+
+    private Sprite _agilitySprite = null;
+    private Sprite _intelligenceSprite = null;
+    private Sprite _strengthSprite = null;
 
     private Sprite _tutorialCute = null;
     private Sprite _tutorialHappy = null;
@@ -65,9 +69,13 @@ public class ResourceManager : MonoBehaviour
         _chimeraC2Sprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
         _chimeraC3Sprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
 
-        _pyraSprite = Resources.Load<Sprite>("Icons/Chimera/C1-Icon");
-        _aquaSprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
-        _bioSprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
+        _aquaSprite = Resources.Load<Sprite>("Icons/Elements/aqua");
+        _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
+        _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
+
+        _agilitySprite = Resources.Load<Sprite>("Icons/Stats/Agility");
+        _intelligenceSprite = Resources.Load<Sprite>("Icons/Stats/Intelligence");
+        _strengthSprite = Resources.Load<Sprite>("Icons/Stats/Strength");
 
         _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
         _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
@@ -212,6 +220,54 @@ public class ResourceManager : MonoBehaviour
             default:
                 Debug.LogWarning($"Returning Default Sprite, please change.");
                 return _defaultChimeraSprite;
+        }
+    }
+
+    public Sprite GetElementSprite(ElementType elementalType)
+    {
+        switch (elementalType)
+        {
+            case ElementType.Aqua:
+                return _aquaSprite;
+            case ElementType.Bio:
+                return _bioSprite;
+            case ElementType.Fira:
+                return _firaSprite;
+            default:
+                Debug.LogWarning($"{elementalType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetStatSprite(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Agility:
+                return _agilitySprite;
+            case StatType.Intelligence:
+                return _intelligenceSprite;
+            case StatType.Strength:
+                return _strengthSprite;
+            default:
+                Debug.LogWarning($"{statType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetStatSprite(FacilityType facility)
+    {
+        switch (facility)
+        {
+            case FacilityType.Waterfall:
+                return _agilitySprite;
+            case FacilityType.RuneStone:
+                return _intelligenceSprite;
+            case FacilityType.Cave:
+                return _strengthSprite;
+            default:
+                Debug.LogWarning($"{facility} is invalid, please change!");
+                return null;
         }
     }
 }

@@ -15,4 +15,12 @@ public class ChimeraShop : MonoBehaviour
             shopItem.Initialize();
         }
     }
+
+    public void UpdateUI()
+    {
+        foreach (ChimeraShopItem shopItem in _chimeraShopItems)
+        {
+            shopItem.UpdateUI();
+        }
+    }
 }

@@ -22,7 +22,7 @@ public enum DetailsButtonType
     Expedition,
 }
 
-public enum ElementalType
+public enum ElementType
 {
     None = -1,
     Aqua,
@@ -61,20 +61,10 @@ public enum SceneType
     Starting,
     WorldMap,
 }
-
-public enum SignType
-{
-    None = -1,
-    Endurance,
-    Intelligence,
-    Strength,
-    Expedition,
-}
-
 public enum StatType
 {
     None = -1,
-    Endurance,
+    Agility,
     Intelligence,
     Strength,
 }

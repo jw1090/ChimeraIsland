@@ -8,9 +8,9 @@ namespace AI.Behavior
         private ChimeraBehavior _chimeraBehavior = null;
         private string _patrolAnim = "Walk";
 
-        public override void Enter(ChimeraBehavior chimeraBehaviors)
+        public override void Enter(ChimeraBehavior chimeraBehavior)
         {
-            _chimeraBehavior = chimeraBehaviors;
+            _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.EnableNavAgent();
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
             _chimeraBehavior.EnterAnim(_patrolAnim);
@@ -25,8 +25,14 @@ namespace AI.Behavior
                 return;
             }
 
-            if (_chimeraBehavior.GetAgentDistance() >= 1.5f || _chimeraBehavior.GetAgentDistance() == 0.0f)
+            if (_chimeraBehavior.GetAgentDistance() >= 1.5f)
             {
+                return;
+            }
+
+            if(_chimeraBehavior.GetAgentDistance() == 0.0f)
+            {
+                _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
                 return;
             }
 

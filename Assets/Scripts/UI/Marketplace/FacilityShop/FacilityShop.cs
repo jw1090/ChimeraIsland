@@ -15,4 +15,12 @@ public class FacilityShop : MonoBehaviour
             shopItem.Initialize();
         }
     }
+
+    public void UpdateUI()
+    {
+        foreach (FacilityShopItem shopItem in _facilityShopItems)
+        {
+            shopItem.UpdateUI();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 using AI.Behavior;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -64,9 +65,10 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             RemoveFromFacility();
+            HeldCheckAgainstUI();
         }
 
-        if ((Input.GetMouseButtonDown(0)))
+        if (Input.GetMouseButtonDown(0))
         {
             EnterHeldState();
         }
@@ -103,15 +105,14 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if (_heldChimera == true)
+        if (_heldChimera == true || EventSystem.current.IsPointerOverGameObject())
         {
             ResetSliderInfo();
             return;
         }
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit, 200.0f);
+        Physics.Raycast(ray, out RaycastHit hit, 100.0f);
 
         if (hit.collider == null)
         {
@@ -148,18 +149,32 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (_isHolding == true)
         {
             return;
         }
+
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, _chimeraLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _chimeraLayer))
         {
             _habitatManager.CurrentHabitat.ActivateGlow(true);
-            Chimera chimera = hit.transform.gameObject.GetComponent<EvolutionLogic>().ChimeraBrain;
-            _heldChimera = chimera.GetComponent<ChimeraBehavior>();
+            _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
             HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
             _isHolding = true;
+        }
+    }
+
+    private void HeldCheckAgainstUI()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            ExitHeldState();
+            return;
         }
     }
 
@@ -169,6 +184,7 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
+
         _habitatManager.CurrentHabitat.ActivateGlow(false);
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;

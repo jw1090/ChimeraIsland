@@ -33,7 +33,7 @@ public class ChimeraCreator : MonoBehaviour
     private void LoadChimeraStats(Chimera newChimera, ChimeraData chimeraInfo)
     {
         newChimera.SetLevel(chimeraInfo.level);
-        newChimera.SetEndurance(chimeraInfo.endurance);
+        newChimera.SetAgility(chimeraInfo.agility);
         newChimera.SetIntelligence(chimeraInfo.intelligence);
         newChimera.SetStrength(chimeraInfo.strength);
     }

@@ -47,7 +47,7 @@ public class ReleaseSlider : MonoBehaviour
         if (_heldCounter > 0.0f)
         {
             gameObject.SetActive(true);
-            transform.position = Input.mousePosition + new Vector3(75.0f, 0.0f, 0.0f);
+            transform.position = Input.mousePosition + new Vector3(70.0f, 70.0f, 0.0f);
             _slider.value = _heldCounter * 0.5f;
         }
         else
