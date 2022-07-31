@@ -15,10 +15,10 @@ namespace AI.Behavior
 
     public class ChimeraBehavior : MonoBehaviour
     {
+        [SerializeField] private GameObject _sphereMarker = null;
         private Animator _animator = null;
         private Camera _mainCamera = null;
         private CameraController _cameraController = null;
-
         private Chimera _chimera = null;
         private ChimeraBaseState _currentState = null;
         private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
@@ -33,6 +33,7 @@ namespace AI.Behavior
         public CameraController CameraController { get => _cameraController; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
         public NavMeshAgent Agent { get => _navMeshAgent; }
+        public GameObject SphereMarker { get => _sphereMarker; }
         public bool StateEnabled { get => _stateEnabled; }
         public int PatrolIndex { get => _patrolIndex; }
 
@@ -54,8 +55,10 @@ namespace AI.Behavior
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
             _cameraController = ServiceLocator.Get<CameraController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _navMeshAgent.enabled = false;
             _chimera = GetComponent<Chimera>();
+
+            _navMeshAgent.enabled = false;
+            _sphereMarker.SetActive(false);
 
             _mainCamera = CameraController.CameraCO;
 
