@@ -6,10 +6,10 @@ namespace AI.Behavior
     public class HeldState : ChimeraBaseState
     {
         private ChimeraBehavior _chimeraBehavior = null;
-        private string _heldAnim = "Held";
-        private float _heightOffset = 1.0f;
-
+        private GameObject _sphereMarker = null;
         private Vector3 _lastValidPos = Vector3.zero;
+        private string _heldAnim = "Held";
+        private float _heightOffset = 2.0f;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -17,16 +17,28 @@ namespace AI.Behavior
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraController.IsHolding = true;
 
+            _sphereMarker = _chimeraBehavior.SphereMarker;
+            _sphereMarker.gameObject.SetActive(true);
+
             _chimeraBehavior.EnterAnim(_heldAnim);
         }
 
         public override void Update()
         {
             ObjFollowMouse();
+
+            if(_lastValidPos != Vector3.zero)
+            {
+                _sphereMarker.transform.position = _lastValidPos;
+            }
         }
 
         public override void Exit()
         {
+            _sphereMarker.gameObject.SetActive(false);
+
+            _chimeraBehavior.gameObject.transform.localPosition = _lastValidPos;
+
             _chimeraBehavior.Agent.enabled = true;
             _chimeraBehavior.BoxCollider.enabled = true;
             _chimeraBehavior.CameraController.IsHolding = false;
@@ -41,10 +53,10 @@ namespace AI.Behavior
             if (Physics.Raycast(ray, out RaycastHit hit, 300f, 1 << LayerMask.NameToLayer("Ground")))
             {
                 // Check if the desired world position is on the NavMesh
-                //if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
-                //{
-                //    _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y + _heightOffset, navMeshHit.position.z);
-                //}
+                if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
+                {
+                    _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y, navMeshHit.position.z);
+                }
 
                 Vector3 desiredWorldPos = hit.point + (Vector3.up * _heightOffset);
 
