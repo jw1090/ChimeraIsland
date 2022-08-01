@@ -47,8 +47,11 @@ public class ResourceManager : MonoBehaviour
     private GameObject _chimeraEvolutionPrefabC1 = null;
     private GameObject _chimeraEvolutionPrefabC2 = null;
     private GameObject _chimeraEvolutionPrefabC3 = null;
+
+    private GameObject _inputManager = null;
     private GameObject _uiManagerPrefab = null;
 
+    public GameObject InputManager { get => _inputManager;}
     public GameObject UIManager { get => _uiManagerPrefab;}
 
     public ResourceManager Initialize()
@@ -102,6 +105,7 @@ public class ResourceManager : MonoBehaviour
         _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
 
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
+        _inputManager = Resources.Load<GameObject>("Input Manager");
 
         return this;
     }
