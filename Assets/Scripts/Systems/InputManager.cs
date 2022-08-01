@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _sphereMarker = null;
     private Camera _cameraMain = null;
     private ChimeraBehavior _heldChimera = null;
     private ReleaseSlider _releaseSlider = null;
@@ -18,6 +19,7 @@ public class InputManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
 
     public event Action<bool, int> HeldStateChange = null;
+    public GameObject SphereMarker { get => _sphereMarker; }
 
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
@@ -35,6 +37,7 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
+        _sphereMarker.SetActive(false);
 
         _isInitialized = true;
 

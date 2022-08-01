@@ -67,6 +67,11 @@ public class GameLoader : AsyncLoader
     {
         Debug.Log("Loading Core Systems");
 
+        var resourceManagerGO = new GameObject("Resource Manager");
+        resourceManagerGO.transform.SetParent(systemsParent);
+        var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
+        ServiceLocator.Register<ResourceManager>(resourceManagerComp);
+
         var monoUtilGO = new GameObject("Monobehaviour Utility");
         monoUtilGO.transform.SetParent(systemsParent);
         var monoUtilComp = monoUtilGO.AddComponent<MonoUtil>().Initialize();
@@ -82,14 +87,9 @@ public class GameLoader : AsyncLoader
         var sessionDataComp = sessionDataGO.AddComponent<SessionData>().Initialize();
         ServiceLocator.Register<ISessionData>(sessionDataComp);
 
-        var resourceManagerGO = new GameObject("Resource Manager");
-        resourceManagerGO.transform.SetParent(systemsParent);
-        var resourceManagerComp = resourceManagerGO.AddComponent<ResourceManager>().Initialize();
-        ServiceLocator.Register<ResourceManager>(resourceManagerComp);
-
-        var inputManagerGO = new GameObject("Input Manager");
-        inputManagerGO.transform.SetParent(systemsParent);
-        var inputManagerComp = inputManagerGO.AddComponent<InputManager>().Initialize();
+        var inputManagerGO = Instantiate(resourceManagerComp.InputManager, systemsParent);
+        inputManagerGO.name = "Input Manager";
+        var inputManagerComp = inputManagerGO.GetComponent<InputManager>().Initialize();
         ServiceLocator.Register<InputManager>(inputManagerComp);
 
         var essenceManagerGO = new GameObject("Essence Manager");
