@@ -5,6 +5,7 @@ public class TutorialObserver : MonoBehaviour
 {
     private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
+    public bool tutorialFiveTriggered = false;
 
     public TutorialObserver Initialize(UIManager uiManager)
     {
@@ -13,7 +14,7 @@ public class TutorialObserver : MonoBehaviour
 
         CreateTutorialListener(_habitatUI.ExpeditionButton, TutorialStageType.ExpeditionRequirements);
         CreateTutorialListener(_habitatUI.MarketplaceButton, TutorialStageType.FacilityShop);
-        CreateTutorialListener(_habitatUI.WaterfallButton, TutorialStageType.FacilityShop);
+        CreateTutorialListener(_habitatUI.WaterfallButton, TutorialStageType.Training);
 
         return this;
     }

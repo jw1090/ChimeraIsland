@@ -58,6 +58,60 @@ public class Chimera : MonoBehaviour
     public int Price { get => _price; }
     public string Name { get => GetName(); }
 
+    public int GetAttribute(StatType type)
+    {
+        switch (type)
+        {
+            case StatType.Agility:
+                return Agility;
+            case StatType.Intelligence:
+                return Intelligence;
+            case StatType.Strength:
+                return Strength;
+            default:
+                return -1;
+        }
+    }
+
+    public int GetXPtoThreshold(StatType type, int level)
+    {
+        if (level <= _level || level > _levelCap) return -1;
+        int threshold;
+        int totalThreshold = 0;
+        switch (type)
+        {
+            case StatType.Agility:
+                threshold = _agilityThreshold;
+                totalThreshold += threshold;
+                for (int i = _level + 1; i < level; i++)
+                {
+                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    totalThreshold += threshold;
+                }
+                return totalThreshold - _agilityExperience;
+            case StatType.Intelligence:
+                threshold = _intelligenceThreshold;
+                totalThreshold += threshold;
+                for (int i = _level + 1; i < level; i++)
+                {
+                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    totalThreshold += threshold;
+                }
+                return totalThreshold - _intelligenceExperience;
+            case StatType.Strength:
+                threshold = _strengthThreshold;
+                totalThreshold += threshold;
+                for (int i = _level+1; i < level; i++)
+                {
+                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    totalThreshold += threshold;
+                }
+                return totalThreshold - _strengthExperience;
+            default:
+                return -1;
+        }
+    }
+
     public string GetName()
     {
         if(_currentEvolution == null)
