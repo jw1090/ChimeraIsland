@@ -20,7 +20,8 @@ public class Facility : MonoBehaviour
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
-
+    [SerializeField] private UITraining _uITraining = null;
+    [SerializeField] private UIManager _uIManager;
     private FacilitySFX _facilitySFX = null;
     private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
@@ -29,7 +30,16 @@ public class Facility : MonoBehaviour
 
     private bool _isInitialized = false;
     private int _currentTier = 0;
+    private int _trainToLevel = 0;
+    private bool _activateTraining = false;
 
+    public FacilityIcon MyFacilityIcon { get => _icon; }
+    public StatType MyStatType{ get => _statType; }
+    public void SetActivateTraining(bool Active) { _activateTraining = Active; }
+    public bool ActivateTraining { get => _activateTraining; }
+    public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
+    public int TrainToLevel { get => _trainToLevel; }
+    public int StatModifier { get => _statModifier; }
     public FacilityType Type { get => _facilityType; }
     public bool IsInitialized { get => _isInitialized; }
     public int CurrentTier { get => _currentTier; }
@@ -42,16 +52,20 @@ public class Facility : MonoBehaviour
 
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _uIManager = ServiceLocator.Get<UIManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _facilitySFX = GetComponent<FacilitySFX>();
 
         _glowObject.enabled = false;
+        _icon.Initialize(this);
         _icon.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
 
         _facilitySign.Initialize(_facilityType);
+
+        _uITraining.Initialize(this);
     }
 
     public bool IsChimeraStored()
@@ -111,7 +125,8 @@ public class Facility : MonoBehaviour
             Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
-
+        _uITraining.gameObject.SetActive(true);
+        _uITraining.IntializeChimera(chimera);
         _icon.gameObject.SetActive(true);
         _icon.GetComponent<FacilityIcon>().SetIcon(chimera.ChimeraIcon);
         _storedChimera = chimera;
@@ -136,7 +151,12 @@ public class Facility : MonoBehaviour
         {
             Debug.Log("Cannot remove Chimera, facility is empty.");
         }
-
+        if (_storedChimera.Level >= 1 && _uIManager.TutorialObserver.tutorialFiveTriggered == false)
+        {
+            _uIManager.TutorialObserver.tutorialFiveTriggered = true;
+            ServiceLocator.Get<TutorialManager>().ShowTutorialStage(TutorialStageType.Details);
+        }
+        _activateTraining = false;
         AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
         chimeraBehavior.ChangeState(chimeraBehavior.States[AI.Behavior.StateEnum.Patrol]);
 
@@ -162,22 +182,25 @@ public class Facility : MonoBehaviour
             return;
         }
 
+        if (_activateTraining == false) //haven't finished training ui setup
+        {
+            return;
+        }
+
         if (EssenceCost() == false) // Was kicked out.
         {
             return;
         }
 
+        if(_storedChimera.GetAttribute(MyStatType) >= _trainToLevel)
+        {
+            RemoveChimera();
+            return;
+        }
+
         _icon.SetIcon(_storedChimera.ChimeraIcon);
-
+        _icon.updateSlider(_storedChimera.GetAttribute(MyStatType));
         _storedChimera.ExperienceTick(_statType, _statModifier);
-        FlatStatBoost();
-    }
-
-    private void FlatStatBoost()
-    {
-        _storedChimera.ExperienceTick(StatType.Agility, 1);
-        _storedChimera.ExperienceTick(StatType.Intelligence, 1);
-        _storedChimera.ExperienceTick(StatType.Strength, 1);
     }
 
     private bool EssenceCost()
