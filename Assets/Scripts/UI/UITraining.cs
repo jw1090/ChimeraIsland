@@ -28,9 +28,9 @@ public class UITraining : MonoBehaviour
         _chimera = chimera;
         attribute = _chimera.GetAttribute(_myFacility.MyStatType);
         _slider.minValue = attribute;
-        _slider.maxValue = 5;
+        _slider.maxValue = attribute + 5;
         _levelTo = attribute + 1;
-        if(_levelTo > 5)
+        if(_chimera.Level == 99)
         {
             _amount.text = "Your Chimera has reached the maximum level";
         }
@@ -69,7 +69,7 @@ public class UITraining : MonoBehaviour
 
     public void OnClickIncrease()
     {
-        if (_levelTo < 5)
+        if (_levelTo < 5 + attribute)
         {
             _levelTo++;
             _slider.value = _levelTo;
@@ -85,7 +85,7 @@ public class UITraining : MonoBehaviour
 
     public void OnClickConfirm()
     {
-        if(_levelTo <= 5 && _levelTo > 1 && _currencyManager.Essence > _myCost)
+        if(_chimera.Level < 99 && _levelTo > 1 && _currencyManager.Essence > _myCost)
         {
             _myFacility.MyFacilityIcon.setSliderAttributes(attribute, _levelTo);
             _myFacility.SetTrainToLevel(_levelTo);
