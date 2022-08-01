@@ -88,10 +88,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        if (IsStageComplete(tutorialType))
-        {
-            return;
-        }
+        if (IsStageComplete(tutorialType)) { return; }
 
         _currentStage = tutorialType;
 
