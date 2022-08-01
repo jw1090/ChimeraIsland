@@ -33,6 +33,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
     
     private BoxCollider _boxCollider = null;
+    private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
@@ -47,6 +48,7 @@ public class Chimera : MonoBehaviour
     public StatType StatPreference { get => _statPreference; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
+    public ChimeraBehavior Behavior { get => _chimeraBehavior; }
     public EvolutionLogic CurrentEvolution { get => _currentEvolution; }
     public Sprite ChimeraIcon { get => _currentEvolution.ChimeraIcon; }
     public Sprite ElementIcon { get => _elementIcon; }
@@ -73,11 +75,16 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    public int GetXPtoThreshold(StatType type, int level)
+    public int GetEXPThresholdDifference(StatType type, int level)
     {
-        if (level <= _level || level > _levelCap) return -1;
-        int threshold;
+        if (level <= _level || level > _levelCap)
+        {
+            return -1;
+        }
+
+        int threshold = 0;
         int totalThreshold = 0;
+
         switch (type)
         {
             case StatType.Agility:

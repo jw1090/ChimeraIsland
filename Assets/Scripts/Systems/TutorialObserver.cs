@@ -5,7 +5,8 @@ public class TutorialObserver : MonoBehaviour
 {
     private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
-    public bool tutorialFiveTriggered = false;
+
+    public bool DetailsTutorial { get; set; } = false;
 
     public TutorialObserver Initialize(UIManager uiManager)
     {

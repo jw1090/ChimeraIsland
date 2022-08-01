@@ -7,17 +7,20 @@ namespace AI.Behavior
     {
         private ChimeraBehavior _chimeraBehavior = null;
         private GameObject _sphereMarker = null;
+        private InputManager _inputManager = null;
         private Vector3 _lastValidPos = Vector3.zero;
         private string _heldAnim = "Held";
         private float _heightOffset = 2.0f;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
+            _inputManager = ServiceLocator.Get<InputManager>();
+
             _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraController.IsHolding = true;
 
-            _sphereMarker = _chimeraBehavior.SphereMarker;
+            _sphereMarker = _inputManager.SphereMarker;
             _sphereMarker.gameObject.SetActive(true);
 
             _chimeraBehavior.EnterAnim(_heldAnim);

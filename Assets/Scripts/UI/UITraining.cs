@@ -1,97 +1,171 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UITraining : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _cost;
-    [SerializeField] private TextMeshProUGUI _amount;
-    [SerializeField] private TextMeshProUGUI _title;
-    [SerializeField] private Slider _slider;
-    private Facility _myFacility;
-    private Chimera _chimera;
-    private CurrencyManager _currencyManager;
-    int _myCost;
-    int _levelTo;
-    int attribute;
-    public void Initialize(Facility facility)
+    [SerializeField] private Color _validColor = Color.white;
+    [SerializeField] private Color _badColor = Color.red;
+    [SerializeField] private Button _screenWideOffButton = null;
+    [SerializeField] private Button _increaseButton = null;
+    [SerializeField] private Button _decreaseButton = null;
+    [SerializeField] private Button _confirmButton = null;
+    [SerializeField] private Button _declineButton = null;
+    [SerializeField] private TextMeshProUGUI _statInfoText = null;
+    [SerializeField] private TextMeshProUGUI _costText = null;
+    [SerializeField] private Slider _slider = null;
+    private Facility _facility = null;
+    private Chimera _chimera = null;
+    private CurrencyManager _currencyManager = null;
+    private HabitatUI _habitatUI = null;
+    private int _cost = 0;
+    private int _levelGoal = 0;
+    private int _attribute = 0;
+
+    public void Initialize(HabitatUI habitatUI)
     {
-        _myFacility = facility;
-        _title.text = $"{_myFacility.MyStatType} Training";
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _habitatUI = habitatUI;
+
+        SetupUIListeners();
     }
 
-    public void IntializeChimera(Chimera chimera)
+    public void SetupUIListeners()
     {
-        _chimera = chimera;
-        attribute = _chimera.GetAttribute(_myFacility.MyStatType);
-        _slider.minValue = attribute;
-        _slider.maxValue = attribute + 5;
-        _levelTo = attribute + 1;
-        if(_chimera.Level == 99)
-        {
-            _amount.text = "Your Chimera has reached the maximum level";
-        }
-        _slider.value = _levelTo;
-        SetCost();
+        CreateButtonListener(_screenWideOffButton, ResetTrainingUI);
+        CreateButtonListener(_increaseButton, IncreaseStatGoal);
+        CreateButtonListener(_decreaseButton, DecreaseStatGoal);
+        CreateButtonListener(_confirmButton, Confirm);
+        CreateButtonListener(_declineButton, ResetTrainingUI);
     }
 
-    public void SetCost()
+    private void CreateButtonListener(Button button, Action action)
     {
-        //every tick the chimera _stat modifier xp and is charged 5 * _statModifier
-        int XpNeeded = _chimera.GetXPtoThreshold(_myFacility.MyStatType, _levelTo);
-        int ticksTo = (int)(XpNeeded / _myFacility.StatModifier);
-        if (XpNeeded % (_myFacility.StatModifier) != 0) ++ticksTo;
-        _myCost = ticksTo * 5 * _myFacility.StatModifier;
-        _cost.text = $"{_myCost} Essence";
-        if (_myCost > _currencyManager.Essence)
+        if (button != null)
         {
-            _cost.color = Color.red;
+            button.onClick.AddListener
+            (delegate
+            {
+                action?.Invoke();
+            });
         }
         else
         {
-            _cost.color = Color.white;
+            Debug.LogError($"{button} is null! Please Fix");
         }
-        _amount.text = $"{attribute} + {_levelTo - attribute}";
     }
 
-    public void OnClickDecrease()
+    public void SetupTrainingUI(Chimera chimera, Facility facility)
     {
-        if(_levelTo > attribute + 1)
+        _chimera = chimera;
+        _facility = facility;
+
+        _attribute = _chimera.GetAttribute(_facility.StatType);
+
+        _slider.minValue = _attribute;
+        _slider.maxValue = 5;
+        _levelGoal = _attribute + 1;
+
+        if(_levelGoal > 5)
         {
-            _levelTo--;
-            _slider.value = _levelTo;
-            SetCost();
+            _statInfoText.text = "Your Chimera has reached the maximum level";
         }
+
+        _slider.value = _levelGoal;
+
+        DetermineCost();
     }
 
-    public void OnClickIncrease()
+    public void DetermineCost()
     {
-        if (_levelTo < 5 + attribute)
+        // Every tick the chimera _stat modifier xp and is charged 5 * _statModifier.
+        int expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
+        int ticksRequired = (int)(expNeeded / _facility.StatModifier);
+
+        if (expNeeded % (_facility.StatModifier) != 0)
         {
-            _levelTo++;
-            _slider.value = _levelTo;
-            SetCost();
+            ++ticksRequired;
         }
+
+         _cost = ticksRequired * 5 * _facility.StatModifier;
+        _costText.text = $"Cost: {_cost} Essence";
+
+        if (_cost > _currencyManager.Essence)
+        {
+            _costText.color = _badColor;
+        }
+        else
+        {
+            _costText.color = _validColor;
+        }
+
+        _statInfoText.text = $" {_facility.StatType}: {_attribute} (+{_levelGoal - _attribute})";
     }
 
-    public void OnClickExit()
+    public void DecreaseStatGoal()
     {
-        _myFacility.RemoveChimera();
+        if(_levelGoal <= _attribute + 1)
+        {
+            return;
+        }
+
+        --_levelGoal;
+        _slider.value = _levelGoal;
+        DetermineCost();
+    }
+
+    public void IncreaseStatGoal()
+    {
+        if (_levelGoal >= 5)
+        {
+            return;
+        }
+
+        ++_levelGoal;
+        _slider.value = _levelGoal;
+        DetermineCost();
+    }
+
+    public void ResetTrainingUI()
+    {
+        if(_facility != null)
+        {
+            if (_facility.IsChimeraStored() == true)
+            {
+                _facility.RemoveChimera();
+                _habitatUI.RevealElementsHiddenByTraining();
+            }
+        }
+
         this.gameObject.SetActive(false);
     }
 
-    public void OnClickConfirm()
+    public void Confirm()
     {
-        if(_chimera.Level < 99 && _levelTo > 1 && _currencyManager.Essence > _myCost)
+        if(_levelGoal > 5)
         {
-            _myFacility.MyFacilityIcon.setSliderAttributes(attribute, _levelTo);
-            _myFacility.SetTrainToLevel(_levelTo);
-            _myFacility.SetActivateTraining(true);
-            this.gameObject.SetActive(false);
+            Debug.Log($"Level goal [{_levelGoal}] is too high.");
+            return;
         }
-    }
 
+        if(_levelGoal <= 1)
+        {
+            Debug.Log($"Level goal [{_levelGoal}] is too low.");
+            return;
+        }
+
+        if(_currencyManager.Essence < _cost)
+        {
+            Debug.Log($"Essence [{_currencyManager.Essence}] too low to afford.");
+            return;
+        }
+
+        _facility.MyFacilityIcon.setSliderAttributes(_attribute, _levelGoal);
+        _facility.SetTrainToLevel(_levelGoal);
+        _facility.SetActivateTraining(true);
+
+        _habitatUI.RevealElementsHiddenByTraining();
+        this.gameObject.SetActive(false);
+    }
 }
