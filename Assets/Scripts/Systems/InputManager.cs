@@ -67,7 +67,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            RemoveFromFacility();
+            //RemoveFromFacility();
             HeldCheckAgainstUI();
         }
 
@@ -77,7 +77,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            ResetSliderInfo();
+            //ResetSliderInfo();
             ExitHeldState();
         }
 

@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class ButtonGlow : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    [SerializeField] private Color _idle;
-    [SerializeField] private Color _hover;
+    [SerializeField] private Color _idle = Color.white;
+    [SerializeField] private Color _hover = Color.white;
     private Image _buttonImage = null;
 
     public void Awake()

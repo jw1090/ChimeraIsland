@@ -14,6 +14,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
     [SerializeField] private Button _expeditionButton = null;
+    [SerializeField] private GameObject _topLeftButtonsFolder = null;
     [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
     [SerializeField] private GameObject _runeFacilityShopIcon = null;
     [SerializeField] private GameObject _caveFacilityShopIcon = null;
@@ -27,6 +28,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
+    [SerializeField] private UITraining _trainingPanel = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
     [SerializeField] private AudioClip _clickSFX = null;
@@ -40,10 +42,12 @@ public class HabitatUI : MonoBehaviour
     public Button ExpeditionButton { get => _expeditionButton; }
     public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
+    public UITraining TrainingPanel { get => _trainingPanel; }
 
     public void Initialize()
     {
         InitializeWallets();
+        _trainingPanel.Initialize(this);
     }
 
     private void InitializeWallets()
@@ -132,7 +136,7 @@ public class HabitatUI : MonoBehaviour
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
 
-        //Audio
+        // Audio
         _audioManager.PlaySFX(_clickSFX);
 
         _closeDetailsButton.gameObject.SetActive(false);
@@ -190,10 +194,15 @@ public class HabitatUI : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
-        if (_settingsPanel.activeInHierarchy == true ||
+        if(_trainingPanel.gameObject.activeInHierarchy == true)
+        {
+            _trainingPanel.ResetTrainingUI();
+            ResetStandardUI();
+        }
+        else if (_settingsPanel.activeInHierarchy == true ||
             _marketplacePanel.gameObject.activeInHierarchy == true ||
             _expeditionPanel.gameObject.activeInHierarchy == true ||
-            _detailsPanel.gameObject.activeInHierarchy
+            _detailsPanel.gameObject.activeInHierarchy == true
             )
         {
             ResetStandardUI();
@@ -228,6 +237,26 @@ public class HabitatUI : MonoBehaviour
     public void UpdateDetails()
     {
         _detailsFolder.UpdateDetailsList();
+    }
+
+    public void OpenTrainingPanel()
+    {
+        _trainingPanel.gameObject.SetActive(true);
+
+        _openDetailsButton.gameObject.SetActive(false);
+        _expeditionButton.gameObject.SetActive(false);
+        _marketplaceButton.gameObject.SetActive(false);
+        _worldMapButton.gameObject.SetActive(false);
+        _topLeftButtonsFolder.gameObject.SetActive(false);
+    }
+
+    public void RevealElementsHiddenByTraining()
+    {
+        _openDetailsButton.gameObject.SetActive(true);
+        _expeditionButton.gameObject.SetActive(true);
+        _marketplaceButton.gameObject.SetActive(true);
+        _worldMapButton.gameObject.SetActive(true);
+        _topLeftButtonsFolder.gameObject.SetActive(true);
     }
 
     public void UpdateEssenceWallets()
