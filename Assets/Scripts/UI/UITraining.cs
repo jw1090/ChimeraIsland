@@ -64,10 +64,10 @@ public class UITraining : MonoBehaviour
         _attribute = _chimera.GetAttribute(_facility.StatType);
 
         _slider.minValue = _attribute;
-        _slider.maxValue = 5;
+        _slider.maxValue = 5 + _attribute;
         _levelGoal = _attribute + 1;
 
-        if(_levelGoal > 5)
+        if(_levelGoal > 5 + _attribute)
         {
             _statInfoText.text = "Your Chimera has reached the maximum level";
         }
@@ -117,7 +117,7 @@ public class UITraining : MonoBehaviour
 
     public void IncreaseStatGoal()
     {
-        if (_levelGoal >= 5)
+        if (_levelGoal >= 5 + _attribute)
         {
             return;
         }
@@ -143,7 +143,7 @@ public class UITraining : MonoBehaviour
 
     public void Confirm()
     {
-        if(_levelGoal > 5)
+        if(_levelGoal > 5 + _attribute)
         {
             Debug.Log($"Level goal [{_levelGoal}] is too high.");
             return;
