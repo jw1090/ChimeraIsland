@@ -18,9 +18,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _strength = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int _agilityGrowth = 1;
-    [SerializeField] private int _intelligenceGrowth = 1;
-    [SerializeField] private int _strengthGrowth = 1;
     [SerializeField] private int _agilityExperience = 0;
     [SerializeField] private int _intelligenceExperience = 0;
     [SerializeField] private int _strengthExperience = 0;
@@ -31,7 +28,8 @@ public class Chimera : MonoBehaviour
 
     [Header("Essence")]
     [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
-    
+
+    private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
@@ -183,6 +181,7 @@ public class Chimera : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
 
+        _audioManager = ServiceLocator.Get<AudioManager>();
         _essenceManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
@@ -300,16 +299,16 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Agility:
-                _agility += _agilityGrowth;
-                Debug.Log($"{_currentEvolution} now has {_agility} {statType}");
+                _agility += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_agility} {statType}");
                 break;
             case StatType.Intelligence:
-                _intelligence += _intelligenceGrowth;
-                Debug.Log($"{_currentEvolution} now has {_intelligence} {statType}");
+                _intelligence += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_intelligence} {statType}");
                 break;
             case StatType.Strength:
-                _strength += _strengthGrowth;
-                Debug.Log($"{_currentEvolution} now has {_strength} {statType}");
+                _strength += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_strength} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -321,7 +320,7 @@ public class Chimera : MonoBehaviour
         ++_levelUpTracker;
         if (_levelUpTracker % 3 == 0)
         {
-            ServiceLocator.Get<AudioManager>().PlayLevelUpSFX();
+            _audioManager.PlayLevelUpSFX();
             ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
@@ -333,7 +332,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        ServiceLocator.Get<AudioManager>().PlayEvolutionSFX();
+        _audioManager.PlayEvolutionSFX();
 
         Destroy(_currentEvolution.gameObject);
 
