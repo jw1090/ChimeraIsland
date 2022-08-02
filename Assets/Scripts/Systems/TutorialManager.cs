@@ -4,7 +4,7 @@ public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
     private UIManager _uiManager = null;
-    private TutorialStageType _currentStage = TutorialStageType.None;
+    private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = true;
 
     public TutorialStageType CurrentStage { get => _currentStage; }
