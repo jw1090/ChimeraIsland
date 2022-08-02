@@ -17,6 +17,7 @@ public class LevelLoader : AsyncLoader
     private PersistentData _persistentData = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
+    private AudioManager _audioManager = null;
 
     protected override void Awake()
     {
@@ -45,6 +46,7 @@ public class LevelLoader : AsyncLoader
                 HabitatSceneSetup();
                 break;
             case SceneType.MainMenu:
+                PlayCurrentSceneMusic();
                 break;
             case SceneType.Starting:
                 break;
@@ -67,6 +69,7 @@ public class LevelLoader : AsyncLoader
         _persistentData = ServiceLocator.Get<PersistentData>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         if (_cameraController != null)
         {
@@ -189,5 +192,10 @@ public class LevelLoader : AsyncLoader
     private void OnComplete()
     {
         Debug.Log($"<color=Lime> {this.GetType()} finished setup. </color>");
+    }
+
+    public void PlayCurrentSceneMusic()
+    {
+        _audioManager.PlaySceneMusic(_sceneType);
     }
 }

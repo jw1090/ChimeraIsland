@@ -11,6 +11,7 @@ public class Facility : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip _placeSFX = null;
     [SerializeField] private AudioClip _removeSFX = null;
+    [SerializeField] private AudioSource _audioSource = null;
 
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
@@ -65,6 +66,7 @@ public class Facility : MonoBehaviour
         _glowObject.enabled = false;
         _trainingIcon.Initialize();
         _trainingIcon.gameObject.SetActive(false);
+        _audioSource.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
 
@@ -129,6 +131,9 @@ public class Facility : MonoBehaviour
             return false;
         }
 
+        //PlayTrainingSFX();
+        _audioManager.PlaySFX(_placeSFX);
+
         _habitatUI.ResetStandardUI();
         _uiTraining.SetupTrainingUI(chimera, this);
         _habitatUI.OpenTrainingPanel();
@@ -142,8 +147,6 @@ public class Facility : MonoBehaviour
         FacilityColliderToggle(FacilityColliderType.release);
         RevealChimera(false);
 
-        _audioManager.PlaySFX(_placeSFX);
-        _facilitySFX.PlaySFX();
 
         Debug.Log($"{_storedChimera} added to the facility.");
 
@@ -211,6 +214,15 @@ public class Facility : MonoBehaviour
         _trainingIcon.UpdateSlider(_storedChimera.GetAttribute(_statType));
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
+    }
+
+    public void PlayTrainingSFX()
+    {
+        if (ActivateTraining == true)
+        {
+            _facilitySFX.PlaySFX();
+            _audioSource.gameObject.SetActive(true);
+        }
     }
 
     private bool EssenceCost()
