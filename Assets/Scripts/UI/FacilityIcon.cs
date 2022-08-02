@@ -3,38 +3,45 @@ using UnityEngine.UI;
 
 public class FacilityIcon : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _icon = null;
+    [SerializeField] private Image _icon = null;
     [SerializeField] private Slider _slider = null;
-    private Facility _facility = null;
-    public void Initialize(Facility facility)
-    {
-        _facility = facility;
-    }
+    private Camera _camera = null;
+    private bool _initialized = false;
 
-    private void Update()
-    {
-        transform.LookAt(Camera.main.transform);
-    }
+    public void SetIcon(Sprite sprite) { _icon.sprite = sprite; }
 
-    public void setSliderAttributes(int starting, int ending)
+    public void SetSliderAttributes(int starting, int ending)
     {
         _slider.minValue = starting;
         _slider.value = starting;
         _slider.maxValue = ending;
     }
 
-    public void updateSlider(int currentXP)
+    public void Initialize()
     {
-        _slider.value = currentXP;
+        _camera = ServiceLocator.Get<CameraController>().CameraCO;
+
+        _initialized = true;
     }
 
-    public void SetIcon(Sprite sprite)
+    private void Update()
     {
-        _icon.sprite = sprite;
+        if(_initialized == false)
+        {
+            return;
+        }
+
+        transform.LookAt(_camera.transform);
     }
 
-    public void RemoveIcon()
+    public void UpdateSlider(int currentExperience)
+    {
+        _slider.value = currentExperience;
+    }
+
+    public void ResetIcon()
     {
         _icon.sprite = null;
+        _slider.value = _slider.minValue;
     }
 }

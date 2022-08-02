@@ -161,7 +161,7 @@ public class UITraining : MonoBehaviour
             return;
         }
 
-        _facility.MyFacilityIcon.setSliderAttributes(_attribute, _levelGoal);
+        _facility.MyFacilityIcon.SetSliderAttributes(_attribute, _levelGoal);
         _facility.SetTrainToLevel(_levelGoal);
         _facility.SetActivateTraining(true);
 
