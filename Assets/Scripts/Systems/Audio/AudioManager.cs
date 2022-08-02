@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _sfxSource = null;
 
     [Header("Music")]
+    [SerializeField] private AudioClip _mainMenuMusic = null;
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
@@ -82,6 +83,21 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
+
+    public void PlaySceneMusic(SceneType sceneType)
+    {
+        switch(sceneType)
+        {
+            case SceneType.MainMenu:
+                _musicSource.clip = _mainMenuMusic;
+                _musicSource.Play();
+                break;
+            default:
+                Debug.LogError($"{sceneType} is invalid. Please change!");
+                break;
+        }
+    }
+
     public void PlaySFX(AudioClip sfx)
     {
         _sfxSource.clip = sfx;
