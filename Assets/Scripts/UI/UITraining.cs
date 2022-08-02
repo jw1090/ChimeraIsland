@@ -94,10 +94,12 @@ public class UITraining : MonoBehaviour
 
         if (_cost > _currencyManager.Essence)
         {
+            _costText.color = _badColor;
             _sliderImage.color = _badColor;
         }
         else
         {
+            _costText.color = Color.white;
             _sliderImage.color = _validColor;
         }
 
