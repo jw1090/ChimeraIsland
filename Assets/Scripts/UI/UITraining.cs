@@ -15,6 +15,7 @@ public class UITraining : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statInfoText = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     [SerializeField] private Slider _slider = null;
+    [SerializeField] private Image _sliderImage = null;
     private Facility _facility = null;
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
@@ -93,11 +94,11 @@ public class UITraining : MonoBehaviour
 
         if (_cost > _currencyManager.Essence)
         {
-            _costText.color = _badColor;
+            _sliderImage.color = _badColor;
         }
         else
         {
-            _costText.color = _validColor;
+            _sliderImage.color = _validColor;
         }
 
         _statInfoText.text = $" {_facility.StatType}: {_attribute} (+{_levelGoal - _attribute})";
