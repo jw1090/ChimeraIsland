@@ -16,7 +16,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
     [SerializeField] private MeshRenderer _glowObject = null;
-    [SerializeField] private FacilityIcon _icon = null;
+    [SerializeField] private FacilityIcon _trainingIcon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
@@ -34,7 +34,7 @@ public class Facility : MonoBehaviour
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
 
-    public FacilityIcon MyFacilityIcon { get => _icon; }
+    public FacilityIcon MyFacilityIcon { get => _trainingIcon; }
     public StatType StatType{ get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
@@ -63,8 +63,8 @@ public class Facility : MonoBehaviour
         _facilitySFX = GetComponent<FacilitySFX>();
 
         _glowObject.enabled = false;
-        _icon.Initialize(this);
-        _icon.gameObject.SetActive(false);
+        _trainingIcon.Initialize();
+        _trainingIcon.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
 
@@ -133,8 +133,8 @@ public class Facility : MonoBehaviour
         _uiTraining.SetupTrainingUI(chimera, this);
         _habitatUI.OpenTrainingPanel();
 
-        _icon.gameObject.SetActive(true);
-        _icon.SetIcon(chimera.ChimeraIcon);
+        _trainingIcon.gameObject.SetActive(true);
+        _trainingIcon.SetIcon(chimera.ChimeraIcon);
 
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
@@ -169,8 +169,8 @@ public class Facility : MonoBehaviour
         AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
         chimeraBehavior.ChangeState(chimeraBehavior.States[AI.Behavior.StateEnum.Patrol]);
 
-        _icon.RemoveIcon();
-        _icon.gameObject.SetActive(false);
+        _trainingIcon.ResetIcon();
+        _trainingIcon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
         FacilityColliderToggle(FacilityColliderType.Place);
@@ -207,8 +207,8 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _icon.SetIcon(_storedChimera.ChimeraIcon);
-        _icon.updateSlider(_storedChimera.GetAttribute(_statType));
+        _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
+        _trainingIcon.UpdateSlider(_storedChimera.GetAttribute(_statType));
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
     }

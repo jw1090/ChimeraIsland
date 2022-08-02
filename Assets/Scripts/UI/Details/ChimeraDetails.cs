@@ -15,7 +15,6 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _addButton = null;
     [SerializeField] private Button _removeButton = null;
-    private ResourceManager _resourceManager = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private int _chimeraSpot = 0;
@@ -24,7 +23,6 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Initialize(int chimeraSpot)
     {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
 
         _chimeraSpot = chimeraSpot;
