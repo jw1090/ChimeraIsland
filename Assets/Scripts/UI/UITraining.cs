@@ -15,9 +15,13 @@ public class UITraining : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statInfoText = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     [SerializeField] private Slider _slider = null;
+    [SerializeField] private AudioClip _confirmSfx = null;
+    [SerializeField] private AudioClip _incrAndDecrSfx = null;
+
     private Facility _facility = null;
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
+    private AudioManager _audioManager = null;
     private HabitatUI _habitatUI = null;
     private int _cost = 0;
     private int _levelGoal = 0;
@@ -26,6 +30,7 @@ public class UITraining : MonoBehaviour
     public void Initialize(HabitatUI habitatUI)
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatUI = habitatUI;
 
         SetupUIListeners();
@@ -164,6 +169,7 @@ public class UITraining : MonoBehaviour
         _facility.MyFacilityIcon.SetSliderAttributes(_attribute, _levelGoal);
         _facility.SetTrainToLevel(_levelGoal);
         _facility.SetActivateTraining(true);
+        _facility.PlayTrainingSFX();
 
         _habitatUI.RevealElementsHiddenByTraining();
         this.gameObject.SetActive(false);
