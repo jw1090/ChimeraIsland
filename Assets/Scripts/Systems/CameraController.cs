@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 1.5f;
     [SerializeField] private float _offset = 5.0f;
+    [SerializeField] private float _resolutionTime = 1.5f;
+    [SerializeField] private Vector3 _velocity = Vector3.zero;
 
     private Camera _cameraCO = null;
     private Rect _upRect = new Rect();
@@ -52,7 +54,6 @@ public class CameraController : MonoBehaviour
         ScreenMove();
         CameraMovement();
         CameraZoom();
-
         CameraCollisionCheck();
     }
 
@@ -119,14 +120,13 @@ public class CameraController : MonoBehaviour
     private void CameraCollisionCheck()
     {
         Vector3 newPosition = transform.localPosition;
-        float changeRate = Time.deltaTime * 25.0f;
+        float changeRate = Time.deltaTime * 50.0f;
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out RaycastHit hitFront, _offset))
         {
             if (hitFront.transform.CompareTag("Bounds"))
             {
                 newPosition.z = transform.localPosition.z - _offset;
-                newPosition.z = Mathf.Lerp(transform.localPosition.z, newPosition.z, changeRate);
             }
         }
         else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out RaycastHit hitBack, _offset))
@@ -134,7 +134,6 @@ public class CameraController : MonoBehaviour
             if (hitBack.transform.CompareTag("Bounds") )
             {
                 newPosition.z = transform.localPosition.z + _offset;
-                newPosition.z = Mathf.Lerp(transform.localPosition.z, newPosition.z, changeRate);
             }
         }
 
@@ -142,8 +141,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitRight.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.z - _offset;
-                newPosition.x = Mathf.Lerp(transform.localPosition.x, newPosition.x, changeRate);
+                newPosition.x = transform.localPosition.x - _offset;
             }
         }
         else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out RaycastHit hitLeft, _offset))
@@ -151,10 +149,9 @@ public class CameraController : MonoBehaviour
             if (hitLeft.transform.CompareTag("Bounds"))
             {
                 newPosition.x = transform.localPosition.x + _offset;
-                newPosition.x = Mathf.Lerp(transform.localPosition.x, newPosition.x, changeRate);
             }
         }
 
-        transform.localPosition = newPosition;
+        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);
     }
 }
