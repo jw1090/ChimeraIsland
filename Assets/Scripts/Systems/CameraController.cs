@@ -120,7 +120,6 @@ public class CameraController : MonoBehaviour
     private void CameraCollisionCheck()
     {
         Vector3 newPosition = transform.localPosition;
-        float changeRate = Time.deltaTime * 50.0f;
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out RaycastHit hitFront, _offset))
         {
