@@ -80,35 +80,35 @@ public class Chimera : MonoBehaviour
             return -1;
         }
 
-        int threshold = 0;
+        int threshold = 5;
         int totalThreshold = 0;
 
         switch (type)
         {
             case StatType.Agility:
-                threshold = _agilityThreshold;
                 totalThreshold += threshold;
-                for (int i = _level + 1; i < level; i++)
+
+                for (int i = _level + 1; i < level; ++i)
                 {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
                     totalThreshold += threshold;
                 }
                 return totalThreshold - _agilityExperience;
             case StatType.Intelligence:
-                threshold = _intelligenceThreshold;
                 totalThreshold += threshold;
-                for (int i = _level + 1; i < level; i++)
+
+                for (int i = _level + 1; i < level; ++i)
                 {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
                     totalThreshold += threshold;
                 }
                 return totalThreshold - _intelligenceExperience;
             case StatType.Strength:
-                threshold = _strengthThreshold;
                 totalThreshold += threshold;
-                for (int i = _level+1; i < level; i++)
+
+                for (int i = _level+1; i < level; ++i)
                 {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
                     totalThreshold += threshold;
                 }
                 return totalThreshold - _strengthExperience;

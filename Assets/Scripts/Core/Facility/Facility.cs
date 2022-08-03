@@ -36,7 +36,7 @@ public class Facility : MonoBehaviour
     private bool _activateTraining = false;
 
     public FacilityIcon MyFacilityIcon { get => _trainingIcon; }
-    public StatType StatType{ get => _statType; }
+    public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsInitialized { get => _isInitialized; }
@@ -66,7 +66,6 @@ public class Facility : MonoBehaviour
         _glowObject.enabled = false;
         _trainingIcon.Initialize();
         _trainingIcon.gameObject.SetActive(false);
-        _audioSource.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
 
@@ -194,17 +193,17 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_activateTraining == false) //haven't finished training ui setup
+        if (_activateTraining == false) // Training has not been confirmed yet.
         {
             return;
         }
 
-        if (EssenceCost() == false) // Was kicked out.
-        {
-            return;
-        }
+        //if (EssenceCost() == false) // Was kicked out.
+        //{
+        //    return;
+        //}
 
-        if(_storedChimera.GetAttribute(_statType) >= _trainToLevel)
+        if (_storedChimera.GetAttribute(_statType) >= _trainToLevel)
         {
             RemoveChimera();
             return;
@@ -243,7 +242,7 @@ public class Facility : MonoBehaviour
     {
         _storedChimera.CurrentEvolution.gameObject.SetActive(reveal);
 
-        if(reveal == true)
+        if (reveal == true)
         {
             _storedChimera.Animator.SetBool("Walk", true);
         }

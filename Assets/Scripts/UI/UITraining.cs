@@ -158,9 +158,8 @@ public class UITraining : MonoBehaviour
             return;
         }
 
-        if(_currencyManager.Essence < _cost)
+        if (EssenceCost() == false)
         {
-            Debug.Log($"Essence [{_currencyManager.Essence}] too low to afford.");
             return;
         }
 
@@ -170,5 +169,16 @@ public class UITraining : MonoBehaviour
 
         _habitatUI.RevealElementsHiddenByTraining();
         this.gameObject.SetActive(false);
+    }
+
+    private bool EssenceCost()
+    {
+        if (_currencyManager.SpendEssence(_cost) == false)
+        {
+            Debug.Log($"Essence [{_currencyManager.Essence}] too low to afford.");
+            return false;
+        }
+
+        return true;
     }
 }
