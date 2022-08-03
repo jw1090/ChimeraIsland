@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 1.5f;
+    [SerializeField] private float _offset = 5.0f;
 
     private Camera _cameraCO = null;
     private Rect _upRect = new Rect();
@@ -117,22 +118,43 @@ public class CameraController : MonoBehaviour
 
     private void CameraCollisionCheck()
     {
-        if (Physics.SphereCast(transform.position, _sphereRadius, transform.forward, out RaycastHit hitFront))
+        Vector3 newPosition = transform.localPosition;
+        float changeRate = Time.deltaTime * 25.0f;
+
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out RaycastHit hitFront, _offset))
         {
-            if (hitFront.transform.CompareTag("Bounds") == false)
+            if (hitFront.transform.CompareTag("Bounds"))
             {
-                return;
+                newPosition.z = transform.localPosition.z - _offset;
+                newPosition.z = Mathf.Lerp(transform.localPosition.z, newPosition.z, changeRate);
             }
-
-            float distance = Vector3.Distance(transform.position, hitFront.point);
-            Debug.Log($"{distance}");
-
-            //Vector3 newPosition = Vector3.zero;
-            //newPosition.x = transform.localPosition.x;
-            //newPosition.y = 20.0f;
-            //newPosition.z = transform.localPosition.z + _sphereRadius;
-
-            //transform.localPosition = newPosition;
         }
+        else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out RaycastHit hitBack, _offset))
+        {
+            if (hitBack.transform.CompareTag("Bounds") )
+            {
+                newPosition.z = transform.localPosition.z + _offset;
+                newPosition.z = Mathf.Lerp(transform.localPosition.z, newPosition.z, changeRate);
+            }
+        }
+
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out RaycastHit hitRight, _offset))
+        {
+            if (hitRight.transform.CompareTag("Bounds"))
+            {
+                newPosition.x = transform.localPosition.z - _offset;
+                newPosition.x = Mathf.Lerp(transform.localPosition.x, newPosition.x, changeRate);
+            }
+        }
+        else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out RaycastHit hitLeft, _offset))
+        {
+            if (hitLeft.transform.CompareTag("Bounds"))
+            {
+                newPosition.x = transform.localPosition.x + _offset;
+                newPosition.x = Mathf.Lerp(transform.localPosition.x, newPosition.x, changeRate);
+            }
+        }
+
+        transform.localPosition = newPosition;
     }
 }
