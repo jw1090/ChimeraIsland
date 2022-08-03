@@ -62,7 +62,7 @@ public class UITraining : MonoBehaviour
         _chimera = chimera;
         _facility = facility;
 
-        _attribute = _chimera.GetAttribute(_facility.StatType);
+        chimera.GetStatByType(_facility.StatType, out _attribute);
 
         _slider.minValue = _attribute;
         _slider.maxValue = 5 + _attribute;
@@ -80,7 +80,6 @@ public class UITraining : MonoBehaviour
 
     public void DetermineCost()
     {
-        // Every tick the chimera _stat modifier xp and is charged 5 * _statModifier.
         int expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
         int ticksRequired = (int)(expNeeded / _facility.StatModifier);
 

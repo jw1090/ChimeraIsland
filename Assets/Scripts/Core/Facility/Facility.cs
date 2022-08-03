@@ -198,19 +198,15 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        //if (EssenceCost() == false) // Was kicked out.
-        //{
-        //    return;
-        //}
-
-        if (_storedChimera.GetAttribute(_statType) >= _trainToLevel)
+        _storedChimera.GetStatByType(_statType, out int currentStatAmount);
+        if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
             return;
         }
 
         _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
-        _trainingIcon.UpdateSlider(_storedChimera.GetAttribute(_statType));
+        _trainingIcon.UpdateSlider(currentStatAmount);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
     }
@@ -222,20 +218,6 @@ public class Facility : MonoBehaviour
             _facilitySFX.PlaySFX();
             _audioSource.gameObject.SetActive(true);
         }
-    }
-
-    private bool EssenceCost()
-    {
-        int price = _statModifier * 5;
-
-        if (_currencyManager.SpendEssence(price) == false) // Can't afford training.
-        {
-            RemoveChimera();
-
-            return false;
-        }
-
-        return true;
     }
 
     private void RevealChimera(bool reveal)

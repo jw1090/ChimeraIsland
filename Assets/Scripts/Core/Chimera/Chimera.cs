@@ -27,7 +27,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
+    [SerializeField] private const int _baseEssenceRate = 4; // Initial Essence gained per tick
 
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
@@ -58,61 +58,50 @@ public class Chimera : MonoBehaviour
     public int Price { get => _price; }
     public string Name { get => GetName(); }
 
-    public int GetAttribute(StatType type)
+    public int GetStatThreshold(StatType statType)
     {
-        switch (type)
+        switch (statType)
         {
             case StatType.Agility:
-                return Agility;
+                return _agilityThreshold;
             case StatType.Intelligence:
-                return Intelligence;
+                return _intelligenceThreshold;
             case StatType.Strength:
-                return Strength;
+                return _strengthThreshold;
             default:
+                Debug.LogError($"Stat Type [{statType}] is invalid.");
                 return -1;
         }
     }
 
-    public int GetEXPThresholdDifference(StatType type, int level)
+    public int GetEXPThresholdDifference(StatType statType, int statLevelGoal)
     {
-        if (level <= _level || level > _levelCap)
+        GetStatByType(statType, out int currentStatAmount);
+        int threshold = GetStatThreshold(statType);
+        int totalThreshold = threshold;
+
+        if (statLevelGoal <= currentStatAmount || statLevelGoal > _levelCap)
         {
+            Debug.LogError($"Level Goal [{statLevelGoal}] is invalid.");
             return -1;
         }
 
-        int threshold = 5;
-        int totalThreshold = 0;
+        for (int i = currentStatAmount + 1; i < statLevelGoal; ++i)
+        {
+            threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+            totalThreshold += threshold;
+        }
 
-        switch (type)
+        switch (statType)
         {
             case StatType.Agility:
-                totalThreshold += threshold;
-
-                for (int i = _level + 1; i < level; ++i)
-                {
-                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _agilityExperience;
             case StatType.Intelligence:
-                totalThreshold += threshold;
-
-                for (int i = _level + 1; i < level; ++i)
-                {
-                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _intelligenceExperience;
             case StatType.Strength:
-                totalThreshold += threshold;
-
-                for (int i = _level+1; i < level; ++i)
-                {
-                    threshold += Mathf.FloorToInt(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _strengthExperience;
             default:
+                Debug.LogError($"StatType: [{statType}] is invalid, please change!");
                 return -1;
         }
     }
@@ -244,7 +233,7 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        int essenceGain = _baseEssenceRate + (int)Mathf.Sqrt(_level);
+        int essenceGain = (int)(_baseEssenceRate * Mathf.Sqrt(_level));
         _essenceManager.IncreaseEssence(essenceGain);
     }
 
@@ -315,15 +304,14 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        _habitatUI.UpdateDetails();
-
-        ++_levelUpTracker;
-        if (_levelUpTracker % 3 == 0)
+        if (++_levelUpTracker % 2 == 0)
         {
             _audioManager.PlayLevelUpSFX();
             ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
+
+        _habitatUI.UpdateDetails();
     }
 
     private void Evolve(EvolutionLogic evolution)
