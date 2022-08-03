@@ -18,9 +18,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _strength = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int _agilityGrowth = 1;
-    [SerializeField] private int _intelligenceGrowth = 1;
-    [SerializeField] private int _strengthGrowth = 1;
     [SerializeField] private int _agilityExperience = 0;
     [SerializeField] private int _intelligenceExperience = 0;
     [SerializeField] private int _strengthExperience = 0;
@@ -30,8 +27,9 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private const int _baseEssenceRate = 5; // Initial Essence gained per tick
-    
+    [SerializeField] private const int _baseEssenceRate = 4; // Initial Essence gained per tick
+
+    private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
@@ -60,61 +58,50 @@ public class Chimera : MonoBehaviour
     public int Price { get => _price; }
     public string Name { get => GetName(); }
 
-    public int GetAttribute(StatType type)
+    public int GetStatThreshold(StatType statType)
     {
-        switch (type)
+        switch (statType)
         {
             case StatType.Agility:
-                return Agility;
+                return _agilityThreshold;
             case StatType.Intelligence:
-                return Intelligence;
+                return _intelligenceThreshold;
             case StatType.Strength:
-                return Strength;
+                return _strengthThreshold;
             default:
+                Debug.LogError($"Stat Type [{statType}] is invalid.");
                 return -1;
         }
     }
 
-    public int GetEXPThresholdDifference(StatType type, int level)
+    public int GetEXPThresholdDifference(StatType statType, int statLevelGoal)
     {
-        if (level <= _level || level > _levelCap)
+        GetStatByType(statType, out int currentStatAmount);
+        int threshold = GetStatThreshold(statType);
+        int totalThreshold = threshold;
+
+        if (statLevelGoal <= currentStatAmount || statLevelGoal > _levelCap)
         {
+            Debug.LogError($"Level Goal [{statLevelGoal}] is invalid.");
             return -1;
         }
 
-        int threshold = 0;
-        int totalThreshold = 0;
+        for (int i = currentStatAmount + 1; i < statLevelGoal; ++i)
+        {
+            threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+            totalThreshold += threshold;
+        }
 
-        switch (type)
+        switch (statType)
         {
             case StatType.Agility:
-                threshold = _agilityThreshold;
-                totalThreshold += threshold;
-                for (int i = _level + 1; i < level; i++)
-                {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _agilityExperience;
             case StatType.Intelligence:
-                threshold = _intelligenceThreshold;
-                totalThreshold += threshold;
-                for (int i = _level + 1; i < level; i++)
-                {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _intelligenceExperience;
             case StatType.Strength:
-                threshold = _strengthThreshold;
-                totalThreshold += threshold;
-                for (int i = _level+1; i < level; i++)
-                {
-                    threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
-                    totalThreshold += threshold;
-                }
                 return totalThreshold - _strengthExperience;
             default:
+                Debug.LogError($"StatType: [{statType}] is invalid, please change!");
                 return -1;
         }
     }
@@ -183,6 +170,7 @@ public class Chimera : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
 
+        _audioManager = ServiceLocator.Get<AudioManager>();
         _essenceManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
@@ -245,7 +233,7 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        int essenceGain = _baseEssenceRate + (int)Mathf.Sqrt(_level);
+        int essenceGain = (int)(_baseEssenceRate * Mathf.Sqrt(_level));
         _essenceManager.IncreaseEssence(essenceGain);
     }
 
@@ -300,31 +288,30 @@ public class Chimera : MonoBehaviour
         switch (statType)
         {
             case StatType.Agility:
-                _agility += _agilityGrowth;
-                Debug.Log($"{_currentEvolution} now has {_agility} {statType}");
+                _agility += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_agility} {statType}");
                 break;
             case StatType.Intelligence:
-                _intelligence += _intelligenceGrowth;
-                Debug.Log($"{_currentEvolution} now has {_intelligence} {statType}");
+                _intelligence += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_intelligence} {statType}");
                 break;
             case StatType.Strength:
-                _strength += _strengthGrowth;
-                Debug.Log($"{_currentEvolution} now has {_strength} {statType}");
+                _strength += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_strength} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
                 break;
         }
 
-        _habitatUI.UpdateDetails();
-
-        ++_levelUpTracker;
-        if (_levelUpTracker % 3 == 0)
+        if (++_levelUpTracker % 2 == 0)
         {
-            ServiceLocator.Get<AudioManager>().PlayLevelUpSFX();
+            _audioManager.PlayLevelUpSFX();
             ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
+
+        _habitatUI.UpdateDetails();
     }
 
     private void Evolve(EvolutionLogic evolution)
@@ -333,7 +320,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        ServiceLocator.Get<AudioManager>().PlayEvolutionSFX();
+        _audioManager.PlayEvolutionSFX();
 
         Destroy(_currentEvolution.gameObject);
 

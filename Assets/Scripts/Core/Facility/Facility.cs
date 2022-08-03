@@ -36,7 +36,7 @@ public class Facility : MonoBehaviour
     private bool _activateTraining = false;
 
     public FacilityIcon MyFacilityIcon { get => _trainingIcon; }
-    public StatType StatType{ get => _statType; }
+    public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsInitialized { get => _isInitialized; }
@@ -66,7 +66,6 @@ public class Facility : MonoBehaviour
         _glowObject.enabled = false;
         _trainingIcon.Initialize();
         _trainingIcon.gameObject.SetActive(false);
-        _audioSource.gameObject.SetActive(false);
 
         FacilityColliderToggle(FacilityColliderType.None);
 
@@ -194,24 +193,20 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_activateTraining == false) //haven't finished training ui setup
+        if (_activateTraining == false) // Training has not been confirmed yet.
         {
             return;
         }
 
-        if (EssenceCost() == false) // Was kicked out.
-        {
-            return;
-        }
-
-        if(_storedChimera.GetAttribute(_statType) >= _trainToLevel)
+        _storedChimera.GetStatByType(_statType, out int currentStatAmount);
+        if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
             return;
         }
 
         _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
-        _trainingIcon.UpdateSlider(_storedChimera.GetAttribute(_statType));
+        _trainingIcon.UpdateSlider(currentStatAmount);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
     }
@@ -225,25 +220,11 @@ public class Facility : MonoBehaviour
         }
     }
 
-    private bool EssenceCost()
-    {
-        int price = _statModifier * 5;
-
-        if (_currencyManager.SpendEssence(price) == false) // Can't afford training.
-        {
-            RemoveChimera();
-
-            return false;
-        }
-
-        return true;
-    }
-
     private void RevealChimera(bool reveal)
     {
         _storedChimera.CurrentEvolution.gameObject.SetActive(reveal);
 
-        if(reveal == true)
+        if (reveal == true)
         {
             _storedChimera.Animator.SetBool("Walk", true);
         }

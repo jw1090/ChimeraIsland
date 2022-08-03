@@ -15,13 +15,10 @@ public class UITraining : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statInfoText = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     [SerializeField] private Slider _slider = null;
-    [SerializeField] private AudioClip _confirmSfx = null;
-    [SerializeField] private AudioClip _incrAndDecrSfx = null;
-
+    [SerializeField] private Image _sliderImage = null;
     private Facility _facility = null;
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
-    private AudioManager _audioManager = null;
     private HabitatUI _habitatUI = null;
     private int _cost = 0;
     private int _levelGoal = 0;
@@ -30,7 +27,6 @@ public class UITraining : MonoBehaviour
     public void Initialize(HabitatUI habitatUI)
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatUI = habitatUI;
 
         SetupUIListeners();
@@ -66,7 +62,7 @@ public class UITraining : MonoBehaviour
         _chimera = chimera;
         _facility = facility;
 
-        _attribute = _chimera.GetAttribute(_facility.StatType);
+        chimera.GetStatByType(_facility.StatType, out _attribute);
 
         _slider.minValue = _attribute;
         _slider.maxValue = 5 + _attribute;
@@ -84,7 +80,6 @@ public class UITraining : MonoBehaviour
 
     public void DetermineCost()
     {
-        // Every tick the chimera _stat modifier xp and is charged 5 * _statModifier.
         int expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
         int ticksRequired = (int)(expNeeded / _facility.StatModifier);
 
@@ -99,10 +94,12 @@ public class UITraining : MonoBehaviour
         if (_cost > _currencyManager.Essence)
         {
             _costText.color = _badColor;
+            _sliderImage.color = _badColor;
         }
         else
         {
-            _costText.color = _validColor;
+            _costText.color = Color.white;
+            _sliderImage.color = _validColor;
         }
 
         _statInfoText.text = $" {_facility.StatType}: {_attribute} (+{_levelGoal - _attribute})";
@@ -160,18 +157,27 @@ public class UITraining : MonoBehaviour
             return;
         }
 
-        if(_currencyManager.Essence < _cost)
+        if (EssenceCost() == false)
         {
-            Debug.Log($"Essence [{_currencyManager.Essence}] too low to afford.");
             return;
         }
 
         _facility.MyFacilityIcon.SetSliderAttributes(_attribute, _levelGoal);
         _facility.SetTrainToLevel(_levelGoal);
         _facility.SetActivateTraining(true);
-        _facility.PlayTrainingSFX();
 
         _habitatUI.RevealElementsHiddenByTraining();
         this.gameObject.SetActive(false);
+    }
+
+    private bool EssenceCost()
+    {
+        if (_currencyManager.SpendEssence(_cost) == false)
+        {
+            Debug.Log($"Essence [{_currencyManager.Essence}] too low to afford.");
+            return false;
+        }
+
+        return true;
     }
 }
