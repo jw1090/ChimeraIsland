@@ -185,6 +185,7 @@ MonoBehaviour:
   _price: 50
   _placeSFX: {fileID: 8300000, guid: a5bcc5a16b2331f4080ad5deb75d7955, type: 3}
   _removeSFX: {fileID: 8300000, guid: d26c127ecf9735e4f91ce8d5320a532e, type: 3}
+  _audioSource: {fileID: 2143830140552795911}
   _rubbleObject: {fileID: 2727856121969084020}
   _tier1Object: {fileID: 5735053481075212357}
   _glowObject: {fileID: 4187645139319949308}
@@ -245,8 +246,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -643,13 +644,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2792039016706888988}
     m_Modifications:
-    - target: {fileID: 1166695928015043848, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1166695928015043848, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166695928015043848, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3795326395446175163, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_Pivot.x
@@ -739,9 +764,21 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7299208546928897313, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: MaxDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299208546928897313, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: MinDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7544926380628261750, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_Name
       value: Chimera Traning Icon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7544926380628261750, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
