@@ -30,6 +30,13 @@ public enum ElementType
     Fira,
 }
 
+public enum ExpeditionRewardType
+{
+    None = -1,
+    HabitatUpgrade,
+    Fossils,
+}
+
 public enum FacilityType
 {
     None = -1,
@@ -51,6 +58,17 @@ public enum HabitatType
     StonePlains,
     TreeOfLife,
     Ashlands,
+}
+
+public enum ModifierBadgeType
+{
+    None = -1,
+    Aqua,
+    Bio,
+    Fira,
+    Agility,
+    Intelligence,
+    Strength,
 }
 
 public enum SceneType

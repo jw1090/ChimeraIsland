@@ -10,7 +10,6 @@ namespace AI.Behavior
         private InputManager _inputManager = null;
         private Vector3 _lastValidPos = Vector3.zero;
         private string _heldAnim = "Held";
-        private float _heightOffset = 2.0f;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
@@ -53,7 +52,7 @@ namespace AI.Behavior
         {
             Ray ray = _chimeraBehavior.MainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 300f, 1 << LayerMask.NameToLayer("Ground")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, 1 << LayerMask.NameToLayer("Ground")))
             {
                 // Check if the desired world position is on the NavMesh
                 if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 1f, 1))
@@ -61,9 +60,9 @@ namespace AI.Behavior
                     _lastValidPos = new Vector3(navMeshHit.position.x, navMeshHit.position.y, navMeshHit.position.z);
                 }
 
-                Vector3 desiredWorldPos = hit.point + (Vector3.up * _heightOffset);
-
+                Vector3 desiredWorldPos = hit.point + Vector3.up;
                 _chimeraBehavior.transform.position = desiredWorldPos;
+
                 _chimeraBehavior.Agent.enabled = false;
             }
         }
