@@ -106,8 +106,6 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        _habitatManager.UpdateCurrentHabitatChimeras();
-
         if(quitGame == true)
         {
             _persistentData.QuitGameSave();
