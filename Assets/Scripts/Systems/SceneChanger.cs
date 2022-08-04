@@ -8,6 +8,7 @@ public class SceneChanger : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
+    private AudioManager _audioManager = null;
 
     public SceneChanger Initialize()
     {
@@ -15,6 +16,7 @@ public class SceneChanger : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
         return this;
     }
 

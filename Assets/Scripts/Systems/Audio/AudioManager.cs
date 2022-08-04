@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -16,9 +18,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
     [SerializeField] private AudioClip _ashlandsMusic = null;
 
+    [Header("UI SFX")]
+    [SerializeField] private AudioClip _standardClickSFX= null;
+    [SerializeField] private AudioClip _confirmClickSFX= null;
+    [SerializeField] private AudioClip _purchaseClickSFX= null;
+    [SerializeField] private AudioClip _placeChimeraSFX = null;
+    [SerializeField] private AudioClip _removeChimeraSFX= null;
     [SerializeField] private AudioClip _evolutionSFX= null;
-    [SerializeField] private AudioClip _levelSFX= null;
+    [SerializeField] private AudioClip _levelUpSFX= null;
 
+    private UIManager _uIManager = null;
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
@@ -50,6 +59,7 @@ public class AudioManager : MonoBehaviour
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _uIManager = ServiceLocator.Get<UIManager>();
 
         _masterVolume = _persistentData.Volumes.x;
         _musicVolume = _persistentData.Volumes.y;
@@ -59,7 +69,40 @@ public class AudioManager : MonoBehaviour
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
         _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
 
+        SetupAudioListeners();
+
         return this;
+    }
+
+    public void SetupAudioListeners()
+    {
+        CreateButtonListener(_uIManager.MainMenuUI.NewGameButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.MainMenuUI.LoadGameButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.MainMenuButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.WorldMapButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.QuitGameButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.WorldMapUI.StonePlainsButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.WorldMapUI.TreeOfLifeButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
+        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
+    }
+
+    private void CreateButtonListener(Button button, Action action)
+    {
+        if (button != null)
+        {
+            button.onClick.AddListener
+            (delegate
+            {
+                action?.Invoke();
+            });
+        }
+        else
+        {
+            Debug.LogError($"{button} is null! Please Fix");
+        }
     }
 
     public void PlayHabitatMusic(HabitatType habitatType)
@@ -88,6 +131,7 @@ public class AudioManager : MonoBehaviour
     {
         switch(sceneType)
         {
+            //We add more if we want. Hopefully!
             case SceneType.MainMenu:
                 _musicSource.clip = _mainMenuMusic;
                 _musicSource.Play();
@@ -98,20 +142,50 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip sfx)
+    public void PlayElementsSFX(ElementsSFX uIElementsSFX)
     {
-        _sfxSource.clip = sfx;
-        _sfxSource.Play();
+        switch(uIElementsSFX)
+        {
+            case ElementsSFX.StandardClick:
+                _sfxSource.clip = _standardClickSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.ConfirmClick:
+                _sfxSource.clip = _confirmClickSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.PurchaseClick:
+                _sfxSource.clip = _purchaseClickSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.PlaceChimera:
+                _sfxSource.clip = _placeChimeraSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.RemoveChimera:
+                _sfxSource.clip = _removeChimeraSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.Evolution:
+                _sfxSource.clip = _evolutionSFX;
+                _sfxSource.Play();
+                break;
+            case ElementsSFX.LevelUp:
+                _sfxSource.clip = _levelUpSFX;
+                _sfxSource.Play();
+                break;
+            default:
+                Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
+                break;
+        }
     }
 
-    public void PlayEvolutionSFX()
+    private void PlayClickSFX()
     {
-        _sfxSource.clip = _evolutionSFX;
-        _sfxSource.Play();
+        PlayElementsSFX(ElementsSFX.StandardClick);
     }
-    public void PlayLevelUpSFX()
+    private void PlayConfirmSFX()
     {
-        _sfxSource.clip = _levelSFX;
-        _sfxSource.Play();
+        PlayElementsSFX(ElementsSFX.ConfirmClick);
     }
 }

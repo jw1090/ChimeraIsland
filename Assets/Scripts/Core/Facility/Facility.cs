@@ -9,8 +9,6 @@ public class Facility : MonoBehaviour
     [SerializeField] private int _price = 50;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip _placeSFX = null;
-    [SerializeField] private AudioClip _removeSFX = null;
     [SerializeField] private AudioSource _audioSource = null;
 
     [Header("Reference")]
@@ -130,9 +128,6 @@ public class Facility : MonoBehaviour
             return false;
         }
 
-        //PlayTrainingSFX();
-        _audioManager.PlaySFX(_placeSFX);
-
         _habitatUI.ResetStandardUI();
         _uiTraining.SetupTrainingUI(chimera, this);
         _habitatUI.OpenTrainingPanel();
@@ -178,7 +173,7 @@ public class Facility : MonoBehaviour
         FacilityColliderToggle(FacilityColliderType.Place);
         RevealChimera(true);
 
-        _audioManager.PlaySFX(_removeSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.RemoveChimera);
         _facilitySFX.StopSFX();
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");
@@ -216,7 +211,7 @@ public class Facility : MonoBehaviour
         if (ActivateTraining == true)
         {
             _facilitySFX.PlaySFX();
-            _audioSource.gameObject.SetActive(true);
+            _audioManager.PlayElementsSFX(ElementsSFX.PlaceChimera);
         }
     }
 
