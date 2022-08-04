@@ -126,7 +126,10 @@ public class Habitat : MonoBehaviour
 
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
+
+
         chimeraComp.Initialize();
+
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)

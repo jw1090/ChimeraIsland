@@ -184,6 +184,11 @@ public class HabitatUI : MonoBehaviour
         _openDetailsButton.gameObject.SetActive(false);
     }
 
+    public void CloseMarketplace()
+    {
+        _marketplacePanel.gameObject.SetActive(false);
+    }
+
     public void OpenTransferMap(Chimera chimera)
     {
         ResetStandardUI();
