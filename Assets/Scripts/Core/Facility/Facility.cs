@@ -8,9 +8,6 @@ public class Facility : MonoBehaviour
     [SerializeField] private int _statModifier = 1;
     [SerializeField] private int _price = 50;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource _audioSource = null;
-
     [Header("Reference")]
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
