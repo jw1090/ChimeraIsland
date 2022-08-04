@@ -465,6 +465,7 @@ MonoBehaviour:
   _sceneType: 0
   _cameraController: {fileID: 1977810681}
   _habitat: {fileID: 359149561}
+  _expeditionManager: {fileID: 0}
 --- !u!4 &1808530569
 Transform:
   m_ObjectHideFlags: 0
@@ -544,13 +545,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 20
-  _pos: {x: 0, y: 22, z: 15}
   _zoom: 80
   _zoomAmount: 20
   _minZoom: 40
   _maxZoom: 90
   _moveSpeed: 12
   _screenEdgeSize: 50
+  _sphereRadius: 1.5
+  _offset: 5
+  _resolutionTime: 1.5
+  _velocity: {x: 0, y: 0, z: 0}
 --- !u!81 &1977810682
 AudioListener:
   m_ObjectHideFlags: 0
@@ -610,7 +614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977810679}
   m_LocalRotation: {x: 0, y: 0.9396927, z: -0.3420201, w: 0}
-  m_LocalPosition: {x: 0, y: 24, z: 15}
+  m_LocalPosition: {x: -5.6, y: 24, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
