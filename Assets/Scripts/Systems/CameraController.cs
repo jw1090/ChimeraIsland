@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     private bool _moveDown = false;
     private bool _moveRight = false;
     private bool _moveLeft = false;
+    private bool _canMove = false;
 
     public bool IsHolding { get; set; }
     public Camera CameraCO { get => _cameraCO; }
@@ -46,19 +47,28 @@ public class CameraController : MonoBehaviour
         _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
         _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
 
+        _canMove = true;
+
         return this;
     }
 
     private void Update()
     {
-        ScreenMove();
         CameraMovement();
+        ScreenMove();
+
         CameraZoom();
+
         CameraCollisionCheck();
     }
 
     private void CameraMovement()
     {
+        if (_canMove == false)
+        {
+            return;
+        }
+
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 2 * _speed : _speed;
         Vector3 newPos = transform.position;
 
@@ -101,6 +111,11 @@ public class CameraController : MonoBehaviour
 
     private void ScreenMove()
     {
+        if(_canMove == false)
+        {
+            return;
+        }
+
         if (IsHolding == false)
         {
             return;
@@ -120,6 +135,7 @@ public class CameraController : MonoBehaviour
     private void CameraCollisionCheck()
     {
         Vector3 newPosition = transform.localPosition;
+        bool readAjust = false;
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out RaycastHit hitFront, _offset))
         {
@@ -127,6 +143,8 @@ public class CameraController : MonoBehaviour
             {
                 newPosition.z = transform.localPosition.z - _offset;
             }
+
+            readAjust = true;
         }
         else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out RaycastHit hitBack, _offset))
         {
@@ -134,6 +152,8 @@ public class CameraController : MonoBehaviour
             {
                 newPosition.z = transform.localPosition.z + _offset;
             }
+
+            readAjust = true;
         }
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out RaycastHit hitRight, _offset))
@@ -142,6 +162,8 @@ public class CameraController : MonoBehaviour
             {
                 newPosition.x = transform.localPosition.x - _offset;
             }
+
+            readAjust = true;
         }
         else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out RaycastHit hitLeft, _offset))
         {
@@ -149,6 +171,17 @@ public class CameraController : MonoBehaviour
             {
                 newPosition.x = transform.localPosition.x + _offset;
             }
+
+            readAjust = true;
+        }
+
+        if(readAjust == true)
+        {
+            _canMove = false;
+        }
+        else
+        {
+            _canMove = true;
         }
 
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);

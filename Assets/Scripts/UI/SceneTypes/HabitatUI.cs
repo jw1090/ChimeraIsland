@@ -43,11 +43,13 @@ public class HabitatUI : MonoBehaviour
     public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITraining TrainingPanel { get => _trainingPanel; }
+    public UIExpedition ExpeditionPanel { get => _expeditionPanel; }
 
     public void Initialize()
     {
         InitializeWallets();
         _trainingPanel.Initialize(this);
+        _expeditionPanel.Initialize();
     }
 
     private void InitializeWallets()
@@ -72,7 +74,6 @@ public class HabitatUI : MonoBehaviour
     {
         _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
-        _expeditionPanel.Initialize();
         _transferMap.Initialize();
         _audioManager = ServiceLocator.Get<AudioManager>();
         ResetStandardUI();
@@ -229,6 +230,8 @@ public class HabitatUI : MonoBehaviour
         ResetStandardUI();
 
         _audioManager.PlaySFX(_clickSFX);
+
+        _expeditionPanel.SetupExpeditionUI();
 
         OpenExpeditionDetailsPanel();
         _expeditionPanel.gameObject.SetActive(true);
