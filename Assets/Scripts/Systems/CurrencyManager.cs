@@ -5,8 +5,8 @@ public class CurrencyManager : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private PersistentData _persistentData = null;
     private bool _currencyLoaded = false;
-    private int _essence = 100;
-    private int _fossils = 5;
+    private int _essence = 0;
+    private int _fossils = 0;
 
     public int Essence { get => _essence; }
     public int Fossils { get => _fossils; }
@@ -36,8 +36,9 @@ public class CurrencyManager : MonoBehaviour
 
     public void ResetCurrency()
     {
-        _essence = 100;
-        _fossils = 5;
+        _essence = 0;
+        _fossils = 0;
+
         if (_habitatUI != null)
         {
             _habitatUI.UpdateEssenceWallets();
@@ -49,6 +50,12 @@ public class CurrencyManager : MonoBehaviour
     {
         _essence += amount;
         _habitatUI.UpdateEssenceWallets();
+    }
+
+    public void IncreaseFossils(int amount)
+    {
+        _fossils += amount;
+        _habitatUI.UpdateFossilWallets();
     }
 
     public bool SpendEssence(int amount)

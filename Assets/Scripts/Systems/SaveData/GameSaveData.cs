@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class GameSaveData
 {
-    public GlobalData globalData = new GlobalData(HabitatType.None, 100, 5);
+    public GlobalData globalData = new GlobalData(HabitatType.None, 0, 0);
     public float masterVolume = 0.0f;
     public float musicVolume = 0.0f;
     public float sfxVolume = 0.0f;

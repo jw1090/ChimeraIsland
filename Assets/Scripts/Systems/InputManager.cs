@@ -11,18 +11,20 @@ public class InputManager : MonoBehaviour
     private ReleaseSlider _releaseSlider = null;
     private UIManager _uiManager = null;
     private TutorialManager _tutorialManager = null;
+    private HabitatManager _habitatManager = null;
+    private CurrencyManager _currencyManager = null;
+    private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
-    private HabitatManager _habitatManager = null;
-    private DebugConfig _debugConfig = null;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
 
+    public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCamera(Camera camera) { _cameraMain = camera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
@@ -56,7 +58,7 @@ public class InputManager : MonoBehaviour
             Debug.Log("Debug Tutorial Input is DISABLED");
         }
 
-        _debugCurrencyInputEnabled = _debugConfig.DebugTutorialInputEnabled;
+        _debugCurrencyInputEnabled = _debugConfig.DebugCurrencyInputEnabled;
         if (_debugCurrencyInputEnabled == false)
         {
             Debug.Log("Debug Currency Input is DISABLED");
@@ -102,6 +104,11 @@ public class InputManager : MonoBehaviour
         if(_debugTutorialInputEnabled)
         {
             DebugTutorialInput();
+        }
+
+        if(_debugCurrencyInputEnabled)
+        {
+            DebugCurrencyInput();
         }
     }
 
@@ -222,6 +229,22 @@ public class InputManager : MonoBehaviour
             {
                 _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
             }
+        }
+    }
+
+    private void DebugCurrencyInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _currencyManager.IncreaseEssence(_debugConfig.DebugEssenceGain);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _currencyManager.IncreaseFossils(_debugConfig.DebugFossilGain);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _currencyManager.ResetCurrency();
         }
     }
 }

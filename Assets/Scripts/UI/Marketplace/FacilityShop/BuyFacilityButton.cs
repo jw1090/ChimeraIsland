@@ -41,13 +41,13 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
                 switch (_facility.Type)
                 {
                     case FacilityType.Cave:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(-18.0f, 20.0f, -7.0f), 0.25f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(-18.0f, 20.0f, -7.0f), 0.25f);
                         break;
                     case FacilityType.Waterfall:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(41.0f, 20.0f, 51.0f), 0.25f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(41.0f, 20.0f, 51.0f), 0.25f);
                         break;
                     case FacilityType.RuneStone:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(16.0f, 20.0f, 39.0f), 0.25f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(16.0f, 20.0f, 39.0f), 0.25f);
                         break;
                     default:
                         Debug.Log("Facility type is null.");
@@ -58,13 +58,13 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
                 switch (_facility.Type)
                 {
                     case FacilityType.Cave:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(16.0f, 24.0f, 44.0f), 0.5f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(16.0f, 24.0f, 44.0f), 0.5f);
                         break;
                     case FacilityType.Waterfall:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(60.0f, 24.0f, 20.0f), 0.5f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(60.0f, 24.0f, 20.0f), 0.5f);
                         break;
                     case FacilityType.RuneStone:
-                        _cameraController.CallMoveCameraToDesintation(new Vector3(-66.0f, 24.0f, 12.0f), 0.5f);
+                        _cameraController.MoveCameraCoroutine(new Vector3(-66.0f, 24.0f, 12.0f), 0.5f);
                         break;
                     default:
                         Debug.Log("Facility type is null.");

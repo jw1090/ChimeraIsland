@@ -142,7 +142,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitFront.transform.CompareTag("Bounds"))
             {
-                newPosition.z = transform.localPosition.z - _offset * 1.5f;
+                newPosition.z = transform.localPosition.z - _offset * 2.0f;
             }
 
             readAjust = true;
@@ -151,7 +151,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitBack.transform.CompareTag("Bounds") )
             {
-                newPosition.z = transform.localPosition.z + _offset * 1.5f;
+                newPosition.z = transform.localPosition.z + _offset * 2.0f;
             }
 
             readAjust = true;
@@ -161,7 +161,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitRight.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x - _offset * 1.5f;
+                newPosition.x = transform.localPosition.x - _offset * 2.0f;
             }
 
             readAjust = true;
@@ -170,7 +170,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitLeft.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x + _offset * 1.5f;
+                newPosition.x = transform.localPosition.x + _offset * 2.0f;
             }
 
             readAjust = true;
@@ -187,10 +187,12 @@ public class CameraController : MonoBehaviour
             _canMove = true;
         }
     }
-    public void CallMoveCameraToDesintation(Vector3 target, float time)
+
+    public void MoveCameraCoroutine(Vector3 target, float time)
     {
         StartCoroutine(MoveCamera(target, time));
     }
+
     private IEnumerator MoveCamera(Vector3 target, float time)
     {
         while (Vector3.Distance(transform.position, target) > 0.5f)
