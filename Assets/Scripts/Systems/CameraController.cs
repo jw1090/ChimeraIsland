@@ -65,13 +65,13 @@ public class CameraController : MonoBehaviour
 
     private void CameraMovement()
     {
-        if (_canMove == false)
-        {
-            return;
-        }
-
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 2 * _speed : _speed;
         Vector3 newPos = transform.position;
+
+        if (_canMove == false)
+        {
+            panSpeed *= 0.25f;
+        }
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -142,7 +142,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitFront.transform.CompareTag("Bounds"))
             {
-                newPosition.z = transform.localPosition.z - _offset;
+                newPosition.z = transform.localPosition.z - _offset * 1.5f;
             }
 
             readAjust = true;
@@ -151,7 +151,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitBack.transform.CompareTag("Bounds") )
             {
-                newPosition.z = transform.localPosition.z + _offset;
+                newPosition.z = transform.localPosition.z + _offset * 1.5f;
             }
 
             readAjust = true;
@@ -161,7 +161,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitRight.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x - _offset;
+                newPosition.x = transform.localPosition.x - _offset * 1.5f;
             }
 
             readAjust = true;
@@ -170,22 +170,22 @@ public class CameraController : MonoBehaviour
         {
             if (hitLeft.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x + _offset;
+                newPosition.x = transform.localPosition.x + _offset * 1.5f;
             }
 
             readAjust = true;
         }
 
+        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);
+
         if(readAjust == true)
         {
             _canMove = false;
         }
-        else
+        if(Vector3.Distance(transform.localPosition, newPosition) < 0.5f)
         {
             _canMove = true;
         }
-
-        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);
     }
 
     public IEnumerator MoveCameraToDesintation(Vector3 target, float time)
