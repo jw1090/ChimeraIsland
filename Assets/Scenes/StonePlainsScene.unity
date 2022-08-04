@@ -187,7 +187,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -281,7 +281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -309,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5411779017660834405, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5411779017660834405, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -436,7 +436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 34.206, y: -53.352, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -459,7 +459,7 @@ MonoBehaviour:
   _screenEdgeSize: 50
   _sphereRadius: 0.2
   _offset: 5
-  _resolutionTime: 0.15
+  _resolutionTime: 1
   _velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -493,6 +493,54 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1725134170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1725134171}
+  - component: {fileID: 1725134172}
+  m_Layer: 0
+  m_Name: Expedition Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1725134171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725134170}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1725134172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725134170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12094aa4fe95424d8a5685ead3ec495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _habitatExpeditions:
+  - {fileID: 11400000, guid: 8ea31c1d376c89f4d862be383ce4c56b, type: 2}
+  - {fileID: 11400000, guid: 51627478b6e205445bcaf0e606ea43da, type: 2}
+  - {fileID: 11400000, guid: 97b1f8ccec78d97459b8c68ea5877d8f, type: 2}
+  - {fileID: 11400000, guid: c3c5f4ecd32c5844c8a158ec6913a62f, type: 2}
 --- !u!1001 &1890870680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -616,6 +664,7 @@ MonoBehaviour:
   _sceneType: 0
   _cameraController: {fileID: 963194229}
   _habitat: {fileID: 2136768068}
+  _expeditionManager: {fileID: 1725134172}
 --- !u!114 &2136768068 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411779017660834404, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}

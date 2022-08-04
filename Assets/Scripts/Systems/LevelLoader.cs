@@ -8,6 +8,7 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private SceneType _sceneType = SceneType.None;
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private ExpeditionManager _expeditionManager = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -81,6 +82,12 @@ public class LevelLoader : AsyncLoader
         {
             _habitat.Initialize();
             _habitatManager.SetCurrentHabitat(_habitat);
+        }
+
+        if(_expeditionManager != null)
+        {
+            ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
+            _uiManager.HabitatUI.ExpeditionPanel.SetExpeditionManager(_expeditionManager);
         }
     }
 

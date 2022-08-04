@@ -259,9 +259,9 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public Sprite GetStatSprite(FacilityType facility)
+    public Sprite GetStatSprite(FacilityType facilityType)
     {
-        switch (facility)
+        switch (facilityType)
         {
             case FacilityType.Waterfall:
                 return _agilitySprite;
@@ -270,7 +270,29 @@ public class ResourceManager : MonoBehaviour
             case FacilityType.Cave:
                 return _strengthSprite;
             default:
-                Debug.LogWarning($"{facility} is invalid, please change!");
+                Debug.LogWarning($"{facilityType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetBadgeSprite(ModifierBadgeType badgeType)
+    {
+        switch (badgeType)
+        {
+            case ModifierBadgeType.Aqua:
+                return _aquaSprite;
+            case ModifierBadgeType.Bio:
+                return _bioSprite;
+            case ModifierBadgeType.Fira:
+                return _firaSprite;
+            case ModifierBadgeType.Agility:
+                return _agilitySprite;
+            case ModifierBadgeType.Intelligence:
+                return _intelligenceSprite;
+            case ModifierBadgeType.Strength:
+                return _strengthSprite;
+            default:
+                Debug.LogWarning($"Badge Type [{badgeType}] is invalid, please change!");
                 return null;
         }
     }
