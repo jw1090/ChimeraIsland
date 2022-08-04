@@ -33,8 +33,16 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _habitat.AddFacility(_facility);
-        _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
+        if(_habitat.AddFacility(_facility) == true) // Purchase Success
+        {
+            _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
+            _habitatUI.ResetStandardUI();
+            FacilityCameraShift();
+        }
+    }
+
+    private void FacilityCameraShift()
+    {
         switch (_habitat.Type)
         {
             case HabitatType.StonePlains:
@@ -75,7 +83,5 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
                 Debug.Log("Habitat type shouldn't exist.");
                 break;
         }
-
-        _habitatUI.CloseMarketplace();
     }
 }

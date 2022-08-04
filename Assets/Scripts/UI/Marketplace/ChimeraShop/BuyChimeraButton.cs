@@ -31,9 +31,16 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _habitat.BuyChimera(_chimera);
-        _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
+        if(_habitat.BuyChimera(_chimera) == true)
+        {
+            _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
+            _habitatUI.ResetStandardUI();
+            ChimeraCameraShift();
+        }
+    }
 
+    private void ChimeraCameraShift()
+    {
         switch (_habitat.Type)
         {
             case HabitatType.StonePlains:
@@ -46,7 +53,5 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
                 Debug.Log("Habitat type shouldn't exist.");
                 break;
         }
-
-        _habitatUI.CloseMarketplace();
     }
 }

@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 _velocity = Vector3.zero;
 
     private Camera _cameraCO = null;
+    private HabitatManager _habitatManager = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
@@ -41,6 +42,7 @@ public class CameraController : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _cameraCO = GetComponent<Camera>();
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
@@ -142,7 +144,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitFront.transform.CompareTag("Bounds"))
             {
-                newPosition.z = transform.localPosition.z - _offset * 2.0f;
+                newPosition.z = transform.localPosition.z - _offset * 3.0f;
             }
 
             readAjust = true;
@@ -151,7 +153,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitBack.transform.CompareTag("Bounds") )
             {
-                newPosition.z = transform.localPosition.z + _offset * 2.0f;
+                newPosition.z = transform.localPosition.z + _offset * 3.0f;
             }
 
             readAjust = true;
@@ -161,7 +163,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitRight.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x - _offset * 2.0f;
+                newPosition.x = transform.localPosition.x - _offset * 3.0f;
             }
 
             readAjust = true;
@@ -170,7 +172,7 @@ public class CameraController : MonoBehaviour
         {
             if (hitLeft.transform.CompareTag("Bounds"))
             {
-                newPosition.x = transform.localPosition.x + _offset * 2.0f;
+                newPosition.x = transform.localPosition.x + _offset * 3.0f;
             }
 
             readAjust = true;
@@ -182,7 +184,7 @@ public class CameraController : MonoBehaviour
         {
             _canMove = false;
         }
-        if(Vector3.Distance(transform.localPosition, newPosition) < 0.5f)
+        if(Vector3.Distance(transform.localPosition, newPosition) < 0.4f)
         {
             _canMove = true;
         }
@@ -191,6 +193,38 @@ public class CameraController : MonoBehaviour
     public void MoveCameraCoroutine(Vector3 target, float time)
     {
         StartCoroutine(MoveCamera(target, time));
+    }
+
+    public void FacilityCameraShift(FacilityType facilityType)
+    {
+        HabitatType habitatType = _habitatManager.CurrentHabitat.Type;
+
+        switch (habitatType)
+        {
+            case HabitatType.StonePlains:
+                break;
+            case HabitatType.TreeOfLife:
+                break;
+            default:
+                Debug.LogWarning($"Invalid Habitat Type [{habitatType}], please change!");
+                break;
+        }
+    }
+
+    public void ChimeraCameraShift()
+    {
+        HabitatType habitatType = _habitatManager.CurrentHabitat.Type;
+
+        switch (habitatType)
+        {
+            case HabitatType.StonePlains:
+                break;
+            case HabitatType.TreeOfLife:
+                break;
+            default:
+                Debug.LogWarning($"Invalid Habitat Type [{habitatType}], please change!");
+                break;
+        }
     }
 
     private IEnumerator MoveCamera(Vector3 target, float time)
