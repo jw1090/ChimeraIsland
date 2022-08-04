@@ -127,6 +127,19 @@ public class Habitat : MonoBehaviour
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
         chimeraComp.Initialize();
+
+        switch (Type)
+        {
+            case HabitatType.StonePlains:
+                GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(18.32937f, 20.0f, 16.59422f);
+                break;
+            case HabitatType.Ashlands:
+                GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-5.641598f, 24.0f, 5.453001f);
+                break;
+            default:
+                Debug.Log("Habitat type shouldn't exist.");
+                break;
+        }
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
@@ -178,6 +191,51 @@ public class Habitat : MonoBehaviour
 
         facility.BuildFacility();
         _habitatManager.AddNewFacility(facility);
+        switch (Type)
+        {
+            case HabitatType.StonePlains:
+                switch (facility.Type)
+                {
+                    case FacilityType.Cave:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-18.0f, 20.0f, -7.0f);
+                        break;
+                    case FacilityType.Waterfall:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(41.0f, 20.0f, 51.0f);
+                        break;
+                    case FacilityType.RuneStone:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(16.0f, 20.0f, 39.0f);
+                        break;
+                    default:
+                        Debug.Log("Facility type is null.");
+                        break;
+                }
+                break;
+            case HabitatType.Ashlands:
+                switch (facility.Type)
+                {
+                    case FacilityType.Cave:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(16.0f, 24.0f, 44.0f);
+                        break;
+                    case FacilityType.Waterfall:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(60.0f, 24.0f, 20.0f);
+                        break;
+                    case FacilityType.RuneStone:
+                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-66.0f, 24.0f, 12.0f);
+                        break;
+                    default:
+                        Debug.Log("Facility type is null.");
+                        break;
+                }
+                break;
+            default:
+            Debug.Log("Habitat type shouldn't exist.");
+            break;
+        }
+
+        if (facility.Type.Equals(FacilityType.Waterfall) && Type == HabitatType.StonePlains)
+        {
+
+        }
     }
 
     private int FacilitiesCount()
