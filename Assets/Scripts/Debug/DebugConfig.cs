@@ -8,9 +8,11 @@ public class DebugConfig : MonoBehaviour, IGameModule
 
     [SerializeField] private bool _enableTutorials = true;
     [SerializeField] private bool _enableDebugTutorialInput = false;
+    [SerializeField] private bool _enableDebugCurrencyInput = false;
 
     public bool TutorialsEnabled { get => _enableTutorials; }
     public bool DebugTutorialInputEnabled { get => _enableDebugTutorialInput; }
+    public bool DebugCurrencyInputEnabled { get => _enableDebugCurrencyInput; }
 
     public IEnumerator LoadModule()
     {

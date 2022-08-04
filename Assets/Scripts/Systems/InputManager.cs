@@ -16,7 +16,9 @@ public class InputManager : MonoBehaviour
     private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
+    private bool _debugCurrencyInputEnabled = false;
     private HabitatManager _habitatManager = null;
+    private DebugConfig _debugConfig = null;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -46,10 +48,18 @@ public class InputManager : MonoBehaviour
 
     private void OnDebugConfigLoaded()
     {
-        _debugTutorialInputEnabled = ServiceLocator.Get<DebugConfig>().DebugTutorialInputEnabled;
+        _debugConfig = ServiceLocator.Get<DebugConfig>();
+
+        _debugTutorialInputEnabled = _debugConfig.DebugTutorialInputEnabled;
         if (_debugTutorialInputEnabled == false)
         {
             Debug.Log("Debug Tutorial Input is DISABLED");
+        }
+
+        _debugCurrencyInputEnabled = _debugConfig.DebugTutorialInputEnabled;
+        if (_debugCurrencyInputEnabled == false)
+        {
+            Debug.Log("Debug Currency Input is DISABLED");
         }
     }
 
