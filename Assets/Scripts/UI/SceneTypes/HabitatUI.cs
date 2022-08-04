@@ -49,6 +49,7 @@ public class HabitatUI : MonoBehaviour
     {
         InitializeWallets();
         _trainingPanel.Initialize(this);
+        _expeditionPanel.Initialize();
     }
 
     private void InitializeWallets()

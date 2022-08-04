@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class UIExpedition : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
+    [SerializeField] private GameObject _badgeFolder = null;
+    [SerializeField] private List<GameObject> _badgeContainers = new List<GameObject>();
     [SerializeField] private List<Image> _badges = new List<Image>();
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
@@ -44,20 +46,49 @@ public class UIExpedition : MonoBehaviour
 
     private void LoadBadges(List<ModifierBadgeType> badgeData)
     {
+        int activeBadgeCount = 1;
         int i = 0;
         foreach(var badgeType in badgeData)
         {
             if(badgeType == ModifierBadgeType.None)
             {
-                _badges[i].gameObject.SetActive(false);
+                _badgeContainers[i].gameObject.SetActive(false);
             }
             else
             {
                 _badges[i].sprite = _resourceManager.GetBadgeSprite(badgeType);
-                _badges[i].gameObject.SetActive(true);
+                _badgeContainers[i].gameObject.SetActive(true);
+                ++activeBadgeCount;
             }
 
             ++i;
+        }
+
+        if(activeBadgeCount > 1)
+        {
+            _badgeFolder.SetActive(true);
+
+            RectTransform rectTransform = _badgeFolder.GetComponent<RectTransform>();
+
+            switch (activeBadgeCount)
+            {
+                case 1:
+                    rectTransform.sizeDelta = new Vector2(150.0f, 80.0f);
+                    break;
+                case 2:
+                    rectTransform.sizeDelta = new Vector2(250.0f, 80.0f);
+                    break;
+                case 3:
+                    rectTransform.sizeDelta = new Vector2(350.0f, 80.0f);
+                    break;
+                default:
+                    Debug.LogWarning($"Active Badge Count is out of range. Badge Count [{activeBadgeCount}]");
+                    break;
+            }
+        }
+        else
+        {
+            _badgeFolder.SetActive(false);
         }
     }
 
