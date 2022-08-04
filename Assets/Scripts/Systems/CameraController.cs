@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -185,5 +186,14 @@ public class CameraController : MonoBehaviour
         }
 
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);
+    }
+
+    public IEnumerator MoveCameraToDesintation(Vector3 target, float time)
+    {
+        while(Vector3.Distance(transform.position, target) > 0.5f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }

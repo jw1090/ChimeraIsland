@@ -14,6 +14,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
 
+    private CameraController _cameraController = null;
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
@@ -42,6 +43,7 @@ public class Habitat : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _cameraController = ServiceLocator.Get<CameraController>();
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
@@ -131,10 +133,10 @@ public class Habitat : MonoBehaviour
         switch (Type)
         {
             case HabitatType.StonePlains:
-                GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(18.32937f, 20.0f, 16.59422f);
+                StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(18.0f, 20.0f, 16.6f),0.25f));
                 break;
-            case HabitatType.Ashlands:
-                GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-5.641598f, 24.0f, 5.453001f);
+            case HabitatType.TreeOfLife:
+                StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(-5.6f, 24.0f, 5.5f), 0.5f));
                 break;
             default:
                 Debug.Log("Habitat type shouldn't exist.");
@@ -197,30 +199,30 @@ public class Habitat : MonoBehaviour
                 switch (facility.Type)
                 {
                     case FacilityType.Cave:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-18.0f, 20.0f, -7.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(-18.0f, 20.0f, -7.0f), 0.25f));
                         break;
                     case FacilityType.Waterfall:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(41.0f, 20.0f, 51.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(41.0f, 20.0f, 51.0f), 0.25f));
                         break;
                     case FacilityType.RuneStone:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(16.0f, 20.0f, 39.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(16.0f, 20.0f, 39.0f), 0.25f));
                         break;
                     default:
                         Debug.Log("Facility type is null.");
                         break;
                 }
                 break;
-            case HabitatType.Ashlands:
+            case HabitatType.TreeOfLife:
                 switch (facility.Type)
                 {
                     case FacilityType.Cave:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(16.0f, 24.0f, 44.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(16.0f, 24.0f, 44.0f), 0.5f));
                         break;
                     case FacilityType.Waterfall:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(60.0f, 24.0f, 20.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(60.0f, 24.0f, 20.0f), 0.5f));
                         break;
                     case FacilityType.RuneStone:
-                        GameObject.Find("Habitat Camera").gameObject.transform.position = new Vector3(-66.0f, 24.0f, 12.0f);
+                        StartCoroutine(_cameraController.MoveCameraToDesintation(new Vector3(-66.0f, 24.0f, 12.0f), 0.5f));
                         break;
                     default:
                         Debug.Log("Facility type is null.");
