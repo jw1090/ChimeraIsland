@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 
 public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private AudioClip _purchaseClickSFX = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private AudioManager _audioManager = null;
@@ -33,7 +32,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.BuyChimera(_chimera);
-        _audioManager.PlaySFX(_purchaseClickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
 
         switch (_habitat.Type)
         {

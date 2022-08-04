@@ -5,7 +5,6 @@ using System.Collections;
 
 public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private AudioClip _purchaseClickSFX = null;
     private Facility _facility = null;
     private Habitat _habitat = null;
     private AudioManager _audioManager = null;
@@ -35,7 +34,7 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _habitat.AddFacility(_facility);
-        _audioManager.PlaySFX(_purchaseClickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.PurchaseClick);
         switch (_habitat.Type)
         {
             case HabitatType.StonePlains:
