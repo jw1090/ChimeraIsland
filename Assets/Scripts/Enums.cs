@@ -131,3 +131,15 @@ public enum TutorialStageType
     Transfers,
     Ashlands,
 }
+
+public enum ElementsSFX
+{
+    None = -1,
+    StandardClick,
+    ConfirmClick,
+    PurchaseClick,
+    PlaceChimera,
+    RemoveChimera,
+    Evolution,
+    LevelUp,
+}

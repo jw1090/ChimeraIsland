@@ -31,7 +31,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private UITraining _trainingPanel = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
-    [SerializeField] private AudioClip _clickSFX = null;
 
     private AudioManager _audioManager = null;
 
@@ -138,7 +137,7 @@ public class HabitatUI : MonoBehaviour
         _standardUI.gameObject.SetActive(true);
 
         // Audio
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
@@ -154,7 +153,7 @@ public class HabitatUI : MonoBehaviour
 
         ResetStandardUI();
 
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _detailsPanel.gameObject.SetActive(true);
         _detailsFolder.ToggleDetailsButtons(detailsButtonType);
@@ -177,7 +176,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _marketplacePanel.gameObject.SetActive(true);
 
@@ -193,7 +192,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _transferMap.Open(chimera);
     }
@@ -223,7 +222,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
@@ -234,7 +233,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlaySFX(_clickSFX);
+        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
 
         _expeditionPanel.SetupExpeditionUI();
 
