@@ -187,13 +187,16 @@ public class CameraController : MonoBehaviour
             _canMove = true;
         }
     }
-
-    public IEnumerator MoveCameraToDesintation(Vector3 target, float time)
+    public void CallMoveCameraToDesintation(Vector3 target, float time)
     {
-        while(Vector3.Distance(transform.position, target) > 0.5f)
+        StartCoroutine(MoveCamera(target, time));
+    }
+    private IEnumerator MoveCamera(Vector3 target, float time)
+    {
+        while (Vector3.Distance(transform.position, target) > 0.5f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
             yield return new WaitForSeconds(0.01f);
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
         }
     }
 }
