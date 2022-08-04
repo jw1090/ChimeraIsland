@@ -181,8 +181,27 @@ public class Chimera : MonoBehaviour
 
         _elementIcon = _resourceManager.GetElementSprite(_elementalType);
 
+        InitializeStats();
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
+    }
+
+    private void InitializeStats()
+    {
+        for (int i = 1; i < _agility; ++i)
+        {
+            _agilityThreshold += (int)(Mathf.Sqrt(_agilityThreshold) * 1.2f);
+        }
+
+        for (int i = 1; i < _intelligence; ++i)
+        {
+            _intelligenceThreshold += (int)(Mathf.Sqrt(_intelligenceThreshold) * 1.2f);
+        }
+
+        for (int i = 1; i < _strength; ++i)
+        {
+            _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
+        }
     }
 
     private void InitializeEvolution()
