@@ -20,7 +20,6 @@ public class UITraining : MonoBehaviour
     private Facility _facility = null;
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
-    private AudioManager _audioManager = null;
     private HabitatUI _habitatUI = null;
     private int _cost = 0;
     private int _levelGoal = 0;
@@ -33,7 +32,6 @@ public class UITraining : MonoBehaviour
     public void Initialize(HabitatUI habitatUI)
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatUI = habitatUI;
 
         SetupUIListeners();

@@ -20,7 +20,7 @@ public class PersistentData : MonoBehaviour
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
-    public void SetEssenceManager(CurrencyManager essenceManager) { _currencyManager = essenceManager; }
+    public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
 

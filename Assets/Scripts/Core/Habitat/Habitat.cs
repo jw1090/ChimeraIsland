@@ -127,9 +127,7 @@ public class Habitat : MonoBehaviour
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
         _activeChimeras.Add(chimeraComp);
 
-
         chimeraComp.Initialize();
-
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
@@ -138,7 +136,7 @@ public class Habitat : MonoBehaviour
 
         if(_habitatManager.AddNewChimera(chimeraToTransfer) == false)
         {
-            chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not succeful, reset habitatType.
+            chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not successful, reset habitatType.
             return false;
         }
 

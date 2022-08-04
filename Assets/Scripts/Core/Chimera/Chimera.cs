@@ -35,7 +35,7 @@ public class Chimera : MonoBehaviour
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
-    private CurrencyManager _essenceManager = null;
+    private CurrencyManager _currencyManager = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
@@ -171,7 +171,7 @@ public class Chimera : MonoBehaviour
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
 
         _audioManager = ServiceLocator.Get<AudioManager>();
-        _essenceManager = ServiceLocator.Get<CurrencyManager>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
@@ -242,7 +242,7 @@ public class Chimera : MonoBehaviour
     // The essence formula is located here.
     public void EssenceTick()
     {
-        if (_essenceManager == null)
+        if (_currencyManager == null)
         {
             return;
         }
@@ -253,7 +253,7 @@ public class Chimera : MonoBehaviour
         }
 
         int essenceGain = (int)(_baseEssenceRate * Mathf.Sqrt(_level));
-        _essenceManager.IncreaseEssence(essenceGain);
+        _currencyManager.IncreaseEssence(essenceGain);
     }
 
     // Transfer experience stored by the chimera and see if each stat's threshold is met.

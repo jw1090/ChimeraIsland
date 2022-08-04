@@ -37,10 +37,10 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
         switch (_habitat.Type)
         {
             case HabitatType.StonePlains:
-                _cameraController.CallMoveCameraToDesintation(new Vector3(18.0f, 20.0f, 16.6f), 0.25f);
+                _cameraController.MoveCameraCoroutine(new Vector3(18.0f, 20.0f, 16.6f), 0.25f);
                 break;
             case HabitatType.TreeOfLife:
-                _cameraController.CallMoveCameraToDesintation(new Vector3(-5.6f, 24.0f, 5.5f), 0.5f);
+                _cameraController.MoveCameraCoroutine(new Vector3(-5.6f, 24.0f, 5.5f), 0.5f);
                 break;
             default:
                 Debug.Log("Habitat type shouldn't exist.");

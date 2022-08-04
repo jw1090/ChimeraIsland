@@ -92,11 +92,12 @@ public class GameLoader : AsyncLoader
         var inputManagerComp = inputManagerGO.GetComponent<InputManager>().Initialize();
         ServiceLocator.Register<InputManager>(inputManagerComp);
 
-        var essenceManagerGO = new GameObject("Essence Manager");
-        essenceManagerGO.transform.SetParent(systemsParent);
-        var essenceManagerComp = essenceManagerGO.AddComponent<CurrencyManager>().Initialize();
-        ServiceLocator.Register<CurrencyManager>(essenceManagerComp);
-        persistentDataComp.SetEssenceManager(essenceManagerComp);
+        var currencyManagerGO = new GameObject("Currency Manager");
+        currencyManagerGO.transform.SetParent(systemsParent);
+        var currencyManagerComp = currencyManagerGO.AddComponent<CurrencyManager>().Initialize();
+        ServiceLocator.Register<CurrencyManager>(currencyManagerComp);
+        persistentDataComp.SetCurrencyManager(currencyManagerComp);
+        inputManagerComp.SetCurrencyManager(currencyManagerComp);
 
         var habitatManagerGO = new GameObject("Habitat Manager");
         habitatManagerGO.transform.SetParent(systemsParent);
@@ -128,7 +129,7 @@ public class GameLoader : AsyncLoader
         ServiceLocator.Register<UIManager>(uiManagerComp);
 
         inputManagerComp.SetUIManager(uiManagerComp);
-        essenceManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
+        currencyManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
         tutorialComp.SetUIManager(uiManagerComp);
         sceneChangerComp.SetupUIListeners();
 
