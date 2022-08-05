@@ -3,5 +3,5 @@ using UnityEngine.UI;
 
 public class Modifier : MonoBehaviour
 {
-    public Image modifierIcon = null;
+    public Image icon = null;
 }
