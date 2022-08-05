@@ -275,21 +275,21 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public Sprite GetBadgeSprite(ModifierBadgeType badgeType)
+    public Sprite GetBadgeSprite(ModifierType badgeType)
     {
         switch (badgeType)
         {
-            case ModifierBadgeType.Aqua:
+            case ModifierType.Aqua:
                 return _aquaSprite;
-            case ModifierBadgeType.Bio:
+            case ModifierType.Bio:
                 return _bioSprite;
-            case ModifierBadgeType.Fira:
+            case ModifierType.Fira:
                 return _firaSprite;
-            case ModifierBadgeType.Agility:
+            case ModifierType.Agility:
                 return _agilitySprite;
-            case ModifierBadgeType.Intelligence:
+            case ModifierType.Intelligence:
                 return _intelligenceSprite;
-            case ModifierBadgeType.Strength:
+            case ModifierType.Strength:
                 return _strengthSprite;
             default:
                 Debug.LogWarning($"Badge Type [{badgeType}] is invalid, please change!");

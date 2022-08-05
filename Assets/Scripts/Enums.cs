@@ -60,7 +60,7 @@ public enum HabitatType
     Ashlands,
 }
 
-public enum ModifierBadgeType
+public enum ModifierType
 {
     None = -1,
     Aqua,

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class UIExpedition : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
-    [SerializeField] private GameObject _badgeFolder = null;
-    [SerializeField] private List<GameObject> _badgeContainers = new List<GameObject>();
+    [SerializeField] private GameObject _modifierFolder = null;
+    [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
     [SerializeField] private List<Image> _badges = new List<Image>();
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
@@ -38,26 +38,26 @@ public class UIExpedition : MonoBehaviour
         ExpeditionData data = _expeditionManager.CurrentExpeditionData;
 
         _expeditionName.text = data.expeditionName;
-        LoadBadges(data.badges);
+        LoadBadges(data.modifiers);
         _minimumLevel.text = $"Minimum Level: {data.minimumLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
         //_duration.text = TimeSpan.FromSeconds(data.duration).ToString("mm:ss");;
     }
 
-    private void LoadBadges(List<ModifierBadgeType> badgeData)
+    private void LoadBadges(List<ModifierType> badgeData)
     {
         int activeBadgeCount = 1;
         int i = 0;
         foreach(var badgeType in badgeData)
         {
-            if(badgeType == ModifierBadgeType.None)
+            if(badgeType == ModifierType.None)
             {
-                _badgeContainers[i].gameObject.SetActive(false);
+                _modifiers[i].gameObject.SetActive(false);
             }
             else
             {
                 _badges[i].sprite = _resourceManager.GetBadgeSprite(badgeType);
-                _badgeContainers[i].gameObject.SetActive(true);
+                _modifiers[i].gameObject.SetActive(true);
                 ++activeBadgeCount;
             }
 
@@ -66,9 +66,9 @@ public class UIExpedition : MonoBehaviour
 
         if(activeBadgeCount > 1)
         {
-            _badgeFolder.SetActive(true);
+            _modifierFolder.SetActive(true);
 
-            RectTransform rectTransform = _badgeFolder.GetComponent<RectTransform>();
+            RectTransform rectTransform = _modifierFolder.GetComponent<RectTransform>();
 
             switch (activeBadgeCount)
             {
@@ -88,7 +88,7 @@ public class UIExpedition : MonoBehaviour
         }
         else
         {
-            _badgeFolder.SetActive(false);
+            _modifierFolder.SetActive(false);
         }
     }
 
