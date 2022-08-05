@@ -137,7 +137,7 @@ public class HabitatUI : MonoBehaviour
         _standardUI.gameObject.SetActive(true);
 
         // Audio
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
@@ -153,7 +153,7 @@ public class HabitatUI : MonoBehaviour
 
         ResetStandardUI();
 
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _detailsPanel.gameObject.SetActive(true);
         _detailsFolder.ToggleDetailsButtons(detailsButtonType);
@@ -176,7 +176,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _marketplacePanel.gameObject.SetActive(true);
 
@@ -192,7 +192,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _transferMap.Open(chimera);
     }
@@ -222,7 +222,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
@@ -233,7 +233,7 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _expeditionPanel.SetupExpeditionUI();
 

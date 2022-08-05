@@ -170,7 +170,7 @@ public class Facility : MonoBehaviour
         FacilityColliderToggle(FacilityColliderType.Place);
         RevealChimera(true);
 
-        _audioManager.PlayElementsSFX(ElementsSFX.RemoveChimera);
+        _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
 
         Debug.Log($"{ _storedChimera} has been removed from the facility.");
@@ -208,7 +208,7 @@ public class Facility : MonoBehaviour
         if (ActivateTraining == true)
         {
             _facilitySFX.PlaySFX();
-            _audioManager.PlayElementsSFX(ElementsSFX.PlaceChimera);
+            _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         }
     }
 

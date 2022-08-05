@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExpeditionData : ScriptableObject
 {
     public string expeditionName = "";
-    public List<ModifierBadgeType> badges = new List<ModifierBadgeType>();
+    public List<ModifierType> modifiers = new List<ModifierType>();
     public int minimumLevel = 0;
     public ExpeditionRewardType rewardType = ExpeditionRewardType.None;
     public float duration = 0.0f;

@@ -60,7 +60,7 @@ public enum HabitatType
     Ashlands,
 }
 
-public enum ModifierBadgeType
+public enum ModifierType
 {
     None = -1,
     Aqua,
@@ -132,7 +132,7 @@ public enum TutorialStageType
     Ashlands,
 }
 
-public enum ElementsSFX
+public enum SFXUIType
 {
     None = -1,
     StandardClick,

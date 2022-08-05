@@ -325,7 +325,7 @@ public class Chimera : MonoBehaviour
 
         if (++_levelUpTracker % 2 == 0)
         {
-            _audioManager.PlayElementsSFX(ElementsSFX.LevelUp);
+            _audioManager.PlayUISFX(SFXUIType.LevelUp);
             ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
@@ -339,7 +339,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        _audioManager.PlayElementsSFX(ElementsSFX.Evolution);
+        _audioManager.PlayUISFX(SFXUIType.Evolution);
 
         Destroy(_currentEvolution.gameObject);
 

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : AsyncLoader
 {
     [SerializeField] private SceneType _sceneType = SceneType.None;
-    [SerializeField] private CameraController _cameraController = null;
+    [SerializeField] private CameraUtil _cameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
 
@@ -72,10 +72,10 @@ public class LevelLoader : AsyncLoader
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 
-        if (_cameraController != null)
+        if (_cameraUtil != null)
         {
-            ServiceLocator.Register<CameraController>(_cameraController.Initialize(), true);
-            _inputManager.SetCamera(_cameraController.CameraCO);
+            ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
+            _inputManager.SetCamera(_cameraUtil.CameraCO);
         }
 
         if (_habitat != null)

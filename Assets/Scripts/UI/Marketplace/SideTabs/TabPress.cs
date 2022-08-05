@@ -26,7 +26,7 @@ public class TabPress : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
     public void OnPointerClick(PointerEventData eventData)
     {
         _tabGroup.OnTabSelected(this);
-        _audioManager.PlayElementsSFX(ElementsSFX.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     public void OnPointerExit(PointerEventData eventData)

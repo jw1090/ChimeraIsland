@@ -86,12 +86,12 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    public void BuyChimera(Chimera chimeraPrefab)
+    public bool BuyChimera(Chimera chimeraPrefab)
     {
         if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
-            return;
+            return false;
         }
 
         //int price = chimeraPrefab.Price;  TODO Update price logic
@@ -105,13 +105,15 @@ public class Habitat : MonoBehaviour
                 $"Can't afford this chimera. It costs {price} " +
                 $"Fossil and you only have {_currencyManager.Fossils} Fossils."
             );
-            return;
+            return false;
         }
 
         GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
         AddChimera(newChimera.transform);
 
         _habitatManager.AddNewChimera(newChimera.GetComponent<Chimera>());
+
+        return true;
     }
 
     public void AddChimera(Transform newChimera)
@@ -151,19 +153,19 @@ public class Habitat : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
 
-    public void AddFacility(Facility facility)
+    public bool AddFacility(Facility facility)
     {
         // Return if no room for another Facility.
         if (FacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
         {
             Debug.Log("Facility capacity is too small to add another Facility.");
-            return;
+            return false;
         }
 
         if (facility.CurrentTier == 3)
         {
             Debug.Log("Facility is already at max tier.");
-            return;
+            return false;
         }
 
         if (_currencyManager.SpendEssence(facility.Price) == false)
@@ -174,11 +176,13 @@ public class Habitat : MonoBehaviour
                 $"It costs {facility.Price} Essence and you" +
                 $"only have {_currencyManager.Essence} Essence."
             );
-            return;
+            return false;
         }
 
         facility.BuildFacility();
         _habitatManager.AddNewFacility(facility);
+
+        return true;
     }
 
     private int FacilitiesCount()

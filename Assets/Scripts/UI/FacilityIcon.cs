@@ -19,7 +19,7 @@ public class FacilityIcon : MonoBehaviour
 
     public void Initialize()
     {
-        _camera = ServiceLocator.Get<CameraController>().CameraCO;
+        _camera = ServiceLocator.Get<CameraUtil>().CameraCO;
 
         _initialized = true;
     }
