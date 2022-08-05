@@ -131,7 +131,6 @@ public class AudioManager : MonoBehaviour
     {
         switch(sceneType)
         {
-            //We add more if we want. Hopefully!
             case SceneType.MainMenu:
                 _musicSource.clip = _mainMenuMusic;
                 _musicSource.Play();
@@ -142,35 +141,35 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayElementsSFX(ElementsSFX uIElementsSFX)
+    public void PlayUISFX(SFXUIType uIElementsSFX)
     {
         switch(uIElementsSFX)
         {
-            case ElementsSFX.StandardClick:
+            case SFXUIType.StandardClick:
                 _sfxSource.clip = _standardClickSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.ConfirmClick:
+            case SFXUIType.ConfirmClick:
                 _sfxSource.clip = _confirmClickSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.PurchaseClick:
+            case SFXUIType.PurchaseClick:
                 _sfxSource.clip = _purchaseClickSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.PlaceChimera:
+            case SFXUIType.PlaceChimera:
                 _sfxSource.clip = _placeChimeraSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.RemoveChimera:
+            case SFXUIType.RemoveChimera:
                 _sfxSource.clip = _removeChimeraSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.Evolution:
+            case SFXUIType.Evolution:
                 _sfxSource.clip = _evolutionSFX;
                 _sfxSource.Play();
                 break;
-            case ElementsSFX.LevelUp:
+            case SFXUIType.LevelUp:
                 _sfxSource.clip = _levelUpSFX;
                 _sfxSource.Play();
                 break;
@@ -182,10 +181,10 @@ public class AudioManager : MonoBehaviour
 
     private void PlayClickSFX()
     {
-        PlayElementsSFX(ElementsSFX.StandardClick);
+        PlayUISFX(SFXUIType.StandardClick);
     }
     private void PlayConfirmSFX()
     {
-        PlayElementsSFX(ElementsSFX.ConfirmClick);
+        PlayUISFX(SFXUIType.ConfirmClick);
     }
 }

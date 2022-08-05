@@ -17,7 +17,7 @@ namespace AI.Behavior
 
             _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.BoxCollider.enabled = false;
-            _chimeraBehavior.CameraController.IsHolding = true;
+            _chimeraBehavior.CameraUtil.IsHolding = true;
 
             _sphereMarker = _inputManager.SphereMarker;
             _sphereMarker.gameObject.SetActive(true);
@@ -43,7 +43,7 @@ namespace AI.Behavior
 
             _chimeraBehavior.Agent.enabled = true;
             _chimeraBehavior.BoxCollider.enabled = true;
-            _chimeraBehavior.CameraController.IsHolding = false;
+            _chimeraBehavior.CameraUtil.IsHolding = false;
             _chimeraBehavior.Dropped = true;
             _chimeraBehavior.ExitAnim(_heldAnim);
         }

@@ -17,7 +17,7 @@ namespace AI.Behavior
     {
         private Animator _animator = null;
         private Camera _mainCamera = null;
-        private CameraController _cameraController = null;
+        private CameraUtil _cameraUtil = null;
         private Chimera _chimera = null;
         private ChimeraBaseState _currentState = null;
         private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
@@ -29,7 +29,7 @@ namespace AI.Behavior
 
         public BoxCollider BoxCollider { get => GetChimeraCollider(); }
         public Camera MainCamera { get => _mainCamera; }
-        public CameraController CameraController { get => _cameraController; }
+        public CameraUtil CameraUtil { get => _cameraUtil; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
         public NavMeshAgent Agent { get => _navMeshAgent; }
         public bool StateEnabled { get => _stateEnabled; }
@@ -51,13 +51,13 @@ namespace AI.Behavior
             ServiceLocator.Get<InputManager>().HeldStateChange += OnHeldStateChanged;
 
             _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
-            _cameraController = ServiceLocator.Get<CameraController>();
+            _cameraUtil = ServiceLocator.Get<CameraUtil>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _chimera = GetComponent<Chimera>();
 
             _navMeshAgent.enabled = false;
 
-            _mainCamera = CameraController.CameraCO;
+            _mainCamera = CameraUtil.CameraCO;
 
             _states.Add(StateEnum.Patrol, new PatrolState());
             _states.Add(StateEnum.Wander, new WanderState());

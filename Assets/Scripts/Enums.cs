@@ -132,7 +132,7 @@ public enum TutorialStageType
     Ashlands,
 }
 
-public enum ElementsSFX
+public enum SFXUIType
 {
     None = -1,
     StandardClick,
