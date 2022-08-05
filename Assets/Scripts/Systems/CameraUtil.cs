@@ -7,7 +7,6 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _speed = 20.0f;
 
     [Header("Zoom")]
-    [SerializeField] private float _zoom = 80.0f;
     [SerializeField] private float _zoomAmount = 20.0f;
     [SerializeField] private float _minZoom = 40.0f;
     [SerializeField] private float _maxZoom = 90.0f;
@@ -19,23 +18,26 @@ public class CameraUtil : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 1.5f;
     [SerializeField] private float _offset = 5.0f;
-    [SerializeField] private float _resolutionTime = 1.5f;
 
     private Camera _cameraCO = null;
     private HabitatManager _habitatManager = null;
-    private Coroutine _cameraDelayRoutine = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
     private Rect _leftRect = new Rect();
-    private Vector3 _dir = Vector3.zero;
+    private Vector3 _direction = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
+    private bool _initialized = false;
+    private bool _canMoveUp = true;
+    private bool _canMoveDown = true;
+    private bool _canMoveLeft = true;
+    private bool _canMoveRight = true;
     private bool _moveUp = false;
     private bool _moveDown = false;
     private bool _moveRight = false;
     private bool _moveLeft = false;
-    private bool _canMove = false;
-    private float _speedModifier = 0.2f;
+    private bool _moveSlow = false;
+    private float _zoom = 90.0f;
 
     public bool IsHolding { get; set; }
     public Camera CameraCO { get => _cameraCO; }
@@ -52,13 +54,18 @@ public class CameraUtil : MonoBehaviour
         _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
         _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
 
-        _canMove = true;
+        _initialized = true;
 
         return this;
     }
 
     private void Update()
     {
+        if(_initialized == false)
+        {
+            return;
+        }
+
         CameraMovement();
         ScreenMove();
 
@@ -72,27 +79,39 @@ public class CameraUtil : MonoBehaviour
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 2 * _speed : _speed;
         Vector3 newPos = transform.position;
 
-        if (_canMove == false)
+        if(_moveSlow == true)
         {
-            panSpeed *= _speedModifier;
+            panSpeed *= 0.25f;
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            newPos.z -= panSpeed * Time.deltaTime;
+            if (_canMoveUp)
+            {
+                newPos.z -= panSpeed * Time.deltaTime;
+            }
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            newPos.z += panSpeed * Time.deltaTime;
+            if (_canMoveDown)
+            {
+                newPos.z += panSpeed * Time.deltaTime;
+            }
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            newPos.x += panSpeed * Time.deltaTime;
+            if (_canMoveLeft)
+            {
+                newPos.x += panSpeed * Time.deltaTime;
+            }
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            newPos.x -= panSpeed * Time.deltaTime;
+            if (_canMoveRight)
+            {
+                newPos.x -= panSpeed * Time.deltaTime;
+            }
         }
 
         float _horizontal = Input.GetAxis("Horizontal");
@@ -116,11 +135,6 @@ public class CameraUtil : MonoBehaviour
 
     private void ScreenMove()
     {
-        if (_canMove == false)
-        {
-            return;
-        }
-
         if (IsHolding == false)
         {
             return;
@@ -131,74 +145,86 @@ public class CameraUtil : MonoBehaviour
         _moveLeft = (_leftRect.Contains(Input.mousePosition));
         _moveRight = (_rightRect.Contains(Input.mousePosition));
 
-        _dir.z = _moveUp ? 1 : _moveDown ? -1 : 0;
-        _dir.x = _moveLeft ? -1 : _moveRight ? 1 : 0;
+        _direction.x = _moveLeft ? -1 : _moveRight ? 1 : 0;
+        _direction.z = _moveUp ? 1 : _moveDown ? -1 : 0;
 
-        transform.position = Vector3.Lerp(transform.position, transform.position + _dir * _moveSpeed, Time.deltaTime);
+        if (_moveSlow == true)
+        {
+            _direction.x *= 0.25f;
+            _direction.z *= 0.25f;
+        }
+
+        transform.position = Vector3.Lerp(transform.position, transform.position + _direction * _moveSpeed, Time.deltaTime);
     }
 
     private void CameraCollisionCheck()
     {
         Vector3 newPosition = transform.localPosition;
-        bool collision = false;
+        RaycastHit hit;
+        float pushback = _offset * 10.0f;
 
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out RaycastHit hitFront, _offset))
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out hit, _offset))
         {
-            if (hitFront.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("Bounds"))
             {
-                newPosition.z = transform.localPosition.z - _offset * 5.0f;
-            }
+                newPosition.z = transform.localPosition.z - pushback;
 
-            collision = true;
-        }
-        else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out RaycastHit hitBack, _offset))
-        {
-            if (hitBack.transform.CompareTag("Bounds"))
-            {
-                newPosition.z = transform.localPosition.z + _offset * 5.0f;
-            }
-
-            collision = true;
-        }
-
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out RaycastHit hitRight, _offset))
-        {
-            if (hitRight.transform.CompareTag("Bounds"))
-            {
-                newPosition.x = transform.localPosition.x - _offset * 5.0f;
-            }
-
-            collision = true;
-        }
-        else if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out RaycastHit hitLeft, _offset))
-        {
-            if (hitLeft.transform.CompareTag("Bounds"))
-            {
-                newPosition.x = transform.localPosition.x + _offset * 5.0f;
-            }
-
-            collision = true;
-        }
-
-        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, newPosition, ref _velocity, _resolutionTime);
-
-        if (collision == true)
-        {
-            _canMove = false;
-
-            if(_cameraDelayRoutine == null)
-            {
-                _cameraDelayRoutine = StartCoroutine(CameraMoveDelay());
+                _canMoveDown = false;
             }
         }
-    }
+        else
+        {
+            _canMoveDown = true;
+        }
 
-    private IEnumerator CameraMoveDelay()
-    {
-        yield return new WaitForSeconds(0.35f);
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out hit, _offset))
+        {
+            if (hit.transform.CompareTag("Bounds"))
+            {
+                newPosition.z = transform.localPosition.z + pushback;
 
-        _canMove = true;
-        _cameraDelayRoutine = null;
+                _canMoveUp = false;
+            }
+        }
+        else
+        {
+            _canMoveUp = true;
+        }
+
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out hit, _offset))
+        {
+            if (hit.transform.CompareTag("Bounds"))
+            {
+                newPosition.x = transform.localPosition.x - pushback;
+
+                _canMoveLeft = false;
+            }
+        }
+        else
+        {
+            _canMoveLeft = true;
+        }
+
+        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out hit, _offset))
+        {
+            if (hit.transform.CompareTag("Bounds"))
+            {
+                newPosition.x = transform.localPosition.x + pushback;
+
+                _canMoveRight = false;
+            }
+        }
+        else
+        {
+            _canMoveRight = true;
+        }
+
+        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1.2f);
+
+        if(_canMoveDown && _canMoveLeft && _canMoveRight && _canMoveUp)
+        {
+            _moveSlow = false;
+        }
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
