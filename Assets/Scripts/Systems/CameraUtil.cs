@@ -76,7 +76,7 @@ public class CameraUtil : MonoBehaviour
         }
 
         Vector3 direction = Vector3.zero;
-        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 2 * _speed : _speed;
+        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 1.5f * _speed : _speed;
 
         bool moveUp = Input.GetKey(KeyCode.W) && _canMoveUp;
         bool moveDown = Input.GetKey(KeyCode.S) && _canMoveDown;
@@ -92,7 +92,7 @@ public class CameraUtil : MonoBehaviour
             direction.z *= 0.25f;
         }
 
-        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 1.0f);
+        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 0.8f);
         transform.position = newPos;
     }
 

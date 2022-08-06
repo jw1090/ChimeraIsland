@@ -44,6 +44,11 @@ public class HabitatUI : MonoBehaviour
     public UITraining TrainingPanel { get => _trainingPanel; }
     public UIExpedition ExpeditionPanel { get => _expeditionPanel; }
 
+    public void SetExpeditionManager(ExpeditionManager expeditionManager)
+    {
+        _expeditionPanel.SetExpeditionManager(expeditionManager);
+    }
+
     public void Initialize(UIManager uiManager)
     {
         InitializeWallets();
@@ -64,8 +69,10 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void InitializeVolumeSettings()
+    public void InitializeVolumeSettings(AudioManager audioManager)
     {
+        _audioManager = audioManager;
+
         _volumeSettings.Initialize();
     }
 
@@ -74,7 +81,7 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.Initialize();
         _detailsFolder.Initialize();
         _transferMap.Initialize();
-        _audioManager = ServiceLocator.Get<AudioManager>();
+
         ResetStandardUI();
     }
 

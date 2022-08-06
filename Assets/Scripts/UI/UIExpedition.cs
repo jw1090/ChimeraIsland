@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
     [SerializeField] private GameObject _modifierFolder = null;
     [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
+    [SerializeField] private List<Image> _chimeraIcons = new List<Image>();
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private TextMeshProUGUI _duration = null;
@@ -85,6 +87,19 @@ public class UIExpedition : MonoBehaviour
             default:
                 Debug.LogWarning($"Reward Type [{rewardType}] was invalid, please change!");
                 return "";
+        }
+    }
+
+    public void UpdateIcons(List<Chimera> chimeras)
+    {
+        foreach(var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
+
+        for(int i = 0; i < chimeras.Count; ++i)
+        {
+            _chimeraIcons[i].sprite = chimeras[i].ChimeraIcon;
         }
     }
 }
