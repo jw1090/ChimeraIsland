@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _evolutionSFX= null;
     [SerializeField] private AudioClip _levelUpSFX= null;
 
-    private UIManager _uIManager = null;
+    private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
@@ -59,7 +59,7 @@ public class AudioManager : MonoBehaviour
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _uIManager = ServiceLocator.Get<UIManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
 
         _masterVolume = _persistentData.Volumes.x;
         _musicVolume = _persistentData.Volumes.y;
@@ -76,33 +76,21 @@ public class AudioManager : MonoBehaviour
 
     public void SetupAudioListeners()
     {
-        CreateButtonListener(_uIManager.MainMenuUI.NewGameButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.MainMenuUI.LoadGameButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.MainMenuButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.WorldMapButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.QuitGameButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.WorldMapUI.StonePlainsButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.WorldMapUI.TreeOfLifeButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
-        CreateButtonListener(_uIManager.HabitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
-    }
+        MainMenuUI mainMenuUI = _uiManager.MainMenuUI;
+        HabitatUI habitatUI = _uiManager.HabitatUI;
+        WorldMapUI worldMapUI = _uiManager.WorldMapUI;
 
-    private void CreateButtonListener(Button button, Action action)
-    {
-        if (button != null)
-        {
-            button.onClick.AddListener
-            (delegate
-            {
-                action?.Invoke();
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
+        _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.MainMenuButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.WorldMapButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.QuitGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(worldMapUI.StonePlainsButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(worldMapUI.TreeOfLifeButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
     }
 
     public void PlayHabitatMusic(HabitatType habitatType)

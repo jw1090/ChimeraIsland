@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,13 +19,12 @@ public class UIManager : MonoBehaviour
     public WorldMapUI WorldMapUI { get => _worldMapUI; }
     public TutorialObserver TutorialObserver { get => _tutorialObserver; }
 
-
     public UIManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _startingUI.Initialize(this);
-        _habitatUI.Initialize();
+        _habitatUI.Initialize(this);
 
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _tutorialOverlay.Initialize(this);
@@ -103,5 +104,21 @@ public class UIManager : MonoBehaviour
     {
         _tutorialOverlay.gameObject.SetActive(false);
         _tutorialManager.SaveTutorialProgress();
+    }
+
+    public void CreateButtonListener(Button button, Action action)
+    {
+        if (button != null)
+        {
+            button.onClick.AddListener
+            (delegate
+            {
+                action?.Invoke();
+            });
+        }
+        else
+        {
+            Debug.LogError($"{button} is null! Please Fix");
+        }
     }
 }

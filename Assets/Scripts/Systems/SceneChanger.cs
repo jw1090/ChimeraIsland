@@ -24,16 +24,16 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
-        CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
-        CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
-        CreateButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
-        CreateButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
-        CreateButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
-        CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
-        CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
+        CreateTutorialButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
+        CreateTutorialButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
+        CreateTutorialButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
+        CreateTutorialButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
+        CreateTutorialButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
+        CreateTutorialButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
+        CreateTutorialButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
     }
 
-    private void CreateButtonListener(Button button, Action action)
+    private void CreateTutorialButtonListener(Button button, Action action)
     {
         if (button != null)
         {

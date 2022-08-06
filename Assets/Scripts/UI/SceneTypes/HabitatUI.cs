@@ -44,10 +44,10 @@ public class HabitatUI : MonoBehaviour
     public UITraining TrainingPanel { get => _trainingPanel; }
     public UIExpedition ExpeditionPanel { get => _expeditionPanel; }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         InitializeWallets();
-        _trainingPanel.Initialize(this);
+        _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize();
     }
 
