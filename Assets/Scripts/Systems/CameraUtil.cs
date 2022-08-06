@@ -92,7 +92,7 @@ public class CameraUtil : MonoBehaviour
             direction.z *= 0.25f;
         }
 
-        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 1.2f);
+        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 1.0f);
         transform.position = newPos;
     }
 

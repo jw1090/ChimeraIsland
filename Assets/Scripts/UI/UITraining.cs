@@ -21,7 +21,7 @@ public class UITraining : MonoBehaviour
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
     private HabitatUI _habitatUI = null;
-    private UIManager uiManager = null;
+    private UIManager _uiManager = null;
     private int _cost = 0;
     private int _levelGoal = 0;
     private int _attribute = 0;
@@ -34,18 +34,19 @@ public class UITraining : MonoBehaviour
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
 
-        _habitatUI = uiManager.HabitatUI;
+        _uiManager = uiManager;
+        _habitatUI = _uiManager.HabitatUI;
 
         SetupUIListeners();
     }
 
     public void SetupUIListeners()
     {
-        uiManager.CreateButtonListener(_screenWideOffButton, ResetTrainingUI);
-        uiManager.CreateButtonListener(_increaseButton, IncreaseStatGoal);
-        uiManager.CreateButtonListener(_decreaseButton, DecreaseStatGoal);
-        uiManager.CreateButtonListener(_confirmButton, Confirm);
-        uiManager.CreateButtonListener(_declineButton, ResetTrainingUI);
+        _uiManager.CreateButtonListener(_screenWideOffButton, ResetTrainingUI);
+        _uiManager.CreateButtonListener(_increaseButton, IncreaseStatGoal);
+        _uiManager.CreateButtonListener(_decreaseButton, DecreaseStatGoal);
+        _uiManager.CreateButtonListener(_confirmButton, Confirm);
+        _uiManager.CreateButtonListener(_declineButton, ResetTrainingUI);
     }
 
     public void SetupTrainingUI(Chimera chimera, Facility facility)

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
+    private List<Chimera> _chimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -37,25 +37,27 @@ public class UIExpedition : MonoBehaviour
         ExpeditionData data = _expeditionManager.CurrentExpeditionData;
 
         _expeditionName.text = data.expeditionName;
-        LoadBadges(data.modifiers);
+        LoadModifiers(data.modifiers);
         _minimumLevel.text = $"Minimum Level: {data.minimumLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
-        //_duration.text = TimeSpan.FromSeconds(data.duration).ToString("mm:ss");
+
+        var ts = TimeSpan.FromSeconds(data.duration);
+        _duration.text = $"Duration: {string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds)}";
     }
 
-    private void LoadBadges(List<ModifierType> badgeData)
+    private void LoadModifiers(List<ModifierType> modifierData)
     {
         int activeBadgeCount = 1;
         int i = 0;
-        foreach(var badgeType in badgeData)
+        foreach(var modifierType in modifierData)
         {
-            if(badgeType == ModifierType.None)
+            if(modifierType == ModifierType.None)
             {
                 _modifiers[i].gameObject.SetActive(false);
             }
             else
             {
-                _modifiers[i].icon.sprite = _resourceManager.GetBadgeSprite(badgeType);
+                _modifiers[i].icon.sprite = _resourceManager.GetModifierSprite(modifierType);
                 _modifiers[i].gameObject.SetActive(true);
                 ++activeBadgeCount;
             }
