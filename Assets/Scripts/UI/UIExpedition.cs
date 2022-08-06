@@ -13,7 +13,6 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
-    private List<Chimera> _chimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 

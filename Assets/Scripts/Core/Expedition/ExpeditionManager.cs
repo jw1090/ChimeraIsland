@@ -15,4 +15,9 @@ public class ExpeditionManager : MonoBehaviour
 
         return this;
     }
+
+    private void UpdateChimeras()
+    {
+        _chimeras.Clear();
+    }
 }
