@@ -12,6 +12,9 @@ public class ExpeditionManager : MonoBehaviour
     private float _agilityModifer = 1.0f;
     private float _intelligenceModifier = 1.0f;
     private float _strengthModifier = 1.0f;
+    private ExpeditionState _expeditionState = ExpeditionState.None;
+
+    public ExpeditionState State { get => _expeditionState; }
 
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
 
@@ -30,6 +33,8 @@ public class ExpeditionManager : MonoBehaviour
         ResetMultipliers();
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
+
+        _expeditionState = ExpeditionState.Setup;
     }
 
     public bool AddChimera(Chimera chimera)

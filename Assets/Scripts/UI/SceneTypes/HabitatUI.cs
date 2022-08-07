@@ -160,7 +160,7 @@ public class HabitatUI : MonoBehaviour
         _detailsPanel.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
-        _expeditionPanel.gameObject.SetActive(false);
+        _expeditionPanel.CloseExpeditionUI();
         _transferMap.gameObject.SetActive(false);
 
         _menuOpen = false;
@@ -262,7 +262,7 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.SetupExpeditionUI();
 
         OpenExpeditionDetailsPanel();
-        _expeditionPanel.gameObject.SetActive(true);
+        _expeditionPanel.OpenExpeditionUI();
 
         _menuOpen = true;
     }

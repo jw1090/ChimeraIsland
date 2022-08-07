@@ -37,6 +37,14 @@ public enum ExpeditionRewardType
     Fossils,
 }
 
+public enum ExpeditionState
+{
+    None = -1,
+    Setup,
+    InProgress,
+    Result
+}
+
 public enum FacilityType
 {
     None = -1,

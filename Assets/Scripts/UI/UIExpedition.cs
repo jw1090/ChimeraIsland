@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
+    [Header("Expedition Setup")]
+    [SerializeField] private GameObject _setupPanel = null;
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
@@ -15,6 +17,21 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private TextMeshProUGUI _duration = null;
+    [SerializeField] private Button _confirmButton = null;
+
+    [Header("In Progress")]
+    [SerializeField] private GameObject _inProgressPanel = null;
+    [SerializeField] private TextMeshProUGUI _inProgressSuccessChance = null;
+    [SerializeField] private Slider _durationSlider = null;
+    [SerializeField] private TextMeshProUGUI _timeRemainingText = null;
+    [SerializeField] private Button _resultsButton = null;
+
+    [Header("Results")]
+    [SerializeField] private GameObject _rewardPanel = null;
+    [SerializeField] private TextMeshProUGUI _successResults = null;
+    [SerializeField] private TextMeshProUGUI _resultsDescription = null;
+    [SerializeField] private Button _closeButton = null;
+
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
@@ -145,5 +162,41 @@ public class UIExpedition : MonoBehaviour
     private void UpdateSuccessText()
     {
         _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+    }
+
+    public void OpenExpeditionUI()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(false);
+
+        switch (_expeditionManager.State)
+        {
+            case ExpeditionState.Setup: // On by default
+                break;
+            case ExpeditionState.InProgress:
+                _inProgressPanel.gameObject.SetActive(true);
+                break;
+            case ExpeditionState.Result:
+                _rewardPanel.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");
+                break;
+        }
+
+        this.gameObject.SetActive(true);
+    }
+
+    public void CloseExpeditionUI()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(false);
+
+        this.gameObject.SetActive(false);
+    }
+
+    private void ConfirmClick()
+    {
+
     }
 }
