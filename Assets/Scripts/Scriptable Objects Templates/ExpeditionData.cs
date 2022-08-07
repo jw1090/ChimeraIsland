@@ -8,5 +8,5 @@ public class ExpeditionData : ScriptableObject
     public List<ModifierType> modifiers = new List<ModifierType>();
     public int minimumLevel = 0;
     public ExpeditionRewardType rewardType = ExpeditionRewardType.None;
-    public float duration = 0.0f;
+    public double duration = 0.0;
 }

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ChimeraDetails : MonoBehaviour
 {
-    [SerializeField] private DetailsTransferButton _detailsTransferButton = null;
     [SerializeField] private Image _chimeraIcon = null;
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
@@ -17,19 +16,32 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _removeButton = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
+    private UIManager _uiManager = null;
+    private ExpeditionManager _expeditionManager = null;
     private int _chimeraSpot = 0;
 
     public Chimera Chimera { get => _chimera; }
 
-    public void Initialize(int chimeraSpot)
+    public void Initialize(UIManager uiManager)
+    {
+        _uiManager = uiManager;
+    }
+
+    public void HabitatDetailsSetup(int chimeraSpot)
     {
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+        _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
 
         _chimeraSpot = chimeraSpot;
 
-        _detailsTransferButton.Initialize(this);
-
         UpdateDetails();
+    }
+
+    public void SetupButtonListeners()
+    {
+        _uiManager.CreateButtonListener(_transferButton, TransferMapClicked);
+        _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
+        _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
     }
 
     public void UpdateDetails()
@@ -74,11 +86,41 @@ public class ChimeraDetails : MonoBehaviour
                 _transferButton.gameObject.SetActive(true);
                 break;
             case DetailsButtonType.Expedition:
-                _addButton.gameObject.SetActive(true);
+                if(_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
+                {
+                    _removeButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _addButton.gameObject.SetActive(true);
+                }
                 break;
             default:
                 Debug.LogWarning($"{detailsButtonType} is not a valid type. Please fix!");
                 break;
+        }
+    }
+
+    private void TransferMapClicked()
+    {
+        _uiManager.HabitatUI.OpenTransferMap(_chimera);
+    }
+
+    private void AddChimeraClicked()
+    {
+        if(_expeditionManager.AddChimera(_chimera) == true) // Success
+        {
+            _addButton.gameObject.SetActive(false);
+            _removeButton.gameObject.SetActive(true);
+        }
+    }
+
+    private void RemoveChimeraClicked()
+    {
+        if(_expeditionManager.RemoveChimera(_chimera) == true) // Success
+        {
+            _addButton.gameObject.SetActive(true);
+            _removeButton.gameObject.SetActive(false);
         }
     }
 }

@@ -9,6 +9,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
     private SceneChanger _sceneChanger = null;
     private AudioManager _audioManager = null;
     private UIManager _uiManager = null;
+
     public void Initialize(UIManager uiManager)
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();

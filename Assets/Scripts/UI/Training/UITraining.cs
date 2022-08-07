@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class UITraining : MonoBehaviour
     private Chimera _chimera = null;
     private CurrencyManager _currencyManager = null;
     private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private int _cost = 0;
     private int _levelGoal = 0;
     private int _attribute = 0;
@@ -29,37 +29,23 @@ public class UITraining : MonoBehaviour
     public Button ConfirmButton { get => _confirmButton; }
     public Button DeclineButton { get => _declineButton; }
 
-    public void Initialize(HabitatUI habitatUI)
+    public void Initialize(UIManager uiManager)
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _habitatUI = habitatUI;
+
+        _uiManager = uiManager;
+        _habitatUI = _uiManager.HabitatUI;
 
         SetupUIListeners();
     }
 
     public void SetupUIListeners()
     {
-        CreateButtonListener(_screenWideOffButton, ResetTrainingUI);
-        CreateButtonListener(_increaseButton, IncreaseStatGoal);
-        CreateButtonListener(_decreaseButton, DecreaseStatGoal);
-        CreateButtonListener(_confirmButton, Confirm);
-        CreateButtonListener(_declineButton, ResetTrainingUI);
-    }
-
-    private void CreateButtonListener(Button button, Action action)
-    {
-        if (button != null)
-        {
-            button.onClick.AddListener
-            (delegate
-            {
-                action?.Invoke();
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
+        _uiManager.CreateButtonListener(_screenWideOffButton, ResetTrainingUI);
+        _uiManager.CreateButtonListener(_increaseButton, IncreaseStatGoal);
+        _uiManager.CreateButtonListener(_decreaseButton, DecreaseStatGoal);
+        _uiManager.CreateButtonListener(_confirmButton, Confirm);
+        _uiManager.CreateButtonListener(_declineButton, ResetTrainingUI);
     }
 
     public void SetupTrainingUI(Chimera chimera, Facility facility)

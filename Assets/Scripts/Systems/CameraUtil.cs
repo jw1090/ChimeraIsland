@@ -25,17 +25,12 @@ public class CameraUtil : MonoBehaviour
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
     private Rect _leftRect = new Rect();
-    private Vector3 _direction = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
     private bool _initialized = false;
     private bool _canMoveUp = true;
     private bool _canMoveDown = true;
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
-    private bool _moveUp = false;
-    private bool _moveDown = false;
-    private bool _moveRight = false;
-    private bool _moveLeft = false;
     private bool _moveSlow = false;
     private float _zoom = 90.0f;
 
@@ -54,6 +49,8 @@ public class CameraUtil : MonoBehaviour
         _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
         _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
 
+        CameraZoom();
+
         _initialized = true;
 
         return this;
@@ -66,95 +63,71 @@ public class CameraUtil : MonoBehaviour
             return;
         }
 
-        CameraMovement();
-        ScreenMove();
-
-        CameraZoom();
+        DragChimeraMovement();
 
         CameraCollisionCheck();
     }
 
-    private void CameraMovement()
+    public void CameraMovement()
     {
-        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 2 * _speed : _speed;
-        Vector3 newPos = transform.position;
-
-        if(_moveSlow == true)
+        if (_initialized == false)
         {
-            panSpeed *= 0.25f;
+            return;
         }
 
-        if (Input.GetKey(KeyCode.W))
+        Vector3 direction = Vector3.zero;
+        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 1.5f * _speed : _speed;
+
+        bool moveUp = Input.GetKey(KeyCode.W) && _canMoveUp;
+        bool moveDown = Input.GetKey(KeyCode.S) && _canMoveDown;
+        bool moveLeft = Input.GetKey(KeyCode.A) && _canMoveLeft;
+        bool moveRight = Input.GetKey(KeyCode.D) && _canMoveRight;
+
+        direction.z = moveUp ? -1 : moveDown ? 1 : 0;
+        direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
+
+        if (_moveSlow == true)
         {
-            if (_canMoveUp)
-            {
-                newPos.z -= panSpeed * Time.deltaTime;
-            }
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            if (_canMoveDown)
-            {
-                newPos.z += panSpeed * Time.deltaTime;
-            }
+            direction.x *= 0.25f;
+            direction.z *= 0.25f;
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            if (_canMoveLeft)
-            {
-                newPos.x += panSpeed * Time.deltaTime;
-            }
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            if (_canMoveRight)
-            {
-                newPos.x -= panSpeed * Time.deltaTime;
-            }
-        }
-
-        float _horizontal = Input.GetAxis("Horizontal");
-        float _vertical = Input.GetAxis("Vertical");
-
-        if (_horizontal != 0 || _vertical != 0)
-        {
-            transform.position = newPos;
-        }
+        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 0.8f);
+        transform.position = newPos;
     }
 
-    private void CameraZoom()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            _zoom -= Input.GetAxis("Mouse ScrollWheel") * _zoomAmount;
-            _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
-            CameraCO.fieldOfView = _zoom;
-        }
-    }
-
-    private void ScreenMove()
+    private void DragChimeraMovement()
     {
         if (IsHolding == false)
         {
             return;
         }
 
-        _moveDown = (_upRect.Contains(Input.mousePosition));
-        _moveUp = (_downRect.Contains(Input.mousePosition));
-        _moveLeft = (_leftRect.Contains(Input.mousePosition));
-        _moveRight = (_rightRect.Contains(Input.mousePosition));
+        Vector3 direction = Vector3.zero;
 
-        _direction.x = _moveLeft ? -1 : _moveRight ? 1 : 0;
-        _direction.z = _moveUp ? 1 : _moveDown ? -1 : 0;
+        bool moveDown = (_upRect.Contains(Input.mousePosition));
+        bool moveUp = (_downRect.Contains(Input.mousePosition));
+        bool moveLeft = (_leftRect.Contains(Input.mousePosition));
+        bool moveRight = (_rightRect.Contains(Input.mousePosition));
+
+        direction.z = moveUp ? 1 : moveDown ? -1 : 0;
+        direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
 
         if (_moveSlow == true)
         {
-            _direction.x *= 0.25f;
-            _direction.z *= 0.25f;
+            direction.x *= 0.25f;
+            direction.z *= 0.25f;
         }
 
-        transform.position = Vector3.Lerp(transform.position, transform.position + _direction * _moveSpeed, Time.deltaTime);
+        Vector3 newPos = Vector3.Lerp(transform.position, transform.position + direction * _moveSpeed, Time.deltaTime);
+        transform.position = newPos;
+    }
+
+    public void CameraZoom()
+    {
+        _zoom -= Input.GetAxis("Mouse ScrollWheel") * _zoomAmount;
+        _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
+        CameraCO.fieldOfView = _zoom;
     }
 
     private void CameraCollisionCheck()

@@ -7,19 +7,31 @@ using UnityEngine.UI;
 public class UIExpedition : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
-    [SerializeField] private GameObject _modifierFolder = null;
-    [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
+    [SerializeField] private GameObject _modifierFolder = null;
+    [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
+    [SerializeField] private List<Image> _chimeraIcons = new List<Image>();
+    [SerializeField] private Slider _successSlider = null;
+    [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private TextMeshProUGUI _duration = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
+    private List<Chimera> _currentChimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+    }
+
+    public void SceneCleanup()
+    {
+        foreach(var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
     }
 
     public void SetupExpeditionUI()
@@ -29,6 +41,10 @@ public class UIExpedition : MonoBehaviour
             Debug.LogError($"Please set the Expedition Manager, it is currently null");
         }
 
+        _currentChimeras = null;
+
+        _expeditionManager.ExpeditionSetup();
+
         LoadData();
     }
 
@@ -37,25 +53,27 @@ public class UIExpedition : MonoBehaviour
         ExpeditionData data = _expeditionManager.CurrentExpeditionData;
 
         _expeditionName.text = data.expeditionName;
-        LoadBadges(data.modifiers);
+        LoadModifiers(data.modifiers);
         _minimumLevel.text = $"Minimum Level: {data.minimumLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
-        //_duration.text = TimeSpan.FromSeconds(data.duration).ToString("mm:ss");
+
+        var ts = TimeSpan.FromSeconds(data.duration);
+        _duration.text = $"Duration: {string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds)}";
     }
 
-    private void LoadBadges(List<ModifierType> badgeData)
+    private void LoadModifiers(List<ModifierType> modifierData)
     {
         int activeBadgeCount = 1;
         int i = 0;
-        foreach(var badgeType in badgeData)
+        foreach(var modifierType in modifierData)
         {
-            if(badgeType == ModifierType.None)
+            if(modifierType == ModifierType.None)
             {
                 _modifiers[i].gameObject.SetActive(false);
             }
             else
             {
-                _modifiers[i].icon.sprite = _resourceManager.GetBadgeSprite(badgeType);
+                _modifiers[i].icon.sprite = _resourceManager.GetModifierSprite(modifierType);
                 _modifiers[i].gameObject.SetActive(true);
                 ++activeBadgeCount;
             }
@@ -85,5 +103,47 @@ public class UIExpedition : MonoBehaviour
                 Debug.LogWarning($"Reward Type [{rewardType}] was invalid, please change!");
                 return "";
         }
+    }
+
+    public void UpdateIcons(List<Chimera> chimeras) // Standard
+    {
+        _currentChimeras = chimeras;
+
+        UpdateIcons();
+    }
+
+    public void UpdateIcons() // Used to update UI during evolutions
+    {
+        if(_currentChimeras == null)
+        {
+            return;
+        }
+
+        foreach (var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
+
+        for (int i = 0; i < _currentChimeras.Count; ++i)
+        {
+            _chimeraIcons[i].sprite = _currentChimeras[i].ChimeraIcon;
+        }
+    }
+
+    public void UpdateDifficultValue(float difficultyValue)
+    {
+        _successSlider.maxValue = difficultyValue;
+    }
+
+    public void UpdateChimeraPower(float power)
+    {
+        _successSlider.value = power;
+
+        UpdateSuccessText();
+    }
+
+    private void UpdateSuccessText()
+    {
+        _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
     }
 }

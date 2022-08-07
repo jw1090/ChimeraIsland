@@ -67,8 +67,8 @@ Transform:
   - {fileID: 6977869457773401215}
   - {fileID: 1221526613}
   - {fileID: 1695720460737137764}
-  - {fileID: 2054917573350485870}
   - {fileID: 959284935615224966}
+  - {fileID: 2054917573350485870}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,11 +88,10 @@ MonoBehaviour:
   _statType: 2
   _statModifier: 1
   _price: 50
-  _audioSource: {fileID: 0}
   _rubbleObject: {fileID: 8090403893966141389}
   _tier1Object: {fileID: 1396333438937323935}
   _glowObject: {fileID: 8838276702326183049}
-  _trainingIcon: {fileID: 8295201059804031542}
+  _trainingIcon: {fileID: 4470197335651607818}
   _placeCollider: {fileID: 4721952644669376352}
   _releaseCollider: {fileID: 2431105710050899180}
   _facilitySign: {fileID: 6402907563462342968}
@@ -292,7 +291,7 @@ GameObject:
   - component: {fileID: 2054917573350485870}
   - component: {fileID: 1991851694971359265}
   m_Layer: 7
-  m_Name: TrainingSFX
+  m_Name: Training Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +309,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8712644418381381357}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1991851694971359265
 AudioSource:
@@ -1357,30 +1356,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8712644418381381357}
     m_Modifications:
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 682486240018232042, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1166695928015043848, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -1399,7 +1374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795326395446175163, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3795326395446175163, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1477,10 +1452,6 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7299208546928897313, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
-      propertyPath: MaxDistance
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7544926380628261750, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
       propertyPath: m_Name
       value: Chimera Traning Icon
@@ -1496,14 +1467,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3795326395446175163, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
   m_PrefabInstance: {fileID: 4178115248315775293}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8295201059804031542 stripped
+--- !u!114 &4470197335651607818 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5396962477752783627, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
+  m_CorrespondingSourceObject: {fileID: 572785516272442423, guid: e798cddbc7ddeb448a989dc2ded5f045, type: 3}
   m_PrefabInstance: {fileID: 4178115248315775293}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b9c6a7016bdb914d819fce5f084b7b1, type: 3}
+  m_Script: {fileID: 11500000, guid: fcbf14d198c01e34d928e6f3d35e12c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

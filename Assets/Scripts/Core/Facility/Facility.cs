@@ -12,7 +12,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private GameObject _rubbleObject = null;
     [SerializeField] private GameObject _tier1Object = null;
     [SerializeField] private MeshRenderer _glowObject = null;
-    [SerializeField] private FacilityIcon _trainingIcon = null;
+    [SerializeField] private TrainingFacilityIcon _trainingIcon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
@@ -30,7 +30,7 @@ public class Facility : MonoBehaviour
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
 
-    public FacilityIcon MyFacilityIcon { get => _trainingIcon; }
+    public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
@@ -138,7 +138,6 @@ public class Facility : MonoBehaviour
         FacilityColliderToggle(FacilityColliderType.release);
         RevealChimera(false);
 
-
         Debug.Log($"{_storedChimera} added to the facility.");
 
         return true;
@@ -197,10 +196,10 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
         _trainingIcon.UpdateSlider(currentStatAmount);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
+        _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
     }
 
     public void PlayTrainingSFX()

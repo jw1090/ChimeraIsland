@@ -75,7 +75,7 @@ public class LevelLoader : AsyncLoader
         if (_cameraUtil != null)
         {
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
-            _inputManager.SetCamera(_cameraUtil.CameraCO);
+            _inputManager.SetCameraUtil(_cameraUtil);
         }
 
         if (_habitat != null)
@@ -87,7 +87,7 @@ public class LevelLoader : AsyncLoader
         if(_expeditionManager != null)
         {
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
-            _uiManager.HabitatUI.ExpeditionPanel.SetExpeditionManager(_expeditionManager);
+            _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
         }
     }
 

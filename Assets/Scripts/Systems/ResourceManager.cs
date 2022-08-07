@@ -275,7 +275,7 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public Sprite GetBadgeSprite(ModifierType badgeType)
+    public Sprite GetModifierSprite(ModifierType badgeType)
     {
         switch (badgeType)
         {

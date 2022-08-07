@@ -7,16 +7,18 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private GameObject _sphereMarker = null;
     private Camera _cameraMain = null;
+    private CameraUtil _cameraUtil = null;
     private ChimeraBehavior _heldChimera = null;
-    private ReleaseSlider _releaseSlider = null;
+    //private ReleaseSlider _releaseSlider = null;
     private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
-    private bool _sliderUpdated = false;
+    //private bool _sliderUpdated = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
@@ -26,12 +28,18 @@ public class InputManager : MonoBehaviour
 
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
-    public void SetCamera(Camera camera) { _cameraMain = camera; }
+    public void SetCameraUtil(CameraUtil cameraUtil)
+    {
+        _cameraUtil = cameraUtil;
+        _cameraMain = _cameraUtil.CameraCO;
+    }
+
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _releaseSlider = _uiManager.HabitatUI.ReleaseSlider;
+        _habitatUI = _uiManager.HabitatUI;
+        //_releaseSlider = _habitatUI.ReleaseSlider;
     }
 
     public InputManager Initialize()
@@ -93,11 +101,24 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            if(_uiManager.HabitatUI != null)
+            _cameraUtil.CameraZoom();
+        }
+
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            if(_habitatUI.MenuOpen == false)
             {
-                _uiManager.HabitatUI.ToggleSettingsMenu();
+                _cameraUtil.CameraMovement();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(_habitatUI != null)
+            {
+                _habitatUI.ToggleSettingsMenu();
             }
         }
 
@@ -112,6 +133,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /*
     private void RemoveFromFacility()
     {
         if (_cameraMain == null)
@@ -149,6 +171,7 @@ public class InputManager : MonoBehaviour
         _releaseSlider.UpdateSliderUI();
         _sliderUpdated = true;
     }
+    
 
     private void ResetSliderInfo()
     {
@@ -161,6 +184,7 @@ public class InputManager : MonoBehaviour
         _releaseSlider.UpdateSliderUI();
         _sliderUpdated = false;
     }
+    */
 
     private void EnterHeldState()
     {
