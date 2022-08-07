@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class UIExpedition : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
+    [SerializeField] private TextMeshProUGUI _minimumLevel = null;
+    [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private GameObject _modifierFolder = null;
     [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
     [SerializeField] private List<Image> _chimeraIcons = new List<Image>();
-    [SerializeField] private TextMeshProUGUI _minimumLevel = null;
-    [SerializeField] private TextMeshProUGUI _rewardType = null;
+    [SerializeField] private Slider _successSlider = null;
+    [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private TextMeshProUGUI _duration = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
@@ -40,6 +42,8 @@ public class UIExpedition : MonoBehaviour
         }
 
         _currentChimeras = null;
+
+        _expeditionManager.ExpeditionSetup();
 
         LoadData();
     }
@@ -124,5 +128,22 @@ public class UIExpedition : MonoBehaviour
         {
             _chimeraIcons[i].sprite = _currentChimeras[i].ChimeraIcon;
         }
+    }
+
+    public void UpdateDifficultValue(float difficultyValue)
+    {
+        _successSlider.maxValue = difficultyValue;
+    }
+
+    public void UpdateChimeraPower(float power)
+    {
+        _successSlider.value = power;
+
+        UpdateSuccessText();
+    }
+
+    private void UpdateSuccessText()
+    {
+        _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
     }
 }
