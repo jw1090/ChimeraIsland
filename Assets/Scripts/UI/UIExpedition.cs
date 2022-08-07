@@ -30,25 +30,20 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private GameObject _rewardPanel = null;
     [SerializeField] private TextMeshProUGUI _successResults = null;
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
-    [SerializeField] private Button _closeButton = null;
+    [SerializeField] private Button _rewardsCloseButton = null;
 
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
+    private UIManager _uiManager = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-    }
 
-    public void SceneCleanup()
-    {
-        foreach(var icon in _chimeraIcons)
-        {
-            icon.sprite = null;
-        }
+        _uiManager = uiManager;
     }
 
     public void SetupExpeditionUI()
@@ -60,9 +55,18 @@ public class UIExpedition : MonoBehaviour
 
         _currentChimeras = null;
 
+        SetupListeners();
+
         _expeditionManager.ExpeditionSetup();
 
         LoadData();
+    }
+
+    public void SetupListeners()
+    {
+        _uiManager.CreateButtonListener(_confirmButton, ConfirmClick);
+        _uiManager.CreateButtonListener(_resultsButton, ResultsClick);
+        _uiManager.CreateButtonListener(_rewardsCloseButton, ResultsCloseClick);
     }
 
     public void LoadData()
@@ -162,6 +166,7 @@ public class UIExpedition : MonoBehaviour
     private void UpdateSuccessText()
     {
         _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+        _inProgressSuccessChance.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
     }
 
     public void OpenExpeditionUI()
@@ -195,8 +200,45 @@ public class UIExpedition : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public void CleanUp()
+    {
+        if (_currentChimeras != null)
+        {
+            _currentChimeras.Clear();
+        }
+
+        if (_expeditionManager != null)
+        {
+            _expeditionManager.ClearChimeras();
+        }
+
+        foreach (var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
+    }
+
     private void ConfirmClick()
     {
+        if(_currentChimeras == null)
+        {
+            return;
+        }
 
+        if(_currentChimeras.Count >= 1)
+        {
+            _inProgressPanel.gameObject.SetActive(true);
+        }
+    }
+
+    private void ResultsClick()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(true);
+    }
+
+    private void ResultsCloseClick()
+    {
+        _rewardPanel.gameObject.SetActive(false);
     }
 }

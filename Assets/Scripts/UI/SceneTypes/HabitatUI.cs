@@ -55,7 +55,7 @@ public class HabitatUI : MonoBehaviour
     {
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
-        _expeditionPanel.Initialize();
+        _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
 
         SetupUIListeners();
@@ -259,6 +259,7 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
+        _expeditionPanel.CleanUp();
         _expeditionPanel.SetupExpeditionUI();
 
         OpenExpeditionDetailsPanel();

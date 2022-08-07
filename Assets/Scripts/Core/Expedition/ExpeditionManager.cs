@@ -23,7 +23,6 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
-        _uiExpedition.SceneCleanup();
 
         return this;
     }
@@ -35,6 +34,11 @@ public class ExpeditionManager : MonoBehaviour
         CalculateChimeraPower();
 
         _expeditionState = ExpeditionState.Setup;
+    }
+
+    public void ClearChimeras()
+    {
+        _chimeras.Clear();
     }
 
     public bool AddChimera(Chimera chimera)
@@ -79,7 +83,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float minimumLevel = CurrentExpeditionData.minimumLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 20.0f;
+        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
 
         _difficultyValue = difficultyValue;
 
