@@ -296,7 +296,7 @@ public class Chimera : MonoBehaviour
             if (canEvolve == true)
             {
                 Evolve(evolution);
-                _habitatUI.UpdateDetails();
+                _habitatUI.UpdateHabitatUI();
             }
         }
     }
@@ -330,7 +330,7 @@ public class Chimera : MonoBehaviour
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
 
-        _habitatUI.UpdateDetails();
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void Evolve(EvolutionLogic evolution)

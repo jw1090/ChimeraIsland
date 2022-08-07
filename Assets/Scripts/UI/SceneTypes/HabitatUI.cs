@@ -33,6 +33,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
     private AudioManager _audioManager = null;
+    private bool _menuOpen = false;
 
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
@@ -43,6 +44,7 @@ public class HabitatUI : MonoBehaviour
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITraining TrainingPanel { get => _trainingPanel; }
     public UIExpedition ExpeditionPanel { get => _expeditionPanel; }
+    public bool MenuOpen { get => _menuOpen; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -54,6 +56,9 @@ public class HabitatUI : MonoBehaviour
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize();
+        _detailsFolder.Initialize(uiManager);
+
+        SetupUIListeners();
     }
 
     private void InitializeWallets()
@@ -79,10 +84,15 @@ public class HabitatUI : MonoBehaviour
     public void LoadHabitatSpecificUI()
     {
         _marketplacePanel.Initialize();
-        _detailsFolder.Initialize();
+        _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
 
         ResetStandardUI();
+    }
+
+    private void SetupUIListeners()
+    {
+        _detailsFolder.SetupButtonListeners();
     }
 
     public void EnableTutorialUIByType(TutorialUIElementType uiElementType)
@@ -152,6 +162,8 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.gameObject.SetActive(false);
         _transferMap.gameObject.SetActive(false);
+
+        _menuOpen = false;
     }
 
     private void OpenDetails(DetailsButtonType detailsButtonType)
@@ -186,8 +198,9 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _marketplacePanel.gameObject.SetActive(true);
-
         _openDetailsButton.gameObject.SetActive(false);
+
+        _menuOpen = true;
     }
 
     public void CloseMarketplace()
@@ -202,6 +215,8 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _transferMap.Open(chimera);
+
+        _menuOpen = true;
     }
 
     public void ToggleSettingsMenu()
@@ -234,6 +249,8 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
         _standardUI.gameObject.SetActive(false);
+
+        _menuOpen = true;
     }
 
     public void OpenExpedition()
@@ -246,11 +263,14 @@ public class HabitatUI : MonoBehaviour
 
         OpenExpeditionDetailsPanel();
         _expeditionPanel.gameObject.SetActive(true);
+
+        _menuOpen = true;
     }
 
-    public void UpdateDetails()
+    public void UpdateHabitatUI()
     {
         _detailsFolder.UpdateDetailsList();
+        _expeditionPanel.UpdateIcons();
     }
 
     public void OpenTrainingPanel()
@@ -262,6 +282,8 @@ public class HabitatUI : MonoBehaviour
         _marketplaceButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
         _topLeftButtonsFolder.gameObject.SetActive(false);
+
+        _menuOpen = true;
     }
 
     public void RevealElementsHiddenByTraining()
@@ -271,6 +293,8 @@ public class HabitatUI : MonoBehaviour
         _marketplaceButton.gameObject.SetActive(true);
         _worldMapButton.gameObject.SetActive(true);
         _topLeftButtonsFolder.gameObject.SetActive(true);
+
+        _menuOpen = false;
     }
 
     public void UpdateEssenceWallets()

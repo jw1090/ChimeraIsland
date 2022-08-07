@@ -15,6 +15,7 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
+    private List<Chimera> _currentChimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -23,12 +24,22 @@ public class UIExpedition : MonoBehaviour
         _resourceManager = ServiceLocator.Get<ResourceManager>();
     }
 
+    public void SceneCleanup()
+    {
+        foreach(var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
+    }
+
     public void SetupExpeditionUI()
     {
         if(_expeditionManager == null)
         {
             Debug.LogError($"Please set the Expedition Manager, it is currently null");
         }
+
+        _currentChimeras = null;
 
         LoadData();
     }
@@ -90,16 +101,28 @@ public class UIExpedition : MonoBehaviour
         }
     }
 
-    public void UpdateIcons(List<Chimera> chimeras)
+    public void UpdateIcons(List<Chimera> chimeras) // Standard
     {
-        foreach(var icon in _chimeraIcons)
+        _currentChimeras = chimeras;
+
+        UpdateIcons();
+    }
+
+    public void UpdateIcons() // Used to update UI during evolutions
+    {
+        if(_currentChimeras == null)
+        {
+            return;
+        }
+
+        foreach (var icon in _chimeraIcons)
         {
             icon.sprite = null;
         }
 
-        for(int i = 0; i < chimeras.Count; ++i)
+        for (int i = 0; i < _currentChimeras.Count; ++i)
         {
-            _chimeraIcons[i].sprite = chimeras[i].ChimeraIcon;
+            _chimeraIcons[i].sprite = _currentChimeras[i].ChimeraIcon;
         }
     }
 }

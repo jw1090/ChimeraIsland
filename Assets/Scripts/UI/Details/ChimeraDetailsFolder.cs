@@ -3,25 +3,38 @@ using UnityEngine;
 
 public class ChimeraDetailsFolder : MonoBehaviour
 {
+    [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
     private List<Chimera> _chimerasList = new List<Chimera>();
-    private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
 
+        foreach (var chimeraDetail in _chimeraDetailsList)
+        {
+            chimeraDetail.Initialize(uiManager);
+        }
+    }
+
+    public void HabitatDetailsSetup()
+    {
         _chimerasList = ServiceLocator.Get<HabitatManager>().CurrentHabitat.ActiveChimeras;
 
         int chimeraSpot = 0;
-        foreach (Transform child in transform)
+        foreach (var chimeraDetail in _chimeraDetailsList)
         {
-            ChimeraDetails details = child.GetComponent<ChimeraDetails>();
-
-            _chimeraDetailsList.Add(details);
-            details.Initialize(chimeraSpot++);
+            chimeraDetail.HabitatDetailsSetup(chimeraSpot++);
         }
 
         CheckDetails();
+    }
+
+    public void SetupButtonListeners()
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.SetupButtonListeners();
+        }
     }
 
     public void UpdateDetailsList()

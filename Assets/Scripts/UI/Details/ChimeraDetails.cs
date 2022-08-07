@@ -22,19 +22,22 @@ public class ChimeraDetails : MonoBehaviour
 
     public Chimera Chimera { get => _chimera; }
 
-    public void Initialize(int chimeraSpot)
+    public void Initialize(UIManager uiManager)
+    {
+        _uiManager = uiManager;
+    }
+
+    public void HabitatDetailsSetup(int chimeraSpot)
     {
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
-        _uiManager = ServiceLocator.Get<UIManager>();
         _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
 
         _chimeraSpot = chimeraSpot;
 
-        SetupButtonListeners();
         UpdateDetails();
     }
 
-    private void SetupButtonListeners()
+    public void SetupButtonListeners()
     {
         _uiManager.CreateButtonListener(_transferButton, TransferMapClicked);
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
@@ -83,7 +86,14 @@ public class ChimeraDetails : MonoBehaviour
                 _transferButton.gameObject.SetActive(true);
                 break;
             case DetailsButtonType.Expedition:
-                _addButton.gameObject.SetActive(true);
+                if(_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
+                {
+                    _removeButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _addButton.gameObject.SetActive(true);
+                }
                 break;
             default:
                 Debug.LogWarning($"{detailsButtonType} is not a valid type. Please fix!");

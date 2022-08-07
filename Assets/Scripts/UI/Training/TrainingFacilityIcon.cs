@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FacilityIcon : MonoBehaviour
+public class TrainingFacilityIcon : MonoBehaviour
 {
     [SerializeField] private Image _icon = null;
     [SerializeField] private Slider _slider = null;
