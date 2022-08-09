@@ -152,7 +152,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_storedChimera.Level >= 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
+        if (_storedChimera.Level > 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
         {
             _uiManager.TutorialObserver.DetailsTutorial = true;
             _tutorialManager.ShowTutorialStage(TutorialStageType.Details);
