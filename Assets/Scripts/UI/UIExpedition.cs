@@ -32,6 +32,7 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
     [SerializeField] private Button _rewardsCloseButton = null;
 
+    private TutorialManager _tutorialManager = null;
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
@@ -51,6 +52,7 @@ public class UIExpedition : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _uiManager = uiManager;
 
@@ -307,6 +309,7 @@ public class UIExpedition : MonoBehaviour
         {
             _expeditionManager.SuccessRewards();
             _expeditionSuccess = false;
+            _tutorialManager.ShowTutorialStage(TutorialStageType.TierTwoStonePlains);
         }
 
         _uiManager.HabitatUI.ResetStandardUI();
