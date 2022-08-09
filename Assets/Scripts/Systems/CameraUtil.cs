@@ -32,7 +32,6 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveDown = true;
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
-    private bool _moveSlow = false;
     private float _zoom = 90.0f;
 
     public bool IsHolding { get; set; }
@@ -44,7 +43,7 @@ public class CameraUtil : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _cameraCO = GetComponent<Camera>();
+        _cameraCO = Camera.main;
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
         _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
@@ -88,12 +87,6 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? -1 : moveDown ? 1 : 0;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
-        if (_moveSlow == true)
-        {
-            direction.x *= 0.25f;
-            direction.z *= 0.25f;
-        }
-
         Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 0.8f);
         transform.position = newPos;
     }
@@ -115,12 +108,6 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? 1 : moveDown ? -1 : 0;
         direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
 
-        if (_moveSlow == true)
-        {
-            direction.x *= 0.25f;
-            direction.z *= 0.25f;
-        }
-
         Vector3 newPos = Vector3.Lerp(transform.position, transform.position + direction * _moveSpeed, Time.deltaTime);
         transform.position = newPos;
     }
@@ -140,7 +127,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.z = transform.localPosition.z - pushback;
 
@@ -154,7 +141,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.z = transform.localPosition.z + pushback;
 
@@ -168,7 +155,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.x = transform.localPosition.x - pushback;
 
@@ -182,7 +169,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.x = transform.localPosition.x + pushback;
 
@@ -195,11 +182,6 @@ public class CameraUtil : MonoBehaviour
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1.2f);
-
-        if(_canMoveDown && _canMoveLeft && _canMoveRight && _canMoveUp)
-        {
-            _moveSlow = false;
-        }
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
