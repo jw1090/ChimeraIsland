@@ -242,6 +242,8 @@ public class UIExpedition : MonoBehaviour
     public void TimerComplete()
     {
         _resultsButton.gameObject.SetActive(true);
+        _timeRemainingText.text = "Complete!";
+        _durationSlider.value = _durationSlider.maxValue;
     }
 
     private void ConfirmClick()
@@ -277,6 +279,6 @@ public class UIExpedition : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
         _expeditionManager.NextExpedition();
-        _expeditionManager.ExpeditionSetup();
+        _uiManager.HabitatUI.ResetStandardUI();
     }
 }

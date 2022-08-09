@@ -170,6 +170,7 @@ public class ExpeditionManager : MonoBehaviour
     private void InProgressTimerUpdate()
     {
         _currentDuration -= Time.deltaTime;
+        _uiExpedition.SetInProgressTimeRemainingText(_currentDuration);
 
         if (_currentDuration <= 0)
         {
@@ -178,7 +179,5 @@ public class ExpeditionManager : MonoBehaviour
 
             _uiExpedition.TimerComplete();
         }
-
-        _uiExpedition.SetInProgressTimeRemainingText(_currentDuration);
     }
 }
