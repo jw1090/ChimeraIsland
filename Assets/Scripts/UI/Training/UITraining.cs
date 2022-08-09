@@ -59,11 +59,6 @@ public class UITraining : MonoBehaviour
         _slider.maxValue = 5 + _attribute;
         _levelGoal = _attribute + 1;
 
-        if(_levelGoal > 5 + _attribute)
-        {
-            _statInfoText.text = "Your Chimera has reached the maximum level";
-        }
-
         _slider.value = _levelGoal;
 
         DetermineCost();
@@ -93,7 +88,7 @@ public class UITraining : MonoBehaviour
             _sliderImage.color = _validColor;
         }
 
-        _statInfoText.text = $" {_facility.StatType}: {_attribute} (+{_levelGoal - _attribute})";
+        _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _attribute})";
     }
 
     public void DecreaseStatGoal()
