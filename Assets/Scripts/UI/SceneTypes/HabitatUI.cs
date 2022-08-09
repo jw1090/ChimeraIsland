@@ -270,7 +270,7 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _expeditionPanel.CleanUp();
-        _expeditionPanel.SetupExpeditionUI();
+        _expeditionPanel.LoadExpeditionUI();
 
         OpenExpeditionDetailsPanel();
         _expeditionPanel.OpenExpeditionUI();
