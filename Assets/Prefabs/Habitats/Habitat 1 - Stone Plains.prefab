@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 271095693}
   m_Layer: 0
   m_Name: Cube (10)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 328838617}
   m_Layer: 0
   m_Name: Cube (5)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 1385340232}
   m_Layer: 0
   m_Name: Cube (9)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -731,7 +731,7 @@ GameObject:
   - component: {fileID: 1606731598}
   m_Layer: 0
   m_Name: Cube (11)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 1932639487}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1208,7 +1208,7 @@ GameObject:
   - component: {fileID: 1223873865294783628}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1683,7 +1683,7 @@ GameObject:
   - component: {fileID: 8744332223719222065}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1778,7 +1778,7 @@ GameObject:
   - component: {fileID: 5851368284423502152}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2060,7 +2060,7 @@ GameObject:
   - component: {fileID: 5253830536889144720}
   m_Layer: 0
   m_Name: Camera Bounds
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2581,7 +2581,7 @@ GameObject:
   - component: {fileID: 8477660814974804519}
   m_Layer: 0
   m_Name: Cube (7)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -3114,7 +3114,7 @@ GameObject:
   - component: {fileID: 2840674288988105821}
   m_Layer: 0
   m_Name: Cube (8)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -3209,7 +3209,7 @@ GameObject:
   - component: {fileID: 7767631889261914124}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7520,7 +7520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5411779016239319915}
-  - component: {fileID: 8019505725810647855}
+  - component: {fileID: 636782902}
   m_Layer: 3
   m_Name: Tiers
   m_TagString: Untagged
@@ -7545,7 +7545,7 @@ Transform:
   m_Father: {fileID: 5411779017005719136}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8019505725810647855
+--- !u!114 &636782902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7557,16 +7557,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84ccb23bcb94684aa7ad101af482f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultStateName: TerrainTier1
+  defaultStateName: Tier 1
   currentState:
-    StateName: TerrainTier1
+    StateName: Tier 1
     StateObject: {fileID: 5411779015779295080}
   stateEntries:
-  - StateName: TerrainTier1
+  - StateName: Tier 1
     StateObject: {fileID: 5411779015779295080}
-  - StateName: TerrainTier2
+  - StateName: Tier 2
     StateObject: {fileID: 5411779017111830514}
-  - StateName: TerrainTier3
+  - StateName: Tier 3
     StateObject: {fileID: 5411779016642794709}
   SetDefaultStateOnBadStateRequest: 0
 --- !u!1 &5411779016244928393
@@ -15590,10 +15590,10 @@ MonoBehaviour:
   - {fileID: 4537259061317317890}
   - {fileID: 6586131686891170891}
   _habitatType: 0
-  _facilityCapacity: 3
   _chimeraFolder: {fileID: 5411779016932246351}
   _spawnPoint: {fileID: 5411779016802924876}
   _patrolNodes: {fileID: 5411779016111463727}
+  _tiers: {fileID: 636782902}
 --- !u!1 &5411779017675810158
 GameObject:
   m_ObjectHideFlags: 0
@@ -15990,7 +15990,7 @@ GameObject:
   - component: {fileID: 1709268767880703738}
   m_Layer: 0
   m_Name: Cube (6)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -16180,7 +16180,7 @@ GameObject:
   - component: {fileID: 4190216218929682845}
   m_Layer: 0
   m_Name: Cube (12)
-  m_TagString: Bounds
+  m_TagString: CameraBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -16993,11 +16993,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_Name
-      value: TerrainTier1
+      value: Tier 1
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6215058023569401645, guid: 61ce4bdf7caa55a4d95cb044627c8d7b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17104,11 +17104,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_Name
-      value: TerrainTier3
+      value: Tier 3
       objectReference: {fileID: 0}
     - target: {fileID: 816165554023415927, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4161495455283829357, guid: 46355425e8d32f240b3fd8891b92c4d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17559,7 +17559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_Name
-      value: TerrainTier2
+      value: Tier 2
       objectReference: {fileID: 0}
     - target: {fileID: 1733193835598659478, guid: 1ee4483897bd91d4982a84a3fce5dde7, type: 3}
       propertyPath: m_IsActive

@@ -24,6 +24,7 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private Slider _durationSlider = null;
     [SerializeField] private TextMeshProUGUI _timeRemainingText = null;
     [SerializeField] private Button _resultsButton = null;
+    [SerializeField] private StatefulObject _inProgressStatefulObject = null;
 
     [Header("Results")]
     [SerializeField] private GameObject _rewardPanel = null;
@@ -35,6 +36,7 @@ public class UIExpedition : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
+    private bool _expeditionSuccess = false;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetInProgressTimeRemainingText(float timeRemaining)
@@ -67,9 +69,9 @@ public class UIExpedition : MonoBehaviour
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.ExpeditionSetup();
+            _expeditionSuccess = false;
+            LoadData();
         }
-
-        LoadData();
     }
 
     public void SetupListeners()
@@ -241,7 +243,7 @@ public class UIExpedition : MonoBehaviour
 
     public void TimerComplete()
     {
-        _resultsButton.gameObject.SetActive(true);
+        _inProgressStatefulObject.SetState("Results Button");
         _timeRemainingText.text = "Complete!";
         _durationSlider.value = _durationSlider.maxValue;
     }
@@ -261,7 +263,7 @@ public class UIExpedition : MonoBehaviour
         _inProgressPanel.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
 
-        _resultsButton.gameObject.SetActive(false);
+        _inProgressStatefulObject.SetState("In Progress");
     }
 
     private void InProgressClick()
@@ -270,6 +272,29 @@ public class UIExpedition : MonoBehaviour
         _rewardPanel.gameObject.SetActive(true);
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
+
+        if(_expeditionManager.RandomSuccesRate())
+        {
+            _successResults.text = $"Success";
+
+            if(_expeditionManager.CurrentExpeditionData.rewardType == ExpeditionRewardType.HabitatUpgrade)
+            {
+                _resultsDescription.text = $"Your Habitat has been upgraded!";
+            }
+            else
+            {
+                _resultsDescription.text = $"You've gained 1 Fossil!";
+            }
+
+            
+            _expeditionSuccess = true;
+        }
+        else
+        {
+            _successResults.text = $"Failure";
+            _resultsDescription.text = $"Train your Chimera and try again!";
+            _expeditionSuccess = false;
+        }
     }
 
     private void ResultsCloseClick()
@@ -278,7 +303,12 @@ public class UIExpedition : MonoBehaviour
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
-        _expeditionManager.NextExpedition();
+        if(_expeditionSuccess == true) // Success
+        {
+            _expeditionManager.SuccessRewards();
+            _expeditionSuccess = false;
+        }
+
         _uiManager.HabitatUI.ResetStandardUI();
     }
 }

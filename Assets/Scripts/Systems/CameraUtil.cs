@@ -5,6 +5,7 @@ public class CameraUtil : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _speed = 20.0f;
+    [SerializeField] private float _transitionSpeed = 0.25f;
 
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount = 20.0f;
@@ -32,7 +33,6 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveDown = true;
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
-    private bool _moveSlow = false;
     private float _zoom = 90.0f;
 
     public bool IsHolding { get; set; }
@@ -44,7 +44,7 @@ public class CameraUtil : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _cameraCO = GetComponent<Camera>();
+        _cameraCO = Camera.main;
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
         _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
@@ -88,12 +88,6 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? -1 : moveDown ? 1 : 0;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
-        if (_moveSlow == true)
-        {
-            direction.x *= 0.25f;
-            direction.z *= 0.25f;
-        }
-
         Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 0.8f);
         transform.position = newPos;
     }
@@ -115,12 +109,6 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? 1 : moveDown ? -1 : 0;
         direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
 
-        if (_moveSlow == true)
-        {
-            direction.x *= 0.25f;
-            direction.z *= 0.25f;
-        }
-
         Vector3 newPos = Vector3.Lerp(transform.position, transform.position + direction * _moveSpeed, Time.deltaTime);
         transform.position = newPos;
     }
@@ -140,7 +128,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.z = transform.localPosition.z - pushback;
 
@@ -154,7 +142,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.z = transform.localPosition.z + pushback;
 
@@ -168,7 +156,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.x = transform.localPosition.x - pushback;
 
@@ -182,7 +170,7 @@ public class CameraUtil : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out hit, _offset))
         {
-            if (hit.transform.CompareTag("Bounds"))
+            if (hit.transform.CompareTag("CameraBounds"))
             {
                 newPosition.x = transform.localPosition.x + pushback;
 
@@ -195,57 +183,13 @@ public class CameraUtil : MonoBehaviour
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1.2f);
-
-        if(_canMoveDown && _canMoveLeft && _canMoveRight && _canMoveUp)
-        {
-            _moveSlow = false;
-        }
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        HabitatType habitatType = _habitatManager.CurrentHabitat.Type;
-
-        switch (habitatType)
-        {
-            case HabitatType.StonePlains:
-                switch (facilityType)
-                {
-                    case FacilityType.Cave:
-                        StartCoroutine(MoveCamera(new Vector3(-18.0f, 20.0f, -7.0f), 0.25f));
-                        break;
-                    case FacilityType.Waterfall:
-                        StartCoroutine(MoveCamera(new Vector3(41.0f, 20.0f, 51.0f), 0.25f));
-                        break;
-                    case FacilityType.RuneStone:
-                        StartCoroutine(MoveCamera(new Vector3(16.0f, 20.0f, 39.0f), 0.25f));
-                        break;
-                    default:
-                        Debug.LogWarning($"Invalid Facility Type [{facilityType}], please change!");
-                        break;
-                }
-                break;
-            case HabitatType.TreeOfLife:
-                switch (facilityType)
-                {
-                    case FacilityType.Cave:
-                        StartCoroutine(MoveCamera(new Vector3(16.0f, 24.0f, 44.0f), 0.5f));
-                        break;
-                    case FacilityType.Waterfall:
-                        StartCoroutine(MoveCamera(new Vector3(60.0f, 24.0f, 20.0f), 0.5f));
-                        break;
-                    case FacilityType.RuneStone:
-                        StartCoroutine(MoveCamera(new Vector3(-66.0f, 24.0f, 12.0f), 0.5f));
-                        break;
-                    default:
-                        Debug.LogWarning($"Invalid Facility Type [{facilityType}], please change!");
-                        break;
-                }
-                break;
-            default:
-                Debug.LogWarning($"Invalid Habitat Type [{habitatType}], please change!");
-                break;
-        }
+        Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
+        facilityPosition.y = this.transform.position.y;
+        StartCoroutine(MoveCamera(facilityPosition, _transitionSpeed));
     }
 
     public void ChimeraCameraShift()

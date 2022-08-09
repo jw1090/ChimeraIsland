@@ -7,18 +7,19 @@ public class Habitat : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private List<Facility> _facilities = new List<Facility>();
     [SerializeField] private HabitatType _habitatType = HabitatType.None;
-    [SerializeField] private int _facilityCapacity = 3;
 
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
+    [SerializeField] private StatefulObject _tiers = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
+    private int _currentTier = 1;
 
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
@@ -52,6 +53,8 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
+
+        LoadHabitatTier();
 
         foreach  (Facility facility in _facilities)
         {
@@ -155,13 +158,6 @@ public class Habitat : MonoBehaviour
 
     public bool AddFacility(Facility facility)
     {
-        // Return if no room for another Facility.
-        if (FacilitiesCount() >= _facilityCapacity && facility.CurrentTier == 0)
-        {
-            Debug.Log("Facility capacity is too small to add another Facility.");
-            return false;
-        }
-
         if (facility.CurrentTier == 3)
         {
             Debug.Log("Facility is already at max tier.");
@@ -198,6 +194,31 @@ public class Habitat : MonoBehaviour
         }
 
         return facilityCount;
+    }
+
+    public void UpgradeHabitatTier()
+    {
+        ++_currentTier;
+        LoadHabitatTier();
+    }
+
+    private void LoadHabitatTier()
+    {
+        switch (_currentTier)
+        {
+            case 1:
+                _tiers.SetState("Tier 1");
+                break;
+            case 2:
+                _tiers.SetState("Tier 2");
+                break;
+            case 3:
+                _tiers.SetState("Tier 3");
+                break;
+            default:
+                Debug.LogWarning($"Habitat tier [{_currentTier}] is invalid. Please fix!");
+                break;
+        }
     }
 
     public void ActivateGlow(bool value)
