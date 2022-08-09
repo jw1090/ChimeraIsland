@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ public class ExpeditionManager : MonoBehaviour
     [SerializeField] private int _currentExpedition = 0;
     private List<Chimera> _chimeras = new List<Chimera>();
     private UIExpedition _uiExpedition = null;
+    private CurrencyManager _currencyManager = null;
+    private HabitatManager _habitatManager = null;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
     private float _agilityModifer = 1.0f;
@@ -21,13 +22,14 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
-    public void NextExpedition() { ++_currentExpedition; }
 
     public ExpeditionManager Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
 
         _expeditionState = ExpeditionState.Setup;
 
@@ -178,6 +180,40 @@ public class ExpeditionManager : MonoBehaviour
             _activeInProgressTimer = false;
 
             _uiExpedition.TimerComplete();
+        }
+    }
+
+    public bool RandomSuccesRate()
+    {
+        float successRoll = Random.Range(0.0f, _difficultyValue);
+
+        if(successRoll >= _chimeraPower)
+        {
+            return true;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void SuccessRewards()
+    {
+        ++_currentExpedition;
+
+        switch (CurrentExpeditionData.rewardType)
+        {
+            case ExpeditionRewardType.HabitatUpgrade:
+                _habitatManager.CurrentHabitat.UpgradeHabitat();
+                Debug.Log("Success! Your habitat upgraded!");
+                break;
+            case ExpeditionRewardType.Fossils:
+                _currencyManager.IncreaseFossils(1);
+                Debug.Log("Success! You recieved 1 Fossil!");
+                break;
+            default:
+                Debug.LogWarning($"Reward type is not valid [{CurrentExpeditionData.rewardType}], please change!");
+                break;
         }
     }
 }
