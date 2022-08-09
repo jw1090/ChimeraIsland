@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
+    [Header("Expedition Setup")]
+    [SerializeField] private GameObject _setupPanel = null;
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
@@ -15,23 +17,33 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private TextMeshProUGUI _duration = null;
+    [SerializeField] private Button _confirmButton = null;
+
+    [Header("In Progress")]
+    [SerializeField] private GameObject _inProgressPanel = null;
+    [SerializeField] private TextMeshProUGUI _inProgressSuccessChance = null;
+    [SerializeField] private Slider _durationSlider = null;
+    [SerializeField] private TextMeshProUGUI _timeRemainingText = null;
+    [SerializeField] private Button _resultsButton = null;
+
+    [Header("Results")]
+    [SerializeField] private GameObject _rewardPanel = null;
+    [SerializeField] private TextMeshProUGUI _successResults = null;
+    [SerializeField] private TextMeshProUGUI _resultsDescription = null;
+    [SerializeField] private Button _rewardsCloseButton = null;
+
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
+    private UIManager _uiManager = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-    }
 
-    public void SceneCleanup()
-    {
-        foreach(var icon in _chimeraIcons)
-        {
-            icon.sprite = null;
-        }
+        _uiManager = uiManager;
     }
 
     public void SetupExpeditionUI()
@@ -43,9 +55,18 @@ public class UIExpedition : MonoBehaviour
 
         _currentChimeras = null;
 
+        SetupListeners();
+
         _expeditionManager.ExpeditionSetup();
 
         LoadData();
+    }
+
+    public void SetupListeners()
+    {
+        _uiManager.CreateButtonListener(_confirmButton, ConfirmClick);
+        _uiManager.CreateButtonListener(_resultsButton, ResultsClick);
+        _uiManager.CreateButtonListener(_rewardsCloseButton, ResultsCloseClick);
     }
 
     public void LoadData()
@@ -145,5 +166,79 @@ public class UIExpedition : MonoBehaviour
     private void UpdateSuccessText()
     {
         _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+        _inProgressSuccessChance.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+    }
+
+    public void OpenExpeditionUI()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(false);
+
+        switch (_expeditionManager.State)
+        {
+            case ExpeditionState.Setup: // On by default
+                break;
+            case ExpeditionState.InProgress:
+                _inProgressPanel.gameObject.SetActive(true);
+                break;
+            case ExpeditionState.Result:
+                _rewardPanel.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");
+                break;
+        }
+
+        this.gameObject.SetActive(true);
+    }
+
+    public void CloseExpeditionUI()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(false);
+
+        this.gameObject.SetActive(false);
+    }
+
+    public void CleanUp()
+    {
+        if (_currentChimeras != null)
+        {
+            _currentChimeras.Clear();
+        }
+
+        if (_expeditionManager != null)
+        {
+            _expeditionManager.ClearChimeras();
+        }
+
+        foreach (var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
+    }
+
+    private void ConfirmClick()
+    {
+        if(_currentChimeras == null)
+        {
+            return;
+        }
+
+        if(_currentChimeras.Count >= 1)
+        {
+            _inProgressPanel.gameObject.SetActive(true);
+        }
+    }
+
+    private void ResultsClick()
+    {
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(true);
+    }
+
+    private void ResultsCloseClick()
+    {
+        _rewardPanel.gameObject.SetActive(false);
     }
 }

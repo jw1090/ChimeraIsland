@@ -55,7 +55,7 @@ public class HabitatUI : MonoBehaviour
     {
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
-        _expeditionPanel.Initialize();
+        _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
 
         SetupUIListeners();
@@ -160,7 +160,7 @@ public class HabitatUI : MonoBehaviour
         _detailsPanel.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
-        _expeditionPanel.gameObject.SetActive(false);
+        _expeditionPanel.CloseExpeditionUI();
         _transferMap.gameObject.SetActive(false);
 
         _menuOpen = false;
@@ -259,10 +259,11 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
+        _expeditionPanel.CleanUp();
         _expeditionPanel.SetupExpeditionUI();
 
         OpenExpeditionDetailsPanel();
-        _expeditionPanel.gameObject.SetActive(true);
+        _expeditionPanel.OpenExpeditionUI();
 
         _menuOpen = true;
     }
