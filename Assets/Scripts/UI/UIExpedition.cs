@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UIExpedition : MonoBehaviour
 {
     [Header("Expedition Setup")]
-    [SerializeField] private GameObject _setupPanel = null;
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
@@ -38,15 +37,25 @@ public class UIExpedition : MonoBehaviour
     private List<Chimera> _currentChimeras = new List<Chimera>();
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
+    public void SetInProgressTimeRemainingText(float timeRemaining)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(timeRemaining);
+        string newDurationText = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
+
+        _timeRemainingText.text = newDurationText;
+        _durationSlider.value = timeRemaining;
+    }
 
     public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
 
         _uiManager = uiManager;
+
+        SetupListeners();
     }
 
-    public void SetupExpeditionUI()
+    public void LoadExpeditionUI()
     {
         if(_expeditionManager == null)
         {
@@ -55,9 +64,10 @@ public class UIExpedition : MonoBehaviour
 
         _currentChimeras = null;
 
-        SetupListeners();
-
-        _expeditionManager.ExpeditionSetup();
+        if(_expeditionManager.State == ExpeditionState.Setup)
+        {
+            _expeditionManager.ExpeditionSetup();
+        }
 
         LoadData();
     }
@@ -65,7 +75,7 @@ public class UIExpedition : MonoBehaviour
     public void SetupListeners()
     {
         _uiManager.CreateButtonListener(_confirmButton, ConfirmClick);
-        _uiManager.CreateButtonListener(_resultsButton, ResultsClick);
+        _uiManager.CreateButtonListener(_resultsButton, InProgressClick);
         _uiManager.CreateButtonListener(_rewardsCloseButton, ResultsCloseClick);
     }
 
@@ -78,8 +88,7 @@ public class UIExpedition : MonoBehaviour
         _minimumLevel.text = $"Minimum Level: {data.minimumLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
 
-        var ts = TimeSpan.FromSeconds(data.duration);
-        _duration.text = $"Duration: {string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds)}";
+        LoadDuration(data.duration);
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)
@@ -112,6 +121,18 @@ public class UIExpedition : MonoBehaviour
         }
     }
 
+    private void LoadDuration(float duration)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(duration);
+        string durationString = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
+
+        _duration.text = durationString;
+        _timeRemainingText.text = durationString;
+
+        _durationSlider.maxValue = duration;
+        _durationSlider.value = _durationSlider.maxValue;
+    }
+
     private string RewardTypeToString(ExpeditionRewardType rewardType)
     {
         switch (rewardType)
@@ -126,7 +147,7 @@ public class UIExpedition : MonoBehaviour
         }
     }
 
-    public void UpdateIcons(List<Chimera> chimeras) // Standard
+    public void UpdateIcons(List<Chimera> chimeras)
     {
         _currentChimeras = chimeras;
 
@@ -166,7 +187,7 @@ public class UIExpedition : MonoBehaviour
     private void UpdateSuccessText()
     {
         _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
-        _inProgressSuccessChance.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+        _inProgressSuccessChance.text = $"Success Chance: {_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
     }
 
     public void OpenExpeditionUI()
@@ -176,7 +197,7 @@ public class UIExpedition : MonoBehaviour
 
         switch (_expeditionManager.State)
         {
-            case ExpeditionState.Setup: // On by default
+            case ExpeditionState.Setup:
                 break;
             case ExpeditionState.InProgress:
                 _inProgressPanel.gameObject.SetActive(true);
@@ -218,6 +239,11 @@ public class UIExpedition : MonoBehaviour
         }
     }
 
+    public void TimerComplete()
+    {
+        _resultsButton.gameObject.SetActive(true);
+    }
+
     private void ConfirmClick()
     {
         if(_currentChimeras == null)
@@ -225,20 +251,32 @@ public class UIExpedition : MonoBehaviour
             return;
         }
 
-        if(_currentChimeras.Count >= 1)
+        if(_currentChimeras.Count < 1)
         {
-            _inProgressPanel.gameObject.SetActive(true);
+            Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
+
+        _inProgressPanel.gameObject.SetActive(true);
+        _expeditionManager.EnterInProgressState();
+
+        _resultsButton.gameObject.SetActive(false);
     }
 
-    private void ResultsClick()
+    private void InProgressClick()
     {
         _inProgressPanel.gameObject.SetActive(false);
         _rewardPanel.gameObject.SetActive(true);
+
+        _expeditionManager.SetExpeditionState(ExpeditionState.Result);
     }
 
     private void ResultsCloseClick()
     {
         _rewardPanel.gameObject.SetActive(false);
+
+        _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
+
+        _expeditionManager.NextExpedition();
+        _expeditionManager.ExpeditionSetup();
     }
 }

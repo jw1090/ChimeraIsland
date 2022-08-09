@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,15 @@ public class ExpeditionManager : MonoBehaviour
     private float _agilityModifer = 1.0f;
     private float _intelligenceModifier = 1.0f;
     private float _strengthModifier = 1.0f;
+    private float _currentDuration = 0.0f;
+    public bool _activeInProgressTimer = false;
     private ExpeditionState _expeditionState = ExpeditionState.None;
 
     public ExpeditionState State { get => _expeditionState; }
-
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
+
+    public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
+    public void NextExpedition() { ++_currentExpedition; }
 
     public ExpeditionManager Initialize()
     {
@@ -24,7 +29,22 @@ public class ExpeditionManager : MonoBehaviour
 
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
 
+        _expeditionState = ExpeditionState.Setup;
+
         return this;
+    }
+
+    public void Update()
+    {
+        if (State != ExpeditionState.InProgress)
+        {
+            return;
+        }
+
+        if (_activeInProgressTimer == true)
+        {
+            InProgressTimerUpdate();
+        }
     }
 
     public void ExpeditionSetup()
@@ -32,13 +52,18 @@ public class ExpeditionManager : MonoBehaviour
         ResetMultipliers();
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
-
-        _expeditionState = ExpeditionState.Setup;
     }
 
     public void ClearChimeras()
     {
         _chimeras.Clear();
+    }
+
+    public void EnterInProgressState()
+    {
+        _expeditionState = ExpeditionState.InProgress;
+        _currentDuration = CurrentExpeditionData.duration;
+        _activeInProgressTimer = true;
     }
 
     public bool AddChimera(Chimera chimera)
@@ -140,5 +165,20 @@ public class ExpeditionManager : MonoBehaviour
         );
 
         return successChance;
+    }
+
+    private void InProgressTimerUpdate()
+    {
+        _currentDuration -= Time.deltaTime;
+
+        if (_currentDuration <= 0)
+        {
+            _currentDuration = 0;
+            _activeInProgressTimer = false;
+
+            _uiExpedition.TimerComplete();
+        }
+
+        _uiExpedition.SetInProgressTimeRemainingText(_currentDuration);
     }
 }
