@@ -9,13 +9,16 @@ public class ExpeditionManager : MonoBehaviour
     private UIExpedition _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
+    private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
     private float _agilityModifer = 1.0f;
     private float _intelligenceModifier = 1.0f;
     private float _strengthModifier = 1.0f;
+    private float _aquaBonus = 0.0f;
+    private float _bioBonus = 0.0f;
+    private float _firaBonus = 0.0f;
     private float _currentDuration = 0.0f;
-    public bool _activeInProgressTimer = false;
     private ExpeditionState _expeditionState = ExpeditionState.None;
 
     public ExpeditionState State { get => _expeditionState; }
@@ -51,7 +54,6 @@ public class ExpeditionManager : MonoBehaviour
 
     public void ExpeditionSetup()
     {
-        ResetMultipliers();
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
@@ -120,12 +122,14 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateChimeraPower()
     {
         float power = 0;
+        
+        CalculateModifiers();
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Agility * _agilityModifer * 7.5f;
-            power += chimera.Intelligence * _intelligenceModifier * 7.5f;
-            power += chimera.Strength * _strengthModifier * 7.5f;
+            power += chimera.Agility * (_agilityModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Intelligence * (_intelligenceModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Strength * (_strengthModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
         }
 
         if (power >= _difficultyValue)
@@ -138,6 +142,57 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _uiExpedition.UpdateChimeraPower(_chimeraPower);
+    }
+
+    private void CalculateModifiers()
+    {
+        ResetMultipliers();
+
+        foreach (ModifierType modifierType in CurrentExpeditionData.modifiers)
+        {
+            switch (modifierType)
+            {
+                case ModifierType.None:
+                    break;
+                case ModifierType.Aqua:
+                    _aquaBonus = 0.1f;
+                    break;
+                case ModifierType.Bio:
+                    _bioBonus = 0.1f;
+                    break;
+                case ModifierType.Fira:
+                    _firaBonus = 0.1f;
+                    break;
+                case ModifierType.Agility:
+                    _agilityModifer = 1.2f;
+                    break;
+                case ModifierType.Intelligence:
+                    _intelligenceModifier = 1.2f;
+                    break;
+                case ModifierType.Strength:
+                    _strengthModifier = 1.2f;
+                    break;
+                default:
+                    Debug.LogWarning($"Modifier type is not valid [{modifierType}]. Please fix.");
+                    break;
+            }
+        }
+    }
+
+    private float ElementTypeModifier(ElementType elementType)
+    {
+        switch (elementType)
+        {
+            case ElementType.Aqua:
+                return _aquaBonus;
+            case ElementType.Bio:
+                return _bioBonus;
+            case ElementType.Fira:
+                return _firaBonus;
+            default:
+                Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
+                return  0.0f;
+        }
     }
 
     private void ResetMultipliers()
@@ -187,9 +242,9 @@ public class ExpeditionManager : MonoBehaviour
     {
         float successRoll = Random.Range(0.0f, _difficultyValue);
 
-        Debug.Log($"You rolled {successRoll} out of {_difficultyValue}");
+        Debug.Log($"You rolled {successRoll} out of {_difficultyValue - _chimeraPower}");
 
-        if(successRoll >= _chimeraPower)
+        if(successRoll >= _difficultyValue - _chimeraPower)
         {
             return true;
         }

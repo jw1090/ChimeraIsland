@@ -194,20 +194,10 @@ public class CameraUtil : MonoBehaviour
 
     public void ChimeraCameraShift()
     {
-        HabitatType habitatType = _habitatManager.CurrentHabitat.Type;
-
-        switch (habitatType)
-        {
-            case HabitatType.StonePlains:
-                StartCoroutine(MoveCamera(new Vector3(18.0f, 20.0f, 16.6f), 0.25f));
-                break;
-            case HabitatType.TreeOfLife:
-                StartCoroutine(MoveCamera(new Vector3(-5.6f, 24.0f, 5.5f), 0.5f));
-                break;
-            default:
-                Debug.LogWarning($"Invalid Habitat Type [{habitatType}], please change!");
-                break;
-        }
+        Vector3 spawnPosition = _habitatManager.CurrentHabitat.SpawnPoint.position;
+        spawnPosition.y = this.transform.position.y;
+        spawnPosition.z += 10.0f;
+        StartCoroutine(MoveCamera(spawnPosition, _transitionSpeed));
     }
 
     private IEnumerator MoveCamera(Vector3 target, float time)
