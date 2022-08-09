@@ -101,16 +101,19 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        if (_cameraUtil != null)
         {
-            _cameraUtil.CameraZoom();
-        }
-
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-        {
-            if(_habitatUI.MenuOpen == false)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
-                _cameraUtil.CameraMovement();
+                _cameraUtil.CameraZoom();
+            }
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                if (_habitatUI.MenuOpen == false)
+                {
+                    _cameraUtil.CameraMovement();
+                }
             }
         }
 

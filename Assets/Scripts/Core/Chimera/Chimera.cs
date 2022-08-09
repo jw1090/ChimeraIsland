@@ -7,27 +7,20 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementType _elementalType = ElementType.None;
     [SerializeField] private StatType _statPreference = StatType.None;
-    [SerializeField] private bool _inFacility = false;
-    [SerializeField] private int _price = 50;
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
-    [SerializeField] private int _levelCap = 99;
     [SerializeField] private int _agility = 1;
     [SerializeField] private int _intelligence = 1;
     [SerializeField] private int _strength = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int _agilityExperience = 0;
-    [SerializeField] private int _intelligenceExperience = 0;
-    [SerializeField] private int _strengthExperience = 0;
     [SerializeField] private int _agilityThreshold = 5;
     [SerializeField] private int _intelligenceThreshold = 5;
     [SerializeField] private int _strengthThreshold = 5;
-    [SerializeField] private int _levelUpTracker = 0;
 
     [Header("Essence")]
-    [SerializeField] private const int _baseEssenceRate = 4; // Initial Essence gained per tick
+    [SerializeField] private int _baseEssenceRate = 4; // Initial Essence gained per tick
 
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
@@ -39,6 +32,13 @@ public class Chimera : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
+    private bool _inFacility = false;
+    private int _agilityExperience = 0;
+    private int _intelligenceExperience = 0;
+    private int _strengthExperience = 0;
+    private int _levelUpTracker = 0;
+    private int _levelCap = 99;
+    private int _price = 1;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
