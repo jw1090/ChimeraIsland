@@ -16,11 +16,11 @@ public class Facility : MonoBehaviour
     [SerializeField] private BoxCollider _placeCollider = null;
     [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
+    [SerializeField] private Transform _cameraTransitionNode = null;
 
     private FacilitySFX _facilitySFX = null;
     private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
-    private CurrencyManager _currencyManager = null;
     private Chimera _storedChimera = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
@@ -31,6 +31,8 @@ public class Facility : MonoBehaviour
     private bool _activateTraining = false;
 
     public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
+    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
+    public MeshRenderer GlowObject { get => _glowObject; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
@@ -39,7 +41,6 @@ public class Facility : MonoBehaviour
     public int TrainToLevel { get => _trainToLevel; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
-    public MeshRenderer GlowObject { get => _glowObject; }
 
     public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
@@ -48,7 +49,6 @@ public class Facility : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
 
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();

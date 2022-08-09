@@ -5,6 +5,7 @@ public class CameraUtil : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _speed = 20.0f;
+    [SerializeField] private float _transitionSpeed = 0.25f;
 
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount = 20.0f;
@@ -186,48 +187,9 @@ public class CameraUtil : MonoBehaviour
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        HabitatType habitatType = _habitatManager.CurrentHabitat.Type;
-
-        switch (habitatType)
-        {
-            case HabitatType.StonePlains:
-                switch (facilityType)
-                {
-                    case FacilityType.Cave:
-                        StartCoroutine(MoveCamera(new Vector3(-18.0f, 20.0f, -7.0f), 0.25f));
-                        break;
-                    case FacilityType.Waterfall:
-                        StartCoroutine(MoveCamera(new Vector3(41.0f, 20.0f, 51.0f), 0.25f));
-                        break;
-                    case FacilityType.RuneStone:
-                        StartCoroutine(MoveCamera(new Vector3(16.0f, 20.0f, 39.0f), 0.25f));
-                        break;
-                    default:
-                        Debug.LogWarning($"Invalid Facility Type [{facilityType}], please change!");
-                        break;
-                }
-                break;
-            case HabitatType.TreeOfLife:
-                switch (facilityType)
-                {
-                    case FacilityType.Cave:
-                        StartCoroutine(MoveCamera(new Vector3(16.0f, 24.0f, 44.0f), 0.5f));
-                        break;
-                    case FacilityType.Waterfall:
-                        StartCoroutine(MoveCamera(new Vector3(60.0f, 24.0f, 20.0f), 0.5f));
-                        break;
-                    case FacilityType.RuneStone:
-                        StartCoroutine(MoveCamera(new Vector3(-66.0f, 24.0f, 12.0f), 0.5f));
-                        break;
-                    default:
-                        Debug.LogWarning($"Invalid Facility Type [{facilityType}], please change!");
-                        break;
-                }
-                break;
-            default:
-                Debug.LogWarning($"Invalid Habitat Type [{habitatType}], please change!");
-                break;
-        }
+        Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
+        facilityPosition.y = this.transform.position.y;
+        StartCoroutine(MoveCamera(facilityPosition, _transitionSpeed));
     }
 
     public void ChimeraCameraShift()
