@@ -35,6 +35,7 @@ public class UIExpedition : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
+    private bool _expeditionSuccess = false;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetInProgressTimeRemainingText(float timeRemaining)
@@ -67,9 +68,9 @@ public class UIExpedition : MonoBehaviour
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.ExpeditionSetup();
+            _expeditionSuccess = false;
+            LoadData();
         }
-
-        LoadData();
     }
 
     public void SetupListeners()
@@ -270,6 +271,17 @@ public class UIExpedition : MonoBehaviour
         _rewardPanel.gameObject.SetActive(true);
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
+
+        if(_expeditionManager.RandomSuccesRate())
+        {
+            // TODO: Success UI
+            _expeditionSuccess = true;
+        }
+        else
+        {
+            // TODO: Fail UI
+            _expeditionSuccess = false;
+        }
     }
 
     private void ResultsCloseClick()
@@ -278,7 +290,12 @@ public class UIExpedition : MonoBehaviour
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
-        _expeditionManager.NextExpedition();
+        if(_expeditionSuccess == true) // Success
+        {
+            _expeditionManager.SuccessRewards();
+            _expeditionSuccess = false;
+        }
+
         _uiManager.HabitatUI.ResetStandardUI();
     }
 }
