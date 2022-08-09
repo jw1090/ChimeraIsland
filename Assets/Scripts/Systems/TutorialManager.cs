@@ -163,16 +163,8 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case HabitatType.TreeOfLife:
-                if (_currentStage == TutorialStageType.TreeOfLife && tutorialStage.finished == false)
-                {
-                    ShowTutorialStage(TutorialStageType.TreeOfLife);
-                }
-                else
-                {
-                    Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
-
-                    EnableUIByProgress();
-                }
+                EnableUIByProgress();
+                ShowTutorialStage(TutorialStageType.TreeOfLife);
                 break;
             default:
                 Debug.Log($"Habitat type \"{_habitatManager.CurrentHabitat.Type}\" shouldn't exist.");
