@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
     //private bool _sliderUpdated = false;
+    private bool _inTransition = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
 
+    public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
@@ -81,6 +83,11 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (_isInitialized == false)
+        {
+            return;
+        }
+
+        if(_inTransition == true)
         {
             return;
         }
