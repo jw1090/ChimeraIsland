@@ -187,24 +187,24 @@ public class ExpeditionManager : MonoBehaviour
     {
         float successRoll = Random.Range(0.0f, _difficultyValue);
 
+        Debug.Log($"You rolled {successRoll} out of {_difficultyValue}");
+
         if(successRoll >= _chimeraPower)
         {
             return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 
     public void SuccessRewards()
     {
-        ++_currentExpedition;
-
         switch (CurrentExpeditionData.rewardType)
         {
             case ExpeditionRewardType.HabitatUpgrade:
-                _habitatManager.CurrentHabitat.UpgradeHabitat();
+                _habitatManager.CurrentHabitat.UpgradeHabitatTier();
                 Debug.Log("Success! Your habitat upgraded!");
                 break;
             case ExpeditionRewardType.Fossils:
@@ -215,5 +215,7 @@ public class ExpeditionManager : MonoBehaviour
                 Debug.LogWarning($"Reward type is not valid [{CurrentExpeditionData.rewardType}], please change!");
                 break;
         }
+
+        ++_currentExpedition;
     }
 }
