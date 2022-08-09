@@ -21,6 +21,7 @@ public class CameraUtil : MonoBehaviour
 
     private Camera _cameraCO = null;
     private HabitatManager _habitatManager = null;
+    private InputManager _inputManager = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
@@ -42,6 +43,7 @@ public class CameraUtil : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
         _cameraCO = GetComponent<Camera>();
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
@@ -266,11 +268,13 @@ public class CameraUtil : MonoBehaviour
 
     private IEnumerator MoveCamera(Vector3 target, float time)
     {
+        _inputManager.SetInTransition(true);
         while (Vector3.Distance(transform.position, target) > 0.5f)
         {
             yield return new WaitForSeconds(0.01f);
 
             transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
         }
+        _inputManager.SetInTransition(false);
     }
 }
