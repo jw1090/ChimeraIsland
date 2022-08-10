@@ -68,11 +68,6 @@ public class UIExpedition : MonoBehaviour
             Debug.LogError($"Please set the Expedition Manager, it is currently null");
         }
 
-        if(_currentChimeras != null)
-        {
-            _currentChimeras.Clear();
-        }
-
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.ExpeditionSetup();

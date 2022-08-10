@@ -41,6 +41,11 @@ public class ExpeditionManager : MonoBehaviour
 
     public void Update()
     {
+        if(_chimeras != null)
+        {
+            Debug.Log($"{_chimeras.Count}");
+        }
+
         if (State != ExpeditionState.InProgress)
         {
             return;
@@ -279,7 +284,7 @@ public class ExpeditionManager : MonoBehaviour
             chimera.SetOnExpedition(onExpedition);
         }
 
-        if(onExpedition == false)
+        if (onExpedition == false)
         {
             _chimeras.Clear();
         }

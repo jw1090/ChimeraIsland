@@ -78,19 +78,19 @@ public class ChimeraDetails : MonoBehaviour
 
     public void ToggleButtons(DetailsButtonType detailsButtonType)
     {
-        if(_chimera == null)
+        if (_chimera == null)
         {
             return;
         }
 
-        if(_chimera.InFacility == true)
+        if (_chimera.InFacility == true)
         {
             _statefulButtons.SetState("Occupied");
             _occupiedText.text = $"Training";
 
             return;
         }
-        else if(_chimera.OnExpedition == true)
+        else if (_chimera.OnExpedition == true)
         {
             _statefulButtons.SetState("Occupied");
             _occupiedText.text = $"On Expedition";
@@ -104,7 +104,7 @@ public class ChimeraDetails : MonoBehaviour
                 _statefulButtons.SetState("Transfer Button");
                 break;
             case DetailsButtonType.Expedition:
-                if(_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
+                if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
                 {
                     _statefulButtons.SetState("Remove Button");
                 }
@@ -126,7 +126,7 @@ public class ChimeraDetails : MonoBehaviour
 
     private void AddChimeraClicked()
     {
-        if(_expeditionManager.AddChimera(_chimera) == true) // Success
+        if (_expeditionManager.AddChimera(_chimera) == true) // Success
         {
             _statefulButtons.SetState("Remove Button");
         }
@@ -134,7 +134,7 @@ public class ChimeraDetails : MonoBehaviour
 
     private void RemoveChimeraClicked()
     {
-        if(_expeditionManager.RemoveChimera(_chimera) == true) // Success
+        if (_expeditionManager.RemoveChimera(_chimera) == true) // Success
         {
             _statefulButtons.SetState("Add Button");
         }
