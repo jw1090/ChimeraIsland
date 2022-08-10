@@ -23,6 +23,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
+    public List<Chimera> Chimeras { get => _chimeras; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -41,11 +42,6 @@ public class ExpeditionManager : MonoBehaviour
 
     public void Update()
     {
-        if(_chimeras != null)
-        {
-            Debug.Log($"{_chimeras.Count}");
-        }
-
         if (State != ExpeditionState.InProgress)
         {
             return;
@@ -59,6 +55,8 @@ public class ExpeditionManager : MonoBehaviour
 
     public void ExpeditionSetup()
     {
+        _chimeras.Clear();
+
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
@@ -277,7 +275,7 @@ public class ExpeditionManager : MonoBehaviour
         }
     }
 
-    public void ChimerasOnExpedition(bool onExpedition)
+    public void PostExpeditionCleanup(bool onExpedition)
     {
         foreach (Chimera chimera in _chimeras)
         {
