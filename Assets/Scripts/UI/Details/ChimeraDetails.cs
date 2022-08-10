@@ -86,7 +86,7 @@ public class ChimeraDetails : MonoBehaviour
         if(_chimera.InFacility == true)
         {
             _statefulButtons.SetState("Occupied");
-            _occupiedText.text = $"Busy Training";
+            _occupiedText.text = $"Training";
 
             return;
         }
@@ -128,8 +128,7 @@ public class ChimeraDetails : MonoBehaviour
     {
         if(_expeditionManager.AddChimera(_chimera) == true) // Success
         {
-            _addButton.gameObject.SetActive(false);
-            _removeButton.gameObject.SetActive(true);
+            _statefulButtons.SetState("Remove Button");
         }
     }
 
@@ -137,8 +136,7 @@ public class ChimeraDetails : MonoBehaviour
     {
         if(_expeditionManager.RemoveChimera(_chimera) == true) // Success
         {
-            _addButton.gameObject.SetActive(true);
-            _removeButton.gameObject.SetActive(false);
+            _statefulButtons.SetState("Add Button");
         }
     }
 }

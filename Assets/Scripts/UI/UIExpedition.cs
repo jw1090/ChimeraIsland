@@ -36,6 +36,7 @@ public class UIExpedition : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
+    private ChimeraDetailsFolder _detailsFolder = null;
     private List<Chimera> _currentChimeras = new List<Chimera>();
     private bool _expeditionSuccess = false;
 
@@ -55,6 +56,7 @@ public class UIExpedition : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _uiManager = uiManager;
+        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
 
         SetupListeners();
     }
@@ -66,7 +68,10 @@ public class UIExpedition : MonoBehaviour
             Debug.LogError($"Please set the Expedition Manager, it is currently null");
         }
 
-        _currentChimeras = null;
+        if(_currentChimeras != null)
+        {
+            _currentChimeras.Clear();
+        }
 
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
@@ -227,16 +232,6 @@ public class UIExpedition : MonoBehaviour
 
     public void CleanUp()
     {
-        if (_currentChimeras != null)
-        {
-            _currentChimeras.Clear();
-        }
-
-        if (_expeditionManager != null)
-        {
-            _expeditionManager.ClearChimeras();
-        }
-
         foreach (var icon in _chimeraIcons)
         {
             icon.sprite = null;
@@ -262,20 +257,12 @@ public class UIExpedition : MonoBehaviour
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
 
-        ChimeraExpeditionSetup();
+        ChimerasOnExpedition(true);
 
         _inProgressPanel.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
 
         _inProgressStatefulObject.SetState("In Progress");
-    }
-
-    private void ChimeraExpeditionSetup()
-    {
-        foreach (Chimera chimera in _currentChimeras)
-        {
-            chimera.SetOnExpedition(true);
-        }
     }
 
     private void InProgressClick()
@@ -313,7 +300,7 @@ public class UIExpedition : MonoBehaviour
     {
         _rewardPanel.gameObject.SetActive(false);
 
-        ChimeraExpeditionCleanup();
+        ChimerasOnExpedition(false);
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
@@ -325,13 +312,13 @@ public class UIExpedition : MonoBehaviour
         }
 
         _uiManager.HabitatUI.ResetStandardUI();
+        _currentChimeras.Clear();
     }
 
-    private void ChimeraExpeditionCleanup()
+    private void ChimerasOnExpedition(bool onExpedition)
     {
-        foreach (Chimera chimera in _currentChimeras)
-        {
-            chimera.SetOnExpedition(false);
-        }
+        _expeditionManager.ChimerasOnExpedition(onExpedition);
+
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
     }
 }

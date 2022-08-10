@@ -21,6 +21,7 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _offset = 1.5f;
 
     private Camera _cameraCO = null;
+    private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private Rect _upRect = new Rect();
@@ -182,17 +183,27 @@ public class CameraUtil : MonoBehaviour
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
+        if(_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+        }
+
         Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
         facilityPosition.y = this.transform.position.y;
-        StartCoroutine(MoveCamera(facilityPosition, _transitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(facilityPosition, _transitionSpeed));
     }
 
     public void ChimeraCameraShift()
     {
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+        }
+
         Vector3 spawnPosition = _habitatManager.CurrentHabitat.SpawnPoint.position;
         spawnPosition.y = this.transform.position.y;
         spawnPosition.z += 10.0f;
-        StartCoroutine(MoveCamera(spawnPosition, _transitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _transitionSpeed));
     }
 
     private IEnumerator MoveCamera(Vector3 target, float time)
@@ -205,5 +216,7 @@ public class CameraUtil : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
         }
         _inputManager.SetInTransition(false);
+
+        _transitionCoroutine = null;
     }
 }

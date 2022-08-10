@@ -42,6 +42,7 @@ public class HabitatUI : MonoBehaviour
     public Button MarketplaceButton { get => _marketplaceButton; }
     public Button ExpeditionButton { get => _expeditionButton; }
     public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
+    public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public UITraining TrainingPanel { get => _trainingPanel; }
     public UIExpedition ExpeditionPanel { get => _expeditionPanel; }

@@ -58,11 +58,6 @@ public class ExpeditionManager : MonoBehaviour
         CalculateChimeraPower();
     }
 
-    public void ClearChimeras()
-    {
-        _chimeras.Clear();
-    }
-
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
@@ -274,6 +269,19 @@ public class ExpeditionManager : MonoBehaviour
         if (_currentExpedition < _habitatExpeditions.Count - 1)
         {
             ++_currentExpedition;
+        }
+    }
+
+    public void ChimerasOnExpedition(bool onExpedition)
+    {
+        foreach (Chimera chimera in _chimeras)
+        {
+            chimera.SetOnExpedition(onExpedition);
+        }
+
+        if(onExpedition == false)
+        {
+            _chimeras.Clear();
         }
     }
 }
