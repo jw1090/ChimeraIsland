@@ -9,6 +9,7 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private CameraUtil _cameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
+    [SerializeField] private LightingManager _lightingManager = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -89,6 +90,11 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
             _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
+        }
+
+        if(_lightingManager != null)
+        {
+            ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
         }
     }
 

@@ -74,7 +74,7 @@ public class UITraining : MonoBehaviour
             ++ticksRequired;
         }
 
-         _cost = ticksRequired * 5 * _facility.StatModifier;
+         _cost = ticksRequired * 5;
         _costText.text = $"Cost: {_cost} Essence";
 
         if (_cost > _currencyManager.Essence)
