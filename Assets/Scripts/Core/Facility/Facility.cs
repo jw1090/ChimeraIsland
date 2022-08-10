@@ -10,10 +10,8 @@ public class Facility : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private StatefulObject _tiers = null;
-    [SerializeField] private MeshRenderer _glowObject = null;
+    [SerializeField] private GlowMarker _glowMarker = null;
     [SerializeField] private TrainingFacilityIcon _trainingIcon = null;
-    [SerializeField] private BoxCollider _placeCollider = null;
-    [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
     [SerializeField] private Transform _cameraTransitionNode = null;
 
@@ -31,13 +29,12 @@ public class Facility : MonoBehaviour
 
     public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
     public Transform CameraTransitionNode { get => _cameraTransitionNode; }
-    public MeshRenderer GlowObject { get => _glowObject; }
+    public GlowMarker GlowObject { get => _glowMarker; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsInitialized { get => _isInitialized; }
     public int StatModifier { get => _statModifier; }
-    public int TrainToLevel { get => _trainToLevel; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
 
@@ -55,13 +52,11 @@ public class Facility : MonoBehaviour
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
 
-        _facilitySFX = GetComponent<FacilitySFX>();
-
-        _glowObject.enabled = false;
+        _glowMarker.Initialize(this);
         _trainingIcon.Initialize();
-        _trainingIcon.gameObject.SetActive(false);
 
-        FacilityColliderToggle(FacilityColliderType.None);
+        _facilitySFX = GetComponent<FacilitySFX>();
+        _trainingIcon.gameObject.SetActive(false);
 
         _tiers.SetState("Tier 0");
 
@@ -95,7 +90,7 @@ public class Facility : MonoBehaviour
 
             _tiers.SetState("Tier 1");
 
-            FacilityColliderToggle(FacilityColliderType.Place);
+            _glowMarker.ActivateGlowCollider(true);
 
             _facilitySFX.Initialize();
             _facilitySFX.BuildSFX();
@@ -133,7 +128,7 @@ public class Facility : MonoBehaviour
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
 
-        FacilityColliderToggle(FacilityColliderType.release);
+        _glowMarker.ActivateGlowCollider(false);
         RevealChimera(false);
 
         Debug.Log($"{_storedChimera} added to the facility.");
@@ -164,7 +159,7 @@ public class Facility : MonoBehaviour
         _trainingIcon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
-        FacilityColliderToggle(FacilityColliderType.Place);
+        _glowMarker.ActivateGlowCollider(true);
         RevealChimera(true);
 
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
@@ -188,6 +183,7 @@ public class Facility : MonoBehaviour
         }
 
         _storedChimera.GetStatByType(_statType, out int currentStatAmount);
+
         if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
@@ -216,27 +212,6 @@ public class Facility : MonoBehaviour
         if (reveal == true)
         {
             _storedChimera.Animator.SetBool("Walk", true);
-        }
-    }
-
-    private void FacilityColliderToggle(FacilityColliderType facilityColliderType)
-    {
-        _placeCollider.enabled = false;
-        _releaseCollider.enabled = false;
-
-        switch (facilityColliderType)
-        {
-            case FacilityColliderType.None:
-                break;
-            case FacilityColliderType.Place:
-                _placeCollider.enabled = true;
-                break;
-            case FacilityColliderType.release:
-                _releaseCollider.enabled = true;
-                break;
-            default:
-                Debug.LogWarning($"{facilityColliderType} is not valid, please change!");
-                break;
         }
     }
 }

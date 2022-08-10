@@ -36,7 +36,7 @@ public class UIExpedition : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
-    private List<Chimera> _currentChimeras = new List<Chimera>();
+    private ChimeraDetailsFolder _detailsFolder = null;
     private bool _expeditionSuccess = false;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
@@ -55,6 +55,7 @@ public class UIExpedition : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _uiManager = uiManager;
+        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
 
         SetupListeners();
     }
@@ -66,9 +67,12 @@ public class UIExpedition : MonoBehaviour
             Debug.LogError($"Please set the Expedition Manager, it is currently null");
         }
 
-        _currentChimeras = null;
+        foreach (var icon in _chimeraIcons)
+        {
+            icon.sprite = null;
+        }
 
-        if(_expeditionManager.State == ExpeditionState.Setup)
+        if (_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.ExpeditionSetup();
             _expeditionSuccess = false;
@@ -153,14 +157,12 @@ public class UIExpedition : MonoBehaviour
 
     public void UpdateIcons(List<Chimera> chimeras)
     {
-        _currentChimeras = chimeras;
-
         UpdateIcons();
     }
 
     public void UpdateIcons() // Used to update UI during evolutions
     {
-        if(_currentChimeras == null)
+        if(_expeditionManager == null)
         {
             return;
         }
@@ -170,9 +172,9 @@ public class UIExpedition : MonoBehaviour
             icon.sprite = null;
         }
 
-        for (int i = 0; i < _currentChimeras.Count; ++i)
+        for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)
         {
-            _chimeraIcons[i].sprite = _currentChimeras[i].ChimeraIcon;
+            _chimeraIcons[i].sprite = _expeditionManager.Chimeras[i].ChimeraIcon;
         }
     }
 
@@ -190,8 +192,10 @@ public class UIExpedition : MonoBehaviour
 
     private void UpdateSuccessText()
     {
-        _successText.text = $"{_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
-        _inProgressSuccessChance.text = $"Success Chance: {_expeditionManager.CalculateSuccessChance().ToString("F2")}%";
+        string successChance = _expeditionManager.CalculateSuccessChance().ToString("F2");
+
+        _successText.text = $"{successChance}%";
+        _inProgressSuccessChance.text = $"Success Chance: {successChance}%";
     }
 
     public void OpenExpeditionUI()
@@ -227,20 +231,7 @@ public class UIExpedition : MonoBehaviour
 
     public void CleanUp()
     {
-        if (_currentChimeras != null)
-        {
-            _currentChimeras.Clear();
-        }
-
-        if (_expeditionManager != null)
-        {
-            _expeditionManager.ClearChimeras();
-        }
-
-        foreach (var icon in _chimeraIcons)
-        {
-            icon.sprite = null;
-        }
+        
     }
 
     public void TimerComplete()
@@ -252,15 +243,17 @@ public class UIExpedition : MonoBehaviour
 
     private void ConfirmClick()
     {
-        if(_currentChimeras == null)
+        if(_expeditionManager == null)
         {
             return;
         }
 
-        if(_currentChimeras.Count < 1)
+        if (_expeditionManager.Chimeras.Count < 1)
         {
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
+
+        PostExpeditionCleanup(true);
 
         _inProgressPanel.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
@@ -303,6 +296,8 @@ public class UIExpedition : MonoBehaviour
     {
         _rewardPanel.gameObject.SetActive(false);
 
+        PostExpeditionCleanup(false);
+
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
         if(_expeditionSuccess == true) // Success
@@ -313,5 +308,12 @@ public class UIExpedition : MonoBehaviour
         }
 
         _uiManager.HabitatUI.ResetStandardUI();
+    }
+
+    private void PostExpeditionCleanup(bool onExpedition)
+    {
+        _expeditionManager.PostExpeditionCleanup(onExpedition);
+
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
     }
 }

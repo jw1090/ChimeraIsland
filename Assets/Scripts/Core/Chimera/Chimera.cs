@@ -33,6 +33,7 @@ public class Chimera : MonoBehaviour
     private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
+    private bool _onExpedition = false;
     private int _agilityExperience = 0;
     private int _intelligenceExperience = 0;
     private int _strengthExperience = 0;
@@ -51,6 +52,7 @@ public class Chimera : MonoBehaviour
     public Sprite ChimeraIcon { get => _currentEvolution.ChimeraIcon; }
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
+    public bool OnExpedition { get => _onExpedition; }
     public int Level { get => _level; }
     public int Agility { get => _agility; }
     public int Intelligence { get => _intelligence; }
@@ -161,6 +163,7 @@ public class Chimera : MonoBehaviour
 
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
+    public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
     public void SetLevel(int level) { _level = level; }
     public void SetAgility(int agility) { _agility = agility; }
     public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
@@ -184,6 +187,11 @@ public class Chimera : MonoBehaviour
         InitializeStats();
         InitializeEvolution();
         GetComponent<ChimeraBehavior>().Initialize();
+    }
+
+    private void Update()
+    {
+        Debug.Log($"{_onExpedition}");
     }
 
     private void InitializeStats()

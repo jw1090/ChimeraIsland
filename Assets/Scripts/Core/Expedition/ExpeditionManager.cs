@@ -23,6 +23,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
+    public List<Chimera> Chimeras { get => _chimeras; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -54,13 +55,10 @@ public class ExpeditionManager : MonoBehaviour
 
     public void ExpeditionSetup()
     {
+        _chimeras.Clear();
+
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
-    }
-
-    public void ClearChimeras()
-    {
-        _chimeras.Clear();
     }
 
     public void EnterInProgressState()
@@ -122,7 +120,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateChimeraPower()
     {
         float power = 0;
-        
+
         CalculateModifiers();
 
         foreach (var chimera in _chimeras)
@@ -191,7 +189,7 @@ public class ExpeditionManager : MonoBehaviour
                 return _firaBonus;
             default:
                 Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
-                return  0.0f;
+                return 0.0f;
         }
     }
 
@@ -217,7 +215,7 @@ public class ExpeditionManager : MonoBehaviour
 
         Debug.Log
         (
-            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: { _difficultyValue.ToString("F2")}\n" +
+            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
             $"Success Chance: {successChance.ToString("F2")}"
         );
 
@@ -244,7 +242,7 @@ public class ExpeditionManager : MonoBehaviour
 
         Debug.Log($"You rolled {successRoll} out of {_difficultyValue - _chimeraPower}");
 
-        if(successRoll >= _difficultyValue - _chimeraPower)
+        if (successRoll >= _difficultyValue - _chimeraPower)
         {
             return true;
         }
@@ -271,9 +269,22 @@ public class ExpeditionManager : MonoBehaviour
                 break;
         }
 
-        if(_currentExpedition < _habitatExpeditions.Count - 1)
+        if (_currentExpedition < _habitatExpeditions.Count - 1)
         {
             ++_currentExpedition;
+        }
+    }
+
+    public void PostExpeditionCleanup(bool onExpedition)
+    {
+        foreach (Chimera chimera in _chimeras)
+        {
+            chimera.SetOnExpedition(onExpedition);
+        }
+
+        if (onExpedition == false)
+        {
+            _chimeras.Clear();
         }
     }
 }
