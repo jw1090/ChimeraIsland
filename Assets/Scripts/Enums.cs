@@ -137,7 +137,6 @@ public enum TutorialStageType
     WorldMapAndTheTreeOfLife,
     TreeOfLife,
     Transfers,
-    Ashlands,
 }
 
 public enum SFXUIType

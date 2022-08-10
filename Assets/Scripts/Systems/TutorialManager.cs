@@ -6,6 +6,7 @@ public class TutorialManager : MonoBehaviour
     private UIManager _uiManager = null;
     private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = true;
+    private HabitatManager _habitatManager = null;
 
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
@@ -22,6 +23,7 @@ public class TutorialManager : MonoBehaviour
 
         CurrentStageInitialize();
 
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         return this;
     }
 
@@ -88,6 +90,40 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
+        switch (tutorialType)
+        {
+            case TutorialStageType.TierTwoStonePlains:
+                if (IsStageComplete(TutorialStageType.TierThreeStonePlains))
+                {
+                    tutorialType = TutorialStageType.WorldMapButton;
+                }
+                else if (IsStageComplete(TutorialStageType.Fossils))
+                {
+                    tutorialType = TutorialStageType.TierThreeStonePlains;
+                }
+                else if (IsStageComplete(TutorialStageType.TierTwoStonePlains))
+                {
+                    tutorialType = TutorialStageType.Fossils;
+                }
+                break;
+            case TutorialStageType.ExpeditionRequirements:
+                if (IsStageComplete(TutorialStageType.TierTwoStonePlains))
+                {
+                    tutorialType = TutorialStageType.UnlockExpeditionModifiers;
+                }
+                else if (IsStageComplete(TutorialStageType.Details))
+                {
+                    tutorialType = TutorialStageType.ExpeditionsInfo;
+                }
+                break;
+            case TutorialStageType.Transfers:
+                if(IsStageComplete(TutorialStageType.TreeOfLife) == false)
+                {
+                    return;
+                }
+                break;
+        }
+
         if (IsStageComplete(tutorialType)) { return; }
 
         _currentStage = tutorialType;
@@ -112,15 +148,27 @@ public class TutorialManager : MonoBehaviour
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
-        if (_currentStage == TutorialStageType.Intro && tutorialStage.finished == false)
+        switch (_habitatManager.CurrentHabitat.Type)
         {
-            ShowTutorialStage(TutorialStageType.Intro);
-        }
-        else
-        {
-            Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
+            case HabitatType.StonePlains:
+                if (_currentStage == TutorialStageType.Intro && tutorialStage.finished == false)
+                {
+                    ShowTutorialStage(TutorialStageType.Intro);
+                }
+                else
+                {
+                    Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
 
-            EnableUIByProgress();
+                    EnableUIByProgress();
+                }
+                break;
+            case HabitatType.TreeOfLife:
+                EnableUIByProgress();
+                ShowTutorialStage(TutorialStageType.TreeOfLife);
+                break;
+            default:
+                Debug.Log($"Habitat type \"{_habitatManager.CurrentHabitat.Type}\" shouldn't exist.");
+                break;
         }
     }
 
@@ -158,7 +206,6 @@ public class TutorialManager : MonoBehaviour
             case TutorialStageType.WorldMapAndTheTreeOfLife:
             case TutorialStageType.TreeOfLife:
             case TutorialStageType.Transfers:
-            case TutorialStageType.Ashlands:
                 _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 _uiManager.EnableTutorialUIByType(TutorialUIElementType.OtherFacilityButtons);
                 _uiManager.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);

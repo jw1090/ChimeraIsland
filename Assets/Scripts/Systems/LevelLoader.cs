@@ -52,6 +52,7 @@ public class LevelLoader : AsyncLoader
             case SceneType.Starting:
                 break;
             case SceneType.WorldMap:
+                _tutorialManager.ShowTutorialStage(TutorialStageType.WorldMapAndTheTreeOfLife);
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");

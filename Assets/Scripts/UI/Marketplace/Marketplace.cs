@@ -14,6 +14,10 @@ public class Marketplace : MonoBehaviour
         _chimeraShop.Initialize();
         _facilityShop.Initialize();
     }
+    public bool ChimeraTabIsActive()
+    {
+        return _tabGroup.ChimeraTab.gameObject.activeSelf;
+    }
 
     public void ChimeraTabSetActive(bool value)
     {
