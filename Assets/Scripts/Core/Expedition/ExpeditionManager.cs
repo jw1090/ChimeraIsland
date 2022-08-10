@@ -271,6 +271,9 @@ public class ExpeditionManager : MonoBehaviour
                 break;
         }
 
-        ++_currentExpedition;
+        if(_currentExpedition < _habitatExpeditions.Count - 1)
+        {
+            ++_currentExpedition;
+        }
     }
 }
