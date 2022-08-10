@@ -1,22 +1,27 @@
 using AI.Behavior;
 using UnityEngine;
 
-public class FacilitiesTrigger : MonoBehaviour
+public class GlowMarker : MonoBehaviour
 {
-    [SerializeField] private Transform _trainingPos;
+    private Transform _trainingPos = null;
     private BoxCollider _boxCollider = null;
+    private MeshRenderer _meshRenderer = null;
     private Facility _facility = null;
 
-    private void Awake()
-    {
-        GameLoader.CallOnComplete(Initialize);
-    }
+    public void ActivateGlowCollider(bool activate) { _boxCollider.enabled = activate; }
+    public void ActivateGlowRenderer(bool activate) { _meshRenderer.enabled = activate; }
 
-    private void Initialize()
+    public void Initialize(Facility facility)
     {
+        _facility = facility;
+
         _boxCollider = GetComponent<BoxCollider>();
-        _facility = GetComponent<Facility>();
-        _boxCollider.enabled = false;
+        _meshRenderer = GetComponent<MeshRenderer>();
+
+        _trainingPos = this.transform;
+
+        ActivateGlowCollider(false);
+        ActivateGlowRenderer(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +49,6 @@ public class FacilitiesTrigger : MonoBehaviour
         chimera.SetInFacility(true);
 
         chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
-        chimeraBehaviour.gameObject.transform.position = _trainingPos.transform.position;
+        chimeraBehaviour.gameObject.transform.position = _trainingPos.position;
     }
 }
