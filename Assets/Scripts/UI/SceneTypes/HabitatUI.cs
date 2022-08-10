@@ -88,8 +88,6 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.Initialize();
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
-
-        ResetStandardUI();
     }
 
     private void SetupUIListeners()
@@ -154,9 +152,6 @@ public class HabitatUI : MonoBehaviour
     {
         _openDetailsButton.gameObject.SetActive(true);
         _standardUI.gameObject.SetActive(true);
-
-        // Audio
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
