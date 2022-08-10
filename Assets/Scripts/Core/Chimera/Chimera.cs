@@ -189,11 +189,6 @@ public class Chimera : MonoBehaviour
         GetComponent<ChimeraBehavior>().Initialize();
     }
 
-    private void Update()
-    {
-        Debug.Log($"{_onExpedition}");
-    }
-
     private void InitializeStats()
     {
         for (int i = 1; i < _agility; ++i)

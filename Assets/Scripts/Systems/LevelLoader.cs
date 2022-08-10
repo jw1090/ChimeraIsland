@@ -122,7 +122,6 @@ public class LevelLoader : AsyncLoader
         {
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
-            case HabitatType.Ashlands:
                 if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
                 {
                     return true;
@@ -148,6 +147,7 @@ public class LevelLoader : AsyncLoader
 
         int loadNum = (int)habitatType + 4;
         SceneManager.LoadSceneAsync(loadNum);
+
         return true;
     }
 
@@ -164,8 +164,6 @@ public class LevelLoader : AsyncLoader
         }
 
         _uiManager.ShowUIByScene(_sceneType);
-
-
     }
 
     private void StartHabitatTickTimer()

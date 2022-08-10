@@ -1,14 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
-    private AudioManager _audioManager = null;
 
     public SceneChanger Initialize()
     {
@@ -16,7 +13,7 @@ public class SceneChanger : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _audioManager = ServiceLocator.Get<AudioManager>();
+
         return this;
     }
 
@@ -24,30 +21,13 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
-        CreateTutorialButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
-        CreateTutorialButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
-        CreateTutorialButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
-        CreateTutorialButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
-        CreateTutorialButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
-        CreateTutorialButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
-        CreateTutorialButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
-    }
-
-    private void CreateTutorialButtonListener(Button button, Action action)
-    {
-        if (button != null)
-        {
-            button.onClick.AddListener
-            (delegate
-            {
-                _uiManager.DisableAllSceneTypeUI();
-                action?.Invoke();
-            });
-        }
-        else
-        {
-            Debug.LogError($"{button} is null! Please Fix");
-        }
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
+        _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
+        _uiManager.CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
     }
 
     public void NewGame()
@@ -108,7 +88,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        if(quitGame == true)
+        if (quitGame == true)
         {
             _persistentData.QuitGameSave();
         }
