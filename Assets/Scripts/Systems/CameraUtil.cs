@@ -17,8 +17,8 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private int _screenEdgeSize = 50;
 
     [Header("Collision")]
-    [SerializeField] private float _sphereRadius = 1.5f;
-    [SerializeField] private float _offset = 5.0f;
+    [SerializeField] private float _sphereRadius = 2.0f;
+    [SerializeField] private float _offset = 1.5f;
 
     private Camera _cameraCO = null;
     private HabitatManager _habitatManager = null;
@@ -88,8 +88,7 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? -1 : moveDown ? 1 : 0;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
-        Vector3 newPos = Vector3.SmoothDamp(transform.position, transform.position + direction * panSpeed, ref _velocity, 0.8f);
-        transform.position = newPos;
+        transform.position = transform.position + direction * panSpeed * Time.deltaTime;
     }
 
     private void DragChimeraMovement()
@@ -109,8 +108,7 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? 1 : moveDown ? -1 : 0;
         direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
 
-        Vector3 newPos = Vector3.Lerp(transform.position, transform.position + direction * _moveSpeed, Time.deltaTime);
-        transform.position = newPos;
+        transform.position = transform.position + direction * _moveSpeed * Time.deltaTime;
     }
 
     public void CameraZoom()
@@ -124,7 +122,12 @@ public class CameraUtil : MonoBehaviour
     {
         Vector3 newPosition = transform.localPosition;
         RaycastHit hit;
-        float pushback = _offset * 10.0f;
+        float pushback = _offset * 0.5f;
+
+        Debug.DrawRay(transform.position, Vector3.forward * _offset, Color.yellow);
+        Debug.DrawRay(transform.position, Vector3.back * _offset, Color.yellow);
+        Debug.DrawRay(transform.position, Vector3.left * _offset, Color.yellow);
+        Debug.DrawRay(transform.position, Vector3.right * _offset, Color.yellow);
 
         if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out hit, _offset))
         {
@@ -144,8 +147,6 @@ public class CameraUtil : MonoBehaviour
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
-                newPosition.z = transform.localPosition.z + pushback;
-
                 _canMoveUp = false;
             }
         }
@@ -158,8 +159,6 @@ public class CameraUtil : MonoBehaviour
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
-                newPosition.x = transform.localPosition.x - pushback;
-
                 _canMoveLeft = false;
             }
         }
@@ -172,8 +171,6 @@ public class CameraUtil : MonoBehaviour
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
-                newPosition.x = transform.localPosition.x + pushback;
-
                 _canMoveRight = false;
             }
         }
@@ -181,8 +178,6 @@ public class CameraUtil : MonoBehaviour
         {
             _canMoveRight = true;
         }
-
-        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, 1.2f);
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
