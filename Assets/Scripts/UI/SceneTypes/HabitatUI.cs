@@ -291,7 +291,6 @@ public class HabitatUI : MonoBehaviour
         _openDetailsButton.gameObject.SetActive(false);
         _expeditionButton.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
-        _worldMapButton.gameObject.SetActive(false);
         _topLeftButtonsFolder.gameObject.SetActive(false);
 
         _menuOpen = true;

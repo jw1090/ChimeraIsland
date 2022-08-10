@@ -17,10 +17,12 @@ public class Habitat : MonoBehaviour
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
+    private UIManager _uiManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
+    public Transform  SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -39,6 +41,8 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
+    public void SetTier(int tier) { _currentTier = tier; }
+
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
@@ -46,6 +50,7 @@ public class Habitat : MonoBehaviour
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
 
         if (_patrolNodes == null)
         {
@@ -158,9 +163,9 @@ public class Habitat : MonoBehaviour
 
     public bool AddFacility(Facility facility)
     {
-        if (facility.CurrentTier == 3)
+        if (facility.CurrentTier >= _currentTier)
         {
-            Debug.Log("Facility is already at max tier.");
+            Debug.Log($"Cannot increase facility tier until habitat is upgraded. Requires Habitat Tier {_currentTier + 1}.");
             return false;
         }
 
@@ -179,21 +184,6 @@ public class Habitat : MonoBehaviour
         _habitatManager.AddNewFacility(facility);
 
         return true;
-    }
-
-    private int FacilitiesCount()
-    {
-        int facilityCount = 0;
-
-        foreach (Facility facility in _facilities)
-        {
-            if (facility.IsInitialized)
-            {
-                ++facilityCount;
-            }
-        }
-
-        return facilityCount;
     }
 
     public void UpgradeHabitatTier()
@@ -225,7 +215,7 @@ public class Habitat : MonoBehaviour
     {
         foreach (Facility facility in _facilities)
         {
-            if (facility.CurrentTier > 0 && !facility.IsChimeraStored())
+            if (facility.CurrentTier > 0 && facility.IsChimeraStored() == false)
             {
                 facility.GlowObject.enabled = value;
             }
@@ -243,19 +233,22 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_habitatManager.TickTimer);
 
-            foreach (Chimera chimera in _activeChimeras)
+            if(_uiManager.HabitatUI.MenuOpen == false)
             {
-                if (chimera.isActiveAndEnabled)
+                foreach (Chimera chimera in _activeChimeras)
                 {
-                    chimera.EssenceTick();
+                    if (chimera.isActiveAndEnabled)
+                    {
+                        chimera.EssenceTick();
+                    }
                 }
-            }
 
-            foreach (Facility facility in _facilities)
-            {
-                if (facility.IsInitialized)
+                foreach (Facility facility in _facilities)
                 {
-                    facility.FacilityTick();
+                    if (facility.IsInitialized)
+                    {
+                        facility.FacilityTick();
+                    }
                 }
             }
         }

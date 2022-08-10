@@ -6,11 +6,10 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _statModifier = 1;
-    [SerializeField] private int _price = 50;
+    [SerializeField] private int _price = 30;
 
     [Header("Reference")]
-    [SerializeField] private GameObject _rubbleObject = null;
-    [SerializeField] private GameObject _tier1Object = null;
+    [SerializeField] private StatefulObject _tiers = null;
     [SerializeField] private MeshRenderer _glowObject = null;
     [SerializeField] private TrainingFacilityIcon _trainingIcon = null;
     [SerializeField] private BoxCollider _placeCollider = null;
@@ -64,6 +63,8 @@ public class Facility : MonoBehaviour
 
         FacilityColliderToggle(FacilityColliderType.None);
 
+        _tiers.SetState("Tier 0");
+
         _facilitySign.Initialize(_facilityType);
     }
 
@@ -84,17 +85,15 @@ public class Facility : MonoBehaviour
 
     public void BuildFacility()
     {
-        _price = (int)(_price * 7.5);
-        ++_currentTier;
+        _price = (int)(_price * 5.0f);
 
         string debugString = "";
 
-        if (_currentTier == 1)
+        if (_currentTier == 0)
         {
             debugString += $"{_facilityType} was purchased";
 
-            _rubbleObject.SetActive(false);
-            _tier1Object.SetActive(true);
+            _tiers.SetState("Tier 1");
 
             FacilityColliderToggle(FacilityColliderType.Place);
 
@@ -106,14 +105,13 @@ public class Facility : MonoBehaviour
         else
         {
             ++_statModifier;
-            debugString += $"{_facilityType} was increased to Tier {CurrentTier}";
+            debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
         }
 
+        ++_currentTier;
         _habitatUI.UpdateShopUI();
 
-        int newMod = _statModifier + 1;
-
-        Debug.Log($" {debugString} and now generates {newMod} {_statType}!");
+        Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
 
     // Called to properly link a chimera to a facility and adjust its states properly.
