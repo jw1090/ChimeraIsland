@@ -11,9 +11,11 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _agility = null;
     [SerializeField] private TextMeshProUGUI _intelligence = null;
     [SerializeField] private TextMeshProUGUI _strength = null;
+    [SerializeField] private StatefulObject _statefulButtons = null;
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _addButton = null;
     [SerializeField] private Button _removeButton = null;
+    [SerializeField] private TextMeshProUGUI _occupiedText = null;
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
@@ -76,23 +78,39 @@ public class ChimeraDetails : MonoBehaviour
 
     public void ToggleButtons(DetailsButtonType detailsButtonType)
     {
-        _transferButton.gameObject.SetActive(false);
-        _addButton.gameObject.SetActive(false);
-        _removeButton.gameObject.SetActive(false);
+        if(_chimera == null)
+        {
+            return;
+        }
+
+        if(_chimera.InFacility == true)
+        {
+            _statefulButtons.SetState("Occupied");
+            _occupiedText.text = $"Busy Training";
+
+            return;
+        }
+        else if(_chimera.OnExpedition == true)
+        {
+            _statefulButtons.SetState("Occupied");
+            _occupiedText.text = $"On Expedition";
+
+            return;
+        }
 
         switch (detailsButtonType)
         {
             case DetailsButtonType.Standard:
-                _transferButton.gameObject.SetActive(true);
+                _statefulButtons.SetState("Transfer Button");
                 break;
             case DetailsButtonType.Expedition:
                 if(_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
                 {
-                    _removeButton.gameObject.SetActive(true);
+                    _statefulButtons.SetState("Remove Button");
                 }
                 else
                 {
-                    _addButton.gameObject.SetActive(true);
+                    _statefulButtons.SetState("Add Button");
                 }
                 break;
             default:

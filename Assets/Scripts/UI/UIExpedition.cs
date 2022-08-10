@@ -262,10 +262,20 @@ public class UIExpedition : MonoBehaviour
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
 
+        ChimeraExpeditionSetup();
+
         _inProgressPanel.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
 
         _inProgressStatefulObject.SetState("In Progress");
+    }
+
+    private void ChimeraExpeditionSetup()
+    {
+        foreach (Chimera chimera in _currentChimeras)
+        {
+            chimera.SetOnExpedition(true);
+        }
     }
 
     private void InProgressClick()
@@ -303,6 +313,8 @@ public class UIExpedition : MonoBehaviour
     {
         _rewardPanel.gameObject.SetActive(false);
 
+        ChimeraExpeditionCleanup();
+
         _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
 
         if(_expeditionSuccess == true) // Success
@@ -313,5 +325,13 @@ public class UIExpedition : MonoBehaviour
         }
 
         _uiManager.HabitatUI.ResetStandardUI();
+    }
+
+    private void ChimeraExpeditionCleanup()
+    {
+        foreach (Chimera chimera in _currentChimeras)
+        {
+            chimera.SetOnExpedition(false);
+        }
     }
 }
