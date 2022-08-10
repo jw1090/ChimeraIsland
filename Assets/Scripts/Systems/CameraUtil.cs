@@ -5,6 +5,7 @@ public class CameraUtil : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _speed = 20.0f;
+    [SerializeField] private float _sprintMultiplier = 1.5f;
     [SerializeField] private float _transitionSpeed = 0.25f;
 
     [Header("Zoom")]
@@ -79,7 +80,7 @@ public class CameraUtil : MonoBehaviour
         }
 
         Vector3 direction = Vector3.zero;
-        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? 1.5f * _speed : _speed;
+        float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? _sprintMultiplier * _speed : _speed;
 
         bool moveUp = Input.GetKey(KeyCode.W) && _canMoveUp;
         bool moveDown = Input.GetKey(KeyCode.S) && _canMoveDown;

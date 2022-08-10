@@ -35,7 +35,6 @@ public class Facility : MonoBehaviour
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsInitialized { get => _isInitialized; }
     public int StatModifier { get => _statModifier; }
-    public int TrainToLevel { get => _trainToLevel; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
 
@@ -184,6 +183,7 @@ public class Facility : MonoBehaviour
         }
 
         _storedChimera.GetStatByType(_statType, out int currentStatAmount);
+
         if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
