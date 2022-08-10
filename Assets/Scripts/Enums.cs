@@ -150,3 +150,10 @@ public enum SFXUIType
     Evolution,
     LevelUp,
 }
+
+public enum DayType
+{
+    None = -1,
+    DayTime,
+    NightTime,
+}
