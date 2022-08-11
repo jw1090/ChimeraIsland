@@ -13,7 +13,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private Button _expeditionButton = null;
+    [SerializeField] private ExpeditionButton _expeditionButton = null;
     [SerializeField] private GameObject _topLeftButtonsFolder = null;
     [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
     [SerializeField] private GameObject _runeFacilityShopIcon = null;
@@ -40,7 +40,7 @@ public class HabitatUI : MonoBehaviour
     public Button QuitGameButton { get => _quitGameButotn; }
     public Button WorldMapButton { get => _worldMapButton; }
     public Button MarketplaceButton { get => _marketplaceButton; }
-    public Button ExpeditionButton { get => _expeditionButton; }
+    public ExpeditionButton ExpeditionButton { get => _expeditionButton; }
     public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
@@ -55,11 +55,15 @@ public class HabitatUI : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
+        _expeditionButton.ActivateNotification(false);
+
         SetupUIListeners();
     }
 
@@ -263,9 +267,10 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
+        _expeditionButton.ActivateNotification(false);
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
-        _expeditionPanel.CleanUp();
         _expeditionPanel.LoadExpeditionUI();
 
         OpenExpeditionDetailsPanel();
