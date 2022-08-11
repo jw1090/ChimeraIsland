@@ -90,7 +90,7 @@ public class UIExpedition : MonoBehaviour
 
         _expeditionName.text = data.expeditionName;
         LoadModifiers(data.modifiers);
-        _minimumLevel.text = $"Minimum Level: {data.minimumLevel}";
+        _minimumLevel.text = $"Suggested Level: {data.minimumLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
 
         LoadDuration(data.duration);
