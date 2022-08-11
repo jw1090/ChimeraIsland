@@ -9,6 +9,7 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private CameraUtil _cameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
+    [SerializeField] private LightingManager _lightingManager = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -52,6 +53,7 @@ public class LevelLoader : AsyncLoader
             case SceneType.Starting:
                 break;
             case SceneType.WorldMap:
+                _tutorialManager.ShowTutorialStage(TutorialStageType.WorldMapAndTheTreeOfLife);
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
@@ -89,6 +91,11 @@ public class LevelLoader : AsyncLoader
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
             _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
         }
+
+        if(_lightingManager != null)
+        {
+            ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
+        }
     }
 
     private void HabitatSceneSetup()
@@ -115,7 +122,6 @@ public class LevelLoader : AsyncLoader
         {
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
-            case HabitatType.Ashlands:
                 if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
                 {
                     return true;
@@ -141,6 +147,7 @@ public class LevelLoader : AsyncLoader
 
         int loadNum = (int)habitatType + 4;
         SceneManager.LoadSceneAsync(loadNum);
+
         return true;
     }
 
@@ -157,8 +164,6 @@ public class LevelLoader : AsyncLoader
         }
 
         _uiManager.ShowUIByScene(_sceneType);
-
-
     }
 
     private void StartHabitatTickTimer()

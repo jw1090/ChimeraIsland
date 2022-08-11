@@ -21,7 +21,6 @@ public class TransferButton : MonoBehaviour, IPointerClickHandler
         {
             case HabitatType.StonePlains:
             case HabitatType.TreeOfLife:
-            case HabitatType.Ashlands:
                 TransferChimera();
                 break;
             default:

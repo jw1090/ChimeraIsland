@@ -7,7 +7,7 @@ public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 3;
-    [SerializeField]private float _tickTimer = 1.0f;
+    [SerializeField]private float _tickTimer = 0.4f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private AudioManager _audioManager = null;

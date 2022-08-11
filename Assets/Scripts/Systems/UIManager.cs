@@ -5,12 +5,13 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [Header("Scene Types")]
+    [SerializeField] private StatefulObject _uiStatefulObject = null;
     [SerializeField] private HabitatUI _habitatUI = null;
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private WorldMapUI _worldMapUI = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private TutorialObserver _tutorialObserver = null;
+    private TutorialObserver _tutorialObserver = null;
     private TutorialManager _tutorialManager = null;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
@@ -23,14 +24,14 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _tutorialObserver = GetComponent<TutorialObserver>();
+
         _startingUI.Initialize(this);
         _habitatUI.Initialize(this);
 
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _tutorialOverlay.Initialize(this);
         _tutorialObserver.Initialize(this);
-
-        DisableAllSceneTypeUI();
 
         return this;
     }
@@ -41,20 +42,18 @@ public class UIManager : MonoBehaviour
 
         switch (uiSceneType)
         {
-            case SceneType.None:
-                DisableAllSceneTypeUI();
-                break;
             case SceneType.Habitat:
-                _habitatUI.gameObject.SetActive(true);
+                _uiStatefulObject.SetState("Habitat UI");
+                _habitatUI.ResetStandardUI();
                 break;
             case SceneType.MainMenu:
-                _mainMenuUI.gameObject.SetActive(true);
+                _uiStatefulObject.SetState("Main Menu UI");
                 break;
             case SceneType.Starting:
-                _startingUI.gameObject.SetActive(true);
+                _uiStatefulObject.SetState("Starting UI");
                 break;
             case SceneType.WorldMap:
-                _worldMapUI.gameObject.SetActive(true);
+                _uiStatefulObject.SetState("World MapUI");
                 break;
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
@@ -79,14 +78,6 @@ public class UIManager : MonoBehaviour
                 Debug.LogError($"{uiElementType} is invalid. Please change!");
                 break;
         }
-    }
-
-    public void DisableAllSceneTypeUI()
-    {
-        _habitatUI.gameObject.SetActive(false);
-        _mainMenuUI.gameObject.SetActive(false);
-        _startingUI.gameObject.SetActive(false);
-        _worldMapUI.gameObject.SetActive(false);
     }
 
     public void TutorialDisableUI()

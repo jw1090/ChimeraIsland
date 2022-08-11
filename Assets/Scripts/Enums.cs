@@ -65,7 +65,6 @@ public enum HabitatType
     None = -1,
     StonePlains,
     TreeOfLife,
-    Ashlands,
 }
 
 public enum ModifierType
@@ -137,7 +136,6 @@ public enum TutorialStageType
     WorldMapAndTheTreeOfLife,
     TreeOfLife,
     Transfers,
-    Ashlands,
 }
 
 public enum SFXUIType
@@ -150,4 +148,11 @@ public enum SFXUIType
     RemoveChimera,
     Evolution,
     LevelUp,
+}
+
+public enum DayType
+{
+    None = -1,
+    DayTime,
+    NightTime,
 }

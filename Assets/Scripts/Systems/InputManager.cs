@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
     private Camera _cameraMain = null;
     private CameraUtil _cameraUtil = null;
     private ChimeraBehavior _heldChimera = null;
-    //private ReleaseSlider _releaseSlider = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
@@ -18,11 +17,11 @@ public class InputManager : MonoBehaviour
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private bool _isInitialized = false;
-    //private bool _sliderUpdated = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
+    private bool _debugHabitatUpgradeInputEnabled = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -41,7 +40,6 @@ public class InputManager : MonoBehaviour
     {
         _uiManager = uiManager;
         _habitatUI = _uiManager.HabitatUI;
-        //_releaseSlider = _habitatUI.ReleaseSlider;
     }
 
     public InputManager Initialize()
@@ -73,6 +71,12 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("Debug Currency Input is DISABLED");
         }
+
+        _debugHabitatUpgradeInputEnabled = _debugConfig.DebugHabitatUpgradeInputEnabled;
+        if (_debugHabitatUpgradeInputEnabled == false)
+        {
+            Debug.Log("Debug Habitat Upgrade Input is DISABLED");
+        }
     }
 
     private void OnDestroy()
@@ -87,14 +91,8 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if(_inTransition == true)
-        {
-            return;
-        }
-
         if (Input.GetMouseButton(0))
         {
-            //RemoveFromFacility();
             HeldCheckAgainstUI();
         }
 
@@ -104,7 +102,6 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            //ResetSliderInfo();
             ExitHeldState();
         }
 
@@ -113,6 +110,11 @@ public class InputManager : MonoBehaviour
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 _cameraUtil.CameraZoom();
+            }
+
+            if (_inTransition == true)
+            {
+                return;
             }
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
@@ -141,64 +143,21 @@ public class InputManager : MonoBehaviour
         {
             DebugCurrencyInput();
         }
+
+        if(_debugHabitatUpgradeInputEnabled)
+        {
+            DebugHabitatUpgradeInput();
+        }
     }
-
-    /*
-    private void RemoveFromFacility()
-    {
-        if (_cameraMain == null)
-        {
-            return;
-        }
-
-        if (_releaseSlider == null)
-        {
-            Debug.LogError("Release slider is Null!");
-            return;
-        }
-
-        if (_heldChimera == true || EventSystem.current.IsPointerOverGameObject())
-        {
-            ResetSliderInfo();
-            return;
-        }
-
-        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out RaycastHit hit, 100.0f);
-
-        if (hit.collider == null)
-        {
-            return;
-        }
-
-        if (hit.collider.CompareTag("Facility") == false)
-        {
-            ResetSliderInfo();
-            return;
-        }
-
-        _releaseSlider.Hold(hit);
-        _releaseSlider.UpdateSliderUI();
-        _sliderUpdated = true;
-    }
-    
-
-    private void ResetSliderInfo()
-    {
-        if (_sliderUpdated == false)
-        {
-            return;
-        }
-
-        _releaseSlider.ResetSlider();
-        _releaseSlider.UpdateSliderUI();
-        _sliderUpdated = false;
-    }
-    */
 
     private void EnterHeldState()
     {
         if (_cameraMain == null)
+        {
+            return;
+        }
+
+        if (_inTransition == true)
         {
             return;
         }
@@ -279,6 +238,14 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             _currencyManager.ResetCurrency();
+        }
+    }
+
+    private void DebugHabitatUpgradeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            _habitatManager.CurrentHabitat.UpgradeHabitatTier();
         }
     }
 }

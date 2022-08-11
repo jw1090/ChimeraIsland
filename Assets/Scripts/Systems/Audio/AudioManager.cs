@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -16,7 +14,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _mainMenuMusic = null;
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
-    [SerializeField] private AudioClip _ashlandsMusic = null;
 
     [Header("UI SFX")]
     [SerializeField] private AudioClip _standardClickSFX= null;
@@ -99,10 +96,6 @@ public class AudioManager : MonoBehaviour
         {
             case HabitatType.StonePlains:
                 _musicSource.clip = _stonePlainsMusic;
-                _musicSource.Play();
-                break;
-            case HabitatType.Ashlands:
-                _musicSource.clip = _ashlandsMusic;
                 _musicSource.Play();
                 break;
             case HabitatType.TreeOfLife:

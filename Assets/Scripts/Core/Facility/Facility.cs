@@ -6,21 +6,18 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
     [SerializeField] private StatType _statType = StatType.None;
     [SerializeField] private int _statModifier = 1;
-    [SerializeField] private int _price = 50;
+    [SerializeField] private int _price = 30;
 
     [Header("Reference")]
-    [SerializeField] private GameObject _rubbleObject = null;
-    [SerializeField] private GameObject _tier1Object = null;
-    [SerializeField] private MeshRenderer _glowObject = null;
+    [SerializeField] private StatefulObject _tiers = null;
+    [SerializeField] private GlowMarker _glowMarker = null;
     [SerializeField] private TrainingFacilityIcon _trainingIcon = null;
-    [SerializeField] private BoxCollider _placeCollider = null;
-    [SerializeField] private BoxCollider _releaseCollider = null;
     [SerializeField] private FacilitySign _facilitySign = null;
+    [SerializeField] private Transform _cameraTransitionNode = null;
 
     private FacilitySFX _facilitySFX = null;
     private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
-    private CurrencyManager _currencyManager = null;
     private Chimera _storedChimera = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
@@ -31,15 +28,15 @@ public class Facility : MonoBehaviour
     private bool _activateTraining = false;
 
     public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
+    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
+    public GlowMarker GlowObject { get => _glowMarker; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsInitialized { get => _isInitialized; }
     public int StatModifier { get => _statModifier; }
-    public int TrainToLevel { get => _trainToLevel; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
-    public MeshRenderer GlowObject { get => _glowObject; }
 
     public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
@@ -48,7 +45,6 @@ public class Facility : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
 
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
@@ -56,13 +52,13 @@ public class Facility : MonoBehaviour
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
 
-        _facilitySFX = GetComponent<FacilitySFX>();
-
-        _glowObject.enabled = false;
+        _glowMarker.Initialize(this);
         _trainingIcon.Initialize();
+
+        _facilitySFX = GetComponent<FacilitySFX>();
         _trainingIcon.gameObject.SetActive(false);
 
-        FacilityColliderToggle(FacilityColliderType.None);
+        _tiers.SetState("Tier 0");
 
         _facilitySign.Initialize(_facilityType);
     }
@@ -84,19 +80,17 @@ public class Facility : MonoBehaviour
 
     public void BuildFacility()
     {
-        _price = (int)(_price * 7.5);
-        ++_currentTier;
+        _price = (int)(_price * 5.0f);
 
         string debugString = "";
 
-        if (_currentTier == 1)
+        if (_currentTier == 0)
         {
             debugString += $"{_facilityType} was purchased";
 
-            _rubbleObject.SetActive(false);
-            _tier1Object.SetActive(true);
+            _tiers.SetState("Tier 1");
 
-            FacilityColliderToggle(FacilityColliderType.Place);
+            _glowMarker.ActivateGlowCollider(true);
 
             _facilitySFX.Initialize();
             _facilitySFX.BuildSFX();
@@ -106,14 +100,13 @@ public class Facility : MonoBehaviour
         else
         {
             ++_statModifier;
-            debugString += $"{_facilityType} was increased to Tier {CurrentTier}";
+            debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
         }
 
+        ++_currentTier;
         _habitatUI.UpdateShopUI();
 
-        int newMod = _statModifier + 1;
-
-        Debug.Log($" {debugString} and now generates {newMod} {_statType}!");
+        Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
 
     // Called to properly link a chimera to a facility and adjust its states properly.
@@ -135,7 +128,7 @@ public class Facility : MonoBehaviour
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
 
-        FacilityColliderToggle(FacilityColliderType.release);
+        _glowMarker.ActivateGlowCollider(false);
         RevealChimera(false);
 
         Debug.Log($"{_storedChimera} added to the facility.");
@@ -152,7 +145,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_storedChimera.Level >= 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
+        if (_storedChimera.Level > 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
         {
             _uiManager.TutorialObserver.DetailsTutorial = true;
             _tutorialManager.ShowTutorialStage(TutorialStageType.Details);
@@ -166,7 +159,7 @@ public class Facility : MonoBehaviour
         _trainingIcon.gameObject.SetActive(false);
         _storedChimera.SetInFacility(false);
 
-        FacilityColliderToggle(FacilityColliderType.Place);
+        _glowMarker.ActivateGlowCollider(true);
         RevealChimera(true);
 
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
@@ -190,6 +183,7 @@ public class Facility : MonoBehaviour
         }
 
         _storedChimera.GetStatByType(_statType, out int currentStatAmount);
+
         if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
@@ -218,27 +212,6 @@ public class Facility : MonoBehaviour
         if (reveal == true)
         {
             _storedChimera.Animator.SetBool("Walk", true);
-        }
-    }
-
-    private void FacilityColliderToggle(FacilityColliderType facilityColliderType)
-    {
-        _placeCollider.enabled = false;
-        _releaseCollider.enabled = false;
-
-        switch (facilityColliderType)
-        {
-            case FacilityColliderType.None:
-                break;
-            case FacilityColliderType.Place:
-                _placeCollider.enabled = true;
-                break;
-            case FacilityColliderType.release:
-                _releaseCollider.enabled = true;
-                break;
-            default:
-                Debug.LogWarning($"{facilityColliderType} is not valid, please change!");
-                break;
         }
     }
 }

@@ -6,7 +6,6 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementType _elementalType = ElementType.None;
-    [SerializeField] private StatType _statPreference = StatType.None;
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
@@ -33,6 +32,7 @@ public class Chimera : MonoBehaviour
     private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
+    private bool _onExpedition = false;
     private int _agilityExperience = 0;
     private int _intelligenceExperience = 0;
     private int _strengthExperience = 0;
@@ -43,7 +43,6 @@ public class Chimera : MonoBehaviour
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
-    public StatType StatPreference { get => _statPreference; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
@@ -51,6 +50,7 @@ public class Chimera : MonoBehaviour
     public Sprite ChimeraIcon { get => _currentEvolution.ChimeraIcon; }
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
+    public bool OnExpedition { get => _onExpedition; }
     public int Level { get => _level; }
     public int Agility { get => _agility; }
     public int Intelligence { get => _intelligence; }
@@ -161,6 +161,7 @@ public class Chimera : MonoBehaviour
 
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
+    public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
     public void SetLevel(int level) { _level = level; }
     public void SetAgility(int agility) { _agility = agility; }
     public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
