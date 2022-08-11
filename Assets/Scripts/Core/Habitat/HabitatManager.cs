@@ -22,7 +22,7 @@ public class HabitatManager : MonoBehaviour
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
-    public List<HabitatData> HabitatDatas { get => _habitatData; }
+    public List<HabitatData> HabitatDataList { get => _habitatData; }
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 

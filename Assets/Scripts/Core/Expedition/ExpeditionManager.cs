@@ -36,7 +36,7 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _currentExpedition = _habitatManager.HabitatDatas[(int)_habitatManager.CurrentHabitat.Type]._expeditionProgress;
+        _currentExpedition = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type]._expeditionProgress;
         _expeditionState = ExpeditionState.Setup;
 
         return this;

@@ -67,7 +67,7 @@ public class PersistentData : MonoBehaviour
         GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
-        List<HabitatData> habitatData = _habitatManager.HabitatDatas;
+        List<HabitatData> habitatData = _habitatManager.HabitatDataList;
         GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes);
         UpdateGameSaveData(myData);
 

@@ -62,7 +62,7 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
-        _currentTier = _habitatManager.HabitatDatas[(int)Type]._currentTier;
+        _currentTier = _habitatManager.HabitatDataList[(int)Type]._currentTier;
         LoadHabitatTier();
 
         foreach  (Facility facility in _facilities)
