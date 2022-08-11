@@ -72,16 +72,8 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool AddChimera(Chimera chimera)
     {
-        if (chimera.Level >= CurrentExpeditionData.minimumLevel == false)
-        {
-            Debug.Log($"<color=Red>{chimera.name} is too low of a level. You must be at least level {CurrentExpeditionData.minimumLevel}.</color>");
-
-            return false;
-        }
         _chimeras.Add(chimera);
-        _uiExpedition.UpdateIcons(_chimeras);
-
-        CalculateChimeraPower();
+        EvaluateRosterChange();
 
         return true;
     }
@@ -89,11 +81,17 @@ public class ExpeditionManager : MonoBehaviour
     public bool RemoveChimera(Chimera chimera)
     {
         _chimeras.Remove(chimera);
+
+        EvaluateRosterChange();
+
+        return true;
+    }
+
+    private void EvaluateRosterChange()
+    {
         _uiExpedition.UpdateIcons(_chimeras);
 
         CalculateChimeraPower();
-
-        return true;
     }
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind)
