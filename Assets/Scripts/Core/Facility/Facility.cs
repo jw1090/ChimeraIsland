@@ -190,7 +190,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _trainingIcon.UpdateSlider(currentStatAmount);
+        _trainingIcon.UpdateSlider(_statModifier);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
         _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
