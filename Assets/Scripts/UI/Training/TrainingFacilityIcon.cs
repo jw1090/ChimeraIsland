@@ -36,7 +36,7 @@ public class TrainingFacilityIcon : MonoBehaviour
 
     public void UpdateSlider(int currentExperience)
     {
-        _slider.value = currentExperience;
+        _slider.value += currentExperience;
     }
 
     public void ResetIcon()
