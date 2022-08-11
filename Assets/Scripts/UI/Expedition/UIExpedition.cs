@@ -23,8 +23,6 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _inProgressSuccessChance = null;
     [SerializeField] private Slider _durationSlider = null;
     [SerializeField] private TextMeshProUGUI _timeRemainingText = null;
-    [SerializeField] private Button _resultsButton = null;
-    [SerializeField] private StatefulObject _inProgressStatefulObject = null;
 
     [Header("Results")]
     [SerializeField] private GameObject _rewardPanel = null;
@@ -83,7 +81,6 @@ public class UIExpedition : MonoBehaviour
     public void SetupListeners()
     {
         _uiManager.CreateButtonListener(_confirmButton, ConfirmClick);
-        _uiManager.CreateButtonListener(_resultsButton, InProgressClick);
         _uiManager.CreateButtonListener(_rewardsCloseButton, ResultsCloseClick);
     }
 
@@ -233,9 +230,38 @@ public class UIExpedition : MonoBehaviour
     {
         _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(true);
 
-        _inProgressStatefulObject.SetState("Results Button");
-        _timeRemainingText.text = "Complete!";
-        _durationSlider.value = _durationSlider.maxValue;
+        _inProgressPanel.gameObject.SetActive(false);
+        _rewardPanel.gameObject.SetActive(true);
+
+        _expeditionManager.SetExpeditionState(ExpeditionState.Result);
+
+        DetermineReward();
+    }
+
+    private void DetermineReward()
+    {
+        if (_expeditionManager.RandomSuccesRate())
+        {
+            _successResults.text = $"Success";
+
+            if (_expeditionManager.CurrentExpeditionData.rewardType == ExpeditionRewardType.HabitatUpgrade)
+            {
+                _resultsDescription.text = $"Your Habitat has been upgraded!";
+            }
+            else
+            {
+                _resultsDescription.text = $"You've gained 1 Fossil!";
+            }
+
+
+            _expeditionSuccess = true;
+        }
+        else
+        {
+            _successResults.text = $"Failure";
+            _resultsDescription.text = $"Train your Chimera and try again!";
+            _expeditionSuccess = false;
+        }
     }
 
     private void ConfirmClick()
@@ -254,39 +280,6 @@ public class UIExpedition : MonoBehaviour
 
         _inProgressPanel.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
-
-        _inProgressStatefulObject.SetState("In Progress");
-    }
-
-    private void InProgressClick()
-    {
-        _inProgressPanel.gameObject.SetActive(false);
-        _rewardPanel.gameObject.SetActive(true);
-
-        _expeditionManager.SetExpeditionState(ExpeditionState.Result);
-
-        if(_expeditionManager.RandomSuccesRate())
-        {
-            _successResults.text = $"Success";
-
-            if(_expeditionManager.CurrentExpeditionData.rewardType == ExpeditionRewardType.HabitatUpgrade)
-            {
-                _resultsDescription.text = $"Your Habitat has been upgraded!";
-            }
-            else
-            {
-                _resultsDescription.text = $"You've gained 1 Fossil!";
-            }
-
-            
-            _expeditionSuccess = true;
-        }
-        else
-        {
-            _successResults.text = $"Failure";
-            _resultsDescription.text = $"Train your Chimera and try again!";
-            _expeditionSuccess = false;
-        }
     }
 
     private void ResultsCloseClick()
@@ -305,6 +298,7 @@ public class UIExpedition : MonoBehaviour
         }
 
         _uiManager.HabitatUI.ResetStandardUI();
+        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);
     }
 
     private void PostExpeditionCleanup(bool onExpedition)
