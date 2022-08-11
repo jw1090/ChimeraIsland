@@ -10,11 +10,13 @@ public class PersistentData : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
+    private List<HabitatData> _habitatSaveData = null;
     private Vector3 _volumes = Vector3.zero;
 
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
+    public List<HabitatData> HabitatData { get => _habitatSaveData; }
     public Vector3 Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
@@ -65,8 +67,8 @@ public class PersistentData : MonoBehaviour
         GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
-
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, _audioManager.Volumes);
+        List<HabitatData> habitatData = _habitatManager.HabitatDatas;
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA);
@@ -76,6 +78,7 @@ public class PersistentData : MonoBehaviour
     {
         _globalSaveData = myData.globalData;
         _chimeraSaveData = myData.chimeras;
+        _habitatSaveData = myData.habitats;
         _facilitySaveData = myData.facilities;
         _volumes = new Vector3(myData.masterVolume, myData.musicVolume, myData.sfxVolume);
     }

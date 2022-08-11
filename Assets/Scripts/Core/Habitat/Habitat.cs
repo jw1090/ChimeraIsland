@@ -41,7 +41,11 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    public void SetTier(int tier) { _currentTier = tier; }
+    public void SetTier(int tier) 
+    { 
+        _currentTier = tier;
+        LoadHabitatTier();
+    }
 
     public Habitat Initialize()
     {
@@ -58,7 +62,7 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
-
+        _currentTier = _habitatManager.HabitatDatas[(int)Type]._currentTier;
         LoadHabitatTier();
 
         foreach  (Facility facility in _facilities)
@@ -189,6 +193,7 @@ public class Habitat : MonoBehaviour
     public void UpgradeHabitatTier()
     {
         ++_currentTier;
+        _habitatManager.SetHabitatTier(_currentTier, Type);
         LoadHabitatTier();
     }
 

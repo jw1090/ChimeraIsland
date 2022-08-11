@@ -10,6 +10,7 @@ public class HabitatManager : MonoBehaviour
     [SerializeField]private float _tickTimer = 0.6f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
+    private List<HabitatData> _habitatData = new List<HabitatData>();
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
@@ -21,6 +22,7 @@ public class HabitatManager : MonoBehaviour
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
+    public List<HabitatData> HabitatDatas { get => _habitatData; }
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
@@ -49,6 +51,17 @@ public class HabitatManager : MonoBehaviour
     public void SetCurrentHabitat(Habitat habitat) 
     { 
         _currentHabitat = habitat;
+    }
+
+    public void SetExpeditionProgress(int num, HabitatType type)
+    {
+        while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[(int)type]._expeditionProgress = num; 
+    }
+    public void SetHabitatTier(int num, HabitatType type) 
+    {
+        while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[(int)type]._currentTier = num; 
     }
 
     [Serializable]
@@ -86,6 +99,8 @@ public class HabitatManager : MonoBehaviour
         {
             StoreFacilityDataByHabitat();
         }
+
+        InitializeHabitatData();
     }
 
     public void ResetDictionaries()
@@ -119,6 +134,20 @@ public class HabitatManager : MonoBehaviour
             return false;
         }
 
+        return true;
+    }
+
+    private bool InitializeHabitatData()
+    {
+        // Get your data from the save system
+        _habitatData = _persistentData.HabitatData;
+
+        if (_habitatData == null)
+        {
+            Debug.LogError("Facility save data is null!");
+            return false;
+        }
+        
         return true;
     }
 
