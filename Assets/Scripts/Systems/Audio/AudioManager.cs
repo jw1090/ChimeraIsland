@@ -51,11 +51,11 @@ public class AudioManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                return null;
+                return _caveAmbientSFX;
             case FacilityType.RuneStone:
-                return null;
+                return _runeAmbientSFX;
             case FacilityType.Waterfall:
-                return null;
+                return _waterfallAmbientSFX;
             default:
                 return null;
         }
@@ -66,11 +66,11 @@ public class AudioManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                return null;
+                return _caveTrainingSFX;
             case FacilityType.RuneStone:
-                return null;
+                return _runeTrainingSFX;
             case FacilityType.Waterfall:
-                return null;
+                return _waterfallTrainingSFX;
             default:
                 return null;
         }
@@ -199,52 +199,6 @@ public class AudioManager : MonoBehaviour
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
                 break;
-        }
-    }
-
-    public void PlayFacilitySFX(FacilityType _facilityType)
-    {
-        switch (_facilityType)
-        {
-            case FacilityType.Waterfall:
-                _facilitySFX.AmbientSource.clip = _waterfallAmbientSFX;
-                _facilitySFX.AmbientSource.Play();
-                break;
-            case FacilityType.Cave:
-                _facilitySFX.AmbientSource.clip = _caveAmbientSFX;
-                _facilitySFX.AmbientSource.Play();
-                break;
-            case FacilityType.RuneStone:
-                _facilitySFX.AmbientSource.clip = _runeAmbientSFX;
-                _facilitySFX.AmbientSource.Play();
-                break;
-            default:
-                Debug.LogError($"{_facilityType} is invalid. Please change!");
-                break;
-
-        }
-    }
-
-    public void PlayTrainingSFX(FacilityType _facilityType)
-    {
-        switch (_facilityType)
-        {
-            //case FacilityType.Waterfall:
-            //    _enduranceAmbientSource.clip = _waterfallAmbientSFX;
-            //    _enduranceAmbientSource.Play();
-            //    break;
-            //case FacilityType.Cave:
-            //    _strengthAmbientSource.clip = _caveAmbientSFX;
-            //    _strengthAmbientSource.Play();
-            //    break;
-            //case FacilityType.RuneStone:
-            //    _intelligenceAmbientSource.clip = _runeAmbientSFX;
-            //    _intelligenceAmbientSource.Play();
-            //    break;
-            default:
-                Debug.LogError($"{_facilityType} is invalid. Please change!");
-                break;
-
         }
     }
     private void PlayClickSFX()

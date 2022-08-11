@@ -94,7 +94,7 @@ public class Facility : MonoBehaviour
 
 
             _facilitySFX.Initialize(this);
-            _audioManager.PlayFacilitySFX(_facilityType);
+            _facilitySFX.BuildSFX();
             
 
             _isInitialized = true;
@@ -202,6 +202,7 @@ public class Facility : MonoBehaviour
     {
         if (ActivateTraining == true)
         {
+            _facilitySFX.PlaySFX();
             _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         }
     }

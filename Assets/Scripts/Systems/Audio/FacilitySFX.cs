@@ -18,9 +18,20 @@ public class FacilitySFX : MonoBehaviour
     {
         AudioManager audioManager = ServiceLocator.Get<AudioManager>();
 
-        audioManager.GetFacilityAmbient(facility.Type);
-        audioManager.GetFacilityTraining(facility.Type);
+        _ambientSFX = audioManager.GetFacilityAmbient(facility.Type);
+        _trainingSFX = audioManager.GetFacilityTraining(facility.Type);
+        _ambientSource.clip = _ambientSFX;
+        _trainingSource.clip = _trainingSFX;
 
+    }
+    public void BuildSFX()
+    {
+        _ambientSource.Play();
+    }
+
+    public void PlaySFX()
+    {
+        _trainingSource.Play();
     }
 
     public void StopSFX()
