@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
+    private bool _debugHabitatUpgradeInputEnabled = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -69,6 +70,12 @@ public class InputManager : MonoBehaviour
         if (_debugCurrencyInputEnabled == false)
         {
             Debug.Log("Debug Currency Input is DISABLED");
+        }
+
+        _debugHabitatUpgradeInputEnabled = _debugConfig.DebugHabitatUpgradeInputEnabled;
+        if (_debugHabitatUpgradeInputEnabled == false)
+        {
+            Debug.Log("Debug Habitat Upgrade Input is DISABLED");
         }
     }
 
@@ -135,6 +142,11 @@ public class InputManager : MonoBehaviour
         if(_debugCurrencyInputEnabled)
         {
             DebugCurrencyInput();
+        }
+
+        if(_debugHabitatUpgradeInputEnabled)
+        {
+            DebugHabitatUpgradeInput();
         }
     }
 
@@ -226,6 +238,14 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             _currencyManager.ResetCurrency();
+        }
+    }
+
+    private void DebugHabitatUpgradeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            _habitatManager.CurrentHabitat.UpgradeHabitatTier();
         }
     }
 }
