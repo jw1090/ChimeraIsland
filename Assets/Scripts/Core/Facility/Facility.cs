@@ -92,8 +92,10 @@ public class Facility : MonoBehaviour
 
             _glowMarker.ActivateGlowCollider(true);
 
-            _facilitySFX.Initialize();
-            _facilitySFX.BuildSFX();
+
+            _facilitySFX.Initialize(this);
+            _audioManager.PlayFacilitySFX(_facilityType);
+            
 
             _isInitialized = true;
         }
@@ -200,7 +202,6 @@ public class Facility : MonoBehaviour
     {
         if (ActivateTraining == true)
         {
-            _facilitySFX.PlaySFX();
             _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         }
     }

@@ -24,8 +24,19 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _evolutionSFX= null;
     [SerializeField] private AudioClip _levelUpSFX= null;
 
+    [Header("Ambient SFX")]
+    [SerializeField] private AudioClip _waterfallAmbientSFX = null;
+    [SerializeField] private AudioClip _caveAmbientSFX = null;
+    [SerializeField] private AudioClip _runeAmbientSFX = null;
+
+    [Header("Facility SFX")]
+    [SerializeField] private AudioClip _waterfallTrainingSFX = null;
+    [SerializeField] private AudioClip _caveTrainingSFX = null;
+    [SerializeField] private AudioClip _runeTrainingSFX = null;
+
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
+    private FacilitySFX _facilitySFX = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
     private float _sfxVolume = 0.0f;
@@ -34,6 +45,36 @@ public class AudioManager : MonoBehaviour
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
+
+    public AudioClip GetFacilityAmbient(FacilityType facilityType)
+    {
+        switch (facilityType)
+        {
+            case FacilityType.Cave:
+                return null;
+            case FacilityType.RuneStone:
+                return null;
+            case FacilityType.Waterfall:
+                return null;
+            default:
+                return null;
+        }
+    }
+
+    public AudioClip GetFacilityTraining(FacilityType facilityType)
+    {
+        switch (facilityType)
+        {
+            case FacilityType.Cave:
+                return null;
+            case FacilityType.RuneStone:
+                return null;
+            case FacilityType.Waterfall:
+                return null;
+            default:
+                return null;
+        }
+    }
 
     public void SetMasterVolume(float masterVolume)
     {
@@ -57,6 +98,7 @@ public class AudioManager : MonoBehaviour
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
         _uiManager = ServiceLocator.Get<UIManager>();
+        _facilitySFX = GetComponent<FacilitySFX>();
 
         _masterVolume = _persistentData.Volumes.x;
         _musicVolume = _persistentData.Volumes.y;
@@ -160,6 +202,51 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayFacilitySFX(FacilityType _facilityType)
+    {
+        switch (_facilityType)
+        {
+            case FacilityType.Waterfall:
+                _facilitySFX.AmbientSource.clip = _waterfallAmbientSFX;
+                _facilitySFX.AmbientSource.Play();
+                break;
+            case FacilityType.Cave:
+                _facilitySFX.AmbientSource.clip = _caveAmbientSFX;
+                _facilitySFX.AmbientSource.Play();
+                break;
+            case FacilityType.RuneStone:
+                _facilitySFX.AmbientSource.clip = _runeAmbientSFX;
+                _facilitySFX.AmbientSource.Play();
+                break;
+            default:
+                Debug.LogError($"{_facilityType} is invalid. Please change!");
+                break;
+
+        }
+    }
+
+    public void PlayTrainingSFX(FacilityType _facilityType)
+    {
+        switch (_facilityType)
+        {
+            //case FacilityType.Waterfall:
+            //    _enduranceAmbientSource.clip = _waterfallAmbientSFX;
+            //    _enduranceAmbientSource.Play();
+            //    break;
+            //case FacilityType.Cave:
+            //    _strengthAmbientSource.clip = _caveAmbientSFX;
+            //    _strengthAmbientSource.Play();
+            //    break;
+            //case FacilityType.RuneStone:
+            //    _intelligenceAmbientSource.clip = _runeAmbientSFX;
+            //    _intelligenceAmbientSource.Play();
+            //    break;
+            default:
+                Debug.LogError($"{_facilityType} is invalid. Please change!");
+                break;
+
+        }
+    }
     private void PlayClickSFX()
     {
         PlayUISFX(SFXUIType.StandardClick);
@@ -168,4 +255,5 @@ public class AudioManager : MonoBehaviour
     {
         PlayUISFX(SFXUIType.ConfirmClick);
     }
+
 }
