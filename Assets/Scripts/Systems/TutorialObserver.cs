@@ -24,7 +24,7 @@ public class TutorialObserver : MonoBehaviour
 
     private void SetupListeners()
     {
-        CreateTutorialListener(_habitatUI.ExpeditionButton, TutorialStageType.ExpeditionRequirements);
+        CreateTutorialListener(_habitatUI.ExpeditionButton.Button, TutorialStageType.ExpeditionRequirements);
         CreateTutorialListener(_habitatUI.MarketplaceButton, TutorialStageType.FacilityShop);
         _uiManager.CreateButtonListener(_habitatUI.WaterfallButton, BuyFirstFacility);
     }

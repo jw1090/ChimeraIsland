@@ -229,13 +229,10 @@ public class UIExpedition : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void CleanUp()
-    {
-        
-    }
-
     public void TimerComplete()
     {
+        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(true);
+
         _inProgressStatefulObject.SetState("Results Button");
         _timeRemainingText.text = "Complete!";
         _durationSlider.value = _durationSlider.maxValue;
