@@ -207,6 +207,7 @@ public class Habitat : MonoBehaviour
                 break;
             default:
                 Debug.LogWarning($"Habitat tier [{_currentTier}] is invalid. Please fix!");
+                --_currentTier;
                 break;
         }
     }
