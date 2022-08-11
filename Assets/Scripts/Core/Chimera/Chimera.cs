@@ -6,7 +6,6 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementType _elementalType = ElementType.None;
-    [SerializeField] private StatType _statPreference = StatType.None;
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
@@ -44,7 +43,6 @@ public class Chimera : MonoBehaviour
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
-    public StatType StatPreference { get => _statPreference; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
