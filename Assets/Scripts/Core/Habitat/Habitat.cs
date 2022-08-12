@@ -22,7 +22,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
-    public Transform  SpawnPoint { get => _spawnPoint.transform; }
+    public Transform SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -41,8 +41,8 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    public void SetTier(int tier) 
-    { 
+    public void SetTier(int tier)
+    {
         _currentTier = tier;
         LoadHabitatTier();
     }
@@ -65,7 +65,7 @@ public class Habitat : MonoBehaviour
         _currentTier = _habitatManager.HabitatDataList[(int)Type]._currentTier;
         LoadHabitatTier();
 
-        foreach  (Facility facility in _facilities)
+        foreach (Facility facility in _facilities)
         {
             facility.Initialize();
         }
@@ -148,7 +148,7 @@ public class Habitat : MonoBehaviour
     {
         chimeraToTransfer.SetHabitatType(habitatType);
 
-        if(_habitatManager.AddNewChimera(chimeraToTransfer) == false)
+        if (_habitatManager.AddNewChimera(chimeraToTransfer) == false)
         {
             chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not successful, reset habitatType.
             return false;
@@ -239,16 +239,8 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_habitatManager.TickTimer);
 
-            if(_uiManager.HabitatUI.MenuOpen == false)
+            if (_uiManager.HabitatUI.MenuOpen == false)
             {
-                foreach (Chimera chimera in _activeChimeras)
-                {
-                    if (chimera.isActiveAndEnabled)
-                    {
-                        chimera.EssenceTick();
-                    }
-                }
-
                 foreach (Facility facility in _facilities)
                 {
                     if (facility.IsInitialized)
