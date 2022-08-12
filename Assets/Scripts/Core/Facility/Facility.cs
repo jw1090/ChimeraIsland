@@ -92,8 +92,10 @@ public class Facility : MonoBehaviour
 
             _glowMarker.ActivateGlowCollider(true);
 
-            _facilitySFX.Initialize();
+
+            _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
+            
 
             _isInitialized = true;
         }
