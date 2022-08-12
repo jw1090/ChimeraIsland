@@ -86,12 +86,12 @@ public class UIExpedition : MonoBehaviour
 
     public void LoadData()
     {
-        ExpeditionData data = _expeditionManager.CurrentExpeditionData;
+        ExpeditionData data = _expeditionManager.GetCurrentExpeditionData();
 
         _expeditionName.text = data.expeditionName;
-        LoadModifiers(data.modifiers);
-        _minimumLevel.text = $"Suggested Level: {data.minimumLevel}";
-        _rewardType.text = $"Rewards: {RewardTypeToString(data.rewardType)}";
+        //LoadModifiers(data.modifiers);
+        _minimumLevel.text = $"Suggested Level: {data.suggestedLevel}";
+        _rewardType.text = $"Rewards: {RewardTypeToString(data.type)}";
 
         LoadDuration(data.duration);
     }
@@ -138,13 +138,13 @@ public class UIExpedition : MonoBehaviour
         _durationSlider.value = _durationSlider.maxValue;
     }
 
-    private string RewardTypeToString(ExpeditionRewardType rewardType)
+    private string RewardTypeToString(ExpeditionType rewardType)
     {
         switch (rewardType)
         {
-            case ExpeditionRewardType.HabitatUpgrade:
+            case ExpeditionType.HabitatUpgrade:
                 return "Habitat Upgrade";
-            case ExpeditionRewardType.Fossils:
+            case ExpeditionType.Fossils:
                 return "Fossils";
             default:
                 Debug.LogWarning($"Reward Type [{rewardType}] was invalid, please change!");
@@ -244,7 +244,7 @@ public class UIExpedition : MonoBehaviour
         {
             _successResults.text = $"Success";
 
-            if (_expeditionManager.CurrentExpeditionData.rewardType == ExpeditionRewardType.HabitatUpgrade)
+            if (_expeditionManager.GetCurrentExpeditionData().type == ExpeditionType.HabitatUpgrade)
             {
                 _resultsDescription.text = $"Your Habitat has been upgraded!";
             }

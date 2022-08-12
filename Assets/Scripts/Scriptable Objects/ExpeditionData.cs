@@ -5,8 +5,10 @@ using UnityEngine;
 public class ExpeditionData : ScriptableObject
 {
     public string expeditionName = "";
+    public ExpeditionType type = ExpeditionType.None;
+    public ModifierAmount modifierAmount = ModifierAmount.None;
     public List<ModifierType> modifiers = new List<ModifierType>();
-    public int minimumLevel = 0;
-    public ExpeditionRewardType rewardType = ExpeditionRewardType.None;
+    public int suggestedLevel = 0;
+    public int energyCost = 0;
     public float duration = 0.0f;
 }

@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class ExpeditionManager : MonoBehaviour
 {
+    [SerializeField] private List<ExpeditionData> _essenceExpeditions = new List<ExpeditionData>();
+    [SerializeField] private List<ExpeditionData> _fossilExpeditions = new List<ExpeditionData>();
     [SerializeField] private List<ExpeditionData> _habitatExpeditions = new List<ExpeditionData>();
-    [SerializeField] private int _currentExpedition = 0;
+    [SerializeField] private int _currentEssenceExpedition = 0;
+    [SerializeField] private int _currentFossilExpedition = 0;
+    [SerializeField] private int _currentHabitatExpedition = 0;
     private List<Chimera> _chimeras = new List<Chimera>();
     private UIExpedition _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -20,12 +24,26 @@ public class ExpeditionManager : MonoBehaviour
     private float _firaBonus = 0.0f;
     private float _currentDuration = 0.0f;
     private ExpeditionState _expeditionState = ExpeditionState.None;
+    private ExpeditionType _currentExpeditionType = ExpeditionType.None;
 
     public ExpeditionState State { get => _expeditionState; }
-    public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
     public List<Chimera> Chimeras { get => _chimeras; }
 
-    public void SetCurrentExpedition(int val) { _currentExpedition = val; }
+    public ExpeditionData GetCurrentExpeditionData()
+    {
+        switch (_currentExpeditionType)
+        {
+            case ExpeditionType.Essence:
+                return _essenceExpeditions[_currentEssenceExpedition];
+            case ExpeditionType.Fossils:
+                return _fossilExpeditions[_currentFossilExpedition];
+            case ExpeditionType.HabitatUpgrade:
+                return _habitatExpeditions[_currentHabitatExpedition];
+            default:
+                Debug.LogError($"Expedition Type [{_currentExpeditionType}] is invalid.");
+                return null;
+        }
+    }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -36,7 +54,6 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _currentExpedition = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type]._expeditionProgress;
         _expeditionState = ExpeditionState.Setup;
 
         return this;
@@ -66,7 +83,7 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _currentDuration = CurrentExpeditionData.duration;
+        _currentDuration = GetCurrentExpeditionData().duration;
         _activeInProgressTimer = true;
     }
 
@@ -109,7 +126,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateCurrentDifficultyValue()
     {
-        float minimumLevel = CurrentExpeditionData.minimumLevel;
+        float minimumLevel = GetCurrentExpeditionData().suggestedLevel;
         float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
 
         _difficultyValue = difficultyValue;
@@ -146,7 +163,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         ResetMultipliers();
 
-        foreach (ModifierType modifierType in CurrentExpeditionData.modifiers)
+        foreach (ModifierType modifierType in GetCurrentExpeditionData().modifiers)
         {
             switch (modifierType)
             {
@@ -254,25 +271,48 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SuccessRewards()
     {
-        switch (CurrentExpeditionData.rewardType)
+        switch (GetCurrentExpeditionData().type)
         {
-            case ExpeditionRewardType.HabitatUpgrade:
+            case ExpeditionType.HabitatUpgrade:
                 _habitatManager.CurrentHabitat.UpgradeHabitatTier();
                 Debug.Log("Success! Your habitat upgraded!");
                 break;
-            case ExpeditionRewardType.Fossils:
+            case ExpeditionType.Fossils:
                 _currencyManager.IncreaseFossils(1);
                 Debug.Log("Success! You recieved 1 Fossil!");
                 break;
             default:
-                Debug.LogWarning($"Reward type is not valid [{CurrentExpeditionData.rewardType}], please change!");
+                Debug.LogWarning($"Reward type is not valid [{GetCurrentExpeditionData().type}], please change!");
                 break;
         }
 
-        if (_currentExpedition < _habitatExpeditions.Count - 1)
+        IncreaseCurrentExpedition();
+    }
+
+    public void IncreaseCurrentExpedition()
+    {
+        switch (_currentExpeditionType)
         {
-            ++_currentExpedition;
-            _habitatManager.SetExpeditionProgress(_currentExpedition, _habitatManager.CurrentHabitat.Type);
+            case ExpeditionType.Essence:
+                if (_currentEssenceExpedition < _essenceExpeditions.Count - 1)
+                {
+                    ++_currentEssenceExpedition;
+                }
+                break;
+            case ExpeditionType.Fossils:
+                if (_currentFossilExpedition < _habitatExpeditions.Count - 1)
+                {
+                    ++_currentFossilExpedition;
+                }
+                break;
+            case ExpeditionType.HabitatUpgrade:
+                if (_currentHabitatExpedition < _habitatExpeditions.Count - 1)
+                {
+                    ++_currentHabitatExpedition;
+                }
+                break;
+            default:
+                break;
         }
     }
 

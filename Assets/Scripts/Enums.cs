@@ -30,11 +30,12 @@ public enum ElementType
     Fira,
 }
 
-public enum ExpeditionRewardType
+public enum ExpeditionType
 {
     None = -1,
-    HabitatUpgrade,
+    Essence,
     Fossils,
+    HabitatUpgrade,
 }
 
 public enum ExpeditionState
@@ -76,6 +77,14 @@ public enum ModifierType
     Agility,
     Intelligence,
     Strength,
+}
+
+public enum ModifierAmount
+{
+    None = -1,
+    One,
+    Two,
+    Three
 }
 
 public enum SceneType
