@@ -3,13 +3,14 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ExpeditionOption : MonoBehaviour
+public class ExpeditionOptionUI : MonoBehaviour
 {
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _title = null;
     [SerializeField] private TextMeshProUGUI _suggestLevel = null;
     [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private TextMeshProUGUI _reward = null;
+    [SerializeField] private Button _button = null;
     [SerializeField] private List<ModifierUI> _modifiers = new List<ModifierUI>();
     private ResourceManager _resourceManager = null;
 

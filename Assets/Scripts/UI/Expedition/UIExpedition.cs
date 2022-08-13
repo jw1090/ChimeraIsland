@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
-    [SerializeField] private ExpeditionSelection _selectionPanel = null;
-    [SerializeField] private ExpeditionSetup _setupPanel = null;
-    [SerializeField] private ExpeditionInProgress _inProgressPanel = null;
-    [SerializeField] private ExpeditionResult _resultPanel = null;
+    [SerializeField] private ExpeditionSelectionUI _selectionPanel = null;
+    [SerializeField] private ExpeditionSetupUI _setupPanel = null;
+    [SerializeField] private ExpeditionInProgressUI _inProgressPanel = null;
+    [SerializeField] private ExpeditionResultUI _resultPanel = null;
 
     [Header("Expedition Setup")]
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
