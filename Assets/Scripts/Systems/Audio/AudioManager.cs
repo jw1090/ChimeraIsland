@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] private AudioClip _mainMenuMusic = null;
+    [SerializeField] private AudioClip _starterSceneMusic = null;
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
 
@@ -23,6 +24,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _removeChimeraSFX= null;
     [SerializeField] private AudioClip _evolutionSFX= null;
     [SerializeField] private AudioClip _levelUpSFX= null;
+    [SerializeField] private AudioClip _errorSFX= null;
 
     [Header("Ambient SFX")]
     [SerializeField] private AudioClip _waterfallAmbientSFX = null;
@@ -158,6 +160,10 @@ public class AudioManager : MonoBehaviour
                 _musicSource.clip = _mainMenuMusic;
                 _musicSource.Play();
                 break;
+            case SceneType.Starting:
+                _musicSource.clip = _starterSceneMusic;
+                _musicSource.Play();
+                break;
             default:
                 Debug.LogError($"{sceneType} is invalid. Please change!");
                 break;
@@ -194,6 +200,10 @@ public class AudioManager : MonoBehaviour
                 break;
             case SFXUIType.LevelUp:
                 _sfxSource.clip = _levelUpSFX;
+                _sfxSource.Play();
+                break; 
+            case SFXUIType.ErrorClick:
+                _sfxSource.clip = _errorSFX;
                 _sfxSource.Play();
                 break;
             default:

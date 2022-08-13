@@ -51,6 +51,7 @@ public class LevelLoader : AsyncLoader
                 PlayCurrentSceneMusic();
                 break;
             case SceneType.Starting:
+                PlayCurrentSceneMusic();
                 break;
             case SceneType.WorldMap:
                 _tutorialManager.ShowTutorialStage(TutorialStageType.WorldMapAndTheTreeOfLife);

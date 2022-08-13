@@ -7,8 +7,11 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
+    private AudioManager _audioManager = null;
 
-    public void Initialize(UIManager uiManager)
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+
+    public void Initialize()
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
@@ -22,6 +25,8 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 
         chimeraComp.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(chimeraComp);
+
+        _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
 
         _sceneChanger.LoadStonePlains();
     }

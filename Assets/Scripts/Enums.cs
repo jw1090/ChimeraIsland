@@ -148,6 +148,7 @@ public enum SFXUIType
     RemoveChimera,
     Evolution,
     LevelUp,
+    ErrorClick
 }
 
 public enum DayType

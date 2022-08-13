@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     public WorldMapUI WorldMapUI { get => _worldMapUI; }
     public TutorialObserver TutorialObserver { get => _tutorialObserver; }
 
+    public void SetAudioManager(AudioManager audioManager) { _startingUI.SetAudioManager(audioManager); }
+
     public UIManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
@@ -27,7 +29,7 @@ public class UIManager : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _tutorialObserver = GetComponent<TutorialObserver>();
 
-        _startingUI.Initialize(this);
+        _startingUI.Initialize();
         _habitatUI.Initialize(this);
 
         _tutorialOverlay.Initialize(this);
