@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ExpeditionManager : MonoBehaviour
 {
-    [SerializeField] private List<ExpeditionData> _essenceExpeditions = new List<ExpeditionData>();
-    [SerializeField] private List<ExpeditionData> _fossilExpeditions = new List<ExpeditionData>();
-    [SerializeField] private List<ExpeditionData> _habitatExpeditions = new List<ExpeditionData>();
+    [SerializeField] private List<ExpeditionBaseData> _essenceExpeditions = new List<ExpeditionBaseData>();
+    [SerializeField] private List<ExpeditionBaseData> _fossilExpeditions = new List<ExpeditionBaseData>();
+    [SerializeField] private List<ExpeditionBaseData> _habitatExpeditions = new List<ExpeditionBaseData>();
     [SerializeField] private int _currentEssenceExpedition = 0;
     [SerializeField] private int _currentFossilExpedition = 0;
     [SerializeField] private int _currentHabitatExpedition = 0;
@@ -29,7 +29,7 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
 
-    public ExpeditionData GetCurrentExpeditionData()
+    public ExpeditionBaseData GetCurrentExpeditionData()
     {
         switch (_currentExpeditionType)
         {
@@ -83,7 +83,7 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _currentDuration = GetCurrentExpeditionData().duration;
+        _currentDuration = GetCurrentExpeditionData().Duration;
         _activeInProgressTimer = true;
     }
 
@@ -126,7 +126,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateCurrentDifficultyValue()
     {
-        float minimumLevel = GetCurrentExpeditionData().suggestedLevel;
+        float minimumLevel = GetCurrentExpeditionData().SuggestedLevel;
         float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
 
         _difficultyValue = difficultyValue;
@@ -163,7 +163,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         ResetMultipliers();
 
-        foreach (ModifierType modifierType in GetCurrentExpeditionData().modifiers)
+        foreach (ModifierType modifierType in GetCurrentExpeditionData().Modifiers)
         {
             switch (modifierType)
             {
@@ -271,7 +271,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SuccessRewards()
     {
-        switch (GetCurrentExpeditionData().type)
+        switch (GetCurrentExpeditionData().Type)
         {
             case ExpeditionType.HabitatUpgrade:
                 _habitatManager.CurrentHabitat.UpgradeHabitatTier();
@@ -282,7 +282,7 @@ public class ExpeditionManager : MonoBehaviour
                 Debug.Log("Success! You recieved 1 Fossil!");
                 break;
             default:
-                Debug.LogWarning($"Reward type is not valid [{GetCurrentExpeditionData().type}], please change!");
+                Debug.LogWarning($"Reward type is not valid [{GetCurrentExpeditionData().Type}], please change!");
                 break;
         }
 

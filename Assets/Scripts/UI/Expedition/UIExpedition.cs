@@ -6,12 +6,17 @@ using UnityEngine.UI;
 
 public class UIExpedition : MonoBehaviour
 {
+    [SerializeField] private ExpeditionSelection _selectionPanel = null;
+    [SerializeField] private ExpeditionSetup _setupPanel = null;
+    [SerializeField] private ExpeditionInProgress _inProgressPanel = null;
+    [SerializeField] private ExpeditionResult _resultPanel = null;
+
     [Header("Expedition Setup")]
     [SerializeField] private TextMeshProUGUI _expeditionName = null;
     [SerializeField] private TextMeshProUGUI _minimumLevel = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private GameObject _modifierFolder = null;
-    [SerializeField] private List<Modifier> _modifiers = new List<Modifier>();
+    [SerializeField] private List<ModifierUI> _modifiers = new List<ModifierUI>();
     [SerializeField] private List<Image> _chimeraIcons = new List<Image>();
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
@@ -19,7 +24,6 @@ public class UIExpedition : MonoBehaviour
     [SerializeField] private Button _confirmButton = null;
 
     [Header("In Progress")]
-    [SerializeField] private GameObject _inProgressPanel = null;
     [SerializeField] private TextMeshProUGUI _inProgressSuccessChance = null;
     [SerializeField] private Slider _durationSlider = null;
     [SerializeField] private TextMeshProUGUI _timeRemainingText = null;
@@ -74,7 +78,7 @@ public class UIExpedition : MonoBehaviour
         {
             _expeditionManager.ExpeditionSetup();
             _expeditionSuccess = false;
-            LoadData();
+            LoadSetupData();
         }
     }
 
@@ -84,16 +88,16 @@ public class UIExpedition : MonoBehaviour
         _uiManager.CreateButtonListener(_rewardsCloseButton, ResultsCloseClick);
     }
 
-    public void LoadData()
+    public void LoadSetupData()
     {
-        ExpeditionData data = _expeditionManager.GetCurrentExpeditionData();
+        ExpeditionBaseData data = _expeditionManager.GetCurrentExpeditionData();
 
-        _expeditionName.text = data.expeditionName;
+        _expeditionName.text = data.Title;
         //LoadModifiers(data.modifiers);
-        _minimumLevel.text = $"Suggested Level: {data.suggestedLevel}";
-        _rewardType.text = $"Rewards: {RewardTypeToString(data.type)}";
+        _minimumLevel.text = $"Suggested Level: {data.SuggestedLevel}";
+        _rewardType.text = $"Rewards: {RewardTypeToString(data.Type)}";
 
-        LoadDuration(data.duration);
+        LoadDuration(data.Duration);
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)
@@ -108,21 +112,12 @@ public class UIExpedition : MonoBehaviour
             }
             else
             {
-                _modifiers[i].icon.sprite = _resourceManager.GetModifierSprite(modifierType);
+                _modifiers[i].Icon.sprite = _resourceManager.GetModifierSprite(modifierType);
                 _modifiers[i].gameObject.SetActive(true);
                 ++activeBadgeCount;
             }
 
             ++i;
-        }
-
-        if(activeBadgeCount > 1)
-        {
-            _modifierFolder.SetActive(true);
-        }
-        else
-        {
-            _modifierFolder.SetActive(false);
         }
     }
 
@@ -244,7 +239,7 @@ public class UIExpedition : MonoBehaviour
         {
             _successResults.text = $"Success";
 
-            if (_expeditionManager.GetCurrentExpeditionData().type == ExpeditionType.HabitatUpgrade)
+            if (_expeditionManager.GetCurrentExpeditionData().Type == ExpeditionType.HabitatUpgrade)
             {
                 _resultsDescription.text = $"Your Habitat has been upgraded!";
             }

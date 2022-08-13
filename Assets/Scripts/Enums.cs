@@ -68,23 +68,25 @@ public enum HabitatType
     TreeOfLife,
 }
 
+public enum HabitatRewardType
+{
+    None = -1,
+    Waterfall,
+    CaveExploring,
+    RuneStones,
+    Upgrade,
+}
+
 public enum ModifierType
 {
     None = -1,
+    Random,
     Aqua,
     Bio,
     Fira,
     Agility,
     Intelligence,
     Strength,
-}
-
-public enum ModifierAmount
-{
-    None = -1,
-    One,
-    Two,
-    Three
 }
 
 public enum SceneType
