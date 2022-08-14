@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class ExpeditionOptionUI : MonoBehaviour
 {
+    [SerializeField] private ExpeditionType _expeditionType = ExpeditionType.None;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _title = null;
     [SerializeField] private TextMeshProUGUI _suggestLevel = null;
@@ -13,6 +14,8 @@ public class ExpeditionOptionUI : MonoBehaviour
     [SerializeField] private Button _button = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     private ResourceManager _resourceManager = null;
+
+    public ExpeditionType ExpeditionType { get => _expeditionType; }
 
     public void Initialize()
     {

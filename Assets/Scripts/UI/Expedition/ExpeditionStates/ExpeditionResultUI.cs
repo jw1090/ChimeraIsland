@@ -32,7 +32,7 @@ public class ExpeditionResultUI : MonoBehaviour
     {
         _expeditionUI.PostExpeditionCleanup(false);
 
-        _expeditionManager.SetExpeditionState(ExpeditionState.Setup);
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
 
         if (_expeditionSuccess == true) // Success
         {

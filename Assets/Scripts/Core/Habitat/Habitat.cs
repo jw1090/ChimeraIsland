@@ -64,8 +64,8 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
-        _currentTier = _habitatManager.HabitatDataList[(int)Type]._currentTier;
-        LoadHabitatTier();
+
+        SetTier(_habitatManager.HabitatDataList[(int)Type]._currentTier);
 
         foreach (Facility facility in _facilities)
         {
@@ -198,6 +198,12 @@ public class Habitat : MonoBehaviour
 
     public void UpgradeHabitatTier()
     {
+        if (_currentTier + 1 >= 4)
+        {
+            Debug.LogWarning($"Can't increase habitat, tier [{_currentTier}] is the highest");
+            return;
+        }
+
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
         LoadHabitatTier();

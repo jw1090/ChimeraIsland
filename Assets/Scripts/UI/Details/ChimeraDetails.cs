@@ -101,7 +101,7 @@ public class ChimeraDetails : MonoBehaviour
         switch (detailsButtonType)
         {
             case DetailsButtonType.Standard:
-                _statefulButtons.SetState("Transfer Button");
+                _statefulButtons.SetState("Wandering");
                 break;
             case DetailsButtonType.Expedition:
                 if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)

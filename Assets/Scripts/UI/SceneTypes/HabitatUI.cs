@@ -192,11 +192,6 @@ public class HabitatUI : MonoBehaviour
         _closeDetailsButton.gameObject.SetActive(true);
     }
 
-    private void OpenExpeditionDetailsPanel()
-    {
-        OpenDetails(DetailsButtonType.Expedition);
-    }
-
     public void OpenMarketplace()
     {
         ResetStandardUI();

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExpeditionUI : MonoBehaviour
@@ -36,6 +34,7 @@ public class ExpeditionUI : MonoBehaviour
         _uiManager = uiManager;
         _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
 
+        _selectionPanel.Initialize();
         _setupPanel.Initialize(uiManager, this);
         _resultPanel.Initialize(uiManager, this);
 
@@ -51,17 +50,22 @@ public class ExpeditionUI : MonoBehaviour
 
     public void OpenExpeditionUI()
     {
+        _uiManager.HabitatUI.OpenStandardDetailsPanel();
+
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
-                break;
-            case ExpeditionState.Setup:
+                _backgroundUIStates.SetState("Selection Panel");
+                _foregroundUIStates.SetState("Transparent");
+                _selectionPanel.LoadSelectionExpeditions();
                 break;
             case ExpeditionState.InProgress:
-                _inProgressPanel.gameObject.SetActive(true);
+                _backgroundUIStates.SetState("Selection Panel");
+                _foregroundUIStates.SetState("In Progress Panel");
                 break;
             case ExpeditionState.Result:
-                _resultPanel.gameObject.SetActive(true);
+                _backgroundUIStates.SetState("Selection Panel");
+                _foregroundUIStates.SetState("Results Panel");
                 break;
             default:
                 Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");
@@ -71,12 +75,11 @@ public class ExpeditionUI : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
-
     public void LoadExpeditionSetup()
     {
         _setupPanel.ResetChimeraIcons();
 
-        if (_expeditionManager.State == ExpeditionState.Setup || _expeditionManager.State == ExpeditionState.Selection)
+        if (_expeditionManager.State == ExpeditionState.Selection)
         {
             _expeditionManager.ExpeditionSetup();
             ExpeditionSuccess = false;
