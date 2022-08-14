@@ -10,7 +10,7 @@ public class ExpeditionManager : MonoBehaviour
     [SerializeField] private int _currentFossilExpedition = 0;
     [SerializeField] private int _currentHabitatExpedition = 0;
     private List<Chimera> _chimeras = new List<Chimera>();
-    private UIExpedition _uiExpedition = null;
+    private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private bool _activeInProgressTimer = false;
@@ -54,7 +54,8 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _expeditionState = ExpeditionState.Setup;
+
+        _expeditionState = ExpeditionState.Selection;
 
         return this;
     }
@@ -106,7 +107,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void EvaluateRosterChange()
     {
-        _uiExpedition.UpdateIcons(_chimeras);
+        _uiExpedition.SetupUI.UpdateIcons();
 
         CalculateChimeraPower();
     }
@@ -131,7 +132,7 @@ public class ExpeditionManager : MonoBehaviour
 
         _difficultyValue = difficultyValue;
 
-        _uiExpedition.UpdateDifficultValue(_difficultyValue);
+        _uiExpedition.SetupUI.UpdateDifficultyValue(_difficultyValue);
     }
 
     private void CalculateChimeraPower()
@@ -156,7 +157,7 @@ public class ExpeditionManager : MonoBehaviour
             _chimeraPower = power;
         }
 
-        _uiExpedition.UpdateChimeraPower(_chimeraPower);
+        _uiExpedition.SetupUI.UpdateChimeraPower(_chimeraPower);
     }
 
     private void CalculateModifiers()
@@ -242,7 +243,7 @@ public class ExpeditionManager : MonoBehaviour
     private void InProgressTimerUpdate()
     {
         _currentDuration -= Time.deltaTime;
-        _uiExpedition.SetInProgressTimeRemainingText(_currentDuration);
+        _uiExpedition.InProgressUI.UpdateInProgressTimeRemainingText(_currentDuration);
 
         if (_currentDuration <= 0)
         {

@@ -41,6 +41,7 @@ public enum ExpeditionType
 public enum ExpeditionState
 {
     None = -1,
+    Selection,
     Setup,
     InProgress,
     Result

@@ -20,7 +20,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
-    [SerializeField] private UIExpedition _expeditionPanel = null;
+    [SerializeField] private ExpeditionUI _expeditionPanel = null;
     [SerializeField] private GameObject _settingsPanel = null;
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
@@ -28,7 +28,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
-    [SerializeField] private UITraining _trainingPanel = null;
+    [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
@@ -44,8 +44,8 @@ public class HabitatUI : MonoBehaviour
     public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
-    public UITraining TrainingPanel { get => _trainingPanel; }
-    public UIExpedition ExpeditionPanel { get => _expeditionPanel; }
+    public TrainingUI TrainingPanel { get => _trainingPanel; }
+    public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public bool MenuOpen { get => _menuOpen; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
@@ -268,12 +268,8 @@ public class HabitatUI : MonoBehaviour
         ResetStandardUI();
 
         _expeditionButton.ActivateNotification(false);
-
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
-        _expeditionPanel.LoadExpeditionUI();
-
-        OpenExpeditionDetailsPanel();
         _expeditionPanel.OpenExpeditionUI();
 
         _menuOpen = true;
@@ -282,7 +278,7 @@ public class HabitatUI : MonoBehaviour
     public void UpdateHabitatUI()
     {
         _detailsFolder.UpdateDetailsList();
-        _expeditionPanel.UpdateIcons();
+        _expeditionPanel.SetupUI.UpdateIcons();
     }
 
     public void OpenTrainingPanel()

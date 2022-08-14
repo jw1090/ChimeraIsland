@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITraining : MonoBehaviour
+public class TrainingUI : MonoBehaviour
 {
     [SerializeField] private Color _validColor = Color.white;
     [SerializeField] private Color _badColor = Color.red;
@@ -14,7 +14,7 @@ public class UITraining : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statInfoText = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     [SerializeField] private Slider _slider = null;
-    [SerializeField] private Image _sliderImage = null;
+    [SerializeField] private Image _sliderFill = null;
 
     private Facility _facility = null;
     private Chimera _chimera = null;
@@ -81,12 +81,12 @@ public class UITraining : MonoBehaviour
         if (_cost > _currencyManager.Essence)
         {
             _costText.color = _badColor;
-            _sliderImage.color = _badColor;
+            _sliderFill.color = _badColor;
         }
         else
         {
             _costText.color = Color.white;
-            _sliderImage.color = _validColor;
+            _sliderFill.color = _validColor;
         }
 
         _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _attribute})";

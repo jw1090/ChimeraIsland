@@ -21,7 +21,7 @@ public class Facility : MonoBehaviour
     private Chimera _storedChimera = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
-    private UITraining _uiTraining = null;
+    private TrainingUI _uiTraining = null;
     private bool _isInitialized = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;

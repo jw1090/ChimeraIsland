@@ -11,7 +11,7 @@ public class ExpeditionOptionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private TextMeshProUGUI _reward = null;
     [SerializeField] private Button _button = null;
-    [SerializeField] private List<ModifierUI> _modifiers = new List<ModifierUI>();
+    [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     private ResourceManager _resourceManager = null;
 
     public void Initialize()
