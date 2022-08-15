@@ -165,6 +165,8 @@ public class HabitatUI : MonoBehaviour
         _transferMap.gameObject.SetActive(false);
 
         _menuOpen = false;
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     private void OpenDetails(DetailsButtonType detailsButtonType)

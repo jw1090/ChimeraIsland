@@ -4,11 +4,13 @@ using UnityEngine;
 public class ExpeditionSelectionUI : MonoBehaviour
 {
     [SerializeField] private List<ExpeditionOptionUI> _expeditionOptions = new List<ExpeditionOptionUI>();
-    private ExpeditionManager _expeditionManager = null;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
-        _expeditionManager = expeditionManager;
+        foreach(ExpeditionOptionUI expeditionOptionUI in _expeditionOptions)
+        {
+            expeditionOptionUI.SetExpeditionManager(expeditionManager);
+        }
     }
 
 
@@ -25,16 +27,13 @@ public class ExpeditionSelectionUI : MonoBehaviour
 
     }
 
-    public void LoadSelectionExpeditions()
+    public void DisplayExpeditionOptions()
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
         {
-            InsertExpeditionData(option);
+            option.LoadExpeditionData();
         }
     }
 
-    private void InsertExpeditionData(ExpeditionOptionUI option)
-    {
-
-    }
+    
 }

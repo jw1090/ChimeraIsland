@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class ExpeditionManager : MonoBehaviour
 {
-    [SerializeField] private List<ExpeditionBaseData> _essenceExpeditions = new List<ExpeditionBaseData>();
-    [SerializeField] private List<ExpeditionBaseData> _fossilExpeditions = new List<ExpeditionBaseData>();
-    [SerializeField] private List<ExpeditionBaseData> _habitatExpeditions = new List<ExpeditionBaseData>();
-    [SerializeField] private int _currentEssenceExpedition = 0;
-    [SerializeField] private int _currentFossilExpedition = 0;
-    [SerializeField] private int _currentHabitatExpedition = 0;
+    [SerializeField] private List<CurrencyExpeditionData> _essenceExpeditions = new List<CurrencyExpeditionData>();
+    [SerializeField] private List<CurrencyExpeditionData> _fossilExpeditions = new List<CurrencyExpeditionData>();
+    [SerializeField] private List<HabitatExpeditionData> _habitatExpeditions = new List<HabitatExpeditionData>();
+    [SerializeField] private int _currentEssenceProgress = 0;
+    [SerializeField] private int _currentFossilProgress = 0;
+    [SerializeField] private int _currentHabitatProgress = 0;
+    private ExpeditionBaseData _selectedExpedition = null;
+    private CurrencyExpeditionData _essenceExpeditionOption = null;
+    private CurrencyExpeditionData _fossilExpeditionOption = null;
+    private HabitatExpeditionData _habitatExpeditionOption = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private bool _activeInProgressTimer = false;
+    private bool _expeditionSuccess = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
     private float _agilityModifer = 1.0f;
@@ -24,26 +29,15 @@ public class ExpeditionManager : MonoBehaviour
     private float _firaBonus = 0.0f;
     private float _currentDuration = 0.0f;
     private ExpeditionState _expeditionState = ExpeditionState.None;
-    private ExpeditionType _currentExpeditionType = ExpeditionType.None;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
+    public CurrencyExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
+    public CurrencyExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
+    public HabitatExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
+    public ExpeditionBaseData SelectedExpedition { get => _selectedExpedition; }
 
-    public ExpeditionBaseData GetCurrentExpeditionData()
-    {
-        switch (_currentExpeditionType)
-        {
-            case ExpeditionType.Essence:
-                return _essenceExpeditions[_currentEssenceExpedition];
-            case ExpeditionType.Fossils:
-                return _fossilExpeditions[_currentFossilExpedition];
-            case ExpeditionType.HabitatUpgrade:
-                return _habitatExpeditions[_currentHabitatExpedition];
-            default:
-                Debug.LogError($"Expedition Type [{_currentExpeditionType}] is invalid.");
-                return null;
-        }
-    }
+    public bool ExpeditionSuccess { get => _expeditionSuccess; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -56,13 +50,14 @@ public class ExpeditionManager : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
 
         _expeditionState = ExpeditionState.Selection;
+        _expeditionSuccess = false;
 
         return this;
     }
 
     public void Update()
     {
-        if (State != ExpeditionState.InProgress)
+        if (_expeditionState != ExpeditionState.InProgress)
         {
             return;
         }
@@ -71,6 +66,11 @@ public class ExpeditionManager : MonoBehaviour
         {
             InProgressTimerUpdate();
         }
+    }
+
+    public void LoadExpeditionOptions()
+    {
+
     }
 
     public void ExpeditionSetup()
@@ -84,7 +84,7 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _currentDuration = GetCurrentExpeditionData().Duration;
+        _currentDuration = _selectedExpedition.Duration;
         _activeInProgressTimer = true;
     }
 
@@ -127,7 +127,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateCurrentDifficultyValue()
     {
-        float minimumLevel = GetCurrentExpeditionData().SuggestedLevel;
+        float minimumLevel = _selectedExpedition.SuggestedLevel;
         float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
 
         _difficultyValue = difficultyValue;
@@ -164,7 +164,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         ResetMultipliers();
 
-        foreach (ModifierType modifierType in GetCurrentExpeditionData().Modifiers)
+        foreach (ModifierType modifierType in _selectedExpedition.Modifiers)
         {
             switch (modifierType)
             {
@@ -262,6 +262,7 @@ public class ExpeditionManager : MonoBehaviour
 
         if (successRoll >= _difficultyValue - _chimeraPower)
         {
+            _expeditionSuccess = true;
             return true;
         }
         else
@@ -272,7 +273,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SuccessRewards()
     {
-        switch (GetCurrentExpeditionData().Type)
+        switch (_selectedExpedition.Type)
         {
             case ExpeditionType.HabitatUpgrade:
                 _habitatManager.CurrentHabitat.UpgradeHabitatTier();
@@ -283,36 +284,57 @@ public class ExpeditionManager : MonoBehaviour
                 Debug.Log("Success! You recieved 1 Fossil!");
                 break;
             default:
-                Debug.LogWarning($"Reward type is not valid [{GetCurrentExpeditionData().Type}], please change!");
+                Debug.LogWarning($"Reward type is not valid [{_selectedExpedition.Type}], please change!");
                 break;
         }
 
-        IncreaseCurrentExpedition();
+        ProgressToNextExpedition();
     }
 
-    public void IncreaseCurrentExpedition()
+    private void ProgressToNextExpedition()
     {
-        switch (_currentExpeditionType)
+        if (_selectedExpedition == null)
+        {
+            Debug.LogError($"Selected Expedition is null. Please change!");
+        }
+
+        switch (_selectedExpedition.Type)
         {
             case ExpeditionType.Essence:
-                if (_currentEssenceExpedition < _essenceExpeditions.Count - 1)
+                _essenceExpeditionOption = null;
+                if (_currentEssenceProgress + 1 < _essenceExpeditions.Count)
                 {
-                    ++_currentEssenceExpedition;
+                    ++_currentEssenceProgress;
+                }
+                else
+                {
+                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentEssenceProgress}]");
                 }
                 break;
             case ExpeditionType.Fossils:
-                if (_currentFossilExpedition < _habitatExpeditions.Count - 1)
+                _fossilExpeditionOption = null;
+                if (_currentFossilProgress + 1 < _fossilExpeditions.Count)
                 {
-                    ++_currentFossilExpedition;
+                    ++_currentFossilProgress;
+                }
+                else
+                {
+                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentFossilProgress}]");
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:
-                if (_currentHabitatExpedition < _habitatExpeditions.Count - 1)
+                _habitatExpeditionOption = null;
+                if (_currentHabitatProgress + 1 < _habitatExpeditions.Count)
                 {
-                    ++_currentHabitatExpedition;
+                    ++_currentHabitatProgress;
+                }
+                else
+                {
+                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentHabitatProgress}]");
                 }
                 break;
             default:
+                Debug.LogError($"Expedition Type [{_selectedExpedition.Type}] is invalid.");
                 break;
         }
     }
@@ -328,5 +350,9 @@ public class ExpeditionManager : MonoBehaviour
         {
             _chimeras.Clear();
         }
+
+        _expeditionSuccess = false;
+        _expeditionState = ExpeditionState.Selection;
+        _selectedExpedition = null;
     }
 }

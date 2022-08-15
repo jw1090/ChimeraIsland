@@ -50,7 +50,7 @@ public class ExpeditionResultUI : MonoBehaviour
         {
             _successResults.text = $"Success";
 
-            if (_expeditionManager.GetCurrentExpeditionData().Type == ExpeditionType.HabitatUpgrade)
+            if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade)
             {
                 _resultsDescription.text = $"Your Habitat has been upgraded!";
             }

@@ -71,6 +71,7 @@ public enum HabitatType
 public enum HabitatRewardType
 {
     None = -1,
+    Random,
     Waterfall,
     CaveExploring,
     RuneStones,

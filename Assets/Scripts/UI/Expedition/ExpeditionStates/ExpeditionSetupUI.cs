@@ -61,7 +61,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void LoadExpeditionData()
     {
-        ExpeditionBaseData data = _expeditionManager.GetCurrentExpeditionData();
+        ExpeditionBaseData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
         _suggestedLevel.text = $"Suggested Level: {data.SuggestedLevel}";

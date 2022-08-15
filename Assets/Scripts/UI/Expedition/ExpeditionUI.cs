@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExpeditionUI : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ExpeditionUI : MonoBehaviour
     [SerializeField] private ExpeditionResultUI _resultPanel = null;
     [SerializeField] private StatefulObject _backgroundUIStates = null;
     [SerializeField] private StatefulObject _foregroundUIStates = null;
+    [SerializeField] private Button _closeButton = null;
 
     public ExpeditionSelectionUI SelectionUI { get => _selectionPanel; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
@@ -16,8 +18,6 @@ public class ExpeditionUI : MonoBehaviour
     public StatefulObject BackgroundUIStates { get => _backgroundUIStates; }
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
 
-    public bool ExpeditionSuccess { get; set; }
-
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
     private ChimeraDetailsFolder _detailsFolder = null;
@@ -25,6 +25,7 @@ public class ExpeditionUI : MonoBehaviour
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
+        _selectionPanel.SetExpeditionManager(expeditionManager);
         _setupPanel.SetExpeditionManager(expeditionManager);
         _resultPanel.SetExpeditionManager(expeditionManager);
     }
@@ -43,6 +44,8 @@ public class ExpeditionUI : MonoBehaviour
 
     public void SetupListeners()
     {
+        _uiManager.CreateButtonListener(_closeButton, _uiManager.HabitatUI.ResetStandardUI);
+
         _selectionPanel.SetupListeners();
         _setupPanel.SetupListeners();
         _resultPanel.SetupListeners();
@@ -57,7 +60,8 @@ public class ExpeditionUI : MonoBehaviour
             case ExpeditionState.Selection:
                 _backgroundUIStates.SetState("Selection Panel");
                 _foregroundUIStates.SetState("Transparent");
-                _selectionPanel.LoadSelectionExpeditions();
+                _expeditionManager.LoadExpeditionOptions();
+                _selectionPanel.DisplayExpeditionOptions();
                 break;
             case ExpeditionState.InProgress:
                 _backgroundUIStates.SetState("Selection Panel");
@@ -82,7 +86,6 @@ public class ExpeditionUI : MonoBehaviour
         if (_expeditionManager.State == ExpeditionState.Selection)
         {
             _expeditionManager.ExpeditionSetup();
-            ExpeditionSuccess = false;
         }
     }
 
