@@ -6,26 +6,23 @@ public class HabitatExpeditionData : ExpeditionBaseData
 {
     public HabitatRewardType RewardType = HabitatRewardType.None;
 
-    public HabitatExpeditionData(HabitatExpeditionData other)
-    {
-        Title = other.Title;
-        Type = other.Type;
-        SuggestedLevel = other.SuggestedLevel;
-        EnergyCost = other.EnergyCost;
-        Duration = other.Duration;
-        RewardType = other.RewardType;
-
-        Modifiers = new List<ModifierType>();
-
-        foreach (var modifier in other.Modifiers)
-        {
-            Modifiers.Add(modifier);
-        }
-    }
-
     public HabitatExpeditionData DeepCopy()
     {
-        HabitatExpeditionData deepCopy = new HabitatExpeditionData(this);
+        HabitatExpeditionData deepCopy = CreateInstance<HabitatExpeditionData>();
+
+        deepCopy.Title = Title;
+        deepCopy.Type = Type;
+        deepCopy.SuggestedLevel = SuggestedLevel;
+        deepCopy.EnergyCost = EnergyCost;
+        deepCopy.Duration = Duration;
+        deepCopy.RewardType = RewardType;
+
+        deepCopy.Modifiers = new List<ModifierType>();
+
+        foreach (var modifier in Modifiers)
+        {
+            deepCopy.Modifiers.Add(modifier);
+        }
 
         return deepCopy;
     }

@@ -13,18 +13,12 @@ public class ExpeditionSelectionUI : MonoBehaviour
         }
     }
 
-
     public void Initialize()
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
         {
             option.Initialize();
         }
-    }
-
-    public void SetupListeners()
-    {
-
     }
 
     public void DisplayExpeditionOptions()

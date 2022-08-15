@@ -26,12 +26,12 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
 
     public void UpdateUI()
     {
-        _tmpText.text = "1"; // TODO: Replace with chimera price update.
+        _tmpText.text = "5"; // TODO: Replace with chimera price update.
     }
 
-    public void OnPointerClick(PointerEventData eventData) // Purchase Success
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if(_habitat.BuyChimera(_chimera) == true)
+        if (_habitat.BuyChimera(_chimera) == true)
         {
             _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
             _habitatUI.ResetStandardUI();

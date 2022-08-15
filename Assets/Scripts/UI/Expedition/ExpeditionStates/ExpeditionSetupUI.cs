@@ -25,14 +25,6 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager = expeditionManager;
     }
 
-    public void ResetChimeraIcons()
-    {
-        foreach (var icon in _chimeraIcons)
-        {
-            icon.Icon = null;
-        }
-    }
-
     public void Initialize(UIManager uiManager, ExpeditionUI expeditionUI)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
@@ -61,6 +53,11 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void LoadExpeditionData()
     {
+        foreach (var icon in _chimeraIcons)
+        {
+            icon.Icon = null;
+        }
+
         ExpeditionBaseData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
@@ -69,6 +66,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         LoadDuration(data.Duration);
         _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
+        LoadModifiers(data.Modifiers);
     }
 
     private void LoadDuration(float duration)

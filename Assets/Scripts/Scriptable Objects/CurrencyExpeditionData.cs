@@ -6,26 +6,23 @@ public class CurrencyExpeditionData : ExpeditionBaseData
 {
     public float AmountGained = 0.0f;
 
-    public CurrencyExpeditionData(CurrencyExpeditionData other)
-    {
-       Title = other.Title;
-       Type = other.Type;
-       SuggestedLevel = other.SuggestedLevel;
-       EnergyCost = other.EnergyCost;
-       Duration = other.Duration;
-       AmountGained = other.AmountGained;
-
-        Modifiers = new List<ModifierType>();
-
-        foreach (var modifier in other.Modifiers)
-        {
-            Modifiers.Add(modifier);
-        }
-    }
-
     public CurrencyExpeditionData DeepCopy()
     {
-        CurrencyExpeditionData deepCopy = new CurrencyExpeditionData(this);
+        CurrencyExpeditionData deepCopy = CreateInstance<CurrencyExpeditionData>();
+
+        deepCopy.Title = Title;
+        deepCopy.Type = Type;
+        deepCopy.SuggestedLevel = SuggestedLevel;
+        deepCopy.EnergyCost = EnergyCost;
+        deepCopy.Duration = Duration;
+        deepCopy.AmountGained = AmountGained;
+
+        deepCopy.Modifiers = new List<ModifierType>();
+
+        foreach (var modifier in Modifiers)
+        {
+            deepCopy.Modifiers.Add(modifier);
+        }
 
         return deepCopy;
     }

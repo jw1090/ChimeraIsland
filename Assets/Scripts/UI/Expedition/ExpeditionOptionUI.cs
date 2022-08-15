@@ -2,8 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
-public class ExpeditionOptionUI : MonoBehaviour
+public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ExpeditionType _expeditionType = ExpeditionType.None;
     [SerializeField] private Image _icon = null;
@@ -124,5 +125,10 @@ public class ExpeditionOptionUI : MonoBehaviour
 
             ++i;
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        _expeditionManager.SetSelectedExpedition(_expeditionType);
     }
 }

@@ -46,7 +46,6 @@ public class ExpeditionUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_closeButton, _uiManager.HabitatUI.ResetStandardUI);
 
-        _selectionPanel.SetupListeners();
         _setupPanel.SetupListeners();
         _resultPanel.SetupListeners();
     }
@@ -81,12 +80,12 @@ public class ExpeditionUI : MonoBehaviour
 
     public void LoadExpeditionSetup()
     {
-        _setupPanel.ResetChimeraIcons();
+        _backgroundUIStates.SetState("Setup Panel");
+        _foregroundUIStates.SetState("Transparent");
 
-        if (_expeditionManager.State == ExpeditionState.Selection)
-        {
-            _expeditionManager.ExpeditionSetup();
-        }
+        _setupPanel.LoadExpeditionData();
+
+        _expeditionManager.ExpeditionSetup();
     }
 
     public void CloseExpeditionUI()

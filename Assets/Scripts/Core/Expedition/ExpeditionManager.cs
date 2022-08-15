@@ -43,6 +43,27 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
+    public void SetSelectedExpedition(ExpeditionType expeditionType)
+    {
+        switch (expeditionType)
+        {
+            case ExpeditionType.Essence:
+                _selectedExpedition = _essenceExpeditionOption;
+                break;
+            case ExpeditionType.Fossils:
+                _selectedExpedition = _fossilExpeditionOption;
+                break;
+            case ExpeditionType.HabitatUpgrade:
+                _selectedExpedition = _habitatExpeditionOption;
+                break;
+            default:
+                Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
+                break;
+        }
+
+        _uiExpedition.LoadExpeditionSetup();
+    }
+
     public ExpeditionManager Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
