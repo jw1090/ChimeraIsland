@@ -53,7 +53,7 @@ public class ExpeditionUI : MonoBehaviour
 
     public void OpenExpeditionUI()
     {
-        _uiManager.HabitatUI.OpenStandardDetailsPanel();
+        _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
 
         switch (_expeditionManager.State)
         {

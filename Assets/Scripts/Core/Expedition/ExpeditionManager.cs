@@ -85,7 +85,7 @@ public class ExpeditionManager : MonoBehaviour
             return;
         }
 
-        CurrencyExpeditionData newExpedition = ExpeditionDataByType(expeditionType).ShallowCopy(); // Get the correct data reference
+        CurrencyExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
         AnalyseRandomModifiers(newExpedition.Modifiers);
 
         switch (newExpedition.Type)
@@ -123,7 +123,7 @@ public class ExpeditionManager : MonoBehaviour
             return;
         }
 
-        HabitatExpeditionData newExpedition = _habitatExpeditions[_currentHabitatProgress].ShallowCopy(); // Get the correct data reference
+        HabitatExpeditionData newExpedition = _habitatExpeditions[_currentHabitatProgress].DeepCopy(); // Get the correct data reference
         AnalyseRandomModifiers(newExpedition.Modifiers);
 
         if (newExpedition.RewardType == HabitatRewardType.Random)
@@ -152,7 +152,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void AnalyseRandomModifiers(List<ModifierType> modifiers) // If a modifier is random, it will randomize it.
     {
-        int modifierMax = Enum.GetValues(typeof(ModifierType)).Length;
+        int modifierMax = Enum.GetValues(typeof(ModifierType)).Length - 1;
 
         for (int i = 0; i < modifiers.Count; ++i)
         {
@@ -168,8 +168,13 @@ public class ExpeditionManager : MonoBehaviour
                 repeated = false;
                 modifiers[i] = (ModifierType)Random.Range(1, modifierMax); // 1 is Aqua
 
-                for (int j = i + 1; j < modifiers.Count; ++j)
+                for (int j = 0; j < modifiers.Count; ++j)
                 {
+                    if (i == j) // Skip Self
+                    {
+                        continue;
+                    }
+
                     if (modifiers[i] == modifiers[j]) // If true, it was repeated
                     {
                         repeated = true;

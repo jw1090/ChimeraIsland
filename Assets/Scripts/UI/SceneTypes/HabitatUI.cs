@@ -32,6 +32,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
+    private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
@@ -56,6 +57,8 @@ public class HabitatUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
+        _uiManager = uiManager;
 
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
@@ -89,6 +92,8 @@ public class HabitatUI : MonoBehaviour
 
     public void LoadHabitatSpecificUI()
     {
+        _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
+
         _marketplacePanel.Initialize();
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
@@ -182,16 +187,22 @@ public class HabitatUI : MonoBehaviour
 
         _openDetailsButton.gameObject.SetActive(false);
 
-        if(_worldMapButton.gameObject.activeInHierarchy == true && detailsButtonType == DetailsButtonType.Standard)
+        if (_worldMapButton.gameObject.activeInHierarchy == true && detailsButtonType == DetailsButtonType.Standard)
         {
             _tutorialManager.ShowTutorialStage(TutorialStageType.Transfers);
         }
     }
 
-    public void OpenStandardDetailsPanel()
+    public void OpenStandardDetails()
     {
         OpenDetails(DetailsButtonType.Standard);
         _closeDetailsButton.gameObject.SetActive(true);
+    }
+
+    public void OpenExpedtionSelectionDetails()
+    {
+        OpenDetails(DetailsButtonType.Standard);
+        _closeDetailsButton.gameObject.SetActive(false);
     }
 
     public void OpenMarketplace()
@@ -228,7 +239,7 @@ public class HabitatUI : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
-        if(_trainingPanel.gameObject.activeInHierarchy == true)
+        if (_trainingPanel.gameObject.activeInHierarchy == true)
         {
             _trainingPanel.ResetTrainingUI();
             ResetStandardUI();
