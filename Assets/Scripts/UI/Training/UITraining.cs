@@ -24,6 +24,7 @@ public class UITraining : MonoBehaviour
     private int _cost = 0;
     private int _levelGoal = 0;
     private int _attribute = 0;
+    private int _expNeeded = 1;
     public Button IncreaseButton { get => _increaseButton; }
     public Button DecreaseButton { get => _decreaseButton; }
     public Button ConfirmButton { get => _confirmButton; }
@@ -66,10 +67,10 @@ public class UITraining : MonoBehaviour
 
     public void DetermineCost()
     {
-        int expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
-        int ticksRequired = (int)(expNeeded / _facility.StatModifier);
+        _expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
+        int ticksRequired = (int)(_expNeeded / _facility.StatModifier);
 
-        if (expNeeded % (_facility.StatModifier) != 0)
+        if (_expNeeded % (_facility.StatModifier) != 0)
         {
             ++ticksRequired;
         }
@@ -148,7 +149,7 @@ public class UITraining : MonoBehaviour
             return;
         }
 
-        _facility.MyFacilityIcon.SetSliderAttributes(_attribute, _levelGoal);
+        _facility.MyFacilityIcon.SetSliderAttributes(0, _expNeeded);
         _facility.SetTrainToLevel(_levelGoal);
         _facility.SetActivateTraining(true);
 

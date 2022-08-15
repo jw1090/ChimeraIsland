@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] private AudioClip _mainMenuMusic = null;
+    [SerializeField] private AudioClip _starterSceneMusic = null;
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
 
@@ -23,9 +24,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _removeChimeraSFX= null;
     [SerializeField] private AudioClip _evolutionSFX= null;
     [SerializeField] private AudioClip _levelUpSFX= null;
+    [SerializeField] private AudioClip _errorSFX= null;
+
+    [Header("Ambient SFX")]
+    [SerializeField] private AudioClip _waterfallAmbientSFX = null;
+    [SerializeField] private AudioClip _caveAmbientSFX = null;
+    [SerializeField] private AudioClip _runeAmbientSFX = null;
+
+    [Header("Facility SFX")]
+    [SerializeField] private AudioClip _waterfallTrainingSFX = null;
+    [SerializeField] private AudioClip _caveTrainingSFX = null;
+    [SerializeField] private AudioClip _runeTrainingSFX = null;
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
+    private FacilitySFX _facilitySFX = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
     private float _sfxVolume = 0.0f;
@@ -34,6 +47,36 @@ public class AudioManager : MonoBehaviour
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
+
+    public AudioClip GetFacilityAmbient(FacilityType facilityType)
+    {
+        switch (facilityType)
+        {
+            case FacilityType.Cave:
+                return _caveAmbientSFX;
+            case FacilityType.RuneStone:
+                return _runeAmbientSFX;
+            case FacilityType.Waterfall:
+                return _waterfallAmbientSFX;
+            default:
+                return null;
+        }
+    }
+
+    public AudioClip GetFacilityTraining(FacilityType facilityType)
+    {
+        switch (facilityType)
+        {
+            case FacilityType.Cave:
+                return _caveTrainingSFX;
+            case FacilityType.RuneStone:
+                return _runeTrainingSFX;
+            case FacilityType.Waterfall:
+                return _waterfallTrainingSFX;
+            default:
+                return null;
+        }
+    }
 
     public void SetMasterVolume(float masterVolume)
     {
@@ -57,6 +100,7 @@ public class AudioManager : MonoBehaviour
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
         _uiManager = ServiceLocator.Get<UIManager>();
+        _facilitySFX = GetComponent<FacilitySFX>();
 
         _masterVolume = _persistentData.Volumes.x;
         _musicVolume = _persistentData.Volumes.y;
@@ -116,6 +160,10 @@ public class AudioManager : MonoBehaviour
                 _musicSource.clip = _mainMenuMusic;
                 _musicSource.Play();
                 break;
+            case SceneType.Starting:
+                _musicSource.clip = _starterSceneMusic;
+                _musicSource.Play();
+                break;
             default:
                 Debug.LogError($"{sceneType} is invalid. Please change!");
                 break;
@@ -153,13 +201,16 @@ public class AudioManager : MonoBehaviour
             case SFXUIType.LevelUp:
                 _sfxSource.clip = _levelUpSFX;
                 _sfxSource.Play();
+                break; 
+            case SFXUIType.ErrorClick:
+                _sfxSource.clip = _errorSFX;
+                _sfxSource.Play();
                 break;
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
                 break;
         }
     }
-
     private void PlayClickSFX()
     {
         PlayUISFX(SFXUIType.StandardClick);
@@ -168,4 +219,5 @@ public class AudioManager : MonoBehaviour
     {
         PlayUISFX(SFXUIType.ConfirmClick);
     }
+
 }

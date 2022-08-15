@@ -18,6 +18,7 @@ public class Habitat : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
+    private AudioManager _audioManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _currentTier = 1;
@@ -41,7 +42,11 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    public void SetTier(int tier) { _currentTier = tier; }
+    public void SetTier(int tier) 
+    { 
+        _currentTier = tier;
+        LoadHabitatTier();
+    }
 
     public Habitat Initialize()
     {
@@ -51,6 +56,7 @@ public class Habitat : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         if (_patrolNodes == null)
         {
@@ -58,7 +64,7 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
-
+        _currentTier = _habitatManager.HabitatDataList[(int)Type]._currentTier;
         LoadHabitatTier();
 
         foreach  (Facility facility in _facilities)
@@ -99,6 +105,7 @@ public class Habitat : MonoBehaviour
         if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)
         {
             Debug.Log("You must increase the Chimera capacity to add more chimeras.");
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             return false;
         }
 
@@ -108,6 +115,7 @@ public class Habitat : MonoBehaviour
 
         if (_currencyManager.SpendFossils(price) == false)
         {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             Debug.Log
             (
                 $"Can't afford this chimera. It costs {price} " +
@@ -165,12 +173,14 @@ public class Habitat : MonoBehaviour
     {
         if (facility.CurrentTier >= _currentTier)
         {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             Debug.Log($"Cannot increase facility tier until habitat is upgraded. Requires Habitat Tier {_currentTier + 1}.");
             return false;
         }
 
         if (_currencyManager.SpendEssence(facility.Price) == false)
         {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             Debug.Log
             (
                 $"Can't afford this facility." +
@@ -189,6 +199,7 @@ public class Habitat : MonoBehaviour
     public void UpgradeHabitatTier()
     {
         ++_currentTier;
+        _habitatManager.SetHabitatTier(_currentTier, Type);
         LoadHabitatTier();
     }
 

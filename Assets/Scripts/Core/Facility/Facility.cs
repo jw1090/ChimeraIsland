@@ -92,8 +92,10 @@ public class Facility : MonoBehaviour
 
             _glowMarker.ActivateGlowCollider(true);
 
-            _facilitySFX.Initialize();
+
+            _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
+            
 
             _isInitialized = true;
         }
@@ -190,7 +192,7 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _trainingIcon.UpdateSlider(currentStatAmount);
+        _trainingIcon.UpdateSlider(_statModifier);
 
         _storedChimera.ExperienceTick(_statType, _statModifier);
         _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);

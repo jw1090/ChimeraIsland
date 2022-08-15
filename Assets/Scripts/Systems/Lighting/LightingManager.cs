@@ -9,6 +9,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private float _startTime = 0.0f;
     [SerializeField] private DayType _dayType = DayType.None;
     [SerializeField] private AnimationCurve _lightingIntensityMultiplier = null;
+    //[SerializeField] private AnimationCurve _reflectionIntensityMultiplier = null;
 
     [Header("Day Light")]
     [SerializeField] private Light _dayLight = null;
@@ -62,6 +63,7 @@ public class LightingManager : MonoBehaviour
 
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
+        //RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
     private void TimeEvaluate()
@@ -79,7 +81,7 @@ public class LightingManager : MonoBehaviour
                 _speed = 1;
                 break;
             case DayType.NightTime:
-                _speed = 4;
+                _speed = 2;
                 break;
             default:
                 Debug.LogWarning($"DayType is not valid [{_dayType}] please change!");

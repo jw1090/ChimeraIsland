@@ -25,6 +25,8 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData CurrentExpeditionData { get => _habitatExpeditions[_currentExpedition]; }
     public List<Chimera> Chimeras { get => _chimeras; }
 
+    public void SetCurrentExpedition(int val) { _currentExpedition = val; }
+
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
     public ExpeditionManager Initialize()
@@ -34,7 +36,7 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-
+        _currentExpedition = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type]._expeditionProgress;
         _expeditionState = ExpeditionState.Setup;
 
         return this;
@@ -270,6 +272,7 @@ public class ExpeditionManager : MonoBehaviour
         if (_currentExpedition < _habitatExpeditions.Count - 1)
         {
             ++_currentExpedition;
+            _habitatManager.SetExpeditionProgress(_currentExpedition, _habitatManager.CurrentHabitat.Type);
         }
     }
 
