@@ -102,10 +102,10 @@ public class CameraUtil : MonoBehaviour
 
         Vector3 direction = Vector3.zero;
 
-        bool moveDown = (_upRect.Contains(Input.mousePosition));
-        bool moveUp = (_downRect.Contains(Input.mousePosition));
-        bool moveLeft = (_leftRect.Contains(Input.mousePosition));
-        bool moveRight = (_rightRect.Contains(Input.mousePosition));
+        bool moveDown = _upRect.Contains(Input.mousePosition) && _canMoveUp;
+        bool moveUp = _downRect.Contains(Input.mousePosition) && _canMoveDown;
+        bool moveLeft = _leftRect.Contains(Input.mousePosition) && _canMoveRight;
+        bool moveRight = _rightRect.Contains(Input.mousePosition) && _canMoveLeft;
 
         direction.z = moveUp ? 1 : moveDown ? -1 : 0;
         direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
