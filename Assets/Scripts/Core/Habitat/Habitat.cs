@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Habitat : MonoBehaviour
 {
@@ -40,6 +42,23 @@ public class Habitat : MonoBehaviour
         }
 
         return null;
+    }
+
+    public FacilityType GetRandomAvailableFacilityType()
+    {
+        List<Facility> facilitiesToBuild = new List<Facility>();
+
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.IsBuilt == false)
+            {
+                facilitiesToBuild.Add(facility);
+            }
+        }
+
+        int rand = Random.Range(0, facilitiesToBuild.Count);
+
+        return facilitiesToBuild[rand].Type;
     }
 
     public void SetTier(int tier)
@@ -233,7 +252,7 @@ public class Habitat : MonoBehaviour
     {
         foreach (Facility facility in _facilities)
         {
-            if (facility.CurrentTier > 0 && facility.IsChimeraStored() == false)
+            if (facility.IsBuilt == true && facility.IsChimeraStored() == false)
             {
                 facility.GlowObject.ActivateGlowRenderer(value);
             }
@@ -255,7 +274,7 @@ public class Habitat : MonoBehaviour
             {
                 foreach (Facility facility in _facilities)
                 {
-                    if (facility.IsInitialized)
+                    if (facility.IsBuilt)
                     {
                         facility.FacilityTick();
                     }

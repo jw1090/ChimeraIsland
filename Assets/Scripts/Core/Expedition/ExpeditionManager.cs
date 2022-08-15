@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
 {
@@ -70,7 +72,111 @@ public class ExpeditionManager : MonoBehaviour
 
     public void LoadExpeditionOptions()
     {
+        SetupExpeditionOption(_essenceExpeditionOption, ExpeditionType.Essence);
+        SetupExpeditionOption(_fossilExpeditionOption, ExpeditionType.Fossils);
+        SetupExpeditionOption(_habitatExpeditionOption);
+    }
 
+    private void SetupExpeditionOption(CurrencyExpeditionData expedition, ExpeditionType expeditionType)
+    {
+        if (expedition != null)
+        {
+            Debug.Log($"{expeditionType} Expedition has already been created.");
+            return;
+        }
+
+        CurrencyExpeditionData newExpedition = ExpeditionDataByType(expeditionType).ShallowCopy(); // Get the correct data reference
+        AnalyseRandomModifiers(newExpedition.Modifiers);
+
+        switch (newExpedition.Type)
+        {
+            case ExpeditionType.Essence:
+                _essenceExpeditionOption = newExpedition;
+                break;
+            case ExpeditionType.Fossils:
+                _fossilExpeditionOption = newExpedition;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private CurrencyExpeditionData ExpeditionDataByType(ExpeditionType expeditionType)
+    {
+        switch (expeditionType)
+        {
+            case ExpeditionType.Essence:
+                return _essenceExpeditions[_currentEssenceProgress];
+            case ExpeditionType.Fossils:
+                return _fossilExpeditions[_currentFossilProgress];
+            default:
+                Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
+                return null;
+        }
+    }
+
+    private void SetupExpeditionOption(HabitatExpeditionData expedition)
+    {
+        if (expedition != null)
+        {
+            Debug.Log($"{_habitatExpeditionOption.Type} Expedition has already been created.");
+            return;
+        }
+
+        HabitatExpeditionData newExpedition = _habitatExpeditions[_currentHabitatProgress].ShallowCopy(); // Get the correct data reference
+        AnalyseRandomModifiers(newExpedition.Modifiers);
+
+        if (newExpedition.RewardType == HabitatRewardType.Random)
+        {
+            FacilityType facilityType = _habitatManager.CurrentHabitat.GetRandomAvailableFacilityType();
+
+            switch (facilityType)
+            {
+                case FacilityType.Cave:
+                    newExpedition.RewardType = HabitatRewardType.CaveExploring;
+                    break;
+                case FacilityType.RuneStone:
+                    newExpedition.RewardType = HabitatRewardType.RuneStone;
+                    break;
+                case FacilityType.Waterfall:
+                    newExpedition.RewardType = HabitatRewardType.Waterfall;
+                    break;
+                default:
+                    Debug.Log($"Facility Type [{facilityType}] is invalid, please change!");
+                    break;
+            }
+        }
+
+        _habitatExpeditionOption = newExpedition;
+    }
+
+    private void AnalyseRandomModifiers(List<ModifierType> modifiers) // If a modifier is random, it will randomize it.
+    {
+        int modifierMax = Enum.GetValues(typeof(ModifierType)).Length;
+
+        for (int i = 0; i < modifiers.Count; ++i)
+        {
+            if (modifiers[i] != ModifierType.Random)
+            {
+                continue;
+            }
+
+            bool repeated = true;
+
+            while (repeated == true)
+            {
+                repeated = false;
+                modifiers[i] = (ModifierType)Random.Range(1, modifierMax); // 1 is Aqua
+
+                for (int j = i + 1; j < modifiers.Count; ++j)
+                {
+                    if (modifiers[i] == modifiers[j]) // If true, it was repeated
+                    {
+                        repeated = true;
+                    }
+                }
+            }
+        }
     }
 
     public void ExpeditionSetup()

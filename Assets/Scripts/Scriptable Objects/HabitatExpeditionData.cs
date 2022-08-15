@@ -4,4 +4,9 @@ using UnityEngine;
 public class HabitatExpeditionData : ExpeditionBaseData
 {
     public HabitatRewardType RewardType = HabitatRewardType.None;
+
+    public HabitatExpeditionData ShallowCopy()
+    {
+        return (HabitatExpeditionData)MemberwiseClone();
+    }
 }

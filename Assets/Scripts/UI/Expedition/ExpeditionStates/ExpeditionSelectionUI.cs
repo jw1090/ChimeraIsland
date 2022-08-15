@@ -34,6 +34,4 @@ public class ExpeditionSelectionUI : MonoBehaviour
             option.LoadExpeditionData();
         }
     }
-
-    
 }

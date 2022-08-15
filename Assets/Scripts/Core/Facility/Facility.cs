@@ -22,7 +22,7 @@ public class Facility : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private TrainingUI _uiTraining = null;
-    private bool _isInitialized = false;
+    private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
@@ -33,7 +33,7 @@ public class Facility : MonoBehaviour
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
-    public bool IsInitialized { get => _isInitialized; }
+    public bool IsBuilt { get => _isBuilt; }
     public int StatModifier { get => _statModifier; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
@@ -65,7 +65,7 @@ public class Facility : MonoBehaviour
 
     public bool IsChimeraStored()
     {
-        if (_isInitialized == false)
+        if (_isBuilt == false)
         {
             return false;
         }
@@ -97,7 +97,7 @@ public class Facility : MonoBehaviour
             _facilitySFX.BuildSFX();
             
 
-            _isInitialized = true;
+            _isBuilt = true;
         }
         else
         {

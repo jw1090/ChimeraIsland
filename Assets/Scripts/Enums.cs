@@ -74,7 +74,7 @@ public enum HabitatRewardType
     Random,
     Waterfall,
     CaveExploring,
-    RuneStones,
+    RuneStone,
     Upgrade,
 }
 
