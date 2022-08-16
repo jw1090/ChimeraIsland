@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
@@ -8,6 +10,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
     private AudioManager _audioManager = null;
+    private bool _clicked = false;
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
@@ -20,6 +23,13 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (_clicked == true)
+        {
+            return;
+        }
+
+        _clicked = true;
+
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(_chimeraType);
         Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
 

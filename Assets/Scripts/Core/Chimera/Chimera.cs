@@ -6,6 +6,7 @@ public class Chimera : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     [SerializeField] private ElementType _elementalType = ElementType.None;
+    [SerializeField] private int _price = 5;
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
@@ -36,7 +37,6 @@ public class Chimera : MonoBehaviour
     private int _explorationExperience = 0;
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
-    private int _price = 1;
     private int _tickCounter = 0;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
