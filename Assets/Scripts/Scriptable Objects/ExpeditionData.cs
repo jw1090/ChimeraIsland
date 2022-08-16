@@ -23,6 +23,7 @@ public class ExpeditionData : ScriptableObject
         deepCopy.EnergyCost = EnergyCost;
         deepCopy.Duration = Duration;
         deepCopy.AmountGained = AmountGained;
+        deepCopy.UpgradeType = UpgradeType;
 
         deepCopy.Modifiers = new List<ModifierType>();
 
