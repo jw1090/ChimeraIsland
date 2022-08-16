@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Habitat : MonoBehaviour
 {
@@ -23,7 +25,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
-    public Transform  SpawnPoint { get => _spawnPoint.transform; }
+    public Transform SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -42,8 +44,25 @@ public class Habitat : MonoBehaviour
         return null;
     }
 
-    public void SetTier(int tier) 
-    { 
+    public FacilityType GetRandomAvailableFacilityType()
+    {
+        List<Facility> facilitiesToBuild = new List<Facility>();
+
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.IsBuilt == false)
+            {
+                facilitiesToBuild.Add(facility);
+            }
+        }
+
+        int rand = Random.Range(0, facilitiesToBuild.Count);
+
+        return facilitiesToBuild[rand].Type;
+    }
+
+    public void SetTier(int tier)
+    {
         _currentTier = tier;
         LoadHabitatTier();
     }
@@ -64,10 +83,10 @@ public class Habitat : MonoBehaviour
             Debug.Break();
         }
         _patrolNodes.Initialize();
-        _currentTier = _habitatManager.HabitatDataList[(int)Type]._currentTier;
-        LoadHabitatTier();
 
-        foreach  (Facility facility in _facilities)
+        SetTier(_habitatManager.HabitatDataList[(int)Type]._currentTier);
+
+        foreach (Facility facility in _facilities)
         {
             facility.Initialize();
         }
@@ -152,7 +171,7 @@ public class Habitat : MonoBehaviour
     {
         chimeraToTransfer.SetHabitatType(habitatType);
 
-        if(_habitatManager.AddNewChimera(chimeraToTransfer) == false)
+        if (_habitatManager.AddNewChimera(chimeraToTransfer) == false)
         {
             chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not successful, reset habitatType.
             return false;
@@ -198,6 +217,12 @@ public class Habitat : MonoBehaviour
 
     public void UpgradeHabitatTier()
     {
+        if (_currentTier + 1 >= 4)
+        {
+            Debug.LogWarning($"Can't increase habitat, tier [{_currentTier}] is the highest");
+            return;
+        }
+
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
         LoadHabitatTier();
@@ -227,7 +252,7 @@ public class Habitat : MonoBehaviour
     {
         foreach (Facility facility in _facilities)
         {
-            if (facility.CurrentTier > 0 && facility.IsChimeraStored() == false)
+            if (facility.IsBuilt == true && facility.IsChimeraStored() == false)
             {
                 facility.GlowObject.ActivateGlowRenderer(value);
             }
@@ -245,19 +270,11 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_habitatManager.TickTimer);
 
-            if(_uiManager.HabitatUI.MenuOpen == false)
+            if (_uiManager.HabitatUI.MenuOpen == false)
             {
-                foreach (Chimera chimera in _activeChimeras)
-                {
-                    if (chimera.isActiveAndEnabled)
-                    {
-                        chimera.EssenceTick();
-                    }
-                }
-
                 foreach (Facility facility in _facilities)
                 {
-                    if (facility.IsInitialized)
+                    if (facility.IsBuilt)
                     {
                         facility.FacilityTick();
                     }

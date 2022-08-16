@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1805857213}
   - component: {fileID: 1805857214}
   m_Layer: 3
-  m_Name: WaterfallSFX
+  m_Name: Ambient Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2612447955109375304, guid: db92983979053ba4b97dab6fadae5f95, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 7f181137932d3ea438ecb273d674496a, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
@@ -819,9 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ambientSource: {fileID: 1805857214}
-  _ambientSFX: {fileID: 8300000, guid: 7f181137932d3ea438ecb273d674496a, type: 3}
   _trainingSource: {fileID: 996673489907746525}
-  _trainingSFX: {fileID: 8300000, guid: 12d553496c3effd42b5496adb3d38cf9, type: 3}
 --- !u!54 &5411779016165357026
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1054,6 +1052,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2804545694187859915}
     m_Modifications:
+    - target: {fileID: 1494637875647407700, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875647407701, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0011
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875647407701, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0006
+      objectReference: {fileID: 0}
     - target: {fileID: 1494637875647407706, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -1069,6 +1079,50 @@ PrefabInstance:
     - target: {fileID: 1494637875742150483, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0028999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.018900001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0059999903
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.13395938
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.124719255
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6582919
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7301725
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -84.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.228
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150492, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 197.879
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494637875742150493, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2188274654451869563, guid: ffb3ca7a45ade174fa5089db72c5a350, type: 3}
       propertyPath: m_Layer

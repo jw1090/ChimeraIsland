@@ -30,17 +30,18 @@ public enum ElementType
     Fira,
 }
 
-public enum ExpeditionRewardType
+public enum ExpeditionType
 {
     None = -1,
-    HabitatUpgrade,
+    Essence,
     Fossils,
+    HabitatUpgrade,
 }
 
 public enum ExpeditionState
 {
     None = -1,
-    Setup,
+    Selection,
     InProgress,
     Result
 }
@@ -67,9 +68,20 @@ public enum HabitatType
     TreeOfLife,
 }
 
+public enum HabitatRewardType
+{
+    None = -1,
+    Random,
+    Waterfall,
+    CaveExploring,
+    RuneStone,
+    Upgrade,
+}
+
 public enum ModifierType
 {
     None = -1,
+    Random,
     Aqua,
     Bio,
     Fira,

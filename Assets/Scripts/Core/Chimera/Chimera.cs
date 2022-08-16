@@ -18,16 +18,12 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _intelligenceThreshold = 5;
     [SerializeField] private int _strengthThreshold = 5;
 
-    [Header("Essence")]
-    [SerializeField] private int _baseEssenceRate = 4; // Initial Essence gained per tick
-
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
-    private CurrencyManager _currencyManager = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private HabitatType _habitatType = HabitatType.None;
@@ -172,7 +168,6 @@ public class Chimera : MonoBehaviour
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
 
         _audioManager = ServiceLocator.Get<AudioManager>();
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
@@ -237,24 +232,6 @@ public class Chimera : MonoBehaviour
         }
 
         AllocateExperience();
-    }
-
-    // Checks if stored experience is below cap and appropriately assigns.
-    // The essence formula is located here.
-    public void EssenceTick()
-    {
-        if (_currencyManager == null)
-        {
-            return;
-        }
-
-        if (_inFacility == true)
-        {
-            return;
-        }
-
-        int essenceGain = (int)(_baseEssenceRate * Mathf.Sqrt(_level));
-        _currencyManager.IncreaseEssence(essenceGain);
     }
 
     // Transfer experience stored by the chimera and see if each stat's threshold is met.
