@@ -83,11 +83,10 @@ public class ExpeditionUI : MonoBehaviour
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
-
         _setupPanel.LoadExpeditionData();
-
         _expeditionManager.ExpeditionSetup();
+
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
     }
 
     public void CloseExpeditionUI()

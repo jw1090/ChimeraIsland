@@ -55,8 +55,10 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon = null;
+            icon.Icon.sprite = null;
         }
+
+        
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
@@ -131,7 +133,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon = null;
+            icon.Icon.sprite = null;
         }
 
         for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)
