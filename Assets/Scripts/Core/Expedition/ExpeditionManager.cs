@@ -45,10 +45,9 @@ public class ExpeditionManager : MonoBehaviour
 
     public void ResetSelectedExpedition()
     {
-        if (_expeditionState == ExpeditionState.Selection)
-        {
-            _selectedExpedition = null;
-        }
+        _expeditionState = ExpeditionState.Selection;
+        _selectedExpedition = null;
+        ChimerasOnExpedition(false);
     }
 
     public void SetSelectedExpedition(ExpeditionType expeditionType)
@@ -485,9 +484,5 @@ public class ExpeditionManager : MonoBehaviour
         {
             _chimeras.Clear();
         }
-
-        _expeditionSuccess = false;
-        _expeditionState = ExpeditionState.Selection;
-        _selectedExpedition = null;
     }
 }
