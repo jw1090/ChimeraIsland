@@ -25,6 +25,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
+    public int CurrentTier { get => _currentTier; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }

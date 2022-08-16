@@ -6,6 +6,7 @@ public class TabGroup : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _objectToSwap = new List<GameObject>();
     [SerializeField] private TabPress _chimeraTab = null;
+    [SerializeField] private TabPress _facilitesTab = null;
     [SerializeField] private Color _tabIdle;
     [SerializeField] private Color _tabHover;
     [SerializeField] private Color _tabActive;
@@ -13,6 +14,7 @@ public class TabGroup : MonoBehaviour
     private TabPress _selectedTab = null;
 
     public TabPress ChimeraTab { get => _chimeraTab; }
+    public TabPress FacilitiesTab { get => _facilitesTab; }
 
     public void Initialize()
     {

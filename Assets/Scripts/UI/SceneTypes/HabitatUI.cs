@@ -37,6 +37,7 @@ public class HabitatUI : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
 
+    public Marketplace Marketplace { get => _marketplacePanel; }
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButotn; }
     public Button WorldMapButton { get => _worldMapButton; }
@@ -147,6 +148,7 @@ public class HabitatUI : MonoBehaviour
     {
         _runeFacilityShopIcon.gameObject.SetActive(false);
         _caveFacilityShopIcon.gameObject.SetActive(false);
+        _waterfallFacilityShopIcon.gameObject.SetActive(false);
         _marketplaceButton.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
@@ -217,6 +219,8 @@ public class HabitatUI : MonoBehaviour
             _tutorialManager.ShowTutorialStage(TutorialStageType.ChimeraShop);
         }
         _openDetailsButton.gameObject.SetActive(false);
+
+        _marketplacePanel.FacilityTabCheckActive();
 
         _menuOpen = true;
     }
