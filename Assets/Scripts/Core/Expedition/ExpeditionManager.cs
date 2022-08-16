@@ -409,13 +409,31 @@ public class ExpeditionManager : MonoBehaviour
     {
         switch (_selectedExpedition.Type)
         {
-            case ExpeditionType.HabitatUpgrade:
-                _habitatManager.CurrentHabitat.UpgradeHabitatTier();
-                Debug.Log("Success! Your habitat upgraded!");
+            case ExpeditionType.Essence:
+                _currencyManager.IncreaseEssence(_selectedExpedition.AmountGained);
                 break;
             case ExpeditionType.Fossils:
-                _currencyManager.IncreaseFossils(1);
-                Debug.Log("Success! You recieved 1 Fossil!");
+                _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
+                break;
+            case ExpeditionType.HabitatUpgrade:
+                switch (_selectedExpedition.UpgradeType)
+                {
+                    case HabitatRewardType.Waterfall:
+                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        break;
+                    case HabitatRewardType.CaveExploring:
+                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
+                        break;
+                    case HabitatRewardType.RuneStone:
+                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        break;
+                    case HabitatRewardType.Habitat:
+                        _habitatManager.CurrentHabitat.UpgradeHabitatTier();
+                        break;
+                    default:
+                        Debug.LogError($"Upgrade type is invalid [{_selectedExpedition.UpgradeType}], please change!");
+                        break;
+                }
                 break;
             default:
                 Debug.LogWarning($"Reward type is not valid [{_selectedExpedition.Type}], please change!");

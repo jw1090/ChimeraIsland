@@ -128,9 +128,7 @@ public class Habitat : MonoBehaviour
             return false;
         }
 
-        //int price = chimeraPrefab.Price;  TODO Update price logic
-
-        int price = 1;
+        int price = chimeraPrefab.Price;
 
         if (_currencyManager.SpendFossils(price) == false)
         {
@@ -187,6 +185,12 @@ public class Habitat : MonoBehaviour
         Destroy(chimeraToRemove.gameObject);
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
+
+    public bool AddFacility(FacilityType facilityType)
+    {
+        return AddFacility(GetFacility(facilityType));
+    }
+
 
     public bool AddFacility(Facility facility)
     {

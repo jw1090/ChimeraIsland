@@ -7,7 +7,7 @@ public class ExpeditionData : ScriptableObject
     public string Title = "";
     public ExpeditionType Type = ExpeditionType.None;
     public HabitatRewardType UpgradeType = HabitatRewardType.None;
-    public float AmountGained = 0.0f;
+    public int AmountGained = 0;
     public int SuggestedLevel = 0;
     public int EnergyCost = 0;
     public float Duration = 0.0f;
