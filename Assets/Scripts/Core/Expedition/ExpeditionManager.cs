@@ -5,16 +5,16 @@ using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
 {
-    [SerializeField] private List<CurrencyExpeditionData> _essenceExpeditions = new List<CurrencyExpeditionData>();
-    [SerializeField] private List<CurrencyExpeditionData> _fossilExpeditions = new List<CurrencyExpeditionData>();
-    [SerializeField] private List<HabitatExpeditionData> _habitatExpeditions = new List<HabitatExpeditionData>();
+    [SerializeField] private List<ExpeditionData> _essenceExpeditions = new List<ExpeditionData>();
+    [SerializeField] private List<ExpeditionData> _fossilExpeditions = new List<ExpeditionData>();
+    [SerializeField] private List<ExpeditionData> _habitatExpeditions = new List<ExpeditionData>();
     [SerializeField] private int _currentEssenceProgress = 0;
     [SerializeField] private int _currentFossilProgress = 0;
     [SerializeField] private int _currentHabitatProgress = 0;
-    private ExpeditionBaseData _selectedExpedition = null;
-    private CurrencyExpeditionData _essenceExpeditionOption = null;
-    private CurrencyExpeditionData _fossilExpeditionOption = null;
-    private HabitatExpeditionData _habitatExpeditionOption = null;
+    private ExpeditionData _selectedExpedition = null;
+    private ExpeditionData _essenceExpeditionOption = null;
+    private ExpeditionData _fossilExpeditionOption = null;
+    private ExpeditionData _habitatExpeditionOption = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -34,14 +34,22 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
-    public CurrencyExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
-    public CurrencyExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
-    public HabitatExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
-    public ExpeditionBaseData SelectedExpedition { get => _selectedExpedition; }
+    public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
+    public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
+    public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
+    public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
 
     public bool ExpeditionSuccess { get => _expeditionSuccess; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
+
+    public void ResetSelectedExpedition()
+    {
+        if (_expeditionState == ExpeditionState.Selection)
+        {
+            _selectedExpedition = null;
+        }
+    }
 
     public void SetSelectedExpedition(ExpeditionType expeditionType)
     {
@@ -95,19 +103,19 @@ public class ExpeditionManager : MonoBehaviour
     {
         SetupExpeditionOption(_essenceExpeditionOption, ExpeditionType.Essence);
         SetupExpeditionOption(_fossilExpeditionOption, ExpeditionType.Fossils);
-        SetupExpeditionOption(_habitatExpeditionOption);
+        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
     }
 
-    private void SetupExpeditionOption(CurrencyExpeditionData expedition, ExpeditionType expeditionType)
+    private void SetupExpeditionOption(ExpeditionData expedition, ExpeditionType expeditionType)
     {
-        if (expedition != null)
+        if (expedition != null) // Already Created
         {
-            Debug.Log($"{expeditionType} Expedition has already been created.");
             return;
         }
 
-        CurrencyExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
+        ExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
         AnalyseRandomModifiers(newExpedition.Modifiers);
+        AnalyseRandomUpgrade(newExpedition);
 
         switch (newExpedition.Type)
         {
@@ -117,12 +125,16 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionType.Fossils:
                 _fossilExpeditionOption = newExpedition;
                 break;
+            case ExpeditionType.HabitatUpgrade:
+                _habitatExpeditionOption = newExpedition;
+                break;
             default:
+                Debug.LogError($"Expedition Type [{newExpedition.Type} is invalid, please fix!]");
                 break;
         }
     }
 
-    private CurrencyExpeditionData ExpeditionDataByType(ExpeditionType expeditionType)
+    private ExpeditionData ExpeditionDataByType(ExpeditionType expeditionType)
     {
         switch (expeditionType)
         {
@@ -130,45 +142,12 @@ public class ExpeditionManager : MonoBehaviour
                 return _essenceExpeditions[_currentEssenceProgress];
             case ExpeditionType.Fossils:
                 return _fossilExpeditions[_currentFossilProgress];
+            case ExpeditionType.HabitatUpgrade:
+                return _habitatExpeditions[_currentHabitatProgress];
             default:
                 Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
                 return null;
         }
-    }
-
-    private void SetupExpeditionOption(HabitatExpeditionData expedition)
-    {
-        if (expedition != null)
-        {
-            Debug.Log($"{_habitatExpeditionOption.Type} Expedition has already been created.");
-            return;
-        }
-
-        HabitatExpeditionData newExpedition = _habitatExpeditions[_currentHabitatProgress].DeepCopy(); // Get the correct data reference
-        AnalyseRandomModifiers(newExpedition.Modifiers);
-
-        if (newExpedition.RewardType == HabitatRewardType.Random)
-        {
-            FacilityType facilityType = _habitatManager.CurrentHabitat.GetRandomAvailableFacilityType();
-
-            switch (facilityType)
-            {
-                case FacilityType.Cave:
-                    newExpedition.RewardType = HabitatRewardType.CaveExploring;
-                    break;
-                case FacilityType.RuneStone:
-                    newExpedition.RewardType = HabitatRewardType.RuneStone;
-                    break;
-                case FacilityType.Waterfall:
-                    newExpedition.RewardType = HabitatRewardType.Waterfall;
-                    break;
-                default:
-                    Debug.Log($"Facility Type [{facilityType}] is invalid, please change!");
-                    break;
-            }
-        }
-
-        _habitatExpeditionOption = newExpedition;
     }
 
     private void AnalyseRandomModifiers(List<ModifierType> modifiers) // If a modifier is random, it will randomize it.
@@ -201,6 +180,30 @@ public class ExpeditionManager : MonoBehaviour
                         repeated = true;
                     }
                 }
+            }
+        }
+    }
+
+    private void AnalyseRandomUpgrade(ExpeditionData expeditionData)
+    {
+        if (expeditionData.UpgradeType == HabitatRewardType.Random)
+        {
+            FacilityType facilityType = _habitatManager.CurrentHabitat.GetRandomAvailableFacilityType();
+
+            switch (facilityType)
+            {
+                case FacilityType.Cave:
+                    expeditionData.UpgradeType = HabitatRewardType.CaveExploring;
+                    break;
+                case FacilityType.RuneStone:
+                    expeditionData.UpgradeType = HabitatRewardType.RuneStone;
+                    break;
+                case FacilityType.Waterfall:
+                    expeditionData.UpgradeType = HabitatRewardType.Waterfall;
+                    break;
+                default:
+                    Debug.Log($"Facility Type [{facilityType}] is invalid, please change!");
+                    break;
             }
         }
     }
@@ -471,7 +474,7 @@ public class ExpeditionManager : MonoBehaviour
         }
     }
 
-    public void PostExpeditionCleanup(bool onExpedition)
+    public void ChimerasOnExpedition(bool onExpedition)
     {
         foreach (Chimera chimera in _chimeras)
         {

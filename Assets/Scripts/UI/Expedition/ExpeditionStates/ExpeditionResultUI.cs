@@ -30,8 +30,7 @@ public class ExpeditionResultUI : MonoBehaviour
 
     private void ResultsCloseClick()
     {
-        _expeditionUI.PostExpeditionCleanup(false);
-
+        _expeditionManager.ChimerasOnExpedition(false);
         _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
 
         if (_expeditionSuccess == true) // Success

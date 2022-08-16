@@ -45,7 +45,7 @@ public class ExpeditionSetupUI : MonoBehaviour
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
 
-        _expeditionUI.PostExpeditionCleanup(true);
+        _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.InProgressUI.gameObject.SetActive(true);
         _expeditionManager.EnterInProgressState();
@@ -58,11 +58,11 @@ public class ExpeditionSetupUI : MonoBehaviour
             icon.Icon = null;
         }
 
-        ExpeditionBaseData data = _expeditionManager.SelectedExpedition;
+        ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
         _suggestedLevel.text = $"Suggested Level: {data.SuggestedLevel}";
-        _rewardType.text = $"Rewards: {RewardTypeToString(data.Type)}";
+        _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
 
         LoadDuration(data.Duration);
         _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
@@ -77,16 +77,31 @@ public class ExpeditionSetupUI : MonoBehaviour
         _duration.text = durationString;
     }
 
-    private string RewardTypeToString(ExpeditionType rewardType)
+    private string RewardTypeToString(ExpeditionData data)
     {
-        switch (rewardType)
+        switch (data.Type)
         {
-            case ExpeditionType.HabitatUpgrade:
-                return "Habitat Upgrade";
+            case ExpeditionType.Essence:
+                return $"{data.AmountGained} Essence";
             case ExpeditionType.Fossils:
-                return "Fossils";
+                return $"{data.AmountGained} Fossils";
+            case ExpeditionType.HabitatUpgrade:
+                switch (data.UpgradeType)
+                {
+                    case HabitatRewardType.Waterfall:
+                        return $"Waterfall";
+                    case HabitatRewardType.CaveExploring:
+                        return $"Explorable Cave";
+                    case HabitatRewardType.RuneStone:
+                        return $"Rune Stones";
+                    case HabitatRewardType.Upgrade:
+                        return $"Habiat Upgrade";
+                    default:
+                        Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
+                        return "";
+                }
             default:
-                Debug.LogWarning($"Reward Type [{rewardType}] was invalid, please change!");
+                Debug.LogError($"Reward Type [{data.Type}] was invalid, please change!");
                 return "";
         }
     }

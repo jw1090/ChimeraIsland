@@ -83,6 +83,8 @@ public class ExpeditionUI : MonoBehaviour
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
 
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
+
         _setupPanel.LoadExpeditionData();
 
         _expeditionManager.ExpeditionSetup();
@@ -90,8 +92,9 @@ public class ExpeditionUI : MonoBehaviour
 
     public void CloseExpeditionUI()
     {
-        _inProgressPanel.gameObject.SetActive(false);
-        _resultPanel.gameObject.SetActive(false);
+        _foregroundUIStates.SetState("Transparent");
+
+        _expeditionManager.ResetSelectedExpedition();
 
         this.gameObject.SetActive(false);
     }
@@ -106,12 +109,5 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward();
-    }
-
-    public void PostExpeditionCleanup(bool onExpedition)
-    {
-        _expeditionManager.PostExpeditionCleanup(onExpedition);
-
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
     }
 }

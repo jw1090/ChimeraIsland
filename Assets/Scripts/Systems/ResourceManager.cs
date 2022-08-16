@@ -24,6 +24,10 @@ public class ResourceManager : MonoBehaviour
     private Sprite _intelligenceSprite = null;
     private Sprite _strengthSprite = null;
 
+    private Sprite _essenceSprite = null;
+    private Sprite _fossilSprite = null;
+    private Sprite _upgradeSprite = null;
+
     private Sprite _tutorialCute = null;
     private Sprite _tutorialHappy = null;
     private Sprite _tutorialLookingLeft = null;
@@ -79,6 +83,10 @@ public class ResourceManager : MonoBehaviour
         _agilitySprite = Resources.Load<Sprite>("Icons/Stats/Agility");
         _intelligenceSprite = Resources.Load<Sprite>("Icons/Stats/Intelligence");
         _strengthSprite = Resources.Load<Sprite>("Icons/Stats/Strength");
+
+        _essenceSprite = Resources.Load<Sprite>("Icons/Expedition/Essence");
+        _fossilSprite = Resources.Load<Sprite>("Icons/Expedition/Fossil");
+        _upgradeSprite = Resources.Load<Sprite>("Icons/Expedition/Upgrade");
 
         _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
         _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
@@ -293,6 +301,22 @@ public class ResourceManager : MonoBehaviour
                 return _strengthSprite;
             default:
                 Debug.LogWarning($"Badge Type [{badgeType}] is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetExpeditionTypeSprite(ExpeditionType expeditionType)
+    {
+        switch (expeditionType)
+        {
+            case ExpeditionType.Essence:
+                return _essenceSprite;
+            case ExpeditionType.Fossils:
+                return _fossilSprite;
+            case ExpeditionType.HabitatUpgrade:
+                return _upgradeSprite;
+            default:
+                Debug.LogWarning($"Expedition Type [{expeditionType}] is invalid, please change!");
                 return null;
         }
     }

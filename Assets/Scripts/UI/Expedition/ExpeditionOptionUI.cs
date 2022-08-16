@@ -47,54 +47,47 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void LoadRewardInfo(CurrencyExpeditionData currencyExpeditionData)
+    private void LoadRewardInfo(ExpeditionData expeditionData)
     {
-        _title.text = $"{currencyExpeditionData.Title}";
-        _suggestLevel.text = $"Suggested Level: {currencyExpeditionData.SuggestedLevel}";
-        _energyCost.text = $"Energy Cost: {currencyExpeditionData.EnergyCost}";
+        _icon.sprite = _resourceManager.GetExpeditionTypeSprite(expeditionData.Type);
+        _title.text = $"{expeditionData.Title}";
+        _suggestLevel.text = $"Suggested Level: {expeditionData.SuggestedLevel}";
+        _energyCost.text = $"Energy Cost: {expeditionData.EnergyCost}";
 
-        switch (currencyExpeditionData.Type)
+        switch (expeditionData.Type)
         {
             case ExpeditionType.Essence:
-                _reward.text = $"Reward: {currencyExpeditionData.AmountGained} Essence";
+                _reward.text = $"Reward: {expeditionData.AmountGained} Essence";
                 break;
             case ExpeditionType.Fossils:
-                _reward.text = $"Reward: {currencyExpeditionData.AmountGained} Fossils";
+                _reward.text = $"Reward: {expeditionData.AmountGained} Fossils";
+                break;
+            case ExpeditionType.HabitatUpgrade:
+                switch (expeditionData.UpgradeType)
+                {
+                    case HabitatRewardType.Waterfall:
+                        _reward.text = $"Reward: Waterfall";
+                        break;
+                    case HabitatRewardType.CaveExploring:
+                        _reward.text = $"Reward: Explorable Cave";
+                        break;
+                    case HabitatRewardType.RuneStone:
+                        _reward.text = $"Reward: Rune Stones";
+                        break;
+                    case HabitatRewardType.Upgrade:
+                        _reward.text = $"Reward: Upgrade Habitat";
+                        break;
+                    default:
+                        Debug.LogError($"Expedition Type is invalid [{expeditionData.UpgradeType}], please change!");
+                        break;
+                }
                 break;
             default:
-                Debug.LogError($"Expedition Type is invalid [{currencyExpeditionData.Type}], please change!");
+                Debug.LogError($"Expedition Type is invalid [{expeditionData.Type}], please change!");
                 break;
         }
 
-        EvaluateModifiers(currencyExpeditionData.Modifiers);
-    }
-
-    private void LoadRewardInfo(HabitatExpeditionData habitatExpeditionData)
-    {
-        _title.text = $"{habitatExpeditionData.Title}";
-        _suggestLevel.text = $"Suggested Level: {habitatExpeditionData.SuggestedLevel}";
-        _energyCost.text = $"Energy Cost: {habitatExpeditionData.EnergyCost}";
-
-        switch (habitatExpeditionData.RewardType)
-        {
-            case HabitatRewardType.Waterfall:
-                _reward.text = $"Reward: Waterfall";
-                break;
-            case HabitatRewardType.CaveExploring:
-                _reward.text = $"Reward: Explorable Cave";
-                break;
-            case HabitatRewardType.RuneStone:
-                _reward.text = $"Reward: Rune Stones";
-                break;
-            case HabitatRewardType.Upgrade:
-                _reward.text = $"Reward: Upgrade Habitat";
-                break;
-            default:
-                Debug.LogError($"Expedition Type is invalid [{habitatExpeditionData.RewardType}], please change!");
-                break;
-        }
-
-        EvaluateModifiers(habitatExpeditionData.Modifiers);
+        EvaluateModifiers(expeditionData.Modifiers);
     }
 
     private void EvaluateModifiers(List<ModifierType> modifiers)
