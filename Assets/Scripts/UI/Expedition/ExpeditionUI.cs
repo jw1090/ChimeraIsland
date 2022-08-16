@@ -58,7 +58,7 @@ public class ExpeditionUI : MonoBehaviour
         {
             case ExpeditionState.Selection:
                 _backgroundUIStates.SetState("Selection Panel");
-                _foregroundUIStates.SetState("Transparent");
+                _foregroundUIStates.SetState("Transparent", true);
                 _expeditionManager.LoadExpeditionOptions();
                 _selectionPanel.DisplayExpeditionOptions();
                 break;
