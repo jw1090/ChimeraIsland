@@ -30,14 +30,13 @@ public class ExpeditionResultUI : MonoBehaviour
 
     private void ResultsCloseClick()
     {
-        _expeditionManager.ChimerasOnExpedition(false);
-        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
-
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
             _expeditionSuccess = false;
         }
+        
+        _expeditionManager.ResetSelectedExpedition();
 
         _uiManager.HabitatUI.ResetStandardUI();
         _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);

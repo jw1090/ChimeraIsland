@@ -74,7 +74,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
                     case HabitatRewardType.RuneStone:
                         _reward.text = $"Reward: Rune Stones";
                         break;
-                    case HabitatRewardType.Upgrade:
+                    case HabitatRewardType.Habitat:
                         _reward.text = $"Reward: Upgrade Habitat";
                         break;
                     default:

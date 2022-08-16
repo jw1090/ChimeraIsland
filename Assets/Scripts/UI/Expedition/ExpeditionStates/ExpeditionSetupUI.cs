@@ -55,8 +55,10 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon = null;
+            icon.Icon.sprite = null;
         }
+
+        
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
@@ -94,7 +96,7 @@ public class ExpeditionSetupUI : MonoBehaviour
                         return $"Explorable Cave";
                     case HabitatRewardType.RuneStone:
                         return $"Rune Stones";
-                    case HabitatRewardType.Upgrade:
+                    case HabitatRewardType.Habitat:
                         return $"Habiat Upgrade";
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
@@ -131,7 +133,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon = null;
+            icon.Icon.sprite = null;
         }
 
         for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)

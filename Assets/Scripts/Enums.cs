@@ -75,7 +75,7 @@ public enum HabitatRewardType
     Waterfall,
     CaveExploring,
     RuneStone,
-    Upgrade,
+    Habitat,
 }
 
 public enum ModifierType

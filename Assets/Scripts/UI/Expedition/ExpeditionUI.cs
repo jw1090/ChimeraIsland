@@ -58,7 +58,7 @@ public class ExpeditionUI : MonoBehaviour
         {
             case ExpeditionState.Selection:
                 _backgroundUIStates.SetState("Selection Panel");
-                _foregroundUIStates.SetState("Transparent");
+                _foregroundUIStates.SetState("Transparent", true);
                 _expeditionManager.LoadExpeditionOptions();
                 _selectionPanel.DisplayExpeditionOptions();
                 break;
@@ -83,11 +83,10 @@ public class ExpeditionUI : MonoBehaviour
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
-
         _setupPanel.LoadExpeditionData();
-
         _expeditionManager.ExpeditionSetup();
+
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
     }
 
     public void CloseExpeditionUI()
