@@ -15,6 +15,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
     private ExpeditionData _habitatExpeditionOption = null;
+    private Marketplace _marketplace = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -78,6 +79,7 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _marketplace = ServiceLocator.Get<UIManager>().HabitatUI.Marketplace;
 
         _expeditionState = ExpeditionState.Selection;
         _expeditionSuccess = false;
@@ -420,12 +422,15 @@ public class ExpeditionManager : MonoBehaviour
                 {
                     case HabitatRewardType.Waterfall:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        _marketplace.ActivateFacility(FacilityType.Waterfall);
                         break;
                     case HabitatRewardType.CaveExploring:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
+                        _marketplace.ActivateFacility(FacilityType.Cave);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.RuneStone);
+                        _marketplace.ActivateFacility(FacilityType.RuneStone);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
