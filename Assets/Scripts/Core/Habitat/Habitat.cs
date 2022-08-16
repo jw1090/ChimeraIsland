@@ -273,6 +273,11 @@ public class Habitat : MonoBehaviour
 
             if (_uiManager.HabitatUI.MenuOpen == false)
             {
+                foreach (Chimera chimera in _activeChimeras)
+                {
+                    chimera.EnergyTick();
+                }
+
                 foreach (Facility facility in _facilities)
                 {
                     if (facility.IsBuilt)

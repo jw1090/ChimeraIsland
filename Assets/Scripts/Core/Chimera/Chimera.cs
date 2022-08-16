@@ -9,14 +9,16 @@ public class Chimera : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
-    [SerializeField] private int _agility = 1;
-    [SerializeField] private int _intelligence = 1;
-    [SerializeField] private int _strength = 1;
+    [SerializeField] private int _stamina = 1;
+    [SerializeField] private int _wisdom = 1;
+    [SerializeField] private int _exploration = 1;
+    [SerializeField] private int _currentEnergy = 1;
+    [SerializeField] private int _maxEnergy = 1;
 
     [Header("Stat Growth")]
-    [SerializeField] private int _agilityThreshold = 5;
-    [SerializeField] private int _intelligenceThreshold = 5;
-    [SerializeField] private int _strengthThreshold = 5;
+    [SerializeField] private int _staminaThreshold = 5;
+    [SerializeField] private int _wisdomThreshold = 5;
+    [SerializeField] private int _explorationThreshold = 5;
 
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
@@ -29,12 +31,13 @@ public class Chimera : MonoBehaviour
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
-    private int _agilityExperience = 0;
-    private int _intelligenceExperience = 0;
-    private int _strengthExperience = 0;
+    private int _staminaExperience = 0;
+    private int _wisdomExperience = 0;
+    private int _explorationExperience = 0;
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
     private int _price = 1;
+    private int _tickCounter = 0;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
@@ -48,9 +51,10 @@ public class Chimera : MonoBehaviour
     public bool InFacility { get => _inFacility; }
     public bool OnExpedition { get => _onExpedition; }
     public int Level { get => _level; }
-    public int Agility { get => _agility; }
-    public int Intelligence { get => _intelligence; }
-    public int Strength { get => _strength; }
+    public int Stamina { get => _stamina; }
+    public int Wisdom { get => _wisdom; }
+    public int Exploration { get => _exploration; }
+    public int Energy { get => _maxEnergy; }
     public int Price { get => _price; }
     public string Name { get => GetName(); }
 
@@ -58,12 +62,12 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Agility:
-                return _agilityThreshold;
-            case StatType.Intelligence:
-                return _intelligenceThreshold;
-            case StatType.Strength:
-                return _strengthThreshold;
+            case StatType.Stamina:
+                return _staminaThreshold;
+            case StatType.Wisdom:
+                return _wisdomThreshold;
+            case StatType.Exploration:
+                return _explorationThreshold;
             default:
                 Debug.LogError($"Stat Type [{statType}] is invalid.");
                 return -1;
@@ -90,12 +94,12 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Agility:
-                return totalThreshold - _agilityExperience;
-            case StatType.Intelligence:
-                return totalThreshold - _intelligenceExperience;
-            case StatType.Strength:
-                return totalThreshold - _strengthExperience;
+            case StatType.Stamina:
+                return totalThreshold - _staminaExperience;
+            case StatType.Wisdom:
+                return totalThreshold - _wisdomExperience;
+            case StatType.Exploration:
+                return totalThreshold - _explorationExperience;
             default:
                 Debug.LogError($"StatType: [{statType}] is invalid, please change!");
                 return -1;
@@ -104,7 +108,7 @@ public class Chimera : MonoBehaviour
 
     public string GetName()
     {
-        if(_currentEvolution == null)
+        if (_currentEvolution == null)
         {
             switch (_chimeraType)
             {
@@ -138,14 +142,14 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Agility:
-                amount = _agility;
+            case StatType.Stamina:
+                amount = _stamina;
                 return true;
-            case StatType.Intelligence:
-                amount = _intelligence;
+            case StatType.Wisdom:
+                amount = _wisdom;
                 return true;
-            case StatType.Strength:
-                amount = _strength;
+            case StatType.Exploration:
+                amount = _exploration;
                 return true;
             default:
                 Debug.LogError("Default StatType please change!");
@@ -159,9 +163,10 @@ public class Chimera : MonoBehaviour
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
     public void SetLevel(int level) { _level = level; }
-    public void SetAgility(int agility) { _agility = agility; }
-    public void SetIntelligence(int intelligence) { _intelligence = intelligence; }
-    public void SetStrength(int strength) { _strength = strength; }
+    public void SetStamina(int stamina) { _stamina = stamina; }
+    public void SetWisdom(int wisdom) { _wisdom = wisdom; }
+    public void SetExploration(int exploration) { _exploration = exploration; }
+    public void SetEnergy(int energy) { _maxEnergy = energy; }
 
     public void Initialize()
     {
@@ -184,20 +189,22 @@ public class Chimera : MonoBehaviour
 
     private void InitializeStats()
     {
-        for (int i = 1; i < _agility; ++i)
+        for (int i = 1; i < _stamina; ++i)
         {
-            _agilityThreshold += (int)(Mathf.Sqrt(_agilityThreshold) * 1.2f);
+            _staminaThreshold += (int)(Mathf.Sqrt(_staminaThreshold) * 1.2f);
         }
 
-        for (int i = 1; i < _intelligence; ++i)
+        for (int i = 1; i < _wisdom; ++i)
         {
-            _intelligenceThreshold += (int)(Mathf.Sqrt(_intelligenceThreshold) * 1.2f);
+            _wisdomThreshold += (int)(Mathf.Sqrt(_wisdomThreshold) * 1.2f);
         }
 
-        for (int i = 1; i < _strength; ++i)
+        for (int i = 1; i < _exploration; ++i)
         {
-            _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
+            _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
         }
+
+        _currentEnergy = _maxEnergy;
     }
 
     private void InitializeEvolution()
@@ -205,6 +212,21 @@ public class Chimera : MonoBehaviour
         _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _currentEvolution.Initialize(this);
         _chimeraType = _currentEvolution.Type;
+    }
+
+    public void EnergyTick()
+    {
+        ++_tickCounter;
+
+        if (_tickCounter == 20)
+        {
+            _tickCounter = 0;
+
+            if (_currentEnergy < _maxEnergy)
+            {
+                ++_currentEnergy;
+            }
+        }
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -217,14 +239,14 @@ public class Chimera : MonoBehaviour
 
         switch (statType)
         {
-            case StatType.Agility:
-                _agilityExperience += amount;
+            case StatType.Stamina:
+                _staminaExperience += amount;
                 break;
-            case StatType.Intelligence:
-                _intelligenceExperience += amount;
+            case StatType.Wisdom:
+                _wisdomExperience += amount;
                 break;
-            case StatType.Strength:
-                _strengthExperience += amount;
+            case StatType.Exploration:
+                _explorationExperience += amount;
                 break;
             default:
                 Debug.LogError("Default Experience Tick Please Change!");
@@ -239,37 +261,38 @@ public class Chimera : MonoBehaviour
     private void AllocateExperience()
     {
         bool levelUp = false;
+        _tickCounter++;
 
-        if (_agilityExperience >= _agilityThreshold)
+        if (_staminaExperience >= _staminaThreshold)
         {
-            _agilityExperience -= _agilityThreshold;
+            _staminaExperience -= _staminaThreshold;
             levelUp = true;
-            LevelUp(StatType.Agility);
+            LevelUp(StatType.Stamina);
 
-            _agilityThreshold += (int)(Mathf.Sqrt(_agilityThreshold) * 1.2f);
+            _staminaThreshold += (int)(Mathf.Sqrt(_staminaThreshold) * 1.2f);
         }
 
-        if (_intelligenceExperience >= _intelligenceThreshold)
+        if (_wisdomExperience >= _wisdomThreshold)
         {
-            _intelligenceExperience -= _intelligenceThreshold;
+            _wisdomExperience -= _wisdomThreshold;
             levelUp = true;
-            LevelUp(StatType.Intelligence);
+            LevelUp(StatType.Wisdom);
 
-            _intelligenceThreshold += (int)(Mathf.Sqrt(_intelligenceThreshold) * 1.2f);
+            _wisdomThreshold += (int)(Mathf.Sqrt(_wisdomThreshold) * 1.2f);
         }
 
-        if (_strengthExperience >= _strengthThreshold)
+        if (_explorationExperience >= _explorationThreshold)
         {
-            _strengthExperience -= _strengthThreshold;
+            _explorationExperience -= _explorationThreshold;
             levelUp = true;
-            LevelUp(StatType.Strength);
+            LevelUp(StatType.Exploration);
 
-            _strengthThreshold += (int)(Mathf.Sqrt(_strengthThreshold) * 1.2f);
+            _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
         }
 
         if (levelUp == true)
         {
-            bool canEvolve = _currentEvolution.CheckEvolution(_agility, _intelligence, _strength, out EvolutionLogic evolution);
+            bool canEvolve = _currentEvolution.CheckEvolution(_stamina, _wisdom, _exploration, out EvolutionLogic evolution);
 
             if (canEvolve == true)
             {
@@ -284,17 +307,18 @@ public class Chimera : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Agility:
-                _agility += 1;
-                Debug.Log($"{_currentEvolution.name} now has {_agility} {statType}");
+            case StatType.Stamina:
+                _stamina += 1;
+                _maxEnergy = (int)(_stamina * 0.5) + 5;
+                Debug.Log($"{_currentEvolution.name} now has {_stamina} {statType}");
                 break;
-            case StatType.Intelligence:
-                _intelligence += 1;
-                Debug.Log($"{_currentEvolution.name} now has {_intelligence} {statType}");
+            case StatType.Wisdom:
+                _wisdom += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_wisdom} {statType}");
                 break;
-            case StatType.Strength:
-                _strength += 1;
-                Debug.Log($"{_currentEvolution.name} now has {_strength} {statType}");
+            case StatType.Exploration:
+                _exploration += 1;
+                Debug.Log($"{_currentEvolution.name} now has {_exploration} {statType}");
                 break;
             default:
                 Debug.LogError("Default Level Up Please Change!");
@@ -327,7 +351,7 @@ public class Chimera : MonoBehaviour
 
         _habitatManager.UpdateCurrentHabitatChimeras();
 
-        if(_inFacility == true)
+        if (_inFacility == true)
         {
             _currentEvolution.gameObject.SetActive(false);
         }
