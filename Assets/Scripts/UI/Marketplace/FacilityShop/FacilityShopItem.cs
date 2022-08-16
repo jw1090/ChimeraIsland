@@ -12,6 +12,8 @@ public class FacilityShopItem : MonoBehaviour
     [SerializeField] private Image _facilityStatIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
 
+    public FacilityType FacilityType { get => _facilityType; }
+
     private ResourceManager _resourceManager = null;
     private Habitat _habitat = null;
 
