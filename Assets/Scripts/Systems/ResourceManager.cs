@@ -20,9 +20,9 @@ public class ResourceManager : MonoBehaviour
     private Sprite _bioSprite = null;
     private Sprite _firaSprite = null;
 
-    private Sprite _agilitySprite = null;
-    private Sprite _intelligenceSprite = null;
-    private Sprite _strengthSprite = null;
+    private Sprite _staminaSprite = null;
+    private Sprite _wisdomSprite = null;
+    private Sprite _explorationSprite = null;
 
     private Sprite _essenceSprite = null;
     private Sprite _fossilSprite = null;
@@ -80,9 +80,9 @@ public class ResourceManager : MonoBehaviour
         _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
         _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
 
-        _agilitySprite = Resources.Load<Sprite>("Icons/Stats/Agility");
-        _intelligenceSprite = Resources.Load<Sprite>("Icons/Stats/Intelligence");
-        _strengthSprite = Resources.Load<Sprite>("Icons/Stats/Strength");
+        _staminaSprite = Resources.Load<Sprite>("Icons/Stats/Stamina");
+        _wisdomSprite = Resources.Load<Sprite>("Icons/Stats/Wisdom");
+        _explorationSprite = Resources.Load<Sprite>("Icons/Stats/Exploration");
 
         _essenceSprite = Resources.Load<Sprite>("Icons/Expedition/Essence");
         _fossilSprite = Resources.Load<Sprite>("Icons/Expedition/Fossil");
@@ -255,12 +255,12 @@ public class ResourceManager : MonoBehaviour
     {
         switch (statType)
         {
-            case StatType.Agility:
-                return _agilitySprite;
-            case StatType.Intelligence:
-                return _intelligenceSprite;
-            case StatType.Strength:
-                return _strengthSprite;
+            case StatType.Stamina:
+                return _staminaSprite;
+            case StatType.Wisdom:
+                return _wisdomSprite;
+            case StatType.Exploration:
+                return _explorationSprite;
             default:
                 Debug.LogWarning($"{statType} is invalid, please change!");
                 return null;
@@ -272,11 +272,11 @@ public class ResourceManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Waterfall:
-                return _agilitySprite;
+                return _staminaSprite;
             case FacilityType.RuneStone:
-                return _intelligenceSprite;
+                return _wisdomSprite;
             case FacilityType.Cave:
-                return _strengthSprite;
+                return _explorationSprite;
             default:
                 Debug.LogWarning($"{facilityType} is invalid, please change!");
                 return null;
@@ -294,11 +294,11 @@ public class ResourceManager : MonoBehaviour
             case ModifierType.Fira:
                 return _firaSprite;
             case ModifierType.Agility:
-                return _agilitySprite;
+                return _staminaSprite;
             case ModifierType.Intelligence:
-                return _intelligenceSprite;
+                return _wisdomSprite;
             case ModifierType.Strength:
-                return _strengthSprite;
+                return _explorationSprite;
             default:
                 Debug.LogWarning($"Badge Type [{badgeType}] is invalid, please change!");
                 return null;

@@ -19,13 +19,13 @@ public class FacilitySign : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                _statType = StatType.Strength;
+                _statType = StatType.Exploration;
                 break;
             case FacilityType.RuneStone:
-                _statType = StatType.Intelligence;
+                _statType = StatType.Wisdom;
                 break;
             case FacilityType.Waterfall:
-                _statType = StatType.Agility;
+                _statType = StatType.Stamina;
                 break;
             default:
                 break;

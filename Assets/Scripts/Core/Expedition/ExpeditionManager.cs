@@ -277,9 +277,9 @@ public class ExpeditionManager : MonoBehaviour
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Agility * (_agilityModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Intelligence * (_intelligenceModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Strength * (_strengthModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Stamina * (_agilityModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Wisdom * (_intelligenceModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Exploration * (_strengthModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
         }
 
         if (power >= _difficultyValue)

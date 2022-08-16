@@ -175,7 +175,7 @@ public class Facility : MonoBehaviour
     public void FacilityTick()
     {
         if (_storedChimera == null)
-        {
+        { 
             return;
         }
 
