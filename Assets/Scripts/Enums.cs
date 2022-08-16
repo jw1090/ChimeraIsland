@@ -101,9 +101,9 @@ public enum SceneType
 public enum StatType
 {
     None = -1,
-    Agility,
-    Intelligence,
-    Strength,
+    Stamina,
+    Wisdom,
+    Exploration,
 }
 
 public enum TutorialIconType
