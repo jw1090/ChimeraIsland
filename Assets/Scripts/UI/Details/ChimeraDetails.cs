@@ -8,9 +8,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TextMeshProUGUI _level = null;
-    [SerializeField] private TextMeshProUGUI _agility = null;
-    [SerializeField] private TextMeshProUGUI _intelligence = null;
-    [SerializeField] private TextMeshProUGUI _strength = null;
+    [SerializeField] private TextMeshProUGUI _exploration = null;
+    [SerializeField] private TextMeshProUGUI _stamina = null;
+    [SerializeField] private TextMeshProUGUI _wisdom = null;
     [SerializeField] private StatefulObject _statefulButtons = null;
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _addButton = null;
@@ -68,12 +68,12 @@ public class ChimeraDetails : MonoBehaviour
 
 
         int amount = 0;
-        string agilityText = _chimera.GetStatByType(StatType.Agility, out amount) ? amount.ToString() : "Invalid!";
-        _agility.text = agilityText;
-        string intelligenceText = _chimera.GetStatByType(StatType.Intelligence, out amount) ? amount.ToString() : "Invalid!";
-        _intelligence.text = intelligenceText;
-        string strengthText = _chimera.GetStatByType(StatType.Strength, out amount) ? amount.ToString() : "Invalid!";
-        _strength.text = strengthText;
+        string staminaText = _chimera.GetStatByType(StatType.Stamina, out amount) ? amount.ToString() : "Invalid!";
+        _stamina.text = staminaText;
+        string wisdomText = _chimera.GetStatByType(StatType.Wisdom, out amount) ? amount.ToString() : "Invalid!";
+        _wisdom.text = wisdomText;
+        string explorationText = _chimera.GetStatByType(StatType.Exploration, out amount) ? amount.ToString() : "Invalid!";
+        _exploration.text = explorationText;
     }
 
     public void ToggleButtons(DetailsButtonType detailsButtonType)
