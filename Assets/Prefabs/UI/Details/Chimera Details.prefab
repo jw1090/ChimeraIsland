@@ -1962,7 +1962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1574459908815496617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1976,7 +1976,7 @@ RectTransform:
   m_Children:
   - {fileID: 1574459907079301717}
   m_Father: {fileID: 2487653792394640662}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2246,7 +2246,7 @@ RectTransform:
   m_Children:
   - {fileID: 3789580674067944577}
   m_Father: {fileID: 2487653792394640662}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2726,7 +2726,7 @@ RectTransform:
   m_Children:
   - {fileID: 3809029028944309186}
   m_Father: {fileID: 2487653792394640662}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2860,7 +2860,7 @@ RectTransform:
   m_Children:
   - {fileID: 6991483922276005001}
   m_Father: {fileID: 2487653792394640662}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3106,7 +3106,7 @@ RectTransform:
   m_Children:
   - {fileID: 7166816916357852373}
   m_Father: {fileID: 2487653792394640662}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3180,11 +3180,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 584507202485891248}
   - {fileID: 1574459908815496617}
   - {fileID: 5382490889798580235}
   - {fileID: 1786465349458869105}
   - {fileID: 3081202528691755029}
-  - {fileID: 584507202485891248}
   m_Father: {fileID: 1574459908703696425}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3213,11 +3213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84ccb23bcb94684aa7ad101af482f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultStateName: Transfer Button
+  defaultStateName: Grazing
   currentState:
-    StateName: Transfer Button
-    StateObject: {fileID: 1574459908815496616}
+    StateName: Grazing
+    StateObject: {fileID: 5815635708510052908}
   stateEntries:
+  - StateName: Grazing
+    StateObject: {fileID: 5815635708510052908}
   - StateName: Transfer Button
     StateObject: {fileID: 1574459908815496616}
   - StateName: Add Button
@@ -3226,8 +3228,6 @@ MonoBehaviour:
     StateObject: {fileID: 2097580464696341663}
   - StateName: Occupied
     StateObject: {fileID: 3470573633869833500}
-  - StateName: Grazing
-    StateObject: {fileID: 5815635708510052908}
   SetDefaultStateOnBadStateRequest: 0
 --- !u!1 &9150619759278942657
 GameObject:
