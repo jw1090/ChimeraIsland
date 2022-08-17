@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
             case SceneType.Habitat:
                 _uiStatefulObject.SetState("Habitat UI");
                 _habitatUI.ResetStandardUI();
+                _habitatUI.LoadCurrentUIProgress();
                 break;
             case SceneType.MainMenu:
                 _uiStatefulObject.SetState("Main Menu UI");
@@ -74,6 +75,7 @@ public class UIManager : MonoBehaviour
             case TutorialUIElementType.MarketplaceChimeraTab:
             case TutorialUIElementType.WorldMapButton:
             case TutorialUIElementType.OtherFacilityButtons:
+            case TutorialUIElementType.FossilButtons:
                 _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
                 break;
             default:

@@ -128,6 +128,7 @@ public enum TutorialUIElementType
     ExpeditionButton,
     MarketplaceChimeraTab,
     WorldMapButton,
+    FossilButtons
 }
 
 public enum TutorialStageType
