@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,33 +13,33 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] private AudioManifest _musicManifest = null;
-    [SerializeField] private AudioClip _mainMenuMusic = null;
-    [SerializeField] private AudioClip _starterSceneMusic = null;
-    [SerializeField] private AudioClip _stonePlainsMusic = null;
-    [SerializeField] private AudioClip _treeOfLifeMusic = null;
+    //[SerializeField] private AudioClip _mainMenuMusic = null;
+    //[SerializeField] private AudioClip _starterSceneMusic = null;
+    //[SerializeField] private AudioClip _stonePlainsMusic = null;
+    //[SerializeField] private AudioClip _treeOfLifeMusic = null;
 
     [Header("UI SFX")]
     [SerializeField] private AudioManifest _uiSFXManifest = null;
-    [SerializeField] private AudioClip _standardClickSFX= null;
-    [SerializeField] private AudioClip _confirmClickSFX= null;
-    [SerializeField] private AudioClip _purchaseClickSFX= null;
-    [SerializeField] private AudioClip _placeChimeraSFX = null;
-    [SerializeField] private AudioClip _removeChimeraSFX= null;
-    [SerializeField] private AudioClip _evolutionSFX= null;
-    [SerializeField] private AudioClip _levelUpSFX= null;
-    [SerializeField] private AudioClip _errorSFX= null;
+    //[SerializeField] private AudioClip _standardClickSFX= null;
+    //[SerializeField] private AudioClip _confirmClickSFX= null;
+    //[SerializeField] private AudioClip _purchaseClickSFX= null;
+    //[SerializeField] private AudioClip _placeChimeraSFX = null;
+    //[SerializeField] private AudioClip _removeChimeraSFX= null;
+    //[SerializeField] private AudioClip _evolutionSFX= null;
+    //[SerializeField] private AudioClip _levelUpSFX= null;
+    //[SerializeField] private AudioClip _errorSFX= null;
 
     [Header("Ambient SFX")]
     [SerializeField] private AudioManifest _ambientSFXManifest = null;
-    [SerializeField] private AudioClip _waterfallAmbientSFX = null;
-    [SerializeField] private AudioClip _caveAmbientSFX = null;
-    [SerializeField] private AudioClip _runeAmbientSFX = null;
+    //[SerializeField] private AudioClip _waterfallAmbientSFX = null;
+    //[SerializeField] private AudioClip _caveAmbientSFX = null;
+    //[SerializeField] private AudioClip _runeAmbientSFX = null;
 
     [Header("Facility SFX")]
     [SerializeField] private AudioManifest _facilitySFXManifest = null;
-    [SerializeField] private AudioClip _waterfallTrainingSFX = null;
-    [SerializeField] private AudioClip _caveTrainingSFX = null;
-    [SerializeField] private AudioClip _runeTrainingSFX = null;
+    //[SerializeField] private AudioClip _waterfallTrainingSFX = null;
+    //[SerializeField] private AudioClip _caveTrainingSFX = null;
+    //[SerializeField] private AudioClip _runeTrainingSFX = null;
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
@@ -57,7 +58,8 @@ public class AudioManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                return _caveAmbientSFX;
+                AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Cave Ambient SFX").FirstOrDefault();
+                return item.Clip;
             case FacilityType.RuneStone:
                 return _runeAmbientSFX;
             case FacilityType.Waterfall:
@@ -143,12 +145,18 @@ public class AudioManager : MonoBehaviour
         switch (habitatType)
         {
             case HabitatType.StonePlains:
-                _musicSource.clip = _stonePlainsMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             case HabitatType.TreeOfLife:
-                _musicSource.clip = _treeOfLifeMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TreeOfLife").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             default:
                 Debug.LogError($"{habitatType} is invalid. Please change!");
