@@ -356,4 +356,16 @@ public class Chimera : MonoBehaviour
             _currentEvolution.gameObject.SetActive(false);
         }
     }
+
+    public void RevealChimera(bool reveal)
+    {
+        _currentEvolution.gameObject.SetActive(reveal);
+
+        if (reveal == true)
+        {
+            _currentEvolution.Animator.SetBool("Walk", true);
+        }
+
+        _boxCollider.enabled = reveal;
+    }
 }

@@ -11,6 +11,10 @@ public class ButtonGlow : MonoBehaviour, IPointerEnterHandler, IPointerClickHand
     public void Awake()
     {
         _buttonImage = GetComponent<Button>().image;
+    }
+
+    public void OnEnable()
+    {
         _buttonImage.color = _idle;
     }
 

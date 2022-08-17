@@ -33,7 +33,7 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(_habitat.AddFacility(_facility) == true) // Purchase Success
+        if(_habitat.BuyFacility(_facility) == true) // Purchase Success
         {
             _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
             _habitatUI.ResetStandardUI();
