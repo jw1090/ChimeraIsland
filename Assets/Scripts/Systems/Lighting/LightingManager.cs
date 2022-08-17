@@ -9,7 +9,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private float _startTime = 0.0f;
     [SerializeField] private DayType _dayType = DayType.None;
     [SerializeField] private AnimationCurve _lightingIntensityMultiplier = null;
-    //[SerializeField] private AnimationCurve _reflectionIntensityMultiplier = null;
+    [SerializeField] private AnimationCurve _reflectionIntensityMultiplier = null;
 
     [Header("Day Light")]
     [SerializeField] private Light _dayLight = null;
@@ -63,7 +63,7 @@ public class LightingManager : MonoBehaviour
 
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
-        //RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+        RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
     private void TimeEvaluate()
