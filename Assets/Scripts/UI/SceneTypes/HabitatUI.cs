@@ -118,13 +118,13 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.SetupButtonListeners();
     }
 
-    public void EnableTutorialUIByType(TutorialUIElementType uiElementType)
+    public void EnableTutorialUIByType(UIElementType uiElementType)
     {
         switch (uiElementType)
         {
-            case TutorialUIElementType.None:
+            case UIElementType.None:
                 break;
-            case TutorialUIElementType.All:
+            case UIElementType.All:
                 _marketplaceButtonFolder.gameObject.SetActive(true);
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
@@ -133,24 +133,24 @@ public class HabitatUI : MonoBehaviour
                 _runeFacilityShopIcon.gameObject.SetActive(true);
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.MarketplaceButton:
+            case UIElementType.MarketplaceButton:
                 _marketplaceButton.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.MarketplaceChimeraTab:
+            case UIElementType.MarketplaceChimeraTab:
                 _marketplacePanel.ChimeraTabSetActive(true);
                 break;
-            case TutorialUIElementType.OpenDetailsButton:
+            case UIElementType.OpenDetailsButton:
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.WorldMapButton:
+            case UIElementType.WorldMapButton:
                 _worldMapButton.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.OtherFacilityButtons:
+            case UIElementType.OtherFacilityButtons:
                 _runeFacilityShopIcon.gameObject.SetActive(true);
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
-            case TutorialUIElementType.FossilButtons:
+            case UIElementType.FossilButtons:
                 foreach(UIFossilWallet uiFossil in _fossilWallets)
                 {
                     uiFossil.gameObject.SetActive(true);

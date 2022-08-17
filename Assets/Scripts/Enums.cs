@@ -118,7 +118,7 @@ public enum TutorialIconType
     Standard,
 }
 
-public enum TutorialUIElementType
+public enum UIElementType
 {
     None = -1,
     All,

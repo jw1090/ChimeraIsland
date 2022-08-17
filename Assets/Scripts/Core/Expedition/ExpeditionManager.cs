@@ -15,14 +15,12 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
     private ExpeditionData _habitatExpeditionOption = null;
-    private Marketplace _marketplace = null;
     private UIManager _uiManager = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private bool _activeInProgressTimer = false;
-    private bool _expeditionSuccess = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
     private float _agilityModifer = 1.0f;
@@ -42,13 +40,10 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
 
-    public bool ExpeditionSuccess { get => _expeditionSuccess; }
-
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
     public void ResetSelectedExpedition()
     {
-        _expeditionState = ExpeditionState.Selection;
         _selectedExpedition = null;
         ChimerasOnExpedition(false);
     }
@@ -80,12 +75,10 @@ public class ExpeditionManager : MonoBehaviour
 
         _uiManager = ServiceLocator.Get<UIManager>();
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
-        _marketplace = _uiManager.HabitatUI.Marketplace;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
 
         _expeditionState = ExpeditionState.Selection;
-        _expeditionSuccess = false;
 
         return this;
     }
@@ -232,14 +225,20 @@ public class ExpeditionManager : MonoBehaviour
         _chimeras.Add(chimera);
         EvaluateRosterChange();
 
+        _uiExpedition.SetupUI.ToggleConfirmButton(true);
+
         return true;
     }
 
     public bool RemoveChimera(Chimera chimera)
     {
         _chimeras.Remove(chimera);
-
         EvaluateRosterChange();
+
+        if(_chimeras.Count == 0)
+        {
+            _uiExpedition.SetupUI.ToggleConfirmButton(false);
+        }
 
         return true;
     }
@@ -401,7 +400,6 @@ public class ExpeditionManager : MonoBehaviour
 
         if (successRoll >= _difficultyValue - _chimeraPower)
         {
-            _expeditionSuccess = true;
             return true;
         }
         else
@@ -418,8 +416,8 @@ public class ExpeditionManager : MonoBehaviour
                 _currencyManager.IncreaseEssence(_selectedExpedition.AmountGained);
                 break;
             case ExpeditionType.Fossils:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.FossilButtons);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.FossilButtons);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
                 break;
             case ExpeditionType.HabitatUpgrade:
@@ -504,6 +502,8 @@ public class ExpeditionManager : MonoBehaviour
         {
             chimera.SetOnExpedition(onExpedition);
         }
+
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Expedition);
 
         if (onExpedition == false)
         {

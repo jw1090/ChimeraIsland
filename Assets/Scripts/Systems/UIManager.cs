@@ -64,18 +64,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void EnableTutorialUIByType(TutorialUIElementType uiElementType)
+    public void EnableUIByType(UIElementType uiElementType)
     {
         switch (uiElementType)
         {
-            case TutorialUIElementType.All:
-            case TutorialUIElementType.MarketplaceButton:
-            case TutorialUIElementType.OpenDetailsButton:
-            case TutorialUIElementType.ExpeditionButton:
-            case TutorialUIElementType.MarketplaceChimeraTab:
-            case TutorialUIElementType.WorldMapButton:
-            case TutorialUIElementType.OtherFacilityButtons:
-            case TutorialUIElementType.FossilButtons:
+            case UIElementType.All:
+            case UIElementType.MarketplaceButton:
+            case UIElementType.OpenDetailsButton:
+            case UIElementType.ExpeditionButton:
+            case UIElementType.MarketplaceChimeraTab:
+            case UIElementType.WorldMapButton:
+            case UIElementType.OtherFacilityButtons:
+            case UIElementType.FossilButtons:
                 _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
                 break;
             default:
