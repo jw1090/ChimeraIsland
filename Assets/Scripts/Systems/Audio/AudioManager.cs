@@ -11,12 +11,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _sfxSource = null;
 
     [Header("Music")]
+    [SerializeField] private AudioManifest _musicManifest = null;
     [SerializeField] private AudioClip _mainMenuMusic = null;
     [SerializeField] private AudioClip _starterSceneMusic = null;
     [SerializeField] private AudioClip _stonePlainsMusic = null;
     [SerializeField] private AudioClip _treeOfLifeMusic = null;
 
     [Header("UI SFX")]
+    [SerializeField] private AudioManifest _uiSFXManifest = null;
     [SerializeField] private AudioClip _standardClickSFX= null;
     [SerializeField] private AudioClip _confirmClickSFX= null;
     [SerializeField] private AudioClip _purchaseClickSFX= null;
@@ -27,11 +29,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _errorSFX= null;
 
     [Header("Ambient SFX")]
+    [SerializeField] private AudioManifest _ambientSFXManifest = null;
     [SerializeField] private AudioClip _waterfallAmbientSFX = null;
     [SerializeField] private AudioClip _caveAmbientSFX = null;
     [SerializeField] private AudioClip _runeAmbientSFX = null;
 
     [Header("Facility SFX")]
+    [SerializeField] private AudioManifest _facilitySFXManifest = null;
     [SerializeField] private AudioClip _waterfallTrainingSFX = null;
     [SerializeField] private AudioClip _caveTrainingSFX = null;
     [SerializeField] private AudioClip _runeTrainingSFX = null;
