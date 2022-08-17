@@ -11,16 +11,17 @@ public class ExpeditionUI : MonoBehaviour
     [SerializeField] private StatefulObject _foregroundUIStates = null;
     [SerializeField] private Button _closeButton = null;
 
+    private ExpeditionManager _expeditionManager = null;
+    private UIManager _uiManager = null;
+    private ChimeraDetailsFolder _detailsFolder = null;
+
+    public ExpeditionManager expeditionManager { get => _expeditionManager; }
     public ExpeditionSelectionUI SelectionUI { get => _selectionPanel; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
     public ExpeditionResultUI ResultsUI { get => _resultPanel; }
     public StatefulObject BackgroundUIStates { get => _backgroundUIStates; }
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
-
-    private ExpeditionManager _expeditionManager = null;
-    private UIManager _uiManager = null;
-    private ChimeraDetailsFolder _detailsFolder = null;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {

@@ -16,6 +16,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _fossilExpeditionOption = null;
     private ExpeditionData _habitatExpeditionOption = null;
     private Marketplace _marketplace = null;
+    private UIManager _uiManager = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -35,6 +36,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
+    public int CurrentFossilProgress { get => _currentFossilProgress; }
     public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
@@ -76,10 +78,11 @@ public class ExpeditionManager : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
-        _uiExpedition = ServiceLocator.Get<UIManager>().HabitatUI.ExpeditionPanel;
+        _uiManager = ServiceLocator.Get<UIManager>();
+        _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
+        _marketplace = _uiManager.HabitatUI.Marketplace;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _marketplace = ServiceLocator.Get<UIManager>().HabitatUI.Marketplace;
 
         _expeditionState = ExpeditionState.Selection;
         _expeditionSuccess = false;
@@ -415,6 +418,8 @@ public class ExpeditionManager : MonoBehaviour
                 _currencyManager.IncreaseEssence(_selectedExpedition.AmountGained);
                 break;
             case ExpeditionType.Fossils:
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _uiManager.EnableTutorialUIByType(TutorialUIElementType.FossilButtons);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
                 break;
             case ExpeditionType.HabitatUpgrade:
@@ -422,15 +427,12 @@ public class ExpeditionManager : MonoBehaviour
                 {
                     case HabitatRewardType.Waterfall:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
-                        _marketplace.ActivateFacility(FacilityType.Waterfall);
                         break;
                     case HabitatRewardType.CaveExploring:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
-                        _marketplace.ActivateFacility(FacilityType.Cave);
                         break;
                     case HabitatRewardType.RuneStone:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.RuneStone);
-                        _marketplace.ActivateFacility(FacilityType.RuneStone);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
