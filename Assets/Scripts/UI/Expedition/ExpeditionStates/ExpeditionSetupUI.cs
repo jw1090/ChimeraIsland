@@ -20,6 +20,8 @@ public class ExpeditionSetupUI : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
 
+    public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
+
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
@@ -53,12 +55,12 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void LoadExpeditionData()
     {
+        ToggleConfirmButton(false);
+
         foreach (var icon in _chimeraIcons)
         {
             icon.Icon.sprite = null;
         }
-
-        
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 

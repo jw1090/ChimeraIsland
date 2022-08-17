@@ -180,37 +180,37 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialStageType.ExpeditionRequirements:
             case TutorialStageType.FacilityShop:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
                 break;
             case TutorialStageType.Training:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OtherFacilityButtons);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
                 break;
             case TutorialStageType.Details:
             case TutorialStageType.ExpeditionsInfo:
             case TutorialStageType.TierTwoStonePlains:
             case TutorialStageType.UnlockExpeditionModifiers:
             case TutorialStageType.Fossils:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OtherFacilityButtons);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
+                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
                 break;
             case TutorialStageType.ChimeraShop:
             case TutorialStageType.TierThreeStonePlains:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OtherFacilityButtons);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
+                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceChimeraTab);
                 break;
             case TutorialStageType.WorldMapButton:
             case TutorialStageType.WorldMapAndTheTreeOfLife:
             case TutorialStageType.TreeOfLife:
             case TutorialStageType.Transfers:
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OtherFacilityButtons);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.OpenDetailsButton);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceChimeraTab);
-                _uiManager.EnableTutorialUIByType(TutorialUIElementType.WorldMapButton);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
+                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
+                _uiManager.EnableUIByType(UIElementType.MarketplaceChimeraTab);
+                _uiManager.EnableUIByType(UIElementType.WorldMapButton);
                 break;
             default:
                 Debug.LogError($"{_currentStage} is invalid. Please change!");
