@@ -247,6 +247,13 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.Play();
                 }
                 break;
+            case SFXUIType.Completion:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Completion SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
                 break;
