@@ -187,13 +187,15 @@ public class Habitat : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
 
-    public bool AddFacility(FacilityType facilityType)
+    public void BuildFacility(FacilityType facilityType)
     {
-        return AddFacility(GetFacility(facilityType));
+        Facility facility = GetFacility(facilityType);
+
+        facility.BuildFacility();
+        _habitatManager.AddNewFacility(facility);
     }
 
-
-    public bool AddFacility(Facility facility)
+    public bool BuyFacility(Facility facility)
     {
         if (facility.CurrentTier >= _currentTier)
         {

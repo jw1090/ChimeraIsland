@@ -424,13 +424,13 @@ public class ExpeditionManager : MonoBehaviour
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall);
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.RuneStone);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
@@ -500,6 +500,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
+            chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
         }
 
