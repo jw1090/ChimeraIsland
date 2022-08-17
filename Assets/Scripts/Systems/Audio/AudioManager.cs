@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,31 +12,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _sfxSource = null;
 
     [Header("Music")]
-    [SerializeField] private AudioClip _mainMenuMusic = null;
-    [SerializeField] private AudioClip _starterSceneMusic = null;
-    [SerializeField] private AudioClip _stonePlainsMusic = null;
-    [SerializeField] private AudioClip _treeOfLifeMusic = null;
+    [SerializeField] private AudioManifest _musicManifest = null;
 
     [Header("UI SFX")]
-    [SerializeField] private AudioClip _standardClickSFX= null;
-    [SerializeField] private AudioClip _confirmClickSFX= null;
-    [SerializeField] private AudioClip _purchaseClickSFX= null;
-    [SerializeField] private AudioClip _placeChimeraSFX = null;
-    [SerializeField] private AudioClip _removeChimeraSFX= null;
-    [SerializeField] private AudioClip _evolutionSFX= null;
-    [SerializeField] private AudioClip _levelUpSFX= null;
-    [SerializeField] private AudioClip _errorSFX= null;
-    [SerializeField] private AudioClip _completionSFX= null;
+    [SerializeField] private AudioManifest _uiSFXManifest = null;
 
     [Header("Ambient SFX")]
-    [SerializeField] private AudioClip _waterfallAmbientSFX = null;
-    [SerializeField] private AudioClip _caveAmbientSFX = null;
-    [SerializeField] private AudioClip _runeAmbientSFX = null;
+    [SerializeField] private AudioManifest _ambientSFXManifest = null;
 
     [Header("Facility SFX")]
-    [SerializeField] private AudioClip _waterfallTrainingSFX = null;
-    [SerializeField] private AudioClip _caveTrainingSFX = null;
-    [SerializeField] private AudioClip _runeTrainingSFX = null;
+    [SerializeField] private AudioManifest _facilitySFXManifest = null;
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
@@ -54,11 +40,20 @@ public class AudioManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                return _caveAmbientSFX;
+                {
+                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Cave Ambient SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             case FacilityType.RuneStone:
-                return _runeAmbientSFX;
+                {
+                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Rune Ambient SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             case FacilityType.Waterfall:
-                return _waterfallAmbientSFX;
+                {
+                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Waterfall Ambient SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             default:
                 return null;
         }
@@ -69,11 +64,20 @@ public class AudioManager : MonoBehaviour
         switch (facilityType)
         {
             case FacilityType.Cave:
-                return _caveTrainingSFX;
+                {
+                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Cave Training SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             case FacilityType.RuneStone:
-                return _runeTrainingSFX;
+                {
+                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Rune Training SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             case FacilityType.Waterfall:
-                return _waterfallTrainingSFX;
+                {
+                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Waterfall Training SFX").FirstOrDefault();
+                    return item.Clip;
+                }
             default:
                 return null;
         }
@@ -140,12 +144,18 @@ public class AudioManager : MonoBehaviour
         switch (habitatType)
         {
             case HabitatType.StonePlains:
-                _musicSource.clip = _stonePlainsMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             case HabitatType.TreeOfLife:
-                _musicSource.clip = _treeOfLifeMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TreeOfLife").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             default:
                 Debug.LogError($"{habitatType} is invalid. Please change!");
@@ -158,12 +168,18 @@ public class AudioManager : MonoBehaviour
         switch(sceneType)
         {
             case SceneType.MainMenu:
-                _musicSource.clip = _mainMenuMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "MainMenuMusic").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             case SceneType.Starting:
-                _musicSource.clip = _starterSceneMusic;
-                _musicSource.Play();
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StarterSceneMusic").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    _musicSource.Play();
+                }
                 break;
             default:
                 Debug.LogError($"{sceneType} is invalid. Please change!");
@@ -176,40 +192,67 @@ public class AudioManager : MonoBehaviour
         switch(uIElementsSFX)
         {
             case SFXUIType.StandardClick:
-                _sfxSource.clip = _standardClickSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Standard Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.ConfirmClick:
-                _sfxSource.clip = _confirmClickSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Confirm Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.PurchaseClick:
-                _sfxSource.clip = _purchaseClickSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Purchase Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.PlaceChimera:
-                _sfxSource.clip = _placeChimeraSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Place Chimera SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.RemoveChimera:
-                _sfxSource.clip = _removeChimeraSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Remove Chimera SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.Evolution:
-                _sfxSource.clip = _evolutionSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Evolution SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.LevelUp:
-                _sfxSource.clip = _levelUpSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Level Up SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break; 
             case SFXUIType.ErrorClick:
-                _sfxSource.clip = _errorSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Error SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case SFXUIType.Completion:
-                _sfxSource.clip = _completionSFX;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Completion SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
