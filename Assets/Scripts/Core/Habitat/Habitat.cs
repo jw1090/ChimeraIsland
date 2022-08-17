@@ -187,11 +187,11 @@ public class Habitat : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
 
-    public void BuildFacility(FacilityType facilityType)
+    public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
 
-        facility.BuildFacility();
+        facility.BuildFacility(moveCamera);
         _habitatManager.AddNewFacility(facility);
     }
 
@@ -216,7 +216,7 @@ public class Habitat : MonoBehaviour
             return false;
         }
 
-        facility.BuildFacility();
+        facility.BuildFacility(true);
         _habitatManager.AddNewFacility(facility);
 
         return true;
