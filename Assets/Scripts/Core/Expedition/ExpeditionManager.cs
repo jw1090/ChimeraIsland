@@ -24,9 +24,9 @@ public class ExpeditionManager : MonoBehaviour
     private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
-    private float _agilityModifer = 1.0f;
-    private float _intelligenceModifier = 1.0f;
-    private float _strengthModifier = 1.0f;
+    private float _explorationModifier = 1.0f;
+    private float _staminaModifer = 1.0f;
+    private float _wisdomModifier = 1.0f;
     private float _aquaBonus = 0.0f;
     private float _bioBonus = 0.0f;
     private float _firaBonus = 0.0f;
@@ -224,6 +224,14 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool AddChimera(Chimera chimera)
     {
+        if (_chimeras.Count == 3)
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            Debug.LogWarning($"Expedition is full!");
+            return false;
+        }
+
         _chimeras.Add(chimera);
         EvaluateRosterChange();
 
@@ -237,7 +245,7 @@ public class ExpeditionManager : MonoBehaviour
         _chimeras.Remove(chimera);
         EvaluateRosterChange();
 
-        if(_chimeras.Count == 0)
+        if (_chimeras.Count == 0)
         {
             _uiExpedition.SetupUI.ToggleConfirmButton(false);
         }
@@ -283,9 +291,9 @@ public class ExpeditionManager : MonoBehaviour
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Stamina * (_agilityModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Wisdom * (_intelligenceModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Exploration * (_strengthModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Stamina * (_staminaModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Wisdom * (_wisdomModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Exploration * (_explorationModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
         }
 
         if (power >= _difficultyValue)
@@ -319,14 +327,14 @@ public class ExpeditionManager : MonoBehaviour
                 case ModifierType.Fira:
                     _firaBonus = 0.1f;
                     break;
-                case ModifierType.Agility:
-                    _agilityModifer = 1.2f;
+                case ModifierType.Exploration:
+                    _explorationModifier = 1.2f;
                     break;
-                case ModifierType.Intelligence:
-                    _intelligenceModifier = 1.2f;
+                case ModifierType.Stamina:
+                    _staminaModifer = 1.2f;
                     break;
-                case ModifierType.Strength:
-                    _strengthModifier = 1.2f;
+                case ModifierType.Wisdom:
+                    _wisdomModifier = 1.2f;
                     break;
                 default:
                     Debug.LogWarning($"Modifier type is not valid [{modifierType}]. Please fix.");
@@ -353,14 +361,20 @@ public class ExpeditionManager : MonoBehaviour
 
     private void ResetMultipliers()
     {
-        _agilityModifer = 1.0f;
-        _intelligenceModifier = 1.0f;
-        _strengthModifier = 1.0f;
+        _staminaModifer = 1.0f;
+        _wisdomModifier = 1.0f;
+        _explorationModifier = 1.0f;
     }
 
     public float CalculateSuccessChance()
     {
         float successChance = 0.0f;
+
+        Debug.Log
+        (
+            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
+            $"Success Chance: {successChance.ToString("F2")}"
+        );
 
         if (Mathf.Approximately(_chimeraPower, _difficultyValue) == true)
         {
@@ -370,12 +384,6 @@ public class ExpeditionManager : MonoBehaviour
         {
             successChance = (_chimeraPower / _difficultyValue) * 100.0f;
         }
-
-        Debug.Log
-        (
-            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
-            $"Success Chance: {successChance.ToString("F2")}"
-        );
 
         return successChance;
     }
@@ -397,6 +405,13 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool RandomSuccesRate()
     {
+
+        if (_selectedExpedition.AutoSucceed == true)
+        {
+            Debug.Log($"Auto suceed activated, you win!");
+            return true;
+        }
+
         float successRoll = Random.Range(0.0f, _difficultyValue);
 
         Debug.Log($"You rolled {successRoll} out of {_difficultyValue - _chimeraPower}");
@@ -422,9 +437,11 @@ public class ExpeditionManager : MonoBehaviour
                 _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
                 _uiManager.EnableUIByType(UIElementType.FossilButtons);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
-                if(_currentFossilProgress + 2 % 2 == 0)
+
+                if (_selectedExpedition.UnlocksNewChimera == true)
                 {
-                    Debug.Log($"You've unlocked Chimera of type {_uiManager.HabitatUI.Marketplace.ActivateRandomChimera()}!");
+                    ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
+                    Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:

@@ -85,9 +85,9 @@ public enum ModifierType
     Aqua,
     Bio,
     Fira,
-    Agility,
-    Intelligence,
-    Strength,
+    Stamina,
+    Wisdom,
+    Exploration,
 }
 
 public enum SceneType
