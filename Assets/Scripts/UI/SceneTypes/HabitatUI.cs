@@ -238,7 +238,7 @@ public class HabitatUI : MonoBehaviour
             _tutorialManager.ShowTutorialStage(TutorialStageType.ChimeraShop);
         }
         _openDetailsButton.gameObject.SetActive(false);
-
+        _marketplacePanel.ChimeraTabSetActive(true);
         _marketplacePanel.FacilityTabCheckActive();
 
         _menuOpen = true;

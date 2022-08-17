@@ -421,6 +421,10 @@ public class ExpeditionManager : MonoBehaviour
                 _uiManager.EnableTutorialUIByType(TutorialUIElementType.MarketplaceButton);
                 _uiManager.EnableTutorialUIByType(TutorialUIElementType.FossilButtons);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
+                if(_currentFossilProgress + 2 % 2 == 0)
+                {
+                    Debug.Log($"You've unlocked Chimera of type {_uiManager.HabitatUI.Marketplace.ActivateRandomChimera()}!");
+                }
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (_selectedExpedition.UpgradeType)

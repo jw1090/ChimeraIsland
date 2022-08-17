@@ -33,6 +33,9 @@ public class ExpeditionResultUI : MonoBehaviour
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
+
+            FacilityCameraCheck(_expeditionManager.SelectedExpedition.UpgradeType);
+
             _expeditionSuccess = false;
         }
         
@@ -57,7 +60,6 @@ public class ExpeditionResultUI : MonoBehaviour
                 _resultsDescription.text = $"You've gained 1 Fossil!";
             }
 
-
             _expeditionSuccess = true;
         }
         else
@@ -65,6 +67,29 @@ public class ExpeditionResultUI : MonoBehaviour
             _successResults.text = $"Failure";
             _resultsDescription.text = $"Train your Chimera and try again!";
             _expeditionSuccess = false;
+        }
+    }
+
+    private void FacilityCameraCheck(HabitatRewardType habitatRewardType)
+    {
+        switch (habitatRewardType)
+        {
+            case HabitatRewardType.None:
+            case HabitatRewardType.Random:
+            case HabitatRewardType.Habitat:
+                break;
+            case HabitatRewardType.Waterfall:
+                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.Waterfall);
+                break;
+            case HabitatRewardType.CaveExploring:
+                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.Cave);
+                break;
+            case HabitatRewardType.RuneStone:
+                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.RuneStone);
+                break;
+            default:
+                Debug.LogError($"Upgrade type is invalid [{habitatRewardType}], please change!");
+                break;
         }
     }
 }
