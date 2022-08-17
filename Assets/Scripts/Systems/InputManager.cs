@@ -109,6 +109,11 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+
                 _cameraUtil.CameraZoom();
             }
 

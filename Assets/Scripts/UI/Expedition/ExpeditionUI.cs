@@ -67,11 +67,11 @@ public class ExpeditionUI : MonoBehaviour
                 _selectionPanel.DisplayExpeditionOptions();
                 break;
             case ExpeditionState.InProgress:
-                _backgroundUIStates.SetState("Selection Panel");
+                _backgroundUIStates.SetState("Setup Panel");
                 _foregroundUIStates.SetState("In Progress Panel");
                 break;
             case ExpeditionState.Result:
-                _backgroundUIStates.SetState("Selection Panel");
+                _backgroundUIStates.SetState("Setup Panel");
                 _foregroundUIStates.SetState("Results Panel");
                 break;
             default:

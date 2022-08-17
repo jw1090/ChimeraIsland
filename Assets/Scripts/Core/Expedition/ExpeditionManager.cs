@@ -224,6 +224,14 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool AddChimera(Chimera chimera)
     {
+        if (_chimeras.Count == 3)
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            Debug.LogWarning($"Expedition is full!");
+            return false;
+        }
+
         _chimeras.Add(chimera);
         EvaluateRosterChange();
 
@@ -237,7 +245,7 @@ public class ExpeditionManager : MonoBehaviour
         _chimeras.Remove(chimera);
         EvaluateRosterChange();
 
-        if(_chimeras.Count == 0)
+        if (_chimeras.Count == 0)
         {
             _uiExpedition.SetupUI.ToggleConfirmButton(false);
         }

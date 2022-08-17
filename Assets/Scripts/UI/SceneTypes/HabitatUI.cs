@@ -13,7 +13,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private GameObject _marketplaceButtonFolder = null;
+    [SerializeField] private GameObject _bottomRightButtonsFolder = null;
     [SerializeField] private ExpeditionButton _expeditionButton = null;
     [SerializeField] private GameObject _topLeftButtonsFolder = null;
     [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
@@ -128,7 +128,7 @@ public class HabitatUI : MonoBehaviour
             case UIElementType.None:
                 break;
             case UIElementType.All:
-                _marketplaceButtonFolder.gameObject.SetActive(true);
+                _bottomRightButtonsFolder.gameObject.SetActive(true);
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
@@ -171,7 +171,7 @@ public class HabitatUI : MonoBehaviour
         _runeFacilityShopIcon.gameObject.SetActive(false);
         _caveFacilityShopIcon.gameObject.SetActive(false);
         _waterfallFacilityShopIcon.gameObject.SetActive(false);
-        _marketplaceButtonFolder.gameObject.SetActive(false);
+        _bottomRightButtonsFolder.gameObject.SetActive(false);
         _openDetailsButton.gameObject.SetActive(false);
         _worldMapButton.gameObject.SetActive(false);
         _closeDetailsButton.gameObject.SetActive(false);
@@ -321,7 +321,7 @@ public class HabitatUI : MonoBehaviour
 
         _openDetailsButton.gameObject.SetActive(false);
         _expeditionButton.gameObject.SetActive(false);
-        _marketplaceButtonFolder.gameObject.SetActive(false);
+        _bottomRightButtonsFolder.gameObject.SetActive(false);
         _topLeftButtonsFolder.gameObject.SetActive(false);
 
         _menuOpen = true;
@@ -331,7 +331,7 @@ public class HabitatUI : MonoBehaviour
     {
         _openDetailsButton.gameObject.SetActive(true);
         _expeditionButton.gameObject.SetActive(true);
-        _marketplaceButtonFolder.gameObject.SetActive(true);
+        _bottomRightButtonsFolder.gameObject.SetActive(true);
         _topLeftButtonsFolder.gameObject.SetActive(true);
 
         _menuOpen = false;
