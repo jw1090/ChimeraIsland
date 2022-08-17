@@ -47,22 +47,44 @@ public class ExpeditionResultUI : MonoBehaviour
         {
             _successResults.text = $"Success";
 
-            if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade)
-            {
-                _resultsDescription.text = $"Your Habitat has been upgraded!";
-            }
-            else
-            {
-                _resultsDescription.text = $"You've gained 1 Fossil!";
-            }
+            ExpeditionData expeditionData = _expeditionManager.SelectedExpedition;
 
+            switch (expeditionData.Type)
+            {
+                case ExpeditionType.Essence:
+                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossil!";
+                    break;
+                case ExpeditionType.Fossils:
+                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossils!";
+                    break;
+                case ExpeditionType.HabitatUpgrade:
+                    switch (expeditionData.UpgradeType)
+                    {
+                        case HabitatRewardType.Waterfall:
+                            break;
+                        case HabitatRewardType.CaveExploring:
+                            break;
+                        case HabitatRewardType.RuneStone:
+                            break;
+                        case HabitatRewardType.Habitat:
+                            _resultsDescription.text = $"Your Habitat has been upgraded!";
+                            break;
+                        default:
+                            Debug.LogError($"Upgrade type is invalid [{expeditionData.UpgradeType}], please change!");
+                            break;
+                    }
+                    break;
+                default:
+                    Debug.LogWarning($"Reward type is not valid [{expeditionData.Type}], please change!");
+                    break;
+            }
 
             _expeditionSuccess = true;
         }
         else
         {
             _successResults.text = $"Failure";
-            _resultsDescription.text = $"Train your Chimera and try again!";
+            _resultsDescription.text = $"Train your Chimeras and try again!";
             _expeditionSuccess = false;
         }
     }
