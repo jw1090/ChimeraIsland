@@ -9,9 +9,9 @@ public class Marketplace : MonoBehaviour
     [SerializeField] private bool _waterfallUnlocked = false;
     [SerializeField] private bool _runeUnlocked = false;
     [SerializeField] private bool _caveUnlocked = false;
-    [SerializeField] private bool _AUnlocked = false;
-    [SerializeField] private bool _BUnlocked = false;
-    [SerializeField] private bool _CUnlocked = false;
+    [SerializeField] private bool _aUnlocked = false;
+    [SerializeField] private bool _bUnlocked = false;
+    [SerializeField] private bool _cUnlocked = false;
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
 
@@ -36,11 +36,11 @@ public class Marketplace : MonoBehaviour
         switch (chimeraType)
         {
             case ChimeraType.A:
-                return _AUnlocked;
+                return _aUnlocked;
             case ChimeraType.B:
-                return _BUnlocked;
+                return _bUnlocked;
             case ChimeraType.C:
-                return _CUnlocked;
+                return _cUnlocked;
             default:
                 Debug.LogError($"Facility type {chimeraType} does not exist");
                 return false;
@@ -97,7 +97,7 @@ public class Marketplace : MonoBehaviour
 
     public void FacilityTabCheckActive()
     {
-        if(_habitatManager.CurrentHabitat.CurrentTier >= 2)
+        if (_habitatManager.CurrentHabitat.CurrentTier >= 2)
         {
             _tabGroup.FacilitiesTab.gameObject.SetActive(true);
             _facilityShop.CheckShowIcons();
@@ -133,33 +133,52 @@ public class Marketplace : MonoBehaviour
                 break;
         }
     }
+
     public void ActivateChimera(ChimeraType chimeraType)
     {
         switch (chimeraType)
         {
             case ChimeraType.A:
-                _AUnlocked = true;
+                _aUnlocked = true;
                 break;
             case ChimeraType.B:
-                _BUnlocked = true;
+                _bUnlocked = true;
                 break;
             case ChimeraType.C:
-                _CUnlocked = true;
+                _cUnlocked = true;
                 break;
             default:
                 Debug.LogError($"Facility type {chimeraType} does not exist");
                 break;
         }
     }
+
     public ChimeraType ActivateRandomChimera()
     {
         List<ChimeraType> deactivatedChimeras = new List<ChimeraType>();
-        if(_AUnlocked == false) deactivatedChimeras.Add(ChimeraType.A);
-        if(_BUnlocked == false) deactivatedChimeras.Add(ChimeraType.B);
-        if(_CUnlocked == false) deactivatedChimeras.Add(ChimeraType.C);
-        if (deactivatedChimeras.Count == 0) return ChimeraType.None;
+
+        if (_aUnlocked == false)
+        {
+            deactivatedChimeras.Add(ChimeraType.A);
+        }
+        if (_bUnlocked == false)
+        {
+            deactivatedChimeras.Add(ChimeraType.B);
+        }
+        if (_cUnlocked == false)
+        {
+            deactivatedChimeras.Add(ChimeraType.C);
+        }
+
+        if (deactivatedChimeras.Count == 0)
+        {
+            return ChimeraType.None;
+        }
+
         int random = Random.Range(0, deactivatedChimeras.Count - 1);
+
         ActivateChimera(deactivatedChimeras[random]);
+
         return deactivatedChimeras[random];
     }
 

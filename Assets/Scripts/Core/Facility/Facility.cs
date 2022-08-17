@@ -79,7 +79,7 @@ public class Facility : MonoBehaviour
         return true;
     }
 
-    public void BuildFacility( bool moveCamera = false)
+    public void BuildFacility(bool moveCamera = false)
     {
         _price = (int)(_price * 5.0f);
 
@@ -108,7 +108,12 @@ public class Facility : MonoBehaviour
 
         ++_currentTier;
         _habitatUI.UpdateShopUI();
-        if(moveCamera)_cameraUtil.FacilityCameraShift(Type);
+
+        if (moveCamera == true)
+        {
+            _cameraUtil.FacilityCameraShift(Type);
+        }
+
         Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
 
@@ -168,7 +173,7 @@ public class Facility : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
 
-        Debug.Log($"{ _storedChimera} has been removed from the facility.");
+        Debug.Log($"{_storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
     }
@@ -176,7 +181,7 @@ public class Facility : MonoBehaviour
     public void FacilityTick()
     {
         if (_storedChimera == null)
-        { 
+        {
             return;
         }
 

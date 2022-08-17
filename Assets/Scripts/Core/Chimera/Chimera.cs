@@ -10,16 +10,16 @@ public class Chimera : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] private int _level = 0;
+    [SerializeField] private int _exploration = 1;
     [SerializeField] private int _stamina = 1;
     [SerializeField] private int _wisdom = 1;
-    [SerializeField] private int _exploration = 1;
     [SerializeField] private int _currentEnergy = 1;
     [SerializeField] private int _maxEnergy = 1;
 
     [Header("Stat Growth")]
+    [SerializeField] private int _explorationThreshold = 5;
     [SerializeField] private int _staminaThreshold = 5;
     [SerializeField] private int _wisdomThreshold = 5;
-    [SerializeField] private int _explorationThreshold = 5;
 
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
@@ -292,7 +292,7 @@ public class Chimera : MonoBehaviour
 
         if (levelUp == true)
         {
-            bool canEvolve = _currentEvolution.CheckEvolution(_stamina, _wisdom, _exploration, out EvolutionLogic evolution);
+            bool canEvolve = _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
 
             if (canEvolve == true)
             {

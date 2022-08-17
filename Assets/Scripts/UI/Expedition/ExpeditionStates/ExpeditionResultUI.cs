@@ -55,7 +55,14 @@ public class ExpeditionResultUI : MonoBehaviour
                     _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
-                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossils!";
+                    if(expeditionData.UnlocksNewChimera == true)
+                    {
+                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.AmountGained} Fossils!";
+                    }
+                    else
+                    {
+                        _resultsDescription.text = $"You gained {expeditionData.AmountGained} Fossils!";
+                    }
                     break;
                 case ExpeditionType.HabitatUpgrade:
                     switch (expeditionData.UpgradeType)
@@ -70,7 +77,7 @@ public class ExpeditionResultUI : MonoBehaviour
                             _resultsDescription.text = $"You unlocked the Rune Stones Facility!";
                             break;
                         case HabitatRewardType.Habitat:
-                            _resultsDescription.text = $"You upgraded the Facility!";
+                            _resultsDescription.text = $"You upgraded the Habitat. Facilities can be upgraded in the Marketplace!";
                             break;
                         default:
                             Debug.LogError($"Upgrade type is invalid [{expeditionData.UpgradeType}], please change!");
