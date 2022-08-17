@@ -19,4 +19,11 @@ public class StartingUI : MonoBehaviour
         _optionBChimeraButton.Initialize();
         _optionCChimeraButton.Initialize();
     }
+
+    public void SetupStartingButtons()
+    {
+        _optionAChimeraButton.SetupStartingButton();
+        _optionBChimeraButton.SetupStartingButton();
+        _optionCChimeraButton.SetupStartingButton();
+    }
 }

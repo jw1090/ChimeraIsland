@@ -10,17 +10,15 @@ public class ExpeditionResultUI : MonoBehaviour
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
     private bool _expeditionSuccess = false;
-    private ExpeditionUI _expeditionUI = null;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(UIManager uiManager, ExpeditionUI expeditionUI)
+    public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _expeditionUI = expeditionUI;
     }
 
     public void SetupListeners()
@@ -33,12 +31,10 @@ public class ExpeditionResultUI : MonoBehaviour
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
-
-            FacilityCameraCheck(_expeditionManager.SelectedExpedition.UpgradeType);
-
             _expeditionSuccess = false;
         }
-        
+
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
         _expeditionManager.ResetSelectedExpedition();
 
         _uiManager.HabitatUI.ResetStandardUI();
@@ -47,17 +43,40 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public void DetermineReward()
     {
-        if (_expeditionManager.RandomSuccesRate())
+        if (_expeditionManager.RandomSuccesRate() == true)
         {
             _successResults.text = $"Success";
 
-            if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade)
+            ExpeditionData expeditionData = _expeditionManager.SelectedExpedition;
+
+            switch (expeditionData.Type)
             {
-                _resultsDescription.text = $"Your Habitat has been upgraded!";
-            }
-            else
-            {
-                _resultsDescription.text = $"You've gained 1 Fossil!";
+                case ExpeditionType.Essence:
+                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossil!";
+                    break;
+                case ExpeditionType.Fossils:
+                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossils!";
+                    break;
+                case ExpeditionType.HabitatUpgrade:
+                    switch (expeditionData.UpgradeType)
+                    {
+                        case HabitatRewardType.Waterfall:
+                            break;
+                        case HabitatRewardType.CaveExploring:
+                            break;
+                        case HabitatRewardType.RuneStone:
+                            break;
+                        case HabitatRewardType.Habitat:
+                            _resultsDescription.text = $"Your Habitat has been upgraded!";
+                            break;
+                        default:
+                            Debug.LogError($"Upgrade type is invalid [{expeditionData.UpgradeType}], please change!");
+                            break;
+                    }
+                    break;
+                default:
+                    Debug.LogWarning($"Reward type is not valid [{expeditionData.Type}], please change!");
+                    break;
             }
 
             _expeditionSuccess = true;
@@ -65,31 +84,8 @@ public class ExpeditionResultUI : MonoBehaviour
         else
         {
             _successResults.text = $"Failure";
-            _resultsDescription.text = $"Train your Chimera and try again!";
+            _resultsDescription.text = $"Train your Chimeras and try again!";
             _expeditionSuccess = false;
-        }
-    }
-
-    private void FacilityCameraCheck(HabitatRewardType habitatRewardType)
-    {
-        switch (habitatRewardType)
-        {
-            case HabitatRewardType.None:
-            case HabitatRewardType.Random:
-            case HabitatRewardType.Habitat:
-                break;
-            case HabitatRewardType.Waterfall:
-                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.Waterfall);
-                break;
-            case HabitatRewardType.CaveExploring:
-                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.Cave);
-                break;
-            case HabitatRewardType.RuneStone:
-                ServiceLocator.Get<CameraUtil>().FacilityCameraShift(FacilityType.RuneStone);
-                break;
-            default:
-                Debug.LogError($"Upgrade type is invalid [{habitatRewardType}], please change!");
-                break;
         }
     }
 }

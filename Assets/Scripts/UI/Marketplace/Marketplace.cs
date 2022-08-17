@@ -30,6 +30,7 @@ public class Marketplace : MonoBehaviour
                 return false;
         }
     }
+
     public bool IsChimeraUnlocked(ChimeraType chimeraType)
     {
         switch (chimeraType)
@@ -45,6 +46,26 @@ public class Marketplace : MonoBehaviour
                 return false;
         }
     }
+
+    public void SetFacilityUnlocked(FacilityType type)
+    {
+        switch (type)
+        {
+            case FacilityType.Cave:
+                _caveUnlocked = true;
+                break;
+            case FacilityType.RuneStone:
+                _runeUnlocked = true;
+                break;
+            case FacilityType.Waterfall:
+                _waterfallUnlocked = true;
+                break;
+            default:
+                Debug.LogError($"Facility type {type} does not exist");
+                break;
+        }
+    }
+
     public void Initialize()
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
@@ -93,6 +114,7 @@ public class Marketplace : MonoBehaviour
         _chimeraShop.UpdateUI();
     }
 
+
     public void ActivateFacility(FacilityType type)
     {
         switch (type)
@@ -140,4 +162,5 @@ public class Marketplace : MonoBehaviour
         ActivateChimera(deactivatedChimeras[random]);
         return deactivatedChimeras[random];
     }
+
 }

@@ -118,7 +118,7 @@ public enum TutorialIconType
     Standard,
 }
 
-public enum TutorialUIElementType
+public enum UIElementType
 {
     None = -1,
     All,
@@ -161,7 +161,8 @@ public enum SFXUIType
     RemoveChimera,
     Evolution,
     LevelUp,
-    ErrorClick
+    ErrorClick,
+    Completion,
 }
 
 public enum DayType

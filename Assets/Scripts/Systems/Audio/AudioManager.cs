@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _evolutionSFX= null;
     [SerializeField] private AudioClip _levelUpSFX= null;
     [SerializeField] private AudioClip _errorSFX= null;
+    [SerializeField] private AudioClip _completionSFX= null;
 
     [Header("Ambient SFX")]
     [SerializeField] private AudioClip _waterfallAmbientSFX = null;
@@ -204,6 +205,10 @@ public class AudioManager : MonoBehaviour
                 break; 
             case SFXUIType.ErrorClick:
                 _sfxSource.clip = _errorSFX;
+                _sfxSource.Play();
+                break;
+            case SFXUIType.Completion:
+                _sfxSource.clip = _completionSFX;
                 _sfxSource.Play();
                 break;
             default:

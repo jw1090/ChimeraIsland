@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
@@ -19,6 +17,11 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
+    }
+
+    public void SetupStartingButton()
+    {
+        _clicked = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
