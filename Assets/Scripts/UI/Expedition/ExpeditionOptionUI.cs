@@ -15,11 +15,13 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
     }
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public ExpeditionType ExpeditionType { get => _expeditionType; }
 
@@ -123,5 +125,6 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _expeditionManager.SetSelectedExpedition(_expeditionType);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 }

@@ -13,6 +13,14 @@ public class ExpeditionSelectionUI : MonoBehaviour
         }
     }
 
+    public void SetAudioManager(AudioManager audioManager)
+    {
+        foreach (ExpeditionOptionUI expeditionOptionUI in _expeditionOptions)
+        {
+            expeditionOptionUI.SetAudioManager(audioManager);
+        }
+    }
+
     public void Initialize()
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
