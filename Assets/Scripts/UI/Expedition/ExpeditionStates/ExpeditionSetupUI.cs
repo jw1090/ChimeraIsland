@@ -19,8 +19,10 @@ public class ExpeditionSetupUI : MonoBehaviour
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -46,7 +48,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         {
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
-
+        _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
         _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.InProgressUI.gameObject.SetActive(true);

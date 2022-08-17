@@ -20,6 +20,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
+    private AudioManager _audioManager = null;
     private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
@@ -77,6 +78,7 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         _expeditionState = ExpeditionState.Selection;
 
@@ -385,6 +387,7 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_currentDuration <= 0)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             _currentDuration = 0;
             _activeInProgressTimer = false;
 
@@ -424,13 +427,13 @@ public class ExpeditionManager : MonoBehaviour
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall);
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.AddFacility(FacilityType.RuneStone);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
@@ -500,6 +503,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
+            chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
         }
 

@@ -94,10 +94,8 @@ public class Facility : MonoBehaviour
 
             _glowMarker.ActivateGlowCollider(true);
 
-
             _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
-            
 
             _isBuilt = true;
         }
@@ -133,7 +131,7 @@ public class Facility : MonoBehaviour
         _storedChimera.SetInFacility(true);
 
         _glowMarker.ActivateGlowCollider(false);
-        RevealChimera(false);
+        _storedChimera.RevealChimera(false);
 
         Debug.Log($"{_storedChimera} added to the facility.");
 
@@ -164,7 +162,7 @@ public class Facility : MonoBehaviour
         _storedChimera.SetInFacility(false);
 
         _glowMarker.ActivateGlowCollider(true);
-        RevealChimera(true);
+        _storedChimera.RevealChimera(true);
 
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
@@ -206,16 +204,6 @@ public class Facility : MonoBehaviour
         {
             _facilitySFX.PlaySFX();
             _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
-        }
-    }
-
-    private void RevealChimera(bool reveal)
-    {
-        _storedChimera.CurrentEvolution.gameObject.SetActive(reveal);
-
-        if (reveal == true)
-        {
-            _storedChimera.Animator.SetBool("Walk", true);
         }
     }
 }
