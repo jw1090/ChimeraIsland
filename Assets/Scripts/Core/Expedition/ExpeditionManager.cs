@@ -431,13 +431,13 @@ public class ExpeditionManager : MonoBehaviour
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall, true);
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave, true);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone, true);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
