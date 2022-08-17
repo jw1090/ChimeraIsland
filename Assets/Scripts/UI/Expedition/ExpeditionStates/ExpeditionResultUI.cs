@@ -52,7 +52,7 @@ public class ExpeditionResultUI : MonoBehaviour
             switch (expeditionData.Type)
             {
                 case ExpeditionType.Essence:
-                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossil!";
+                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
                     _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Fossils!";
@@ -61,13 +61,16 @@ public class ExpeditionResultUI : MonoBehaviour
                     switch (expeditionData.UpgradeType)
                     {
                         case HabitatRewardType.Waterfall:
+                            _resultsDescription.text = $"You unlocked the Waterfall Facility!";
                             break;
                         case HabitatRewardType.CaveExploring:
+                            _resultsDescription.text = $"You unlocked the Explorable Cave Facility!";
                             break;
                         case HabitatRewardType.RuneStone:
+                            _resultsDescription.text = $"You unlocked the Rune Stones Facility!";
                             break;
                         case HabitatRewardType.Habitat:
-                            _resultsDescription.text = $"Your Habitat has been upgraded!";
+                            _resultsDescription.text = $"You upgraded the Facility!";
                             break;
                         default:
                             Debug.LogError($"Upgrade type is invalid [{expeditionData.UpgradeType}], please change!");
