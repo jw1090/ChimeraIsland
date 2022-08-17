@@ -7,9 +7,10 @@ public class FacilityShop : MonoBehaviour
     private List<FacilityShopItem> _facilityShopItems = new List<FacilityShopItem>();
     private Marketplace _marketplace = null;
     private HabitatManager _habitatManager = null;
+
     public FacilityShopItem GetShopItem(FacilityType facilityType)
     {
-        foreach(FacilityShopItem facilityShopItem in _facilityShopItems)
+        foreach (FacilityShopItem facilityShopItem in _facilityShopItems)
         {
             if (facilityShopItem.FacilityType == facilityType) return facilityShopItem;
         }
@@ -32,13 +33,13 @@ public class FacilityShop : MonoBehaviour
 
     public void CheckShowIcons()
     {
-        //if facility is tier is less than habitat & facility unlocked
+        // If facility is tier is less than habitat & facility unlocked
         foreach (FacilityType type in Enum.GetValues(typeof(FacilityType)))
         {
             if (type != FacilityType.None)
             {
                 Facility facility = _habitatManager.CurrentHabitat.GetFacility(type);
-                if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.IsFacilityUnlocked(type) == true)
+                if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.GetFacilityUnlocked(type) == true)
                 {
                     GetShopItem(type).gameObject.SetActive(true);
                 }

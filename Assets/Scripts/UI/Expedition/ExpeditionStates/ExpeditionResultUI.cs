@@ -10,17 +10,15 @@ public class ExpeditionResultUI : MonoBehaviour
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
     private bool _expeditionSuccess = false;
-    private ExpeditionUI _expeditionUI = null;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(UIManager uiManager, ExpeditionUI expeditionUI)
+    public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _expeditionUI = expeditionUI;
     }
 
     public void SetupListeners()
@@ -35,7 +33,8 @@ public class ExpeditionResultUI : MonoBehaviour
             _expeditionManager.SuccessRewards();
             _expeditionSuccess = false;
         }
-        
+
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
         _expeditionManager.ResetSelectedExpedition();
 
         _uiManager.HabitatUI.ResetStandardUI();
@@ -44,7 +43,7 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public void DetermineReward()
     {
-        if (_expeditionManager.RandomSuccesRate())
+        if (_expeditionManager.RandomSuccesRate() == true)
         {
             _successResults.text = $"Success";
 

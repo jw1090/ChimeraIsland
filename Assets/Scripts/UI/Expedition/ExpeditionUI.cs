@@ -20,8 +20,6 @@ public class ExpeditionUI : MonoBehaviour
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
     public ExpeditionResultUI ResultsUI { get => _resultPanel; }
-    public StatefulObject BackgroundUIStates { get => _backgroundUIStates; }
-    public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -38,7 +36,7 @@ public class ExpeditionUI : MonoBehaviour
 
         _selectionPanel.Initialize();
         _setupPanel.Initialize(uiManager, this);
-        _resultPanel.Initialize(uiManager, this);
+        _resultPanel.Initialize(uiManager);
 
         SetupListeners();
     }
@@ -81,6 +79,8 @@ public class ExpeditionUI : MonoBehaviour
 
     public void LoadExpeditionSetup()
     {
+        SetupUI.ToggleConfirmButton(false);
+
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
 
@@ -93,9 +93,6 @@ public class ExpeditionUI : MonoBehaviour
     public void CloseExpeditionUI()
     {
         _foregroundUIStates.SetState("Transparent");
-
-        _expeditionManager.ResetSelectedExpedition();
-
         this.gameObject.SetActive(false);
     }
 

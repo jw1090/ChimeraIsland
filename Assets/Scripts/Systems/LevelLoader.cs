@@ -87,13 +87,13 @@ public class LevelLoader : AsyncLoader
             _habitatManager.SetCurrentHabitat(_habitat);
         }
 
-        if(_expeditionManager != null)
+        if (_expeditionManager != null)
         {
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
             _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
         }
 
-        if(_lightingManager != null)
+        if (_lightingManager != null)
         {
             ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
         }
@@ -159,9 +159,21 @@ public class LevelLoader : AsyncLoader
             return;
         }
 
-        if(_sceneType == SceneType.Habitat)
+        switch (_sceneType)
         {
-            _uiManager.HabitatUI.LoadHabitatSpecificUI();
+            case SceneType.Habitat:
+                _uiManager.HabitatUI.LoadHabitatSpecificUI();
+                break;
+            case SceneType.MainMenu:                
+                break;
+            case SceneType.Starting:
+                _uiManager.StartingUI.SetupStartingButtons();
+                break;
+            case SceneType.WorldMap:
+                break;
+            default:
+                Debug.LogWarning($"Scene Type: {_sceneType} is invalid.");
+                break;
         }
 
         _uiManager.ShowUIByScene(_sceneType);
@@ -179,7 +191,7 @@ public class LevelLoader : AsyncLoader
 
     private void ProcessQueuedCallbacks()
     {
-        foreach(var callback in _queuedCallbacks)
+        foreach (var callback in _queuedCallbacks)
         {
             callback?.Invoke();
         }
@@ -193,7 +205,7 @@ public class LevelLoader : AsyncLoader
 
     public static void CallOnComplete(Action callback)
     {
-        if(_instance == null)
+        if (_instance == null)
         {
             _queuedCallbacks.Add(callback);
             return;
