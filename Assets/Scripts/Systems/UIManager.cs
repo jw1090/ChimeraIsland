@@ -20,7 +20,11 @@ public class UIManager : MonoBehaviour
     public WorldMapUI WorldMapUI { get => _worldMapUI; }
     public TutorialObserver TutorialObserver { get => _tutorialObserver; }
 
-    public void SetAudioManager(AudioManager audioManager) { _startingUI.SetAudioManager(audioManager); }
+    public void SetAudioManager(AudioManager audioManager) 
+    {
+        _startingUI.SetAudioManager(audioManager);
+        _habitatUI.SetAudioManager(audioManager);
+    }
 
     public UIManager Initialize()
     {

@@ -20,6 +20,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
+    private AudioManager _audioManager = null;
     private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
@@ -77,6 +78,7 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         _expeditionState = ExpeditionState.Selection;
 
@@ -385,6 +387,7 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_currentDuration <= 0)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             _currentDuration = 0;
             _activeInProgressTimer = false;
 
