@@ -39,7 +39,7 @@ public class FacilityShop : MonoBehaviour
             if (type != FacilityType.None)
             {
                 Facility facility = _habitatManager.CurrentHabitat.GetFacility(type);
-                if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.GetFacilityUnlocked(type) == true)
+                if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.IsFacilityUnlocked(type) == true)
                 {
                     GetShopItem(type).gameObject.SetActive(true);
                 }

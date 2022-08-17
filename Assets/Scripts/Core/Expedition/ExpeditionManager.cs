@@ -422,18 +422,22 @@ public class ExpeditionManager : MonoBehaviour
                 _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
                 _uiManager.EnableUIByType(UIElementType.FossilButtons);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
+                if(_currentFossilProgress + 2 % 2 == 0)
+                {
+                    Debug.Log($"You've unlocked Chimera of type {_uiManager.HabitatUI.Marketplace.ActivateRandomChimera()}!");
+                }
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall, true);
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave, true);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone, true);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();

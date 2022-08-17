@@ -37,7 +37,6 @@ public class BuyFacilityButton : MonoBehaviour, IPointerClickHandler
         {
             _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
             _habitatUI.ResetStandardUI();
-            _cameraUtil.FacilityCameraShift(_facility.Type);
         }
     }
 }

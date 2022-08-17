@@ -15,6 +15,8 @@ public class ChimeraShopItem : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private Habitat _habitat = null;
 
+    public ChimeraType ChimeraType { get => _chimera.ChimeraType; }
+
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
