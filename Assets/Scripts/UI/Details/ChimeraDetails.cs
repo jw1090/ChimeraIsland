@@ -20,6 +20,7 @@ public class ChimeraDetails : MonoBehaviour
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
     private int _chimeraSpot = 0;
 
     public Chimera Chimera { get => _chimera; }
@@ -33,6 +34,7 @@ public class ChimeraDetails : MonoBehaviour
     {
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
         _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         _chimeraSpot = chimeraSpot;
 
@@ -129,6 +131,11 @@ public class ChimeraDetails : MonoBehaviour
         if (_expeditionManager.AddChimera(_chimera) == true) // Success
         {
             _statefulButtons.SetState("Remove Button");
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        }
+        else
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
         }
     }
 
@@ -137,6 +144,11 @@ public class ChimeraDetails : MonoBehaviour
         if (_expeditionManager.RemoveChimera(_chimera) == true) // Success
         {
             _statefulButtons.SetState("Add Button");
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        }
+        else
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
         }
     }
 }

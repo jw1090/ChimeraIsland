@@ -28,6 +28,11 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.SetExpeditionManager(expeditionManager);
         _resultPanel.SetExpeditionManager(expeditionManager);
     }
+    public void SetAudioManager(AudioManager audioManager)
+    {
+        _selectionPanel.SetAudioManager(audioManager);
+        _setupPanel.SetAudioManager(audioManager);
+    }
 
     public void Initialize(UIManager uiManager)
     {
