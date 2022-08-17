@@ -9,10 +9,8 @@ public class Marketplace : MonoBehaviour
     [SerializeField] private bool _runeUnlocked = false;
     [SerializeField] private bool _caveUnlocked = false;
     private HabitatManager _habitatManager = null;
-    public ChimeraShop ChimeraShop { get => _chimeraShop; }
-    public FacilityShop FacilityShop { get => _facilityShop; }
 
-    public bool IsFacilityUnlocked(FacilityType facilityType)
+    public bool GetFacilityUnlocked(FacilityType facilityType)
     {
         switch (facilityType)
         {
@@ -27,6 +25,26 @@ public class Marketplace : MonoBehaviour
                 return false;
         }
     }
+
+    public void SetFacilityUnlocked(FacilityType type)
+    {
+        switch (type)
+        {
+            case FacilityType.Cave:
+                _caveUnlocked = true;
+                break;
+            case FacilityType.RuneStone:
+                _runeUnlocked = true;
+                break;
+            case FacilityType.Waterfall:
+                _waterfallUnlocked = true;
+                break;
+            default:
+                Debug.LogError($"Facility type {type} does not exist");
+                break;
+        }
+    }
+
     public void Initialize()
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
@@ -66,22 +84,5 @@ public class Marketplace : MonoBehaviour
         _chimeraShop.UpdateUI();
     }
 
-    public void ActivateFacility(FacilityType type)
-    {
-        switch (type)
-        {
-            case FacilityType.Cave:
-                _caveUnlocked = true;
-                break;
-            case FacilityType.RuneStone:
-                _runeUnlocked = true;
-                break;
-            case FacilityType.Waterfall:
-                _waterfallUnlocked = true;
-                break;
-            default:
-                Debug.LogError($"Facility type {type} does not exist");
-                break;
-        }
-    }
+    
 }

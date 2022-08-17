@@ -21,7 +21,6 @@ public class ExpeditionManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private bool _activeInProgressTimer = false;
-    private bool _expeditionSuccess = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
     private float _agilityModifer = 1.0f;
@@ -40,13 +39,10 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
 
-    public bool ExpeditionSuccess { get => _expeditionSuccess; }
-
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
     public void ResetSelectedExpedition()
     {
-        _expeditionState = ExpeditionState.Selection;
         _selectedExpedition = null;
         ChimerasOnExpedition(false);
     }
@@ -82,7 +78,6 @@ public class ExpeditionManager : MonoBehaviour
         _marketplace = ServiceLocator.Get<UIManager>().HabitatUI.Marketplace;
 
         _expeditionState = ExpeditionState.Selection;
-        _expeditionSuccess = false;
 
         return this;
     }
@@ -229,14 +224,20 @@ public class ExpeditionManager : MonoBehaviour
         _chimeras.Add(chimera);
         EvaluateRosterChange();
 
+        _uiExpedition.SetupUI.ToggleConfirmButton(true);
+
         return true;
     }
 
     public bool RemoveChimera(Chimera chimera)
     {
         _chimeras.Remove(chimera);
-
         EvaluateRosterChange();
+
+        if(_chimeras.Count == 0)
+        {
+            _uiExpedition.SetupUI.ToggleConfirmButton(false);
+        }
 
         return true;
     }
@@ -398,7 +399,6 @@ public class ExpeditionManager : MonoBehaviour
 
         if (successRoll >= _difficultyValue - _chimeraPower)
         {
-            _expeditionSuccess = true;
             return true;
         }
         else
@@ -422,15 +422,15 @@ public class ExpeditionManager : MonoBehaviour
                 {
                     case HabitatRewardType.Waterfall:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Waterfall);
-                        _marketplace.ActivateFacility(FacilityType.Waterfall);
+                        _marketplace.SetFacilityUnlocked(FacilityType.Waterfall);
                         break;
                     case HabitatRewardType.CaveExploring:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.Cave);
-                        _marketplace.ActivateFacility(FacilityType.Cave);
+                        _marketplace.SetFacilityUnlocked(FacilityType.Cave);
                         break;
                     case HabitatRewardType.RuneStone:
                         _habitatManager.CurrentHabitat.AddFacility(FacilityType.RuneStone);
-                        _marketplace.ActivateFacility(FacilityType.RuneStone);
+                        _marketplace.SetFacilityUnlocked(FacilityType.RuneStone);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
