@@ -54,13 +54,6 @@ public enum FacilityType
     Waterfall,
 }
 
-public enum FacilityColliderType
-{
-    None = -1,
-    Place,
-    release,
-}
-
 public enum HabitatType
 {
     None = -1,
@@ -98,6 +91,7 @@ public enum SceneType
     Starting,
     WorldMap,
 }
+
 public enum StatType
 {
     None = -1,
@@ -128,7 +122,8 @@ public enum UIElementType
     ExpeditionButton,
     MarketplaceChimeraTab,
     WorldMapButton,
-    FossilButtons
+    FossilButtons,
+    EssenceButtons,
 }
 
 public enum TutorialStageType

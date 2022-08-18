@@ -80,6 +80,7 @@ public class UIManager : MonoBehaviour
             case UIElementType.WorldMapButton:
             case UIElementType.OtherFacilityButtons:
             case UIElementType.FossilButtons:
+            case UIElementType.EssenceButtons:
                 _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
                 break;
             default:

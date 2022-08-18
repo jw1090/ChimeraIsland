@@ -178,7 +178,8 @@ public class AudioManager : MonoBehaviour
                 Debug.LogError($"{habitatType} is invalid. Please change!");
                 break;
         }
-    } 
+    }
+
     public void PlayHabitatAmbient(HabitatType habitatType)
     {
         switch (habitatType)
@@ -294,10 +295,12 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
+
     private void PlayClickSFX()
     {
         PlayUISFX(SFXUIType.StandardClick);
     }
+
     private void PlayConfirmSFX()
     {
         PlayUISFX(SFXUIType.ConfirmClick);
@@ -307,5 +310,4 @@ public class AudioManager : MonoBehaviour
     {
         _ambientSource.Stop();
     }
-
 }
