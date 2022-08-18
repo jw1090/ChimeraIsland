@@ -145,9 +145,9 @@ public class AudioManager : MonoBehaviour
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.MainMenuButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.MainMenuButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.QuitGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.WorldMapButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.QuitGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(worldMapUI.StonePlainsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(worldMapUI.TreeOfLifeButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
