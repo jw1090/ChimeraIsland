@@ -35,7 +35,9 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
+    public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
+    public int CurrentHabitatProgress { get => _currentHabitatProgress; }
     public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
@@ -450,6 +452,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:
+                _uiManager.EnableUIByType(UIElementType.EssenceButtons);
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:

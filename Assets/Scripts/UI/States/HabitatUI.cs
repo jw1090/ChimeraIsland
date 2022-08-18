@@ -55,10 +55,12 @@ public class HabitatUI : MonoBehaviour
     {
         _expeditionPanel.SetExpeditionManager(expeditionManager);
     }
+
     public void SetAudioManager(AudioManager audioManager)
     {
         _expeditionPanel.SetAudioManager(audioManager);
     }
+
     public void Initialize(UIManager uiManager)
     {
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
@@ -80,7 +82,16 @@ public class HabitatUI : MonoBehaviour
         if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
         {
             _marketplaceButton.gameObject.SetActive(false);
+
             foreach (var wallet in _fossilWallets)
+            {
+                wallet.gameObject.SetActive(false);
+            }
+        }
+
+        if (_expeditionPanel.expeditionManager.CurrentHabitatProgress == 0)
+        {
+            foreach (var wallet in _essenceWallets)
             {
                 wallet.gameObject.SetActive(false);
             }
@@ -154,9 +165,15 @@ public class HabitatUI : MonoBehaviour
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.FossilButtons:
-                foreach(UIFossilWallet uiFossil in _fossilWallets)
+                foreach(UIFossilWallet fossilWallet in _fossilWallets)
                 {
-                    uiFossil.gameObject.SetActive(true);
+                    fossilWallet.gameObject.SetActive(true);
+                }
+                break;
+            case UIElementType.EssenceButtons:
+                foreach (UIEssenceWallet essenceWallet in _essenceWallets)
+                {
+                    essenceWallet.gameObject.SetActive(true);
                 }
                 break;
             default:
