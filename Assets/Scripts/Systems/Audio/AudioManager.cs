@@ -230,29 +230,29 @@ public class AudioManager : MonoBehaviour
             case SFXUIType.StandardClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Standard Click SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _uiSource.clip = item.Clip;
+                    _uiSource.Play();
                 }
                 break;
             case SFXUIType.ConfirmClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Confirm Click SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _uiSource.clip = item.Clip;
+                    _uiSource.Play();
                 }
                 break;
             case SFXUIType.PurchaseClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Purchase Click SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _uiSource.clip = item.Clip;
+                    _uiSource.Play();
                 }
                 break;
             case SFXUIType.PlaceChimera:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Place Chimera SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _uiSource.clip = item.Clip;
+                    _uiSource.Play();
                 }
                 break;
             case SFXUIType.RemoveChimera:
