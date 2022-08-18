@@ -36,7 +36,7 @@ public class FacilityShopItem : MonoBehaviour
             case FacilityType.RuneStone:
                 return "Rune Stones";
             case FacilityType.Waterfall:
-                return "Watefall";
+                return "Waterfall";
             default:
                 Debug.LogWarning($"{_facilityType} is invalid, please change");
                 return "Error";

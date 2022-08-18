@@ -240,13 +240,13 @@ public class Habitat : MonoBehaviour
         switch (_currentTier)
         {
             case 1:
-                _tiers.SetState("Tier 1");
+                _tiers.SetState("Tier 1", true);
                 break;
             case 2:
-                _tiers.SetState("Tier 2");
+                _tiers.SetState("Tier 2", true);
                 break;
             case 3:
-                _tiers.SetState("Tier 3");
+                _tiers.SetState("Tier 3", true);
                 break;
             default:
                 Debug.LogWarning($"Habitat tier [{_currentTier}] is invalid. Please fix!");
@@ -277,19 +277,16 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_habitatManager.TickTimer);
 
-            if (_uiManager.HabitatUI.MenuOpen == false)
+            foreach (Chimera chimera in _activeChimeras)
             {
-                foreach (Chimera chimera in _activeChimeras)
-                {
-                    chimera.EnergyTick();
-                }
+                chimera.EnergyTick();
+            }
 
-                foreach (Facility facility in _facilities)
+            foreach (Facility facility in _facilities)
+            {
+                if (facility.IsBuilt)
                 {
-                    if (facility.IsBuilt)
-                    {
-                        facility.FacilityTick();
-                    }
+                    facility.FacilityTick();
                 }
             }
         }

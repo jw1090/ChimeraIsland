@@ -45,11 +45,13 @@ public class UIVolumeSettings : MonoBehaviour
     private void SetSFXVolume(float sfxValue)
     {
         _audioManager.SetSFXVolume(40 * Mathf.Log10(sfxValue));
-    }  
+    }
+
     private void SetAmbientVolume(float ambientValue)
     {
         _audioManager.SetAmbientVolume(40 * Mathf.Log10(ambientValue));
     }
+
     private void SetUISFXVolume(float uiSfxValue)
     {
         _audioManager.SetUISFXVolume(40 * Mathf.Log10(uiSfxValue));

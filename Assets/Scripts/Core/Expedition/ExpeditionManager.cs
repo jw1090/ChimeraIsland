@@ -35,13 +35,14 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
-    public int CurrentEssenceProgress { get => _currentEssenceProgress; }
-    public int CurrentFossilProgress { get => _currentFossilProgress; }
-    public int CurrentHabitatProgress { get => _currentHabitatProgress; }
     public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
+    public int CurrentEssenceProgress { get => _currentEssenceProgress; }
+    public int CurrentFossilProgress { get => _currentFossilProgress; }
+    public int CurrentHabitatProgress { get => _currentHabitatProgress; }
+    public int FinalUpgradeMission { get => _habitatExpeditions.Count - 1; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -283,7 +284,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float minimumLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
+        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 14.0f;
 
         _difficultyValue = difficultyValue;
 
@@ -326,13 +327,13 @@ public class ExpeditionManager : MonoBehaviour
                 case ModifierType.None:
                     break;
                 case ModifierType.Aqua:
-                    _aquaBonus = 0.1f;
+                    _aquaBonus = 0.2f;
                     break;
                 case ModifierType.Bio:
-                    _bioBonus = 0.1f;
+                    _bioBonus = 0.2f;
                     break;
                 case ModifierType.Fira:
-                    _firaBonus = 0.1f;
+                    _firaBonus = 0.2f;
                     break;
                 case ModifierType.Exploration:
                     _explorationModifier = 1.2f;
@@ -442,7 +443,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.Fossils:
                 _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.FossilButtons);
+                _uiManager.EnableUIByType(UIElementType.FossilsWallets);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
 
                 if (_selectedExpedition.UnlocksNewChimera == true)
@@ -452,7 +453,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:
-                _uiManager.EnableUIByType(UIElementType.EssenceButtons);
+                _uiManager.EnableUIByType(UIElementType.EssenceWallets);
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:

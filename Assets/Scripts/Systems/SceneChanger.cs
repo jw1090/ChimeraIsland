@@ -23,9 +23,9 @@ public class SceneChanger : MonoBehaviour
 
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
         _uiManager.CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
     }

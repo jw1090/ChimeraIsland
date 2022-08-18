@@ -6,6 +6,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private string _chimeraName = "";
+    [SerializeField] private StatType _statBonus = StatType.None;
     [SerializeField] private int _reqExploration = 0;
     [SerializeField] private int _reqStamina = 0;
     [SerializeField] private int _reqWisdom = 0;
@@ -18,6 +19,7 @@ public class EvolutionLogic : MonoBehaviour
     public Animator Animator { get => GetComponent<Animator>(); }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
+    public StatType StatBonus { get => _statBonus; }
     public int ReqExploration { get => _reqExploration; }
     public int ReqStamina { get => _reqStamina; }
     public int ReqWisdom { get => _reqWisdom; }

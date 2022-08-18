@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class HabitatUI : MonoBehaviour
 {
     [Header("Scene Changing")]
-    [SerializeField] private Button _mainMenuButton = null;
-    [SerializeField] private Button _quitGameButotn = null;
     [SerializeField] private Button _worldMapButton = null;
 
     [Header("Elements")]
@@ -22,12 +20,11 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
-    [SerializeField] private GameObject _settingsPanel = null;
+    [SerializeField] private Settings _settingsPanel = null;
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private TransferMap _transferMap = null;
-    [SerializeField] private UIVolumeSettings _volumeSettings = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
@@ -39,8 +36,7 @@ public class HabitatUI : MonoBehaviour
     private bool _menuOpen = false;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
-    public Button MainMenuButton { get => _mainMenuButton; }
-    public Button QuitGameButton { get => _quitGameButotn; }
+    public Settings Settings { get => _settingsPanel; }
     public Button WorldMapButton { get => _worldMapButton; }
     public Button MarketplaceButton { get => _marketplaceButton; }
     public ExpeditionButton ExpeditionButton { get => _expeditionButton; }
@@ -71,6 +67,7 @@ public class HabitatUI : MonoBehaviour
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
+        _settingsPanel.Initialize(uiManager);
 
         _expeditionButton.ActivateNotification(false);
 
@@ -115,7 +112,7 @@ public class HabitatUI : MonoBehaviour
     {
         _audioManager = audioManager;
 
-        _volumeSettings.Initialize();
+        _settingsPanel.InitializeVolumeSettings();
     }
 
     public void LoadHabitatSpecificUI()
@@ -125,6 +122,24 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.Initialize();
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
+
+        UIProgressCheck();
+    }
+
+    private void UIProgressCheck()
+    {
+        ExpeditionManager expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+
+        if (expeditionManager.CurrentHabitatProgress > 0)
+        {
+            EnableUIElementByType(UIElementType.EssenceWallets);
+        }
+
+        if (expeditionManager.CurrentFossilProgress > 0)
+        {
+            EnableUIElementByType(UIElementType.MarketplaceButton);
+            EnableUIElementByType(UIElementType.FossilsWallets);
+        }
     }
 
     private void SetupUIListeners()
@@ -132,7 +147,7 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.SetupButtonListeners();
     }
 
-    public void EnableTutorialUIByType(UIElementType uiElementType)
+    public void EnableUIElementByType(UIElementType uiElementType)
     {
         switch (uiElementType)
         {
@@ -164,13 +179,13 @@ public class HabitatUI : MonoBehaviour
                 _runeFacilityShopIcon.gameObject.SetActive(true);
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
-            case UIElementType.FossilButtons:
-                foreach(UIFossilWallet fossilWallet in _fossilWallets)
+            case UIElementType.FossilsWallets:
+                foreach (UIFossilWallet fossilWallet in _fossilWallets)
                 {
                     fossilWallet.gameObject.SetActive(true);
                 }
                 break;
-            case UIElementType.EssenceButtons:
+            case UIElementType.EssenceWallets:
                 foreach (UIEssenceWallet essenceWallet in _essenceWallets)
                 {
                     essenceWallet.gameObject.SetActive(true);
@@ -282,12 +297,17 @@ public class HabitatUI : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
+        if (isActiveAndEnabled == false)
+        {
+            return;
+        }
+
         if (_trainingPanel.gameObject.activeInHierarchy == true)
         {
             _trainingPanel.ResetTrainingUI();
             ResetStandardUI();
         }
-        else if (_settingsPanel.activeInHierarchy == true ||
+        else if (_settingsPanel.gameObject.activeInHierarchy == true ||
             _marketplacePanel.gameObject.activeInHierarchy == true ||
             _expeditionPanel.gameObject.activeInHierarchy == true ||
             _detailsPanel.gameObject.activeInHierarchy == true

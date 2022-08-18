@@ -300,8 +300,29 @@ public class Chimera : MonoBehaviour
             if (canEvolve == true)
             {
                 Evolve(evolution);
+                EvolveStatBonus();
                 _habitatUI.UpdateHabitatUI();
             }
+        }
+    }
+
+    private void EvolveStatBonus()
+    {
+        switch (_currentEvolution.StatBonus)
+        {
+            case StatType.None:
+                break;
+            case StatType.Exploration:
+                _exploration += 5;
+                break;
+            case StatType.Stamina:
+                _stamina += 5;
+                break;
+            case StatType.Wisdom:
+                _wisdom += 5;
+                break;
+            default:
+                break;
         }
     }
 
