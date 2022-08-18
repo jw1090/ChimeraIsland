@@ -214,7 +214,7 @@ public class CameraUtil : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
 
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, time);
+            transform.position = Vector3.Lerp(transform.position, target, time);
         }
         _inputManager.SetInTransition(false);
 

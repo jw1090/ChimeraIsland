@@ -36,6 +36,6 @@ public class ChimeraCreator : MonoBehaviour
         newChimera.SetStamina(chimeraInfo.stamina);
         newChimera.SetWisdom(chimeraInfo.wisdom);
         newChimera.SetExploration(chimeraInfo.exploration);
-        newChimera.SetEnergy(chimeraInfo.energy);
+        newChimera.SetCurrentEnergy(chimeraInfo.currentEnergy);
     }
 }

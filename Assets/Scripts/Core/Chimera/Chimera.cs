@@ -13,8 +13,8 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _exploration = 1;
     [SerializeField] private int _stamina = 1;
     [SerializeField] private int _wisdom = 1;
-    [SerializeField] private int _currentEnergy = 1;
-    [SerializeField] private int _maxEnergy = 1;
+    private int _currentEnergy = 5;
+    private int _maxEnergy = 5;
 
     [Header("Stat Growth")]
     [SerializeField] private int _explorationThreshold = 5;
@@ -37,7 +37,7 @@ public class Chimera : MonoBehaviour
     private int _explorationExperience = 0;
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
-    private int _tickCounter = 0;
+    private int _energyTickCounter = 0;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
@@ -54,7 +54,8 @@ public class Chimera : MonoBehaviour
     public int Stamina { get => _stamina; }
     public int Wisdom { get => _wisdom; }
     public int Exploration { get => _exploration; }
-    public int Energy { get => _maxEnergy; }
+    public int CurrentEnergy { get => _currentEnergy; }
+    public int MaxEnergy { get => _maxEnergy; }
     public int Price { get => _price; }
     public string Name { get => GetName(); }
 
@@ -166,7 +167,7 @@ public class Chimera : MonoBehaviour
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
-    public void SetEnergy(int energy) { _maxEnergy = energy; }
+    public void SetCurrentEnergy(int currentEnergy) { _currentEnergy = currentEnergy; }
 
     public void Initialize()
     {
@@ -204,7 +205,7 @@ public class Chimera : MonoBehaviour
             _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
         }
 
-        _currentEnergy = _maxEnergy;
+        _maxEnergy = (int)(_stamina * 0.5) + 5;
     }
 
     private void InitializeEvolution()
@@ -216,15 +217,16 @@ public class Chimera : MonoBehaviour
 
     public void EnergyTick()
     {
-        ++_tickCounter;
+        ++_energyTickCounter;
 
-        if (_tickCounter == 20)
+        if (_energyTickCounter >= 20)
         {
-            _tickCounter = 0;
+            _energyTickCounter = 0;
 
             if (_currentEnergy < _maxEnergy)
             {
                 ++_currentEnergy;
+                _habitatUI.UpdateHabitatUI();
             }
         }
     }
@@ -261,7 +263,7 @@ public class Chimera : MonoBehaviour
     private void AllocateExperience()
     {
         bool levelUp = false;
-        _tickCounter++;
+        _energyTickCounter++;
 
         if (_staminaExperience >= _staminaThreshold)
         {
