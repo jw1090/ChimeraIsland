@@ -11,6 +11,8 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
     [SerializeField] private TextMeshProUGUI _wisdom = null;
+    [SerializeField] private Slider _energySlider = null;
+    [SerializeField] private TextMeshProUGUI _energyText = null;
     [SerializeField] private StatefulObject _statefulButtons = null;
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _addButton = null;
@@ -76,6 +78,10 @@ public class ChimeraDetails : MonoBehaviour
         _wisdom.text = wisdomText;
         string explorationText = _chimera.GetStatByType(StatType.Exploration, out amount) ? amount.ToString() : "Invalid!";
         _exploration.text = explorationText;
+
+        _energySlider.maxValue = _chimera.MaxEnergy;
+        _energySlider.value = _chimera.CurrentEnergy;
+        _energyText.text = $"Energy: {_chimera.CurrentEnergy}";
     }
 
     public void ToggleButtons(DetailsButtonType detailsButtonType)
