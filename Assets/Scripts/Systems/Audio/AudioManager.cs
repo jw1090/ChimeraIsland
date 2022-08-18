@@ -10,9 +10,14 @@ public class AudioManager : MonoBehaviour
     [Header("Source")]
     [SerializeField] private AudioSource _musicSource = null;
     [SerializeField] private AudioSource _sfxSource = null;
+    [SerializeField] private AudioSource _ambientSource = null;
+    [SerializeField] private AudioSource _uiSource = null;
 
     [Header("Music")]
     [SerializeField] private AudioManifest _musicManifest = null;
+
+    [Header("Ambient")]
+    [SerializeField] private AudioManifest _ambientManifest = null;
 
     [Header("UI SFX")]
     [SerializeField] private AudioManifest _uiSFXManifest = null;
@@ -25,15 +30,18 @@ public class AudioManager : MonoBehaviour
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
-    private FacilitySFX _facilitySFX = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
     private float _sfxVolume = 0.0f;
+    private float _ambientVolume = 0.0f;
+    private float _uiSfxVolume = 0.0f;
 
     public Vector3 Volumes { get => new Vector3(_masterVolume, _musicVolume, _sfxVolume); }
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
+    public float AmbientVolume { get => _ambientVolume; }
+    public float UISFXVolume { get => _uiSfxVolume; }
 
     public AudioClip GetFacilityAmbient(FacilityType facilityType)
     {
@@ -101,19 +109,28 @@ public class AudioManager : MonoBehaviour
         _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
     }
 
+    public void SetAmbientVolume(float sfxVolume)
+    {
+        _ambientVolume = sfxVolume;
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.AMBIENT, _ambientVolume);
+    }
+
+    public void SetUISFXVolume(float sfxVolume)
+    {
+        _uiSfxVolume = sfxVolume;
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.UISFX, _uiSfxVolume);
+    }
+
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
         _uiManager = ServiceLocator.Get<UIManager>();
-        _facilitySFX = GetComponent<FacilitySFX>();
-
-        _masterVolume = _persistentData.Volumes.x;
-        _musicVolume = _persistentData.Volumes.y;
-        _sfxVolume = _persistentData.Volumes.z;
 
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
         _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.AMBIENT, _ambientVolume);
+        _mixer.SetFloat(GameConsts.AudioMixerKeys.UISFX, _uiSfxVolume);
 
         SetupAudioListeners();
 
@@ -161,6 +178,22 @@ public class AudioManager : MonoBehaviour
                 Debug.LogError($"{habitatType} is invalid. Please change!");
                 break;
         }
+    } 
+    public void PlayHabitatAmbient(HabitatType habitatType)
+    {
+        switch (habitatType)
+        {
+            case HabitatType.StonePlains:
+                {
+                    AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
+                    _ambientSource.clip = item.Clip;
+                    _ambientSource.Play();
+                }
+                break;
+            default:
+                Debug.LogError($"{habitatType} is invalid. Please change!");
+                break;
+        }
     }
 
     public void PlaySceneMusic(SceneType sceneType)
@@ -171,6 +204,7 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "MainMenuMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
+                    StopAmbientSource();
                     _musicSource.Play();
                 }
                 break;
@@ -178,6 +212,7 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StarterSceneMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
+                    StopAmbientSource();
                     _musicSource.Play();
                 }
                 break;
@@ -222,8 +257,8 @@ public class AudioManager : MonoBehaviour
             case SFXUIType.RemoveChimera:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Remove Chimera SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _uiSource.clip = item.Clip;
+                    _uiSource.Play();
                 }
                 break;
             case SFXUIType.Evolution:
@@ -266,6 +301,11 @@ public class AudioManager : MonoBehaviour
     private void PlayConfirmSFX()
     {
         PlayUISFX(SFXUIType.ConfirmClick);
+    }
+
+    private void StopAmbientSource()
+    {
+        _ambientSource.Stop();
     }
 
 }
