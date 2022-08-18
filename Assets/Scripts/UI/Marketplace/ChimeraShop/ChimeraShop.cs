@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,6 @@ public class ChimeraShop : MonoBehaviour
 {
     private List<ChimeraShopItem> _chimeraShopItems = new List<ChimeraShopItem>();
     private Marketplace _marketplace = null;
-    private HabitatManager _habitatManager = null;
 
     public ChimeraShopItem GetShopItem(ChimeraType chimeraType)
     {
@@ -26,7 +24,7 @@ public class ChimeraShop : MonoBehaviour
             _chimeraShopItems.Add(shopItem);
             shopItem.Initialize();
         }
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
+
         _marketplace = marketplace;
     }
 

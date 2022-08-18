@@ -84,7 +84,7 @@ public class ExpeditionSelectionUI : MonoBehaviour
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
         {
-            if (option.ExpeditionType == ExpeditionType.HabitatUpgrade && _expeditionManager.CurrentHabitatProgress > _expeditionManager.FinalUpgradeMission)
+            if (option.ExpeditionType == ExpeditionType.HabitatUpgrade && _expeditionManager.CurrentHabitatProgress >= _expeditionManager.FinalUpgradeMission)
             {
                 option.gameObject.SetActive(false);
                 continue;

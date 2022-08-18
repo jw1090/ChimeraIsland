@@ -117,17 +117,17 @@ public class Chimera : MonoBehaviour
                 case ChimeraType.A1:
                 case ChimeraType.A2:
                 case ChimeraType.A3:
-                    return "Elephanto";
+                    return "Nauphant";
                 case ChimeraType.B:
                 case ChimeraType.B1:
                 case ChimeraType.B2:
                 case ChimeraType.B3:
-                    return "Waddlo";
+                    return "Frolli";
                 case ChimeraType.C:
                 case ChimeraType.C1:
                 case ChimeraType.C2:
                 case ChimeraType.C3:
-                    return "Leafo";
+                    return "Patchero";
                 default:
                     Debug.LogError($"{_chimeraType} is invalid, please change!");
                     return "";
@@ -268,7 +268,7 @@ public class Chimera : MonoBehaviour
 
         if (_staminaExperience >= _staminaThreshold)
         {
-            _staminaExperience -= _staminaThreshold;
+            _staminaExperience = 0;
             levelUp = true;
             LevelUp(StatType.Stamina);
 
@@ -277,7 +277,7 @@ public class Chimera : MonoBehaviour
 
         if (_wisdomExperience >= _wisdomThreshold)
         {
-            _wisdomExperience -= _wisdomThreshold;
+            _wisdomExperience = 0;
             levelUp = true;
             LevelUp(StatType.Wisdom);
 
@@ -286,7 +286,7 @@ public class Chimera : MonoBehaviour
 
         if (_explorationExperience >= _explorationThreshold)
         {
-            _explorationExperience -= _explorationThreshold;
+            _explorationExperience = 0;
             levelUp = true;
             LevelUp(StatType.Exploration);
 
@@ -322,6 +322,7 @@ public class Chimera : MonoBehaviour
                 _wisdom += 5;
                 break;
             default:
+                Debug.LogError($"Unhandled stat type [{_currentEvolution.StatBonus}]");
                 break;
         }
     }
@@ -371,6 +372,7 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
+        InitializeStats();
         _boxCollider.enabled = false;
 
         _habitatManager.UpdateCurrentHabitatChimeras();
