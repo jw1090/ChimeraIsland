@@ -42,6 +42,8 @@ namespace AI.Behavior
         private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
+
+        public void SetAgentSpeed(float agentSpeed) { _navMeshAgent.speed = agentSpeed; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
         public void IncreasePatrolIndex() { _patrolIndex += 1; }
         public void ResetPatrolIndex() { _patrolIndex = 0; }

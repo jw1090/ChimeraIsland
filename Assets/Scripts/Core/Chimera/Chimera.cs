@@ -178,14 +178,15 @@ public class Chimera : MonoBehaviour
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
+        _chimeraBehavior = GetComponent<ChimeraBehavior>();
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
         _elementIcon = _resourceManager.GetElementSprite(_elementalType);
 
         InitializeStats();
+        _chimeraBehavior.Initialize();
         InitializeEvolution();
-        GetComponent<ChimeraBehavior>().Initialize();
     }
 
     private void InitializeStats()
