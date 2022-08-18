@@ -23,6 +23,8 @@ public static class GameConsts
         public const string MASTER = "MasterVolume";
         public const string MUSIC = "MusicVolume";
         public const string SFX = "SFXVolume";
+        public const string AMBIENT = "AmbientVolume";
+        public const string UISFX = "UISFXVolume";
     }
 
     public class Colors
