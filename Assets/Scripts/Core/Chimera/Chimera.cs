@@ -322,6 +322,7 @@ public class Chimera : MonoBehaviour
                 _wisdom += 5;
                 break;
             default:
+                Debug.LogError($"Unhandled stat type [{_currentEvolution.StatBonus}]");
                 break;
         }
     }
