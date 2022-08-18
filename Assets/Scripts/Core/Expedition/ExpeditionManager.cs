@@ -38,6 +38,7 @@ public class ExpeditionManager : MonoBehaviour
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
+    public int FinalUpgradeMission { get => _habitatExpeditions.Count - 1; }
     public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
