@@ -9,6 +9,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqExploration = 0;
     [SerializeField] private int _reqStamina = 0;
     [SerializeField] private int _reqWisdom = 0;
+    [SerializeField] private float _speed = 4.5f;
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
@@ -29,6 +30,7 @@ public class EvolutionLogic : MonoBehaviour
         _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 
         _chimeraBrain = chimera;
+        _chimeraBrain.Behavior.SetAgentSpeed(_speed);
     }
 
     public bool CheckEvolution(int exploration, int staminan, int wisdom, out EvolutionLogic newEvolution)
