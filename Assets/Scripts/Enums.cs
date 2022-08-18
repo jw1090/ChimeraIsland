@@ -95,9 +95,9 @@ public enum SceneType
 public enum StatType
 {
     None = -1,
+    Exploration,
     Stamina,
     Wisdom,
-    Exploration,
 }
 
 public enum TutorialIconType
@@ -122,8 +122,8 @@ public enum UIElementType
     ExpeditionButton,
     MarketplaceChimeraTab,
     WorldMapButton,
-    FossilButtons,
-    EssenceButtons,
+    FossilsWallets,
+    EssenceWallets,
 }
 
 public enum TutorialStageType

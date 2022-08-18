@@ -122,6 +122,24 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.Initialize();
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
+
+        UIProgressCheck();
+    }
+
+    private void UIProgressCheck()
+    {
+        ExpeditionManager expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+
+        if (expeditionManager.CurrentHabitatProgress > 0)
+        {
+            EnableUIElementByType(UIElementType.EssenceWallets);
+        }
+
+        if (expeditionManager.CurrentFossilProgress > 0)
+        {
+            EnableUIElementByType(UIElementType.MarketplaceButton);
+            EnableUIElementByType(UIElementType.FossilsWallets);
+        }
     }
 
     private void SetupUIListeners()
@@ -129,7 +147,7 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.SetupButtonListeners();
     }
 
-    public void EnableTutorialUIByType(UIElementType uiElementType)
+    public void EnableUIElementByType(UIElementType uiElementType)
     {
         switch (uiElementType)
         {
@@ -161,13 +179,13 @@ public class HabitatUI : MonoBehaviour
                 _runeFacilityShopIcon.gameObject.SetActive(true);
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
-            case UIElementType.FossilButtons:
-                foreach(UIFossilWallet fossilWallet in _fossilWallets)
+            case UIElementType.FossilsWallets:
+                foreach (UIFossilWallet fossilWallet in _fossilWallets)
                 {
                     fossilWallet.gameObject.SetActive(true);
                 }
                 break;
-            case UIElementType.EssenceButtons:
+            case UIElementType.EssenceWallets:
                 foreach (UIEssenceWallet essenceWallet in _essenceWallets)
                 {
                     essenceWallet.gameObject.SetActive(true);
@@ -279,6 +297,11 @@ public class HabitatUI : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
+        if (isActiveAndEnabled == false)
+        {
+            return;
+        }
+
         if (_trainingPanel.gameObject.activeInHierarchy == true)
         {
             _trainingPanel.ResetTrainingUI();

@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
+    [SerializeField] private TextMeshProUGUI _nameText = null;
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
@@ -17,6 +19,8 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
+
+        ChimeraName();
     }
 
     public void SetupStartingButton()
@@ -42,5 +46,25 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
 
         _sceneChanger.LoadStonePlains();
+    }
+
+    private void ChimeraName()
+    {
+        switch (_chimeraType)
+        {
+            case ChimeraType.None:
+                break;
+            case ChimeraType.A:
+                _nameText.text = "Nauphant";
+                break;
+            case ChimeraType.B:
+                _nameText.text = "Frolli";
+                break;
+            case ChimeraType.C:
+                _nameText.text = "Patchero";
+                break;
+            default:
+                break;
+        }
     }
 }

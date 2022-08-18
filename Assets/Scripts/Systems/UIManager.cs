@@ -79,9 +79,9 @@ public class UIManager : MonoBehaviour
             case UIElementType.MarketplaceChimeraTab:
             case UIElementType.WorldMapButton:
             case UIElementType.OtherFacilityButtons:
-            case UIElementType.FossilButtons:
-            case UIElementType.EssenceButtons:
-                _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
+            case UIElementType.FossilsWallets:
+            case UIElementType.EssenceWallets:
+                _habitatUI.EnableUIElementByType(uiElementType); // Habitat UI
                 break;
             default:
                 Debug.LogError($"{uiElementType} is invalid. Please change!");
