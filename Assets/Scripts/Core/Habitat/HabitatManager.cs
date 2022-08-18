@@ -53,10 +53,24 @@ public class HabitatManager : MonoBehaviour
         _currentHabitat = habitat;
     }
 
-    public void SetExpeditionProgress(int num, HabitatType type)
+    public void SetExpeditionProgress(int essence, int fossil, int habitat)
     {
-        while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[(int)type]._expeditionProgress = num; 
+        int type = (int)CurrentHabitat.Type;
+        while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[type]._expeditionEssenceProgress = essence;
+        _habitatData[type]._expeditionHabitatProgress = habitat;
+        _habitatData[type]._expeditionFossilProgress = fossil;
+    }
+    public void SetHabitatUIProgress(bool a, bool b, bool c, bool cave, bool rune, bool waterfall)
+    {
+        int type = (int)CurrentHabitat.Type;
+        while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[type]._aUnlocked = a;
+        _habitatData[type]._bUnlocked = b;
+        _habitatData[type]._cUnlocked = c;
+        _habitatData[type]._caveUnlocked = cave;
+        _habitatData[type]._runeUnlocked = rune;
+        _habitatData[type]._waterfallUnlocked = waterfall;
     }
     public void SetHabitatTier(int num, HabitatType type) 
     {

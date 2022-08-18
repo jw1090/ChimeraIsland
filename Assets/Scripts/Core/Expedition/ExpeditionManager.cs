@@ -82,6 +82,11 @@ public class ExpeditionManager : MonoBehaviour
 
         _expeditionState = ExpeditionState.Selection;
 
+        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
+        _currentEssenceProgress = data._expeditionEssenceProgress;
+        _currentFossilProgress = data._expeditionFossilProgress;
+        _currentHabitatProgress = data._expeditionHabitatProgress;
+
         return this;
     }
 
@@ -518,6 +523,7 @@ public class ExpeditionManager : MonoBehaviour
                 Debug.LogError($"Expedition Type [{_selectedExpedition.Type}] is invalid.");
                 break;
         }
+        _habitatManager.SetExpeditionProgress(_currentEssenceProgress, _currentFossilProgress, _currentHabitatProgress);
     }
 
     public void ChimerasOnExpedition(bool onExpedition)
