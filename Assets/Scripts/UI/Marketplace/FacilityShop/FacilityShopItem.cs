@@ -32,11 +32,11 @@ public class FacilityShopItem : MonoBehaviour
         switch (_facilityType)
         {
             case FacilityType.Cave:
-                return "Exploration";
+                return "Cave";
             case FacilityType.RuneStone:
-                return "Wisdom";
+                return "Rune Stones";
             case FacilityType.Waterfall:
-                return "Stamina";
+                return "Watefall";
             default:
                 Debug.LogWarning($"{_facilityType} is invalid, please change");
                 return "Error";
