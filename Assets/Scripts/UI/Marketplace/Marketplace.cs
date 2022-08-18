@@ -64,6 +64,27 @@ public class Marketplace : MonoBehaviour
                 Debug.LogError($"Facility type {type} does not exist");
                 break;
         }
+        _habitatManager.SetHabitatUIProgress(_aUnlocked, _bUnlocked, _cUnlocked, _caveUnlocked, _runeUnlocked, _waterfallUnlocked);
+    }
+
+    public void SetChimeraUnlocked(ChimeraType chimeraType)
+    {
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                _aUnlocked = true;
+                break;
+            case ChimeraType.B:
+                _bUnlocked = true;
+                break;
+            case ChimeraType.C:
+                _cUnlocked = true;
+                break;
+            default:
+                Debug.LogError($"Facility type {chimeraType} does not exist");
+                break;
+        }
+        _habitatManager.SetHabitatUIProgress(_aUnlocked, _bUnlocked, _cUnlocked, _caveUnlocked, _runeUnlocked, _waterfallUnlocked);
     }
 
     public void Initialize()
@@ -75,6 +96,14 @@ public class Marketplace : MonoBehaviour
         _facilityShop.Initialize(this);
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+
+        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
+        _waterfallUnlocked = data._waterfallUnlocked;
+        _runeUnlocked = data._runeUnlocked;
+        _caveUnlocked = data._caveUnlocked;
+        _aUnlocked = data._aUnlocked;
+        _bUnlocked = data._bUnlocked;
+        _cUnlocked = data._cUnlocked;
     }
 
     public bool ChimeraTabIsActive()
@@ -114,45 +143,6 @@ public class Marketplace : MonoBehaviour
         _chimeraShop.UpdateUI();
     }
 
-
-    public void ActivateFacility(FacilityType type)
-    {
-        switch (type)
-        {
-            case FacilityType.Cave:
-                _caveUnlocked = true;
-                break;
-            case FacilityType.RuneStone:
-                _runeUnlocked = true;
-                break;
-            case FacilityType.Waterfall:
-                _waterfallUnlocked = true;
-                break;
-            default:
-                Debug.LogError($"Facility type {type} does not exist");
-                break;
-        }
-    }
-
-    public void ActivateChimera(ChimeraType chimeraType)
-    {
-        switch (chimeraType)
-        {
-            case ChimeraType.A:
-                _aUnlocked = true;
-                break;
-            case ChimeraType.B:
-                _bUnlocked = true;
-                break;
-            case ChimeraType.C:
-                _cUnlocked = true;
-                break;
-            default:
-                Debug.LogError($"Facility type {chimeraType} does not exist");
-                break;
-        }
-    }
-
     public ChimeraType ActivateRandomChimera()
     {
         List<ChimeraType> deactivatedChimeras = new List<ChimeraType>();
@@ -177,7 +167,7 @@ public class Marketplace : MonoBehaviour
 
         int random = Random.Range(0, deactivatedChimeras.Count - 1);
 
-        ActivateChimera(deactivatedChimeras[random]);
+        SetChimeraUnlocked(deactivatedChimeras[random]);
 
         return deactivatedChimeras[random];
     }
