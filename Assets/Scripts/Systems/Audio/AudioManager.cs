@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Linq;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class AudioManager : MonoBehaviour
     private float _ambientVolume = 0.0f;
     private float _uiSfxVolume = 0.0f;
 
-    public Vector3 Volumes { get => new Vector3(_masterVolume, _musicVolume, _sfxVolume); }
+    public List<float> Volumes { get => new List<float> { _masterVolume, _musicVolume, _sfxVolume, _ambientVolume, _uiSfxVolume }; }
     public float MasterVolume { get => _masterVolume; }
     public float MusicVolume { get => _musicVolume; }
     public float SFXVolume { get => _sfxVolume; }
@@ -124,6 +125,11 @@ public class AudioManager : MonoBehaviour
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _masterVolume = _persistentData.Volumes[0];
+        _musicVolume = _persistentData.Volumes[1];
+        _sfxVolume = _persistentData.Volumes[2];
+        _ambientVolume = _persistentData.Volumes[3];
+        _uiSfxVolume= _persistentData.Volumes[4];
         _uiManager = ServiceLocator.Get<UIManager>();
 
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);

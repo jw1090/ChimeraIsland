@@ -11,13 +11,13 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
-    private Vector3 _volumes = Vector3.zero;
+    private List<float> _volumes = new List<float>();
 
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
     public List<HabitatData> HabitatData { get => _habitatSaveData; }
-    public Vector3 Volumes { get => _volumes; }
+    public List<float> Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
 
@@ -80,7 +80,7 @@ public class PersistentData : MonoBehaviour
         _chimeraSaveData = myData.chimeras;
         _habitatSaveData = myData.habitats;
         _facilitySaveData = myData.facilities;
-        _volumes = new Vector3(myData.masterVolume, myData.musicVolume, myData.sfxVolume);
+        _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
     }
 
     public void ResetLastSessionHabitat()
