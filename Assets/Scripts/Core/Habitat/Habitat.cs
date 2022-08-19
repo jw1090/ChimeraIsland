@@ -77,6 +77,7 @@ public class Habitat : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _audioManager.SetHabitat(this);
 
         if (_patrolNodes == null)
         {
@@ -232,6 +233,8 @@ public class Habitat : MonoBehaviour
 
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
+        _audioManager.PlayHabitatMusic(_habitatType);
+        _audioManager.PlayHabitatAmbient(_habitatType);
         LoadHabitatTier();
     }
 
