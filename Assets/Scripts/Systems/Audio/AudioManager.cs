@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
+    private Habitat _habitat = null;
     private float _masterVolume = 0.0f;
     private float _musicVolume = 0.0f;
     private float _sfxVolume = 0.0f;
@@ -122,6 +123,8 @@ public class AudioManager : MonoBehaviour
         _mixer.SetFloat(GameConsts.AudioMixerKeys.UISFX, _uiSfxVolume);
     }
 
+    public void SetHabitat(Habitat habitat) { _habitat = habitat; }
+
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
@@ -168,9 +171,7 @@ public class AudioManager : MonoBehaviour
         {
             case HabitatType.StonePlains:
                 {
-                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
-                    _musicSource.clip = item.Clip;
-                    _musicSource.Play();
+                   PlayMusicOnTier();
                 }
                 break;
             case HabitatType.TreeOfLife:
@@ -192,9 +193,7 @@ public class AudioManager : MonoBehaviour
         {
             case HabitatType.StonePlains:
                 {
-                    AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
-                    _ambientSource.clip = item.Clip;
-                    _ambientSource.Play();
+                    PlayAmbientOnTier();
                 }
                 break;
             default:
@@ -315,5 +314,45 @@ public class AudioManager : MonoBehaviour
     private void StopAmbientSource()
     {
         _ambientSource.Stop();
+    }
+    private void PlayMusicOnTier()
+    {
+        if (_habitat.CurrentTier == 1)
+        {
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
+            _musicSource.clip = item.Clip;
+        }
+        if (_habitat.CurrentTier == 2)
+        {
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains2").FirstOrDefault();
+            _musicSource.clip = item.Clip;
+        }
+        if (_habitat.CurrentTier == 3)
+        {
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains3").FirstOrDefault();
+            _musicSource.clip = item.Clip;
+        }
+        _musicSource.Play();
+    }
+    private void PlayAmbientOnTier()
+    {
+        if (_habitat.CurrentTier == 1)
+        {
+             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+            _ambientSource.Play();
+        }
+        if (_habitat.CurrentTier == 2)
+        {
+             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient2").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+
+        }
+        if (_habitat.CurrentTier == 3)
+        {
+             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient3").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+        }
+        _ambientSource.Play();
     }
 }
