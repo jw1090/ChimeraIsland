@@ -42,7 +42,7 @@ public class ExpeditionManager : MonoBehaviour
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
-    public int FinalUpgradeMission { get => _habitatExpeditions.Count - 1; }
+    public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -86,9 +86,9 @@ public class ExpeditionManager : MonoBehaviour
         _expeditionState = ExpeditionState.Selection;
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _currentEssenceProgress = data._expeditionEssenceProgress;
-        _currentFossilProgress = data._expeditionFossilProgress;
-        _currentHabitatProgress = data._expeditionHabitatProgress;
+        _currentEssenceProgress = data.expeditionEssenceProgress;
+        _currentFossilProgress = data.expeditionFossilProgress;
+        _currentHabitatProgress = data.expeditionHabitatProgress;
 
         return this;
     }
@@ -284,7 +284,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float minimumLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 14.0f;
+        float difficultyValue = Mathf.Pow(minimumLevel * 1.2f, 1.5f) * 20.0f;
 
         _difficultyValue = difficultyValue;
 
@@ -492,7 +492,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             case ExpeditionType.Essence:
                 _essenceExpeditionOption = null;
-                if (_currentEssenceProgress + 1 < _essenceExpeditions.Count)
+                if (_currentEssenceProgress < _essenceExpeditions.Count)
                 {
                     ++_currentEssenceProgress;
                 }
@@ -503,24 +503,24 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.Fossils:
                 _fossilExpeditionOption = null;
-                if (_currentFossilProgress + 1 < _fossilExpeditions.Count)
+                if (_currentFossilProgress < _fossilExpeditions.Count)
                 {
                     ++_currentFossilProgress;
                 }
                 else
                 {
-                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentFossilProgress}]");
+                    Debug.LogWarning($"Fossil Expedition is at max rank [{_currentFossilProgress}]");
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress + 1 < _habitatExpeditions.Count)
+                if (_currentHabitatProgress < _habitatExpeditions.Count)
                 {
                     ++_currentHabitatProgress;
                 }
                 else
                 {
-                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentHabitatProgress}]");
+                    Debug.LogWarning($"Habitat Expedition is at max rank [{_currentHabitatProgress}]");
                 }
                 break;
             default:

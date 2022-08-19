@@ -60,7 +60,6 @@ public class LightingManager : MonoBehaviour
 
         DaylightToggle();
         NightLightToggle();
-        Debug.Log(_dayLight.intensity);
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);

@@ -3,16 +3,16 @@
 [Serializable]
 public class HabitatData
 {
-    public int _expeditionHabitatProgress = 0;
-    public int _expeditionEssenceProgress = 0;
-    public int _expeditionFossilProgress = 0;
-    public int _currentTier = 1;
-    public bool _aUnlocked = false;
-    public bool _bUnlocked = false;
-    public bool _cUnlocked = false;
-    public bool _caveUnlocked = false;
-    public bool _runeUnlocked = false;
-    public bool _waterfallUnlocked = false;
+    public int expeditionEssenceProgress = 0;
+    public int expeditionFossilProgress = 0;
+    public int expeditionHabitatProgress = 0;
+    public int currentTier = 1;
+    public bool aUnlocked = false;
+    public bool bUnlocked = false;
+    public bool cUnlocked = false;
+    public bool caveUnlocked = false;
+    public bool runeUnlocked = false;
+    public bool waterfallUnlocked = false;
 
     public HabitatData()
     {

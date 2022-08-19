@@ -19,7 +19,6 @@ public class Habitat : MonoBehaviour
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
-    private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
@@ -75,7 +74,6 @@ public class Habitat : MonoBehaviour
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _audioManager.SetHabitat(this);
 
@@ -86,7 +84,7 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        SetTier(_habitatManager.HabitatDataList[(int)Type]._currentTier);
+        SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
 
         foreach (Facility facility in _facilities)
         {
