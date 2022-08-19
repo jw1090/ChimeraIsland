@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
         switch (uiSceneType)
         {
             case SceneType.Habitat:
+                _uiStatefulObject.SetState("Habitat UI", true);
                 _habitatUI.ResetStandardUI();
                 _habitatUI.LoadCurrentUIProgress();
                 break;
