@@ -492,7 +492,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             case ExpeditionType.Essence:
                 _essenceExpeditionOption = null;
-                if (_currentEssenceProgress < _essenceExpeditions.Count)
+                if (_currentEssenceProgress < _essenceExpeditions.Count - 1)
                 {
                     ++_currentEssenceProgress;
                 }
@@ -503,7 +503,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.Fossils:
                 _fossilExpeditionOption = null;
-                if (_currentFossilProgress < _fossilExpeditions.Count)
+                if (_currentFossilProgress < _fossilExpeditions.Count - 1)
                 {
                     ++_currentFossilProgress;
                 }
