@@ -6,7 +6,6 @@ public class ExpeditionSelectionUI : MonoBehaviour
     [SerializeField] private List<ExpeditionOptionUI> _expeditionOptions = new List<ExpeditionOptionUI>();
     private ExpeditionManager _expeditionManager = null;
 
-
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
