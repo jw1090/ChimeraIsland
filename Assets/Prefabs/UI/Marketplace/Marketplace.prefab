@@ -947,6 +947,7 @@ MonoBehaviour:
   _tabGroup: {fileID: 7529008985590663490}
   _chimeraShop: {fileID: 7529008986748518273}
   _facilityShop: {fileID: 7529008985421949394}
+  _closeButton: {fileID: 7529008986452980055}
   _waterfallUnlocked: 0
   _runeUnlocked: 0
   _caveUnlocked: 0
@@ -1175,6 +1176,7 @@ GameObject:
   - component: {fileID: 7529008986452980053}
   - component: {fileID: 7529008986452980054}
   - component: {fileID: 7529008986452980055}
+  - component: {fileID: 650835369190832529}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Untagged
@@ -1283,19 +1285,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7529008986452980054}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HabitatUI, Assembly-CSharp
-        m_MethodName: ResetStandardUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &650835369190832529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7529008986452980041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6058800d59f024aa548b745235a2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idle: {r: 1, g: 1, b: 1, a: 1}
+  _hover: {r: 0.85490197, g: 0.8862745, b: 0.5058824, a: 1}
 --- !u!1 &7529008986702177429
 GameObject:
   m_ObjectHideFlags: 0

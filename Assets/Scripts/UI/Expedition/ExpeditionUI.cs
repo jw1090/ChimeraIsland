@@ -19,6 +19,7 @@ public class ExpeditionUI : MonoBehaviour
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
+    public StatefulObject BackgroundStates { get => _backgroundUIStates; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {

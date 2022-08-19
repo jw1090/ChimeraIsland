@@ -57,25 +57,25 @@ public class HabitatManager : MonoBehaviour
     {
         int type = (int)CurrentHabitat.Type;
         while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[type]._expeditionEssenceProgress = essence;
-        _habitatData[type]._expeditionHabitatProgress = habitat;
-        _habitatData[type]._expeditionFossilProgress = fossil;
+        _habitatData[type].expeditionEssenceProgress = essence;
+        _habitatData[type].expeditionHabitatProgress = habitat;
+        _habitatData[type].expeditionFossilProgress = fossil;
     }
     public void SetHabitatUIProgress(bool a, bool b, bool c, bool cave, bool rune, bool waterfall)
     {
         int type = (int)CurrentHabitat.Type;
         while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[type]._aUnlocked = a;
-        _habitatData[type]._bUnlocked = b;
-        _habitatData[type]._cUnlocked = c;
-        _habitatData[type]._caveUnlocked = cave;
-        _habitatData[type]._runeUnlocked = rune;
-        _habitatData[type]._waterfallUnlocked = waterfall;
+        _habitatData[type].aUnlocked = a;
+        _habitatData[type].bUnlocked = b;
+        _habitatData[type].cUnlocked = c;
+        _habitatData[type].caveUnlocked = cave;
+        _habitatData[type].runeUnlocked = rune;
+        _habitatData[type].waterfallUnlocked = waterfall;
     }
     public void SetHabitatTier(int num, HabitatType type)
     {
         while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[(int)type]._currentTier = num;
+        _habitatData[(int)type].currentTier = num;
     }
 
     [Serializable]

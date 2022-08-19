@@ -86,9 +86,9 @@ public class ExpeditionManager : MonoBehaviour
         _expeditionState = ExpeditionState.Selection;
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _currentEssenceProgress = data._expeditionEssenceProgress;
-        _currentFossilProgress = data._expeditionFossilProgress;
-        _currentHabitatProgress = data._expeditionHabitatProgress;
+        _currentEssenceProgress = data.expeditionEssenceProgress;
+        _currentFossilProgress = data.expeditionFossilProgress;
+        _currentHabitatProgress = data.expeditionHabitatProgress;
 
         return this;
     }

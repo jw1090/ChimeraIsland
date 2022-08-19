@@ -84,7 +84,7 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        SetTier(_habitatManager.HabitatDataList[(int)Type]._currentTier);
+        SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
 
         foreach (Facility facility in _facilities)
         {

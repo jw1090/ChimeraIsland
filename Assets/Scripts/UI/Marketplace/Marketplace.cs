@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Marketplace : MonoBehaviour
 {
     [SerializeField] private TabGroup _tabGroup = null;
     [SerializeField] private ChimeraShop _chimeraShop = null;
     [SerializeField] private FacilityShop _facilityShop = null;
+    [SerializeField] private Button _closeButton = null;
     [SerializeField] private bool _waterfallUnlocked = false;
     [SerializeField] private bool _runeUnlocked = false;
     [SerializeField] private bool _caveUnlocked = false;
@@ -14,6 +16,7 @@ public class Marketplace : MonoBehaviour
     [SerializeField] private bool _cUnlocked = false;
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private UIManager _uiManager = null;
 
     public bool IsFacilityUnlocked(FacilityType facilityType)
     {
@@ -87,23 +90,33 @@ public class Marketplace : MonoBehaviour
         _habitatManager.SetHabitatUIProgress(_aUnlocked, _bUnlocked, _cUnlocked, _caveUnlocked, _runeUnlocked, _waterfallUnlocked);
     }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
+
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+
+        _uiManager = uiManager;
 
         _tabGroup.Initialize();
         _chimeraShop.Initialize(this);
         _facilityShop.Initialize(this);
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
+
+        SetupListeners();
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _waterfallUnlocked = data._waterfallUnlocked;
-        _runeUnlocked = data._runeUnlocked;
-        _caveUnlocked = data._caveUnlocked;
-        _aUnlocked = data._aUnlocked;
-        _bUnlocked = data._bUnlocked;
-        _cUnlocked = data._cUnlocked;
+        _waterfallUnlocked = data.waterfallUnlocked;
+        _runeUnlocked = data.runeUnlocked;
+        _caveUnlocked = data.caveUnlocked;
+        _aUnlocked = data.aUnlocked;
+        _bUnlocked = data.bUnlocked;
+        _cUnlocked = data.cUnlocked;
+    }
+
+    private void SetupListeners()
+    {
+        _uiManager.CreateButtonListener(_closeButton, _uiManager.HabitatUI.ResetStandardUI);
     }
 
     public bool ChimeraTabIsActive()

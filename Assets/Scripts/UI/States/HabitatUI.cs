@@ -70,8 +70,6 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.Initialize(uiManager);
 
         _expeditionButton.ActivateNotification(false);
-
-        SetupUIListeners();
     }
 
     public void LoadCurrentUIProgress()
@@ -119,7 +117,7 @@ public class HabitatUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
 
-        _marketplacePanel.Initialize();
+        _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
 
@@ -140,11 +138,6 @@ public class HabitatUI : MonoBehaviour
             EnableUIElementByType(UIElementType.MarketplaceButton);
             EnableUIElementByType(UIElementType.FossilsWallets);
         }
-    }
-
-    private void SetupUIListeners()
-    {
-        _detailsFolder.SetupButtonListeners();
     }
 
     public void EnableUIElementByType(UIElementType uiElementType)
