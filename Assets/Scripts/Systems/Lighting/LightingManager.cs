@@ -60,7 +60,7 @@ public class LightingManager : MonoBehaviour
 
         DaylightToggle();
         NightLightToggle();
-
+        Debug.Log(_dayLight.intensity);
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
@@ -113,11 +113,11 @@ public class LightingManager : MonoBehaviour
 
     private void DaylightToggle()
     {
-        if (_dayLight.intensity == 0 && _dayLight.gameObject.activeInHierarchy)
+        if (_dayLight.intensity == 0.1 && _dayLight.gameObject.activeInHierarchy)
         {
             _dayLight.gameObject.SetActive(false);
         }
-        else if (_dayLight.intensity > 0 && !_dayLight.gameObject.activeInHierarchy)
+        else if (_dayLight.intensity > 0.1 && !_dayLight.gameObject.activeInHierarchy)
         {
             _dayLight.gameObject.SetActive(true);
             _dayType = DayType.DayTime;
