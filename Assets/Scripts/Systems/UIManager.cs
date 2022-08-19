@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
         _tutorialOverlay.Initialize(this);
         _tutorialObserver.Initialize(this);
 
+        _uiStatefulObject.SetState("Transparent", true);
+
         return this;
     }
 
@@ -49,18 +51,15 @@ public class UIManager : MonoBehaviour
         switch (uiSceneType)
         {
             case SceneType.Habitat:
-                _uiStatefulObject.SetState("Habitat UI");
+                _uiStatefulObject.SetState("Habitat UI", true);
                 _habitatUI.ResetStandardUI();
                 _habitatUI.LoadCurrentUIProgress();
                 break;
             case SceneType.MainMenu:
-                _uiStatefulObject.SetState("Main Menu UI");
+                _uiStatefulObject.SetState("Main Menu UI", true);
                 break;
             case SceneType.Starting:
-                _uiStatefulObject.SetState("Starting UI");
-                break;
-            case SceneType.WorldMap:
-                _uiStatefulObject.SetState("World MapUI");
+                _uiStatefulObject.SetState("Starting UI", true);
                 break;
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
@@ -79,8 +78,9 @@ public class UIManager : MonoBehaviour
             case UIElementType.MarketplaceChimeraTab:
             case UIElementType.WorldMapButton:
             case UIElementType.OtherFacilityButtons:
-            case UIElementType.FossilButtons:
-                _habitatUI.EnableTutorialUIByType(uiElementType); // Habitat UI
+            case UIElementType.FossilsWallets:
+            case UIElementType.EssenceWallets:
+                _habitatUI.EnableUIElementByType(uiElementType); // Habitat UI
                 break;
             default:
                 Debug.LogError($"{uiElementType} is invalid. Please change!");

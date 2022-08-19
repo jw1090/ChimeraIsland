@@ -6,8 +6,8 @@ using UnityEngine;
 public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
-    [SerializeField] private int _chimeraCapacity = 3;
-    [SerializeField]private float _tickTimer = 0.4f;
+    [SerializeField] private int _chimeraCapacity = 5;
+    [SerializeField] private float _tickTimer = 0.4f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private List<HabitatData> _habitatData = new List<HabitatData>();
@@ -48,20 +48,34 @@ public class HabitatManager : MonoBehaviour
         return new List<FacilityData>();
     }
 
-    public void SetCurrentHabitat(Habitat habitat) 
-    { 
+    public void SetCurrentHabitat(Habitat habitat)
+    {
         _currentHabitat = habitat;
     }
 
-    public void SetExpeditionProgress(int num, HabitatType type)
+    public void SetExpeditionProgress(int essence, int fossil, int habitat)
     {
-        while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[(int)type]._expeditionProgress = num; 
+        int type = (int)CurrentHabitat.Type;
+        while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[type].expeditionEssenceProgress = essence;
+        _habitatData[type].expeditionHabitatProgress = habitat;
+        _habitatData[type].expeditionFossilProgress = fossil;
     }
-    public void SetHabitatTier(int num, HabitatType type) 
+    public void SetHabitatUIProgress(bool a, bool b, bool c, bool cave, bool rune, bool waterfall)
+    {
+        int type = (int)CurrentHabitat.Type;
+        while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
+        _habitatData[type].aUnlocked = a;
+        _habitatData[type].bUnlocked = b;
+        _habitatData[type].cUnlocked = c;
+        _habitatData[type].caveUnlocked = cave;
+        _habitatData[type].runeUnlocked = rune;
+        _habitatData[type].waterfallUnlocked = waterfall;
+    }
+    public void SetHabitatTier(int num, HabitatType type)
     {
         while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[(int)type]._currentTier = num; 
+        _habitatData[(int)type].currentTier = num;
     }
 
     [Serializable]
@@ -147,7 +161,7 @@ public class HabitatManager : MonoBehaviour
             Debug.LogError("Facility save data is null!");
             return false;
         }
-        
+
         return true;
     }
 
@@ -170,9 +184,9 @@ public class HabitatManager : MonoBehaviour
 
     private void StoreFacilityDataByHabitat()
     {
-        foreach (var faciliy in _facilitySaveData)
+        foreach (var facility in _facilitySaveData)
         {
-            AddFacilityToHabitat(faciliy, faciliy.habitatType);
+            AddFacilityToHabitat(facility, facility.habitatType);
         }
     }
 
@@ -183,7 +197,7 @@ public class HabitatManager : MonoBehaviour
             _chimerasByHabitat.Add(habitat, new List<ChimeraData>());
         }
 
-        if(HabitatCapacityCheck(habitat) == false)
+        if (HabitatCapacityCheck(habitat) == false)
         {
             Debug.Log($"Cannot add {chimeraToAdd.chimeraType}, {habitat} is full.");
             return false;
@@ -233,8 +247,8 @@ public class HabitatManager : MonoBehaviour
     public bool AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
-        
-        if(AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType) == true)
+
+        if (AddChimeraToHabitat(chimeraSavedData, chimeraSavedData.habitatType) == true)
         {
             return true;
         }
@@ -244,8 +258,29 @@ public class HabitatManager : MonoBehaviour
 
     public void AddNewFacility(Facility facilityToSave)
     {
+        FacilityDeleteCheck(facilityToSave.Type);
+
         FacilityData facilitySavedData = new FacilityData(facilityToSave, _currentHabitat.Type);
+
         AddFacilityToHabitat(facilitySavedData, facilitySavedData.habitatType);
+    }
+
+    private void FacilityDeleteCheck(FacilityType facilityToSave)
+    {
+        if (_facilitiesByHabitat.ContainsKey(_currentHabitat.Type) == false)
+        {
+            return;
+        }
+
+        foreach (FacilityData facility in _facilitiesByHabitat[_currentHabitat.Type])
+        {
+            if (facilityToSave == facility.facilityType)
+            {
+                _facilitiesByHabitat[_currentHabitat.Type].Remove(facility);
+
+                return;
+            }
+        }
     }
 
     public void SpawnChimerasForHabitat()
@@ -257,6 +292,7 @@ public class HabitatManager : MonoBehaviour
     public void PlayCurrentHabitatMusic()
     {
         _audioManager.PlayHabitatMusic(_currentHabitat.Type);
+        _audioManager.PlayHabitatAmbient(_currentHabitat.Type);
     }
 
     public void BuildFacilitiesForHabitat()

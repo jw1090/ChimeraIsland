@@ -9,7 +9,7 @@ public class ChimeraData
     public int exploration = 0;
     public int stamina = 0;
     public int wisdom = 0;
-    public int energy = 0;
+    public int currentEnergy = 0;
 
     public ChimeraData(Chimera chimera)
     {
@@ -19,6 +19,6 @@ public class ChimeraData
         stamina = chimera.Stamina;
         wisdom = chimera.Wisdom;
         exploration = chimera.Exploration;
-        energy = chimera.Energy;
+        currentEnergy = chimera.CurrentEnergy;
     }
 }

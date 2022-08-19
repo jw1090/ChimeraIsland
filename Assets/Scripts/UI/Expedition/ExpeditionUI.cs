@@ -16,10 +16,10 @@ public class ExpeditionUI : MonoBehaviour
     private ChimeraDetailsFolder _detailsFolder = null;
 
     public ExpeditionManager expeditionManager { get => _expeditionManager; }
-    public ExpeditionSelectionUI SelectionUI { get => _selectionPanel; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
-    public ExpeditionResultUI ResultsUI { get => _resultPanel; }
+    public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
+    public StatefulObject BackgroundStates { get => _backgroundUIStates; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -61,18 +61,18 @@ public class ExpeditionUI : MonoBehaviour
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
-                _backgroundUIStates.SetState("Selection Panel");
+                _backgroundUIStates.SetState("Selection Panel", true);
                 _foregroundUIStates.SetState("Transparent", true);
                 _expeditionManager.LoadExpeditionOptions();
                 _selectionPanel.DisplayExpeditionOptions();
                 break;
             case ExpeditionState.InProgress:
-                _backgroundUIStates.SetState("Selection Panel");
-                _foregroundUIStates.SetState("In Progress Panel");
+                _backgroundUIStates.SetState("Setup Panel", true);
+                _foregroundUIStates.SetState("In Progress Panel", true);
                 break;
             case ExpeditionState.Result:
-                _backgroundUIStates.SetState("Selection Panel");
-                _foregroundUIStates.SetState("Results Panel");
+                _backgroundUIStates.SetState("Setup Panel", true);
+                _foregroundUIStates.SetState("Results Panel", true);
                 break;
             default:
                 Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FacilityShop : MonoBehaviour
 {
+    [SerializeField] private GameObject _itemsFolder = null;
+    private StatefulObject _statefulMenu = null;
     private List<FacilityShopItem> _facilityShopItems = new List<FacilityShopItem>();
     private Marketplace _marketplace = null;
     private HabitatManager _habitatManager = null;
@@ -20,34 +22,46 @@ public class FacilityShop : MonoBehaviour
 
     public void Initialize(Marketplace marketplace)
     {
-        foreach (Transform child in transform)
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
+
+        _statefulMenu = GetComponent<StatefulObject>();
+        _marketplace = marketplace;
+
+        _statefulMenu.SetState("Sold Out", true);
+
+        foreach (Transform child in _itemsFolder.transform)
         {
             FacilityShopItem shopItem = child.GetComponent<FacilityShopItem>();
 
             _facilityShopItems.Add(shopItem);
             shopItem.Initialize();
         }
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _marketplace = marketplace;
+
     }
 
     public void CheckShowIcons()
     {
-        // If facility is tier is less than habitat & facility unlocked
-        foreach (FacilityType type in Enum.GetValues(typeof(FacilityType)))
+        bool soldOut = true;
+
+        foreach (FacilityShopItem shopItem in _facilityShopItems)
         {
-            if (type != FacilityType.None)
+            Facility facility = _habitatManager.CurrentHabitat.GetFacility(shopItem.FacilityType);
+            if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.IsFacilityUnlocked(shopItem.FacilityType) == true)
             {
-                Facility facility = _habitatManager.CurrentHabitat.GetFacility(type);
-                if (facility.CurrentTier < _habitatManager.CurrentHabitat.CurrentTier && _marketplace.GetFacilityUnlocked(type) == true)
-                {
-                    GetShopItem(type).gameObject.SetActive(true);
-                }
-                else
-                {
-                    GetShopItem(type).gameObject.SetActive(false);
-                }
+                shopItem.gameObject.SetActive(true);
+                _statefulMenu.SetState("Items");
+
+                soldOut = false;
             }
+            else
+            {
+                shopItem.gameObject.SetActive(false);
+            }
+        }
+
+        if (soldOut == true)
+        {
+            _statefulMenu.SetState("Sold Out");
         }
     }
 

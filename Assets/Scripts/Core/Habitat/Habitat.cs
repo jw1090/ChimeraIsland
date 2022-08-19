@@ -19,7 +19,6 @@ public class Habitat : MonoBehaviour
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
-    private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
@@ -75,8 +74,8 @@ public class Habitat : MonoBehaviour
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _audioManager.SetHabitat(this);
 
         if (_patrolNodes == null)
         {
@@ -85,7 +84,7 @@ public class Habitat : MonoBehaviour
         }
         _patrolNodes.Initialize();
 
-        SetTier(_habitatManager.HabitatDataList[(int)Type]._currentTier);
+        SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
 
         foreach (Facility facility in _facilities)
         {
@@ -187,11 +186,11 @@ public class Habitat : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
     }
 
-    public void BuildFacility(FacilityType facilityType)
+    public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
 
-        facility.BuildFacility();
+        facility.BuildFacility(moveCamera);
         _habitatManager.AddNewFacility(facility);
     }
 
@@ -216,7 +215,7 @@ public class Habitat : MonoBehaviour
             return false;
         }
 
-        facility.BuildFacility();
+        facility.BuildFacility(true);
         _habitatManager.AddNewFacility(facility);
 
         return true;
@@ -232,6 +231,8 @@ public class Habitat : MonoBehaviour
 
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
+        _audioManager.PlayHabitatMusic(_habitatType);
+        _audioManager.PlayHabitatAmbient(_habitatType);
         LoadHabitatTier();
     }
 
@@ -240,13 +241,13 @@ public class Habitat : MonoBehaviour
         switch (_currentTier)
         {
             case 1:
-                _tiers.SetState("Tier 1");
+                _tiers.SetState("Tier 1", true);
                 break;
             case 2:
-                _tiers.SetState("Tier 2");
+                _tiers.SetState("Tier 2", true);
                 break;
             case 3:
-                _tiers.SetState("Tier 3");
+                _tiers.SetState("Tier 3", true);
                 break;
             default:
                 Debug.LogWarning($"Habitat tier [{_currentTier}] is invalid. Please fix!");
@@ -277,19 +278,16 @@ public class Habitat : MonoBehaviour
         {
             yield return new WaitForSeconds(_habitatManager.TickTimer);
 
-            if (_uiManager.HabitatUI.MenuOpen == false)
+            foreach (Chimera chimera in _activeChimeras)
             {
-                foreach (Chimera chimera in _activeChimeras)
-                {
-                    chimera.EnergyTick();
-                }
+                chimera.EnergyTick();
+            }
 
-                foreach (Facility facility in _facilities)
+            foreach (Facility facility in _facilities)
+            {
+                if (facility.IsBuilt)
                 {
-                    if (facility.IsBuilt)
-                    {
-                        facility.FacilityTick();
-                    }
+                    facility.FacilityTick();
                 }
             }
         }

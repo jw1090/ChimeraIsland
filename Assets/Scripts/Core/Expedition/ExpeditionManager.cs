@@ -24,9 +24,9 @@ public class ExpeditionManager : MonoBehaviour
     private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
-    private float _agilityModifer = 1.0f;
-    private float _intelligenceModifier = 1.0f;
-    private float _strengthModifier = 1.0f;
+    private float _explorationModifier = 1.0f;
+    private float _staminaModifer = 1.0f;
+    private float _wisdomModifier = 1.0f;
     private float _aquaBonus = 0.0f;
     private float _bioBonus = 0.0f;
     private float _firaBonus = 0.0f;
@@ -35,11 +35,14 @@ public class ExpeditionManager : MonoBehaviour
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
-    public int CurrentFossilProgress { get => _currentFossilProgress; }
     public ExpeditionData EssenceExpeditionOption { get => _essenceExpeditionOption; }
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
+    public int CurrentEssenceProgress { get => _currentEssenceProgress; }
+    public int CurrentFossilProgress { get => _currentFossilProgress; }
+    public int CurrentHabitatProgress { get => _currentHabitatProgress; }
+    public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -81,6 +84,11 @@ public class ExpeditionManager : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
 
         _expeditionState = ExpeditionState.Selection;
+
+        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
+        _currentEssenceProgress = data.expeditionEssenceProgress;
+        _currentFossilProgress = data.expeditionFossilProgress;
+        _currentHabitatProgress = data.expeditionHabitatProgress;
 
         return this;
     }
@@ -224,6 +232,14 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool AddChimera(Chimera chimera)
     {
+        if (_chimeras.Count == 3)
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            Debug.LogWarning($"Expedition is full!");
+            return false;
+        }
+
         _chimeras.Add(chimera);
         EvaluateRosterChange();
 
@@ -237,7 +253,7 @@ public class ExpeditionManager : MonoBehaviour
         _chimeras.Remove(chimera);
         EvaluateRosterChange();
 
-        if(_chimeras.Count == 0)
+        if (_chimeras.Count == 0)
         {
             _uiExpedition.SetupUI.ToggleConfirmButton(false);
         }
@@ -268,7 +284,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float minimumLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 15.0f;
+        float difficultyValue = Mathf.Pow(minimumLevel * 1.2f, 1.5f) * 20.0f;
 
         _difficultyValue = difficultyValue;
 
@@ -283,9 +299,9 @@ public class ExpeditionManager : MonoBehaviour
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Stamina * (_agilityModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Wisdom * (_intelligenceModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Exploration * (_strengthModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Stamina * (_staminaModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Wisdom * (_wisdomModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Exploration * (_explorationModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
         }
 
         if (power >= _difficultyValue)
@@ -311,22 +327,22 @@ public class ExpeditionManager : MonoBehaviour
                 case ModifierType.None:
                     break;
                 case ModifierType.Aqua:
-                    _aquaBonus = 0.1f;
+                    _aquaBonus = 0.2f;
                     break;
                 case ModifierType.Bio:
-                    _bioBonus = 0.1f;
+                    _bioBonus = 0.2f;
                     break;
                 case ModifierType.Fira:
-                    _firaBonus = 0.1f;
+                    _firaBonus = 0.2f;
                     break;
-                case ModifierType.Agility:
-                    _agilityModifer = 1.2f;
+                case ModifierType.Exploration:
+                    _explorationModifier = 1.2f;
                     break;
-                case ModifierType.Intelligence:
-                    _intelligenceModifier = 1.2f;
+                case ModifierType.Stamina:
+                    _staminaModifer = 1.2f;
                     break;
-                case ModifierType.Strength:
-                    _strengthModifier = 1.2f;
+                case ModifierType.Wisdom:
+                    _wisdomModifier = 1.2f;
                     break;
                 default:
                     Debug.LogWarning($"Modifier type is not valid [{modifierType}]. Please fix.");
@@ -353,14 +369,20 @@ public class ExpeditionManager : MonoBehaviour
 
     private void ResetMultipliers()
     {
-        _agilityModifer = 1.0f;
-        _intelligenceModifier = 1.0f;
-        _strengthModifier = 1.0f;
+        _staminaModifer = 1.0f;
+        _wisdomModifier = 1.0f;
+        _explorationModifier = 1.0f;
     }
 
     public float CalculateSuccessChance()
     {
         float successChance = 0.0f;
+
+        Debug.Log
+        (
+            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
+            $"Success Chance: {successChance.ToString("F2")}"
+        );
 
         if (Mathf.Approximately(_chimeraPower, _difficultyValue) == true)
         {
@@ -370,12 +392,6 @@ public class ExpeditionManager : MonoBehaviour
         {
             successChance = (_chimeraPower / _difficultyValue) * 100.0f;
         }
-
-        Debug.Log
-        (
-            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
-            $"Success Chance: {successChance.ToString("F2")}"
-        );
 
         return successChance;
     }
@@ -397,6 +413,13 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool RandomSuccesRate()
     {
+
+        if (_selectedExpedition.AutoSucceed == true)
+        {
+            Debug.Log($"Auto suceed activated, you win!");
+            return true;
+        }
+
         float successRoll = Random.Range(0.0f, _difficultyValue);
 
         Debug.Log($"You rolled {successRoll} out of {_difficultyValue - _chimeraPower}");
@@ -420,20 +443,27 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.Fossils:
                 _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.FossilButtons);
+                _uiManager.EnableUIByType(UIElementType.FossilsWallets);
                 _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
+
+                if (_selectedExpedition.UnlocksNewChimera == true)
+                {
+                    ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
+                    Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
+                }
                 break;
             case ExpeditionType.HabitatUpgrade:
+                _uiManager.EnableUIByType(UIElementType.EssenceWallets);
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Waterfall, true);
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.Cave, true);
                         break;
                     case HabitatRewardType.RuneStone:
-                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone);
+                        _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone, true);
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
@@ -462,7 +492,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             case ExpeditionType.Essence:
                 _essenceExpeditionOption = null;
-                if (_currentEssenceProgress + 1 < _essenceExpeditions.Count)
+                if (_currentEssenceProgress < _essenceExpeditions.Count - 1)
                 {
                     ++_currentEssenceProgress;
                 }
@@ -473,30 +503,31 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.Fossils:
                 _fossilExpeditionOption = null;
-                if (_currentFossilProgress + 1 < _fossilExpeditions.Count)
+                if (_currentFossilProgress < _fossilExpeditions.Count - 1)
                 {
                     ++_currentFossilProgress;
                 }
                 else
                 {
-                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentFossilProgress}]");
+                    Debug.LogWarning($"Fossil Expedition is at max rank [{_currentFossilProgress}]");
                 }
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress + 1 < _habitatExpeditions.Count)
+                if (_currentHabitatProgress < _habitatExpeditions.Count)
                 {
                     ++_currentHabitatProgress;
                 }
                 else
                 {
-                    Debug.LogWarning($"Essence Expedition is at max rank [{_currentHabitatProgress}]");
+                    Debug.LogWarning($"Habitat Expedition is at max rank [{_currentHabitatProgress}]");
                 }
                 break;
             default:
                 Debug.LogError($"Expedition Type [{_selectedExpedition.Type}] is invalid.");
                 break;
         }
+        _habitatManager.SetExpeditionProgress(_currentEssenceProgress, _currentFossilProgress, _currentHabitatProgress);
     }
 
     public void ChimerasOnExpedition(bool onExpedition)

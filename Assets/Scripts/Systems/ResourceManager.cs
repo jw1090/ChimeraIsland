@@ -293,11 +293,11 @@ public class ResourceManager : MonoBehaviour
                 return _bioSprite;
             case ModifierType.Fira:
                 return _firaSprite;
-            case ModifierType.Agility:
+            case ModifierType.Stamina:
                 return _staminaSprite;
-            case ModifierType.Intelligence:
+            case ModifierType.Wisdom:
                 return _wisdomSprite;
-            case ModifierType.Strength:
+            case ModifierType.Exploration:
                 return _explorationSprite;
             default:
                 Debug.LogWarning($"Badge Type [{badgeType}] is invalid, please change!");

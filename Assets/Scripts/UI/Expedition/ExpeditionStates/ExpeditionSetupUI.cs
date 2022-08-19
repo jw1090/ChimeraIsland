@@ -15,6 +15,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private Button _confirmButton = null;
+    [SerializeField] private Button _backButton = null;
     private UIManager _uiManager = null;
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
@@ -40,6 +41,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     public void SetupListeners()
     {
         _uiManager.CreateButtonListener(_confirmButton, ConfirmClick);
+        _uiManager.CreateButtonListener(_backButton, BackClick);
     }
 
     private void ConfirmClick()
@@ -48,11 +50,21 @@ public class ExpeditionSetupUI : MonoBehaviour
         {
             Debug.Log($"<color=Red>Please add a Chimera to send it on an expedition.</color>");
         }
+
         _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
         _expeditionManager.ChimerasOnExpedition(true);
 
-        _expeditionUI.InProgressUI.gameObject.SetActive(true);
+        _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Party);
         _expeditionManager.EnterInProgressState();
+
+        _backButton.gameObject.SetActive(false);
+    }
+
+    private void BackClick()
+    {
+        _expeditionUI.BackgroundStates.SetState("Selection Panel");
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     public void LoadExpeditionData()
@@ -73,6 +85,8 @@ public class ExpeditionSetupUI : MonoBehaviour
         LoadDuration(data.Duration);
         _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
         LoadModifiers(data.Modifiers);
+
+        _backButton.gameObject.SetActive(true);
     }
 
     private void LoadDuration(float duration)

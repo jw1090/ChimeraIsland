@@ -164,7 +164,7 @@ public class LevelLoader : AsyncLoader
             case SceneType.Habitat:
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
-            case SceneType.MainMenu:                
+            case SceneType.MainMenu:
                 break;
             case SceneType.Starting:
                 _uiManager.StartingUI.SetupStartingButtons();

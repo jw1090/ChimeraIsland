@@ -15,6 +15,7 @@ public class Facility : MonoBehaviour
     [SerializeField] private FacilitySign _facilitySign = null;
     [SerializeField] private Transform _cameraTransitionNode = null;
 
+    private CameraUtil _cameraUtil;
     private FacilitySFX _facilitySFX = null;
     private HabitatUI _habitatUI = null;
     private AudioManager _audioManager = null;
@@ -48,6 +49,7 @@ public class Facility : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
@@ -57,7 +59,6 @@ public class Facility : MonoBehaviour
 
         _facilitySFX = GetComponent<FacilitySFX>();
         _trainingIcon.gameObject.SetActive(false);
-
         _tiers.SetState("Tier 0");
 
         _facilitySign.Initialize(_facilityType);
@@ -78,10 +79,8 @@ public class Facility : MonoBehaviour
         return true;
     }
 
-    public void BuildFacility()
+    public void BuildFacility(bool moveCamera = false)
     {
-        _price = (int)(_price * 5.0f);
-
         string debugString = "";
 
         if (_currentTier == 0)
@@ -101,12 +100,18 @@ public class Facility : MonoBehaviour
         }
         else
         {
+            _price = (int)(_price * 4.0f);
             ++_statModifier;
             debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
         }
 
         ++_currentTier;
         _habitatUI.UpdateShopUI();
+
+        if (moveCamera == true)
+        {
+            _cameraUtil.FacilityCameraShift(Type);
+        }
 
         Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
@@ -167,7 +172,7 @@ public class Facility : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
 
-        Debug.Log($"{ _storedChimera} has been removed from the facility.");
+        Debug.Log($"{_storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
     }
@@ -175,7 +180,7 @@ public class Facility : MonoBehaviour
     public void FacilityTick()
     {
         if (_storedChimera == null)
-        { 
+        {
             return;
         }
 

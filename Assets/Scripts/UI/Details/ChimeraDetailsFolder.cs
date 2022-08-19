@@ -14,6 +14,16 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             chimeraDetail.Initialize(uiManager);
         }
+
+        SetupListeners();
+    }
+
+    private void SetupListeners()
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.SetupButtonListeners();
+        }
     }
 
     public void HabitatDetailsSetup()
@@ -27,14 +37,6 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
 
         CheckDetails();
-    }
-
-    public void SetupButtonListeners()
-    {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.SetupButtonListeners();
-        }
     }
 
     public void UpdateDetailsList()

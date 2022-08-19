@@ -6,9 +6,11 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private string _chimeraName = "";
-    [SerializeField] private int _reqAgilty = 0;
-    [SerializeField] private int _reqIntelligence = 0;
-    [SerializeField] private int _reqStrength = 0;
+    [SerializeField] private StatType _statBonus = StatType.None;
+    [SerializeField] private int _reqExploration = 0;
+    [SerializeField] private int _reqStamina = 0;
+    [SerializeField] private int _reqWisdom = 0;
+    [SerializeField] private float _speed = 4.5f;
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
@@ -17,9 +19,10 @@ public class EvolutionLogic : MonoBehaviour
     public Animator Animator { get => GetComponent<Animator>(); }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
-    public int ReqAgility { get => _reqAgilty; }
-    public int ReqIntelligence { get => _reqIntelligence; }
-    public int ReqStrength { get => _reqStrength; }
+    public StatType StatBonus { get => _statBonus; }
+    public int ReqExploration { get => _reqExploration; }
+    public int ReqStamina { get => _reqStamina; }
+    public int ReqWisdom { get => _reqWisdom; }
     public string Name { get => _chimeraName; }
 
     public void Initialize(Chimera chimera)
@@ -29,9 +32,10 @@ public class EvolutionLogic : MonoBehaviour
         _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 
         _chimeraBrain = chimera;
+        _chimeraBrain.Behavior.SetAgentSpeed(_speed);
     }
 
-    public bool CheckEvolution(int agility, int intelligence, int strength, out EvolutionLogic newEvolution)
+    public bool CheckEvolution(int exploration, int staminan, int wisdom, out EvolutionLogic newEvolution)
     {
         newEvolution = null;
 
@@ -42,15 +46,15 @@ public class EvolutionLogic : MonoBehaviour
 
         foreach (var possibleEvolution in _evolutionPaths)
         {
-            if (agility < possibleEvolution.ReqAgility)
+            if (staminan < possibleEvolution.ReqStamina)
             {
                 continue;
             }
-            else if (intelligence < possibleEvolution.ReqIntelligence)
+            else if (wisdom < possibleEvolution.ReqWisdom)
             {
                 continue;
             }
-            if (strength < possibleEvolution.ReqStrength)
+            if (exploration < possibleEvolution.ReqExploration)
             {
                 continue;
             }

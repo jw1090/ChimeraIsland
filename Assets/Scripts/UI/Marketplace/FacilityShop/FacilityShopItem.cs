@@ -4,26 +4,28 @@ using UnityEngine.UI;
 
 public class FacilityShopItem : MonoBehaviour
 {
-    [Header("Shop Info")]
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
-
-    [Header("References")]
     [SerializeField] private BuyFacilityButton _buyFacilityButton = null;
     [SerializeField] private Image _facilityStatIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
-
-    public FacilityType FacilityType { get => _facilityType; }
-
+    [SerializeField] private TextMeshProUGUI _tier = null;
     private ResourceManager _resourceManager = null;
     private Habitat _habitat = null;
+    private Facility _facility = null;
+
+    public FacilityType FacilityType { get => _facilityType; }
 
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
 
+        _facility = _habitat.GetFacility(_facilityType);
+
         _name.text = LoadName();
+        _tier.text = $"T{_facility.CurrentTier + 1}";
         _facilityStatIcon.sprite = _resourceManager.GetStatSprite(_facilityType);
+
         _buyFacilityButton.Initialize(_habitat, _facilityType);
     }
 
@@ -32,11 +34,11 @@ public class FacilityShopItem : MonoBehaviour
         switch (_facilityType)
         {
             case FacilityType.Cave:
-                return "Exploration";
+                return "Cave";
             case FacilityType.RuneStone:
-                return "Wisdom";
+                return "Rune Stones";
             case FacilityType.Waterfall:
-                return "Stamina";
+                return "Waterfall";
             default:
                 Debug.LogWarning($"{_facilityType} is invalid, please change");
                 return "Error";
@@ -45,6 +47,8 @@ public class FacilityShopItem : MonoBehaviour
 
     public void UpdateUI()
     {
+        _tier.text = $"T{_facility.CurrentTier + 1}";
+
         _buyFacilityButton.UpdateUI();
     }
 }

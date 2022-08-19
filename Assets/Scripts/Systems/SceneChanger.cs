@@ -23,11 +23,9 @@ public class SceneChanger : MonoBehaviour
 
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.MainMenuButton, LoadMainMenu);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.WorldMapButton, LoadWorldMap);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.QuitGameButton, QuitGame);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
-        _uiManager.CreateButtonListener(_uiManager.WorldMapUI.TreeOfLifeButton, LoadTreeOfLife);
     }
 
     public void NewGame()
@@ -59,25 +57,9 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
     }
 
-    public void LoadWorldMap()
-    {
-        SaveSessionData(false);
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.WORLD_MAP);
-    }
-
     public void LoadStonePlains()
     {
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
-    }
-
-    public void LoadTreeOfLife()
-    {
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TREE_OF_LIFE);
-    }
-
-    public void LoadAshlands()
-    {
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.ASHLANDS);
     }
 
     private void SaveSessionData(bool quitGame)

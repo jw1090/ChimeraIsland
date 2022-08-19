@@ -18,7 +18,7 @@ public enum ChimeraType
 public enum DetailsButtonType
 {
     None = -1,
-    Standard,
+    Party,
     Expedition,
 }
 
@@ -54,13 +54,6 @@ public enum FacilityType
     Waterfall,
 }
 
-public enum FacilityColliderType
-{
-    None = -1,
-    Place,
-    release,
-}
-
 public enum HabitatType
 {
     None = -1,
@@ -85,9 +78,9 @@ public enum ModifierType
     Aqua,
     Bio,
     Fira,
-    Agility,
-    Intelligence,
-    Strength,
+    Stamina,
+    Wisdom,
+    Exploration,
 }
 
 public enum SceneType
@@ -98,12 +91,13 @@ public enum SceneType
     Starting,
     WorldMap,
 }
+
 public enum StatType
 {
     None = -1,
+    Exploration,
     Stamina,
     Wisdom,
-    Exploration,
 }
 
 public enum TutorialIconType
@@ -128,7 +122,8 @@ public enum UIElementType
     ExpeditionButton,
     MarketplaceChimeraTab,
     WorldMapButton,
-    FossilButtons
+    FossilsWallets,
+    EssenceWallets,
 }
 
 public enum TutorialStageType

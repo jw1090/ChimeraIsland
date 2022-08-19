@@ -6,10 +6,7 @@ public static class GameConsts
     {
         public const int MAIN_MENU = 1;
         public const int STARTER_SELECT = 2;
-        public const int WORLD_MAP = 3;
-        public const int STONE_PLANES = 4;
-        public const int TREE_OF_LIFE = 5;
-        public const int ASHLANDS = 6;
+        public const int STONE_PLANES = 3;
     }
 
     public class JsonSaveKeys
@@ -23,6 +20,8 @@ public static class GameConsts
         public const string MASTER = "MasterVolume";
         public const string MUSIC = "MusicVolume";
         public const string SFX = "SFXVolume";
+        public const string AMBIENT = "AmbientVolume";
+        public const string UISFX = "UISFXVolume";
     }
 
     public class Colors

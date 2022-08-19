@@ -9,7 +9,7 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private float _startTime = 0.0f;
     [SerializeField] private DayType _dayType = DayType.None;
     [SerializeField] private AnimationCurve _lightingIntensityMultiplier = null;
-    //[SerializeField] private AnimationCurve _reflectionIntensityMultiplier = null;
+    [SerializeField] private AnimationCurve _reflectionIntensityMultiplier = null;
 
     [Header("Day Light")]
     [SerializeField] private Light _dayLight = null;
@@ -61,9 +61,8 @@ public class LightingManager : MonoBehaviour
         DaylightToggle();
         NightLightToggle();
 
-
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
-        //RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+        RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
     private void TimeEvaluate()
@@ -113,11 +112,11 @@ public class LightingManager : MonoBehaviour
 
     private void DaylightToggle()
     {
-        if (_dayLight.intensity == 0 && _dayLight.gameObject.activeInHierarchy)
+        if (_dayLight.intensity == 0.1 && _dayLight.gameObject.activeInHierarchy)
         {
             _dayLight.gameObject.SetActive(false);
         }
-        else if (_dayLight.intensity > 0 && !_dayLight.gameObject.activeInHierarchy)
+        else if (_dayLight.intensity > 0.1 && !_dayLight.gameObject.activeInHierarchy)
         {
             _dayLight.gameObject.SetActive(true);
             _dayType = DayType.DayTime;
