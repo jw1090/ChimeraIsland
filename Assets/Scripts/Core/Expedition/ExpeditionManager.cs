@@ -42,7 +42,7 @@ public class ExpeditionManager : MonoBehaviour
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
-    public int FinalUpgradeMission { get => _habitatExpeditions.Count; }
+    public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -284,7 +284,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float minimumLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.3f, 1.5f) * 14.0f;
+        float difficultyValue = Mathf.Pow(minimumLevel * 1.2f, 1.5f) * 20.0f;
 
         _difficultyValue = difficultyValue;
 

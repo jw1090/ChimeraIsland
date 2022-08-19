@@ -207,6 +207,8 @@ public class Chimera : MonoBehaviour
         }
 
         _maxEnergy = (int)(_stamina * 0.5) + 5;
+
+        LevelCalculation();
     }
 
     private void InitializeEvolution()
@@ -352,12 +354,17 @@ public class Chimera : MonoBehaviour
 
         if (++_levelUpTracker % 2 == 0)
         {
+            LevelCalculation();
             _audioManager.PlayUISFX(SFXUIType.LevelUp);
-            ++_level;
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
 
         _habitatUI.UpdateHabitatUI();
+    }
+
+    private void LevelCalculation()
+    {
+        _level = (int)Mathf.Round((_stamina + _wisdom + _exploration) * 0.33f);
     }
 
     private void Evolve(EvolutionLogic evolution)

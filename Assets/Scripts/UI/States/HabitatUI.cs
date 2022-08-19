@@ -243,7 +243,7 @@ public class HabitatUI : MonoBehaviour
 
         _openDetailsButton.gameObject.SetActive(false);
 
-        if (_worldMapButton.gameObject.activeInHierarchy == true && detailsButtonType == DetailsButtonType.Standard)
+        if (_worldMapButton.gameObject.activeInHierarchy == true && detailsButtonType == DetailsButtonType.Party)
         {
             _tutorialManager.ShowTutorialStage(TutorialStageType.Transfers);
         }
@@ -251,13 +251,13 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenStandardDetails()
     {
-        OpenDetails(DetailsButtonType.Standard);
+        OpenDetails(DetailsButtonType.Party);
         _closeDetailsButton.gameObject.SetActive(true);
     }
 
     public void OpenExpedtionSelectionDetails()
     {
-        OpenDetails(DetailsButtonType.Standard);
+        OpenDetails(DetailsButtonType.Party);
         _closeDetailsButton.gameObject.SetActive(false);
     }
 

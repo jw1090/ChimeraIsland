@@ -39,9 +39,9 @@ public class ExpeditionSelectionUI : MonoBehaviour
         {
             StarterUpgrade();
         }
-        else if (_expeditionManager.CurrentEssenceProgress == 0)
+        else if (_expeditionManager.CurrentFossilProgress == 0)
         {
-            StarterEssence();
+            StarterFossil();
         }
         else
         {
@@ -64,11 +64,11 @@ public class ExpeditionSelectionUI : MonoBehaviour
         }
     }
 
-    private void StarterEssence()
+    private void StarterFossil()
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
         {
-            if (option.ExpeditionType != ExpeditionType.Essence)
+            if (option.ExpeditionType != ExpeditionType.Fossils)
             {
                 option.gameObject.SetActive(false);
                 continue;
@@ -83,7 +83,7 @@ public class ExpeditionSelectionUI : MonoBehaviour
     {
         foreach (ExpeditionOptionUI option in _expeditionOptions)
         {
-            if (option.ExpeditionType == ExpeditionType.HabitatUpgrade && _expeditionManager.CurrentHabitatProgress >= _expeditionManager.FinalUpgradeMission)
+            if (option.ExpeditionType == ExpeditionType.HabitatUpgrade && _expeditionManager.CurrentHabitatProgress >= _expeditionManager.UpgradeMissionBounds)
             {
                 option.gameObject.SetActive(false);
                 continue;

@@ -81,8 +81,6 @@ public class Facility : MonoBehaviour
 
     public void BuildFacility(bool moveCamera = false)
     {
-        _price = (int)(_price * 5.0f);
-
         string debugString = "";
 
         if (_currentTier == 0)
@@ -102,6 +100,7 @@ public class Facility : MonoBehaviour
         }
         else
         {
+            _price = (int)(_price * 4.0f);
             ++_statModifier;
             debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
         }

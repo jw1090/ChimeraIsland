@@ -51,7 +51,8 @@ public class ExpeditionSetupUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
         _expeditionManager.ChimerasOnExpedition(true);
 
-        _expeditionUI.InProgressUI.gameObject.SetActive(true);
+        _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Party);
         _expeditionManager.EnterInProgressState();
     }
 

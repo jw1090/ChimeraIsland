@@ -108,7 +108,7 @@ public class ChimeraDetails : MonoBehaviour
 
         switch (detailsButtonType)
         {
-            case DetailsButtonType.Standard:
+            case DetailsButtonType.Party:
                 _statefulButtons.SetState("Grazing", true);
                 break;
             case DetailsButtonType.Expedition:

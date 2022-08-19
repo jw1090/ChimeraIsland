@@ -16,10 +16,9 @@ public class ExpeditionUI : MonoBehaviour
     private ChimeraDetailsFolder _detailsFolder = null;
 
     public ExpeditionManager expeditionManager { get => _expeditionManager; }
-    public ExpeditionSelectionUI SelectionUI { get => _selectionPanel; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
-    public ExpeditionResultUI ResultsUI { get => _resultPanel; }
+    public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
