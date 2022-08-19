@@ -109,6 +109,10 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
                 _cameraUtil.CameraZoom();
             }
 
@@ -162,7 +166,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -184,7 +188,7 @@ public class InputManager : MonoBehaviour
 
     private void HeldCheckAgainstUI()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             ExitHeldState();
             return;
