@@ -162,7 +162,16 @@ public class Chimera : MonoBehaviour
 
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
-    public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
+    public void SetOnExpedition(bool onExpedition)
+    {
+        _onExpedition = onExpedition;
+
+        if (onExpedition == false)
+        {
+            transform.position = _habitatManager.CurrentHabitat.SpawnPoint.transform.position;
+        }
+    }
+
     public void SetLevel(int level) { _level = level; }
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }

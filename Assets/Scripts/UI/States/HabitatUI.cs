@@ -122,6 +122,7 @@ public class HabitatUI : MonoBehaviour
         _transferMap.Initialize();
 
         UIProgressCheck();
+        _expeditionButton.ActivateNotification(false);
     }
 
     private void UIProgressCheck()

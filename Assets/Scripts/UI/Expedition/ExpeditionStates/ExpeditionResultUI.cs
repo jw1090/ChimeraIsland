@@ -7,6 +7,7 @@ public class ExpeditionResultUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successResults = null;
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
     [SerializeField] private Button _rewardsCloseButton = null;
+    private ExpeditionUI _expeditionUI = null; 
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
     private bool _expeditionSuccess = false;
@@ -16,8 +17,9 @@ public class ExpeditionResultUI : MonoBehaviour
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(UIManager uiManager)
+    public void Initialize(ExpeditionUI expeditionUI, UIManager uiManager)
     {
+        _expeditionUI = expeditionUI;
         _uiManager = uiManager;
     }
 
@@ -31,14 +33,21 @@ public class ExpeditionResultUI : MonoBehaviour
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
-            _expeditionSuccess = false;
         }
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
-        _expeditionManager.ResetSelectedExpedition();
+        if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade && _expeditionSuccess == true)
+        {
+            _uiManager.HabitatUI.ResetStandardUI();
+        }
+        else
+        {
+            _expeditionUI.OpenExpeditionUI();
+        }
 
-        _uiManager.HabitatUI.ResetStandardUI();
+        _expeditionManager.ResetSelectedExpedition();
         _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);
+        _expeditionSuccess = false;
     }
 
     public void DetermineReward()
@@ -55,7 +64,7 @@ public class ExpeditionResultUI : MonoBehaviour
                     _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
-                    if(expeditionData.UnlocksNewChimera == true)
+                    if (expeditionData.UnlocksNewChimera == true)
                     {
                         _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.AmountGained} Fossils!";
                     }
