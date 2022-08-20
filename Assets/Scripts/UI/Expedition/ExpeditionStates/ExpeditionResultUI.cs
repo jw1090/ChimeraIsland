@@ -33,11 +33,10 @@ public class ExpeditionResultUI : MonoBehaviour
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
-            _expeditionSuccess = false;
         }
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
-        if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade)
+        if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade && _expeditionSuccess == true)
         {
             _uiManager.HabitatUI.ResetStandardUI();
         }
@@ -48,6 +47,7 @@ public class ExpeditionResultUI : MonoBehaviour
 
         _expeditionManager.ResetSelectedExpedition();
         _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);
+        _expeditionSuccess = false;
     }
 
     public void DetermineReward()

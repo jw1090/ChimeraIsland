@@ -422,7 +422,7 @@ public class ExpeditionManager : MonoBehaviour
 
         float successRoll = Random.Range(0.0f, _difficultyValue);
 
-        Debug.Log($"You rolled {successRoll} out of {_difficultyValue - _chimeraPower}");
+        Debug.Log($"You rolled: {successRoll} | You needed: {_difficultyValue - _chimeraPower}");
 
         if (successRoll >= _difficultyValue - _chimeraPower)
         {
