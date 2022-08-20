@@ -336,13 +336,13 @@ public class ExpeditionManager : MonoBehaviour
                     _firaBonus = 0.2f;
                     break;
                 case ModifierType.Exploration:
-                    _explorationModifier = 1.2f;
+                    _explorationModifier = 1.5f;
                     break;
                 case ModifierType.Stamina:
-                    _staminaModifer = 1.2f;
+                    _staminaModifer = 1.5f;
                     break;
                 case ModifierType.Wisdom:
-                    _wisdomModifier = 1.2f;
+                    _wisdomModifier = 1.5f;
                     break;
                 default:
                     Debug.LogWarning($"Modifier type is not valid [{modifierType}]. Please fix.");
@@ -514,7 +514,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress < _habitatExpeditions.Count)
+                if (_currentHabitatProgress < _habitatExpeditions.Count - 1)
                 {
                     ++_currentHabitatProgress;
                 }

@@ -47,7 +47,11 @@ public static class FileHandler
 
     private static string GetPath(string filename)
     {
+#if UNITY_EDITOR
         return System.IO.Path.Combine(Application.dataPath, "JSON", $"{filename}");
+#else
+        return System.IO.Path.Combine(Application.persistentDataPath, "JSON", $"{filename}");
+#endif
     }
 
     private static void WriteFile(string path, string content)
