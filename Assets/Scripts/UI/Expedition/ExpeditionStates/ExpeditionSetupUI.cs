@@ -30,7 +30,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(UIManager uiManager, ExpeditionUI expeditionUI)
+    public void Initialize(ExpeditionUI expeditionUI,UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
 
