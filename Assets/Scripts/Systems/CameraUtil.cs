@@ -29,7 +29,6 @@ public class CameraUtil : MonoBehaviour
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
     private Rect _leftRect = new Rect();
-    private Vector3 _velocity = Vector3.zero;
     private bool _initialized = false;
     private bool _canMoveUp = true;
     private bool _canMoveDown = true;

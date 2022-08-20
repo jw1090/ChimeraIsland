@@ -40,8 +40,8 @@ public class ExpeditionUI : MonoBehaviour
         _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
 
         _selectionPanel.Initialize();
-        _setupPanel.Initialize(uiManager, this);
-        _resultPanel.Initialize(uiManager);
+        _setupPanel.Initialize(this, uiManager);
+        _resultPanel.Initialize(this, uiManager);
 
         SetupListeners();
     }
