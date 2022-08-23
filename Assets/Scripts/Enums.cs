@@ -18,8 +18,8 @@ public enum ChimeraType
 public enum DetailsButtonType
 {
     None = -1,
-    Party,
-    Expedition,
+    Standard,
+    ExpeditionParty,
 }
 
 public enum ElementType

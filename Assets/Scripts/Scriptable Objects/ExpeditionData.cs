@@ -15,6 +15,17 @@ public class ExpeditionData : ScriptableObject
     public float Duration = 0.0f;
     public List<ModifierType> Modifiers = new List<ModifierType>();
 
+    public bool ActiveInProgressTimer { get; set; }  = false;
+    public float ExplorationModifier { get; set; } = 1.0f;
+    public float StaminaModifer { get; set; } = 1.0f;
+    public float WisdomModifier { get; set; } = 1.0f;
+    public float AquaBonus { get; set; } = 0.0f;
+    public float BioBonus { get; set; } = 0.0f;
+    public float FiraBonus { get; set; } = 0.0f;
+    public float DifficultyValue { get; set; } = 0;
+    public float ChimeraPower { get; set; } = 0;
+    public float CurrentDuration { get; set; } = 0.0f;
+
     public ExpeditionData DeepCopy()
     {
         ExpeditionData deepCopy = CreateInstance<ExpeditionData>();

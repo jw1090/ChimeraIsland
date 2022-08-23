@@ -108,10 +108,10 @@ public class ChimeraDetails : MonoBehaviour
 
         switch (detailsButtonType)
         {
-            case DetailsButtonType.Party:
+            case DetailsButtonType.Standard:
                 _statefulButtons.SetState("Grazing", true);
                 break;
-            case DetailsButtonType.Expedition:
+            case DetailsButtonType.ExpeditionParty:
                 if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
                 {
                     _statefulButtons.SetState("Remove Button");

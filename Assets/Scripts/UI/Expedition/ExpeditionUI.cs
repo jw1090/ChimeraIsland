@@ -92,7 +92,7 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
     }
 
     public void CloseExpeditionUI()
