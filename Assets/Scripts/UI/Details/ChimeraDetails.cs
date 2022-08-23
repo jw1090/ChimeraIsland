@@ -14,8 +14,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Slider _energySlider = null;
     [SerializeField] private TextMeshProUGUI _energyText = null;
     [SerializeField] private StatefulObject _statefulButtons = null;
-    [SerializeField] private Button _transferButton = null;
+    [SerializeField] private Button _findButton = null;
     [SerializeField] private Button _addButton = null;
+    [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
     private Chimera _chimera = null;
@@ -23,6 +24,7 @@ public class ChimeraDetails : MonoBehaviour
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
+    private CameraUtil _cameraUtil = null;
     private int _chimeraSpot = 0;
 
     public Chimera Chimera { get => _chimera; }
@@ -37,6 +39,7 @@ public class ChimeraDetails : MonoBehaviour
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
         _expeditionManager = ServiceLocator.Get<ExpeditionManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
         _chimeraSpot = chimeraSpot;
 
@@ -48,6 +51,7 @@ public class ChimeraDetails : MonoBehaviour
         _uiManager.CreateButtonListener(_transferButton, TransferMapClicked);
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
         _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
+        _uiManager.CreateButtonListener(_findButton, FindChimera);
     }
 
     public void UpdateDetails()
@@ -108,8 +112,8 @@ public class ChimeraDetails : MonoBehaviour
 
         switch (detailsButtonType)
         {
-            case DetailsButtonType.Standard:
-                _statefulButtons.SetState("Grazing", true);
+            case DetailsButtonType.Party:
+                _statefulButtons.SetState("Find Button", true);
                 break;
             case DetailsButtonType.ExpeditionParty:
                 if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
@@ -156,5 +160,11 @@ public class ChimeraDetails : MonoBehaviour
         {
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
         }
+    }
+
+    private void FindChimera()
+    {
+        _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
+        _cameraUtil.FindChimeraCameraShift(Chimera);
     }
 }

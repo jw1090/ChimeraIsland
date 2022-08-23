@@ -402,7 +402,6 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_selectedExpedition.CurrentDuration <= 0)
         {
-            _audioManager.PlayUISFX(SFXUIType.Completion);
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
 
@@ -425,10 +424,12 @@ public class ExpeditionManager : MonoBehaviour
 
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             return true;
         }
         else
         {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             return false;
         }
     }
