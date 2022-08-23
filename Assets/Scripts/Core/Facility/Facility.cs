@@ -111,6 +111,7 @@ public class Facility : MonoBehaviour
         if (moveCamera == true)
         {
             _cameraUtil.FacilityCameraShift(Type);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
         }
 
         Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
@@ -155,7 +156,6 @@ public class Facility : MonoBehaviour
         if (_storedChimera.Level > 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
         {
             _uiManager.TutorialObserver.DetailsTutorial = true;
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Details);
         }
 
         _activateTraining = false;

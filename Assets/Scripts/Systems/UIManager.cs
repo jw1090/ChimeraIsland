@@ -88,11 +88,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void TutorialDisableUI()
-    {
-        _habitatUI.TutorialDisableUI();
-    }
-
     public void StartTutorial(TutorialStageData tutorialSteps)
     {
         _tutorialOverlay.gameObject.SetActive(true);

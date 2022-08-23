@@ -6,8 +6,6 @@ public class TutorialObserver : MonoBehaviour
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
-    private HabitatManager _habitatManager = null;
-    private CurrencyManager _currencyManager = null;
     public bool DetailsTutorial { get; set; } = false;
 
     public TutorialObserver Initialize(UIManager uiManager)
@@ -15,8 +13,6 @@ public class TutorialObserver : MonoBehaviour
         _uiManager = uiManager;
         _habitatUI = _uiManager.HabitatUI;
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         SetupListeners();
 
         return this;
@@ -24,9 +20,7 @@ public class TutorialObserver : MonoBehaviour
 
     private void SetupListeners()
     {
-        CreateTutorialListener(_habitatUI.ExpeditionButton.Button, TutorialStageType.ExpeditionRequirements);
-        CreateTutorialListener(_habitatUI.MarketplaceButton, TutorialStageType.FacilityShop);
-        _uiManager.CreateButtonListener(_habitatUI.WaterfallButton, BuyFirstFacility);
+        CreateTutorialListener(_habitatUI.ExpeditionButton.Button, TutorialStageType.ExpeditionSelection);
     }
 
     private void CreateTutorialListener(Button button, TutorialStageType tutorialStageType)
@@ -37,14 +31,6 @@ public class TutorialObserver : MonoBehaviour
             {
                 _tutorialManager.ShowTutorialStage(tutorialStageType);
             });
-        }
-    }
-
-    private void BuyFirstFacility()
-    {
-        if(_habitatManager.CurrentHabitat.GetFacility(FacilityType.Waterfall).Price <= _currencyManager.Essence)
-        {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Training);
         }
     }
 }
