@@ -206,30 +206,28 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
-    private void OpenDetails(DetailsButtonType detailsButtonType)
+    private void OpenDetails()
     {
         _detailsFolder.CheckDetails();
-
-        ResetStandardUI();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
 
         _detailsPanel.gameObject.SetActive(true);
-        _detailsFolder.ToggleDetailsButtons(detailsButtonType);
-
         _openDetailsButton.gameObject.SetActive(false);
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     public void OpenStandardDetails()
     {
-        OpenDetails(DetailsButtonType.Standard);
+        ResetStandardUI();
         _closeDetailsButton.gameObject.SetActive(true);
+        OpenDetails();
     }
 
     public void OpenExpedtionSelectionDetails()
     {
-        OpenDetails(DetailsButtonType.Standard);
-        _closeDetailsButton.gameObject.SetActive(false);
+        ResetStandardUI();
+        OpenDetails();
     }
 
     public void OpenMarketplace()
@@ -308,7 +306,7 @@ public class HabitatUI : MonoBehaviour
         _expeditionButton.ActivateNotification(false);
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
-        _expeditionPanel.OpenExpeditionUI();
+        _expeditionPanel.ExpeditionButtonClick();
 
         _menuOpen = true;
     }

@@ -54,10 +54,15 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.SetupListeners();
     }
 
-    public void OpenExpeditionUI()
+    public void ExpeditionButtonClick()
     {
         _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
 
+        OpenExpeditionUI();
+    }
+
+    public void OpenExpeditionUI()
+    {
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
