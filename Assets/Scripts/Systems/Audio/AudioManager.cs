@@ -297,9 +297,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case SFXUIType.Hold:
                 {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hold SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    //AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hold SFX").FirstOrDefault();
+                    //_sfxSource.clip = item.Clip;
+                    //_sfxSource.Play();
                 }
                 break;
             default:

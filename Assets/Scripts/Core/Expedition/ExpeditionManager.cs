@@ -22,16 +22,6 @@ public class ExpeditionManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
-    private bool _activeInProgressTimer = false;
-    private float _difficultyValue = 0;
-    private float _chimeraPower = 0;
-    private float _explorationModifier = 1.0f;
-    private float _staminaModifer = 1.0f;
-    private float _wisdomModifier = 1.0f;
-    private float _aquaBonus = 0.0f;
-    private float _bioBonus = 0.0f;
-    private float _firaBonus = 0.0f;
-    private float _currentDuration = 0.0f;
     private ExpeditionState _expeditionState = ExpeditionState.None;
 
     public ExpeditionState State { get => _expeditionState; }
@@ -102,7 +92,12 @@ public class ExpeditionManager : MonoBehaviour
             return;
         }
 
-        if (_activeInProgressTimer == true)
+        if(_selectedExpedition == null)
+        {
+            return;
+        }
+
+        if (_selectedExpedition.ActiveInProgressTimer == true)
         {
             InProgressTimerUpdate();
         }
@@ -228,8 +223,8 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _currentDuration = _selectedExpedition.Duration;
-        _activeInProgressTimer = true;
+        _selectedExpedition.CurrentDuration = _selectedExpedition.Duration;
+        _selectedExpedition.ActiveInProgressTimer = true;
     }
 
     public bool AddChimera(Chimera chimera)
@@ -288,9 +283,8 @@ public class ExpeditionManager : MonoBehaviour
         float minimumLevel = _selectedExpedition.SuggestedLevel;
         float difficultyValue = Mathf.Pow(minimumLevel * 1.2f, 1.5f) * 20.0f;
 
-        _difficultyValue = difficultyValue;
-
-        _uiExpedition.SetupUI.UpdateDifficultyValue(_difficultyValue);
+        _selectedExpedition.DifficultyValue = difficultyValue;
+        _uiExpedition.SetupUI.UpdateDifficultyValue(difficultyValue);
     }
 
     private void CalculateChimeraPower()
@@ -301,21 +295,21 @@ public class ExpeditionManager : MonoBehaviour
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Stamina * (_staminaModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Wisdom * (_wisdomModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Exploration * (_explorationModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Stamina * (_selectedExpedition.StaminaModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Wisdom * (_selectedExpedition.WisdomModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            power += chimera.Exploration * (_selectedExpedition.ExplorationModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
         }
 
-        if (power >= _difficultyValue)
+        if (power >= _selectedExpedition.DifficultyValue)
         {
-            _chimeraPower = _difficultyValue;
+            _selectedExpedition.ChimeraPower = _selectedExpedition.DifficultyValue;
         }
         else
         {
-            _chimeraPower = power;
+            _selectedExpedition.ChimeraPower = power;
         }
 
-        _uiExpedition.SetupUI.UpdateChimeraPower(_chimeraPower);
+        _uiExpedition.SetupUI.UpdateChimeraPower(_selectedExpedition.ChimeraPower);
     }
 
     private void CalculateModifiers()
@@ -329,22 +323,22 @@ public class ExpeditionManager : MonoBehaviour
                 case ModifierType.None:
                     break;
                 case ModifierType.Aqua:
-                    _aquaBonus = 0.2f;
+                    _selectedExpedition.AquaBonus = 0.25f;
                     break;
                 case ModifierType.Bio:
-                    _bioBonus = 0.2f;
+                    _selectedExpedition.BioBonus = 0.25f;
                     break;
                 case ModifierType.Fira:
-                    _firaBonus = 0.2f;
+                    _selectedExpedition.FiraBonus = 0.25f;
                     break;
                 case ModifierType.Exploration:
-                    _explorationModifier = 1.5f;
+                    _selectedExpedition.ExplorationModifier = 1.5f;
                     break;
                 case ModifierType.Stamina:
-                    _staminaModifer = 1.5f;
+                    _selectedExpedition.StaminaModifer = 1.5f;
                     break;
                 case ModifierType.Wisdom:
-                    _wisdomModifier = 1.5f;
+                    _selectedExpedition.WisdomModifier = 1.5f;
                     break;
                 default:
                     Debug.LogWarning($"Modifier type is not valid [{modifierType}]. Please fix.");
@@ -358,11 +352,11 @@ public class ExpeditionManager : MonoBehaviour
         switch (elementType)
         {
             case ElementType.Aqua:
-                return _aquaBonus;
+                return _selectedExpedition.AquaBonus;
             case ElementType.Bio:
-                return _bioBonus;
+                return _selectedExpedition.BioBonus;
             case ElementType.Fira:
-                return _firaBonus;
+                return _selectedExpedition.FiraBonus;
             default:
                 Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
                 return 0.0f;
@@ -371,9 +365,12 @@ public class ExpeditionManager : MonoBehaviour
 
     private void ResetMultipliers()
     {
-        _staminaModifer = 1.0f;
-        _wisdomModifier = 1.0f;
-        _explorationModifier = 1.0f;
+        _selectedExpedition.AquaBonus = 0.0f;
+        _selectedExpedition.BioBonus = 0.0f;
+        _selectedExpedition.FiraBonus = 0.0f;
+        _selectedExpedition.StaminaModifer = 1.0f;
+        _selectedExpedition.WisdomModifier = 1.0f;
+        _selectedExpedition.ExplorationModifier = 1.0f;
     }
 
     public float CalculateSuccessChance()
@@ -382,17 +379,17 @@ public class ExpeditionManager : MonoBehaviour
 
         Debug.Log
         (
-            $"Chimera Power: {_chimeraPower.ToString("F2")} | Difficulty Value: {_difficultyValue.ToString("F2")}\n" +
+            $"Chimera Power: {_selectedExpedition.ChimeraPower.ToString("F2")} | Difficulty Value: {_selectedExpedition.DifficultyValue.ToString("F2")}\n" +
             $"Success Chance: {successChance.ToString("F2")}"
         );
 
-        if (Mathf.Approximately(_chimeraPower, _difficultyValue) == true)
+        if (Mathf.Approximately(_selectedExpedition.ChimeraPower, _selectedExpedition.DifficultyValue) == true)
         {
             successChance = 100.0f;
         }
         else
         {
-            successChance = (_chimeraPower / _difficultyValue) * 100.0f;
+            successChance = (_selectedExpedition.ChimeraPower / _selectedExpedition.DifficultyValue) * 100.0f;
         }
 
         return successChance;
@@ -400,13 +397,13 @@ public class ExpeditionManager : MonoBehaviour
 
     private void InProgressTimerUpdate()
     {
-        _currentDuration -= Time.deltaTime;
-        _uiExpedition.InProgressUI.UpdateInProgressTimeRemainingText(_currentDuration);
+        _selectedExpedition.CurrentDuration -= Time.deltaTime;
+        _uiExpedition.InProgressUI.UpdateInProgressTimeRemainingText(_selectedExpedition.CurrentDuration);
 
-        if (_currentDuration <= 0)
+        if (_selectedExpedition.CurrentDuration <= 0)
         {
-            _currentDuration = 0;
-            _activeInProgressTimer = false;
+            _selectedExpedition.CurrentDuration = 0;
+            _selectedExpedition.ActiveInProgressTimer = false;
 
             _uiExpedition.TimerComplete();
         }
@@ -417,15 +414,16 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_selectedExpedition.AutoSucceed == true)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             Debug.Log($"Auto suceed activated, you win!");
             return true;
         }
 
-        float successRoll = Random.Range(0.0f, _difficultyValue);
+        float successRoll = Random.Range(0.0f, _selectedExpedition.DifficultyValue);
 
-        Debug.Log($"You rolled: {successRoll} | You needed: {_difficultyValue - _chimeraPower}");
+        Debug.Log($"You rolled: {successRoll} | You needed: {_selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower}");
 
-        if (successRoll >= _difficultyValue - _chimeraPower)
+        if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
             return true;
@@ -543,11 +541,14 @@ public class ExpeditionManager : MonoBehaviour
             chimera.SetOnExpedition(onExpedition);
         }
 
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Expedition);
-
         if (onExpedition == false)
         {
             _chimeras.Clear();
+            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+        }
+        else
+        {
+            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
 }

@@ -112,10 +112,10 @@ public class ChimeraDetails : MonoBehaviour
 
         switch (detailsButtonType)
         {
-            case DetailsButtonType.Party:
+            case DetailsButtonType.Standard:
                 _statefulButtons.SetState("Find Button", true);
                 break;
-            case DetailsButtonType.Expedition:
+            case DetailsButtonType.ExpeditionParty:
                 if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
                 {
                     _statefulButtons.SetState("Remove Button");
@@ -164,6 +164,11 @@ public class ChimeraDetails : MonoBehaviour
 
     private void FindChimera()
     {
+        if(_uiManager.HabitatUI.MenuOpen)
+        {
+            _uiManager.HabitatUI.ResetStandardUI();
+        }
+
         _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
         _cameraUtil.FindChimeraCameraShift(Chimera);
     }

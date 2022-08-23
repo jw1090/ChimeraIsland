@@ -54,10 +54,15 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.SetupListeners();
     }
 
-    public void OpenExpeditionUI()
+    public void ExpeditionButtonClick()
     {
         _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
 
+        OpenExpeditionUI();
+    }
+
+    public void OpenExpeditionUI()
+    {
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
@@ -92,7 +97,7 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
     }
 
     public void CloseExpeditionUI()

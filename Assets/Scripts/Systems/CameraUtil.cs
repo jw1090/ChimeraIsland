@@ -6,7 +6,6 @@ public class CameraUtil : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float _speed = 20.0f;
     [SerializeField] private float _sprintMultiplier = 1.5f;
-    [SerializeField] private float _transitionSpeed = 0.25f;
 
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount = 20.0f;
@@ -35,6 +34,8 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
+    private float _standardTransitionSpeed = 0.06f;
+    private float _findTransitionSpeed = 0.05f;
 
     public bool IsHolding { get; set; }
     public Camera CameraCO { get => _cameraCO; }
@@ -61,7 +62,7 @@ public class CameraUtil : MonoBehaviour
 
     private void Update()
     {
-        if(_initialized == false)
+        if (_initialized == false)
         {
             return;
         }
@@ -183,14 +184,14 @@ public class CameraUtil : MonoBehaviour
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        if(_transitionCoroutine != null)
+        if (_transitionCoroutine != null)
         {
             StopCoroutine(_transitionCoroutine);
         }
 
         Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
         facilityPosition.y = this.transform.position.y;
-        _transitionCoroutine = StartCoroutine(MoveCamera(facilityPosition, _transitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(facilityPosition, _standardTransitionSpeed));
     }
 
     public void ChimeraCameraShift()
@@ -203,7 +204,7 @@ public class CameraUtil : MonoBehaviour
         Vector3 spawnPosition = _habitatManager.CurrentHabitat.SpawnPoint.position;
         spawnPosition.y = this.transform.position.y;
         spawnPosition.z += 10.0f;
-        _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _transitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _standardTransitionSpeed));
     }
 
     public void FindChimeraCameraShift(Chimera chimera)
@@ -213,10 +214,7 @@ public class CameraUtil : MonoBehaviour
             StopCoroutine(_transitionCoroutine);
         }
 
-        Vector3 chimeraPosition = chimera.transform.position;
-        chimeraPosition.y = this.transform.position.y;
-        chimeraPosition.z += 5.0f;
-        _transitionCoroutine = StartCoroutine(MoveCamera(chimeraPosition, _transitionSpeed));
+        _transitionCoroutine = StartCoroutine(TrackingChimeraCamera(chimera, _findTransitionSpeed));
     }
 
     private IEnumerator MoveCamera(Vector3 target, float time)
@@ -226,21 +224,29 @@ public class CameraUtil : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
 
-            CameraCollisionCheck();
-
-            if (_canMoveDown == false || _canMoveLeft == false || _canMoveRight == false || _canMoveUp == false)
-            {
-                _inputManager.SetInTransition(false);
-                StopCoroutine(_transitionCoroutine);
-                _transitionCoroutine = null;
-            }
-            else
-            {
-                transform.position = Vector3.Lerp(transform.position, target, time);
-            }
+            transform.position = Vector3.Lerp(transform.position, target, time);
         }
         _inputManager.SetInTransition(false);
+    }
 
-        _transitionCoroutine = null;
+    private IEnumerator TrackingChimeraCamera(Chimera chimera, float time)
+    {
+        _inputManager.SetInTransition(true);
+
+        Vector3 chimeraPosition = chimera.transform.position;
+        chimeraPosition.y = this.transform.position.y;
+        chimeraPosition.z += 10.0f;
+
+        while (Vector3.Distance(transform.position, chimeraPosition) > 2.0f)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            chimeraPosition = chimera.transform.position;
+            chimeraPosition.y = this.transform.position.y;
+            chimeraPosition.z += 10.0f;
+
+            transform.position = Vector3.Lerp(transform.position, chimeraPosition, time);
+        }
+        _inputManager.SetInTransition(false);
     }
 }

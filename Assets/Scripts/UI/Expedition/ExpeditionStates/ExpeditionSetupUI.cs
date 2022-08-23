@@ -22,6 +22,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
+    private ChimeraDetailsFolder _detailsFolder = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -37,6 +38,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
+        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
         _expeditionUI = expeditionUI;
     }
 
@@ -57,7 +59,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Party);
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
         _expeditionManager.EnterInProgressState();
 
         _backButton.gameObject.SetActive(false);
@@ -65,6 +67,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     private void BackClick()
     {
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
