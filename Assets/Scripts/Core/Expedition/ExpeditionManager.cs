@@ -414,6 +414,7 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_selectedExpedition.AutoSucceed == true)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             Debug.Log($"Auto suceed activated, you win!");
             return true;
         }
