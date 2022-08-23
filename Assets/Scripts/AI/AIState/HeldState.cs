@@ -10,14 +10,18 @@ namespace AI.Behavior
         private InputManager _inputManager = null;
         private Vector3 _lastValidPos = Vector3.zero;
         private string _heldAnim = "Held";
+        private AudioManager _audioManager = null;
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
             _inputManager = ServiceLocator.Get<InputManager>();
+            _audioManager = ServiceLocator.Get<AudioManager>();
 
             _chimeraBehavior = chimeraBehavior;
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraUtil.IsHolding = true;
+
+            _audioManager.PlayUISFX(SFXUIType.Hold);
 
             _sphereMarker = _inputManager.SphereMarker;
             _sphereMarker.gameObject.SetActive(true);
@@ -46,6 +50,7 @@ namespace AI.Behavior
             _chimeraBehavior.CameraUtil.IsHolding = false;
             _chimeraBehavior.Dropped = true;
             _chimeraBehavior.ExitAnim(_heldAnim);
+            _audioManager.StopSfxSound();
         }
 
         private void ObjFollowMouse()

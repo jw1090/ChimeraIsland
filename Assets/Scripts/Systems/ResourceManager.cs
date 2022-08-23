@@ -28,13 +28,18 @@ public class ResourceManager : MonoBehaviour
     private Sprite _fossilSprite = null;
     private Sprite _upgradeSprite = null;
 
-    private Sprite _tutorialCute = null;
-    private Sprite _tutorialHappy = null;
-    private Sprite _tutorialLookingLeft = null;
-    private Sprite _tutorialLookingRight = null;
-    private Sprite _tutorialShocked = null;
-    private Sprite _tutorialSpeaking = null;
-    private Sprite _tutorialStandard = null;
+    private Sprite _tutorialHappyA = null;
+    private Sprite _tutorialShockedA = null;
+    private Sprite _tutorialSpeakingA = null;
+    private Sprite _tutorialStandardA = null;
+    private Sprite _tutorialHappyB = null;
+    private Sprite _tutorialShockedB = null;
+    private Sprite _tutorialSpeakingB = null;
+    private Sprite _tutorialStandardB = null;
+    private Sprite _tutorialHappyC = null;
+    private Sprite _tutorialShockedC = null;
+    private Sprite _tutorialSpeakingC = null;
+    private Sprite _tutorialStandardC = null;
 
     private GameObject _chimeraBasePrefabA = null;
     private GameObject _chimeraBasePrefabB = null;
@@ -54,9 +59,16 @@ public class ResourceManager : MonoBehaviour
 
     private GameObject _inputManager = null;
     private GameObject _uiManagerPrefab = null;
+    private ChimeraType _firstChimeraType = ChimeraType.None;
 
+    public ChimeraType FirstChimeraType { get => _firstChimeraType; }
     public GameObject InputManager { get => _inputManager;}
     public GameObject UIManager { get => _uiManagerPrefab;}
+
+    public void SetFirstChimeraType(ChimeraType chimeraType)
+    {
+        _firstChimeraType = chimeraType;
+    }
 
     public ResourceManager Initialize()
     {
@@ -88,13 +100,18 @@ public class ResourceManager : MonoBehaviour
         _fossilSprite = Resources.Load<Sprite>("Icons/Expedition/Fossil");
         _upgradeSprite = Resources.Load<Sprite>("Icons/Expedition/Upgrade");
 
-        _tutorialCute = Resources.Load<Sprite>("Icons/Tutorial/Cute");
-        _tutorialHappy = Resources.Load<Sprite>("Icons/Tutorial/Happy");
-        _tutorialLookingLeft = Resources.Load<Sprite>("Icons/Tutorial/Looking Left");
-        _tutorialLookingRight = Resources.Load<Sprite>("Icons/Tutorial/Looking Right");
-        _tutorialShocked = Resources.Load<Sprite>("Icons/Tutorial/Shocked");
-        _tutorialSpeaking = Resources.Load<Sprite>("Icons/Tutorial/Speaking");
-        _tutorialStandard = Resources.Load<Sprite>("Icons/Tutorial/Standard");
+        _tutorialHappyA = Resources.Load<Sprite>("Icons/Tutorial/Happy A");
+        _tutorialShockedA = Resources.Load<Sprite>("Icons/Tutorial/Shocked A");
+        _tutorialSpeakingA = Resources.Load<Sprite>("Icons/Tutorial/Speaking A");
+        _tutorialStandardA = Resources.Load<Sprite>("Icons/Tutorial/Standard A");
+        _tutorialHappyB = Resources.Load<Sprite>("Icons/Tutorial/Happy B");
+        _tutorialShockedB = Resources.Load<Sprite>("Icons/Tutorial/Shocked B");
+        _tutorialSpeakingB = Resources.Load<Sprite>("Icons/Tutorial/Speaking B");
+        _tutorialStandardB = Resources.Load<Sprite>("Icons/Tutorial/Standard B");
+        _tutorialHappyC = Resources.Load<Sprite>("Icons/Tutorial/Happy C");
+        _tutorialShockedC = Resources.Load<Sprite>("Icons/Tutorial/Shocked C");
+        _tutorialSpeakingC = Resources.Load<Sprite>("Icons/Tutorial/Speaking C");
+        _tutorialStandardC = Resources.Load<Sprite>("Icons/Tutorial/Standard C");
 
         _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");
         _chimeraBasePrefabB = Resources.Load<GameObject>("Chimera/B");
@@ -179,26 +196,68 @@ public class ResourceManager : MonoBehaviour
 
     public Sprite GetTutorialSprite(TutorialIconType type)
     {
-        switch (type)
+        switch (_firstChimeraType)
         {
-            case TutorialIconType.Cute:
-                return _tutorialCute;
-            case TutorialIconType.Happy:
-                return _tutorialHappy;
-            case TutorialIconType.LookingLeft:
-                return _tutorialLookingLeft;
-            case TutorialIconType.LookingRight:
-                return _tutorialLookingRight;
-            case TutorialIconType.Shocked:
-                return _tutorialShocked;
-            case TutorialIconType.Speaking:
-                return _tutorialSpeaking;
-            case TutorialIconType.Standard:
-                return _tutorialStandard;
+            case ChimeraType.A:
+            case ChimeraType.A1:
+            case ChimeraType.A2:
+            case ChimeraType.A3:
+                switch (type)
+                {
+                    case TutorialIconType.Happy:
+                        return _tutorialHappyA;
+                    case TutorialIconType.Shocked:
+                        return _tutorialShockedA;
+                    case TutorialIconType.Speaking:
+                        return _tutorialSpeakingA;
+                    case TutorialIconType.Standard:
+                        return _tutorialStandardA;
+                    default:
+                        Debug.LogError($"Unhandled sprite type: {type}");
+                        return null;
+                }
+            case ChimeraType.B:
+            case ChimeraType.B1:
+            case ChimeraType.B2:
+            case ChimeraType.B3:
+                switch (type)
+                {
+                    case TutorialIconType.Happy:
+                        return _tutorialHappyB;
+                    case TutorialIconType.Shocked:
+                        return _tutorialShockedB;
+                    case TutorialIconType.Speaking:
+                        return _tutorialSpeakingB;
+                    case TutorialIconType.Standard:
+                        return _tutorialStandardB;
+                    default:
+                        Debug.LogError($"Unhandled sprite type: {type}");
+                        return null;
+                }
+            case ChimeraType.C:
+            case ChimeraType.C1:
+            case ChimeraType.C2:
+            case ChimeraType.C3:
+                switch (type)
+                {
+                    case TutorialIconType.Happy:
+                        return _tutorialHappyC;
+                    case TutorialIconType.Shocked:
+                        return _tutorialShockedC;
+                    case TutorialIconType.Speaking:
+                        return _tutorialSpeakingC;
+                    case TutorialIconType.Standard:
+                        return _tutorialStandardC;
+                    default:
+                        Debug.LogError($"Unhandled sprite type: {type}");
+                        return null;
+                }
             default:
-                Debug.LogError($"Unhandled sprite type: {type}");
                 return null;
         }
+
+
+
     }
 
     public Sprite GetChimeraSprite(ChimeraType type)

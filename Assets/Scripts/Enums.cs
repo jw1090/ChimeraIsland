@@ -103,10 +103,7 @@ public enum StatType
 public enum TutorialIconType
 {
     None = -1,
-    Cute,
     Happy,
-    LookingLeft,
-    LookingRight,
     Shocked,
     Speaking,
     Standard,
@@ -149,6 +146,7 @@ public enum SFXUIType
     LevelUp,
     ErrorClick,
     Completion,
+    Hold,
 }
 
 public enum DayType
