@@ -206,6 +206,19 @@ public class CameraUtil : MonoBehaviour
         _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _transitionSpeed));
     }
 
+    public void FindChimeraCameraShift(Chimera chimera)
+    {
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+        }
+
+        Vector3 chimeraPosition = chimera.transform.position;
+        chimeraPosition.y = this.transform.position.y;
+        chimeraPosition.z += 5.0f;
+        _transitionCoroutine = StartCoroutine(MoveCamera(chimeraPosition, _transitionSpeed));
+    }
+
     private IEnumerator MoveCamera(Vector3 target, float time)
     {
         _inputManager.SetInTransition(true);
@@ -213,7 +226,18 @@ public class CameraUtil : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
 
-            transform.position = Vector3.Lerp(transform.position, target, time);
+            CameraCollisionCheck();
+
+            if (_canMoveDown == false || _canMoveLeft == false || _canMoveRight == false || _canMoveUp == false)
+            {
+                _inputManager.SetInTransition(false);
+                StopCoroutine(_transitionCoroutine);
+                _transitionCoroutine = null;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, target, time);
+            }
         }
         _inputManager.SetInTransition(false);
 
