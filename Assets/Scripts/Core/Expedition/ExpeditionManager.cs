@@ -405,7 +405,6 @@ public class ExpeditionManager : MonoBehaviour
 
         if (_currentDuration <= 0)
         {
-            _audioManager.PlayUISFX(SFXUIType.Completion);
             _currentDuration = 0;
             _activeInProgressTimer = false;
 
@@ -428,10 +427,12 @@ public class ExpeditionManager : MonoBehaviour
 
         if (successRoll >= _difficultyValue - _chimeraPower)
         {
+            _audioManager.PlayUISFX(SFXUIType.Completion);
             return true;
         }
         else
         {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             return false;
         }
     }
