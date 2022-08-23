@@ -214,7 +214,6 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _uiManager.TutorialDisableUI();
             _tutorialManager.ResetTutorialProgress();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }

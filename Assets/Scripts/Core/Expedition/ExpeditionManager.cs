@@ -21,6 +21,7 @@ public class ExpeditionManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
+    private TutorialManager _tutorialManager = null;
     private bool _activeInProgressTimer = false;
     private float _difficultyValue = 0;
     private float _chimeraPower = 0;
@@ -82,6 +83,7 @@ public class ExpeditionManager : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _expeditionState = ExpeditionState.Selection;
 
@@ -451,6 +453,7 @@ public class ExpeditionManager : MonoBehaviour
                     ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
                     Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
                 }
+                _tutorialManager.ShowTutorialStage(TutorialStageType.FossilShop);
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _uiManager.EnableUIByType(UIElementType.EssenceWallets);
@@ -467,6 +470,7 @@ public class ExpeditionManager : MonoBehaviour
                         break;
                     case HabitatRewardType.Habitat:
                         _habitatManager.CurrentHabitat.UpgradeHabitatTier();
+                        _tutorialManager.ShowTutorialStage(TutorialStageType.FacilityUpgrades);
                         break;
                     default:
                         Debug.LogError($"Upgrade type is invalid [{_selectedExpedition.UpgradeType}], please change!");
