@@ -130,20 +130,11 @@ public enum TutorialStageType
 {
     None = -1,
     Intro,
-    ExpeditionRequirements,
-    FacilityShop,
-    Training,
-    Details,
-    ExpeditionsInfo,
-    TierTwoStonePlains,
-    UnlockExpeditionModifiers,
-    Fossils,
-    ChimeraShop,
-    TierThreeStonePlains,
-    WorldMapButton,
-    WorldMapAndTheTreeOfLife,
-    TreeOfLife,
-    Transfers,
+    ExpeditionSelection,
+    ExpeditionSetup,
+    Facilities,
+    FossilShop,
+    FacilityUpgrades,
 }
 
 public enum SFXUIType

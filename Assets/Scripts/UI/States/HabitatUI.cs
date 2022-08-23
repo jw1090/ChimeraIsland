@@ -32,7 +32,6 @@ public class HabitatUI : MonoBehaviour
 
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
-    private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
@@ -59,8 +58,6 @@ public class HabitatUI : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
-
         _uiManager = uiManager;
 
         InitializeWallets();
@@ -191,21 +188,6 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    // Removes the basic UI so it can slowly be revealed by the Tutorial.
-    public void TutorialDisableUI()
-    {
-        _runeFacilityShopIcon.gameObject.SetActive(false);
-        _caveFacilityShopIcon.gameObject.SetActive(false);
-        _waterfallFacilityShopIcon.gameObject.SetActive(false);
-        _bottomRightButtonsFolder.gameObject.SetActive(false);
-        _openDetailsButton.gameObject.SetActive(false);
-        _worldMapButton.gameObject.SetActive(false);
-        _closeDetailsButton.gameObject.SetActive(false);
-        _marketplaceButton.gameObject.SetActive(false);
-        _detailsButtons.gameObject.SetActive(false);
-        _marketplacePanel.ChimeraTabSetActive(false);
-    }
-
     // Resets to the standard UI when nothing has been disabled.
     public void ResetStandardUI()
     {
@@ -236,11 +218,6 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.ToggleDetailsButtons(detailsButtonType);
 
         _openDetailsButton.gameObject.SetActive(false);
-
-        if (_worldMapButton.gameObject.activeInHierarchy == true && detailsButtonType == DetailsButtonType.Party)
-        {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Transfers);
-        }
     }
 
     public void OpenStandardDetails()
@@ -262,10 +239,6 @@ public class HabitatUI : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _marketplacePanel.gameObject.SetActive(true);
-        if (_marketplacePanel.ChimeraTabIsActive() == true)
-        {
-            _tutorialManager.ShowTutorialStage(TutorialStageType.ChimeraShop);
-        }
         _openDetailsButton.gameObject.SetActive(false);
         _marketplacePanel.ChimeraTabSetActive(true);
         _marketplacePanel.FacilityTabCheckActive();

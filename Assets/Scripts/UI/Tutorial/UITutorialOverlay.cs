@@ -41,10 +41,6 @@ public class UITutorialOverlay : MonoBehaviour
         }
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
-        if(loadedStep.activateElement != UIElementType.None.ToString())
-        {
-            _uiManager.EnableUIByType((UIElementType) Enum.Parse(typeof(UIElementType),loadedStep.activateElement));
-        }
 
         Sprite icon = _resourceManager.GetTutorialSprite((TutorialIconType)Enum.Parse(typeof(TutorialIconType), loadedStep.type));
 
