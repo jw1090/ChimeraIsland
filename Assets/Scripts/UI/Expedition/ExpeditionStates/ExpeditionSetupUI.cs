@@ -16,6 +16,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private Button _confirmButton = null;
     [SerializeField] private Button _backButton = null;
+    private TutorialManager _tutoiralManager = null;
     private UIManager _uiManager = null;
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
@@ -34,6 +35,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
 
+        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
         _expeditionUI = expeditionUI;
     }
@@ -87,6 +89,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
+        _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
     }
 
     private void LoadDuration(float duration)
