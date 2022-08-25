@@ -81,6 +81,7 @@ public enum ModifierType
     Stamina,
     Wisdom,
     Exploration,
+    Max,
 }
 
 public enum SceneType

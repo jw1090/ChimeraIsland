@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -118,7 +117,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         ExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
-        AnalyseRandomModifiers(newExpedition.Modifiers);
+        AssignExpeditionUpgradeType(newExpedition.Modifiers);
         AnalyseRandomUpgrade(newExpedition);
 
         switch (newExpedition.Type)
@@ -154,9 +153,9 @@ public class ExpeditionManager : MonoBehaviour
         }
     }
 
-    private void AnalyseRandomModifiers(List<ModifierType> modifiers) // If a modifier is random, it will randomize it.
+    private void AssignExpeditionUpgradeType(List<ModifierType> modifiers) // If a modifier is random, it will randomize it.
     {
-        int modifierMax = Enum.GetValues(typeof(ModifierType)).Length - 1;
+        int modifierMax = (int)ModifierType.Max;
 
         for (int i = 0; i < modifiers.Count; ++i)
         {
