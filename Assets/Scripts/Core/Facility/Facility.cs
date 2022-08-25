@@ -29,9 +29,11 @@ public class Facility : MonoBehaviour
     private bool _activateTraining = false;
     private FacilityData _loadedFacilityData = null;
 
-    public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
-    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
+    public Chimera StoredChimera { get => _storedChimera; }
+    public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
     public GlowMarker GlowObject { get => _glowMarker; }
+    public TrainingFacilityIcon TrainingIcon { get => _trainingIcon; }
+    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
@@ -39,9 +41,7 @@ public class Facility : MonoBehaviour
     public int StatModifier { get => _statModifier; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
-    public Chimera StoredChimera { get => _storedChimera; }
     public int TrainToLevel { get => _trainToLevel; }
-    public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
 
     public void SetFacilityData(FacilityData data) { _loadedFacilityData = data; }
     public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
@@ -122,8 +122,7 @@ public class Facility : MonoBehaviour
         Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
 
-    // Called to properly link a chimera to a facility and adjust its states properly.
-    public bool PlaceChimera(Chimera chimera)
+    public bool PlaceChimeraFromUI(Chimera chimera)
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
@@ -132,25 +131,18 @@ public class Facility : MonoBehaviour
         }
 
         _habitatUI.ResetStandardUI();
-        _uiTraining.SetupTrainingUI(chimera, this);
         _habitatUI.OpenTrainingPanel();
+        _uiTraining.SetupTrainingUI(chimera, this);
 
         _trainingIcon.gameObject.SetActive(true);
         _trainingIcon.SetIcon(chimera.ChimeraIcon);
 
-        _storedChimera = chimera;
-        _storedChimera.SetInFacility(true);
-
-        _glowMarker.ActivateGlowCollider(false);
-        _storedChimera.RevealChimera(false);
-
-        Debug.Log($"{_storedChimera} added to the facility.");
+        StoreChimera(chimera);
 
         return true;
     }
 
-    // Called to instantly setup a chimera in the training process
-    public bool LoadChimera(Chimera chimera)
+    public bool PlaceChimeraFromPersistantData(Chimera chimera)
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
@@ -158,27 +150,33 @@ public class Facility : MonoBehaviour
             return false;
         }
 
-        MyFacilityIcon.SetSliderAttributes(0, _loadedFacilityData.sliderMax);
-        MyFacilityIcon.SetSliderValue(_loadedFacilityData.sliderValue);
+        _trainingIcon.SetSliderAttributes(0, _loadedFacilityData.sliderMax);
+        _trainingIcon.SetSliderValue(_loadedFacilityData.sliderValue);
+
         SetTrainToLevel(_loadedFacilityData.trainToLevel);
         SetActivateTraining(true);
+        chimera.SetXPByType(_statType, _loadedFacilityData.chimeraStatXp);
 
-        _habitatUI.RevealElementsHiddenByTraining();
+        StoreChimera(chimera);
 
+        return true;
+    }
+
+    private void StoreChimera(Chimera chimera)
+    {
         _trainingIcon.gameObject.SetActive(true);
         _trainingIcon.SetIcon(chimera.ChimeraIcon);
 
-        chimera.SetXPByType(_statType, _loadedFacilityData.chimeraStatXp);
-
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
+        _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
         _glowMarker.ActivateGlowCollider(false);
         _storedChimera.RevealChimera(false);
+        _storedChimera.Behavior.enabled = false;
+        _storedChimera.Behavior.Agent.enabled = false;
 
         Debug.Log($"{_storedChimera} added to the facility.");
-
-        return true;
     }
 
     // Removes Chimera from facility and cleans up chimera and facility logic.
@@ -196,15 +194,17 @@ public class Facility : MonoBehaviour
         }
 
         _activateTraining = false;
-        AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
-        chimeraBehavior.ChangeState(chimeraBehavior.States[AI.Behavior.StateEnum.Patrol]);
 
         _trainingIcon.ResetIcon();
         _trainingIcon.gameObject.SetActive(false);
-        _storedChimera.SetInFacility(false);
 
         _glowMarker.ActivateGlowCollider(true);
+
+        _storedChimera.SetInFacility(false);
         _storedChimera.RevealChimera(true);
+        _storedChimera.Behavior.ChangeState(_storedChimera.Behavior.States[AI.Behavior.StateEnum.Patrol]);
+        _storedChimera.Behavior.enabled = true;
+        _storedChimera.Behavior.Agent.enabled = true;
 
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
