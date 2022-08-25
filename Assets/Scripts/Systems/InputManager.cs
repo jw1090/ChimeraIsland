@@ -95,6 +95,10 @@ public class InputManager : MonoBehaviour
         {
             HeldCheckAgainstUI();
         }
+        if (Input.GetMouseButton(1))
+        {
+            HeldCheckAgainstUI();
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -193,7 +197,10 @@ public class InputManager : MonoBehaviour
 
     private void RotateChimeraCheck()
     {
-
+        if(_isHolding)
+        {
+            _heldChimera.transform.Rotate(Vector3.up,45f);
+        }
     }
 
 
