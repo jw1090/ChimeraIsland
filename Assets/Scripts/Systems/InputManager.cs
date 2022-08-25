@@ -105,6 +105,11 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
+        if(Input.GetMouseButtonDown(1))
+        {
+            RotateChimeraCheck();
+        }
+
         if (_cameraUtil != null)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
@@ -185,6 +190,12 @@ public class InputManager : MonoBehaviour
             _isHolding = true;
         }
     }
+
+    private void RotateChimeraCheck()
+    {
+
+    }
+
 
     private void HeldCheckAgainstUI()
     {
