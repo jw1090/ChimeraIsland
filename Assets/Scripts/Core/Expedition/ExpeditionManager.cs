@@ -91,7 +91,7 @@ public class ExpeditionManager : MonoBehaviour
             return;
         }
 
-        if(_selectedExpedition == null)
+        if (_selectedExpedition == null)
         {
             return;
         }
@@ -538,6 +538,14 @@ public class ExpeditionManager : MonoBehaviour
         {
             chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
+            chimera.Behavior.enabled = !onExpedition;
+            chimera.Behavior.Agent.enabled = !onExpedition;
+
+            if (onExpedition == false)
+            {
+                chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomSpawnPoint();
+            }
+
         }
 
         if (onExpedition == false)

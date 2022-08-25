@@ -149,7 +149,7 @@ public class TrainingUI : MonoBehaviour
             return;
         }
 
-        _facility.MyFacilityIcon.SetSliderAttributes(0, _expNeeded);
+        _facility.TrainingIcon.SetSliderAttributes(0, _expNeeded);
         _facility.SetTrainToLevel(_levelGoal);
         _facility.SetActivateTraining(true);
 

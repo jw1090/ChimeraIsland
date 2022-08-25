@@ -23,8 +23,8 @@ public class FacilityData
             storedChimeraId = facility.StoredChimera.UniqueID;
             trainToLevel = facility.TrainToLevel;
             chimeraStatXp = facility.StoredChimera.GetXP(facility.StatType);
-            sliderValue = facility.MyFacilityIcon.currentValue;
-            sliderMax = facility.MyFacilityIcon.max;
+            sliderValue = facility.TrainingIcon.currentValue;
+            sliderMax = facility.TrainingIcon.max;
         }
     }
 }

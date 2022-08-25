@@ -130,7 +130,7 @@ public class Habitat : MonoBehaviour
                 {
                     if (chimera.UniqueID == facility.LoadedFacilityData.storedChimeraId)
                     {
-                        facility.LoadChimera(chimera);
+                        facility.PlaceChimeraFromPersistantData(chimera);
                     }
                 }
             }
@@ -169,11 +169,7 @@ public class Habitat : MonoBehaviour
 
     public void AddChimera(Transform newChimera)
     {
-        Vector3 spawnPos = _spawnPoint.transform.localPosition;
-        float spawnPointX = spawnPos.x + Random.Range(-3, 3);
-        float spawnPointZ = spawnPos.z + Random.Range(-3, 3);
-
-        newChimera.position = new Vector3(spawnPointX, spawnPos.y, spawnPointZ);
+        newChimera.position = RandomSpawnPoint();
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 
@@ -181,6 +177,15 @@ public class Habitat : MonoBehaviour
         _activeChimeras.Add(chimeraComp);
 
         chimeraComp.Initialize();
+    }
+
+    public Vector3 RandomSpawnPoint()
+    {
+        Vector3 spawnPos = _habitatManager.CurrentHabitat.SpawnPoint.transform.position;
+        spawnPos.x = spawnPos.x + Random.Range(-2.0f, 2.0f);
+        spawnPos.z = spawnPos.z + Random.Range(-2.0f, 2.0f);
+
+        return spawnPos;
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
