@@ -27,6 +27,7 @@ public class Facility : MonoBehaviour
     private int _currentTier = 0;
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
+    private FacilityData _loadedFacilityData = null;
 
     public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
     public Transform CameraTransitionNode { get => _cameraTransitionNode; }
@@ -38,7 +39,11 @@ public class Facility : MonoBehaviour
     public int StatModifier { get => _statModifier; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
+    public Chimera StoredChimera { get => _storedChimera; }
+    public int TrainToLevel { get => _trainToLevel; }
+    public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
 
+    public void SetFacilityData(FacilityData data) { _loadedFacilityData = data; }
     public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
 
@@ -132,6 +137,38 @@ public class Facility : MonoBehaviour
 
         _trainingIcon.gameObject.SetActive(true);
         _trainingIcon.SetIcon(chimera.ChimeraIcon);
+
+        _storedChimera = chimera;
+        _storedChimera.SetInFacility(true);
+
+        _glowMarker.ActivateGlowCollider(false);
+        _storedChimera.RevealChimera(false);
+
+        Debug.Log($"{_storedChimera} added to the facility.");
+
+        return true;
+    }
+
+    // Called to instantly setup a chimera in the training process
+    public bool LoadChimera(Chimera chimera)
+    {
+        if (_storedChimera != null) // Something is already in the facility.
+        {
+            Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
+            return false;
+        }
+
+        MyFacilityIcon.SetSliderAttributes(0, _loadedFacilityData.sliderMax);
+        MyFacilityIcon.SetSliderValue(_loadedFacilityData.sliderValue);
+        SetTrainToLevel(_loadedFacilityData.trainToLevel);
+        SetActivateTraining(true);
+
+        _habitatUI.RevealElementsHiddenByTraining();
+
+        _trainingIcon.gameObject.SetActive(true);
+        _trainingIcon.SetIcon(chimera.ChimeraIcon);
+
+        chimera.SetXPByType(_statType, _loadedFacilityData.chimeraStatXp);
 
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);

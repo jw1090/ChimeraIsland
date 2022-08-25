@@ -112,9 +112,27 @@ public class Habitat : MonoBehaviour
         {
             Facility facility = GetFacility(facilityInfo.facilityType);
 
+            facility.SetFacilityData(facilityInfo);
             for (int i = 0; i < facilityInfo.currentTier; ++i)
             {
                 facility.BuildFacility();
+            }
+        }
+    }
+
+    public void MoveChimerasToFacility()
+    {
+        foreach (Facility facility in _facilities)
+        {
+            if (facility.LoadedFacilityData != null && facility.LoadedFacilityData.storedChimeraId != 0)
+            {
+                foreach (Chimera chimera in _activeChimeras)
+                {
+                    if (chimera.UniqueID == facility.LoadedFacilityData.storedChimeraId)
+                    {
+                        facility.LoadChimera(chimera);
+                    }
+                }
             }
         }
     }
