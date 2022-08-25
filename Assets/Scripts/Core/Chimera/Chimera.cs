@@ -61,7 +61,6 @@ public class Chimera : MonoBehaviour
     public string Name { get => GetName(); }
     public int UniqueID { get => _uniqueId; }
 
-
     public int GetStatThreshold(StatType statType)
     {
         switch (statType)
@@ -182,15 +181,7 @@ public class Chimera : MonoBehaviour
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
-    public void SetOnExpedition(bool onExpedition)
-    {
-        _onExpedition = onExpedition;
-
-        if (onExpedition == false)
-        {
-            transform.position = _habitatManager.CurrentHabitat.SpawnPoint.transform.position;
-        }
-    }
+    public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
 
     public void SetLevel(int level) { _level = level; }
     public void SetStamina(int stamina) { _stamina = stamina; }
@@ -407,7 +398,10 @@ public class Chimera : MonoBehaviour
 
         if (++_levelUpTracker % 2 == 0)
         {
+            _levelUpTracker = 0;
+
             LevelCalculation();
+
             _audioManager.PlayUISFX(SFXUIType.LevelUp);
             Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
         }
@@ -418,6 +412,7 @@ public class Chimera : MonoBehaviour
     private void LevelCalculation()
     {
         _level = (int)Mathf.Round((_stamina + _wisdom + _exploration) * 0.33f);
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void Evolve(EvolutionLogic evolution)
@@ -441,6 +436,8 @@ public class Chimera : MonoBehaviour
         {
             _currentEvolution.gameObject.SetActive(false);
         }
+
+        LevelCalculation();
     }
 
     public void RevealChimera(bool reveal)

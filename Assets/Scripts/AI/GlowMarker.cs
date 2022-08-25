@@ -44,7 +44,7 @@ public class GlowMarker : MonoBehaviour
             return;
         }
 
-        _facility.PlaceChimera(chimera);
+        _facility.PlaceChimeraFromUI(chimera);
 
         chimera.SetInFacility(true);
 
