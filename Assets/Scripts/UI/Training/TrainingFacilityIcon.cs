@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +8,19 @@ public class TrainingFacilityIcon : MonoBehaviour
     [SerializeField] private Slider _slider = null;
     private Camera _camera = null;
     private bool _initialized = false;
+    public float max { get => _slider.maxValue; }
+    public float currentValue { get => _slider.value; }
 
     public void SetIcon(Sprite sprite) { _icon.sprite = sprite; }
 
-    public void SetSliderAttributes(int starting, int ending)
+    public void SetSliderAttributes(float starting, float ending)
     {
         _slider.minValue = starting;
         _slider.value = starting;
         _slider.maxValue = ending;
     }
+
+    public void SetSliderValue(float val) { _slider.value = val; }
 
     public void Initialize()
     {
