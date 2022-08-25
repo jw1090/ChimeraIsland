@@ -107,6 +107,9 @@ public class LevelLoader : AsyncLoader
                 _habitatManager.PlayCurrentHabitatMusic();
                 _habitatManager.BuildFacilitiesForHabitat();
                 _habitatManager.SpawnChimerasForHabitat();
+
+                _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+
                 StartHabitatTickTimer();
             }
         }
