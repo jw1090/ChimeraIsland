@@ -244,6 +244,22 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
+    public void UpdateCurrentHabitatFacilities()
+    {
+        if (_facilitiesByHabitat.ContainsKey(_currentHabitat.Type) == false)
+        {
+            Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
+            return;
+        }
+
+        _facilitiesByHabitat.Remove(_currentHabitat.Type);
+
+        foreach (Facility facility in _currentHabitat.Facilities)
+        {
+            AddNewFacility(facility);
+        }
+    }
+
     public bool AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);

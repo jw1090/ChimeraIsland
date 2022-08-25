@@ -21,6 +21,7 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _staminaThreshold = 5;
     [SerializeField] private int _wisdomThreshold = 5;
 
+    private int _uniqueId = 1;
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
@@ -58,6 +59,8 @@ public class Chimera : MonoBehaviour
     public int MaxEnergy { get => _maxEnergy; }
     public int Price { get => _price; }
     public string Name { get => GetName(); }
+    public int UniqueID { get => _uniqueId; }
+
 
     public int GetStatThreshold(StatType statType)
     {
@@ -69,6 +72,22 @@ public class Chimera : MonoBehaviour
                 return _wisdomThreshold;
             case StatType.Exploration:
                 return _explorationThreshold;
+            default:
+                Debug.LogError($"Stat Type [{statType}] is invalid.");
+                return -1;
+        }
+    }
+
+    public int GetXP(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Stamina:
+                return _staminaExperience;
+            case StatType.Wisdom:
+                return _wisdomExperience;
+            case StatType.Exploration:
+                return _explorationExperience;
             default:
                 Debug.LogError($"Stat Type [{statType}] is invalid.");
                 return -1;
@@ -160,6 +179,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition)
@@ -178,6 +198,25 @@ public class Chimera : MonoBehaviour
     public void SetExploration(int exploration) { _exploration = exploration; }
     public void SetCurrentEnergy(int currentEnergy) { _currentEnergy = currentEnergy; }
 
+    public void SetXPByType(StatType statType, int amount)
+    {
+        switch (statType)
+        {
+            case StatType.Stamina:
+                _staminaExperience = amount;
+                break;
+            case StatType.Wisdom:
+                _wisdomExperience = amount;
+                break;
+            case StatType.Exploration:
+                _explorationExperience = amount;
+                break;
+            default:
+                Debug.LogError("Default StatType please change!");
+                break;
+        }
+    }
+
     public void Initialize()
     {
         Debug.Log($"<color=Cyan> Initializing Chimera: {_chimeraType}</color>");
@@ -192,6 +231,11 @@ public class Chimera : MonoBehaviour
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
         _elementIcon = _resourceManager.GetElementSprite(_elementalType);
+
+        if(_uniqueId == 1)
+        {
+            _uniqueId = gameObject.GetInstanceID();
+        }
 
         InitializeStats();
         _chimeraBehavior.Initialize();

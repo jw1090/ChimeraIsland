@@ -68,6 +68,7 @@ public class PersistentData : MonoBehaviour
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
         _habitatManager.UpdateCurrentHabitatChimeras();
+        _habitatManager.UpdateCurrentHabitatFacilities();
 
         GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<FacilityData> myFacilityData = FacilitiesToData();
