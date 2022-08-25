@@ -22,8 +22,8 @@ public class ExpeditionData : ScriptableObject
     public float AquaBonus { get; set; } = 0.0f;
     public float BioBonus { get; set; } = 0.0f;
     public float FiraBonus { get; set; } = 0.0f;
-    public float DifficultyValue { get; set; } = 0;
-    public float ChimeraPower { get; set; } = 0;
+    public float DifficultyValue { get; set; } = 1.0f;
+    public float ChimeraPower { get; set; } = 0.0f;
     public float CurrentDuration { get; set; } = 0.0f;
 
     public ExpeditionData DeepCopy()
