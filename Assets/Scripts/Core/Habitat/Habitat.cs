@@ -11,6 +11,7 @@ public class Habitat : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder = null;
+    [SerializeField] private CrystalManager _crystalManager = null;
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
@@ -25,6 +26,7 @@ public class Habitat : MonoBehaviour
     private int _currentTier = 1;
 
     public int CurrentTier { get => _currentTier; }
+    public CrystalManager CrystalManager { get => _crystalManager; } 
     public Transform SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
@@ -67,6 +69,16 @@ public class Habitat : MonoBehaviour
         LoadHabitatTier();
     }
 
+    public void SetExpeditionManager(ExpeditionManager expeditionManager)
+    {
+        foreach (Facility facility in _facilities)
+        {
+            facility.SetExpeditionManager(expeditionManager);
+        }
+
+        _crystalManager.SetExpeditionManager(expeditionManager);
+    }
+
     public void ToggleFireflies(bool toggleOn) { _environment.Tiers[_currentTier - 1].ToggleFireflies(toggleOn); }
 
     public Habitat Initialize()
@@ -77,14 +89,11 @@ public class Habitat : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
-        _audioManager.SetHabitat(this);
 
-        if (_patrolNodes == null)
-        {
-            Debug.LogError($"{this.GetType()}'s PatrolNodes ref is null. Please assign it from the list of Habitat's children in the hierarchy!");
-            Debug.Break();
-        }
+        _audioManager.SetHabitat(this);
+        _crystalManager.Initialize(this);
         _patrolNodes.Initialize();
+        _environment.Initialize();
 
         SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
 
@@ -307,6 +316,8 @@ public class Habitat : MonoBehaviour
             {
                 chimera.EnergyTick();
             }
+
+            _crystalManager.SpawnTick();
 
             foreach (Facility facility in _facilities)
             {

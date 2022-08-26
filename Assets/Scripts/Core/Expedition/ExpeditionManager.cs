@@ -442,6 +442,12 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _uiManager.EnableUIByType(UIElementType.EssenceWallets);
+
+                if (_currentHabitatProgress == 0)
+                {
+                    _habitatManager.CurrentHabitat.CrystalManager.TripleSpawn();
+                }
+
                 switch (_selectedExpedition.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:

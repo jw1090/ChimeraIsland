@@ -7,6 +7,14 @@ public class FireflyFolder : MonoBehaviour
 
     public bool IsEmpty { get => _fireflies.Count == 0; }
 
+    public void Initialize()
+    {
+        foreach (var fireflies in _fireflies)
+        {
+            fireflies.Initialize();
+        }
+    }
+
     public void PlayFireflies()
     {
         foreach (var fireflies in _fireflies)

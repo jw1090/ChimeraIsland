@@ -90,6 +90,7 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
             _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
+            _habitat.SetExpeditionManager(_expeditionManager);
         }
 
         if (_lightingManager != null)

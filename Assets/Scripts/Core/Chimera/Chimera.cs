@@ -8,20 +8,11 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ElementType _elementalType = ElementType.None;
     [SerializeField] private int _price = 5;
 
-    [Header("Stats")]
-    [SerializeField] private int _level = 0;
-    [SerializeField] private int _exploration = 1;
-    [SerializeField] private int _stamina = 1;
-    [SerializeField] private int _wisdom = 1;
-    private int _currentEnergy = 5;
-    private int _maxEnergy = 5;
-
     [Header("Stat Growth")]
     [SerializeField] private int _explorationThreshold = 5;
     [SerializeField] private int _staminaThreshold = 5;
     [SerializeField] private int _wisdomThreshold = 5;
 
-    private int _uniqueId = 1;
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
@@ -33,12 +24,19 @@ public class Chimera : MonoBehaviour
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
+    private int _uniqueId = 1;
+    private int _exploration = 1;
+    private int _stamina = 1;
+    private int _wisdom = 1;
+    private int _currentEnergy = 5;
+    private int _maxEnergy = 5;
     private int _staminaExperience = 0;
     private int _wisdomExperience = 0;
     private int _explorationExperience = 0;
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
+    private float _averagePower = 0;
 
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
@@ -51,7 +49,7 @@ public class Chimera : MonoBehaviour
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
     public bool OnExpedition { get => _onExpedition; }
-    public int Level { get => _level; }
+    public float AveragePower { get => _averagePower; }
     public int Stamina { get => _stamina; }
     public int Wisdom { get => _wisdom; }
     public int Exploration { get => _exploration; }
@@ -183,7 +181,6 @@ public class Chimera : MonoBehaviour
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
 
-    public void SetLevel(int level) { _level = level; }
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
@@ -281,7 +278,7 @@ public class Chimera : MonoBehaviour
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick(StatType statType, int amount)
     {
-        if (_level >= _levelCap)
+        if (_averagePower >= _levelCap)
         {
             return;
         }
@@ -403,7 +400,7 @@ public class Chimera : MonoBehaviour
             LevelCalculation();
 
             _audioManager.PlayUISFX(SFXUIType.LevelUp);
-            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
+            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_averagePower} !");
         }
 
         _habitatUI.UpdateHabitatUI();
@@ -411,7 +408,8 @@ public class Chimera : MonoBehaviour
 
     private void LevelCalculation()
     {
-        _level = (int)Mathf.Round((_stamina + _wisdom + _exploration) * 0.33f);
+        float power = (_stamina + _wisdom + _exploration) * 0.334f;
+        _averagePower = Mathf.Round(power * 10.0f) * 0.1f; // Round to the tenth
         _habitatUI.UpdateHabitatUI();
     }
 

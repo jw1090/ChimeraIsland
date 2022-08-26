@@ -4,6 +4,11 @@ public class EnvironmentTier : MonoBehaviour
 {
     [SerializeField] private FireflyFolder _fireflyFolder = null;
 
+    public void Initialize()
+    {
+        _fireflyFolder.Initialize();
+    }
+
     public void ToggleFireflies(bool toggleOn)
     {
         if (_fireflyFolder.IsEmpty == true)

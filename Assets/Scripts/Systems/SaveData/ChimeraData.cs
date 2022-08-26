@@ -5,7 +5,6 @@ public class ChimeraData
 {
     public ChimeraType chimeraType = ChimeraType.None;
     public HabitatType habitatType = HabitatType.None;
-    public int level = 0;
     public int exploration = 0;
     public int stamina = 0;
     public int wisdom = 0;
@@ -16,7 +15,6 @@ public class ChimeraData
     {
         habitatType = chimera.HabitatType;
         chimeraType = chimera.ChimeraType;
-        level = chimera.Level;
         stamina = chimera.Stamina;
         wisdom = chimera.Wisdom;
         exploration = chimera.Exploration;
