@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
+    private const float _rotationAmount = 1.5f;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -99,6 +100,10 @@ public class InputManager : MonoBehaviour
         {
             HeldCheckAgainstUI();
         }
+        if (Input.GetMouseButton(1))
+        {
+            RotateChimeraCheck();
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -107,11 +112,6 @@ public class InputManager : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             ExitHeldState();
-        }
-
-        if(Input.GetMouseButtonDown(1))
-        {
-            RotateChimeraCheck();
         }
 
         if (_cameraUtil != null)
@@ -141,23 +141,23 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(_habitatUI != null)
+            if (_habitatUI != null)
             {
                 _habitatUI.ToggleSettingsMenu();
             }
         }
 
-        if(_debugTutorialInputEnabled)
+        if (_debugTutorialInputEnabled)
         {
             DebugTutorialInput();
         }
 
-        if(_debugCurrencyInputEnabled)
+        if (_debugCurrencyInputEnabled)
         {
             DebugCurrencyInput();
         }
 
-        if(_debugHabitatUpgradeInputEnabled)
+        if (_debugHabitatUpgradeInputEnabled)
         {
             DebugHabitatUpgradeInput();
         }
@@ -197,9 +197,9 @@ public class InputManager : MonoBehaviour
 
     private void RotateChimeraCheck()
     {
-        if(_isHolding)
+        if (_isHolding == true)
         {
-            _heldChimera.transform.Rotate(Vector3.up,45f);
+            _heldChimera.transform.Rotate(Vector3.up, _rotationAmount);
         }
     }
 
@@ -239,7 +239,7 @@ public class InputManager : MonoBehaviour
         {
             int newStageId = ++currentStageId;
 
-            if(newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
+            if (newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
             {
                 _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
             }

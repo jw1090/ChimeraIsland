@@ -9,7 +9,7 @@ public class CameraUtil : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount = 20.0f;
-    [SerializeField] private float _minZoom = 40.0f;
+    [SerializeField] private float _minZoom = 20.0f;
     [SerializeField] private float _maxZoom = 90.0f;
 
     [Header("Edge Follow")]
