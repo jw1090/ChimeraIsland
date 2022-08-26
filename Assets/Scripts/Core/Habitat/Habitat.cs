@@ -26,7 +26,6 @@ public class Habitat : MonoBehaviour
 
     public int CurrentTier { get => _currentTier; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
-    public GameObject FireflyFolder { get => _environment.Tiers[_currentTier - 1].FireflyFolder; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -67,6 +66,8 @@ public class Habitat : MonoBehaviour
         _currentTier = tier;
         LoadHabitatTier();
     }
+
+    public void ToggleFireflies(bool toggleOn) { _environment.Tiers[_currentTier - 1].ToggleFireflies(toggleOn); }
 
     public Habitat Initialize()
     {
