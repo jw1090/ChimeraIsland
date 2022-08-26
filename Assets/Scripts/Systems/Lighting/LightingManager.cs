@@ -30,7 +30,9 @@ public class LightingManager : MonoBehaviour
     private float _speed = 0.0f;
 
     public DayType DayType { get => _dayType; }
+
     public void SetHabitat(Habitat habitat) { _habitat = habitat; }
+
     public LightingManager Initialize()
     {
         _dayPosition = _dayLight.transform.eulerAngles;
@@ -62,15 +64,13 @@ public class LightingManager : MonoBehaviour
         DaylightToggle();
         NightLightToggle();
 
-        FirefliesToggle();
-
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
     private void FirefliesToggle()
     {
-        if(DayType == DayType.DayTime)
+        if (DayType == DayType.DayTime)
         {
             _habitat.ToggleFireflies(false);
         }
@@ -93,9 +93,11 @@ public class LightingManager : MonoBehaviour
         switch (_dayType)
         {
             case DayType.DayTime:
+                FirefliesToggle();
                 _speed = 1;
                 break;
             case DayType.NightTime:
+                FirefliesToggle();
                 _speed = 2;
                 break;
             default:
@@ -137,7 +139,7 @@ public class LightingManager : MonoBehaviour
             _dayLight.gameObject.SetActive(true);
             _dayType = DayType.DayTime;
         }
-        if(!_nightLight.gameObject.activeInHierarchy)
+        if (!_nightLight.gameObject.activeInHierarchy)
         {
             _dayType = DayType.DayTime;
         }
