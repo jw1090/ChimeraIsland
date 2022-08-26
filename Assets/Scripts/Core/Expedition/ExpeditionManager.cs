@@ -22,6 +22,10 @@ public class ExpeditionManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
+    private const float _difficultyLevelMultiplier = 1.2f;
+    private const float _difficultyScalar = 20.0f;
+    private const float _difficultyExponent = 1.5f;
+    private const float _powerScalar = 6.5f;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
@@ -33,6 +37,8 @@ public class ExpeditionManager : MonoBehaviour
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
     public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
+
+    public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
 
     public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
 
@@ -264,23 +270,10 @@ public class ExpeditionManager : MonoBehaviour
         CalculateChimeraPower();
     }
 
-    public bool HasChimeraBeenAdded(Chimera chimeraToFind)
-    {
-        foreach (var chimera in _chimeras)
-        {
-            if (chimeraToFind == chimera)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void CalculateCurrentDifficultyValue()
     {
-        float minimumLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(minimumLevel * 1.2f, 1.5f) * 20.0f;
+        float suggestedLevel = _selectedExpedition.SuggestedLevel;
+        float difficultyValue = Mathf.Pow(suggestedLevel * _difficultyLevelMultiplier, _difficultyExponent) * _difficultyScalar;
 
         _selectedExpedition.DifficultyValue = difficultyValue;
         _uiExpedition.SetupUI.UpdateDifficultyValue(difficultyValue);
@@ -294,20 +287,14 @@ public class ExpeditionManager : MonoBehaviour
 
         foreach (var chimera in _chimeras)
         {
-            power += chimera.Stamina * (_selectedExpedition.StaminaModifer + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Wisdom * (_selectedExpedition.WisdomModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
-            power += chimera.Exploration * (_selectedExpedition.ExplorationModifier + ElementTypeModifier(chimera.ElementalType)) * 6.5f;
+            float elementalTypeModifier = ElementTypeModifier(chimera.ElementalType);
+
+            power += chimera.Stamina * (_selectedExpedition.StaminaModifer + elementalTypeModifier) * _powerScalar;
+            power += chimera.Wisdom * (_selectedExpedition.WisdomModifier + elementalTypeModifier) * _powerScalar;
+            power += chimera.Exploration * (_selectedExpedition.ExplorationModifier + elementalTypeModifier) * _powerScalar;
         }
 
-        if (power >= _selectedExpedition.DifficultyValue)
-        {
-            _selectedExpedition.ChimeraPower = _selectedExpedition.DifficultyValue;
-        }
-        else
-        {
-            _selectedExpedition.ChimeraPower = power;
-        }
-
+        _selectedExpedition.ChimeraPower = power >= _selectedExpedition.DifficultyValue ? _selectedExpedition.DifficultyValue : power;
         _uiExpedition.SetupUI.UpdateChimeraPower(_selectedExpedition.ChimeraPower);
     }
 
@@ -541,7 +528,7 @@ public class ExpeditionManager : MonoBehaviour
             chimera.Behavior.enabled = !onExpedition;
             chimera.Behavior.Agent.enabled = !onExpedition;
 
-            if (onExpedition == false)
+            if (onExpedition == true)
             {
                 chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomSpawnPoint();
             }
