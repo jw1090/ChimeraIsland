@@ -3,5 +3,5 @@ using UnityEngine;
 
 public class CrystalManager : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> crystals = null;
+    [SerializeField] private List<CrystalSpawn> crystals = null;
 }
