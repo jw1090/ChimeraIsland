@@ -16,13 +16,14 @@ public class InputManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
+    private LayerMask _crystalLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
-    private const float _rotationAmount = 1.5f;
+    private const float _rotationAmount = 0.8f;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -50,6 +51,7 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
+        _crystalLayer = LayerMask.GetMask("Crystal");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -107,7 +109,10 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            EnterHeldState();
+            if (HarvestCrystal() == false)
+            {
+                HeldStateCheck();
+            }
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -163,7 +168,31 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void EnterHeldState()
+    private bool HarvestCrystal()
+    {
+        if (_cameraMain == null)
+        {
+            return false;
+        }
+
+        if (_inTransition == true)
+        {
+            return false;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _crystalLayer))
+        {
+            CrystalSpawn crystal = hit.transform.gameObject.GetComponent<CrystalSpawn>();
+            crystal.Harvest();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void HeldStateCheck()
     {
         if (_cameraMain == null)
         {

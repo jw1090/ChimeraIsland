@@ -77,7 +77,6 @@ public class LightingManager : MonoBehaviour
         else
         {
             _habitat.ToggleFireflies(true);
-
         }
     }
 

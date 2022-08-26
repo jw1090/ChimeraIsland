@@ -84,7 +84,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _suggestedLevel.text = $"Suggested Level: {data.SuggestedLevel}";
+        _suggestedLevel.text = $"Suggested Total Power: {data.SuggestedLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
 
         LoadDuration(data.Duration);

@@ -23,11 +23,12 @@ public class Facility : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private TrainingUI _uiTraining = null;
+    private ExpeditionManager _expeditionManager = null;
+    private FacilityData _loadedFacilityData = null;
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
-    private FacilityData _loadedFacilityData = null;
 
     public Chimera StoredChimera { get => _storedChimera; }
     public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
@@ -44,8 +45,9 @@ public class Facility : MonoBehaviour
     public int TrainToLevel { get => _trainToLevel; }
 
     public void SetFacilityData(FacilityData data) { _loadedFacilityData = data; }
-    public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
+    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
+    public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
 
     public void Initialize()
     {
@@ -188,11 +190,6 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_storedChimera.Level > 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
-        {
-            _uiManager.TutorialObserver.DetailsTutorial = true;
-        }
-
         _activateTraining = false;
 
         _trainingIcon.ResetIcon();
@@ -212,6 +209,15 @@ public class Facility : MonoBehaviour
         Debug.Log($"{_storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
+
+        if (_expeditionManager.State == ExpeditionState.Selection)
+        {
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+        }
+        else
+        {
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+        }
     }
 
     public void FacilityTick()

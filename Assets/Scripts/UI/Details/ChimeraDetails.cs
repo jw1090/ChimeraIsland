@@ -70,10 +70,9 @@ public class ChimeraDetails : MonoBehaviour
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
         _name.text = $"{_chimera.Name}";
-        _level.text = $"Level: {_chimera.Level}";
+        _level.text = $"Average Power: {_chimera.AveragePower.ToString("F1")}";
         _chimeraIcon.sprite = _chimera.ChimeraIcon;
         _elementIcon.sprite = _chimera.ElementIcon;
-
 
         int amount = 0;
         string staminaText = _chimera.GetStatByType(StatType.Stamina, out amount) ? amount.ToString() : "Invalid!";
