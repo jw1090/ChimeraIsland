@@ -4,5 +4,5 @@ public class EnvironmentTier : MonoBehaviour
 {
     [SerializeField] private GameObject _fireflyFolder = null;
 
-    public GameObject FireflyFolder { get => _fireflyFolder; }
+    public void ToggleFireflies(bool toggleOn) { _fireflyFolder.SetActive(toggleOn); }
 }
