@@ -23,13 +23,14 @@ public class LightingManager : MonoBehaviour
 
     Vector3 _dayPosition = Vector3.zero;
     Vector3 _nightPosition = Vector3.zero;
+    private Habitat _habitat = null;
     private bool _initialized = false;
     private float _timeRate = 0.0f;
     private float _noon = 90.0f;
     private float _speed = 0.0f;
 
     public DayType DayType { get => _dayType; }
-
+    public void SetHabitat(Habitat habitat) { _habitat = habitat; }
     public LightingManager Initialize()
     {
         _dayPosition = _dayLight.transform.eulerAngles;
@@ -61,8 +62,23 @@ public class LightingManager : MonoBehaviour
         DaylightToggle();
         NightLightToggle();
 
+        FirefliesToggle();
+
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+    }
+
+    private void FirefliesToggle()
+    {
+        if(DayType == DayType.DayTime)
+        {
+            _habitat.ToggleFireflies(false);
+        }
+        else
+        {
+            _habitat.ToggleFireflies(true);
+
+        }
     }
 
     private void TimeEvaluate()

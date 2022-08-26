@@ -95,6 +95,7 @@ public class LevelLoader : AsyncLoader
         if (_lightingManager != null)
         {
             ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
+            _lightingManager.SetHabitat(_habitat);
         }
     }
 
