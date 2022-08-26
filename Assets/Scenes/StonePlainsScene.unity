@@ -208,49 +208,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 636782902, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: defaultStateName
+      propertyPath: currentState.StateName
       value: Tier 3
       objectReference: {fileID: 0}
-    - target: {fileID: 162854225441561853, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 87.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 162854225441561853, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 13.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 162854225441561853, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 95.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 1178103361852177243, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 85.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1178103361852177243, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 7.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 1371514536842912243, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 87.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 1371514536842912243, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 13.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1371514536842912243, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 95.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 5411779015779295080, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5411779016642794709, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 636782902, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateObject
+      value: 
+      objectReference: {fileID: 2134104455}
     - target: {fileID: 5411779017660834402, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: m_Name
       value: Habitat 1 - Stone Plains
@@ -460,6 +424,11 @@ MonoBehaviour:
   _habitat: {fileID: 2136768068}
   _expeditionManager: {fileID: 1725134172}
   _lightingManager: {fileID: 292593569}
+--- !u!1 &2134104455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5411779016642794709, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+  m_PrefabInstance: {fileID: 904453929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2136768068 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411779017660834404, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
