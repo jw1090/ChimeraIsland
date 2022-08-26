@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +13,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private GameObject _spawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
+    [SerializeField] private Environment _environment = null;
     [SerializeField] private StatefulObject _tiers = null;
 
     private ChimeraCreator _chimeraCreator = null;
@@ -26,6 +26,7 @@ public class Habitat : MonoBehaviour
 
     public int CurrentTier { get => _currentTier; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
+    public GameObject FireflyFolder { get => _environment.Tiers[_currentTier - 1].FireflyFolder; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
