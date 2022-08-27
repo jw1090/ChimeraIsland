@@ -212,11 +212,11 @@ public class Facility : MonoBehaviour
 
         if (_expeditionManager.State == ExpeditionState.Selection)
         {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
         }
         else
         {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
 

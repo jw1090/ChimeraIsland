@@ -28,6 +28,7 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.SetExpeditionManager(expeditionManager);
         _resultPanel.SetExpeditionManager(expeditionManager);
     }
+
     public void SetAudioManager(AudioManager audioManager)
     {
         _selectionPanel.SetAudioManager(audioManager);
@@ -66,6 +67,7 @@ public class ExpeditionUI : MonoBehaviour
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
+            case ExpeditionState.Setup:
                 _backgroundUIStates.SetState("Selection Panel", true);
                 _foregroundUIStates.SetState("Transparent", true);
                 _expeditionManager.LoadExpeditionOptions();

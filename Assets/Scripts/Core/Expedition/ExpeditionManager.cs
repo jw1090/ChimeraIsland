@@ -221,6 +221,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         _chimeras.Clear();
 
+        _expeditionState = ExpeditionState.Setup;
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
@@ -397,7 +398,6 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool RandomSuccesRate()
     {
-
         if (_selectedExpedition.AutoSucceed == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
@@ -538,7 +538,6 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomSpawnPoint();
             }
-
         }
 
         if (onExpedition == false)
