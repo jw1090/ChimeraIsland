@@ -210,13 +210,13 @@ public class Facility : MonoBehaviour
 
         _storedChimera = null;
 
-        if (_expeditionManager.State == ExpeditionState.Selection)
+        if (_expeditionManager.State == ExpeditionState.Setup)
         {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
         else
         {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
         }
     }
 
