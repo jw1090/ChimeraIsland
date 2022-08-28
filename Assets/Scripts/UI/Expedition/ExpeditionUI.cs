@@ -106,6 +106,11 @@ public class ExpeditionUI : MonoBehaviour
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
+
+        if(_expeditionManager.State == ExpeditionState.Setup)
+        {
+            _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+        }
     }
 
     public void TimerComplete()
