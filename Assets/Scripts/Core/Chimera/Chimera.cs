@@ -1,4 +1,5 @@
 using AI.Behavior;
+using Assets.Scripts.Core.Chimera;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
@@ -21,9 +22,12 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
+    private GameObject _evolutionIcon = null;
+
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
+    private bool _readyToEvolve = false;
     private int _uniqueId = 1;
     private int _exploration = 1;
     private int _stamina = 1;
@@ -38,6 +42,7 @@ public class Chimera : MonoBehaviour
     private int _energyTickCounter = 0;
     private float _averagePower = 0;
 
+    public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
@@ -176,6 +181,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetEvolutionIconActive(){_evolutionIcon.SetActive(true);}
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
@@ -228,6 +234,10 @@ public class Chimera : MonoBehaviour
         InitializeStats();
         _chimeraBehavior.Initialize();
         InitializeEvolution();
+
+        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3( 0.0f, 5.0f, 0.0f), transform.rotation);
+        _evolutionIcon.transform.parent = gameObject.transform;
+        _evolutionIcon.GetComponent<ChimeraEvolutionIcon>().Initialize();
     }
 
     private void InitializeStats()
@@ -342,11 +352,17 @@ public class Chimera : MonoBehaviour
 
             if (canEvolve == true)
             {
-                Evolve(evolution);
-                EvolveStatBonus();
-                _habitatUI.UpdateHabitatUI();
+                _readyToEvolve = true;
             }
         }
+    }
+
+    public void ActivateEvolve()
+    {
+        _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
+        Evolve(evolution);
+        EvolveStatBonus();
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void EvolveStatBonus()
@@ -415,6 +431,9 @@ public class Chimera : MonoBehaviour
 
     private void Evolve(EvolutionLogic evolution)
     {
+        _readyToEvolve = false;
+        _evolutionIcon.SetActive(false);
+
         Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
