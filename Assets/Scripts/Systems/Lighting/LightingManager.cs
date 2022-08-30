@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LightingManager : MonoBehaviour
@@ -21,24 +22,27 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Gradient _nightLightColor = null;
     [SerializeField] private AnimationCurve _nightLightIntensity = null;
 
-    Vector3 _dayPosition = Vector3.zero;
-    Vector3 _nightPosition = Vector3.zero;
+    Vector3 _dayRotation = Vector3.zero;
+    Vector3 _nightRotation = Vector3.zero;
+    private Habitat _habitat = null;
     private bool _initialized = false;
     private float _timeRate = 0.0f;
-    private float _noon = 90.0f;
     private float _speed = 0.0f;
 
+    public static event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
 
     public LightingManager Initialize()
     {
-        _dayPosition = _dayLight.transform.eulerAngles;
-        _nightPosition = _nightLight.transform.eulerAngles;
+        DayTypeChanged += OnDayTypeChanged;
+        _dayRotation = _dayLight.transform.eulerAngles;
+        _nightRotation = _nightLight.transform.eulerAngles;
 
         _timeRate = 1.0f / _fullDayLength;
         _time = _startTime;
 
         _dayType = DayType.DayTime;
+        _speed = 1.0f;
 
         _initialized = true;
 
@@ -55,32 +59,47 @@ public class LightingManager : MonoBehaviour
         TimeEvaluate();
         LightRotation();
 
-        IntensityManipulation();
-        ColorManipulation();
-
-        DaylightToggle();
-        NightLightToggle();
-
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+    }
+
+    private void FirefliesToggle(bool shouldShow)
+    {
+        _habitat.ToggleFireflies(shouldShow);
     }
 
     private void TimeEvaluate()
     {
         _time += _timeRate * _speed * Time.deltaTime;
 
+        // Update time of day
         if (_time >= 1.0f)
         {
             _time = 0.0f;
         }
 
+        // Update the light intensity
+        _dayLight.intensity = _dayLightIntensity.Evaluate(_time);
+        _nightLight.intensity = _nightLightIntensity.Evaluate(_time);
+
+        // Update the light color
+        _dayLight.color = _dayLightColor.Evaluate(_time);
+        _nightLight.color = _nightLightColor.Evaluate(_time);
+
+        // Check for DayType change
         switch (_dayType)
         {
             case DayType.DayTime:
-                _speed = 1;
+                if(_nightLight.intensity > 0f)
+                {
+                    DayTypeChanged.Invoke(DayType.NightTime);
+                }
                 break;
             case DayType.NightTime:
-                _speed = 2;
+                if(_nightLight.intensity <= 0)
+                {
+                    DayTypeChanged.Invoke(DayType.DayTime);
+                }
                 break;
             default:
                 Debug.LogWarning($"DayType is not valid [{_dayType}] please change!");
@@ -91,48 +110,35 @@ public class LightingManager : MonoBehaviour
     // Lights are opposite directions.
     private void LightRotation()
     {
-        _dayPosition.x = (_time - 0.25f) * _noon * 4.0f;
-        _nightPosition.x = (_time - 0.75f) * _noon * 4.0f;
+        _dayRotation.x = (_time - 0.25f) * (360f);
+        _nightRotation.x = (_time - 0.75f) * (360f);
 
-        _dayLight.transform.eulerAngles = _dayPosition;
-        _nightLight.transform.eulerAngles = _nightPosition;
-    }
-
-    private void IntensityManipulation()
-    {
-        _dayLight.intensity = _dayLightIntensity.Evaluate(_time);
-        _nightLight.intensity = _nightLightIntensity.Evaluate(_time);
-    }
-
-    private void ColorManipulation()
-    {
-        _dayLight.color = _dayLightColor.Evaluate(_time);
-        _nightLight.color = _nightLightColor.Evaluate(_time);
-    }
-
-    private void DaylightToggle()
-    {
-        if (_dayLight.intensity == 0.1 && _dayLight.gameObject.activeInHierarchy)
+        _dayLight.transform.eulerAngles = _dayRotation;
+        _nightLight.transform.eulerAngles = _nightRotation;
+        if (!_nightLight.gameObject.activeInHierarchy)
         {
-            _dayLight.gameObject.SetActive(false);
-        }
-        else if (_dayLight.intensity > 0.1 && !_dayLight.gameObject.activeInHierarchy)
-        {
-            _dayLight.gameObject.SetActive(true);
             _dayType = DayType.DayTime;
         }
     }
 
-    private void NightLightToggle()
+    private void OnDayTypeChanged(DayType newType)
     {
-        if (_nightLight.intensity == 0 && _nightLight.gameObject.activeInHierarchy)
+        switch (newType)
         {
-            _nightLight.gameObject.SetActive(false);
-        }
-        else if (_nightLight.intensity > 0 && !_nightLight.gameObject.activeInHierarchy)
-        {
-            _nightLight.gameObject.SetActive(true);
-            _dayType = DayType.NightTime;
+            case DayType.NightTime:
+                FirefliesToggle(true);
+                _nightLight.gameObject.SetActive(true);
+                _dayType = DayType.NightTime;
+                _speed = 2.0f;
+                break;
+            case DayType.DayTime:
+                FirefliesToggle(false);
+                _nightLight.gameObject.SetActive(false);
+                _dayType = DayType.DayTime;
+                _speed = 1.0f;
+                break;
+            default:
+                break;
         }
     }
 }
