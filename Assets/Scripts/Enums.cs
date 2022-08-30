@@ -148,6 +148,10 @@ public enum SFXUIType
     LevelUp,
     ErrorClick,
     Completion,
+    Failure,
+    Hit,
+    Harvest,
+    PortalClick,
 }
 
 public enum DayType
