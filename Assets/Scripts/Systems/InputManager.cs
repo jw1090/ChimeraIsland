@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
+    private LayerMask _portalLayer = new LayerMask();
+    private LayerMask _marketplaceLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -52,6 +54,8 @@ public class InputManager : MonoBehaviour
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
         _crystalLayer = LayerMask.GetMask("Crystal");
+        _portalLayer = LayerMask.GetMask("Portal");
+        _marketplaceLayer = LayerMask.GetMask("Marketplace");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -200,6 +204,14 @@ public class InputManager : MonoBehaviour
                 HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
                 _isHolding = true;
             }
+        }
+        else if(Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer))
+        {
+            _habitatUI.OpenExpedition();
+        }
+        else if (Physics.Raycast(ray, out RaycastHit marketplaceHit, 300.0f, _marketplaceLayer))
+        {
+            _habitatUI.OpenMarketplace();
         }
     }
 
