@@ -38,11 +38,11 @@ public class CrystalSpawn : MonoBehaviour
             _isActive = false;
             _crystal.SetActive(false);
             _currencyManager.IncreaseEssence(40);
-            _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
+            _audioManager.PlayUISFX(SFXUIType.Harvest);
         }
         else
         {
-            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+            _audioManager.PlayUISFX(SFXUIType.Hit);
         }
     }
 }

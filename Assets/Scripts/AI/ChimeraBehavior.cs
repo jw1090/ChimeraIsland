@@ -32,7 +32,7 @@ namespace AI.Behavior
         public CameraUtil CameraUtil { get => _cameraUtil; }
         public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
         public NavMeshAgent Agent { get => _navMeshAgent; }
-        public bool StateEnabled { get => _stateEnabled; }
+        public Chimera Chimera { get => _chimera; }
         public int PatrolIndex { get => _patrolIndex; }
 
         public bool Dropped { get; set; } = false;
@@ -102,16 +102,9 @@ namespace AI.Behavior
         {
             if (transform.GetHashCode() == id)
             {
-                if (wasClicked)
+                if (wasClicked == true)
                 {
-                    if(_chimera.ReadyToEvolve == true)
-                    {
-                        _chimera.ActivateEvolve();
-                    }
-                    else
-                    {
-                        ChangeState(_states[StateEnum.Held]);
-                    }
+                    ChangeState(_states[StateEnum.Held]);
                 }
                 else
                 {
