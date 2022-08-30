@@ -46,7 +46,6 @@ public class ExpeditionResultUI : MonoBehaviour
         }
 
         _expeditionManager.ResetSelectedExpedition();
-        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);
         _expeditionSuccess = false;
     }
 

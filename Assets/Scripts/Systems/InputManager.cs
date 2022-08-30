@@ -16,7 +16,9 @@ public class InputManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
+    private LayerMask _portalLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
+    private LayerMask _marketplaceLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -52,6 +54,8 @@ public class InputManager : MonoBehaviour
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
         _crystalLayer = LayerMask.GetMask("Crystal");
+        _portalLayer = LayerMask.GetMask("Portal");
+        _marketplaceLayer = LayerMask.GetMask("Marketplace");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -111,7 +115,13 @@ public class InputManager : MonoBehaviour
         {
             if (HarvestCrystal() == false)
             {
-                HeldStateCheck();
+                if(HeldStateCheck() == false)
+                {
+                    if(OpenExpeditions() == false)
+                    {
+                        OpenMarketplace();
+                    }
+                }
             }
         }
         else if (Input.GetMouseButtonUp(0))
@@ -192,26 +202,26 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-    private void HeldStateCheck()
+    private bool HeldStateCheck()
     {
         if (_cameraMain == null)
         {
-            return;
+            return false;
         }
 
         if (_inTransition == true)
         {
-            return;
+            return false;
         }
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
-            return;
+            return false;
         }
 
         if (_isHolding == true)
         {
-            return;
+            return true;
         }
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
@@ -221,7 +231,71 @@ public class InputManager : MonoBehaviour
             _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
             HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
             _isHolding = true;
+            return true;
         }
+        return false;
+    }
+
+    private bool OpenExpeditions()
+    {
+        if (_cameraMain == null)
+        {
+            return false;
+        }
+
+        if (_inTransition == true)
+        {
+            return false;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return false;
+        }
+
+        if (_isHolding == true)
+        {
+            return false;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _portalLayer))
+        {
+            _habitatUI.OpenExpedition();
+            return true;
+        }
+        return false;
+    }
+
+    private bool OpenMarketplace()
+    {
+        if (_cameraMain == null)
+        {
+            return false;
+        }
+
+        if (_inTransition == true)
+        {
+            return false;
+        }
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return false;
+        }
+
+        if (_isHolding == true)
+        {
+            return false;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _marketplaceLayer))
+        {
+            _habitatUI.OpenMarketplace();
+            return true;
+        }
+        return false;
     }
 
     private void RotateChimeraCheck()

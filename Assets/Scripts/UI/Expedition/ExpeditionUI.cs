@@ -115,8 +115,6 @@ public class ExpeditionUI : MonoBehaviour
 
     public void TimerComplete()
     {
-        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(true);
-
         _inProgressPanel.gameObject.SetActive(false);
         _resultPanel.gameObject.SetActive(true);
 
