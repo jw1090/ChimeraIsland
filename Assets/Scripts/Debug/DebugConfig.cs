@@ -1,5 +1,5 @@
-using System.Collections;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class DebugConfig : MonoBehaviour, IGameModule

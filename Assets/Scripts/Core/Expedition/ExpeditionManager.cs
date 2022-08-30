@@ -416,7 +416,7 @@ public class ExpeditionManager : MonoBehaviour
         }
         else
         {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+            _audioManager.PlayUISFX(SFXUIType.Failure);
             return false;
         }
     }
