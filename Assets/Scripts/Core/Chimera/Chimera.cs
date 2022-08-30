@@ -234,7 +234,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.Initialize();
         InitializeEvolution();
 
-        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3(0.0f, 5.0f, 0.0f), transform.rotation);
+        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3( 0.0f, 5.0f, 0.0f), transform.rotation).GetComponent<ChimeraEvolutionIcon>();
         _evolutionIcon.gameObject.transform.parent = gameObject.transform;
         _evolutionIcon.Initialize();
     }
