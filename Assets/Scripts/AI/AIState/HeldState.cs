@@ -21,7 +21,7 @@ namespace AI.Behavior
             _chimeraBehavior.BoxCollider.enabled = false;
             _chimeraBehavior.CameraUtil.IsHolding = true;
 
-            _audioManager.PlayUISFX(SFXUIType.Hold);
+            //_audioManager.PlayHeldChimeraSFX(_chimeraBehavior.GetChimeraType());
 
             _sphereMarker = _inputManager.SphereMarker;
             _sphereMarker.gameObject.SetActive(true);
@@ -33,7 +33,7 @@ namespace AI.Behavior
         {
             ObjFollowMouse();
 
-            if(_lastValidPos != Vector3.zero)
+            if (_lastValidPos != Vector3.zero)
             {
                 _sphereMarker.transform.position = _lastValidPos;
             }
@@ -50,7 +50,7 @@ namespace AI.Behavior
             _chimeraBehavior.CameraUtil.IsHolding = false;
             _chimeraBehavior.Dropped = true;
             _chimeraBehavior.ExitAnim(_heldAnim);
-            _audioManager.StopSfxSound();
+            //_audioManager.StopSFXSource();
         }
 
         private void ObjFollowMouse()

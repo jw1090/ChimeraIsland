@@ -148,7 +148,6 @@ public enum SFXUIType
     LevelUp,
     ErrorClick,
     Completion,
-    Hold,
 }
 
 public enum DayType
