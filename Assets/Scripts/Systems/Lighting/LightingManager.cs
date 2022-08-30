@@ -31,6 +31,7 @@ public class LightingManager : MonoBehaviour
 
     public static event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
+    public void SetHabitat(Habitat habitat) { _habitat = habitat; }
 
     public LightingManager Initialize()
     {
