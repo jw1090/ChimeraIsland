@@ -48,7 +48,7 @@ public class LightingManager : MonoBehaviour
         return this;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_initialized == false)
         {
