@@ -203,6 +203,11 @@ public class Facility : MonoBehaviour
         _storedChimera.Behavior.enabled = true;
         _storedChimera.Behavior.Agent.enabled = true;
 
+        if (_storedChimera.ReadyToEvolve == true)
+        {
+            _storedChimera.SetEvolutionIconActive();
+        }
+
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
 

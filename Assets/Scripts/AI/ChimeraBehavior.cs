@@ -104,7 +104,14 @@ namespace AI.Behavior
             {
                 if (wasClicked)
                 {
-                    ChangeState(_states[StateEnum.Held]);
+                    if(_chimera.ReadyToEvolve == true)
+                    {
+                        _chimera.ActivateEvolve();
+                    }
+                    else
+                    {
+                        ChangeState(_states[StateEnum.Held]);
+                    }
                 }
                 else
                 {
