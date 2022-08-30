@@ -291,9 +291,37 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.Play();
                 }
                 break;
+            case SFXUIType.PortalClick:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
             case SFXUIType.Completion:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Completion SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Failure:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Failure SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Hit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Harvest:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Harvest SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.Play();
                 }
@@ -308,64 +336,88 @@ public class AudioManager : MonoBehaviour
         switch (chimeraType)
         {
             case ChimeraType.A:
-                AudioClipItem itemA = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemA.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.A1:
-                AudioClipItem itemA1 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemA1.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.A2:
-                AudioClipItem itemA2 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemA2.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.A3:
-                AudioClipItem itemA3 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemA3.Clip;
-                _sfxSource.Play();
-                break;
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                    break;
+                }
             case ChimeraType.B:
-                AudioClipItem itemB = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B").FirstOrDefault();
-                _sfxSource.clip = itemB.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.B1:
-                AudioClipItem itemB1 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemB1.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.B2:
-                AudioClipItem itemB2 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemB2.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.B3:
-                AudioClipItem itemB3 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemB3.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.C:
-                AudioClipItem itemC = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C").FirstOrDefault();
-                _sfxSource.clip = itemC.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.C1:
-                AudioClipItem itemC1 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemC1.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.C2:
-                AudioClipItem itemC2 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemC2.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             case ChimeraType.C3:
-                AudioClipItem itemC3 = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
-                _sfxSource.clip = itemC3.Clip;
-                _sfxSource.Play();
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
                 break;
             default:
                 Debug.LogError($"{chimeraType} is invalid. Please change!");
