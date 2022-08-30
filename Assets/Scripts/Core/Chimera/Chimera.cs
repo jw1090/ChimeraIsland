@@ -1,5 +1,4 @@
 using AI.Behavior;
-using Assets.Scripts.Core.Chimera;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
@@ -22,7 +21,7 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
-    private GameObject _evolutionIcon = null;
+    private ChimeraEvolutionIcon _evolutionIcon = null;
 
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
@@ -181,7 +180,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void SetEvolutionIconActive(){_evolutionIcon.SetActive(true);}
+    public void SetEvolutionIconActive(){_evolutionIcon.gameObject.SetActive(true);}
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
@@ -235,9 +234,9 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.Initialize();
         InitializeEvolution();
 
-        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3( 0.0f, 5.0f, 0.0f), transform.rotation);
-        _evolutionIcon.transform.parent = gameObject.transform;
-        _evolutionIcon.GetComponent<ChimeraEvolutionIcon>().Initialize();
+        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3(0.0f, 5.0f, 0.0f), transform.rotation);
+        _evolutionIcon.gameObject.transform.parent = gameObject.transform;
+        _evolutionIcon.Initialize();
     }
 
     private void InitializeStats()
@@ -432,7 +431,7 @@ public class Chimera : MonoBehaviour
     private void Evolve(EvolutionLogic evolution)
     {
         _readyToEvolve = false;
-        _evolutionIcon.SetActive(false);
+        _evolutionIcon.gameObject.SetActive(false);
 
         Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
 

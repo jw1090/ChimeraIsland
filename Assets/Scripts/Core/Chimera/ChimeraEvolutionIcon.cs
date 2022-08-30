@@ -1,20 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Core.Chimera
+public class ChimeraEvolutionIcon : MonoBehaviour
 {
-    internal class ChimeraEvolutionIcon : MonoBehaviour
+    private Camera _camera = null;
+    public void Initialize()
     {
-        private Camera _camera = null;
-        public void Initialize()
-        {
-            _camera = ServiceLocator.Get<CameraUtil>().CameraCO;
-        }
+        _camera = ServiceLocator.Get<CameraUtil>().CameraCO;
+    }
 
-        private void Update()
-        {
-            transform.LookAt(_camera.transform);
-        }
+    private void Update()
+    {
+        transform.LookAt(_camera.transform);
     }
 }
 
