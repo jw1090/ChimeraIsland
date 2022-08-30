@@ -66,7 +66,7 @@ public class LightingManager : MonoBehaviour
 
     private void FirefliesToggle(bool shouldShow)
     {
-        _habitat.ToggleFireflies(shouldShow);
+        _habitat?.ToggleFireflies(shouldShow);
     }
 
     private void TimeEvaluate()
