@@ -28,6 +28,9 @@ public class AudioManager : MonoBehaviour
 
     [Header("Facility SFX")]
     [SerializeField] private AudioManifest _facilitySFXManifest = null;
+    
+    [Header("Chimeras SFX")]
+    [SerializeField] private AudioManifest _chimeraSFXManifest = null;
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
@@ -288,9 +291,37 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.Play();
                 }
                 break;
+            case SFXUIType.PortalClick:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
             case SFXUIType.Completion:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Completion SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Failure:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Failure SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Hit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case SFXUIType.Harvest:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Harvest SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.Play();
                 }
@@ -300,7 +331,103 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-
+    public void PlayHeldChimeraSFX(ChimeraType chimeraType)
+    {
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.A1:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.A2:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.A3:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "A3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                    break;
+                }
+            case ChimeraType.B:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.B1:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.B2:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.B3:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "B3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.C:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.C1:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C1").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.C2:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C2").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            case ChimeraType.C3:
+                {
+                    AudioClipItem item = _chimeraSFXManifest.AudioItems.Where(c => c.Name == "C3").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.Play();
+                }
+                break;
+            default:
+                Debug.LogError($"{chimeraType} is invalid. Please change!");
+                break;
+        }
+    }
+    public void StopSFXSource()
+    {
+        _sfxSource.Stop();
+    }
     private void PlayClickSFX()
     {
         PlayUISFX(SFXUIType.StandardClick);

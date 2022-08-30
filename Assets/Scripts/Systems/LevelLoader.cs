@@ -54,7 +54,6 @@ public class LevelLoader : AsyncLoader
                 PlayCurrentSceneMusic();
                 break;
             case SceneType.WorldMap:
-                _tutorialManager.ShowTutorialStage(TutorialStageType.WorldMapAndTheTreeOfLife);
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
@@ -91,11 +90,13 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<ExpeditionManager>(_expeditionManager.Initialize(), true);
             _uiManager.HabitatUI.SetExpeditionManager(_expeditionManager);
+            _habitat.SetExpeditionManager(_expeditionManager);
         }
 
         if (_lightingManager != null)
         {
             ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
+            _lightingManager.SetHabitat(_habitat);
         }
     }
 
@@ -108,6 +109,9 @@ public class LevelLoader : AsyncLoader
                 _habitatManager.PlayCurrentHabitatMusic();
                 _habitatManager.BuildFacilitiesForHabitat();
                 _habitatManager.SpawnChimerasForHabitat();
+
+                _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+
                 StartHabitatTickTimer();
             }
         }

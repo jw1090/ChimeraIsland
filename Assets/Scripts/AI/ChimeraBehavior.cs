@@ -42,6 +42,7 @@ namespace AI.Behavior
         private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
         public int GetNodeCount() { return _nodes.Count; }
         public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
+        public ChimeraType GetChimeraType() { return _chimera.ChimeraType; }
 
         public void SetAgentSpeed(float agentSpeed) { _navMeshAgent.speed = agentSpeed; }
         public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
@@ -103,7 +104,14 @@ namespace AI.Behavior
             {
                 if (wasClicked)
                 {
-                    ChangeState(_states[StateEnum.Held]);
+                    if(_chimera.ReadyToEvolve == true)
+                    {
+                        _chimera.ActivateEvolve();
+                    }
+                    else
+                    {
+                        ChangeState(_states[StateEnum.Held]);
+                    }
                 }
                 else
                 {

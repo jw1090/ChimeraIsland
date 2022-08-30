@@ -16,11 +16,13 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private Button _confirmButton = null;
     [SerializeField] private Button _backButton = null;
+    private TutorialManager _tutoiralManager = null;
     private UIManager _uiManager = null;
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
+    private ChimeraDetailsFolder _detailsFolder = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -30,11 +32,13 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(UIManager uiManager, ExpeditionUI expeditionUI)
+    public void Initialize(ExpeditionUI expeditionUI,UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
 
+        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
+        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
         _expeditionUI = expeditionUI;
     }
 
@@ -55,7 +59,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Party);
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
         _expeditionManager.EnterInProgressState();
 
         _backButton.gameObject.SetActive(false);
@@ -63,6 +67,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     private void BackClick()
     {
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
@@ -79,7 +84,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _suggestedLevel.text = $"Suggested Level: {data.SuggestedLevel}";
+        _suggestedLevel.text = $"Suggested Total Power: {data.SuggestedLevel}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
 
         LoadDuration(data.Duration);
@@ -87,6 +92,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
+        _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
     }
 
     private void LoadDuration(float duration)

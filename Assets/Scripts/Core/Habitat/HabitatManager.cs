@@ -6,7 +6,7 @@ using UnityEngine;
 public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
-    [SerializeField] private int _chimeraCapacity = 5;
+    [SerializeField] private int _chimeraCapacity = 9;
     [SerializeField] private float _tickTimer = 0.4f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
@@ -241,6 +241,22 @@ public class HabitatManager : MonoBehaviour
         foreach (Chimera chimera in _currentHabitat.ActiveChimeras)
         {
             AddNewChimera(chimera);
+        }
+    }
+
+    public void UpdateCurrentHabitatFacilities()
+    {
+        if (_facilitiesByHabitat.ContainsKey(_currentHabitat.Type) == false)
+        {
+            Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
+            return;
+        }
+
+        _facilitiesByHabitat.Remove(_currentHabitat.Type);
+
+        foreach (Facility facility in _currentHabitat.Facilities)
+        {
+            AddNewFacility(facility);
         }
     }
 

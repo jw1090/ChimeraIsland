@@ -18,8 +18,8 @@ public enum ChimeraType
 public enum DetailsButtonType
 {
     None = -1,
-    Party,
-    Expedition,
+    Standard,
+    ExpeditionParty,
 }
 
 public enum ElementType
@@ -42,8 +42,9 @@ public enum ExpeditionState
 {
     None = -1,
     Selection,
+    Setup,
     InProgress,
-    Result
+    Result,
 }
 
 public enum FacilityType
@@ -81,6 +82,7 @@ public enum ModifierType
     Stamina,
     Wisdom,
     Exploration,
+    Max,
 }
 
 public enum SceneType
@@ -103,10 +105,7 @@ public enum StatType
 public enum TutorialIconType
 {
     None = -1,
-    Cute,
     Happy,
-    LookingLeft,
-    LookingRight,
     Shocked,
     Speaking,
     Standard,
@@ -130,20 +129,11 @@ public enum TutorialStageType
 {
     None = -1,
     Intro,
-    ExpeditionRequirements,
-    FacilityShop,
-    Training,
-    Details,
-    ExpeditionsInfo,
-    TierTwoStonePlains,
-    UnlockExpeditionModifiers,
-    Fossils,
-    ChimeraShop,
-    TierThreeStonePlains,
-    WorldMapButton,
-    WorldMapAndTheTreeOfLife,
-    TreeOfLife,
-    Transfers,
+    ExpeditionSelection,
+    ExpeditionSetup,
+    Facilities,
+    FossilShop,
+    FacilityUpgrades,
 }
 
 public enum SFXUIType
@@ -158,6 +148,10 @@ public enum SFXUIType
     LevelUp,
     ErrorClick,
     Completion,
+    Failure,
+    Hit,
+    Harvest,
+    PortalClick,
 }
 
 public enum DayType

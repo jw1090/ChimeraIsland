@@ -16,12 +16,14 @@ public class InputManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
     private LayerMask _chimeraLayer = new LayerMask();
+    private LayerMask _crystalLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
+    private const float _rotationAmount = 0.8f;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -49,6 +51,7 @@ public class InputManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
+        _crystalLayer = LayerMask.GetMask("Crystal");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -95,10 +98,21 @@ public class InputManager : MonoBehaviour
         {
             HeldCheckAgainstUI();
         }
+        if (Input.GetMouseButton(1))
+        {
+            HeldCheckAgainstUI();
+        }
+        if (Input.GetMouseButton(1))
+        {
+            RotateChimeraCheck();
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
-            EnterHeldState();
+            if (HarvestCrystal() == false)
+            {
+                HeldStateCheck();
+            }
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -132,29 +146,53 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(_habitatUI != null)
+            if (_habitatUI != null)
             {
                 _habitatUI.ToggleSettingsMenu();
             }
         }
 
-        if(_debugTutorialInputEnabled)
+        if (_debugTutorialInputEnabled)
         {
             DebugTutorialInput();
         }
 
-        if(_debugCurrencyInputEnabled)
+        if (_debugCurrencyInputEnabled)
         {
             DebugCurrencyInput();
         }
 
-        if(_debugHabitatUpgradeInputEnabled)
+        if (_debugHabitatUpgradeInputEnabled)
         {
             DebugHabitatUpgradeInput();
         }
     }
 
-    private void EnterHeldState()
+    private bool HarvestCrystal()
+    {
+        if (_cameraMain == null)
+        {
+            return false;
+        }
+
+        if (_inTransition == true)
+        {
+            return false;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _crystalLayer))
+        {
+            CrystalSpawn crystal = hit.transform.gameObject.GetComponent<CrystalSpawn>();
+            crystal.Harvest();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void HeldStateCheck()
     {
         if (_cameraMain == null)
         {
@@ -186,6 +224,15 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void RotateChimeraCheck()
+    {
+        if (_isHolding == true)
+        {
+            _heldChimera.transform.Rotate(Vector3.up, _rotationAmount);
+        }
+    }
+
+
     private void HeldCheckAgainstUI()
     {
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
@@ -214,7 +261,6 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _uiManager.TutorialDisableUI();
             _tutorialManager.ResetTutorialProgress();
             _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
         }
@@ -222,7 +268,7 @@ public class InputManager : MonoBehaviour
         {
             int newStageId = ++currentStageId;
 
-            if(newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
+            if (newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
             {
                 _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
             }

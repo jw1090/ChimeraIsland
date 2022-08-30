@@ -23,14 +23,18 @@ public class Facility : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private TrainingUI _uiTraining = null;
+    private ExpeditionManager _expeditionManager = null;
+    private FacilityData _loadedFacilityData = null;
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
     private bool _activateTraining = false;
 
-    public TrainingFacilityIcon MyFacilityIcon { get => _trainingIcon; }
-    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
+    public Chimera StoredChimera { get => _storedChimera; }
+    public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
     public GlowMarker GlowObject { get => _glowMarker; }
+    public TrainingFacilityIcon TrainingIcon { get => _trainingIcon; }
+    public Transform CameraTransitionNode { get => _cameraTransitionNode; }
     public StatType StatType { get => _statType; }
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
@@ -38,9 +42,12 @@ public class Facility : MonoBehaviour
     public int StatModifier { get => _statModifier; }
     public int CurrentTier { get => _currentTier; }
     public int Price { get => _price; }
+    public int TrainToLevel { get => _trainToLevel; }
 
-    public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
+    public void SetFacilityData(FacilityData data) { _loadedFacilityData = data; }
+    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
+    public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
 
     public void Initialize()
     {
@@ -111,13 +118,13 @@ public class Facility : MonoBehaviour
         if (moveCamera == true)
         {
             _cameraUtil.FacilityCameraShift(Type);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
         }
 
         Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
     }
 
-    // Called to properly link a chimera to a facility and adjust its states properly.
-    public bool PlaceChimera(Chimera chimera)
+    public bool PlaceChimeraFromUI(Chimera chimera)
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
@@ -126,21 +133,52 @@ public class Facility : MonoBehaviour
         }
 
         _habitatUI.ResetStandardUI();
-        _uiTraining.SetupTrainingUI(chimera, this);
         _habitatUI.OpenTrainingPanel();
+        _uiTraining.SetupTrainingUI(chimera, this);
 
+        _trainingIcon.gameObject.SetActive(true);
+        _trainingIcon.SetIcon(chimera.ChimeraIcon);
+
+        StoreChimera(chimera);
+
+        return true;
+    }
+
+    public bool PlaceChimeraFromPersistantData(Chimera chimera)
+    {
+        if (_storedChimera != null) // Something is already in the facility.
+        {
+            Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
+            return false;
+        }
+
+        _trainingIcon.SetSliderAttributes(0, _loadedFacilityData.sliderMax);
+        _trainingIcon.SetSliderValue(_loadedFacilityData.sliderValue);
+
+        SetTrainToLevel(_loadedFacilityData.trainToLevel);
+        SetActivateTraining(true);
+        chimera.SetXPByType(_statType, _loadedFacilityData.chimeraStatXp);
+
+        StoreChimera(chimera);
+
+        return true;
+    }
+
+    private void StoreChimera(Chimera chimera)
+    {
         _trainingIcon.gameObject.SetActive(true);
         _trainingIcon.SetIcon(chimera.ChimeraIcon);
 
         _storedChimera = chimera;
         _storedChimera.SetInFacility(true);
+        _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
         _glowMarker.ActivateGlowCollider(false);
         _storedChimera.RevealChimera(false);
+        _storedChimera.Behavior.enabled = false;
+        _storedChimera.Behavior.Agent.enabled = false;
 
         Debug.Log($"{_storedChimera} added to the facility.");
-
-        return true;
     }
 
     // Removes Chimera from facility and cleans up chimera and facility logic.
@@ -152,22 +190,23 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        if (_storedChimera.Level > 1 && _uiManager.TutorialObserver.DetailsTutorial == false)
-        {
-            _uiManager.TutorialObserver.DetailsTutorial = true;
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Details);
-        }
-
         _activateTraining = false;
-        AI.Behavior.ChimeraBehavior chimeraBehavior = _storedChimera.gameObject.GetComponent<AI.Behavior.ChimeraBehavior>();
-        chimeraBehavior.ChangeState(chimeraBehavior.States[AI.Behavior.StateEnum.Patrol]);
 
         _trainingIcon.ResetIcon();
         _trainingIcon.gameObject.SetActive(false);
-        _storedChimera.SetInFacility(false);
 
         _glowMarker.ActivateGlowCollider(true);
+
+        _storedChimera.SetInFacility(false);
         _storedChimera.RevealChimera(true);
+        _storedChimera.Behavior.ChangeState(_storedChimera.Behavior.States[AI.Behavior.StateEnum.Patrol]);
+        _storedChimera.Behavior.enabled = true;
+        _storedChimera.Behavior.Agent.enabled = true;
+
+        if (_storedChimera.ReadyToEvolve == true)
+        {
+            _storedChimera.SetEvolutionIconActive();
+        }
 
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
@@ -175,6 +214,15 @@ public class Facility : MonoBehaviour
         Debug.Log($"{_storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
+
+        if (_expeditionManager.State == ExpeditionState.Setup)
+        {
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+        }
+        else
+        {
+            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+        }
     }
 
     public void FacilityTick()

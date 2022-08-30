@@ -97,40 +97,6 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        switch (tutorialType)
-        {
-            case TutorialStageType.TierTwoStonePlains:
-                if (IsStageComplete(TutorialStageType.TierThreeStonePlains))
-                {
-                    tutorialType = TutorialStageType.WorldMapButton;
-                }
-                else if (IsStageComplete(TutorialStageType.Fossils))
-                {
-                    tutorialType = TutorialStageType.TierThreeStonePlains;
-                }
-                else if (IsStageComplete(TutorialStageType.TierTwoStonePlains))
-                {
-                    tutorialType = TutorialStageType.Fossils;
-                }
-                break;
-            case TutorialStageType.ExpeditionRequirements:
-                if (IsStageComplete(TutorialStageType.TierTwoStonePlains))
-                {
-                    tutorialType = TutorialStageType.UnlockExpeditionModifiers;
-                }
-                else if (IsStageComplete(TutorialStageType.Details))
-                {
-                    tutorialType = TutorialStageType.ExpeditionsInfo;
-                }
-                break;
-            case TutorialStageType.Transfers:
-                if(IsStageComplete(TutorialStageType.TreeOfLife) == false)
-                {
-                    return;
-                }
-                break;
-        }
-
         if (IsStageComplete(tutorialType)) { return; }
 
         _currentStage = tutorialType;
@@ -151,8 +117,6 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        _uiManager.TutorialDisableUI();
-
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
         switch (_habitatManager.CurrentHabitat.Type)
@@ -165,62 +129,12 @@ public class TutorialManager : MonoBehaviour
                 else
                 {
                     Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
-
-                    EnableUIByProgress();
                 }
                 break;
             case HabitatType.TreeOfLife:
-                EnableUIByProgress();
-                ShowTutorialStage(TutorialStageType.TreeOfLife);
                 break;
             default:
                 Debug.Log($"Habitat type \"{_habitatManager.CurrentHabitat.Type}\" shouldn't exist.");
-                break;
-        }
-    }
-
-    private void EnableUIByProgress()
-    {
-        switch (_currentStage)
-        {
-            case TutorialStageType.Intro:
-                break;
-            case TutorialStageType.ExpeditionRequirements:
-            case TutorialStageType.FacilityShop:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                break;
-            case TutorialStageType.Training:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
-                break;
-            case TutorialStageType.Details:
-            case TutorialStageType.ExpeditionsInfo:
-            case TutorialStageType.TierTwoStonePlains:
-            case TutorialStageType.UnlockExpeditionModifiers:
-            case TutorialStageType.Fossils:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
-                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
-                break;
-            case TutorialStageType.ChimeraShop:
-            case TutorialStageType.TierThreeStonePlains:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
-                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
-                _uiManager.EnableUIByType(UIElementType.MarketplaceChimeraTab);
-                break;
-            case TutorialStageType.WorldMapButton:
-            case TutorialStageType.WorldMapAndTheTreeOfLife:
-            case TutorialStageType.TreeOfLife:
-            case TutorialStageType.Transfers:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.OtherFacilityButtons);
-                _uiManager.EnableUIByType(UIElementType.OpenDetailsButton);
-                _uiManager.EnableUIByType(UIElementType.MarketplaceChimeraTab);
-                _uiManager.EnableUIByType(UIElementType.WorldMapButton);
-                break;
-            default:
-                Debug.LogError($"{_currentStage} is invalid. Please change!");
                 break;
         }
     }

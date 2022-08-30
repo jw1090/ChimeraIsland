@@ -28,6 +28,7 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.SetExpeditionManager(expeditionManager);
         _resultPanel.SetExpeditionManager(expeditionManager);
     }
+
     public void SetAudioManager(AudioManager audioManager)
     {
         _selectionPanel.SetAudioManager(audioManager);
@@ -40,8 +41,8 @@ public class ExpeditionUI : MonoBehaviour
         _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
 
         _selectionPanel.Initialize();
-        _setupPanel.Initialize(uiManager, this);
-        _resultPanel.Initialize(uiManager);
+        _setupPanel.Initialize(this, uiManager);
+        _resultPanel.Initialize(this, uiManager);
 
         SetupListeners();
     }
@@ -54,13 +55,19 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.SetupListeners();
     }
 
-    public void OpenExpeditionUI()
+    public void ExpeditionButtonClick()
     {
         _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
 
+        OpenExpeditionUI();
+    }
+
+    public void OpenExpeditionUI()
+    {
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
+            case ExpeditionState.Setup:
                 _backgroundUIStates.SetState("Selection Panel", true);
                 _foregroundUIStates.SetState("Transparent", true);
                 _expeditionManager.LoadExpeditionOptions();
@@ -92,13 +99,18 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Expedition);
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
     }
 
     public void CloseExpeditionUI()
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
+
+        if(_expeditionManager.State == ExpeditionState.Setup)
+        {
+            _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+        }
     }
 
     public void TimerComplete()

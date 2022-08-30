@@ -12,6 +12,7 @@ public class PersistentData : MonoBehaviour
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
+    private ResourceManager _resourceManager = null;
 
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
@@ -28,6 +29,7 @@ public class PersistentData : MonoBehaviour
 
     public PersistentData Initialize()
     {
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
         LoadData();
 
@@ -42,7 +44,10 @@ public class PersistentData : MonoBehaviour
             Debug.Log($"No Save Data found");
             myData = new GameSaveData();
         }
-
+        if (myData._firstChimeraType != ChimeraType.None)
+        {
+            _resourceManager.SetFirstChimeraType(myData._firstChimeraType);
+        }
         UpdateGameSaveData(myData);
     }
 
@@ -63,12 +68,13 @@ public class PersistentData : MonoBehaviour
     public void SaveSessionData(HabitatType habitatType = HabitatType.None)
     {
         _habitatManager.UpdateCurrentHabitatChimeras();
+        _habitatManager.UpdateCurrentHabitatFacilities();
 
         GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _resourceManager.FirstChimeraType);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA);

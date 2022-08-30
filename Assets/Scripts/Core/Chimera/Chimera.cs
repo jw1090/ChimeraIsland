@@ -8,14 +8,6 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ElementType _elementalType = ElementType.None;
     [SerializeField] private int _price = 5;
 
-    [Header("Stats")]
-    [SerializeField] private int _level = 0;
-    [SerializeField] private int _exploration = 1;
-    [SerializeField] private int _stamina = 1;
-    [SerializeField] private int _wisdom = 1;
-    private int _currentEnergy = 5;
-    private int _maxEnergy = 5;
-
     [Header("Stat Growth")]
     [SerializeField] private int _explorationThreshold = 5;
     [SerializeField] private int _staminaThreshold = 5;
@@ -29,16 +21,27 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
+    private ChimeraEvolutionIcon _evolutionIcon = null;
+
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
+    private bool _readyToEvolve = false;
+    private int _uniqueId = 1;
+    private int _exploration = 1;
+    private int _stamina = 1;
+    private int _wisdom = 1;
+    private int _currentEnergy = 5;
+    private int _maxEnergy = 5;
     private int _staminaExperience = 0;
     private int _wisdomExperience = 0;
     private int _explorationExperience = 0;
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
+    private float _averagePower = 0;
 
+    public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
@@ -50,7 +53,7 @@ public class Chimera : MonoBehaviour
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
     public bool OnExpedition { get => _onExpedition; }
-    public int Level { get => _level; }
+    public float AveragePower { get => _averagePower; }
     public int Stamina { get => _stamina; }
     public int Wisdom { get => _wisdom; }
     public int Exploration { get => _exploration; }
@@ -58,6 +61,7 @@ public class Chimera : MonoBehaviour
     public int MaxEnergy { get => _maxEnergy; }
     public int Price { get => _price; }
     public string Name { get => GetName(); }
+    public int UniqueID { get => _uniqueId; }
 
     public int GetStatThreshold(StatType statType)
     {
@@ -69,6 +73,22 @@ public class Chimera : MonoBehaviour
                 return _wisdomThreshold;
             case StatType.Exploration:
                 return _explorationThreshold;
+            default:
+                Debug.LogError($"Stat Type [{statType}] is invalid.");
+                return -1;
+        }
+    }
+
+    public int GetXP(StatType statType)
+    {
+        switch (statType)
+        {
+            case StatType.Stamina:
+                return _staminaExperience;
+            case StatType.Wisdom:
+                return _wisdomExperience;
+            case StatType.Exploration:
+                return _explorationExperience;
             default:
                 Debug.LogError($"Stat Type [{statType}] is invalid.");
                 return -1;
@@ -160,14 +180,35 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetEvolutionIconActive(){_evolutionIcon.gameObject.SetActive(true);}
+    public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
-    public void SetLevel(int level) { _level = level; }
+
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
     public void SetCurrentEnergy(int currentEnergy) { _currentEnergy = currentEnergy; }
+
+    public void SetXPByType(StatType statType, int amount)
+    {
+        switch (statType)
+        {
+            case StatType.Stamina:
+                _staminaExperience = amount;
+                break;
+            case StatType.Wisdom:
+                _wisdomExperience = amount;
+                break;
+            case StatType.Exploration:
+                _explorationExperience = amount;
+                break;
+            default:
+                Debug.LogError("Default StatType please change!");
+                break;
+        }
+    }
 
     public void Initialize()
     {
@@ -184,9 +225,18 @@ public class Chimera : MonoBehaviour
 
         _elementIcon = _resourceManager.GetElementSprite(_elementalType);
 
+        if(_uniqueId == 1)
+        {
+            _uniqueId = gameObject.GetInstanceID();
+        }
+
         InitializeStats();
         _chimeraBehavior.Initialize();
         InitializeEvolution();
+
+        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3( 0.0f, 5.0f, 0.0f), transform.rotation).GetComponent<ChimeraEvolutionIcon>();
+        _evolutionIcon.gameObject.transform.parent = gameObject.transform;
+        _evolutionIcon.Initialize();
     }
 
     private void InitializeStats()
@@ -237,7 +287,7 @@ public class Chimera : MonoBehaviour
     // Checks if stored experience is below cap and appropriately adds stat exp.
     public void ExperienceTick(StatType statType, int amount)
     {
-        if (_level >= _levelCap)
+        if (_averagePower >= _levelCap)
         {
             return;
         }
@@ -301,11 +351,17 @@ public class Chimera : MonoBehaviour
 
             if (canEvolve == true)
             {
-                Evolve(evolution);
-                EvolveStatBonus();
-                _habitatUI.UpdateHabitatUI();
+                _readyToEvolve = true;
             }
         }
+    }
+
+    public void ActivateEvolve()
+    {
+        _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
+        Evolve(evolution);
+        EvolveStatBonus();
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void EvolveStatBonus()
@@ -354,9 +410,12 @@ public class Chimera : MonoBehaviour
 
         if (++_levelUpTracker % 2 == 0)
         {
+            _levelUpTracker = 0;
+
             LevelCalculation();
+
             _audioManager.PlayUISFX(SFXUIType.LevelUp);
-            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_level} !");
+            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_averagePower} !");
         }
 
         _habitatUI.UpdateHabitatUI();
@@ -364,11 +423,16 @@ public class Chimera : MonoBehaviour
 
     private void LevelCalculation()
     {
-        _level = (int)Mathf.Round((_stamina + _wisdom + _exploration) * 0.33f);
+        float power = (_stamina + _wisdom + _exploration) * 0.334f;
+        _averagePower = Mathf.Round(power * 10.0f) * 0.1f; // Round to the tenth
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void Evolve(EvolutionLogic evolution)
     {
+        _readyToEvolve = false;
+        _evolutionIcon.gameObject.SetActive(false);
+
         Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
@@ -388,6 +452,8 @@ public class Chimera : MonoBehaviour
         {
             _currentEvolution.gameObject.SetActive(false);
         }
+
+        LevelCalculation();
     }
 
     public void RevealChimera(bool reveal)
