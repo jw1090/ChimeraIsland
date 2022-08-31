@@ -102,6 +102,8 @@ public class Habitat : MonoBehaviour
             facility.Initialize();
         }
 
+        ToggleFireflies(false);
+
         _isInitialized = true;
 
         return this;
