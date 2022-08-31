@@ -316,7 +316,7 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.Harvest:
