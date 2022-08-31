@@ -100,19 +100,12 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            HeldCheckAgainstUI();
-        }
-        if (Input.GetMouseButton(1))
-        {
             RotateChimeraCheck();
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (HarvestCrystal() == false)
-            {
-                HeldStateCheck();
-            }
+            LeftClickDown();
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -168,59 +161,45 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private bool HarvestCrystal()
+    private void LeftClickDown()
     {
         if (_cameraMain == null)
         {
-            return false;
+            return;
         }
 
         if (_inTransition == true)
         {
-            return false;
+            return;
         }
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _crystalLayer))
+        if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
         {
-            CrystalSpawn crystal = hit.transform.gameObject.GetComponent<CrystalSpawn>();
+            CrystalSpawn crystal = crystalHit.transform.gameObject.GetComponent<CrystalSpawn>();
             crystal.Harvest();
 
-            return true;
-        }
-
-        return false;
-    }
-
-    private void HeldStateCheck()
-    {
-        if (_cameraMain == null)
-        {
             return;
         }
-
-        if (_inTransition == true)
+        else if(Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
-            return;
-        }
+            if (_isHolding == true)
+            {
+                return;
+            }
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+            _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
 
-        if (_isHolding == true)
-        {
-            return;
-        }
-
-        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _chimeraLayer))
-        {
-            _habitatManager.CurrentHabitat.ActivateGlow(true);
-            _heldChimera = hit.transform.gameObject.GetComponent<ChimeraBehavior>();
-            HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
-            _isHolding = true;
+            if (_heldChimera.Chimera.ReadyToEvolve == true)
+            {
+                _heldChimera.Chimera.EvolveChimera();
+            }
+            else
+            {
+                _habitatManager.CurrentHabitat.ActivateGlow(true);
+                HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
+                _isHolding = true;
+            }
         }
     }
 
@@ -231,7 +210,6 @@ public class InputManager : MonoBehaviour
             _heldChimera.transform.Rotate(Vector3.up, _rotationAmount);
         }
     }
-
 
     private void HeldCheckAgainstUI()
     {

@@ -17,16 +17,17 @@ public class Chimera : MonoBehaviour
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
+    private EvolutionLogic _chimeraToBecome = null;
     private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private ChimeraEvolutionIcon _evolutionIcon = null;
-
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
     private bool _readyToEvolve = false;
+    private float _averagePower = 0;
     private int _uniqueId = 1;
     private int _exploration = 1;
     private int _stamina = 1;
@@ -39,7 +40,6 @@ public class Chimera : MonoBehaviour
     private int _levelUpTracker = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
-    private float _averagePower = 0;
 
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
@@ -180,12 +180,11 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void SetEvolutionIconActive(){_evolutionIcon.gameObject.SetActive(true);}
+    public void SetEvolutionIconActive() { _evolutionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
-
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
@@ -225,7 +224,7 @@ public class Chimera : MonoBehaviour
 
         _elementIcon = _resourceManager.GetElementSprite(_elementalType);
 
-        if(_uniqueId == 1)
+        if (_uniqueId == 1)
         {
             _uniqueId = gameObject.GetInstanceID();
         }
@@ -234,7 +233,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.Initialize();
         InitializeEvolution();
 
-        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3( 0.0f, 5.0f, 0.0f), transform.rotation).GetComponent<ChimeraEvolutionIcon>();
+        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3(0.0f, 5.0f, 0.0f), transform.rotation).GetComponent<ChimeraEvolutionIcon>();
         _evolutionIcon.gameObject.transform.parent = gameObject.transform;
         _evolutionIcon.Initialize();
     }
@@ -345,21 +344,22 @@ public class Chimera : MonoBehaviour
             _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
         }
 
-        if (levelUp == true)
+        if (levelUp == true && _chimeraToBecome == null)
         {
-            bool canEvolve = _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
-
-            if (canEvolve == true)
-            {
-                _readyToEvolve = true;
-            }
+            _readyToEvolve = _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
+            _chimeraToBecome = evolution;
         }
     }
 
-    public void ActivateEvolve()
+    public void EvolveChimera()
     {
-        _currentEvolution.CheckEvolution(_exploration, _stamina, _wisdom, out EvolutionLogic evolution);
-        Evolve(evolution);
+        if (_readyToEvolve == false)
+        {
+            Debug.LogError($"Not ready for evolution!");
+            return;
+        }
+
+        Evolve(_chimeraToBecome);
         EvolveStatBonus();
         _habitatUI.UpdateHabitatUI();
     }
@@ -444,16 +444,13 @@ public class Chimera : MonoBehaviour
         _currentEvolution = newEvolution;
         InitializeEvolution();
         InitializeStats();
-        _boxCollider.enabled = false;
+        _currentEvolution.Animator.SetBool("Walk", true);
 
         _habitatManager.UpdateCurrentHabitatChimeras();
 
-        if (_inFacility == true)
-        {
-            _currentEvolution.gameObject.SetActive(false);
-        }
-
         LevelCalculation();
+
+        _chimeraToBecome = null;
     }
 
     public void RevealChimera(bool reveal)
