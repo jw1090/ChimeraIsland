@@ -16,6 +16,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
     [SerializeField] private StatefulObject _tiers = null;
+    [SerializeField] private GameObject _hatchery = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
@@ -25,6 +26,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
+    public GameObject Hatchery { get => _hatchery; }
     public int CurrentTier { get => _currentTier; }
     public CrystalManager CrystalManager { get => _crystalManager; } 
     public Transform SpawnPoint { get => _spawnPoint.transform; }

@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
     private LayerMask _marketplaceLayer = new LayerMask();
+    private LayerMask _facilityLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -56,6 +57,7 @@ public class InputManager : MonoBehaviour
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
         _marketplaceLayer = LayerMask.GetMask("Marketplace");
+        _facilityLayer = LayerMask.GetMask("Facility");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -172,6 +174,11 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (_inTransition == true)
         {
             return;
@@ -210,6 +217,11 @@ public class InputManager : MonoBehaviour
             _habitatUI.OpenExpedition();
         }
         else if (Physics.Raycast(ray, out RaycastHit marketplaceHit, 300.0f, _marketplaceLayer))
+        {
+            _habitatUI.OpenMarketplace();
+        }
+
+        else if (Physics.Raycast(ray, out RaycastHit facilityHit, 300.0f, _facilityLayer) && _habitatUI.Marketplace.FacilityTabCheckActive())
         {
             _habitatUI.OpenMarketplace();
         }
