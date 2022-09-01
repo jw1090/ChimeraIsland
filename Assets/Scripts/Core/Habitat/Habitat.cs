@@ -263,7 +263,6 @@ public class Habitat : MonoBehaviour
     {
         if (_currentTier + 1 >= 4)
         {
-            Debug.LogWarning($"Can't increase habitat, tier [{_currentTier}] is the highest");
             return;
         }
 

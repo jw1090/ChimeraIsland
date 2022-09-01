@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -549,5 +550,16 @@ public class ExpeditionManager : MonoBehaviour
         {
             _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
+    }
+    public void BeatCurrentHabitatExpedition()
+    {
+        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        if (_habitatExpeditionOption == null)
+        {
+            Debug.Log("You've finished all habitat expeditions");
+            return;
+        }
+        _selectedExpedition = _habitatExpeditionOption;
+        _uiExpedition.BeatCurrentHabitatExpedition();
     }
 }

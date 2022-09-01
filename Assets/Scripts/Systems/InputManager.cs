@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
+    ExpeditionManager _expeditionManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -41,6 +42,7 @@ public class InputManager : MonoBehaviour
     }
 
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
+    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -297,7 +299,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            _habitatManager.CurrentHabitat.UpgradeHabitatTier();
+            _expeditionManager.BeatCurrentHabitatExpedition();
         }
     }
 }
