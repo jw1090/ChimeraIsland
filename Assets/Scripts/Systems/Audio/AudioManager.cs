@@ -439,6 +439,7 @@ public class AudioManager : MonoBehaviour
     {
         _ambientSource.Stop();
     }
+
     private void PlayMusicOnTier()
     {
         if (_habitat.CurrentTier == 1)
@@ -458,6 +459,7 @@ public class AudioManager : MonoBehaviour
         }
         _musicSource.Play();
     }
+
     private void PlayAmbientOnTier()
     {
         if (_habitat.CurrentTier == 1)
