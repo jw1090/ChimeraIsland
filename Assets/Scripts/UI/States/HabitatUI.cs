@@ -10,9 +10,6 @@ public class HabitatUI : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
-    [SerializeField] private Button _marketplaceButton = null;
-    [SerializeField] private GameObject _bottomRightButtonsFolder = null;
-    [SerializeField] private ExpeditionButton _expeditionButton = null;
     [SerializeField] private GameObject _topLeftButtonsFolder = null;
     [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
     [SerializeField] private GameObject _runeFacilityShopIcon = null;
@@ -30,22 +27,20 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
+    private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private bool _menuOpen = false;
+    private TutorialManager _tutorialManager = null;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
     public Button WorldMapButton { get => _worldMapButton; }
-    public Button MarketplaceButton { get => _marketplaceButton; }
-    public ExpeditionButton ExpeditionButton { get => _expeditionButton; }
-    public Button WaterfallButton { get => _waterfallFacilityShopIcon.GetComponentInChildren<Button>(); }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public bool MenuOpen { get => _menuOpen; }
-
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionPanel.SetExpeditionManager(expeditionManager);
@@ -66,14 +61,15 @@ public class HabitatUI : MonoBehaviour
         _detailsFolder.Initialize(uiManager);
         _settingsPanel.Initialize(uiManager);
 
-        _expeditionButton.ActivateNotification(false);
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
     }
 
     public void LoadCurrentUIProgress()
     {
         if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
         {
-            _marketplaceButton.gameObject.SetActive(false);
+            _habitatManager.CurrentHabitat.Hatchery.SetActive(false);
 
             foreach (var wallet in _fossilWallets)
             {
@@ -119,7 +115,6 @@ public class HabitatUI : MonoBehaviour
         _transferMap.Initialize();
 
         UIProgressCheck();
-        _expeditionButton.ActivateNotification(false);
     }
 
     private void UIProgressCheck()
@@ -145,7 +140,6 @@ public class HabitatUI : MonoBehaviour
             case UIElementType.None:
                 break;
             case UIElementType.All:
-                _bottomRightButtonsFolder.gameObject.SetActive(true);
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
@@ -154,7 +148,7 @@ public class HabitatUI : MonoBehaviour
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.MarketplaceButton:
-                _marketplaceButton.gameObject.SetActive(true);
+                _habitatManager.CurrentHabitat.Hatchery.SetActive(true);
                 break;
             case UIElementType.MarketplaceChimeraTab:
                 _marketplacePanel.ChimeraTabSetActive(true);
@@ -303,7 +297,8 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
 
-        _expeditionButton.ActivateNotification(false);
+        _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _expeditionPanel.ExpeditionButtonClick();
@@ -322,8 +317,6 @@ public class HabitatUI : MonoBehaviour
         _trainingPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
-        _expeditionButton.gameObject.SetActive(false);
-        _bottomRightButtonsFolder.gameObject.SetActive(false);
         _topLeftButtonsFolder.gameObject.SetActive(false);
 
         _menuOpen = true;
@@ -332,8 +325,6 @@ public class HabitatUI : MonoBehaviour
     public void RevealElementsHiddenByTraining()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _expeditionButton.gameObject.SetActive(true);
-        _bottomRightButtonsFolder.gameObject.SetActive(true);
         _topLeftButtonsFolder.gameObject.SetActive(true);
 
         _menuOpen = false;

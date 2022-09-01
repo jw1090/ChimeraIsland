@@ -137,16 +137,18 @@ public class Marketplace : MonoBehaviour
         }
     }
 
-    public void FacilityTabCheckActive()
+    public bool FacilityTabCheckActive()
     {
         if (_habitatManager.CurrentHabitat.CurrentTier >= 2)
         {
             _tabGroup.FacilitiesTab.gameObject.SetActive(true);
             _facilityShop.CheckShowIcons();
+            return true;
         }
         else
         {
             _tabGroup.FacilitiesTab.gameObject.SetActive(false);
+            return false;
         }
     }
 
