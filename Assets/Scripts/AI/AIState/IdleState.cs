@@ -11,11 +11,15 @@ namespace AI.Behavior
 
         public override void Enter(ChimeraBehavior chimeraBehavior)
         {
+
             _chimeraBehavior = chimeraBehavior;
             _idleTimer = _idleDuration;
+
             _chimeraBehavior.EnterAnim(_idleAnim);
             _chimeraBehavior.EnableNavAgent();
             _chimeraBehavior.Agent.isStopped = true;
+
+            ToggleIdleParticle(true);
         }
 
         public override void Update()
@@ -30,9 +34,16 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            ToggleIdleParticle(false);
+
             _chimeraBehavior.Agent.isStopped = false;
             _idleTimer = 0.0f;
             _chimeraBehavior.ExitAnim(_idleAnim);
+        }
+
+        private void ToggleIdleParticle(bool toggle)
+        {
+            _chimeraBehavior.Chimera.CurrentEvolution.ToggleIdleParticles(toggle);
         }
     }
 }

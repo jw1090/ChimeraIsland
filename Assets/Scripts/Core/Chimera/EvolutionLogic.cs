@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
+    [Header("General Logic")]
     [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private string _chimeraName = "";
@@ -11,12 +12,20 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private int _reqStamina = 0;
     [SerializeField] private int _reqWisdom = 0;
     [SerializeField] private float _speed = 4.5f;
+
+    [Header("Particles")]
+    [SerializeField] private List<ParticleSystem> _idleParticles = null;
+    [SerializeField] private List<ParticleSystem> _patrolParticles = null;
+
+    [Header("References")]
+    [SerializeField] private Animator _animator = null;
+
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
     public ChimeraType Type { get => _evolutionType; }
-    public Animator Animator { get => GetComponent<Animator>(); }
+    public Animator Animator { get => _animator; }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
     public StatType StatBonus { get => _statBonus; }
@@ -28,7 +37,6 @@ public class EvolutionLogic : MonoBehaviour
     public void Initialize(Chimera chimera)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-
         _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 
         _chimeraBrain = chimera;
@@ -64,5 +72,33 @@ public class EvolutionLogic : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void ToggleIdleParticles(bool toggle)
+    {
+        if (_idleParticles.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var particle in _idleParticles)
+        {
+            ParticleSystem.EmissionModule module = particle.emission;
+            module.enabled = toggle;
+        }
+    }
+
+    public void TogglePatrolParticles(bool toggle)
+    {
+        if (_patrolParticles.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var particle in _patrolParticles)
+        {
+            ParticleSystem.EmissionModule module = particle.emission;
+            module.enabled = toggle;
+        }
     }
 }

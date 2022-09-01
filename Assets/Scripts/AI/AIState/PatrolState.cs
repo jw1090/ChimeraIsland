@@ -15,6 +15,8 @@ namespace AI.Behavior
             _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
             _chimeraBehavior.EnterAnim(_patrolAnim);
 
+            TogglePatrolParticle(true);
+
             ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
         }
 
@@ -56,6 +58,8 @@ namespace AI.Behavior
 
         public override void Exit()
         {
+            TogglePatrolParticle(false);
+
             _chimeraBehavior.Dropped = false;
             _chimeraBehavior.ExitAnim(_patrolAnim);
         }
@@ -64,6 +68,11 @@ namespace AI.Behavior
         {
             yield return new WaitForSeconds(0.1f);
             _chimeraBehavior.Dropped = false;
+        }
+
+        private void TogglePatrolParticle(bool toggle)
+        {
+            _chimeraBehavior.Chimera.CurrentEvolution.TogglePatrolParticles(toggle);
         }
     }
 }
