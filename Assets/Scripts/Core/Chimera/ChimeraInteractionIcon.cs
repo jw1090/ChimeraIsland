@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ChimeraEvolutionIcon : MonoBehaviour
+public class ChimeraInteractionIcon : MonoBehaviour
 {
     private Camera _camera = null;
+
     public void Initialize()
     {
         _camera = ServiceLocator.Get<CameraUtil>().CameraCO;
@@ -14,4 +14,3 @@ public class ChimeraEvolutionIcon : MonoBehaviour
         transform.LookAt(_camera.transform);
     }
 }
-
