@@ -13,6 +13,9 @@ public class Chimera : MonoBehaviour
     [SerializeField] private int _staminaThreshold = 5;
     [SerializeField] private int _wisdomThreshold = 5;
 
+    [Header("References")]
+    [SerializeField] private ChimeraInteractionIcon _interactionIcon = null;
+
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
@@ -22,7 +25,6 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
-    private ChimeraEvolutionIcon _evolutionIcon = null;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
@@ -37,7 +39,6 @@ public class Chimera : MonoBehaviour
     private int _staminaExperience = 0;
     private int _wisdomExperience = 0;
     private int _explorationExperience = 0;
-    private int _levelUpTracker = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
 
@@ -180,7 +181,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void SetEvolutionIconActive() { _evolutionIcon.gameObject.SetActive(true); }
+    public void SetEvolutionIconActive() { _interactionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
@@ -232,10 +233,7 @@ public class Chimera : MonoBehaviour
         InitializeStats();
         _chimeraBehavior.Initialize();
         InitializeEvolution();
-
-        _evolutionIcon = Instantiate(Resources.Load<GameObject>("Chimera/Chimera Evolution Icon"), transform.position + new Vector3(0.0f, 5.0f, 0.0f), transform.rotation).GetComponent<ChimeraEvolutionIcon>();
-        _evolutionIcon.gameObject.transform.parent = gameObject.transform;
-        _evolutionIcon.Initialize();
+        _interactionIcon.Initialize();
     }
 
     private void InitializeStats()
@@ -408,16 +406,6 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
-        if (++_levelUpTracker % 2 == 0)
-        {
-            _levelUpTracker = 0;
-
-            LevelCalculation();
-
-            _audioManager.PlayUISFX(SFXUIType.LevelUp);
-            Debug.Log($"LEVEL UP! {_currentEvolution} is now level {_averagePower} !");
-        }
-
         _habitatUI.UpdateHabitatUI();
     }
 
@@ -431,7 +419,7 @@ public class Chimera : MonoBehaviour
     private void Evolve(EvolutionLogic evolution)
     {
         _readyToEvolve = false;
-        _evolutionIcon.gameObject.SetActive(false);
+        _interactionIcon.gameObject.SetActive(false);
 
         Debug.Log($"{_currentEvolution} is evolving into {evolution}!");
 
