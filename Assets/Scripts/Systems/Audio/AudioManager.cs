@@ -266,8 +266,8 @@ public class AudioManager : MonoBehaviour
             case SFXUIType.RemoveChimera:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Remove Chimera SFX").FirstOrDefault();
-                    _uiSource.clip = item.Clip;
-                    _uiSource.Play();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip, 1.0F);
                 }
                 break;
             case SFXUIType.Evolution:
@@ -302,21 +302,21 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Completion SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip,1.0F);
                 }
                 break;
             case SFXUIType.Failure:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Failure SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip, 1.0F);
                 }
                 break;
             case SFXUIType.Hit:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.Harvest:
