@@ -1,4 +1,3 @@
-using AI.Behavior;
 using UnityEngine;
 
 public class GlowMarker : MonoBehaviour
@@ -48,7 +47,7 @@ public class GlowMarker : MonoBehaviour
 
         chimera.SetInFacility(true);
 
-        chimeraBehaviour.ChangeState(chimeraBehaviour.States[StateEnum.Training]);
+        chimeraBehaviour.ChangeState(ChimeraBehaviorState.Training);
         chimeraBehaviour.gameObject.transform.position = _trainingPos.position;
     }
 }

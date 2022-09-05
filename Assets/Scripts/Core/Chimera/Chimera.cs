@@ -1,4 +1,3 @@
-using AI.Behavior;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
@@ -234,6 +233,8 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.Initialize();
         InitializeEvolution();
         _interactionIcon.Initialize();
+
+        _chimeraBehavior.StartAI();
     }
 
     private void InitializeStats()

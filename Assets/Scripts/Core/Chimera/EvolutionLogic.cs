@@ -17,9 +17,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _idleParticles = null;
     [SerializeField] private List<ParticleSystem> _patrolParticles = null;
 
-    [Header("References")]
-    [SerializeField] private Animator _animator = null;
-
+    private Animator _animator = null;
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
@@ -37,10 +35,15 @@ public class EvolutionLogic : MonoBehaviour
     public void Initialize(Chimera chimera)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _animator = GetComponent<Animator>();
+
         _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 
         _chimeraBrain = chimera;
         _chimeraBrain.Behavior.SetAgentSpeed(_speed);
+
+        ToggleIdleParticles(false);
+        TogglePatrolParticles(false);
     }
 
     public bool CheckEvolution(int exploration, int staminan, int wisdom, out EvolutionLogic newEvolution)
@@ -76,29 +79,31 @@ public class EvolutionLogic : MonoBehaviour
 
     public void ToggleIdleParticles(bool toggle)
     {
-        if (_idleParticles.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var particle in _idleParticles)
-        {
-            ParticleSystem.EmissionModule module = particle.emission;
-            module.enabled = toggle;
-        }
+        ToggleParticles(toggle, _idleParticles);
     }
 
     public void TogglePatrolParticles(bool toggle)
     {
-        if (_patrolParticles.Count == 0)
+        ToggleParticles(toggle, _patrolParticles);
+    }
+
+    private void ToggleParticles(bool toggle, List<ParticleSystem> particles)
+    {
+        if (particles.Count == 0)
         {
             return;
         }
 
-        foreach (var particle in _patrolParticles)
+        foreach (var particle in particles)
         {
-            ParticleSystem.EmissionModule module = particle.emission;
-            module.enabled = toggle;
+            if (toggle == true)
+            {
+                particle.Play();
+            }
+            else
+            {
+                particle.Stop();
+            }
         }
     }
 }
