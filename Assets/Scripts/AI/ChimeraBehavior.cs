@@ -2,153 +2,172 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace AI.Behavior
+public enum ChimeraBehaviorState
 {
-    public enum StateEnum
+    Patrol,
+    Wander,
+    Held,
+    Training,
+    Idle,
+}
+
+public class ChimeraBehavior : MonoBehaviour
+{
+    private Animator _animator = null;
+    private Camera _mainCamera = null;
+    private CameraUtil _cameraUtil = null;
+    private Chimera _chimera = null;
+    private ChimeraBaseState _currentState = null;
+    private PatrolState _patrolState = null;
+    private WanderState _wanderState = null;
+    private HeldState _heldState = null;
+    private TrainingState _trainingState = null;
+    private IdleState _idleState = null;
+    private NavMeshAgent _navMeshAgent = null;
+    private List<Transform> _nodes = null;
+    private bool _isActive = false;
+    private int _patrolIndex = 0;
+    private bool _stateEnabled = false;
+
+    public BoxCollider BoxCollider { get => GetChimeraCollider(); }
+    public Camera MainCamera { get => _mainCamera; }
+    public CameraUtil CameraUtil { get => _cameraUtil; }
+    public NavMeshAgent Agent { get => _navMeshAgent; }
+    public Chimera Chimera { get => _chimera; }
+    public int PatrolIndex { get => _patrolIndex; }
+    public bool Dropped { get; set; } = false;
+    public bool WasClicked { get; set; } = false;
+
+    public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
+    private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
+    public int GetNodeCount() { return _nodes.Count; }
+    public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
+    public ChimeraType GetChimeraType() { return _chimera.ChimeraType; }
+
+    public void SetAgentSpeed(float agentSpeed) { _navMeshAgent.speed = agentSpeed; }
+    public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
+    public void IncreasePatrolIndex() { _patrolIndex += 1; }
+    public void ResetPatrolIndex() { _patrolIndex = 0; }
+
+    public void Initialize()
     {
-        Patrol,
-        Wander,
-        Held,
-        Training,
-        Idle,
+        ServiceLocator.Get<InputManager>().HeldStateChange += OnHeldStateChanged;
+
+        _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _chimera = GetComponent<Chimera>();
+
+        _navMeshAgent.enabled = false;
+
+        _mainCamera = CameraUtil.CameraCO;
+
+        _patrolState = new PatrolState();
+        _wanderState = new WanderState();
+        _heldState = new HeldState();
+        _trainingState = new TrainingState();
+        _idleState = new IdleState();
+
+        _animator = _chimera.Animator;
     }
 
-    public class ChimeraBehavior : MonoBehaviour
+    public void StartAI()
     {
-        private Animator _animator = null;
-        private Camera _mainCamera = null;
-        private CameraUtil _cameraUtil = null;
-        private Chimera _chimera = null;
-        private ChimeraBaseState _currentState = null;
-        private Dictionary<StateEnum, ChimeraBaseState> _states = new Dictionary<StateEnum, ChimeraBaseState>();
-        private List<Transform> _nodes = null;
-        private NavMeshAgent _navMeshAgent = null;
-        private bool _isActive = false;
-        private int _patrolIndex = 0;
-        private bool _stateEnabled = false;
+        ChangeState(ChimeraBehaviorState.Patrol);
+        _isActive = true;
+    }
 
-        public BoxCollider BoxCollider { get => GetChimeraCollider(); }
-        public Camera MainCamera { get => _mainCamera; }
-        public CameraUtil CameraUtil { get => _cameraUtil; }
-        public Dictionary<StateEnum, ChimeraBaseState> States { get => _states; }
-        public NavMeshAgent Agent { get => _navMeshAgent; }
-        public Chimera Chimera { get => _chimera; }
-        public int PatrolIndex { get => _patrolIndex; }
+    public void EnableNavAgent()
+    {
+        _navMeshAgent.enabled = true;
+    }
 
-        public bool Dropped { get; set; } = false;
-        public bool WasClicked { get; set; } = false;
-
-        public Transform GetCurrentNode() { return _nodes[Random.Range(0, _nodes.Count)]; }
-        private BoxCollider GetChimeraCollider() { return _chimera.BoxCollider; }
-        public int GetNodeCount() { return _nodes.Count; }
-        public float GetAgentDistance() { return _navMeshAgent.remainingDistance; }
-        public ChimeraType GetChimeraType() { return _chimera.ChimeraType; }
-
-        public void SetAgentSpeed(float agentSpeed) { _navMeshAgent.speed = agentSpeed; }
-        public void SetAgentDestination(Vector3 destination) { _navMeshAgent.destination = destination; }
-        public void IncreasePatrolIndex() { _patrolIndex += 1; }
-        public void ResetPatrolIndex() { _patrolIndex = 0; }
-
-        public void Initialize()
+    private void OnDestroy()
+    {
+        var inputManager = ServiceLocator.Get<InputManager>();
+        if (inputManager != null)
         {
-            ServiceLocator.Get<InputManager>().HeldStateChange += OnHeldStateChanged;
+            inputManager.HeldStateChange -= OnHeldStateChanged;
+        }
+    }
 
-            _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
-            _cameraUtil = ServiceLocator.Get<CameraUtil>();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-            _chimera = GetComponent<Chimera>();
-
-            _navMeshAgent.enabled = false;
-
-            _mainCamera = CameraUtil.CameraCO;
-
-            _states.Add(StateEnum.Patrol, new PatrolState());
-            _states.Add(StateEnum.Wander, new WanderState());
-            _states.Add(StateEnum.Held, new HeldState());
-            _states.Add(StateEnum.Training, new TrainingState());
-            _states.Add(StateEnum.Idle, new IdleState());
-            _animator = _chimera.Animator;
-
-            ChangeState(_states[StateEnum.Patrol]);
-
-            _isActive = true;
+    private void Update()
+    {
+        if (_isActive == false || _currentState == null || _stateEnabled == false)
+        {
+            return;
         }
 
-        public void EnableNavAgent()
-        {
-            _navMeshAgent.enabled = true;
-        }
+        _currentState.Update();
+    }
 
-        private void OnDestroy()
+    private void OnHeldStateChanged(bool wasClicked, int id)
+    {
+        if (transform.GetHashCode() == id)
         {
-            var inputManager = ServiceLocator.Get<InputManager>();
-            if (inputManager != null)
+            if (wasClicked == true)
             {
-                inputManager.HeldStateChange -= OnHeldStateChanged;
+                ChangeState(ChimeraBehaviorState.Held);
+            }
+            else
+            {
+                ChangeState(ChimeraBehaviorState.Patrol);
             }
         }
+    }
 
-        private void Update()
+    public void ChangeState(ChimeraBehaviorState state)
+    {
+        if (_currentState != null)
         {
-            if (_isActive == false || _currentState == null || _stateEnabled == false)
-            {
-                return;
-            }
-
-            _currentState.Update();
+            _currentState.Exit();
+            _stateEnabled = false;
         }
 
-        private void OnHeldStateChanged(bool wasClicked, int id)
+        _currentState = DetermineState(state);
+        _currentState.Enter(this);
+        _stateEnabled = true;
+    }
+
+    private ChimeraBaseState DetermineState(ChimeraBehaviorState state)
+    {
+        switch (state)
         {
-            if (transform.GetHashCode() == id)
-            {
-                if (wasClicked == true)
-                {
-                    ChangeState(_states[StateEnum.Held]);
-                }
-                else
-                {
-                    ChangeState(_states[StateEnum.Patrol]);
-                }
-            }
+            case ChimeraBehaviorState.Patrol:
+                return _patrolState;
+            case ChimeraBehaviorState.Wander:
+                return _wanderState;
+            case ChimeraBehaviorState.Held:
+                return _heldState;
+            case ChimeraBehaviorState.Training:
+                return _trainingState;
+            case ChimeraBehaviorState.Idle:
+                return _idleState;
+            default:
+                Debug.LogError($"Invalid State [{state}], Please Fix!");
+                return null;
+        }
+    }
+
+    public void EnterAnim(string _animationState)
+    {
+        _animator = _chimera.Animator;
+
+        _animator.SetBool(_animationState, true);
+    }
+
+    public void ExitAnim(string _animationState)
+    {
+        if (_animator == null)
+        {
+            return;
         }
 
-        public void ChangeState(ChimeraBaseState state)
-        {
-            if (_currentState != null)
-            {
-                _currentState.Exit();
-                _stateEnabled = false;
-            }
+        _animator.SetBool(_animationState, false);
+    }
 
-            _currentState = state;
-            _currentState.Enter(this);
-            _stateEnabled = true;
-        }
-
-        public void HeldEnterCheck()
-        {
-            if (WasClicked == true)
-            {
-                ChangeState(_states[StateEnum.Held]);
-            }
-        }
-
-        public void EnterAnim(string _animationState)
-        {
-            _animator = _chimera.Animator;
-
-            _animator.SetBool(_animationState, true);
-        }
-
-        public void ExitAnim(string _animationState)
-        {
-            if (_animator == null)
-            {
-                return;
-            }
-
-            _animator.SetBool(_animationState, false);
-        }
+    public void TogglePatrolParticle(bool toggle)
+    {
+        _chimera.CurrentEvolution.TogglePatrolParticles(toggle);
     }
 }
