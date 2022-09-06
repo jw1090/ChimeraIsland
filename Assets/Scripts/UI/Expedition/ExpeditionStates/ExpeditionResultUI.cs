@@ -46,13 +46,12 @@ public class ExpeditionResultUI : MonoBehaviour
         }
 
         _expeditionManager.ResetSelectedExpedition();
-        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(false);
         _expeditionSuccess = false;
     }
 
-    public void DetermineReward()
+    public void DetermineReward(bool bypass = false)
     {
-        if (_expeditionManager.RandomSuccesRate() == true)
+        if (_expeditionManager.RandomSuccesRate() == true || bypass == true)
         {
             _successResults.text = $"Success";
 
@@ -99,6 +98,10 @@ public class ExpeditionResultUI : MonoBehaviour
             }
 
             _expeditionSuccess = true;
+            if(bypass == true)
+            {
+                ResultsCloseClick();
+            }
         }
         else
         {

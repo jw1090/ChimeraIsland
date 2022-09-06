@@ -115,13 +115,18 @@ public class ExpeditionUI : MonoBehaviour
 
     public void TimerComplete()
     {
-        _uiManager.HabitatUI.ExpeditionButton.ActivateNotification(true);
-
         _inProgressPanel.gameObject.SetActive(false);
         _resultPanel.gameObject.SetActive(true);
 
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward();
+    }
+
+    public void BeatCurrentHabitatExpedition()
+    {
+        _expeditionManager.SetExpeditionState(ExpeditionState.Result);
+
+        _resultPanel.DetermineReward(true);
     }
 }
