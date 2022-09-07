@@ -407,6 +407,8 @@ public class Chimera : MonoBehaviour
                 break;
         }
 
+        LevelCalculation();
+
         _habitatUI.UpdateHabitatUI();
     }
 

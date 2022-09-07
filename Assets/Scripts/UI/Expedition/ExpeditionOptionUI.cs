@@ -59,10 +59,10 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
         switch (expeditionData.Type)
         {
             case ExpeditionType.Essence:
-                _reward.text = $"Reward: {expeditionData.AmountGained} Essence";
+                _reward.text = $"Reward: {expeditionData.BaseAmountGained} Essence";
                 break;
             case ExpeditionType.Fossils:
-                _reward.text = $"Reward: {expeditionData.AmountGained} Fossils";
+                _reward.text = $"Reward: {expeditionData.BaseAmountGained} Fossils";
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (expeditionData.UpgradeType)
