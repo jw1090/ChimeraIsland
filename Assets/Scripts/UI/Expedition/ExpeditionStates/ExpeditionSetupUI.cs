@@ -10,7 +10,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
-    [SerializeField] private TextMeshProUGUI _suggestedLevel = null;
+    [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
@@ -84,7 +84,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _suggestedLevel.text = $"Suggested Total Power: {data.SuggestedLevel}";
+        _energyCost.text = $"Energy Cost: {data.EnergyCost}";
         _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
 
         LoadDuration(data.Duration);

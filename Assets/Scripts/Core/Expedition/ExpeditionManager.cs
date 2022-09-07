@@ -273,7 +273,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateCurrentDifficultyValue()
     {
-        float suggestedLevel = _selectedExpedition.SuggestedLevel;
+        float suggestedLevel = _selectedExpedition.SuggestedTotalPower;
         float difficultyValue = Mathf.Pow(suggestedLevel * _difficultyLevelMultiplier, _difficultyExponent) * _difficultyScalar;
 
         _selectedExpedition.DifficultyValue = difficultyValue;

@@ -10,7 +10,7 @@ public class ExpeditionData : ScriptableObject
     public HabitatRewardType UpgradeType = HabitatRewardType.None;
     public bool UnlocksNewChimera = false;
     public int AmountGained = 0;
-    public int SuggestedLevel = 0;
+    public int SuggestedTotalPower = 0;
     public int EnergyCost = 0;
     public float Duration = 0.0f;
     public List<ModifierType> Modifiers = new List<ModifierType>();
@@ -36,7 +36,7 @@ public class ExpeditionData : ScriptableObject
         deepCopy.UpgradeType = UpgradeType;
         deepCopy.UnlocksNewChimera = UnlocksNewChimera;
         deepCopy.AmountGained = AmountGained;
-        deepCopy.SuggestedLevel = SuggestedLevel;
+        deepCopy.SuggestedTotalPower = SuggestedTotalPower;
         deepCopy.EnergyCost = EnergyCost;
         deepCopy.Duration = Duration;
 
