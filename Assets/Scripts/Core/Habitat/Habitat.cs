@@ -22,13 +22,14 @@ public class Habitat : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
+    private LightingManager _lightingManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
     public GameObject Hatchery { get => _hatchery; }
     public int CurrentTier { get => _currentTier; }
-    public CrystalManager CrystalManager { get => _crystalManager; } 
+    public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
@@ -64,6 +65,8 @@ public class Habitat : MonoBehaviour
 
         return facilitiesToBuild[rand].Type;
     }
+
+    public void SetLightingManager(LightingManager lightingManager) { _lightingManager = lightingManager; }
 
     public void SetTier(int tier)
     {
@@ -271,6 +274,7 @@ public class Habitat : MonoBehaviour
         _audioManager.PlayHabitatMusic(_habitatType);
         _audioManager.PlayHabitatAmbient(_habitatType);
         LoadHabitatTier();
+        EvaluateFireflies();
     }
 
     private void LoadHabitatTier()
@@ -329,6 +333,18 @@ public class Habitat : MonoBehaviour
                     facility.FacilityTick();
                 }
             }
+        }
+    }
+
+    private void EvaluateFireflies()
+    {
+        if (_lightingManager.DayType == DayType.DayTime)
+        {
+            ToggleFireflies(false);
+        }
+        else
+        {
+            ToggleFireflies(true);
         }
     }
 }

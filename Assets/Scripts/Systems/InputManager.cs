@@ -298,7 +298,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            _expeditionManager.BeatCurrentHabitatExpedition();
+            _expeditionManager.CompleteCurrentUpgradeExpedition();
         }
     }
 }

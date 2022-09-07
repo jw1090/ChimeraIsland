@@ -406,7 +406,6 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         float successRoll = Random.Range(0.0f, _selectedExpedition.DifficultyValue);
-
         Debug.Log($"You rolled: {successRoll} | You needed: {_selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower}");
 
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
@@ -550,15 +549,17 @@ public class ExpeditionManager : MonoBehaviour
             _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
-    public void BeatCurrentHabitatExpedition()
+    public void CompleteCurrentUpgradeExpedition()
     {
         SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+
         if (_habitatExpeditionOption == null)
         {
             Debug.Log("You've finished all habitat expeditions");
             return;
         }
+
         _selectedExpedition = _habitatExpeditionOption;
-        _uiExpedition.BeatCurrentHabitatExpedition();
+        _uiExpedition.CompleteCurrentHabitatExpedition();
     }
 }

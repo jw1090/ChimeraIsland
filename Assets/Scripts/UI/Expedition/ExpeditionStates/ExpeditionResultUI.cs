@@ -7,7 +7,7 @@ public class ExpeditionResultUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successResults = null;
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
     [SerializeField] private Button _rewardsCloseButton = null;
-    private ExpeditionUI _expeditionUI = null; 
+    private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
     private bool _expeditionSuccess = false;
@@ -51,7 +51,9 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public void DetermineReward(bool bypass = false)
     {
-        if (_expeditionManager.RandomSuccesRate() == true || bypass == true)
+        bool results = bypass ? bypass : _expeditionManager.RandomSuccesRate();
+
+        if (results == true)
         {
             _successResults.text = $"Success";
 
@@ -98,7 +100,7 @@ public class ExpeditionResultUI : MonoBehaviour
             }
 
             _expeditionSuccess = true;
-            if(bypass == true)
+            if (bypass == true)
             {
                 ResultsCloseClick();
             }
