@@ -10,7 +10,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
-    [SerializeField] private TextMeshProUGUI _suggestedLevel = null;
+    [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
@@ -84,9 +84,8 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _suggestedLevel.text = $"Suggested Total Power: {data.SuggestedLevel}";
-        _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
-
+        _energyCost.text = $"Energy Cost: {data.EnergyCost}";
+        UpdateRewards(data);
         LoadDuration(data.Duration);
         _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
         LoadModifiers(data.Modifiers);
@@ -103,33 +102,44 @@ public class ExpeditionSetupUI : MonoBehaviour
         _duration.text = durationString;
     }
 
-    private string RewardTypeToString(ExpeditionData data)
+    public void UpdateRewards(ExpeditionData data)
     {
+        string reward = "";
+
         switch (data.Type)
         {
             case ExpeditionType.Essence:
-                return $"{data.AmountGained} Essence";
+                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Essence";
+                break;
             case ExpeditionType.Fossils:
-                return $"{data.AmountGained} Fossils";
+                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Fossils";
+                break;
             case ExpeditionType.HabitatUpgrade:
                 switch (data.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        return $"Waterfall";
+                        reward = $"Waterfall";
+                        break;
                     case HabitatRewardType.CaveExploring:
-                        return $"Explorable Cave";
+                        reward = $"Explorable Cave";
+                        break;
                     case HabitatRewardType.RuneStone:
-                        return $"Rune Stones";
+                        reward = $"Rune Stones";
+                        break;
                     case HabitatRewardType.Habitat:
-                        return $"Habiat Upgrade";
+                        reward = $"Habiat Upgrade";
+                        break;
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
-                        return "";
+                        break;
                 }
+                break;
             default:
                 Debug.LogError($"Reward Type [{data.Type}] was invalid, please change!");
-                return "";
+                break;
         }
+
+        _rewardType.text = $"Rewards: {reward}";
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)

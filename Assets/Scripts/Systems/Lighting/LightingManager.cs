@@ -31,10 +31,11 @@ public class LightingManager : MonoBehaviour
 
     public event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
-    public void SetHabitat(Habitat habitat) { _habitat = habitat; }
 
     public LightingManager Initialize()
     {
+        _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+
         DayTypeChanged = OnDayTypeChanged;
         _dayRotation = _dayLight.transform.eulerAngles;
         _nightRotation = _nightLight.transform.eulerAngles;

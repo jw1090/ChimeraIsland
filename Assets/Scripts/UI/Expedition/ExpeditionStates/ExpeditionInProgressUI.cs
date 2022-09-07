@@ -13,7 +13,7 @@ public class ExpeditionInProgressUI : MonoBehaviour
 
     public void UpdateInProgressTimeRemainingText(float timeRemaining)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(timeRemaining);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Ceil(timeRemaining));
         string newDurationText = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
 
         _timeRemainingText.text = newDurationText;

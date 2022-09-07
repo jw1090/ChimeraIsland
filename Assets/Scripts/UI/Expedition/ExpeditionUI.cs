@@ -123,7 +123,7 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.DetermineReward();
     }
 
-    public void BeatCurrentHabitatExpedition()
+    public void CompleteCurrentHabitatExpedition()
     {
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 

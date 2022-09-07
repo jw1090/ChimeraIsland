@@ -9,12 +9,13 @@ public class ExpeditionData : ScriptableObject
     public ExpeditionType Type = ExpeditionType.None;
     public HabitatRewardType UpgradeType = HabitatRewardType.None;
     public bool UnlocksNewChimera = false;
-    public int AmountGained = 0;
-    public int SuggestedLevel = 0;
+    public int BaseAmountGained = 0;
+    public int SuggestedTotalPower = 0;
     public int EnergyCost = 0;
     public float Duration = 0.0f;
     public List<ModifierType> Modifiers = new List<ModifierType>();
 
+    public int ActualAmountGained { get => BaseAmountGained + (int)(BaseAmountGained * RewardModifier); }
     public bool ActiveInProgressTimer { get; set; }  = false;
     public float ExplorationModifier { get; set; } = 1.0f;
     public float StaminaModifer { get; set; } = 1.0f;
@@ -25,6 +26,7 @@ public class ExpeditionData : ScriptableObject
     public float DifficultyValue { get; set; } = 1.0f;
     public float ChimeraPower { get; set; } = 0.0f;
     public float CurrentDuration { get; set; } = 0.0f;
+    public float RewardModifier { get; set; } = 0.0f;
 
     public ExpeditionData DeepCopy()
     {
@@ -35,8 +37,8 @@ public class ExpeditionData : ScriptableObject
         deepCopy.Type = Type;
         deepCopy.UpgradeType = UpgradeType;
         deepCopy.UnlocksNewChimera = UnlocksNewChimera;
-        deepCopy.AmountGained = AmountGained;
-        deepCopy.SuggestedLevel = SuggestedLevel;
+        deepCopy.BaseAmountGained = BaseAmountGained;
+        deepCopy.SuggestedTotalPower = SuggestedTotalPower;
         deepCopy.EnergyCost = EnergyCost;
         deepCopy.Duration = Duration;
 
@@ -48,5 +50,15 @@ public class ExpeditionData : ScriptableObject
         }
 
         return deepCopy;
+    }
+
+    public void ResetMultipliersAndModifiers()
+    {
+        AquaBonus = 0.0f;
+        BioBonus = 0.0f;
+        FiraBonus = 0.0f;
+        StaminaModifer = 1.0f;
+        WisdomModifier = 1.0f;
+        ExplorationModifier = 1.0f;
     }
 }
