@@ -69,7 +69,7 @@ public class HabitatUI : MonoBehaviour
     {
         if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
         {
-            _habitatManager.CurrentHabitat.Hatchery.SetActive(false);
+            _habitatManager.CurrentHabitat.Temple.SetState("Ruined Temple");
 
             foreach (var wallet in _fossilWallets)
             {
@@ -148,7 +148,7 @@ public class HabitatUI : MonoBehaviour
                 _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.MarketplaceButton:
-                _habitatManager.CurrentHabitat.Hatchery.SetActive(true);
+                _habitatManager.CurrentHabitat.Temple.SetState("Completed Temple");
                 break;
             case UIElementType.MarketplaceChimeraTab:
                 _marketplacePanel.ChimeraTabSetActive(true);
