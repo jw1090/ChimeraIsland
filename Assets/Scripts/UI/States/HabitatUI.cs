@@ -11,9 +11,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private GameObject _topLeftButtonsFolder = null;
-    [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
-    [SerializeField] private GameObject _runeFacilityShopIcon = null;
-    [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
@@ -69,7 +66,7 @@ public class HabitatUI : MonoBehaviour
     {
         if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
         {
-            _habitatManager.CurrentHabitat.Hatchery.SetActive(false);
+            _habitatManager.CurrentHabitat.Temple.SetState("Ruined Temple");
 
             foreach (var wallet in _fossilWallets)
             {
@@ -144,11 +141,9 @@ public class HabitatUI : MonoBehaviour
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 _marketplacePanel.ChimeraTabSetActive(true);
-                _runeFacilityShopIcon.gameObject.SetActive(true);
-                _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.MarketplaceButton:
-                _habitatManager.CurrentHabitat.Hatchery.SetActive(true);
+                _habitatManager.CurrentHabitat.Temple.SetState("Completed Temple");
                 break;
             case UIElementType.MarketplaceChimeraTab:
                 _marketplacePanel.ChimeraTabSetActive(true);
@@ -159,10 +154,6 @@ public class HabitatUI : MonoBehaviour
                 break;
             case UIElementType.WorldMapButton:
                 _worldMapButton.gameObject.SetActive(true);
-                break;
-            case UIElementType.OtherFacilityButtons:
-                _runeFacilityShopIcon.gameObject.SetActive(true);
-                _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.FossilsWallets:
                 foreach (UIFossilWallet fossilWallet in _fossilWallets)
