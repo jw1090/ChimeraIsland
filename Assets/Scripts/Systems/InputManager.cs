@@ -222,9 +222,10 @@ public class InputManager : MonoBehaviour
             _habitatUI.OpenMarketplace();
         }
 
-        else if (Physics.Raycast(ray, out RaycastHit facilityHit, 300.0f, _facilityLayer) && _habitatUI.Marketplace.FacilityTabCheckActive())
+        else if (Physics.Raycast(ray, out RaycastHit facilityHit, 300.0f, _facilityLayer) && _habitatUI.FacilityMarketplace.CheckActive())
         {
-            _habitatUI.OpenMarketplace();
+            FacilityType hitFacilityType = facilityHit.transform.gameObject.GetComponent<Facility>().Type;
+            _habitatUI.OpenFacilityUpgradeMenu(hitFacilityType);
         }
     }
 

@@ -92,7 +92,7 @@ public class Facility : MonoBehaviour
 
         if (_currentTier == 0)
         {
-            _habitatUI.Marketplace.SetFacilityUnlocked(_facilityType);
+            _habitatUI.FacilityMarketplace.SetFacilityUnlocked(_facilityType);
 
             debugString += $"{_facilityType} was purchased";
 

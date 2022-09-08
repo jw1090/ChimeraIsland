@@ -11,9 +11,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private GameObject _topLeftButtonsFolder = null;
-    [SerializeField] private GameObject _waterfallFacilityShopIcon = null;
-    [SerializeField] private GameObject _runeFacilityShopIcon = null;
-    [SerializeField] private GameObject _caveFacilityShopIcon = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
@@ -24,6 +21,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
+    [SerializeField] private FacilityUpgradeMarketplace _facilityMarketplace = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
@@ -33,6 +31,7 @@ public class HabitatUI : MonoBehaviour
     private bool _menuOpen = false;
     private TutorialManager _tutorialManager = null;
 
+    public FacilityUpgradeMarketplace FacilityMarketplace { get => _facilityMarketplace; }
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
     public Button WorldMapButton { get => _worldMapButton; }
@@ -110,7 +109,8 @@ public class HabitatUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
 
-        _marketplacePanel.Initialize(_uiManager);
+        _marketplacePanel.Initialize(_uiManager); 
+        _facilityMarketplace.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
 
@@ -144,8 +144,6 @@ public class HabitatUI : MonoBehaviour
                 _openDetailsButton.gameObject.SetActive(true);
                 _worldMapButton.gameObject.SetActive(true);
                 _marketplacePanel.ChimeraTabSetActive(true);
-                _runeFacilityShopIcon.gameObject.SetActive(true);
-                _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.MarketplaceButton:
                 _habitatManager.CurrentHabitat.Hatchery.SetActive(true);
@@ -161,8 +159,6 @@ public class HabitatUI : MonoBehaviour
                 _worldMapButton.gameObject.SetActive(true);
                 break;
             case UIElementType.OtherFacilityButtons:
-                _runeFacilityShopIcon.gameObject.SetActive(true);
-                _caveFacilityShopIcon.gameObject.SetActive(true);
                 break;
             case UIElementType.FossilsWallets:
                 foreach (UIFossilWallet fossilWallet in _fossilWallets)
@@ -194,6 +190,7 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
         _transferMap.gameObject.SetActive(false);
+        _facilityMarketplace.CloseUI();
 
         _menuOpen = false;
 
@@ -218,6 +215,18 @@ public class HabitatUI : MonoBehaviour
         OpenDetails();
     }
 
+    public void OpenFacilityUpgradeMenu(FacilityType facilityType)
+    {
+        ResetStandardUI();
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+
+        _openDetailsButton.gameObject.SetActive(false);
+        _facilityMarketplace.ShowShop(facilityType);
+
+        _menuOpen = true;
+    }
+
     public void OpenExpedtionSelectionDetails()
     {
         ResetStandardUI();
@@ -233,7 +242,6 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
         _marketplacePanel.ChimeraTabSetActive(true);
-        _marketplacePanel.FacilityTabCheckActive();
 
         _menuOpen = true;
     }
@@ -348,6 +356,7 @@ public class HabitatUI : MonoBehaviour
 
     public void UpdateShopUI()
     {
+        _facilityMarketplace.UpdateUI();
         _marketplacePanel.UpdateShopUI();
     }
 }
