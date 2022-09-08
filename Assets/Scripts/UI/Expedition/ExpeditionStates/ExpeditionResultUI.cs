@@ -62,16 +62,16 @@ public class ExpeditionResultUI : MonoBehaviour
             switch (expeditionData.Type)
             {
                 case ExpeditionType.Essence:
-                    _resultsDescription.text = $"You've gained {expeditionData.BaseAmountGained} Essence!";
+                    _resultsDescription.text = $"You've gained {expeditionData.ActualAmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
                     if (expeditionData.UnlocksNewChimera == true)
                     {
-                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.BaseAmountGained} Fossils!";
+                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.ActualAmountGained} Fossils!";
                     }
                     else
                     {
-                        _resultsDescription.text = $"You gained {expeditionData.BaseAmountGained} Fossils!";
+                        _resultsDescription.text = $"You gained {expeditionData.ActualAmountGained} Fossils!";
                     }
                     break;
                 case ExpeditionType.HabitatUpgrade:
