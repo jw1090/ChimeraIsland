@@ -555,7 +555,7 @@ public class ExpeditionManager : MonoBehaviour
 
             if (onExpedition == true)
             {
-                chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomSpawnPoint();
+                chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
             }
         }
 
