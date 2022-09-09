@@ -13,6 +13,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private CrystalManager _crystalManager = null;
     [SerializeField] private GameObject _spawnPoint = null;
+    [SerializeField] private GameObject _templeSpawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
     [SerializeField] private StatefulObject _tiers = null;
@@ -31,6 +32,7 @@ public class Habitat : MonoBehaviour
     public int CurrentTier { get => _currentTier; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
+    public Transform TempleSpawnPoint { get => _templeSpawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -120,7 +122,7 @@ public class Habitat : MonoBehaviour
         {
             var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-            AddChimera(newChimera.transform);
+            AddChimera(newChimera.transform, true);
         }
     }
 
@@ -185,9 +187,28 @@ public class Habitat : MonoBehaviour
         return true;
     }
 
-    public void AddChimera(Transform newChimera)
+    public Vector3 GetRandomPatrolNode()
     {
-        newChimera.position = RandomSpawnPoint();
+        List<Transform> nodes = _patrolNodes.Nodes;
+        int random = (int)(Random.value * 100.0f) % nodes.Count;
+        return nodes[random].position;
+    }
+
+    public void AddChimera(Transform newChimera, bool loadingIn = false)
+    {
+        if(ActiveChimeras.Count == 0)
+        {
+            newChimera.position = RandomSpawnPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+        }
+        else if (loadingIn == true)
+        {
+            newChimera.position = RandomSpawnPoint(GetRandomPatrolNode());
+        }
+        else
+        {
+            newChimera.position = RandomSpawnPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
+        }
+        
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 
@@ -196,10 +217,8 @@ public class Habitat : MonoBehaviour
 
         chimeraComp.Initialize();
     }
-
-    public Vector3 RandomSpawnPoint()
+    public Vector3 RandomSpawnPoint(Vector3 spawnPos)
     {
-        Vector3 spawnPos = _habitatManager.CurrentHabitat.SpawnPoint.transform.position;
         spawnPos.x = spawnPos.x + Random.Range(-2.0f, 2.0f);
         spawnPos.z = spawnPos.z + Random.Range(-2.0f, 2.0f);
 

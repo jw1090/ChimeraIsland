@@ -34,6 +34,7 @@ public class ChimeraBehavior : MonoBehaviour
     public CameraUtil CameraUtil { get => _cameraUtil; }
     public NavMeshAgent Agent { get => _navMeshAgent; }
     public Chimera Chimera { get => _chimera; }
+    public List<Transform> Nodes { get => _nodes; }
     public int PatrolIndex { get => _patrolIndex; }
     public bool Dropped { get; set; } = false;
     public bool WasClicked { get; set; } = false;
