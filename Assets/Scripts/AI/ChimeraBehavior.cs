@@ -166,8 +166,25 @@ public class ChimeraBehavior : MonoBehaviour
         _animator.SetBool(_animationState, false);
     }
 
-    public void TogglePatrolParticle(bool toggle)
+    public void EvaluateParticlesOnEvolve()
+    {
+        if (_currentState == _patrolState || _currentState == _wanderState)
+        {
+            TogglePatrolParticles(true);
+        }
+        else if (_currentState == _idleState)
+        {
+            ToggleIdleParticles(true);
+        }
+    }
+
+    public void TogglePatrolParticles(bool toggle)
     {
         _chimera.CurrentEvolution.TogglePatrolParticles(toggle);
+    }
+
+    public void ToggleIdleParticles(bool toggle)
+    {
+        _chimera.CurrentEvolution.ToggleIdleParticles(toggle);
     }
 }
