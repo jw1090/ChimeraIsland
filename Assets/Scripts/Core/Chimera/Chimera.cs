@@ -360,6 +360,7 @@ public class Chimera : MonoBehaviour
 
         Evolve(_chimeraToBecome);
         EvolveStatBonus();
+        _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.UpdateHabitatUI();
     }
 
