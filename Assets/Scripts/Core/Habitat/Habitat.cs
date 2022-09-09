@@ -198,15 +198,15 @@ public class Habitat : MonoBehaviour
     {
         if(ActiveChimeras.Count == 0)
         {
-            newChimera.position = RandomSpawnPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+            newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
         }
         else if (loadingIn == true)
         {
-            newChimera.position = RandomSpawnPoint(GetRandomPatrolNode());
+            newChimera.position = RandomDistanceFromPoint(GetRandomPatrolNode());
         }
         else
         {
-            newChimera.position = RandomSpawnPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
+            newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
         }
         
         newChimera.rotation = Quaternion.identity;
@@ -217,12 +217,12 @@ public class Habitat : MonoBehaviour
 
         chimeraComp.Initialize();
     }
-    public Vector3 RandomSpawnPoint(Vector3 spawnPos)
+    public Vector3 RandomDistanceFromPoint(Vector3 spawnPoint)
     {
-        spawnPos.x = spawnPos.x + Random.Range(-2.0f, 2.0f);
-        spawnPos.z = spawnPos.z + Random.Range(-2.0f, 2.0f);
+        spawnPoint.x = spawnPoint.x + Random.Range(-2.0f, 2.0f);
+        spawnPoint.z = spawnPoint.z + Random.Range(-2.0f, 2.0f);
 
-        return spawnPos;
+        return spawnPoint;
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
