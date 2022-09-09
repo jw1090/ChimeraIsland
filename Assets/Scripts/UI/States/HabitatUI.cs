@@ -217,6 +217,10 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenFacilityUpgradeMenu(FacilityType facilityType)
     {
+        if (_facilityMarketplace.CheckActive() == false || _facilityMarketplace.IsFacilityUnlocked(facilityType) == false)
+        {
+            return;
+        }
         ResetStandardUI();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);

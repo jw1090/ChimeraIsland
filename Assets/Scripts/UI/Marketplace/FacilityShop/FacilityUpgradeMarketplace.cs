@@ -97,10 +97,6 @@ public class FacilityUpgradeMarketplace : MonoBehaviour
 
     public void ShowShop(FacilityType facilityType)
     {
-        if (CheckActive() == false)
-        {
-            return;
-        }
         FacilityShopItem shopItem = GetShopItem(facilityType);
         Facility facility = _habitatManager.CurrentHabitat.GetFacility(shopItem.FacilityType);
         if (IsFacilityUnlocked(shopItem.FacilityType) == true)
