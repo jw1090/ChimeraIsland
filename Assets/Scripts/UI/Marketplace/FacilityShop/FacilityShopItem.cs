@@ -9,14 +9,18 @@ public class FacilityShopItem : MonoBehaviour
     [SerializeField] private Image _facilityStatIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TextMeshProUGUI _tier = null;
+    [SerializeField] private GameObject _defaultPanel = null;
+    [SerializeField] private GameObject _soldOutPanel = null;
     private ResourceManager _resourceManager = null;
     private Habitat _habitat = null;
     private Facility _facility = null;
+    private HabitatUI _habitatUI = null;
 
     public FacilityType FacilityType { get => _facilityType; }
 
-    public void Initialize()
+    public void Initialize(HabitatUI habitatUI)
     {
+        _habitatUI = habitatUI;
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
 
@@ -27,6 +31,13 @@ public class FacilityShopItem : MonoBehaviour
         _facilityStatIcon.sprite = _resourceManager.GetStatSprite(_facilityType);
 
         _buyFacilityButton.Initialize(_habitat, _facilityType);
+    }
+
+    public void Display(bool soldOut)
+    {
+        _defaultPanel.SetActive(!soldOut);
+        _buyFacilityButton.gameObject.SetActive(!soldOut);
+        _soldOutPanel.SetActive(soldOut);
     }
 
     private string LoadName()
@@ -50,5 +61,11 @@ public class FacilityShopItem : MonoBehaviour
         _tier.text = $"T{_facility.CurrentTier + 1}";
 
         _buyFacilityButton.UpdateUI();
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        _habitatUI.ResetStandardUI();
     }
 }

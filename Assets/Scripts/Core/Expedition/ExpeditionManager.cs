@@ -14,6 +14,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
     private ExpeditionData _habitatExpeditionOption = null;
+    private CameraUtil _cameraUtil = null;
     private UIManager _uiManager = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
@@ -80,6 +81,7 @@ public class ExpeditionManager : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
         _expeditionState = ExpeditionState.Selection;
 
@@ -441,7 +443,11 @@ public class ExpeditionManager : MonoBehaviour
                 _currencyManager.IncreaseEssence(_selectedExpedition.ActualAmountGained);
                 break;
             case ExpeditionType.Fossils:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
+
+                if (_habitatManager.CurrentHabitat.Temple.CurrentState.StateName != "Completed Temple")
+                {
+                    _cameraUtil.GeneralCameraShift(_habitatManager.CurrentHabitat.Temple.gameObject.transform.GetChild(0).position + new Vector3( 5f,0f,10f));
+                }
                 _uiManager.EnableUIByType(UIElementType.FossilsWallets);
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
