@@ -181,6 +181,17 @@ public class CameraUtil : MonoBehaviour
             _canMoveRight = true;
         }
     }
+    public void GeneralCameraShift(Vector3 positionToSee)
+    {
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+        }
+
+        positionToSee.y = this.transform.position.y;
+        positionToSee.z += 10.0f;
+        _transitionCoroutine = StartCoroutine(MoveCamera(positionToSee, _standardTransitionSpeed));
+    }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {

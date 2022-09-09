@@ -10,6 +10,7 @@ public class ExpeditionResultUI : MonoBehaviour
     private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private HabitatManager _habitatManager = null;
     private bool _expeditionSuccess = false;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
@@ -19,6 +20,7 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public void Initialize(ExpeditionUI expeditionUI, UIManager uiManager)
     {
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _expeditionUI = expeditionUI;
         _uiManager = uiManager;
     }
@@ -38,6 +40,11 @@ public class ExpeditionResultUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
         if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade && _expeditionSuccess == true)
         {
+            _uiManager.HabitatUI.ResetStandardUI();
+        }
+        else if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.Fossils && _expeditionSuccess == true && _habitatManager.CurrentHabitat.Temple.CurrentState.StateName != "Completed Temple")
+        {
+            _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
             _uiManager.HabitatUI.ResetStandardUI();
         }
         else

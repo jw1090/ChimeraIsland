@@ -6,33 +6,13 @@ public class Marketplace : MonoBehaviour
 {
     [SerializeField] private TabGroup _tabGroup = null;
     [SerializeField] private ChimeraShop _chimeraShop = null;
-    [SerializeField] private FacilityShop _facilityShop = null;
     [SerializeField] private Button _closeButton = null;
-    [SerializeField] private bool _waterfallUnlocked = false;
-    [SerializeField] private bool _runeUnlocked = false;
-    [SerializeField] private bool _caveUnlocked = false;
     [SerializeField] private bool _aUnlocked = false;
     [SerializeField] private bool _bUnlocked = false;
     [SerializeField] private bool _cUnlocked = false;
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
-
-    public bool IsFacilityUnlocked(FacilityType facilityType)
-    {
-        switch (facilityType)
-        {
-            case FacilityType.Cave:
-                return _caveUnlocked;
-            case FacilityType.RuneStone:
-                return _runeUnlocked;
-            case FacilityType.Waterfall:
-                return _waterfallUnlocked;
-            default:
-                Debug.LogError($"Facility type {facilityType} does not exist");
-                return false;
-        }
-    }
 
     public bool IsChimeraUnlocked(ChimeraType chimeraType)
     {
@@ -48,26 +28,6 @@ public class Marketplace : MonoBehaviour
                 Debug.LogError($"Facility type {chimeraType} does not exist");
                 return false;
         }
-    }
-
-    public void SetFacilityUnlocked(FacilityType type)
-    {
-        switch (type)
-        {
-            case FacilityType.Cave:
-                _caveUnlocked = true;
-                break;
-            case FacilityType.RuneStone:
-                _runeUnlocked = true;
-                break;
-            case FacilityType.Waterfall:
-                _waterfallUnlocked = true;
-                break;
-            default:
-                Debug.LogError($"Facility type {type} does not exist");
-                break;
-        }
-        _habitatManager.SetHabitatUIProgress(_aUnlocked, _bUnlocked, _cUnlocked, _caveUnlocked, _runeUnlocked, _waterfallUnlocked);
     }
 
     public void SetChimeraUnlocked(ChimeraType chimeraType)
@@ -87,7 +47,7 @@ public class Marketplace : MonoBehaviour
                 Debug.LogError($"Facility type {chimeraType} does not exist");
                 break;
         }
-        _habitatManager.SetHabitatUIProgress(_aUnlocked, _bUnlocked, _cUnlocked, _caveUnlocked, _runeUnlocked, _waterfallUnlocked);
+        _habitatManager.SetHabitatUIProgressChimera(_aUnlocked, _bUnlocked, _cUnlocked);
     }
 
     public void Initialize(UIManager uiManager)
@@ -101,14 +61,10 @@ public class Marketplace : MonoBehaviour
 
         _tabGroup.Initialize();
         _chimeraShop.Initialize(this);
-        _facilityShop.Initialize(this);
 
         SetupListeners();
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _waterfallUnlocked = data.waterfallUnlocked;
-        _runeUnlocked = data.runeUnlocked;
-        _caveUnlocked = data.caveUnlocked;
         _aUnlocked = data.aUnlocked;
         _bUnlocked = data.bUnlocked;
         _cUnlocked = data.cUnlocked;
@@ -137,24 +93,8 @@ public class Marketplace : MonoBehaviour
         }
     }
 
-    public bool FacilityTabCheckActive()
-    {
-        if (_habitatManager.CurrentHabitat.CurrentTier >= 2)
-        {
-            _tabGroup.FacilitiesTab.gameObject.SetActive(true);
-            _facilityShop.CheckShowIcons();
-            return true;
-        }
-        else
-        {
-            _tabGroup.FacilitiesTab.gameObject.SetActive(false);
-            return false;
-        }
-    }
-
     public void UpdateShopUI()
     {
-        _facilityShop.UpdateUI();
         _chimeraShop.UpdateUI();
     }
 
