@@ -212,7 +212,7 @@ public class CameraUtil : MonoBehaviour
             StopCoroutine(_transitionCoroutine);
         }
 
-        Vector3 spawnPosition = _habitatManager.CurrentHabitat.SpawnPoint.position;
+        Vector3 spawnPosition = _habitatManager.CurrentHabitat.TempleSpawnPoint.position;
         spawnPosition.y = this.transform.position.y;
         spawnPosition.z += 10.0f;
         _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _standardTransitionSpeed));
