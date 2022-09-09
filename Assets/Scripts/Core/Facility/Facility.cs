@@ -98,8 +98,6 @@ public class Facility : MonoBehaviour
 
             _tiers.SetState("Tier 1");
 
-            //_glowMarker.ActivateGlowCollider(true);
-
             _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
 
@@ -173,7 +171,6 @@ public class Facility : MonoBehaviour
         _storedChimera.SetInFacility(true);
         _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
-        //_glowMarker.ActivateGlowCollider(false);
         _storedChimera.RevealChimera(false);
         _storedChimera.Behavior.enabled = false;
         _storedChimera.Behavior.Agent.enabled = false;
@@ -194,8 +191,6 @@ public class Facility : MonoBehaviour
 
         _trainingIcon.ResetIcon();
         _trainingIcon.gameObject.SetActive(false);
-
-        //_glowMarker.ActivateGlowCollider(true);
 
         _storedChimera.SetInFacility(false);
         _storedChimera.RevealChimera(true);
