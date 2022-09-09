@@ -322,7 +322,7 @@ public class Habitat : MonoBehaviour
         {
             if (facility.IsBuilt == true && facility.IsChimeraStored() == false)
             {
-                facility.GlowObject.ActivateGlowRenderer(value);
+                facility.GlowObject.ActivateGlow(value);
             }
         }
     }
