@@ -290,7 +290,7 @@ public class HabitatUI : MonoBehaviour
 
         _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);
 
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.PortalClick);
 
         _expeditionPanel.ExpeditionButtonClick();
 
