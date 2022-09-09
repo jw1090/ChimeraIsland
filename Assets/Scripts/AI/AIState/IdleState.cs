@@ -9,7 +9,6 @@ public class IdleState : ChimeraBaseState
 
     public override void Enter(ChimeraBehavior chimeraBehavior)
     {
-
         _chimeraBehavior = chimeraBehavior;
         _idleTimer = _idleDuration;
 

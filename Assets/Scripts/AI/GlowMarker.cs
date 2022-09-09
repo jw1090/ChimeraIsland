@@ -29,7 +29,7 @@ public class GlowMarker : MonoBehaviour
 
     private IEnumerator GlowReset()
     {
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.02f);
         this.gameObject.SetActive(false);
     }
 

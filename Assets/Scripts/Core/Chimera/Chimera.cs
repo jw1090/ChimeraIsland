@@ -452,6 +452,8 @@ public class Chimera : MonoBehaviour
         if (reveal == true)
         {
             _currentEvolution.Animator.SetBool("Walk", true);
+            _currentEvolution.ToggleIdleParticles(false);
+            _currentEvolution.TogglePatrolParticles(false);
         }
 
         _boxCollider.enabled = reveal;
