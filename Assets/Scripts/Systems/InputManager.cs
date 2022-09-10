@@ -193,7 +193,12 @@ public class InputManager : MonoBehaviour
 
             return;
         }
-        else if(Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
+
+        else if (Physics.Raycast(ray, 300.0f, _portalLayer))
+        {
+            _habitatUI.OpenExpedition();
+        }
+        else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
             if (_isHolding == true)
             {
@@ -213,15 +218,10 @@ public class InputManager : MonoBehaviour
                 _isHolding = true;
             }
         }
-        else if(Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer))
-        {
-            _habitatUI.OpenExpedition();
-        }
-        else if (Physics.Raycast(ray, out RaycastHit marketplaceHit, 300.0f, _marketplaceLayer))
+        else if (Physics.Raycast(ray, 300.0f, _marketplaceLayer))
         {
             _habitatUI.OpenMarketplace();
         }
-
         else if (Physics.Raycast(ray, out RaycastHit facilityHit, 300.0f, _facilityLayer) && _habitatUI.FacilityMarketplace.CheckActive())
         {
             FacilityType hitFacilityType = facilityHit.transform.gameObject.GetComponent<Facility>().Type;

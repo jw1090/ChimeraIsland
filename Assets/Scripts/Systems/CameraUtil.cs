@@ -208,15 +208,6 @@ public class CameraUtil : MonoBehaviour
         CameraShift(facilityPosition);
     }
 
-    public void ChimeraCameraShift()
-    {
-        Vector3 spawnPosition = _habitatManager.CurrentHabitat.TempleSpawnPoint.position;
-        spawnPosition.y = this.transform.position.y;
-        spawnPosition.z += 10.0f;
-
-        CameraShift(spawnPosition);
-    }
-
     public void FindChimeraCameraShift(Chimera chimera)
     {
         if (_transitionCoroutine != null)

@@ -32,6 +32,8 @@ public class ExpeditionResultUI : MonoBehaviour
 
     private void ResultsCloseClick()
     {
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
@@ -48,7 +50,6 @@ public class ExpeditionResultUI : MonoBehaviour
             _expeditionUI.OpenExpeditionUI();
         }
 
-        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
         _expeditionManager.ResetSelectedExpedition();
         _expeditionSuccess = false;
     }
