@@ -1,5 +1,90 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1706766192816176179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7894407927623128621}
+  m_Layer: 3
+  m_Name: Node
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7894407927623128621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706766192816176179}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -24, y: 5, z: 40}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6803276666393196987}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7934306592631434586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294697180737912856}
+  - component: {fileID: 905916721494220223}
+  m_Layer: 3
+  m_Name: States
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &294697180737912856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7934306592631434586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3657520731594837410}
+  - {fileID: 5637960538121650234}
+  m_Father: {fileID: 6803276666393196987}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &905916721494220223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7934306592631434586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84ccb23bcb94684aa7ad101af482f61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultStateName: Ruined Temple
+  currentState:
+    StateName: Ruined Temple
+    StateObject: {fileID: 4146072627647485720}
+  stateEntries:
+  - StateName: Ruined Temple
+    StateObject: {fileID: 4146072627647485720}
+  - StateName: Completed Temple
+    StateObject: {fileID: 5005152372185963136}
+  SetDefaultStateOnBadStateRequest: 0
 --- !u!1 &8531414144287979650
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6803276666393196987}
-  - component: {fileID: 8881653941011952021}
+  - component: {fileID: 1412989182932771330}
   m_Layer: 3
   m_Name: Temple
   m_TagString: Untagged
@@ -28,12 +113,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3657520731594837410}
-  - {fileID: 5637960538121650234}
+  - {fileID: 294697180737912856}
+  - {fileID: 7894407927623128621}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8881653941011952021
+--- !u!114 &1412989182932771330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,25 +127,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8531414144287979650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84ccb23bcb94684aa7ad101af482f61, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d8a59e7e4efcf5499607b12893527aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultStateName: Ruined Temple
-  currentState:
-    StateName: Ruined Temple
-    StateObject: {fileID: 4146072627647485720}
-  stateEntries:
-  - StateName: Ruined Temple
-    StateObject: {fileID: 4146072627647485720}
-  - StateName: Completed Temple
-    StateObject: {fileID: 5005152372185963136}
-  SetDefaultStateOnBadStateRequest: 0
+  _states: {fileID: 905916721494220223}
+  _cameraTransitionNode: {fileID: 7894407927623128621}
 --- !u!1001 &3691828256422583966
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6803276666393196987}
+    m_TransformParent: {fileID: 294697180737912856}
     m_Modifications:
     - target: {fileID: 122813087651984955, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
       propertyPath: m_NavMeshLayer
@@ -460,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8523587506301060126, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8523587506301060126, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -501,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 9007776506125491876, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.68242997
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007776506125491876, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.68243
       objectReference: {fileID: 0}
     - target: {fileID: 9007776506125491876, guid: ab8de6abb1bf46d48abc810f03eec62d, type: 3}
       propertyPath: m_LocalScale.z
@@ -571,7 +652,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6803276666393196987}
+    m_TransformParent: {fileID: 294697180737912856}
     m_Modifications:
     - target: {fileID: 98788310515189053, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
       propertyPath: m_NavMeshLayer
@@ -670,6 +751,10 @@ PrefabInstance:
       value: Ruined Temple
       objectReference: {fileID: 0}
     - target: {fileID: 885964096328380646, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 885964096328380646, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -744,6 +829,10 @@ PrefabInstance:
     - target: {fileID: 2498654765867116338, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843839594789937409, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2843839594789937409, guid: 1670f78cb5bd460408d14ffd1b6ec5c9, type: 3}
       propertyPath: m_StaticEditorFlags

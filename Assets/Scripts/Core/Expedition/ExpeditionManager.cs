@@ -350,7 +350,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             totalPartyWisdom += chimera.Wisdom;
         }
-        
+
         if (totalPartyWisdom == 1) // 1 wisdom is the base so it should not give any benefit.
         {
             totalPartyWisdom = 0;
@@ -443,11 +443,11 @@ public class ExpeditionManager : MonoBehaviour
                 _currencyManager.IncreaseEssence(_selectedExpedition.ActualAmountGained);
                 break;
             case ExpeditionType.Fossils:
-
                 if (_habitatManager.CurrentHabitat.Temple.CurrentState.StateName != "Completed Temple")
                 {
-                    _cameraUtil.GeneralCameraShift(_habitatManager.CurrentHabitat.Temple.gameObject.transform.GetChild(0).position + new Vector3( 5f,0f,10f));
+                    _cameraUtil.TempleCameraShift();
                 }
+
                 _uiManager.EnableUIByType(UIElementType.FossilsWallets);
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);

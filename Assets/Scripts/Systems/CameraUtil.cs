@@ -181,16 +181,20 @@ public class CameraUtil : MonoBehaviour
             _canMoveRight = true;
         }
     }
-    public void GeneralCameraShift(Vector3 positionToSee)
+
+    private void CameraShift(Vector3 position)
     {
         if (_transitionCoroutine != null)
         {
             StopCoroutine(_transitionCoroutine);
         }
 
-        positionToSee.y = this.transform.position.y;
-        positionToSee.z += 10.0f;
-        _transitionCoroutine = StartCoroutine(MoveCamera(positionToSee, _standardTransitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(position, _standardTransitionSpeed));
+    }
+
+    public void TempleCameraShift()
+    {
+
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
