@@ -194,32 +194,27 @@ public class CameraUtil : MonoBehaviour
 
     public void TempleCameraShift()
     {
+        Vector3 templeposition = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode.position;
+        templeposition.y = this.transform.position.y;
 
+        CameraShift(templeposition);
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        if (_transitionCoroutine != null)
-        {
-            StopCoroutine(_transitionCoroutine);
-        }
-
         Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
         facilityPosition.y = this.transform.position.y;
-        _transitionCoroutine = StartCoroutine(MoveCamera(facilityPosition, _standardTransitionSpeed));
+
+        CameraShift(facilityPosition);
     }
 
     public void ChimeraCameraShift()
     {
-        if (_transitionCoroutine != null)
-        {
-            StopCoroutine(_transitionCoroutine);
-        }
-
         Vector3 spawnPosition = _habitatManager.CurrentHabitat.TempleSpawnPoint.position;
         spawnPosition.y = this.transform.position.y;
         spawnPosition.z += 10.0f;
-        _transitionCoroutine = StartCoroutine(MoveCamera(spawnPosition, _standardTransitionSpeed));
+
+        CameraShift(spawnPosition);
     }
 
     public void FindChimeraCameraShift(Chimera chimera)

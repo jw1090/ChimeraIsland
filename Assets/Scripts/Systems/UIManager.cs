@@ -68,7 +68,6 @@ public class UIManager : MonoBehaviour
         switch (uiElementType)
         {
             case UIElementType.All:
-            case UIElementType.MarketplaceButton:
             case UIElementType.OpenDetailsButton:
             case UIElementType.ExpeditionButton:
             case UIElementType.MarketplaceChimeraTab:

@@ -443,27 +443,26 @@ public class ExpeditionManager : MonoBehaviour
                 _currencyManager.IncreaseEssence(_selectedExpedition.ActualAmountGained);
                 break;
             case ExpeditionType.Fossils:
-                if (_habitatManager.CurrentHabitat.Temple.CurrentState.StateName != "Completed Temple")
+                if (_habitatManager.CurrentHabitat.Temple.IsCompleted == false)
                 {
+                    _habitatManager.CurrentHabitat.Temple.Build();
                     _cameraUtil.TempleCameraShift();
+                    _uiManager.EnableUIByType(UIElementType.FossilsWallets);
                 }
-
-                _uiManager.EnableUIByType(UIElementType.FossilsWallets);
-
-                _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
 
                 if (_selectedExpedition.UnlocksNewChimera == true)
                 {
                     ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
                     Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
                 }
+
+                _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
                 _tutorialManager.ShowTutorialStage(TutorialStageType.FossilShop);
                 break;
             case ExpeditionType.HabitatUpgrade:
-                _uiManager.EnableUIByType(UIElementType.EssenceWallets);
-
                 if (_currentHabitatProgress == 0)
                 {
+                    _uiManager.EnableUIByType(UIElementType.EssenceWallets);
                     _habitatManager.CurrentHabitat.CrystalManager.TripleSpawn();
                 }
 
