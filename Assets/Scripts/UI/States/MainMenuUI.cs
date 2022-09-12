@@ -14,6 +14,8 @@ public class MainMenuUI : MonoBehaviour
 
     public Button NewGameButton { get => _newGameButton; }
     public Button LoadGameButton { get => _loadGameButton; }
+    public Button OpenCreditsButton { get => _openCreditsButton; }
+    public Button CloseCreditsButton { get => _closeCreditsButton; }
 
     public void Initialize(UIManager uiManager)
     {
