@@ -28,6 +28,9 @@ public class ExpeditionManager : MonoBehaviour
     private const float _difficultyExponent = 1.5f;
     private const float _powerScalar = 6.5f;
     private const float _rewardDenominator = 40.0f;
+    private const float _rewardExponent = 0.66f;
+    private const float _duartionDenominator = 300.0f;
+    private const float _durationExponent = 0.45f;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
@@ -231,7 +234,7 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _selectedExpedition.CurrentDuration = _selectedExpedition.Duration;
+        _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
         _selectedExpedition.ActiveInProgressTimer = true;
     }
 
@@ -298,8 +301,11 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         CalculateRewardModifier();
+        CalculateDurationModifier();
+
         _selectedExpedition.ChimeraPower = power >= _selectedExpedition.DifficultyValue ? _selectedExpedition.DifficultyValue : power;
         _uiExpedition.SetupUI.UpdateRewards(_selectedExpedition);
+        _uiExpedition.SetupUI.UpdateDuration(_selectedExpedition);
         _uiExpedition.SetupUI.UpdateChimeraPower(_selectedExpedition.ChimeraPower);
 
     }
@@ -355,7 +361,26 @@ public class ExpeditionManager : MonoBehaviour
             totalPartyWisdom = 0;
         }
 
-        _selectedExpedition.RewardModifier = Mathf.Pow(totalPartyWisdom / _rewardDenominator, 0.66f);
+        _selectedExpedition.RewardModifier = Mathf.Pow(totalPartyWisdom / _rewardDenominator, _rewardExponent);
+    }
+
+    private void CalculateDurationModifier()
+    {
+        _selectedExpedition.DurationModifier = 0.0f;
+
+        int totalPartyExploration = 0;
+
+        foreach (var chimera in _chimeras)
+        {
+            totalPartyExploration += chimera.Exploration;
+        }
+
+        if (totalPartyExploration == 1) // 1 wisdom is the base so it should not give any benefit.
+        {
+            totalPartyExploration = 0;
+        }
+
+        _selectedExpedition.DurationModifier = Mathf.Pow(totalPartyExploration / _duartionDenominator, _durationExponent);
     }
 
     private float ElementTypeModifier(ElementType elementType)

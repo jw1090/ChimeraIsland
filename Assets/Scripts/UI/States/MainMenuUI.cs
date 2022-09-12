@@ -7,8 +7,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _openCreditsButton = null;
     [SerializeField] private Button _closeCreditsButton = null;
-    [SerializeField] private GameObject _menuPanel = null;
-    [SerializeField] private GameObject _creditsPanel = null;
     private UIManager _uiManager;
     private StatefulObject _statefulObject;
 

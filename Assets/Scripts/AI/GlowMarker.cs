@@ -10,7 +10,10 @@ public class GlowMarker : MonoBehaviour
     {
         if (activate == false)
         {
-            StartCoroutine(GlowReset());
+            if (this.gameObject.activeInHierarchy == true)
+            {
+                StartCoroutine(GlowReset());
+            }
         }
         else
         {

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,20 +12,13 @@ public class ExpeditionInProgressUI : MonoBehaviour
 
     public void UpdateInProgressTimeRemainingText(float timeRemaining)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Ceil(timeRemaining));
-        string newDurationText = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
-
-        _timeRemainingText.text = newDurationText;
+        _timeRemainingText.text = $"Duration: {timeRemaining.ToString("F1")} Seconds";
         _durationSlider.value = timeRemaining;
     }
 
     public void UpdateSuccessText(float duration)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(duration);
-        string durationString = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
-
-        _timeRemainingText.text = durationString;
-
+        _timeRemainingText.text = $"Duration: {duration.ToString("F1")} Seconds";
         _durationSlider.maxValue = duration;
         _durationSlider.value = _durationSlider.maxValue;
     }

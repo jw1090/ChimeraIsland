@@ -25,6 +25,7 @@ public class Facility : MonoBehaviour
     private TrainingUI _uiTraining = null;
     private ExpeditionManager _expeditionManager = null;
     private FacilityData _loadedFacilityData = null;
+    private InputManager _inputManager = null;
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
@@ -57,6 +58,7 @@ public class Facility : MonoBehaviour
         _uiManager = ServiceLocator.Get<UIManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+        _inputManager = ServiceLocator.Get<InputManager>();
 
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
@@ -188,6 +190,10 @@ public class Facility : MonoBehaviour
         }
 
         _activateTraining = false;
+        if (_inputManager.IsHolding == true)
+        {
+            _glowMarker.ActivateGlow(true);
+        }
 
         _trainingIcon.ResetIcon();
         _trainingIcon.gameObject.SetActive(false);

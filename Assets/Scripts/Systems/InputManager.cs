@@ -30,6 +30,7 @@ public class InputManager : MonoBehaviour
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
+    public bool IsHolding { get => _isHolding; }
 
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }

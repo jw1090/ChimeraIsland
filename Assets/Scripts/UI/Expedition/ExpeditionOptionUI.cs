@@ -54,7 +54,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
         _icon.sprite = _resourceManager.GetExpeditionTypeSprite(expeditionData.Type);
         _title.text = $"{expeditionData.Title}";
         _difficulty.text = $"Difficulty: {expeditionData.Difficulty}";
-        _energyCost.text = $"Energy Drain: {expeditionData.EnergyCost}";
+        _energyCost.text = $"Energy Drain: {expeditionData.EnergyDrain}";
 
         switch (expeditionData.Type)
         {

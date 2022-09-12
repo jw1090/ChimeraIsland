@@ -10,12 +10,13 @@ public class ExpeditionData : ScriptableObject
     public HabitatRewardType UpgradeType = HabitatRewardType.None;
     public bool UnlocksNewChimera = false;
     public int BaseAmountGained = 0;
+    public float BaseDuration = 5.0f;
     public int Difficulty = 0;
-    public int EnergyCost = 0;
-    public float Duration = 0.0f;
+    public int EnergyDrain = 5;
     public List<ModifierType> Modifiers = new List<ModifierType>();
 
     public int ActualAmountGained { get => BaseAmountGained + (int)(BaseAmountGained * RewardModifier); }
+    public float ActualDuration { get => BaseDuration - (BaseDuration * DurationModifier); }
     public bool ActiveInProgressTimer { get; set; }  = false;
     public float ExplorationModifier { get; set; } = 1.0f;
     public float StaminaModifer { get; set; } = 1.0f;
@@ -27,6 +28,7 @@ public class ExpeditionData : ScriptableObject
     public float ChimeraPower { get; set; } = 0.0f;
     public float CurrentDuration { get; set; } = 0.0f;
     public float RewardModifier { get; set; } = 0.0f;
+    public float DurationModifier { get; set; } = 0.0f;
 
     public ExpeditionData DeepCopy()
     {
@@ -39,8 +41,8 @@ public class ExpeditionData : ScriptableObject
         deepCopy.UnlocksNewChimera = UnlocksNewChimera;
         deepCopy.BaseAmountGained = BaseAmountGained;
         deepCopy.Difficulty = Difficulty;
-        deepCopy.EnergyCost = EnergyCost;
-        deepCopy.Duration = Duration;
+        deepCopy.EnergyDrain = EnergyDrain;
+        deepCopy.BaseDuration = BaseDuration;
 
         deepCopy.Modifiers = new List<ModifierType>();
 
