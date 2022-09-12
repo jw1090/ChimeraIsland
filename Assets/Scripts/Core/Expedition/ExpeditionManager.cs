@@ -113,52 +113,51 @@ public class ExpeditionManager : MonoBehaviour
 
     public void LoadExpeditionOptions()
     {
-        SetupExpeditionOption(_essenceExpeditionOption, ExpeditionType.Essence);
-        SetupExpeditionOption(_fossilExpeditionOption, ExpeditionType.Fossils);
-        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        SetupExpeditionOption(ref _essenceExpeditionOption, ExpeditionType.Essence);
+        SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils);
+        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
     }
 
-    private void SetupExpeditionOption(ExpeditionData expedition, ExpeditionType expeditionType)
+    private void SetupExpeditionOption(ref ExpeditionData expedition, ExpeditionType expeditionType)
     {
         if (expedition != null) // Already Created
         {
             return;
         }
 
-        ExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
-        AssignExpeditionUpgradeType(newExpedition.Modifiers);
-        AnalyseRandomUpgrade(newExpedition);
-
-        switch (newExpedition.Type)
+        if (ExpeditionDataByType(expeditionType, out ExpeditionData newExpedition) == true)
         {
-            case ExpeditionType.Essence:
-                _essenceExpeditionOption = newExpedition;
-                break;
-            case ExpeditionType.Fossils:
-                _fossilExpeditionOption = newExpedition;
-                break;
-            case ExpeditionType.HabitatUpgrade:
-                _habitatExpeditionOption = newExpedition;
-                break;
-            default:
-                Debug.LogError($"Expedition Type [{newExpedition.Type} is invalid, please fix!]");
-                break;
+            AssignExpeditionUpgradeType(newExpedition.Modifiers);
+            AnalyseRandomUpgrade(newExpedition);
+            expedition = newExpedition;
         }
     }
 
-    private ExpeditionData ExpeditionDataByType(ExpeditionType expeditionType)
+    private bool ExpeditionDataByType(ExpeditionType expeditionType, out ExpeditionData newExpedition)
     {
+        newExpedition = null;
+
         switch (expeditionType)
         {
             case ExpeditionType.Essence:
-                return _essenceExpeditions[_currentEssenceProgress];
+                newExpedition = _essenceExpeditions[_currentEssenceProgress].DeepCopy();
+                return true;
             case ExpeditionType.Fossils:
-                return _fossilExpeditions[_currentFossilProgress];
+                newExpedition = _fossilExpeditions[_currentFossilProgress].DeepCopy();
+                return true;
             case ExpeditionType.HabitatUpgrade:
-                return _habitatExpeditions[_currentHabitatProgress];
+                if (_currentHabitatProgress >= _habitatExpeditions.Count) // Finished
+                {
+                    return false;
+                }
+                else
+                {
+                    newExpedition = _habitatExpeditions[_currentHabitatProgress].DeepCopy();
+                    return true;
+                }
             default:
                 Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
-                return null;
+                return false;
         }
     }
 
@@ -568,9 +567,10 @@ public class ExpeditionManager : MonoBehaviour
             _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
+
     public void CompleteCurrentUpgradeExpedition()
     {
-        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
 
         if (_habitatExpeditionOption == null)
         {
