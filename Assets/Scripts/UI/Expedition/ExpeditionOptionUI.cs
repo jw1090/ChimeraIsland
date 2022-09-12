@@ -9,7 +9,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private ExpeditionType _expeditionType = ExpeditionType.None;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _title = null;
-    [SerializeField] private TextMeshProUGUI _suggestedTotalPower = null;
+    [SerializeField] private TextMeshProUGUI _difficulty = null;
     [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private TextMeshProUGUI _reward = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
@@ -53,8 +53,8 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     {
         _icon.sprite = _resourceManager.GetExpeditionTypeSprite(expeditionData.Type);
         _title.text = $"{expeditionData.Title}";
-        _suggestedTotalPower.text = $"Suggested Total Power: {expeditionData.SuggestedTotalPower}";
-        _energyCost.text = $"Energy Cost: {expeditionData.EnergyCost}";
+        _difficulty.text = $"Difficulty: {expeditionData.Difficulty}";
+        _energyCost.text = $"Energy Drain: {expeditionData.EnergyDrain}";
 
         switch (expeditionData.Type)
         {

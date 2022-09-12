@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
 
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
+        _mainMenuUI.Initialize(this);
         _startingUI.Initialize();
         _habitatUI.Initialize(this);
 
@@ -68,7 +69,6 @@ public class UIManager : MonoBehaviour
         switch (uiElementType)
         {
             case UIElementType.All:
-            case UIElementType.MarketplaceButton:
             case UIElementType.OpenDetailsButton:
             case UIElementType.ExpeditionButton:
             case UIElementType.MarketplaceChimeraTab:

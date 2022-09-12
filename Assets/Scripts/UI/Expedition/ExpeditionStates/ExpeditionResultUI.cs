@@ -32,20 +32,18 @@ public class ExpeditionResultUI : MonoBehaviour
 
     private void ResultsCloseClick()
     {
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
-        }
 
-        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
-        if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade && _expeditionSuccess == true)
-        {
-            _uiManager.HabitatUI.ResetStandardUI();
-        }
-        else if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.Fossils && _expeditionSuccess == true && _habitatManager.CurrentHabitat.Temple.CurrentState.StateName != "Completed Temple")
-        {
-            _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-            _uiManager.HabitatUI.ResetStandardUI();
+            if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade
+                || _expeditionManager.SelectedExpedition.Type == ExpeditionType.Fossils
+                && _expeditionManager.CurrentFossilProgress == 1)
+            {
+                _uiManager.HabitatUI.ResetStandardUI();
+            }
         }
         else
         {

@@ -16,8 +16,8 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _templeSpawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
+    [SerializeField] private Temple _temple = null;
     [SerializeField] private StatefulObject _tiers = null;
-    [SerializeField] private StatefulObject _temple = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
@@ -28,8 +28,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
-    public StatefulObject Temple { get => _temple; }
-    public int CurrentTier { get => _currentTier; }
+    public Temple Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
     public Transform TempleSpawnPoint { get => _templeSpawnPoint.transform; }
@@ -37,6 +36,7 @@ public class Habitat : MonoBehaviour
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
     public HabitatType Type { get => _habitatType; }
+    public int CurrentTier { get => _currentTier; }
 
     public Facility GetFacility(FacilityType facilityType)
     {

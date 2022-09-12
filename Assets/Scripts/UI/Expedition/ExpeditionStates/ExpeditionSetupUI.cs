@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
-    [SerializeField] private TextMeshProUGUI _energyCost = null;
+    [SerializeField] private TextMeshProUGUI _energyDrain = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
@@ -84,22 +83,14 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _energyCost.text = $"Energy Cost: {data.EnergyCost}";
+        _energyDrain.text = $"Energy Drain: {data.EnergyDrain}";
         UpdateRewards(data);
-        LoadDuration(data.Duration);
-        _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
+        UpdateDuration(data);
+        _expeditionUI.InProgressUI.UpdateSuccessText(data.ActualDuration);
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
         _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
-    }
-
-    private void LoadDuration(float duration)
-    {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(duration);
-        string durationString = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
-
-        _duration.text = durationString;
     }
 
     public void UpdateRewards(ExpeditionData data)
@@ -140,6 +131,11 @@ public class ExpeditionSetupUI : MonoBehaviour
         }
 
         _rewardType.text = $"Rewards: {reward}";
+    }
+
+    public void UpdateDuration(ExpeditionData data)
+    {
+        _duration.text = $"Duration: {data.ActualDuration.ToString("F1")} (-{(data.BaseDuration * data.DurationModifier).ToString("F1")}) Seconds";
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)

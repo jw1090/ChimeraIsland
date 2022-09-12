@@ -35,7 +35,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
         {
             _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
             _habitatUI.ResetStandardUI();
-            _cameraUtil.ChimeraCameraShift();
+            _cameraUtil.TempleCameraShift();
         }
     }
 }

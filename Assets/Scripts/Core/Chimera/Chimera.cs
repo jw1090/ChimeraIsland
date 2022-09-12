@@ -40,6 +40,7 @@ public class Chimera : MonoBehaviour
     private int _explorationExperience = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
+    private const int _statBonusAmount = 3;
 
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
@@ -371,13 +372,13 @@ public class Chimera : MonoBehaviour
             case StatType.None:
                 break;
             case StatType.Exploration:
-                _exploration += 5;
+                _exploration += _statBonusAmount;
                 break;
             case StatType.Stamina:
-                _stamina += 5;
+                _stamina += _statBonusAmount;
                 break;
             case StatType.Wisdom:
-                _wisdom += 5;
+                _wisdom += _statBonusAmount;
                 break;
             default:
                 Debug.LogError($"Unhandled stat type [{_currentEvolution.StatBonus}]");

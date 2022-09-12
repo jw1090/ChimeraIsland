@@ -105,19 +105,30 @@ public class LevelLoader : AsyncLoader
     {
         if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
         {
-            if (_habitat != null)
-            {
-                _habitatManager.PlayCurrentHabitatMusic();
-                _habitatManager.BuildFacilitiesForHabitat();
-                _habitatManager.SpawnChimerasForHabitat();
+            TempleBuildCheck();
 
-                _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+            _habitatManager.PlayCurrentHabitatMusic();
+            _habitatManager.BuildFacilitiesForHabitat();
+            _habitatManager.SpawnChimerasForHabitat();
 
-                StartHabitatTickTimer();
-            }
+            _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+
+            StartHabitatTickTimer();
         }
 
         _tutorialManager.TutorialStageCheck();
+    }
+
+    private void TempleBuildCheck()
+    {
+        if (_expeditionManager.CurrentFossilProgress == 0)
+        {
+            _habitatManager.CurrentHabitat.Temple.ResetTemple();
+        }
+        else
+        {
+            _habitatManager.CurrentHabitat.Temple.Build();
+        }
     }
 
     private bool LastSessionHabitatCheck()
