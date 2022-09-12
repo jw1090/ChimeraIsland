@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
 
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
+        _mainMenuUI.Initialize(this);
         _startingUI.Initialize();
         _habitatUI.Initialize(this);
 
