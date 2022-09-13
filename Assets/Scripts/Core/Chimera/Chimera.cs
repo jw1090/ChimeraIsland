@@ -269,6 +269,11 @@ public class Chimera : MonoBehaviour
 
     public void EnergyTick()
     {
+        if (_onExpedition == true) // Nn energy gain on expeditions.
+        {
+            return;
+        }
+
         ++_energyTickCounter;
 
         if (_energyTickCounter >= 20)
@@ -281,6 +286,35 @@ public class Chimera : MonoBehaviour
                 _habitatUI.UpdateHabitatUI();
             }
         }
+    }
+
+    public void AddEnergy(int energyAmount)
+    {
+        if (_currentEnergy + energyAmount > _maxEnergy)
+        {
+            _currentEnergy = _maxEnergy;
+        }
+        else
+        {
+            _currentEnergy += energyAmount;
+        }
+
+        _habitatUI.UpdateHabitatUI();
+    }
+
+    public void DrainEnergy(int drainAmount)
+    {
+        if (_currentEnergy - drainAmount < 0)
+        {
+            Debug.LogError($"Drain Amount [{drainAmount}] is causing Current Energy [{_currentEnergy}] to try to enter negatives. Please check.");
+            _currentEnergy = 0;
+        }
+        else
+        {
+            _currentEnergy -= drainAmount;
+        }
+
+        _habitatUI.UpdateHabitatUI();
     }
 
     // Checks if stored experience is below cap and appropriately adds stat exp.
@@ -452,7 +486,7 @@ public class Chimera : MonoBehaviour
 
         if (reveal == true)
         {
-            _currentEvolution.Animator.SetBool("Walk", true);
+            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
             _currentEvolution.ToggleIdleParticles(false);
             _currentEvolution.TogglePatrolParticles(false);
         }
