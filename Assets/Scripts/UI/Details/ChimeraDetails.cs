@@ -144,6 +144,11 @@ public class ChimeraDetails : MonoBehaviour
             return false;
         }
 
+        if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
+        {
+            return false;
+        }
+
         if (_chimera.CurrentEnergy >= _expeditionManager.SelectedExpedition.EnergyDrain) // Can afford the energy cost. 
         {
             return false;
