@@ -68,6 +68,19 @@ public class Habitat : MonoBehaviour
         return facilitiesToBuild[rand].Type;
     }
 
+    public Chimera GetFirstChimera()
+    {
+        foreach (Chimera chimera in ActiveChimeras)
+        {
+            if (chimera.FirstChimera == true)
+            {
+                return chimera;
+            }
+        }
+        Debug.LogError("Missing first chimera");
+        return new Chimera();
+    }
+
     public void SetLightingManager(LightingManager lightingManager) { _lightingManager = lightingManager; }
 
     public void SetTier(int tier)

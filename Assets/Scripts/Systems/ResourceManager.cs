@@ -59,16 +59,9 @@ public class ResourceManager : MonoBehaviour
 
     private GameObject _inputManager = null;
     private GameObject _uiManagerPrefab = null;
-    private ChimeraType _firstChimeraType = ChimeraType.None;
 
-    public ChimeraType FirstChimeraType { get => _firstChimeraType; }
     public GameObject InputManager { get => _inputManager;}
     public GameObject UIManager { get => _uiManagerPrefab;}
-
-    public void SetFirstChimeraType(ChimeraType chimeraType)
-    {
-        _firstChimeraType = chimeraType;
-    }
 
     public ResourceManager Initialize()
     {
@@ -192,72 +185,6 @@ public class ResourceManager : MonoBehaviour
                 Debug.LogError($"Unhandled chimera type: {type}");
                 return null;
         }
-    }
-
-    public Sprite GetTutorialSprite(TutorialIconType type)
-    {
-        switch (_firstChimeraType)
-        {
-            case ChimeraType.A:
-            case ChimeraType.A1:
-            case ChimeraType.A2:
-            case ChimeraType.A3:
-                switch (type)
-                {
-                    case TutorialIconType.Happy:
-                        return _tutorialHappyA;
-                    case TutorialIconType.Shocked:
-                        return _tutorialShockedA;
-                    case TutorialIconType.Speaking:
-                        return _tutorialSpeakingA;
-                    case TutorialIconType.Standard:
-                        return _tutorialStandardA;
-                    default:
-                        Debug.LogError($"Unhandled sprite type: {type}");
-                        return null;
-                }
-            case ChimeraType.B:
-            case ChimeraType.B1:
-            case ChimeraType.B2:
-            case ChimeraType.B3:
-                switch (type)
-                {
-                    case TutorialIconType.Happy:
-                        return _tutorialHappyB;
-                    case TutorialIconType.Shocked:
-                        return _tutorialShockedB;
-                    case TutorialIconType.Speaking:
-                        return _tutorialSpeakingB;
-                    case TutorialIconType.Standard:
-                        return _tutorialStandardB;
-                    default:
-                        Debug.LogError($"Unhandled sprite type: {type}");
-                        return null;
-                }
-            case ChimeraType.C:
-            case ChimeraType.C1:
-            case ChimeraType.C2:
-            case ChimeraType.C3:
-                switch (type)
-                {
-                    case TutorialIconType.Happy:
-                        return _tutorialHappyC;
-                    case TutorialIconType.Shocked:
-                        return _tutorialShockedC;
-                    case TutorialIconType.Speaking:
-                        return _tutorialSpeakingC;
-                    case TutorialIconType.Standard:
-                        return _tutorialStandardC;
-                    default:
-                        Debug.LogError($"Unhandled sprite type: {type}");
-                        return null;
-                }
-            default:
-                return null;
-        }
-
-
-
     }
 
     public Sprite GetChimeraSprite(ChimeraType type)
