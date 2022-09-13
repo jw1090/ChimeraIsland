@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Habitat : MonoBehaviour
@@ -230,10 +231,16 @@ public class Habitat : MonoBehaviour
 
         chimeraComp.Initialize();
     }
+
     public Vector3 RandomDistanceFromPoint(Vector3 spawnPoint)
     {
         spawnPoint.x = spawnPoint.x + Random.Range(-2.0f, 2.0f);
         spawnPoint.z = spawnPoint.z + Random.Range(-2.0f, 2.0f);
+
+        if (NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 1f, 1))
+        {
+            spawnPoint = new Vector3(navMeshHit.position.x, navMeshHit.position.y, navMeshHit.position.z);
+        }
 
         return spawnPoint;
     }
