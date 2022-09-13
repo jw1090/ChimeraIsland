@@ -5,6 +5,7 @@ public class CrystalSpawn : MonoBehaviour
     [SerializeField] private GameObject _crystal = null;
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
+    private Habitat _habitat = null;
     private int _health = 3;
     private bool _isActive = false;
 
@@ -37,18 +38,19 @@ public class CrystalSpawn : MonoBehaviour
         {
             _isActive = false;
             _crystal.SetActive(false);
-            _currencyManager.IncreaseEssence(15);
+            _currencyManager.IncreaseEssence(20 * _habitat.CurrentTier);
+
             _audioManager.PlayUISFX(SFXUIType.Harvest);
         }
         else
         {
             if (_health == 1)
             {
-                _currencyManager.IncreaseEssence(10);
+                _currencyManager.IncreaseEssence(15 * _habitat.CurrentTier);
             }
             else
             {
-                _currencyManager.IncreaseEssence(5);
+                _currencyManager.IncreaseEssence(10 * _habitat.CurrentTier);
             }
 
             _audioManager.PlayUISFX(SFXUIType.Hit);

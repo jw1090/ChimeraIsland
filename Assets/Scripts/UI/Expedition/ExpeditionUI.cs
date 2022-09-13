@@ -99,7 +99,7 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+        _detailsFolder.ToggleDetailsButtons();
     }
 
     public void CloseExpeditionUI()
@@ -109,7 +109,7 @@ public class ExpeditionUI : MonoBehaviour
 
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
-            _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+            _expeditionManager.RemoveAllChimeras();
         }
     }
 

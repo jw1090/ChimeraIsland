@@ -58,7 +58,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _detailsFolder.ToggleDetailsButtons();
         _expeditionManager.EnterInProgressState();
 
         _backButton.gameObject.SetActive(false);
@@ -68,7 +68,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         _expeditionManager.RemoveAllChimeras();
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _detailsFolder.ToggleDetailsButtons();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
