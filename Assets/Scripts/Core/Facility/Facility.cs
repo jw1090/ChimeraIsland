@@ -200,7 +200,6 @@ public class Facility : MonoBehaviour
 
         _storedChimera.SetInFacility(false);
         _storedChimera.RevealChimera(true);
-        _storedChimera.Behavior.ChangeState(ChimeraBehaviorState.Patrol);
         _storedChimera.Behavior.enabled = true;
         _storedChimera.Behavior.Agent.enabled = true;
 

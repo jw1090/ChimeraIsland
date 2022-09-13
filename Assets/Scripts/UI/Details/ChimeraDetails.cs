@@ -108,6 +108,12 @@ public class ChimeraDetails : MonoBehaviour
 
             return;
         }
+        else if (NotEnoughEnergy() == true) // Not Enough Energy
+        {
+            _statefulButtons.SetState("Occupied");
+            _occupiedText.text = $"Energy Too Low";
+            return;
+        }
 
         switch (detailsButtonType)
         {
@@ -128,6 +134,22 @@ public class ChimeraDetails : MonoBehaviour
                 Debug.LogWarning($"{detailsButtonType} is not a valid type. Please fix!");
                 break;
         }
+    }
+
+    // Return true on not enough energy for selected expedition.
+    private bool NotEnoughEnergy()
+    {
+        if (_expeditionManager.SelectedExpedition == null) // No mission currently selected.
+        {
+            return false;
+        }
+
+        if (_chimera.CurrentEnergy >= _expeditionManager.SelectedExpedition.EnergyDrain) // Can afford the energy cost. 
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void TransferMapClicked()
@@ -163,7 +185,7 @@ public class ChimeraDetails : MonoBehaviour
 
     private void FindChimera()
     {
-        if(_uiManager.HabitatUI.MenuOpen)
+        if (_uiManager.HabitatUI.MenuOpen)
         {
             _uiManager.HabitatUI.ResetStandardUI();
         }
