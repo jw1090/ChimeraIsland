@@ -7,11 +7,13 @@ public class UITutorialOverlay : MonoBehaviour
     private UIManager _uiManager = null;
     private ResourceManager _resourceManager = null;
     private TutorialStageData _tutorialData = null;
+    private HabitatManager _habitatManager = null;
     private int _tutorialStep = -1;
 
     public void Initialize(UIManager uiManager)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = uiManager;
     }
 
@@ -42,7 +44,7 @@ public class UITutorialOverlay : MonoBehaviour
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
 
-        Sprite icon = _resourceManager.GetTutorialSprite((TutorialIconType)Enum.Parse(typeof(TutorialIconType), loadedStep.type));
+        Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
 
        _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
 
