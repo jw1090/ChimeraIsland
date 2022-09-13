@@ -276,7 +276,7 @@ public class Chimera : MonoBehaviour
 
         ++_energyTickCounter;
 
-        if (_energyTickCounter >= 20)
+        if (_energyTickCounter >= 35)
         {
             _energyTickCounter = 0;
 
@@ -284,6 +284,7 @@ public class Chimera : MonoBehaviour
             {
                 ++_currentEnergy;
                 _habitatUI.UpdateHabitatUI();
+                _habitatUI.DetailsPanel.ToggleDetailsButtons();
             }
         }
     }

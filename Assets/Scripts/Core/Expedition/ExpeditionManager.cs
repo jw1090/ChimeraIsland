@@ -27,8 +27,8 @@ public class ExpeditionManager : MonoBehaviour
     private const float _difficultyScalar = 14.5f;
     private const float _difficultyExponent = 1.5f;
     private const float _powerScalar = 6.5f;
-    private const float _rewardDenominator = 40.0f;
-    private const float _rewardExponent = 0.66f;
+    private const float _rewardDenominator = 65.0f;
+    private const float _rewardExponent = 0.9f;
     private const float _duartionDenominator = 300.0f;
     private const float _durationExponent = 0.45f;
 
@@ -284,6 +284,10 @@ public class ExpeditionManager : MonoBehaviour
         {
             RemoveChimera(chimera);
         }
+
+        _selectedExpedition = null;
+        _expeditionState = ExpeditionState.Selection;
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons();
     }
 
     private void EvaluateRosterChange()
@@ -324,7 +328,6 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition.SetupUI.UpdateRewards(_selectedExpedition);
         _uiExpedition.SetupUI.UpdateDuration(_selectedExpedition);
         _uiExpedition.SetupUI.UpdateChimeraPower(_selectedExpedition.ChimeraPower);
-
     }
 
     private void CalculateModifiers()
@@ -599,14 +602,10 @@ public class ExpeditionManager : MonoBehaviour
             }
         }
 
+        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons();
         if (onExpedition == false)
         {
             _chimeras.Clear();
-            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
-        }
-        else
-        {
-            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
 

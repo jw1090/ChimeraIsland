@@ -56,8 +56,6 @@ MonoBehaviour:
   _loadGameButton: {fileID: 7608696169604161938}
   _openCreditsButton: {fileID: 3407662985748644065}
   _closeCreditsButton: {fileID: 6940003543677365983}
-  _menuPanel: {fileID: 6961020591285068160}
-  _creditsPanel: {fileID: 6845241383346498598}
 --- !u!222 &3116444563802952584
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -577,7 +575,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3366053685588714522}
+  - {fileID: 1756714200612929741}
   m_Father: {fileID: 4432474196685544981}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1977,14 +1975,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2294,7 +2292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _idle: {r: 1, g: 1, b: 1, a: 1}
   _hover: {r: 0.87058824, g: 0.8862745, b: 0.69803923, a: 1}
---- !u!1001 &6299845155817201443
+--- !u!1001 &7041956870393756660
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2335,11 +2333,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8780634115215719225, guid: 7dd550b9885a822438791e89afd4da5d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1732
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 8780634115215719225, guid: 7dd550b9885a822438791e89afd4da5d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1700
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 8780634115215719225, guid: 7dd550b9885a822438791e89afd4da5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2391,8 +2389,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dd550b9885a822438791e89afd4da5d, type: 3}
---- !u!224 &3366053685588714522 stripped
+--- !u!224 &1756714200612929741 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8780634115215719225, guid: 7dd550b9885a822438791e89afd4da5d, type: 3}
-  m_PrefabInstance: {fileID: 6299845155817201443}
+  m_PrefabInstance: {fileID: 7041956870393756660}
   m_PrefabAsset: {fileID: 0}

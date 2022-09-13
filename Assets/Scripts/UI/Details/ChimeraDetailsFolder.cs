@@ -5,6 +5,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
     private List<Chimera> _chimerasList = new List<Chimera>();
+    private ExpeditionManager _expeditionManager = null;
+
+    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
     public void Initialize(UIManager uiManager)
     {
@@ -45,6 +48,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             detail.UpdateDetails();
         }
+
+        ToggleDetailsButtons();
     }
 
     public void CheckDetails()
@@ -56,11 +61,23 @@ public class ChimeraDetailsFolder : MonoBehaviour
         UpdateDetailsList();
     }
 
-    public void ToggleDetailsButtons(DetailsButtonType detailsButtonType)
+    private void ToggleDetailsButtons(DetailsButtonType detailsButtonType)
     {
         foreach (var detail in _chimeraDetailsList)
         {
             detail.ToggleButtons(detailsButtonType);
+        }
+    }
+
+    public void ToggleDetailsButtons()
+    {
+        if (_expeditionManager.State == ExpeditionState.Setup)
+        {
+            ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+        }
+        else
+        {
+            ToggleDetailsButtons(DetailsButtonType.Standard);
         }
     }
 }
