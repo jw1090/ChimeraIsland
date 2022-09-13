@@ -44,12 +44,14 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void UpdateDetailsList()
     {
+        // Check Expedition state to determine button layout
+        DetailsButtonType detailsButtonType = _expeditionManager.State == ExpeditionState.Setup ? DetailsButtonType.ExpeditionParty : DetailsButtonType.Standard;
+
         foreach (var detail in _chimeraDetailsList)
         {
             detail.UpdateDetails();
+            detail.ToggleButtons(detailsButtonType);
         }
-
-        ToggleDetailsButtons();
     }
 
     public void CheckDetails()
@@ -58,27 +60,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             _chimeraDetailsList[i].gameObject.SetActive(true);
         }
+
         UpdateDetailsList();
-    }
-
-    private void ToggleDetailsButtons(DetailsButtonType detailsButtonType)
-    {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.ToggleButtons(detailsButtonType);
-        }
-    }
-
-    public void ToggleDetailsButtons()
-    {
-        if (_expeditionManager.State == ExpeditionState.Setup)
-        {
-            ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
-        }
-        else
-        {
-            ToggleDetailsButtons(DetailsButtonType.Standard);
-        }
     }
 
     public void DetailsStatGlow()

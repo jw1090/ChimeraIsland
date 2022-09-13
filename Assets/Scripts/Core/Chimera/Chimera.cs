@@ -287,7 +287,6 @@ public class Chimera : MonoBehaviour
             {
                 ++_currentEnergy;
                 _habitatUI.UpdateHabitatUI();
-                _habitatUI.DetailsPanel.ToggleDetailsButtons();
             }
         }
     }

@@ -17,6 +17,7 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _habitatExpeditionOption = null;
     private CameraUtil _cameraUtil = null;
     private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -80,6 +81,7 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiManager = ServiceLocator.Get<UIManager>();
+        _habitatUI = _uiManager.HabitatUI;
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
@@ -288,7 +290,7 @@ public class ExpeditionManager : MonoBehaviour
 
         _selectedExpedition = null;
         _expeditionState = ExpeditionState.Selection;
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons();
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void EvaluateRosterChange()
@@ -603,7 +605,8 @@ public class ExpeditionManager : MonoBehaviour
             }
         }
 
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons();
+        _habitatUI.UpdateHabitatUI();
+
         if (onExpedition == false)
         {
             _chimeras.Clear();

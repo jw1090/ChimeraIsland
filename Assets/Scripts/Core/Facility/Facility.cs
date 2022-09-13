@@ -212,7 +212,7 @@ public class Facility : MonoBehaviour
 
         _storedChimera = null;
 
-        _habitatUI.DetailsPanel.ToggleDetailsButtons();
+        _habitatUI.UpdateHabitatUI();
     }
 
     public void FacilityTick()

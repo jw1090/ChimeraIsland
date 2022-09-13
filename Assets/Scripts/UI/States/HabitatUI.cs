@@ -197,7 +197,6 @@ public class HabitatUI : MonoBehaviour
     private void OpenDetails()
     {
         _detailsFolder.CheckDetails();
-        _detailsFolder.ToggleDetailsButtons();
 
         _detailsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
