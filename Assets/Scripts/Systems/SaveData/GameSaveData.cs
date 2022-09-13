@@ -14,9 +14,8 @@ public class GameSaveData
     public List<HabitatData> habitats = new List<HabitatData>{new HabitatData(), new HabitatData()};
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
-    public ChimeraType _firstChimeraType = ChimeraType.None;
 
-    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, ChimeraType FirstChimeraType)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes)
     {
         habitats = newHabitatData;
         globalData = newGlobalData;
@@ -27,7 +26,6 @@ public class GameSaveData
         sfxVolume = volumes[2];
         ambientVolume = volumes[3];
         uiSfxVolume = volumes[4];
-        _firstChimeraType = FirstChimeraType;
     }
 
     public GameSaveData() { }

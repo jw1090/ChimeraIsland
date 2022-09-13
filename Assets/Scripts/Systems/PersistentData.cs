@@ -44,10 +44,6 @@ public class PersistentData : MonoBehaviour
             Debug.Log($"No Save Data found");
             myData = new GameSaveData();
         }
-        if (myData._firstChimeraType != ChimeraType.None)
-        {
-            _resourceManager.SetFirstChimeraType(myData._firstChimeraType);
-        }
         UpdateGameSaveData(myData);
     }
 
@@ -74,7 +70,7 @@ public class PersistentData : MonoBehaviour
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _resourceManager.FirstChimeraType);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA);

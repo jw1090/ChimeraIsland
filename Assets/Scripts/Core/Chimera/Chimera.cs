@@ -41,7 +41,9 @@ public class Chimera : MonoBehaviour
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
     private const int _statBonusAmount = 3;
+    private bool _isFirstChimera = false;
 
+    public bool FirstChimera { get => _isFirstChimera; }
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
@@ -181,6 +183,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
+    public void SetIsFirstChimera(bool IsFirstChimera) {_isFirstChimera = IsFirstChimera;}
     public void SetEvolutionIconActive() { _interactionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
@@ -276,7 +279,7 @@ public class Chimera : MonoBehaviour
 
         ++_energyTickCounter;
 
-        if (_energyTickCounter >= 20)
+        if (_energyTickCounter >= 35)
         {
             _energyTickCounter = 0;
 
@@ -284,6 +287,7 @@ public class Chimera : MonoBehaviour
             {
                 ++_currentEnergy;
                 _habitatUI.UpdateHabitatUI();
+                _habitatUI.DetailsPanel.ToggleDetailsButtons();
             }
         }
     }

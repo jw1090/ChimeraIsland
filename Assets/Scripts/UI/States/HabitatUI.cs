@@ -40,8 +40,10 @@ public class HabitatUI : MonoBehaviour
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public bool MenuOpen { get => _menuOpen; }
+
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
+        _detailsFolder.SetExpeditionManager(expeditionManager);
         _expeditionPanel.SetExpeditionManager(expeditionManager);
     }
 
@@ -194,7 +196,7 @@ public class HabitatUI : MonoBehaviour
     private void OpenDetails()
     {
         _detailsFolder.CheckDetails();
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _detailsFolder.ToggleDetailsButtons();
 
         _detailsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);

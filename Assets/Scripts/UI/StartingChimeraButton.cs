@@ -37,10 +37,9 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 
         _clicked = true;
 
-        _resourceManager.SetFirstChimeraType(_chimeraType);
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(_chimeraType);
         Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
-
+        chimeraComp.SetIsFirstChimera(true);
         chimeraComp.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(chimeraComp);
 
