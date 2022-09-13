@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,12 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
+
+    [Header("Stat Preference")]
+    [SerializeField] private Color _prefferedGoldColor = new Color();
+    [SerializeField] private Color _defaultColor = new Color();
+    [SerializeField] private List<Image> _statIcons = new List<Image>();
+
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
@@ -32,6 +39,7 @@ public class ChimeraDetails : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
+        NoPrefferedStat();
     }
 
     public void HabitatDetailsSetup(int chimeraSpot)
@@ -144,7 +152,7 @@ public class ChimeraDetails : MonoBehaviour
             return false;
         }
 
-        if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true)
+        if (_expeditionManager.HasChimeraBeenAdded(_chimera) == true) // No need to check if its in a mission if its already been added.
         {
             return false;
         }
@@ -197,5 +205,40 @@ public class ChimeraDetails : MonoBehaviour
 
         _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
         _cameraUtil.FindChimeraCameraShift(Chimera);
+    }
+
+    public void DetermineStatGlow()
+    {
+        if(_chimera == null)
+        {
+            return;
+        }
+
+        switch (_chimera.PreferredStat)
+        {
+            case StatType.None:
+                NoPrefferedStat();
+                break;
+            case StatType.Exploration:
+                _statIcons[0].color = _prefferedGoldColor;
+                break;
+            case StatType.Stamina:
+                _statIcons[1].color = _prefferedGoldColor;
+                break;
+            case StatType.Wisdom:
+                _statIcons[2].color = _prefferedGoldColor;
+                break;
+            default:
+                Debug.LogError($"Unhandled stat [{_chimera.PreferredStat}] please fix!");
+                break;
+        }
+    }
+
+    private void NoPrefferedStat()
+    {
+        foreach (Image statBG in _statIcons)
+        {
+            statBG.color = _defaultColor;
+        }
     }
 }

@@ -75,7 +75,8 @@ public class TrainingUI : MonoBehaviour
             ++ticksRequired;
         }
 
-         _cost = ticksRequired * 5;
+        float costModifier = CalculateCostModifier();
+        _cost = (int)(ticksRequired * 9 * costModifier);
         _costText.text = $"Cost: {_cost} Essence";
 
         if (_cost > _currencyManager.Essence)
@@ -92,9 +93,19 @@ public class TrainingUI : MonoBehaviour
         _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _attribute})";
     }
 
+    private float CalculateCostModifier()
+    {
+        if (_chimera.PreferredStat == _facility.StatType)
+        {
+            return 0.5f;
+        }
+
+        return 1.0f;
+    }
+
     public void DecreaseStatGoal()
     {
-        if(_levelGoal <= _attribute + 1)
+        if (_levelGoal <= _attribute + 1)
         {
             return;
         }
@@ -118,7 +129,7 @@ public class TrainingUI : MonoBehaviour
 
     public void ResetTrainingUI()
     {
-        if(_facility != null)
+        if (_facility != null)
         {
             if (_facility.IsChimeraStored() == true)
             {
@@ -132,13 +143,13 @@ public class TrainingUI : MonoBehaviour
 
     public void Confirm()
     {
-        if(_levelGoal > 5 + _attribute)
+        if (_levelGoal > 5 + _attribute)
         {
             Debug.Log($"Level goal [{_levelGoal}] is too high.");
             return;
         }
 
-        if(_levelGoal <= 1)
+        if (_levelGoal <= 1)
         {
             Debug.Log($"Level goal [{_levelGoal}] is too low.");
             return;

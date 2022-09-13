@@ -79,11 +79,21 @@ public class EvolutionLogic : MonoBehaviour
 
     public void ToggleIdleParticles(bool toggle)
     {
+        if (toggle == true &&_idleParticles != _patrolParticles)
+        {
+            ToggleParticles(false, _patrolParticles);
+        }
+
         ToggleParticles(toggle, _idleParticles);
     }
 
     public void TogglePatrolParticles(bool toggle)
     {
+        if (toggle == true && _idleParticles != _patrolParticles)
+        {
+            ToggleParticles(false, _idleParticles);
+        }
+
         ToggleParticles(toggle, _patrolParticles);
     }
 
@@ -98,6 +108,11 @@ public class EvolutionLogic : MonoBehaviour
         {
             if (toggle == true)
             {
+                if (particle.isPlaying == true)
+                {
+                    continue;
+                }
+
                 particle.Play();
             }
             else
