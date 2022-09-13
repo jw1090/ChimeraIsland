@@ -24,6 +24,8 @@ public class HeldState : ChimeraBaseState
         _sphereMarker = _inputManager.SphereMarker;
         _sphereMarker.gameObject.SetActive(true);
 
+        _chimeraBehavior.StopParticles();
+
         _chimeraBehavior.EnterAnim(_heldAnim);
     }
 

@@ -16,7 +16,7 @@ public class IdleState : ChimeraBaseState
         _chimeraBehavior.EnableNavAgent();
         _chimeraBehavior.Agent.isStopped = true;
 
-        _chimeraBehavior.ToggleIdleParticles(true);
+        _chimeraBehavior.ActivateIdleParticles();
     }
 
     public override void Update()
@@ -31,8 +31,6 @@ public class IdleState : ChimeraBaseState
 
     public override void Exit()
     {
-        _chimeraBehavior.ToggleIdleParticles(false);
-
         _chimeraBehavior.Agent.isStopped = false;
         _idleTimer = 0.0f;
         _chimeraBehavior.ExitAnim(_idleAnim);

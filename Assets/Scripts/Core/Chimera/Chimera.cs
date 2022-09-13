@@ -41,6 +41,8 @@ public class Chimera : MonoBehaviour
     private int _explorationExperience = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
+    private const float _thresholdScaler = 1.2f;
+    private const float _thresholdExponent = 0.35f;
 
     public bool FirstChimera { get => _isFirstChimera; }
     public bool ReadyToEvolve { get => _readyToEvolve; }
@@ -112,18 +114,18 @@ public class Chimera : MonoBehaviour
 
         for (int i = currentStatAmount + 1; i < statLevelGoal; ++i)
         {
-            threshold += (int)(Mathf.Sqrt(threshold) * 1.2f);
+            CalculateThresholdGrowth(ref threshold);
             totalThreshold += threshold;
         }
 
         switch (statType)
         {
+            case StatType.Exploration:
+                return totalThreshold - _explorationExperience;
             case StatType.Stamina:
                 return totalThreshold - _staminaExperience;
             case StatType.Wisdom:
                 return totalThreshold - _wisdomExperience;
-            case StatType.Exploration:
-                return totalThreshold - _explorationExperience;
             default:
                 Debug.LogError($"StatType: [{statType}] is invalid, please change!");
                 return -1;
@@ -183,7 +185,7 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void SetIsFirstChimera(bool IsFirstChimera) {_isFirstChimera = IsFirstChimera;}
+    public void SetIsFirstChimera(bool IsFirstChimera) { _isFirstChimera = IsFirstChimera; }
     public void SetEvolutionIconActive() { _interactionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
@@ -243,24 +245,32 @@ public class Chimera : MonoBehaviour
 
     private void InitializeStats()
     {
+        for (int i = 1; i < _exploration; ++i)
+        {
+            CalculateThresholdGrowth(ref _explorationThreshold);
+        }
+
         for (int i = 1; i < _stamina; ++i)
-        {   
-            _staminaThreshold += (int)(Mathf.Sqrt(_staminaThreshold) * 1.2f);
+        {
+            CalculateThresholdGrowth(ref _staminaThreshold);
         }
 
         for (int i = 1; i < _wisdom; ++i)
         {
-            _wisdomThreshold += (int)(Mathf.Sqrt(_wisdomThreshold) * 1.2f);
-        }
-
-        for (int i = 1; i < _exploration; ++i)
-        {
-            _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
+            CalculateThresholdGrowth(ref _wisdomThreshold);
         }
 
         _maxEnergy = (int)(_stamina * 0.5) + 5;
 
         LevelCalculation();
+    }
+
+    private void CalculateThresholdGrowth(ref int statThreshold)
+    {
+        float scalerNumber = statThreshold * _thresholdScaler;
+        float powNumber = (Mathf.Pow(scalerNumber, _thresholdExponent));
+
+        statThreshold += (int)powNumber;
     }
 
     private void InitializeEvolution()
@@ -279,7 +289,7 @@ public class Chimera : MonoBehaviour
 
         ++_energyTickCounter;
 
-        if (_energyTickCounter >= 35)
+        if (_energyTickCounter >= 45)
         {
             _energyTickCounter = 0;
 
@@ -354,14 +364,24 @@ public class Chimera : MonoBehaviour
         bool levelUp = false;
         _energyTickCounter++;
 
+        if (_explorationExperience >= _explorationThreshold)
+        {
+            _explorationExperience = 0;
+            levelUp = true;
+            LevelUp(StatType.Exploration);
+
+            CalculateThresholdGrowth(ref _explorationThreshold);
+        }
+
         if (_staminaExperience >= _staminaThreshold)
         {
             _staminaExperience = 0;
             levelUp = true;
             LevelUp(StatType.Stamina);
 
-            _staminaThreshold += (int)(Mathf.Sqrt(_staminaThreshold) * 1.2f);
+            CalculateThresholdGrowth(ref _staminaThreshold);
         }
+
 
         if (_wisdomExperience >= _wisdomThreshold)
         {
@@ -369,16 +389,7 @@ public class Chimera : MonoBehaviour
             levelUp = true;
             LevelUp(StatType.Wisdom);
 
-            _wisdomThreshold += (int)(Mathf.Sqrt(_wisdomThreshold) * 1.2f);
-        }
-
-        if (_explorationExperience >= _explorationThreshold)
-        {
-            _explorationExperience = 0;
-            levelUp = true;
-            LevelUp(StatType.Exploration);
-
-            _explorationThreshold += (int)(Mathf.Sqrt(_explorationThreshold) * 1.2f);
+            CalculateThresholdGrowth(ref _wisdomThreshold);
         }
 
         if (levelUp == true && _chimeraToBecome == null)

@@ -76,7 +76,7 @@ public class TrainingUI : MonoBehaviour
         }
 
         float costModifier = CalculateCostModifier();
-        _cost = (int)(ticksRequired * 5 * costModifier);
+        _cost = (int)(ticksRequired * 9 * costModifier);
         _costText.text = $"Cost: {_cost} Essence";
 
         if (_cost > _currencyManager.Essence)

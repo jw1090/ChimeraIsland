@@ -7,7 +7,7 @@ public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 9;
-    [SerializeField] private float _tickTimer = 0.4f;
+    [SerializeField] private float _tickTimer = 0.3f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private List<HabitatData> _habitatData = new List<HabitatData>();

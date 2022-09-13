@@ -27,7 +27,7 @@ public class CrystalManager : MonoBehaviour
             return;
         }
 
-        if (++_tracker >= 40)
+        if (++_tracker >= 60)
         {
             _tracker = 0;
             SpawnCrystal();
