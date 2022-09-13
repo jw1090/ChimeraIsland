@@ -571,7 +571,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress < _habitatExpeditions.Count - 1)
+                if (_currentHabitatProgress < _habitatExpeditions.Count)
                 {
                     ++_currentHabitatProgress;
                 }
