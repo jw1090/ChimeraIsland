@@ -28,6 +28,7 @@ public class Chimera : MonoBehaviour
     private bool _inFacility = false;
     private bool _onExpedition = false;
     private bool _readyToEvolve = false;
+    private bool _isFirstChimera = false;
     private float _averagePower = 0;
     private int _uniqueId = 1;
     private int _exploration = 1;
@@ -40,14 +41,13 @@ public class Chimera : MonoBehaviour
     private int _explorationExperience = 0;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
-    private const int _statBonusAmount = 3;
-    private bool _isFirstChimera = false;
 
     public bool FirstChimera { get => _isFirstChimera; }
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public HabitatType HabitatType { get => _habitatType; }
+    public StatType PreferredStat { get => _currentEvolution.StatBonus; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
@@ -56,15 +56,15 @@ public class Chimera : MonoBehaviour
     public Sprite ElementIcon { get => _elementIcon; }
     public bool InFacility { get => _inFacility; }
     public bool OnExpedition { get => _onExpedition; }
-    public float AveragePower { get => _averagePower; }
     public int Stamina { get => _stamina; }
     public int Wisdom { get => _wisdom; }
     public int Exploration { get => _exploration; }
     public int CurrentEnergy { get => _currentEnergy; }
     public int MaxEnergy { get => _maxEnergy; }
     public int Price { get => _price; }
-    public string Name { get => GetName(); }
     public int UniqueID { get => _uniqueId; }
+    public float AveragePower { get => _averagePower; }
+    public string Name { get => GetName(); }
 
     public int GetStatThreshold(StatType statType)
     {
@@ -244,7 +244,7 @@ public class Chimera : MonoBehaviour
     private void InitializeStats()
     {
         for (int i = 1; i < _stamina; ++i)
-        {
+        {   
             _staminaThreshold += (int)(Mathf.Sqrt(_staminaThreshold) * 1.2f);
         }
 
@@ -398,30 +398,9 @@ public class Chimera : MonoBehaviour
         }
 
         Evolve(_chimeraToBecome);
-        EvolveStatBonus();
         _chimeraBehavior.EvaluateParticlesOnEvolve();
+        _habitatUI.DetailsPanel.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
-    }
-
-    private void EvolveStatBonus()
-    {
-        switch (_currentEvolution.StatBonus)
-        {
-            case StatType.None:
-                break;
-            case StatType.Exploration:
-                _exploration += _statBonusAmount;
-                break;
-            case StatType.Stamina:
-                _stamina += _statBonusAmount;
-                break;
-            case StatType.Wisdom:
-                _wisdom += _statBonusAmount;
-                break;
-            default:
-                Debug.LogError($"Unhandled stat type [{_currentEvolution.StatBonus}]");
-                break;
-        }
     }
 
     // Increase stat at rate of the relevant statgrowth variable.
@@ -474,7 +453,7 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
-        InitializeStats();
+
         _currentEvolution.Animator.SetBool("Walk", true);
 
         _habitatManager.UpdateCurrentHabitatChimeras();
@@ -488,13 +467,15 @@ public class Chimera : MonoBehaviour
     {
         _currentEvolution.gameObject.SetActive(reveal);
 
+        _chimeraBehavior.enabled = reveal;
+        _chimeraBehavior.Agent.enabled = reveal;
+        _boxCollider.enabled = reveal;
+
         if (reveal == true)
         {
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
             _currentEvolution.ToggleIdleParticles(false);
             _currentEvolution.TogglePatrolParticles(false);
         }
-
-        _boxCollider.enabled = reveal;
     }
 }

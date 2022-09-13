@@ -80,4 +80,12 @@ public class ChimeraDetailsFolder : MonoBehaviour
             ToggleDetailsButtons(DetailsButtonType.Standard);
         }
     }
+
+    public void DetailsStatGlow()
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.DetermineStatGlow();
+        }
+    }
 }

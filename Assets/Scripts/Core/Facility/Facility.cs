@@ -174,8 +174,6 @@ public class Facility : MonoBehaviour
         _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
         _storedChimera.RevealChimera(false);
-        _storedChimera.Behavior.enabled = false;
-        _storedChimera.Behavior.Agent.enabled = false;
 
         Debug.Log($"{_storedChimera} added to the facility.");
     }
@@ -199,9 +197,8 @@ public class Facility : MonoBehaviour
         _trainingIcon.gameObject.SetActive(false);
 
         _storedChimera.SetInFacility(false);
+
         _storedChimera.RevealChimera(true);
-        _storedChimera.Behavior.enabled = true;
-        _storedChimera.Behavior.Agent.enabled = true;
 
         if (_storedChimera.ReadyToEvolve == true)
         {
