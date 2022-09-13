@@ -168,6 +168,11 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.ResumeButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.ScreenWideButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Marketplace.CloseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
     }
 
     public void PlayHabitatMusic(HabitatType habitatType)

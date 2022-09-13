@@ -131,7 +131,7 @@ public class Facility : MonoBehaviour
             Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
-
+        _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         _habitatUI.ResetStandardUI();
         _habitatUI.OpenTrainingPanel();
         _uiTraining.SetupTrainingUI(chimera, this);

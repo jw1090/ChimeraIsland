@@ -12,6 +12,7 @@ public class FacilityShopItem : MonoBehaviour
     [SerializeField] private GameObject _defaultPanel = null;
     [SerializeField] private GameObject _soldOutPanel = null;
     private ResourceManager _resourceManager = null;
+    private AudioManager _audioManager = null;
     private Habitat _habitat = null;
     private Facility _facility = null;
     private HabitatUI _habitatUI = null;
@@ -23,6 +24,7 @@ public class FacilityShopItem : MonoBehaviour
         _habitatUI = habitatUI;
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         _facility = _habitat.GetFacility(_facilityType);
 
@@ -66,6 +68,7 @@ public class FacilityShopItem : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
         _habitatUI.ResetStandardUI();
     }
 }
