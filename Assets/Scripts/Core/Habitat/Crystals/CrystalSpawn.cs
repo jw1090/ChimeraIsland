@@ -11,10 +11,12 @@ public class CrystalSpawn : MonoBehaviour
 
     public bool IsActive { get => _isActive; }
 
-    public void Initialize()
+    public void Initialize(Habitat habitat)
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+
+        _habitat = habitat;
 
         _isActive = false;
         _crystal.SetActive(false);
