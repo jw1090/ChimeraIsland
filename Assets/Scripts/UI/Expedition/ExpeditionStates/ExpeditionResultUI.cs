@@ -10,8 +10,9 @@ public class ExpeditionResultUI : MonoBehaviour
     private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
     private bool _expeditionSuccess = false;
-
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
@@ -51,7 +52,7 @@ public class ExpeditionResultUI : MonoBehaviour
         {
             _expeditionUI.OpenExpeditionUI();
         }
-
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
         _expeditionManager.ResetSelectedExpedition();
         _expeditionSuccess = false;
     }

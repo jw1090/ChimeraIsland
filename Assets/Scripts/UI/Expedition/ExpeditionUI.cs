@@ -14,12 +14,15 @@ public class ExpeditionUI : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
     private ChimeraDetailsFolder _detailsFolder = null;
+    private AudioManager _audioManager = null;
 
     public ExpeditionManager expeditionManager { get => _expeditionManager; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
     public StatefulObject BackgroundStates { get => _backgroundUIStates; }
+    public ExpeditionResultUI ExpeditionResult { get => _resultPanel; }
+    public Button CloseButton { get => _closeButton; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -31,8 +34,10 @@ public class ExpeditionUI : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager)
     {
+        _audioManager = audioManager;
         _selectionPanel.SetAudioManager(audioManager);
         _setupPanel.SetAudioManager(audioManager);
+        _resultPanel.SetAudioManager(audioManager);
     }
 
     public void Initialize(UIManager uiManager)
@@ -106,7 +111,6 @@ public class ExpeditionUI : MonoBehaviour
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
-
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.RemoveAllChimeras();
