@@ -23,8 +23,8 @@ public class ExpeditionManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
-    private const float _difficultyLevelMultiplier = 1.2f;
-    private const float _difficultyScalar = 20.0f;
+    private const float _difficultyFlatModifier = 10.0f;
+    private const float _difficultyScalar = 14.5f;
     private const float _difficultyExponent = 1.5f;
     private const float _powerScalar = 6.5f;
     private const float _rewardDenominator = 40.0f;
@@ -249,6 +249,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _chimeras.Add(chimera);
+        chimera.DrainEnergy(_selectedExpedition.EnergyDrain);
         EvaluateRosterChange();
 
         _uiExpedition.SetupUI.ToggleConfirmButton(true);
@@ -259,6 +260,7 @@ public class ExpeditionManager : MonoBehaviour
     public bool RemoveChimera(Chimera chimera)
     {
         _chimeras.Remove(chimera);
+        chimera.AddEnergy(_selectedExpedition.EnergyDrain);
         EvaluateRosterChange();
 
         if (_chimeras.Count == 0)
@@ -267,6 +269,21 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void RemoveAllChimeras()
+    {
+        List<Chimera> tempChimeraList = new List<Chimera>();
+
+        foreach (var chimera in _chimeras)
+        {
+            tempChimeraList.Add(chimera);
+        }
+
+        foreach (var chimera in tempChimeraList)
+        {
+            RemoveChimera(chimera);
+        }
     }
 
     private void EvaluateRosterChange()
@@ -279,7 +296,7 @@ public class ExpeditionManager : MonoBehaviour
     private void CalculateCurrentDifficultyValue()
     {
         float suggestedLevel = _selectedExpedition.Difficulty;
-        float difficultyValue = Mathf.Pow(suggestedLevel * _difficultyLevelMultiplier, _difficultyExponent) * _difficultyScalar;
+        float difficultyValue = Mathf.Pow(suggestedLevel, _difficultyExponent) * _difficultyScalar + _difficultyFlatModifier;
 
         _selectedExpedition.DifficultyValue = difficultyValue;
         _uiExpedition.SetupUI.UpdateDifficultyValue(difficultyValue);

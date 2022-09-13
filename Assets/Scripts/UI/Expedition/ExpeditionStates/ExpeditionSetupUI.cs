@@ -66,8 +66,10 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     private void BackClick()
     {
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _expeditionManager.RemoveAllChimeras();
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
+        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 

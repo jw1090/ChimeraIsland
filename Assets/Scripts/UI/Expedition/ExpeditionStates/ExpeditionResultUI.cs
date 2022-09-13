@@ -10,7 +10,6 @@ public class ExpeditionResultUI : MonoBehaviour
     private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
-    private HabitatManager _habitatManager = null;
     private bool _expeditionSuccess = false;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
@@ -20,7 +19,6 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public void Initialize(ExpeditionUI expeditionUI, UIManager uiManager)
     {
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _expeditionUI = expeditionUI;
         _uiManager = uiManager;
     }
@@ -43,6 +41,10 @@ public class ExpeditionResultUI : MonoBehaviour
                 && _expeditionManager.CurrentFossilProgress == 1)
             {
                 _uiManager.HabitatUI.ResetStandardUI();
+            }
+            else
+            {
+                _expeditionUI.OpenExpeditionUI();
             }
         }
         else
