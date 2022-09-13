@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
@@ -571,7 +572,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress < _habitatExpeditions.Count - 1)
+                if (_currentHabitatProgress < _habitatExpeditions.Count)
                 {
                     ++_currentHabitatProgress;
                 }
@@ -598,7 +599,9 @@ public class ExpeditionManager : MonoBehaviour
 
             if (onExpedition == true)
             {
-                chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+
+                chimera.gameObject.transform.position = positionAttempt;
             }
         }
 

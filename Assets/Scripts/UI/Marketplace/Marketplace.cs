@@ -14,6 +14,7 @@ public class Marketplace : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
 
+    public Button CloseButton { get => _closeButton; } 
     public bool IsChimeraUnlocked(ChimeraType chimeraType)
     {
         switch (chimeraType)

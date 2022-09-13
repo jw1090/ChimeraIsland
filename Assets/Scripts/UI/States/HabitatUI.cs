@@ -39,6 +39,7 @@ public class HabitatUI : MonoBehaviour
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
+    public Button CloseDetailsButton { get => _closeDetailsButton; }
     public bool MenuOpen { get => _menuOpen; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
@@ -108,7 +109,7 @@ public class HabitatUI : MonoBehaviour
     public void LoadHabitatSpecificUI()
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
-
+        _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
         _marketplacePanel.Initialize(_uiManager); 
         _facilityMarketplace.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
@@ -190,7 +191,7 @@ public class HabitatUI : MonoBehaviour
 
         _menuOpen = false;
 
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        //_audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     private void OpenDetails()
