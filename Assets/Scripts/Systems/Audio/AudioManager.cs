@@ -295,14 +295,14 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Error SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.PortalClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.Completion:
