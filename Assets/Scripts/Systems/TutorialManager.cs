@@ -50,7 +50,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        if(_tutorialData == null)
+        if (_tutorialData == null)
         {
             Debug.LogWarning("No Tutorial Data Loaded! Disabling Tutorials!");
             _tutorialsEnabled = false;
@@ -81,9 +81,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        foreach (var tutorial in _tutorialData.Tutorials)
+        if (_tutorialData != null)
         {
-            tutorial.finished = false;
+            foreach (var tutorial in _tutorialData.Tutorials)
+            {
+                tutorial.finished = false;
+            }
         }
 
         _currentStage = 0;
