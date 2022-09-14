@@ -21,17 +21,15 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
-    [SerializeField] private FacilityUpgradeMarketplace _facilityMarketplace = null;
+    [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
-    private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private bool _menuOpen = false;
     private TutorialManager _tutorialManager = null;
 
-    public FacilityUpgradeMarketplace FacilityMarketplace { get => _facilityMarketplace; }
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
     public Button WorldMapButton { get => _worldMapButton; }
@@ -55,6 +53,7 @@ public class HabitatUI : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
 
         InitializeWallets();
@@ -62,9 +61,7 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
         _settingsPanel.Initialize(uiManager);
-
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _tutorialOverlay.Initialize(this);
     }
 
     public void LoadCurrentUIProgress()
@@ -84,6 +81,22 @@ public class HabitatUI : MonoBehaviour
                 wallet.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void StartTutorial(TutorialStageData tutorialSteps)
+    {
+        _tutorialOverlay.gameObject.SetActive(true);
+        _tutorialOverlay.ShowOverlay(tutorialSteps);
+
+        _menuOpen = true;
+    }
+
+    public void EndTutorial()
+    {
+        _tutorialOverlay.gameObject.SetActive(false);
+        _tutorialManager.SaveTutorialProgress();
+
+        _menuOpen = false;
     }
 
     private void InitializeWallets()
@@ -111,7 +124,6 @@ public class HabitatUI : MonoBehaviour
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
         _marketplacePanel.Initialize(_uiManager); 
-        _facilityMarketplace.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
 
@@ -187,11 +199,8 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
         _transferMap.gameObject.SetActive(false);
-        _facilityMarketplace.CloseUI();
 
         _menuOpen = false;
-
-        //_audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     private void OpenDetails()
@@ -209,22 +218,6 @@ public class HabitatUI : MonoBehaviour
         ResetStandardUI();
         _closeDetailsButton.gameObject.SetActive(true);
         OpenDetails();
-    }
-
-    public void OpenFacilityUpgradeMenu(FacilityType facilityType)
-    {
-        if (_facilityMarketplace.CheckActive() == false || _facilityMarketplace.IsFacilityUnlocked(facilityType) == false)
-        {
-            return;
-        }
-        ResetStandardUI();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-
-        _openDetailsButton.gameObject.SetActive(false);
-        _facilityMarketplace.ShowShop(facilityType);
-
-        _menuOpen = true;
     }
 
     public void OpenExpedtionSelectionDetails()
@@ -356,7 +349,6 @@ public class HabitatUI : MonoBehaviour
 
     public void UpdateShopUI()
     {
-        _facilityMarketplace.UpdateUI();
         _marketplacePanel.UpdateShopUI();
     }
 }

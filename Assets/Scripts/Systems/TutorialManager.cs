@@ -3,7 +3,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = true;
     private HabitatManager _habitatManager = null;
@@ -11,7 +11,7 @@ public class TutorialManager : MonoBehaviour
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
+    public void SetHabitatUI(HabitatUI habitatUI) { _habitatUI = habitatUI; }
 
     public TutorialManager Initialize()
     {
@@ -104,7 +104,7 @@ public class TutorialManager : MonoBehaviour
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
         Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
-        _uiManager.StartTutorial(tutorialStage);
+        _habitatUI.StartTutorial(tutorialStage);
     }
 
     private bool IsStageComplete(TutorialStageType stage)
