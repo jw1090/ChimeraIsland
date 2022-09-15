@@ -92,6 +92,7 @@ public enum SceneType
     MainMenu,
     Starting,
     WorldMap,
+    Builder,
 }
 
 public enum StatType
