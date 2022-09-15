@@ -43,9 +43,7 @@ public class TutorialManager : MonoBehaviour
 
     private void LoadTutorialFromJson()
     {
-        Debug.Log($"Loading Tutorial Data From: {GameConsts.JsonSaveKeys.TUTORIAL_DATA}");
-
-        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA);
+        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
     }
 
     private void CurrentStageInitialize()
@@ -76,7 +74,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA);
+        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
     }
 
     public void ResetTutorialProgress()

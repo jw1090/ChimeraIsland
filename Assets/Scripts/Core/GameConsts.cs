@@ -11,8 +11,8 @@ public static class GameConsts
 
     public class JsonSaveKeys
     {
-        public static readonly string GAME_DATA = "Saves/GameSaveData.json";
-        public static readonly string TUTORIAL_DATA = "Tutorial/TutorialInfo.json";
+        public static readonly string GAME_DATA = "GameSaveData.json";
+        public static readonly string TUTORIAL_DATA = "TutorialInfo.json";
     }
 
     public class AudioMixerKeys

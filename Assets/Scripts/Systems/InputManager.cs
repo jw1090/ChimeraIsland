@@ -136,7 +136,7 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                if (_habitatUI.MenuOpen == false)
+                if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
                     _cameraUtil.CameraMovement();
                 }

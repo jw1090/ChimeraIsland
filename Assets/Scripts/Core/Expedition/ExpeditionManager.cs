@@ -237,7 +237,10 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
+
+        _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
+
         _selectedExpedition.ActiveInProgressTimer = true;
     }
 
@@ -389,7 +392,7 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateDurationModifier()
     {
-        _selectedExpedition.DurationModifier = 0.0f;
+        _selectedExpedition.DurationModifier = 1.0f;
 
         int totalPartyExploration = 0;
 
@@ -447,7 +450,7 @@ public class ExpeditionManager : MonoBehaviour
     private void InProgressTimerUpdate()
     {
         _selectedExpedition.CurrentDuration -= Time.deltaTime;
-        _uiExpedition.InProgressUI.UpdateInProgressTimeRemainingText(_selectedExpedition.CurrentDuration);
+        _uiExpedition.InProgressUI.UpdateSliderInfo(_selectedExpedition.CurrentDuration);
 
         if (_selectedExpedition.CurrentDuration <= 0)
         {

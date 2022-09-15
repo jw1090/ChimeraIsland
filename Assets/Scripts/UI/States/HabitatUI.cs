@@ -28,6 +28,7 @@ public class HabitatUI : MonoBehaviour
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private bool _menuOpen = false;
+    private bool _tutorialOpen = false;
     private TutorialManager _tutorialManager = null;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
@@ -39,6 +40,7 @@ public class HabitatUI : MonoBehaviour
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
     public bool MenuOpen { get => _menuOpen; }
+    public bool TutorialOpen { get => _tutorialOpen; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -83,22 +85,6 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void StartTutorial(TutorialStageData tutorialSteps)
-    {
-        _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps);
-
-        _menuOpen = true;
-    }
-
-    public void EndTutorial()
-    {
-        _tutorialOverlay.gameObject.SetActive(false);
-        _tutorialManager.SaveTutorialProgress();
-
-        _menuOpen = false;
-    }
-
     private void InitializeWallets()
     {
         foreach (var wallet in _essenceWallets)
@@ -123,7 +109,7 @@ public class HabitatUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
-        _marketplacePanel.Initialize(_uiManager); 
+        _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();
 
@@ -143,6 +129,26 @@ public class HabitatUI : MonoBehaviour
         {
             EnableUIElementByType(UIElementType.FossilsWallets);
         }
+    }
+
+    public void StartTutorial(TutorialStageData tutorialSteps)
+    {
+        _tutorialOverlay.gameObject.SetActive(true);
+        _tutorialOverlay.ShowOverlay(tutorialSteps);
+
+        _standardUI.gameObject.SetActive(false);
+
+        _tutorialOpen = true;
+    }
+
+    public void EndTutorial()
+    {
+        _tutorialOverlay.gameObject.SetActive(false);
+        _tutorialManager.SaveTutorialProgress();
+
+        _standardUI.gameObject.SetActive(true);
+
+        _tutorialOpen = false;
     }
 
     public void EnableUIElementByType(UIElementType uiElementType)
@@ -191,7 +197,11 @@ public class HabitatUI : MonoBehaviour
     public void ResetStandardUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _standardUI.gameObject.SetActive(true);
+
+        if (_tutorialOpen == false)
+        {
+            _standardUI.gameObject.SetActive(true);
+        }
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
@@ -262,10 +272,17 @@ public class HabitatUI : MonoBehaviour
             return;
         }
 
+        if (_tutorialOpen == true)
+        {
+            return;
+        }
+
         if (_trainingPanel.gameObject.activeInHierarchy == true)
         {
             _trainingPanel.ResetTrainingUI();
             ResetStandardUI();
+
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
         }
         else if (_settingsPanel.gameObject.activeInHierarchy == true ||
             _marketplacePanel.gameObject.activeInHierarchy == true ||
@@ -274,6 +291,8 @@ public class HabitatUI : MonoBehaviour
             )
         {
             ResetStandardUI();
+
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
         }
         else
         {

@@ -10,16 +10,16 @@ public class ExpeditionInProgressUI : MonoBehaviour
 
     public void SetSuccesText(string successChance) { _inProgressSuccessChance.text = $"Success Chance: {successChance}%"; }
 
-    public void UpdateInProgressTimeRemainingText(float timeRemaining)
-    {
-        _timeRemainingText.text = $"Duration: {timeRemaining.ToString("F1")} Seconds";
-        _durationSlider.value = timeRemaining;
-    }
-
-    public void UpdateSuccessText(float duration)
+    public void SetupSliderInfo(float duration)
     {
         _timeRemainingText.text = $"Duration: {duration.ToString("F1")} Seconds";
         _durationSlider.maxValue = duration;
         _durationSlider.value = _durationSlider.maxValue;
+    }
+
+    public void UpdateSliderInfo(float timeRemaining)
+    {
+        _timeRemainingText.text = $"Duration: {timeRemaining.ToString("F1")} Seconds";
+        _durationSlider.value = timeRemaining;
     }
 }

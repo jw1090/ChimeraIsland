@@ -22,6 +22,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     {
         _expeditionManager = expeditionManager;
     }
+
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public ExpeditionType ExpeditionType { get => _expeditionType; }
