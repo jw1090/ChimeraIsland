@@ -88,7 +88,6 @@ public class ExpeditionSetupUI : MonoBehaviour
         _energyDrain.text = $"Energy Drain: {data.EnergyDrain}";
         UpdateRewards(data);
         UpdateDuration(data);
-        _expeditionUI.InProgressUI.UpdateSuccessText(data.ActualDuration);
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
@@ -120,7 +119,7 @@ public class ExpeditionSetupUI : MonoBehaviour
                         reward = $"Rune Stones";
                         break;
                     case HabitatRewardType.Habitat:
-                        reward = $"Habiat Upgrade";
+                        reward = $"Habitat Upgrade";
                         break;
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");

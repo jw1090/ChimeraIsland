@@ -406,7 +406,7 @@ public class Chimera : MonoBehaviour
             Debug.LogError($"Not ready for evolution!");
             return;
         }
-
+            
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsPanel.DetailsStatGlow();
@@ -463,8 +463,8 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
-
-        _currentEvolution.Animator.SetBool("Walk", true);
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
+        _currentEvolution.Animator.Play("Walk");
 
         _habitatManager.UpdateCurrentHabitatChimeras();
 
@@ -484,8 +484,7 @@ public class Chimera : MonoBehaviour
         if (reveal == true)
         {
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
-            _currentEvolution.ToggleIdleParticles(false);
-            _currentEvolution.TogglePatrolParticles(false);
+            _currentEvolution.Animator.Play("Walk");
         }
     }
 }

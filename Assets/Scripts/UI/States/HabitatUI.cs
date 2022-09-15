@@ -197,7 +197,11 @@ public class HabitatUI : MonoBehaviour
     public void ResetStandardUI()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _standardUI.gameObject.SetActive(true);
+
+        if (_tutorialOpen == false)
+        {
+            _standardUI.gameObject.SetActive(true);
+        }
 
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);

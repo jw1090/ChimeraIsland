@@ -25,6 +25,11 @@ public class TrainingUI : MonoBehaviour
     private int _levelGoal = 0;
     private int _attribute = 0;
     private int _expNeeded = 1;
+    private float _preferredDiscount = 1.0f;
+    private const float _priceScalar = 4.0f;
+    private const float _priceExponent = 1.35f;
+    private const float _priceFlatModifier = 15.0f;
+
     public Button IncreaseButton { get => _increaseButton; }
     public Button DecreaseButton { get => _decreaseButton; }
     public Button ConfirmButton { get => _confirmButton; }
@@ -67,7 +72,9 @@ public class TrainingUI : MonoBehaviour
 
     public void DetermineCost()
     {
-        _expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
+        CalculatePreferredDiscount();
+
+        _expNeeded = (int)(_chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal));
         int ticksRequired = (int)(_expNeeded / _facility.StatModifier);
 
         if (_expNeeded % (_facility.StatModifier) != 0)
@@ -75,8 +82,7 @@ public class TrainingUI : MonoBehaviour
             ++ticksRequired;
         }
 
-        float costModifier = CalculateCostModifier();
-        _cost = (int)(ticksRequired * 9 * costModifier);
+        _cost = CalculateCost(ticksRequired);
         _costText.text = $"Cost: {_cost} Essence";
 
         if (_cost > _currencyManager.Essence)
@@ -93,14 +99,19 @@ public class TrainingUI : MonoBehaviour
         _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _attribute})";
     }
 
-    private float CalculateCostModifier()
+    private void CalculatePreferredDiscount()
     {
+        _preferredDiscount = 1.0f; // Discount of 1 is nothing.
+
         if (_chimera.PreferredStat == _facility.StatType)
         {
-            return 0.5f;
+            _preferredDiscount = 0.5f;
         }
+    }
 
-        return 1.0f;
+    private int CalculateCost(int ticksRequired)
+    {
+        return (int)((Mathf.Pow(ticksRequired * _priceScalar, _priceExponent) + _priceFlatModifier) * _preferredDiscount);
     }
 
     public void DecreaseStatGoal()
