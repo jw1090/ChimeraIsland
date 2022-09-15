@@ -23,6 +23,7 @@ public class SceneChanger : MonoBehaviour
 
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
@@ -66,7 +67,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (_habitatManager.CurrentHabitat == null)
         {
-            Debug.LogError("Current Habitat is null! Cannot save!");
+            Debug.Log("Current Habitat is null!");
             return;
         }
 

@@ -11,7 +11,10 @@ public static class FileHandler
 
     public static T ReadFromJSON<T>(string filename)
     {
-        string content = ReadFile(GetPath(filename));
+        string path = GetPath(filename);
+        Debug.Log($"Reading From: {filename}");
+
+        string content = ReadFile(path);
 
         if (string.IsNullOrEmpty(content) || content == "{}")
         {

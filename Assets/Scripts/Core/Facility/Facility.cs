@@ -29,6 +29,8 @@ public class Facility : MonoBehaviour
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
+    private int _upgradeProgress = 0;
+    private int _upgradeGoal = 0;
     private bool _activateTraining = false;
 
     public Chimera StoredChimera { get => _storedChimera; }
@@ -94,8 +96,6 @@ public class Facility : MonoBehaviour
 
         if (_currentTier == 0)
         {
-            _habitatUI.FacilityMarketplace.SetFacilityUnlocked(_facilityType);
-
             debugString += $"{_facilityType} was purchased";
 
             _tiers.SetState("Tier 1");

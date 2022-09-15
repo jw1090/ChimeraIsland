@@ -7,6 +7,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _openCreditsButton = null;
     [SerializeField] private Button _closeCreditsButton = null;
+    [SerializeField] private Button _quitGameButton = null;
+
     private UIManager _uiManager;
     private StatefulObject _statefulObject;
 
@@ -14,6 +16,7 @@ public class MainMenuUI : MonoBehaviour
     public Button LoadGameButton { get => _loadGameButton; }
     public Button OpenCreditsButton { get => _openCreditsButton; }
     public Button CloseCreditsButton { get => _closeCreditsButton; }
+    public Button QuitGameButton { get => _quitGameButton; }
 
     public void Initialize(UIManager uiManager)
     {
