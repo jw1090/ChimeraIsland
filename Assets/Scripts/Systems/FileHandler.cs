@@ -24,9 +24,9 @@ public static class FileHandler
 
     private static string GetPath(string filename, bool isPersistant)
     {
+#if UNITY_EDITOR
         string folder = "";
 
-#if UNITY_EDITOR
         if (isPersistant == true)
         {
             folder = "PersistentData";
@@ -44,7 +44,7 @@ public static class FileHandler
             return System.IO.Path.Combine(Application.dataPath, folder, $"{filename}");
         }
 #else
-        if (persistant == true)
+        if (isPersistant == true)
         {
             return System.IO.Path.Combine(Application.persistentDataPath, $"{filename}");
         }
