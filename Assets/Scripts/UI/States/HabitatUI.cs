@@ -109,6 +109,7 @@ public class HabitatUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
+
         _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
         _transferMap.Initialize();

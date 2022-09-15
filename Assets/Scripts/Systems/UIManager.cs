@@ -9,12 +9,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HabitatUI _habitatUI = null;
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
-    [SerializeField] private WorldMapUI _worldMapUI = null;
+    [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
-    public WorldMapUI WorldMapUI { get => _worldMapUI; }
+    public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
 
     public void SetAudioManager(AudioManager audioManager) 
     {
@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
         _mainMenuUI.Initialize(this);
         _startingUI.Initialize();
         _habitatUI.Initialize(this);
+        _evolutionBuilderUI.Initialize(this);
 
         _uiStatefulObject.SetState("Transparent", true);
 
@@ -51,6 +52,9 @@ public class UIManager : MonoBehaviour
                 break;
             case SceneType.Starting:
                 _uiStatefulObject.SetState("Starting UI", true);
+                break;
+            case SceneType.Builder:
+                _uiStatefulObject.SetState("Builder UI", true);
                 break;
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");

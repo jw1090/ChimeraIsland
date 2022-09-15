@@ -153,7 +153,6 @@ public class AudioManager : MonoBehaviour
     {
         MainMenuUI mainMenuUI = _uiManager.MainMenuUI;
         HabitatUI habitatUI = _uiManager.HabitatUI;
-        WorldMapUI worldMapUI = _uiManager.WorldMapUI;
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
@@ -161,9 +160,6 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(mainMenuUI.CloseCreditsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.Settings.MainMenuButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.Settings.QuitGameButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.WorldMapButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(worldMapUI.StonePlainsButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(worldMapUI.TreeOfLifeButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
@@ -225,6 +221,7 @@ public class AudioManager : MonoBehaviour
                 }
                 break;
             case SceneType.Starting:
+            case SceneType.Builder:
                 {
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StarterSceneMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
