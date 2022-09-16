@@ -53,9 +53,12 @@ public class LevelLoader : AsyncLoader
                 HabitatSceneSetup();
                 break;
             case SceneType.MainMenu:
-            case SceneType.Builder:
             case SceneType.Starting:
+                break;
                 PlayCurrentSceneMusic();
+            case SceneType.Builder:
+                PlayCurrentSceneMusic();
+                _evolutionBuilder.BuildA();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");

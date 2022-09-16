@@ -27,9 +27,9 @@ public class HabitatUI : MonoBehaviour
 
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
     private bool _tutorialOpen = false;
-    private TutorialManager _tutorialManager = null;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }

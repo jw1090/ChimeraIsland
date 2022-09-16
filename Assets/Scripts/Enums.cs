@@ -30,6 +30,11 @@ public enum ElementType
     Fira,
 }
 
+public enum EvolutionVFXType
+{
+    GrowingLight,
+}
+
 public enum ExpeditionType
 {
     None = -1,

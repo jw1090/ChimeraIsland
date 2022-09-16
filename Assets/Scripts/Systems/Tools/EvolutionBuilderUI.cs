@@ -24,6 +24,10 @@ public class EvolutionBuilderUI : MonoBehaviour
     private UIManager _uiManager = null;
     private EvolutionBuilder _evolutionBuilder = null;
 
+    public Button PlayButton { get => _playButton; }
+    public Button ResetButton { get => _resetButton; }
+    public Button SaveButton { get => _saveButton; }
+
     public void SetEvolutionBuilder(EvolutionBuilder evolutionBuilder) { _evolutionBuilder = evolutionBuilder; }
 
     public void Initialize(UIManager uiManager)
