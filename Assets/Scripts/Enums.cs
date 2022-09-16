@@ -32,7 +32,9 @@ public enum ElementType
 
 public enum EvolutionVFXType
 {
+    None = -1,
     GrowingLight,
+    WaterDrop,
 }
 
 public enum ExpeditionType

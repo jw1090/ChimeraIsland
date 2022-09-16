@@ -172,7 +172,14 @@ public class EvolutionBuilderUI : MonoBehaviour
 
     private EvolutionVFXType GetVFXTypeFromDropdown()
     {
-        return EvolutionVFXType.GrowingLight;
+        if (_vfxTypeDropdown.value == 0)
+        {
+            return EvolutionVFXType.GrowingLight;
+        }
+        else
+        {
+            return EvolutionVFXType.WaterDrop;
+        }
     }
 
     private Color GetColorFromDropdown()
