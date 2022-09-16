@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -95,6 +96,22 @@ public class UIManager : MonoBehaviour
         else
         {
             Debug.LogError($"{button} is null! Please Fix");
+        }
+    }
+
+    public void CreateDropdownListener(TMP_Dropdown dropdown, Action action)
+    {
+        if (dropdown != null)
+        {
+            dropdown.onValueChanged.AddListener
+            (delegate
+            {
+                action?.Invoke();
+            });
+        }
+        else
+        {
+            Debug.LogError($"{dropdown} is null! Please Fix");
         }
     }
 }

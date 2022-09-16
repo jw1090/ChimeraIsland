@@ -57,8 +57,9 @@ public class LevelLoader : AsyncLoader
                 break;
                 PlayCurrentSceneMusic();
             case SceneType.Builder:
+                _evolutionBuilder.BuildAll();
+                _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
                 PlayCurrentSceneMusic();
-                _evolutionBuilder.BuildA();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");

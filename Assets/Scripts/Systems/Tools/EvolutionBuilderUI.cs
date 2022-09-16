@@ -33,11 +33,14 @@ public class EvolutionBuilderUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
+
+        SetupDropdownListeners();
+        SetupButtonListeners();
     }
 
     public void SetupDropdownListeners()
     {
-
+        _uiManager.CreateDropdownListener(_baseChimeraDropdown, OnChangeBaseDropdown);
     }
 
     public void SetupButtonListeners()
@@ -52,7 +55,7 @@ public class EvolutionBuilderUI : MonoBehaviour
         List<string> chimeraOptions = new List<string>();
         foreach (Chimera chimera in _evolutionBuilder.BaseChimeras)
         {
-            chimeraOptions.Add(chimera.name);
+            chimeraOptions.Add(chimera.Name);
         }
 
         _baseChimeraDropdown.AddOptions(chimeraOptions);
@@ -63,15 +66,40 @@ public class EvolutionBuilderUI : MonoBehaviour
 
     private void UpdateEvolutionDropdown()
     {
+        _evolutionDropdown.ClearOptions();
+
         Chimera chimera = _evolutionBuilder.BaseChimeras[_baseChimeraDropdown.value];
 
         List<string> evolutionOptions = new List<string>();
         foreach (EvolutionLogic evolution in chimera.CurrentEvolution.PossibleEvolutions)
         {
-            evolutionOptions.Add(evolution.name);
+            evolutionOptions.Add(evolution.Name);
         }
 
-        _baseChimeraDropdown.AddOptions(evolutionOptions);
-        _baseChimeraDropdown.value = 0;
+        _evolutionDropdown.AddOptions(evolutionOptions);
+        _evolutionDropdown.value = 0;
+    }
+
+    private void OnChangeBaseDropdown()
+    {
+        _evolutionBuilder.SelectChimera(GetChimeraTypeFromNumber());
+
+        UpdateEvolutionDropdown();
+    }
+
+    private ChimeraType GetChimeraTypeFromNumber()
+    {
+        if(_baseChimeraDropdown.value == 0)
+        {
+            return ChimeraType.A;
+        }
+        else if(_baseChimeraDropdown.value == 1)
+        {
+            return ChimeraType.B;
+        }
+        else
+        {
+            return ChimeraType.C;
+        }
     }
 }
