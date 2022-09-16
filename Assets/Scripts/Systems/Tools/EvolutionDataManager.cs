@@ -21,4 +21,32 @@ public class EvolutionDataManager : MonoBehaviour
     public EvolutionData C1EvolutionData { get => _c1EvolutionData; }
     public EvolutionData C2EvolutionData { get => _c2EvolutionData; }
     public EvolutionData C3EvolutionData { get => _c3EvolutionData; }
+
+    public EvolutionData GetEvolutionDataByType(ChimeraType chimeraType)
+    {
+        switch (chimeraType)
+        {
+            case ChimeraType.A1:
+                return _a1EvolutionData;
+            case ChimeraType.A2:
+                return _a2EvolutionData;
+            case ChimeraType.A3:
+                return _a3EvolutionData;
+            case ChimeraType.B1:
+                return _b1EvolutionData;
+            case ChimeraType.B2:
+                return _b2EvolutionData;
+            case ChimeraType.B3:
+                return _b3EvolutionData;
+            case ChimeraType.C1:
+                return _c1EvolutionData;
+            case ChimeraType.C2:
+                return _c2EvolutionData;
+            case ChimeraType.C3:
+                return _c3EvolutionData;
+            default:
+                Debug.LogError($"Chimera Type [{chimeraType}] is invalid. Please fix!");
+                return null;
+        }
+    }
 }

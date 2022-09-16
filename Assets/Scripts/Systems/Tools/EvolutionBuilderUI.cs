@@ -45,7 +45,7 @@ public class EvolutionBuilderUI : MonoBehaviour
 
     public void SetupButtonListeners()
     {
-
+        _uiManager.CreateButtonListener(_saveButton, OnSavePressed);
     }
 
     public void LoadBaseChimeras()
@@ -82,18 +82,34 @@ public class EvolutionBuilderUI : MonoBehaviour
 
     private void OnChangeBaseDropdown()
     {
-        _evolutionBuilder.SelectChimera(GetChimeraTypeFromNumber());
+        _evolutionBuilder.SelectChimera(GetBaseTypeFromDropdown());
 
         UpdateEvolutionDropdown();
     }
 
-    private ChimeraType GetChimeraTypeFromNumber()
+    private void OnSavePressed()
     {
-        if(_baseChimeraDropdown.value == 0)
+        _evolutionBuilder.SaveVFXInstructions(GetEvolutionTypeFromDropdown(), CreateEvoltuionData());
+    }
+
+    private EvolutionData CreateEvoltuionData()
+    {
+        EvolutionData evolutionData = new EvolutionData();
+
+        evolutionData.EvolutionVFXType = GetVFXTypeFromDropdown();
+        evolutionData.Color = GetColorFromDropdown();
+        evolutionData.Size = GetSizeFromDropdown();
+
+        return evolutionData;
+    }
+
+    private ChimeraType GetBaseTypeFromDropdown()
+    {
+        if (_baseChimeraDropdown.value == 0)
         {
             return ChimeraType.A;
         }
-        else if(_baseChimeraDropdown.value == 1)
+        else if (_baseChimeraDropdown.value == 1)
         {
             return ChimeraType.B;
         }
@@ -101,5 +117,71 @@ public class EvolutionBuilderUI : MonoBehaviour
         {
             return ChimeraType.C;
         }
+    }
+
+    private ChimeraType GetEvolutionTypeFromDropdown()
+    {
+        ChimeraType chimeraType = GetBaseTypeFromDropdown();
+
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                switch (_evolutionDropdown.value)
+                {
+                    case 0:
+                        return ChimeraType.A1;
+                    case 1:
+                        return ChimeraType.A2;
+                    case 2:
+                        return ChimeraType.A3;
+                    default:
+                        Debug.LogError($"Chimera Type [{chimeraType}] is invalid. Please fix!");
+                        return ChimeraType.None;
+                }
+            case ChimeraType.B:
+                switch (_evolutionDropdown.value)
+                {
+                    case 0:
+                        return ChimeraType.B1;
+                    case 1:
+                        return ChimeraType.B2;
+                    case 2:
+                        return ChimeraType.B3;
+                    default:
+                        Debug.LogError($"Chimera Type [{chimeraType}] is invalid. Please fix!");
+                        return ChimeraType.None;
+                }
+            case ChimeraType.C:
+                switch (_evolutionDropdown.value)
+                {
+                    case 0:
+                        return ChimeraType.C1;
+                    case 1:
+                        return ChimeraType.C2;
+                    case 2:
+                        return ChimeraType.C3;
+                    default:
+                        Debug.LogError($"Chimera Type [{chimeraType}] is invalid. Please fix!");
+                        return ChimeraType.None;
+                }
+            default:
+                Debug.LogError($"Chimera Type [{chimeraType}] is invalid. Please fix!");
+                return ChimeraType.None;
+        }
+    }
+
+    private EvolutionVFXType GetVFXTypeFromDropdown()
+    {
+        return EvolutionVFXType.GrowingLight;
+    }
+
+    private Color GetColorFromDropdown()
+    {
+        return _vfxColors[_vfxColorDropdown.value];
+    }
+
+    private float GetSizeFromDropdown()
+    {
+        return _vfxSizes[_vfxSizeDropdown.value];
     }
 }

@@ -77,8 +77,8 @@ public class EvolutionBuilder : MonoBehaviour
         _baseChimeras.Add(chimeraComp);
     }
 
-    public void SaveVFXInstructions()
+    public void SaveVFXInstructions(ChimeraType chimeraType, EvolutionData evolutionData)
     {
-
+        _evolutionDataManager.GetEvolutionDataByType(chimeraType).InsertData(evolutionData);
     }
 }
