@@ -18,8 +18,7 @@ public class InputManager : MonoBehaviour
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
-    private LayerMask _marketplaceLayer = new LayerMask();
-    private LayerMask _facilityLayer = new LayerMask();
+    private LayerMask _templeLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -58,8 +57,7 @@ public class InputManager : MonoBehaviour
         _chimeraLayer = LayerMask.GetMask("Chimera");
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
-        _marketplaceLayer = LayerMask.GetMask("Marketplace");
-        _facilityLayer = LayerMask.GetMask("Facility");
+        _templeLayer = LayerMask.GetMask("Temple");
         _sphereMarker.SetActive(false);
 
         _isInitialized = true;
@@ -138,7 +136,7 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                if (_habitatUI.MenuOpen == false)
+                if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
                     _cameraUtil.CameraMovement();
                 }
@@ -194,7 +192,6 @@ public class InputManager : MonoBehaviour
 
             return;
         }
-
         else if (Physics.Raycast(ray, 300.0f, _portalLayer))
         {
             _habitatUI.OpenExpedition();
@@ -219,14 +216,9 @@ public class InputManager : MonoBehaviour
                 _isHolding = true;
             }
         }
-        else if (Physics.Raycast(ray, 300.0f, _marketplaceLayer))
+        else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
             _habitatUI.OpenMarketplace();
-        }
-        else if (Physics.Raycast(ray, out RaycastHit facilityHit, 300.0f, _facilityLayer) && _habitatUI.FacilityMarketplace.CheckActive())
-        {
-            FacilityType hitFacilityType = facilityHit.transform.gameObject.GetComponent<Facility>().Type;
-            _habitatUI.OpenFacilityUpgradeMenu(hitFacilityType);
         }
     }
 

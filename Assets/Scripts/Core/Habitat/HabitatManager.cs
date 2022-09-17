@@ -7,7 +7,7 @@ public class HabitatManager : MonoBehaviour
 {
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 9;
-    [SerializeField] private float _tickTimer = 0.4f;
+    [SerializeField] private float _tickTimer = 0.3f;
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private List<HabitatData> _habitatData = new List<HabitatData>();
@@ -16,6 +16,7 @@ public class HabitatManager : MonoBehaviour
     private Habitat _currentHabitat = null;
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
+    private HabitatUI _habitatUI = null;
 
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
@@ -24,6 +25,7 @@ public class HabitatManager : MonoBehaviour
     public float TickTimer { get => _tickTimer; }
     public List<HabitatData> HabitatDataList { get => _habitatData; }
 
+    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
@@ -308,6 +310,9 @@ public class HabitatManager : MonoBehaviour
     {
         var chimerasToSpawn = GetChimerasForHabitat(_currentHabitat.Type);
         _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
+
+
+        _habitatUI.DetailsPanel.DetailsStatGlow();
     }
 
     public void PlayCurrentHabitatMusic()

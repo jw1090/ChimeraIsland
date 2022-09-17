@@ -29,6 +29,8 @@ public class Facility : MonoBehaviour
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
+    private int _upgradeProgress = 0;
+    private int _upgradeGoal = 0;
     private bool _activateTraining = false;
 
     public Chimera StoredChimera { get => _storedChimera; }
@@ -94,8 +96,6 @@ public class Facility : MonoBehaviour
 
         if (_currentTier == 0)
         {
-            _habitatUI.FacilityMarketplace.SetFacilityUnlocked(_facilityType);
-
             debugString += $"{_facilityType} was purchased";
 
             _tiers.SetState("Tier 1");
@@ -174,8 +174,6 @@ public class Facility : MonoBehaviour
         _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
         _storedChimera.RevealChimera(false);
-        _storedChimera.Behavior.enabled = false;
-        _storedChimera.Behavior.Agent.enabled = false;
 
         Debug.Log($"{_storedChimera} added to the facility.");
     }
@@ -199,9 +197,8 @@ public class Facility : MonoBehaviour
         _trainingIcon.gameObject.SetActive(false);
 
         _storedChimera.SetInFacility(false);
+
         _storedChimera.RevealChimera(true);
-        _storedChimera.Behavior.enabled = true;
-        _storedChimera.Behavior.Agent.enabled = true;
 
         if (_storedChimera.ReadyToEvolve == true)
         {
@@ -215,7 +212,7 @@ public class Facility : MonoBehaviour
 
         _storedChimera = null;
 
-        _habitatUI.DetailsPanel.ToggleDetailsButtons();
+        _habitatUI.UpdateHabitatUI();
     }
 
     public void FacilityTick()

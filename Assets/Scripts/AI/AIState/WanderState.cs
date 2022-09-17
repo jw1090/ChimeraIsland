@@ -20,7 +20,7 @@ public class WanderState : ChimeraBaseState
         _chimeraBehavior.EnableNavAgent();
         _chimeraBehavior.SetAgentDestination(_wanderPoint);
 
-        _chimeraBehavior.TogglePatrolParticles(true);
+        _chimeraBehavior.ActivatePatrolParticles();
     }
 
     public override void Update()
@@ -40,8 +40,6 @@ public class WanderState : ChimeraBaseState
 
     public override void Exit()
     {
-        _chimeraBehavior.TogglePatrolParticles(false);
-
         _chimeraBehavior.ExitAnim(_wanderAnim);
     }
 
