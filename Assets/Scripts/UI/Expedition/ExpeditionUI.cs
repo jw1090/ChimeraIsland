@@ -13,13 +13,16 @@ public class ExpeditionUI : MonoBehaviour
 
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
-    private ChimeraDetailsFolder _detailsFolder = null;
+    private HabitatUI _habitatUI = null;
+    private AudioManager _audioManager = null;
 
     public ExpeditionManager expeditionManager { get => _expeditionManager; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
     public ExpeditionInProgressUI InProgressUI { get => _inProgressPanel; }
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
     public StatefulObject BackgroundStates { get => _backgroundUIStates; }
+    public ExpeditionResultUI ExpeditionResult { get => _resultPanel; }
+    public Button CloseButton { get => _closeButton; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -31,14 +34,16 @@ public class ExpeditionUI : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager)
     {
+        _audioManager = audioManager;
         _selectionPanel.SetAudioManager(audioManager);
         _setupPanel.SetAudioManager(audioManager);
+        _resultPanel.SetAudioManager(audioManager);
     }
 
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
+        _habitatUI = _uiManager.HabitatUI;
 
         _selectionPanel.Initialize();
         _setupPanel.Initialize(this, uiManager);
@@ -99,17 +104,16 @@ public class ExpeditionUI : MonoBehaviour
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
+        _habitatUI.UpdateHabitatUI();
     }
 
     public void CloseExpeditionUI()
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
-
         if(_expeditionManager.State == ExpeditionState.Setup)
         {
-            _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+            _expeditionManager.RemoveAllChimeras();
         }
     }
 
@@ -123,7 +127,7 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.DetermineReward();
     }
 
-    public void BeatCurrentHabitatExpedition()
+    public void CompleteCurrentHabitatExpedition()
     {
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 

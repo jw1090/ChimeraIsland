@@ -1,18 +1,19 @@
 using UnityEngine;
-using System;
 
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private UITextInfo _textInfo = null;
-    private UIManager _uiManager = null;
-    private ResourceManager _resourceManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialStageData _tutorialData = null;
+    private HabitatManager _habitatManager = null;
     private int _tutorialStep = -1;
 
-    public void Initialize(UIManager uiManager)
+    public void Initialize(HabitatUI habitatUI)
     {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _uiManager = uiManager;
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _habitatUI = habitatUI;
+
+        this.gameObject.SetActive(false);
     }
 
     public void ShowOverlay(TutorialStageData tutorialSteps)
@@ -33,18 +34,18 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowStep()
     {
-        if(_tutorialStep >= _tutorialData.StepData.Length)
+        if (_tutorialStep >= _tutorialData.StepData.Length)
         {
             _tutorialData.finished = true;
-            _uiManager.EndTutorial();
+            _habitatUI.EndTutorial();
             return;
         }
 
         TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
 
-        Sprite icon = _resourceManager.GetTutorialSprite((TutorialIconType)Enum.Parse(typeof(TutorialIconType), loadedStep.type));
+        Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
 
-       _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
+        _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
 
         // Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
     }

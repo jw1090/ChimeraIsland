@@ -10,8 +10,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private WorldMapUI _worldMapUI = null;
-    [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    private TutorialManager _tutorialManager = null;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
@@ -28,12 +26,9 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
-
+        _mainMenuUI.Initialize(this);
         _startingUI.Initialize();
         _habitatUI.Initialize(this);
-
-        _tutorialOverlay.Initialize(this);
 
         _uiStatefulObject.SetState("Transparent", true);
 
@@ -68,7 +63,6 @@ public class UIManager : MonoBehaviour
         switch (uiElementType)
         {
             case UIElementType.All:
-            case UIElementType.MarketplaceButton:
             case UIElementType.OpenDetailsButton:
             case UIElementType.ExpeditionButton:
             case UIElementType.MarketplaceChimeraTab:
@@ -82,18 +76,6 @@ public class UIManager : MonoBehaviour
                 Debug.LogError($"{uiElementType} is invalid. Please change!");
                 break;
         }
-    }
-
-    public void StartTutorial(TutorialStageData tutorialSteps)
-    {
-        _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps);
-    }
-
-    public void EndTutorial()
-    {
-        _tutorialOverlay.gameObject.SetActive(false);
-        _tutorialManager.SaveTutorialProgress();
     }
 
     public void CreateButtonListener(Button button, Action action)

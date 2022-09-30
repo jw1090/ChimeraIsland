@@ -25,9 +25,12 @@ public class Facility : MonoBehaviour
     private TrainingUI _uiTraining = null;
     private ExpeditionManager _expeditionManager = null;
     private FacilityData _loadedFacilityData = null;
+    private InputManager _inputManager = null;
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
+    private int _upgradeProgress = 0;
+    private int _upgradeGoal = 0;
     private bool _activateTraining = false;
 
     public Chimera StoredChimera { get => _storedChimera; }
@@ -57,6 +60,7 @@ public class Facility : MonoBehaviour
         _uiManager = ServiceLocator.Get<UIManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+        _inputManager = ServiceLocator.Get<InputManager>();
 
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
@@ -92,13 +96,9 @@ public class Facility : MonoBehaviour
 
         if (_currentTier == 0)
         {
-            _habitatUI.Marketplace.SetFacilityUnlocked(_facilityType);
-
             debugString += $"{_facilityType} was purchased";
 
             _tiers.SetState("Tier 1");
-
-            _glowMarker.ActivateGlowCollider(true);
 
             _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
@@ -131,7 +131,7 @@ public class Facility : MonoBehaviour
             Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
-
+        _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         _habitatUI.ResetStandardUI();
         _habitatUI.OpenTrainingPanel();
         _uiTraining.SetupTrainingUI(chimera, this);
@@ -173,10 +173,7 @@ public class Facility : MonoBehaviour
         _storedChimera.SetInFacility(true);
         _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
-        _glowMarker.ActivateGlowCollider(false);
         _storedChimera.RevealChimera(false);
-        _storedChimera.Behavior.enabled = false;
-        _storedChimera.Behavior.Agent.enabled = false;
 
         Debug.Log($"{_storedChimera} added to the facility.");
     }
@@ -191,17 +188,17 @@ public class Facility : MonoBehaviour
         }
 
         _activateTraining = false;
+        if (_inputManager.IsHolding == true)
+        {
+            _glowMarker.ActivateGlow(true);
+        }
 
         _trainingIcon.ResetIcon();
         _trainingIcon.gameObject.SetActive(false);
 
-        _glowMarker.ActivateGlowCollider(true);
-
         _storedChimera.SetInFacility(false);
+
         _storedChimera.RevealChimera(true);
-        _storedChimera.Behavior.ChangeState(ChimeraBehaviorState.Patrol);
-        _storedChimera.Behavior.enabled = true;
-        _storedChimera.Behavior.Agent.enabled = true;
 
         if (_storedChimera.ReadyToEvolve == true)
         {
@@ -215,14 +212,7 @@ public class Facility : MonoBehaviour
 
         _storedChimera = null;
 
-        if (_expeditionManager.State == ExpeditionState.Setup)
-        {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
-        }
-        else
-        {
-            _habitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
-        }
+        _habitatUI.UpdateHabitatUI();
     }
 
     public void FacilityTick()

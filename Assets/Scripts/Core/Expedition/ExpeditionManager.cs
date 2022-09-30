@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
@@ -14,7 +15,9 @@ public class ExpeditionManager : MonoBehaviour
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
     private ExpeditionData _habitatExpeditionOption = null;
+    private CameraUtil _cameraUtil = null;
     private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private List<Chimera> _chimeras = new List<Chimera>();
     private ExpeditionUI _uiExpedition = null;
     private CurrencyManager _currencyManager = null;
@@ -22,10 +25,14 @@ public class ExpeditionManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
-    private const float _difficultyLevelMultiplier = 1.2f;
-    private const float _difficultyScalar = 20.0f;
+    private const float _difficultyFlatModifier = 10.0f;
+    private const float _difficultyScalar = 14.5f;
     private const float _difficultyExponent = 1.5f;
     private const float _powerScalar = 6.5f;
+    private const float _rewardDenominator = 65.0f;
+    private const float _rewardExponent = 0.9f;
+    private const float _duartionDenominator = 300.0f;
+    private const float _durationExponent = 0.45f;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
@@ -74,11 +81,13 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiManager = ServiceLocator.Get<UIManager>();
+        _habitatUI = _uiManager.HabitatUI;
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
         _expeditionState = ExpeditionState.Selection;
 
@@ -110,52 +119,51 @@ public class ExpeditionManager : MonoBehaviour
 
     public void LoadExpeditionOptions()
     {
-        SetupExpeditionOption(_essenceExpeditionOption, ExpeditionType.Essence);
-        SetupExpeditionOption(_fossilExpeditionOption, ExpeditionType.Fossils);
-        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        SetupExpeditionOption(ref _essenceExpeditionOption, ExpeditionType.Essence);
+        SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils);
+        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
     }
 
-    private void SetupExpeditionOption(ExpeditionData expedition, ExpeditionType expeditionType)
+    private void SetupExpeditionOption(ref ExpeditionData expedition, ExpeditionType expeditionType)
     {
         if (expedition != null) // Already Created
         {
             return;
         }
 
-        ExpeditionData newExpedition = ExpeditionDataByType(expeditionType).DeepCopy(); // Get the correct data reference
-        AssignExpeditionUpgradeType(newExpedition.Modifiers);
-        AnalyseRandomUpgrade(newExpedition);
-
-        switch (newExpedition.Type)
+        if (ExpeditionDataByType(expeditionType, out ExpeditionData newExpedition) == true)
         {
-            case ExpeditionType.Essence:
-                _essenceExpeditionOption = newExpedition;
-                break;
-            case ExpeditionType.Fossils:
-                _fossilExpeditionOption = newExpedition;
-                break;
-            case ExpeditionType.HabitatUpgrade:
-                _habitatExpeditionOption = newExpedition;
-                break;
-            default:
-                Debug.LogError($"Expedition Type [{newExpedition.Type} is invalid, please fix!]");
-                break;
+            AssignExpeditionUpgradeType(newExpedition.Modifiers);
+            AnalyseRandomUpgrade(newExpedition);
+            expedition = newExpedition;
         }
     }
 
-    private ExpeditionData ExpeditionDataByType(ExpeditionType expeditionType)
+    private bool ExpeditionDataByType(ExpeditionType expeditionType, out ExpeditionData newExpedition)
     {
+        newExpedition = null;
+
         switch (expeditionType)
         {
             case ExpeditionType.Essence:
-                return _essenceExpeditions[_currentEssenceProgress];
+                newExpedition = _essenceExpeditions[_currentEssenceProgress].DeepCopy();
+                return true;
             case ExpeditionType.Fossils:
-                return _fossilExpeditions[_currentFossilProgress];
+                newExpedition = _fossilExpeditions[_currentFossilProgress].DeepCopy();
+                return true;
             case ExpeditionType.HabitatUpgrade:
-                return _habitatExpeditions[_currentHabitatProgress];
+                if (_currentHabitatProgress >= _habitatExpeditions.Count) // Finished
+                {
+                    return false;
+                }
+                else
+                {
+                    newExpedition = _habitatExpeditions[_currentHabitatProgress].DeepCopy();
+                    return true;
+                }
             default:
                 Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
-                return null;
+                return false;
         }
     }
 
@@ -229,7 +237,10 @@ public class ExpeditionManager : MonoBehaviour
     public void EnterInProgressState()
     {
         _expeditionState = ExpeditionState.InProgress;
-        _selectedExpedition.CurrentDuration = _selectedExpedition.Duration;
+
+        _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
+        _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
+
         _selectedExpedition.ActiveInProgressTimer = true;
     }
 
@@ -244,6 +255,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _chimeras.Add(chimera);
+        chimera.DrainEnergy(_selectedExpedition.EnergyDrain);
         EvaluateRosterChange();
 
         _uiExpedition.SetupUI.ToggleConfirmButton(true);
@@ -254,6 +266,7 @@ public class ExpeditionManager : MonoBehaviour
     public bool RemoveChimera(Chimera chimera)
     {
         _chimeras.Remove(chimera);
+        chimera.AddEnergy(_selectedExpedition.EnergyDrain);
         EvaluateRosterChange();
 
         if (_chimeras.Count == 0)
@@ -262,6 +275,25 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void RemoveAllChimeras()
+    {
+        List<Chimera> tempChimeraList = new List<Chimera>();
+
+        foreach (var chimera in _chimeras)
+        {
+            tempChimeraList.Add(chimera);
+        }
+
+        foreach (var chimera in tempChimeraList)
+        {
+            RemoveChimera(chimera);
+        }
+
+        _selectedExpedition = null;
+        _expeditionState = ExpeditionState.Selection;
+        _habitatUI.UpdateHabitatUI();
     }
 
     private void EvaluateRosterChange()
@@ -273,8 +305,8 @@ public class ExpeditionManager : MonoBehaviour
 
     private void CalculateCurrentDifficultyValue()
     {
-        float suggestedLevel = _selectedExpedition.SuggestedLevel;
-        float difficultyValue = Mathf.Pow(suggestedLevel * _difficultyLevelMultiplier, _difficultyExponent) * _difficultyScalar;
+        float suggestedLevel = _selectedExpedition.Difficulty;
+        float difficultyValue = Mathf.Pow(suggestedLevel, _difficultyExponent) * _difficultyScalar + _difficultyFlatModifier;
 
         _selectedExpedition.DifficultyValue = difficultyValue;
         _uiExpedition.SetupUI.UpdateDifficultyValue(difficultyValue);
@@ -295,13 +327,18 @@ public class ExpeditionManager : MonoBehaviour
             power += chimera.Exploration * (_selectedExpedition.ExplorationModifier + elementalTypeModifier) * _powerScalar;
         }
 
+        CalculateRewardModifier();
+        CalculateDurationModifier();
+
         _selectedExpedition.ChimeraPower = power >= _selectedExpedition.DifficultyValue ? _selectedExpedition.DifficultyValue : power;
+        _uiExpedition.SetupUI.UpdateRewards(_selectedExpedition);
+        _uiExpedition.SetupUI.UpdateDuration(_selectedExpedition);
         _uiExpedition.SetupUI.UpdateChimeraPower(_selectedExpedition.ChimeraPower);
     }
 
     private void CalculateModifiers()
     {
-        ResetMultipliers();
+        _selectedExpedition.ResetMultipliersAndModifiers();
 
         foreach (ModifierType modifierType in _selectedExpedition.Modifiers)
         {
@@ -334,6 +371,44 @@ public class ExpeditionManager : MonoBehaviour
         }
     }
 
+    private void CalculateRewardModifier()
+    {
+        _selectedExpedition.RewardModifier = 0.0f;
+
+        int totalPartyWisdom = 0;
+
+        foreach (var chimera in _chimeras)
+        {
+            totalPartyWisdom += chimera.Wisdom;
+        }
+
+        if (totalPartyWisdom == 1) // 1 wisdom is the base so it should not give any benefit.
+        {
+            totalPartyWisdom = 0;
+        }
+
+        _selectedExpedition.RewardModifier = Mathf.Pow(totalPartyWisdom / _rewardDenominator, _rewardExponent);
+    }
+
+    private void CalculateDurationModifier()
+    {
+        _selectedExpedition.DurationModifier = 1.0f;
+
+        int totalPartyExploration = 0;
+
+        foreach (var chimera in _chimeras)
+        {
+            totalPartyExploration += chimera.Exploration;
+        }
+
+        if (totalPartyExploration == 1) // 1 wisdom is the base so it should not give any benefit.
+        {
+            totalPartyExploration = 0;
+        }
+
+        _selectedExpedition.DurationModifier = Mathf.Pow(totalPartyExploration / _duartionDenominator, _durationExponent);
+    }
+
     private float ElementTypeModifier(ElementType elementType)
     {
         switch (elementType)
@@ -348,16 +423,6 @@ public class ExpeditionManager : MonoBehaviour
                 Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
                 return 0.0f;
         }
-    }
-
-    private void ResetMultipliers()
-    {
-        _selectedExpedition.AquaBonus = 0.0f;
-        _selectedExpedition.BioBonus = 0.0f;
-        _selectedExpedition.FiraBonus = 0.0f;
-        _selectedExpedition.StaminaModifer = 1.0f;
-        _selectedExpedition.WisdomModifier = 1.0f;
-        _selectedExpedition.ExplorationModifier = 1.0f;
     }
 
     public float CalculateSuccessChance()
@@ -385,7 +450,7 @@ public class ExpeditionManager : MonoBehaviour
     private void InProgressTimerUpdate()
     {
         _selectedExpedition.CurrentDuration -= Time.deltaTime;
-        _uiExpedition.InProgressUI.UpdateInProgressTimeRemainingText(_selectedExpedition.CurrentDuration);
+        _uiExpedition.InProgressUI.UpdateSliderInfo(_selectedExpedition.CurrentDuration);
 
         if (_selectedExpedition.CurrentDuration <= 0)
         {
@@ -406,7 +471,6 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         float successRoll = Random.Range(0.0f, _selectedExpedition.DifficultyValue);
-
         Debug.Log($"You rolled: {successRoll} | You needed: {_selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower}");
 
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
@@ -426,25 +490,29 @@ public class ExpeditionManager : MonoBehaviour
         switch (_selectedExpedition.Type)
         {
             case ExpeditionType.Essence:
-                _currencyManager.IncreaseEssence(_selectedExpedition.AmountGained);
+                _currencyManager.IncreaseEssence(_selectedExpedition.ActualAmountGained);
                 break;
             case ExpeditionType.Fossils:
-                _uiManager.EnableUIByType(UIElementType.MarketplaceButton);
-                _uiManager.EnableUIByType(UIElementType.FossilsWallets);
-                _currencyManager.IncreaseFossils(_selectedExpedition.AmountGained);
+                if (_habitatManager.CurrentHabitat.Temple.IsCompleted == false)
+                {
+                    _habitatManager.CurrentHabitat.Temple.Build();
+                    _cameraUtil.TempleCameraShift();
+                    _uiManager.EnableUIByType(UIElementType.FossilsWallets);
+                }
 
                 if (_selectedExpedition.UnlocksNewChimera == true)
                 {
                     ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
                     Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
                 }
+
+                _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
                 _tutorialManager.ShowTutorialStage(TutorialStageType.FossilShop);
                 break;
             case ExpeditionType.HabitatUpgrade:
-                _uiManager.EnableUIByType(UIElementType.EssenceWallets);
-
                 if (_currentHabitatProgress == 0)
                 {
+                    _uiManager.EnableUIByType(UIElementType.EssenceWallets);
                     _habitatManager.CurrentHabitat.CrystalManager.TripleSpawn();
                 }
 
@@ -509,7 +577,7 @@ public class ExpeditionManager : MonoBehaviour
                 break;
             case ExpeditionType.HabitatUpgrade:
                 _habitatExpeditionOption = null;
-                if (_currentHabitatProgress < _habitatExpeditions.Count - 1)
+                if (_currentHabitatProgress < _habitatExpeditions.Count)
                 {
                     ++_currentHabitatProgress;
                 }
@@ -531,34 +599,34 @@ public class ExpeditionManager : MonoBehaviour
         {
             chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
-            chimera.Behavior.enabled = !onExpedition;
-            chimera.Behavior.Agent.enabled = !onExpedition;
 
             if (onExpedition == true)
             {
-                chimera.gameObject.transform.position = _habitatManager.CurrentHabitat.RandomSpawnPoint();
+                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+
+                chimera.gameObject.transform.position = positionAttempt;
             }
         }
+
+        _habitatUI.UpdateHabitatUI();
 
         if (onExpedition == false)
         {
             _chimeras.Clear();
-            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
-        }
-        else
-        {
-            _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.ExpeditionParty);
         }
     }
-    public void BeatCurrentHabitatExpedition()
+
+    public void CompleteCurrentUpgradeExpedition()
     {
-        SetupExpeditionOption(_habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+
         if (_habitatExpeditionOption == null)
         {
             Debug.Log("You've finished all habitat expeditions");
             return;
         }
+
         _selectedExpedition = _habitatExpeditionOption;
-        _uiExpedition.BeatCurrentHabitatExpedition();
+        _uiExpedition.CompleteCurrentHabitatExpedition();
     }
 }

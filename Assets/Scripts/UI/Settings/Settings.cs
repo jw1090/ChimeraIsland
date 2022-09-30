@@ -11,6 +11,8 @@ public class Settings : MonoBehaviour
 
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButton; }
+    public Button ResumeButton { get => _resumeButton; }
+    public Button ScreenWideButton { get => _screenWideButton; }
 
     private UIManager _uiManager = null;
 

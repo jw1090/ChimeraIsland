@@ -3,7 +3,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
-    private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = true;
     private HabitatManager _habitatManager = null;
@@ -11,7 +11,7 @@ public class TutorialManager : MonoBehaviour
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
 
-    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
+    public void SetHabitatUI(HabitatUI habitatUI) { _habitatUI = habitatUI; }
 
     public TutorialManager Initialize()
     {
@@ -43,14 +43,14 @@ public class TutorialManager : MonoBehaviour
 
     private void LoadTutorialFromJson()
     {
-        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA);
+        _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
     }
 
     private void CurrentStageInitialize()
     {
         if (_tutorialsEnabled == false) { return; }
 
-        if(_tutorialData == null)
+        if (_tutorialData == null)
         {
             Debug.LogWarning("No Tutorial Data Loaded! Disabling Tutorials!");
             _tutorialsEnabled = false;
@@ -74,16 +74,19 @@ public class TutorialManager : MonoBehaviour
     {
         if (_tutorialsEnabled == false) { return; }
 
-        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA);
+        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
     }
 
     public void ResetTutorialProgress()
     {
         if (_tutorialsEnabled == false) { return; }
 
-        foreach (var tutorial in _tutorialData.Tutorials)
+        if (_tutorialData != null)
         {
-            tutorial.finished = false;
+            foreach (var tutorial in _tutorialData.Tutorials)
+            {
+                tutorial.finished = false;
+            }
         }
 
         _currentStage = 0;
@@ -104,7 +107,7 @@ public class TutorialManager : MonoBehaviour
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
 
         Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
-        _uiManager.StartTutorial(tutorialStage);
+        _habitatUI.StartTutorial(tutorialStage);
     }
 
     private bool IsStageComplete(TutorialStageType stage)

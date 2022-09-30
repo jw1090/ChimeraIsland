@@ -118,13 +118,20 @@ public class ChimeraBehavior : MonoBehaviour
 
     public void ChangeState(ChimeraBehaviorState state)
     {
+        ChimeraBaseState newState = DetermineState(state);
+
+        if (_currentState == newState)
+        {
+            return; // Already current state, don't swap.
+        }
+
         if (_currentState != null)
         {
             _currentState.Exit();
             _stateEnabled = false;
         }
 
-        _currentState = DetermineState(state);
+        _currentState = newState;
         _currentState.Enter(this);
         _stateEnabled = true;
     }
@@ -166,8 +173,31 @@ public class ChimeraBehavior : MonoBehaviour
         _animator.SetBool(_animationState, false);
     }
 
-    public void TogglePatrolParticle(bool toggle)
+    public void EvaluateParticlesOnEvolve()
     {
-        _chimera.CurrentEvolution.TogglePatrolParticles(toggle);
+        if (_currentState == _patrolState || _currentState == _wanderState)
+        {
+            _chimera.CurrentEvolution.TogglePatrolParticles(true);
+        }
+        else if (_currentState == _idleState)
+        {
+            _chimera.CurrentEvolution.ToggleIdleParticles(true);
+        }
+    }
+
+    public void StopParticles()
+    {
+        _chimera.CurrentEvolution.TogglePatrolParticles(false);
+        _chimera.CurrentEvolution.ToggleIdleParticles(false);
+    }
+
+    public void ActivatePatrolParticles()
+    {
+        _chimera.CurrentEvolution.TogglePatrolParticles(true);
+    }
+
+    public void ActivateIdleParticles()
+    {
+        _chimera.CurrentEvolution.ToggleIdleParticles(true);
     }
 }

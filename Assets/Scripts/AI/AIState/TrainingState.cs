@@ -10,6 +10,8 @@ public class TrainingState : ChimeraBaseState
         _chimeraBehavior.BoxCollider.enabled = false;
         _chimeraBehavior.Agent.enabled = false;
 
+        _chimeraBehavior.StopParticles();
+
         _chimeraBehavior.EnterAnim(_trainingAnim);
     }
 

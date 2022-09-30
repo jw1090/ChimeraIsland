@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Habitat : MonoBehaviour
@@ -13,27 +14,30 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private CrystalManager _crystalManager = null;
     [SerializeField] private GameObject _spawnPoint = null;
+    [SerializeField] private GameObject _templeSpawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
+    [SerializeField] private Temple _temple = null;
     [SerializeField] private StatefulObject _tiers = null;
-    [SerializeField] private GameObject _hatchery = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
+    private LightingManager _lightingManager = null;
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
-    public GameObject Hatchery { get => _hatchery; }
-    public int CurrentTier { get => _currentTier; }
-    public CrystalManager CrystalManager { get => _crystalManager; } 
+    public Temple Temple { get => _temple; }
+    public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
+    public Transform TempleSpawnPoint { get => _templeSpawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
     public HabitatType Type { get => _habitatType; }
+    public int CurrentTier { get => _currentTier; }
 
     public Facility GetFacility(FacilityType facilityType)
     {
@@ -64,6 +68,21 @@ public class Habitat : MonoBehaviour
 
         return facilitiesToBuild[rand].Type;
     }
+
+    public Chimera GetFirstChimera()
+    {
+        foreach (Chimera chimera in ActiveChimeras)
+        {
+            if (chimera.FirstChimera == true)
+            {
+                return chimera;
+            }
+        }
+        Debug.LogError("Missing first chimera");
+        return new Chimera();
+    }
+
+    public void SetLightingManager(LightingManager lightingManager) { _lightingManager = lightingManager; }
 
     public void SetTier(int tier)
     {
@@ -117,7 +136,7 @@ public class Habitat : MonoBehaviour
         {
             var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-            AddChimera(newChimera.transform);
+            AddChimera(newChimera.transform, true);
         }
     }
 
@@ -182,9 +201,28 @@ public class Habitat : MonoBehaviour
         return true;
     }
 
-    public void AddChimera(Transform newChimera)
+    public Vector3 GetRandomPatrolNode()
     {
-        newChimera.position = RandomSpawnPoint();
+        List<Transform> nodes = _patrolNodes.Nodes;
+        int random = (int)(Random.value * 100.0f) % nodes.Count;
+        return nodes[random].position;
+    }
+
+    public void AddChimera(Transform newChimera, bool loadingIn = false)
+    {
+        if(ActiveChimeras.Count == 0)
+        {
+            newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+        }
+        else if (loadingIn == true)
+        {
+            newChimera.position = RandomDistanceFromPoint(GetRandomPatrolNode());
+        }
+        else
+        {
+            newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
+        }
+        
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 
@@ -194,13 +232,17 @@ public class Habitat : MonoBehaviour
         chimeraComp.Initialize();
     }
 
-    public Vector3 RandomSpawnPoint()
+    public Vector3 RandomDistanceFromPoint(Vector3 spawnPoint)
     {
-        Vector3 spawnPos = _habitatManager.CurrentHabitat.SpawnPoint.transform.position;
-        spawnPos.x = spawnPos.x + Random.Range(-2.0f, 2.0f);
-        spawnPos.z = spawnPos.z + Random.Range(-2.0f, 2.0f);
+        spawnPoint.x = spawnPoint.x + Random.Range(-2.0f, 2.0f);
+        spawnPoint.z = spawnPoint.z + Random.Range(-2.0f, 2.0f);
 
-        return spawnPos;
+        if (NavMesh.SamplePosition(spawnPoint, out NavMeshHit navMeshHit, 1f, 1))
+        {
+            spawnPoint = new Vector3(navMeshHit.position.x, navMeshHit.position.y, navMeshHit.position.z);
+        }
+
+        return spawnPoint;
     }
 
     public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
@@ -271,6 +313,7 @@ public class Habitat : MonoBehaviour
         _audioManager.PlayHabitatMusic(_habitatType);
         _audioManager.PlayHabitatAmbient(_habitatType);
         LoadHabitatTier();
+        EvaluateFireflies();
     }
 
     private void LoadHabitatTier()
@@ -299,7 +342,7 @@ public class Habitat : MonoBehaviour
         {
             if (facility.IsBuilt == true && facility.IsChimeraStored() == false)
             {
-                facility.GlowObject.ActivateGlowRenderer(value);
+                facility.GlowObject.ActivateGlow(value);
             }
         }
     }
@@ -329,6 +372,18 @@ public class Habitat : MonoBehaviour
                     facility.FacilityTick();
                 }
             }
+        }
+    }
+
+    private void EvaluateFireflies()
+    {
+        if (_lightingManager.DayType == DayType.DayTime)
+        {
+            ToggleFireflies(false);
+        }
+        else
+        {
+            ToggleFireflies(true);
         }
     }
 }

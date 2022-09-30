@@ -157,6 +157,8 @@ public class AudioManager : MonoBehaviour
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.OpenCreditsButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.CloseCreditsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.Settings.MainMenuButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.Settings.QuitGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.WorldMapButton, PlayClickSFX);
@@ -166,6 +168,11 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.ResumeButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Settings.ScreenWideButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.Marketplace.CloseButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
     }
 
     public void PlayHabitatMusic(HabitatType habitatType)
@@ -288,14 +295,14 @@ public class AudioManager : MonoBehaviour
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Error SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.PortalClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
-                    _sfxSource.Play();
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
             case SFXUIType.Completion:

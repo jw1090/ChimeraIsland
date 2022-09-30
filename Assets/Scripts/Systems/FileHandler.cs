@@ -3,15 +3,15 @@ using UnityEngine;
 
 public static class FileHandler
 {
-    public static void SaveToJSON<T>(T toSave, string filename)
+    public static void SaveToJSON<T>(T toSave, string filename, bool isPersistant) // False leads to readonly "StreamingAssets"
     {
         string content = JsonUtility.ToJson(toSave, true);
-        WriteFile(GetPath(filename), content);
+        WriteFile(GetPath(filename, isPersistant), content);
     }
 
-    public static T ReadFromJSON<T>(string filename)
+    public static T ReadFromJSON<T>(string filename, bool isPersistant)
     {
-        string content = ReadFile(GetPath(filename));
+        string content = ReadFile(GetPath(filename, isPersistant));
 
         if (string.IsNullOrEmpty(content) || content == "{}")
         {
@@ -22,12 +22,36 @@ public static class FileHandler
         return res;
     }
 
-    private static string GetPath(string filename)
+    private static string GetPath(string filename, bool isPersistant)
     {
 #if UNITY_EDITOR
-        return System.IO.Path.Combine(Application.dataPath, "JSON", $"{filename}");
+        string folder = "";
+
+        if (isPersistant == true)
+        {
+            folder = "PersistentData";
+
+            Debug.Log($"Loading Tutorial Data From: {Application.dataPath}/{folder}/{filename}");
+
+            return System.IO.Path.Combine(Application.dataPath, folder, $"{filename}");
+        }
+        else
+        {
+            folder = "StreamingAssets";
+
+            Debug.Log($"Loading Tutorial Data From: {Application.dataPath}/{folder}/{filename}");
+
+            return System.IO.Path.Combine(Application.dataPath, folder, $"{filename}");
+        }
 #else
-        return System.IO.Path.Combine(Application.persistentDataPath, "JSON", $"{filename}");
+        if (isPersistant == true)
+        {
+            return System.IO.Path.Combine(Application.persistentDataPath, $"{filename}");
+        }
+        else
+        {
+            return System.IO.Path.Combine(Application.streamingAssetsPath, $"{filename}");
+        }
 #endif
     }
 

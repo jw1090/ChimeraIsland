@@ -9,9 +9,10 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private ExpeditionType _expeditionType = ExpeditionType.None;
     [SerializeField] private Image _icon = null;
     [SerializeField] private TextMeshProUGUI _title = null;
-    [SerializeField] private TextMeshProUGUI _suggestLevel = null;
-    [SerializeField] private TextMeshProUGUI _energyCost = null;
     [SerializeField] private TextMeshProUGUI _reward = null;
+    [SerializeField] private TextMeshProUGUI _difficulty = null;
+    [SerializeField] private TextMeshProUGUI _energyDrain = null;
+    [SerializeField] private TextMeshProUGUI _duration = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
@@ -21,6 +22,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     {
         _expeditionManager = expeditionManager;
     }
+
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public ExpeditionType ExpeditionType { get => _expeditionType; }
@@ -53,16 +55,17 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     {
         _icon.sprite = _resourceManager.GetExpeditionTypeSprite(expeditionData.Type);
         _title.text = $"{expeditionData.Title}";
-        _suggestLevel.text = $"Suggested Total Power: {expeditionData.SuggestedLevel}";
-        _energyCost.text = $"Energy Cost: {expeditionData.EnergyCost}";
+        _difficulty.text = $"Difficulty: {expeditionData.Difficulty}";
+        _energyDrain.text = $"Energy Drain: {expeditionData.EnergyDrain}";
+        _duration.text = $"Duration: {expeditionData.BaseDuration} Seconds";
 
         switch (expeditionData.Type)
         {
             case ExpeditionType.Essence:
-                _reward.text = $"Reward: {expeditionData.AmountGained} Essence";
+                _reward.text = $"Reward: {expeditionData.BaseAmountGained} Essence";
                 break;
             case ExpeditionType.Fossils:
-                _reward.text = $"Reward: {expeditionData.AmountGained} Fossils";
+                _reward.text = $"Reward: {expeditionData.BaseAmountGained} Fossils";
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (expeditionData.UpgradeType)

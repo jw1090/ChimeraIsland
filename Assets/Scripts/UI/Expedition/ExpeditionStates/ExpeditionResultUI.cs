@@ -7,11 +7,12 @@ public class ExpeditionResultUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successResults = null;
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
     [SerializeField] private Button _rewardsCloseButton = null;
-    private ExpeditionUI _expeditionUI = null; 
+    private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
     private bool _expeditionSuccess = false;
-
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
@@ -30,28 +31,37 @@ public class ExpeditionResultUI : MonoBehaviour
 
     private void ResultsCloseClick()
     {
+        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
+
         if (_expeditionSuccess == true) // Success
         {
             _expeditionManager.SuccessRewards();
-        }
 
-        _expeditionManager.SetExpeditionState(ExpeditionState.Selection);
-        if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade && _expeditionSuccess == true)
-        {
-            _uiManager.HabitatUI.ResetStandardUI();
+            if (_expeditionManager.SelectedExpedition.Type == ExpeditionType.HabitatUpgrade
+                || _expeditionManager.SelectedExpedition.Type == ExpeditionType.Fossils
+                && _expeditionManager.CurrentFossilProgress == 1)
+            {
+                _uiManager.HabitatUI.ResetStandardUI();
+            }
+            else
+            {
+                _expeditionUI.OpenExpeditionUI();
+            }
         }
         else
         {
             _expeditionUI.OpenExpeditionUI();
         }
-
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
         _expeditionManager.ResetSelectedExpedition();
         _expeditionSuccess = false;
     }
 
     public void DetermineReward(bool bypass = false)
     {
-        if (_expeditionManager.RandomSuccesRate() == true || bypass == true)
+        bool results = bypass ? bypass : _expeditionManager.RandomSuccesRate();
+
+        if (results == true)
         {
             _successResults.text = $"Success";
 
@@ -60,16 +70,16 @@ public class ExpeditionResultUI : MonoBehaviour
             switch (expeditionData.Type)
             {
                 case ExpeditionType.Essence:
-                    _resultsDescription.text = $"You've gained {expeditionData.AmountGained} Essence!";
+                    _resultsDescription.text = $"You've gained {expeditionData.ActualAmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
                     if (expeditionData.UnlocksNewChimera == true)
                     {
-                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.AmountGained} Fossils!";
+                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.ActualAmountGained} Fossils!";
                     }
                     else
                     {
-                        _resultsDescription.text = $"You gained {expeditionData.AmountGained} Fossils!";
+                        _resultsDescription.text = $"You gained {expeditionData.ActualAmountGained} Fossils!";
                     }
                     break;
                 case ExpeditionType.HabitatUpgrade:
@@ -98,7 +108,7 @@ public class ExpeditionResultUI : MonoBehaviour
             }
 
             _expeditionSuccess = true;
-            if(bypass == true)
+            if (bypass == true)
             {
                 ResultsCloseClick();
             }

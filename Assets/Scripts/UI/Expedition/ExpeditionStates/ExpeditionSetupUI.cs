@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _duration = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
-    [SerializeField] private TextMeshProUGUI _suggestedLevel = null;
+    [SerializeField] private TextMeshProUGUI _energyDrain = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     [SerializeField] private Slider _successSlider = null;
     [SerializeField] private TextMeshProUGUI _successText = null;
@@ -18,11 +17,11 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private Button _backButton = null;
     private TutorialManager _tutoiralManager = null;
     private UIManager _uiManager = null;
+    private HabitatUI _habitatUI = null;
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
-    private ChimeraDetailsFolder _detailsFolder = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -38,7 +37,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
-        _detailsFolder = _uiManager.HabitatUI.DetailsPanel;
+        _habitatUI = _uiManager.HabitatUI;
         _expeditionUI = expeditionUI;
     }
 
@@ -59,7 +58,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager.ChimerasOnExpedition(true);
 
         _expeditionUI.ForegroundUIStates.SetState("In Progress Panel");
-        _uiManager.HabitatUI.DetailsPanel.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _habitatUI.UpdateHabitatUI();
         _expeditionManager.EnterInProgressState();
 
         _backButton.gameObject.SetActive(false);
@@ -67,8 +66,10 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     private void BackClick()
     {
-        _detailsFolder.ToggleDetailsButtons(DetailsButtonType.Standard);
+        _expeditionManager.RemoveAllChimeras();
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
+        _habitatUI.UpdateHabitatUI();
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
@@ -84,52 +85,58 @@ public class ExpeditionSetupUI : MonoBehaviour
         ExpeditionData data = _expeditionManager.SelectedExpedition;
 
         _expeditionTitle.text = data.Title;
-        _suggestedLevel.text = $"Suggested Total Power: {data.SuggestedLevel}";
-        _rewardType.text = $"Rewards: {RewardTypeToString(data)}";
-
-        LoadDuration(data.Duration);
-        _expeditionUI.InProgressUI.UpdateSuccessText(data.Duration);
+        _energyDrain.text = $"Energy Drain: {data.EnergyDrain}";
+        UpdateRewards(data);
+        UpdateDuration(data);
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
         _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
     }
 
-    private void LoadDuration(float duration)
+    public void UpdateRewards(ExpeditionData data)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(duration);
-        string durationString = $"Duration: {string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds)}";
+        string reward = "";
 
-        _duration.text = durationString;
-    }
-
-    private string RewardTypeToString(ExpeditionData data)
-    {
         switch (data.Type)
         {
             case ExpeditionType.Essence:
-                return $"{data.AmountGained} Essence";
+                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Essence";
+                break;
             case ExpeditionType.Fossils:
-                return $"{data.AmountGained} Fossils";
+                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Fossils";
+                break;
             case ExpeditionType.HabitatUpgrade:
                 switch (data.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        return $"Waterfall";
+                        reward = $"Waterfall";
+                        break;
                     case HabitatRewardType.CaveExploring:
-                        return $"Explorable Cave";
+                        reward = $"Explorable Cave";
+                        break;
                     case HabitatRewardType.RuneStone:
-                        return $"Rune Stones";
+                        reward = $"Rune Stones";
+                        break;
                     case HabitatRewardType.Habitat:
-                        return $"Habiat Upgrade";
+                        reward = $"Habitat Upgrade";
+                        break;
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
-                        return "";
+                        break;
                 }
+                break;
             default:
                 Debug.LogError($"Reward Type [{data.Type}] was invalid, please change!");
-                return "";
+                break;
         }
+
+        _rewardType.text = $"Rewards: {reward}";
+    }
+
+    public void UpdateDuration(ExpeditionData data)
+    {
+        _duration.text = $"Duration: {data.ActualDuration.ToString("F1")} (-{(data.BaseDuration * data.DurationModifier).ToString("F1")}) Seconds";
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)

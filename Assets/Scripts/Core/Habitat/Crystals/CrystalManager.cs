@@ -16,7 +16,7 @@ public class CrystalManager : MonoBehaviour
 
         foreach (CrystalSpawn crystal in crystals)
         {
-            crystal.Initialize();
+            crystal.Initialize(habitat);
         }
     }
 
@@ -27,7 +27,7 @@ public class CrystalManager : MonoBehaviour
             return;
         }
 
-        if (++_tracker >= 40)
+        if (++_tracker >= 60)
         {
             _tracker = 0;
             SpawnCrystal();

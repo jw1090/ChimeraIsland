@@ -1,26 +1,39 @@
+using System.Collections;
 using UnityEngine;
 
 public class GlowMarker : MonoBehaviour
 {
     private Transform _trainingPos = null;
-    private BoxCollider _boxCollider = null;
-    private MeshRenderer _meshRenderer = null;
     private Facility _facility = null;
 
-    public void ActivateGlowCollider(bool activate) { _boxCollider.enabled = activate; }
-    public void ActivateGlowRenderer(bool activate) { _meshRenderer.enabled = activate; }
+    public void ActivateGlow(bool activate)
+    {
+        if (activate == false)
+        {
+            if (this.gameObject.activeInHierarchy == true)
+            {
+                StartCoroutine(GlowReset());
+            }
+        }
+        else
+        {
+            this.gameObject.SetActive(true);
+        }
+    }
 
     public void Initialize(Facility facility)
     {
         _facility = facility;
 
-        _boxCollider = GetComponent<BoxCollider>();
-        _meshRenderer = GetComponent<MeshRenderer>();
-
         _trainingPos = this.transform;
 
-        ActivateGlowCollider(false);
-        ActivateGlowRenderer(false);
+        this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator GlowReset()
+    {
+        yield return new WaitForSeconds(0.02f);
+        this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
