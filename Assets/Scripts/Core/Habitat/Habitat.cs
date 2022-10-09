@@ -210,7 +210,7 @@ public class Habitat : MonoBehaviour
 
     public void AddChimera(Transform newChimera, bool loadingIn = false)
     {
-        if(ActiveChimeras.Count == 0)
+        if (ActiveChimeras.Count == 0)
         {
             newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
         }
@@ -222,7 +222,7 @@ public class Habitat : MonoBehaviour
         {
             newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
         }
-        
+
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 

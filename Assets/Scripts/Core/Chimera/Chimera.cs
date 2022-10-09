@@ -243,6 +243,11 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.StartAI();
     }
 
+    public void InitializeForBuilder()
+    {
+        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
+    }
+
     private void InitializeStats()
     {
         for (int i = 1; i < _exploration; ++i)

@@ -6,10 +6,15 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : AsyncLoader
 {
     [SerializeField] private SceneType _sceneType = SceneType.None;
+
+    [Header("Standard References")]
     [SerializeField] private CameraUtil _cameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
     [SerializeField] private LightingManager _lightingManager = null;
+
+    [Header("Builder References")]
+    [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -48,12 +53,13 @@ public class LevelLoader : AsyncLoader
                 HabitatSceneSetup();
                 break;
             case SceneType.MainMenu:
-                PlayCurrentSceneMusic();
-                break;
             case SceneType.Starting:
-                PlayCurrentSceneMusic();
                 break;
-            case SceneType.WorldMap:
+                PlayCurrentSceneMusic();
+            case SceneType.Builder:
+                _evolutionBuilder.BuildAll();
+                _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
+                PlayCurrentSceneMusic();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
@@ -98,6 +104,12 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
             _habitat.SetLightingManager(_lightingManager);
+        }
+
+        if (_evolutionBuilder != null)
+        {
+            _evolutionBuilder.Initialize();
+            _uiManager.EvolutionBuilderUI.SetEvolutionBuilder(_evolutionBuilder);
         }
     }
 
@@ -185,7 +197,7 @@ public class LevelLoader : AsyncLoader
             case SceneType.Starting:
                 _uiManager.StartingUI.SetupStartingButtons();
                 break;
-            case SceneType.WorldMap:
+            case SceneType.Builder:
                 break;
             default:
                 Debug.LogWarning($"Scene Type: {_sceneType} is invalid.");

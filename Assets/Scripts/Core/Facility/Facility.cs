@@ -29,8 +29,8 @@ public class Facility : MonoBehaviour
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
-    private int _upgradeProgress = 0;
-    private int _upgradeGoal = 0;
+    //private int _upgradeProgress = 0;
+    //private int _upgradeGoal = 0;
     private bool _activateTraining = false;
 
     public Chimera StoredChimera { get => _storedChimera; }

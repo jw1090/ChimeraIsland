@@ -30,6 +30,13 @@ public enum ElementType
     Fira,
 }
 
+public enum EvolutionVFXType
+{
+    None = -1,
+    GrowingLight,
+    WaterDrop,
+}
+
 public enum ExpeditionType
 {
     None = -1,
@@ -92,6 +99,7 @@ public enum SceneType
     MainMenu,
     Starting,
     WorldMap,
+    Builder,
 }
 
 public enum StatType
