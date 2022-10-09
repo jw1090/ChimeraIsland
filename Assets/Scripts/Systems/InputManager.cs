@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject _sphereMarker = null;
     private Camera _cameraMain = null;
     private CameraUtil _cameraUtil = null;
+    private DebugCameraUtil _debugCameraUtil = null;
     private ChimeraBehavior _heldChimera = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
@@ -25,7 +26,9 @@ public class InputManager : MonoBehaviour
     private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
+    private bool _debugViewEnabled = false;
     private const float _rotationAmount = 0.8f;
+    private bool _debugCameraActive = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -38,6 +41,12 @@ public class InputManager : MonoBehaviour
     {
         _cameraUtil = cameraUtil;
         _cameraMain = _cameraUtil.CameraCO;
+    }
+
+    public void SetDebugCameraUtil(DebugCameraUtil debugCameraUtil)
+    {
+        _debugCameraUtil = debugCameraUtil;
+        _debugCameraUtil.Camera.enabled = false;
     }
 
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
@@ -65,6 +74,7 @@ public class InputManager : MonoBehaviour
         return this;
     }
 
+   
     private void OnDebugConfigLoaded()
     {
         _debugConfig = ServiceLocator.Get<DebugConfig>();
@@ -85,6 +95,12 @@ public class InputManager : MonoBehaviour
         if (_debugHabitatUpgradeInputEnabled == false)
         {
             Debug.Log("Debug Habitat Upgrade Input is DISABLED");
+        }
+
+        _debugViewEnabled = _debugConfig.EnableDebugViewInput;
+        if (_debugViewEnabled == false)
+        {
+            Debug.Log("Debug View Input is DISABLED");
         }
     }
 
@@ -118,7 +134,7 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (_cameraUtil != null)
+        if (_cameraUtil != null && _cameraUtil.enabled)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
@@ -139,6 +155,26 @@ public class InputManager : MonoBehaviour
                 if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
                     _cameraUtil.CameraMovement();
+                }
+            }
+        }
+
+        if (_debugCameraUtil != null && _debugCameraUtil.enabled)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            {
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                _debugCameraUtil.CameraZoom();
+            }
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
+            {
+                if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
+                {
+                    _debugCameraUtil.CameraMovement();
                 }
             }
         }
@@ -164,6 +200,11 @@ public class InputManager : MonoBehaviour
         if (_debugHabitatUpgradeInputEnabled)
         {
             DebugHabitatUpgradeInput();
+        }
+
+        if(_debugViewEnabled)
+        {
+            DebugViewInput();
         }
     }
 
@@ -290,9 +331,33 @@ public class InputManager : MonoBehaviour
 
     private void DebugHabitatUpgradeInput()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             _expeditionManager.CompleteCurrentUpgradeExpedition();
+        }
+    }
+
+    private void DebugViewInput()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            _habitatUI.ToggleUI();
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _debugCameraActive = !_debugCameraActive;
+            if(_debugCameraActive)
+            {
+                _debugCameraUtil.Camera.enabled = true;
+                _cameraUtil.CameraCO.enabled = false;
+            }
+            else
+            {
+                _debugCameraUtil.transform.position = _cameraUtil.transform.position;
+                _debugCameraUtil.transform.rotation = _cameraUtil.transform.rotation;
+                _debugCameraUtil.Camera.enabled = false;
+                _cameraUtil.CameraCO.enabled = true;
+            }
         }
     }
 }

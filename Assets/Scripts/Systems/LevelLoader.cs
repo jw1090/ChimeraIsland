@@ -7,6 +7,7 @@ public class LevelLoader : AsyncLoader
 {
     [SerializeField] private SceneType _sceneType = SceneType.None;
     [SerializeField] private CameraUtil _cameraUtil = null;
+    [SerializeField] private DebugCameraUtil _debugCameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
     [SerializeField] private LightingManager _lightingManager = null;
@@ -78,6 +79,12 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
             _inputManager.SetCameraUtil(_cameraUtil);
+        }
+
+        if(_debugCameraUtil != null)
+        {
+            ServiceLocator.Register<DebugCameraUtil>(_debugCameraUtil.Initialize(), true);
+            _inputManager.SetDebugCameraUtil(_debugCameraUtil);
         }
 
         if (_habitat != null)
