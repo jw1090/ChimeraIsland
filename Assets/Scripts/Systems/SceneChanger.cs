@@ -26,7 +26,6 @@ public class SceneChanger : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
-        _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
     }
 
     public void NewGame()

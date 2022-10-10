@@ -23,10 +23,11 @@ public class EvolutionLogic : MonoBehaviour
     private Sprite _chimeraIcon = null;
 
     public ChimeraType Type { get => _evolutionType; }
+    public StatType StatBonus { get => _statBonus; }
     public Animator Animator { get => _animator; }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
-    public StatType StatBonus { get => _statBonus; }
+    public List<EvolutionLogic> PossibleEvolutions { get => _evolutionPaths; }
     public int ReqExploration { get => _reqExploration; }
     public int ReqStamina { get => _reqStamina; }
     public int ReqWisdom { get => _reqWisdom; }
