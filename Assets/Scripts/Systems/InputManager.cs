@@ -134,7 +134,7 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (_cameraUtil != null && _cameraUtil.enabled)
+        if (_cameraUtil != null && !_debugCameraActive)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
@@ -159,7 +159,7 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (_debugCameraUtil != null && _debugCameraUtil.enabled)
+        if (_debugCameraUtil != null && _debugCameraActive)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
@@ -170,7 +170,7 @@ public class InputManager : MonoBehaviour
                 _debugCameraUtil.CameraZoom();
             }
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
             {
                 if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
@@ -348,15 +348,19 @@ public class InputManager : MonoBehaviour
             _debugCameraActive = !_debugCameraActive;
             if(_debugCameraActive)
             {
+                _debugCameraUtil.transform.localPosition = new Vector3(0, 0, 0);
+                _debugCameraUtil.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 _debugCameraUtil.Camera.enabled = true;
-                _cameraUtil.CameraCO.enabled = false;
+                _cameraUtil.CameraCO.enabled = false; 
+                Cursor.visible = false;
             }
             else
             {
-                _debugCameraUtil.transform.position = _cameraUtil.transform.position;
-                _debugCameraUtil.transform.rotation = _cameraUtil.transform.rotation;
+                _debugCameraUtil.transform.localPosition = new Vector3( 0,0,0);
+                _debugCameraUtil.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 _debugCameraUtil.Camera.enabled = false;
                 _cameraUtil.CameraCO.enabled = true;
+                Cursor.visible = true;
             }
         }
     }
