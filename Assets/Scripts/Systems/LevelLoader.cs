@@ -28,7 +28,6 @@ public class LevelLoader : AsyncLoader
 
     protected override void Awake()
     {
-        // TODO: Craig is not happy with this <.< (It's all his fault though)
         _instance = this;
         GameLoader.CallOnComplete(LevelSetup);
     }
@@ -54,8 +53,8 @@ public class LevelLoader : AsyncLoader
                 break;
             case SceneType.MainMenu:
             case SceneType.Starting:
-                break;
                 PlayCurrentSceneMusic();
+                break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
                 _uiManager.EvolutionBuilderUI.LoadBaseChimeras();

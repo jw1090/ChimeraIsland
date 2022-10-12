@@ -420,6 +420,7 @@ MonoBehaviour:
   _habitat: {fileID: 2136768068}
   _expeditionManager: {fileID: 1725134172}
   _lightingManager: {fileID: 292593569}
+  _evolutionBuilder: {fileID: 0}
 --- !u!114 &2136768068 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411779017660834404, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
@@ -438,10 +439,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1995555186315372889, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
-      propertyPath: m_ClearFlags
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1995555186315372891, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
       propertyPath: m_Name
       value: Habitat Camera
@@ -489,6 +486,14 @@ PrefabInstance:
     - target: {fileID: 1995555186315372894, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8986822347153459199, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
+      propertyPath: _sensitivityChange
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8986822347153459199, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
+      propertyPath: _turnSensitivityChange
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}

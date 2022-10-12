@@ -30,6 +30,7 @@ public class HabitatUI : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
     private bool _tutorialOpen = false;
+    private bool _uiActive = true;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
@@ -39,6 +40,7 @@ public class HabitatUI : MonoBehaviour
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
+    public bool UIActive { get => _uiActive; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
 
@@ -197,13 +199,20 @@ public class HabitatUI : MonoBehaviour
     // Resets to the standard UI when nothing has been disabled.
     public void ResetStandardUI()
     {
-        _openDetailsButton.gameObject.SetActive(true);
-
-        if (_tutorialOpen == false)
+        if (_uiActive == false)
         {
-            _standardUI.gameObject.SetActive(true);
+            _openDetailsButton.gameObject.SetActive(false);
+            _standardUI.gameObject.SetActive(false);
         }
+        else
+        {
+            _openDetailsButton.gameObject.SetActive(true);
 
+            if (_tutorialOpen == false)
+            {
+                _standardUI.gameObject.SetActive(true);
+            }
+        }
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
@@ -239,6 +248,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenMarketplace()
     {
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
@@ -316,6 +330,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedition()
     {
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);
@@ -370,5 +389,11 @@ public class HabitatUI : MonoBehaviour
     public void UpdateShopUI()
     {
         _marketplacePanel.UpdateShopUI();
+    }
+
+    public void ToggleUI()
+    {
+        _uiActive = !_uiActive;
+        ResetStandardUI();
     }
 }
