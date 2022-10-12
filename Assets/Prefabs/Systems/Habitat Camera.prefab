@@ -103,10 +103,11 @@ MonoBehaviour:
   _zoomAmount: 20
   _minZoom: 30
   _maxZoom: 80
-  _moveSpeed: 12
   _screenEdgeSize: 50
   _sphereRadius: 2
   _offset: 1.5
+  _freeCamera: {fileID: 8986822347153459199}
+  _cameraCO: {fileID: 1995555186315372889}
 --- !u!114 &1995555186315372892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,11 +150,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2508541122459217075}
   - component: {fileID: 8742675787848561595}
-  - component: {fileID: 5974653297525937374}
   - component: {fileID: 927704019075528706}
   - component: {fileID: 8986822347153459199}
   m_Layer: 0
-  m_Name: Debug Camera
+  m_Name: Free Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,14 +216,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5974653297525937374
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3138962059379023497}
-  m_Enabled: 1
 --- !u!114 &927704019075528706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,12 +260,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae5a0e9aaa45f7469b3aa1744750912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 20
-  _sprintMultiplier: 1.5
-  _zoomAmount: 20
-  _minZoom: 20
-  _maxZoom: 90
-  _moveSpeed: 12
-  _screenEdgeSize: 50
-  _sphereRadius: 2
-  _offset: 1.5
+  _cameraCO: {fileID: 8742675787848561595}

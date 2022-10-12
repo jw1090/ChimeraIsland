@@ -9,7 +9,6 @@ public class LevelLoader : AsyncLoader
 
     [Header("Standard References")]
     [SerializeField] private CameraUtil _cameraUtil = null;
-    [SerializeField] private DebugCameraUtil _debugCameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
     [SerializeField] private LightingManager _lightingManager = null;
@@ -29,7 +28,6 @@ public class LevelLoader : AsyncLoader
 
     protected override void Awake()
     {
-        // TODO: Craig is not happy with this <.< (It's all his fault though)
         _instance = this;
         GameLoader.CallOnComplete(LevelSetup);
     }
@@ -55,8 +53,8 @@ public class LevelLoader : AsyncLoader
                 break;
             case SceneType.MainMenu:
             case SceneType.Starting:
-                break;
                 PlayCurrentSceneMusic();
+                break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
                 _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
@@ -85,12 +83,6 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
             _inputManager.SetCameraUtil(_cameraUtil);
-        }
-
-        if(_debugCameraUtil != null)
-        {
-            ServiceLocator.Register<DebugCameraUtil>(_debugCameraUtil.Initialize(), true);
-            _inputManager.SetDebugCameraUtil(_debugCameraUtil);
         }
 
         if (_habitat != null)

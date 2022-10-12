@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject _sphereMarker = null;
     private Camera _cameraMain = null;
     private CameraUtil _cameraUtil = null;
-    private DebugCameraUtil _debugCameraUtil = null;
+    private FreeCamera _freeCamera = null;
     private ChimeraBehavior _heldChimera = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
-    ExpeditionManager _expeditionManager = null;
+    private ExpeditionManager _expeditionManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
     private const float _rotationAmount = 0.8f;
-    private bool _debugCameraActive = false;
+    private bool _freeCameraActive = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -43,12 +43,7 @@ public class InputManager : MonoBehaviour
         _cameraMain = _cameraUtil.CameraCO;
     }
 
-    public void SetDebugCameraUtil(DebugCameraUtil debugCameraUtil)
-    {
-        _debugCameraUtil = debugCameraUtil;
-        _debugCameraUtil.Camera.enabled = false;
-    }
-
+    public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetUIManager(UIManager uiManager)
@@ -74,7 +69,7 @@ public class InputManager : MonoBehaviour
         return this;
     }
 
-   
+
     private void OnDebugConfigLoaded()
     {
         _debugConfig = ServiceLocator.Get<DebugConfig>();
@@ -134,7 +129,7 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (_cameraUtil != null && !_debugCameraActive)
+        if (_cameraUtil != null && _freeCameraActive == false)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
@@ -142,6 +137,7 @@ public class InputManager : MonoBehaviour
                 {
                     return;
                 }
+
                 _cameraUtil.CameraZoom();
             }
 
@@ -154,29 +150,13 @@ public class InputManager : MonoBehaviour
             {
                 if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
-                    _cameraUtil.CameraMovement();
+                    _cameraUtil.CameraUpdate();
                 }
             }
         }
-
-        if (_debugCameraUtil != null && _debugCameraActive)
+        else if (_freeCamera != null)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0)
-            {
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                {
-                    return;
-                }
-                _debugCameraUtil.CameraZoom();
-            }
-
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
-            {
-                if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
-                {
-                    _debugCameraUtil.CameraMovement();
-                }
-            }
+            _freeCamera.CameraUpdate();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -187,22 +167,22 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (_debugTutorialInputEnabled)
+        if (_debugTutorialInputEnabled == true)
         {
             DebugTutorialInput();
         }
 
-        if (_debugCurrencyInputEnabled)
+        if (_debugCurrencyInputEnabled == true)
         {
             DebugCurrencyInput();
         }
 
-        if (_debugHabitatUpgradeInputEnabled)
+        if (_debugHabitatUpgradeInputEnabled == true)
         {
             DebugHabitatUpgradeInput();
         }
 
-        if(_debugViewEnabled)
+        if (_debugViewEnabled == true)
         {
             DebugViewInput();
         }
@@ -343,24 +323,29 @@ public class InputManager : MonoBehaviour
         {
             _habitatUI.ToggleUI();
         }
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            _debugCameraActive = !_debugCameraActive;
-            if(_debugCameraActive)
+            if (_freeCamera == null)
             {
-                _debugCameraUtil.transform.localPosition = new Vector3(0, 0, 0);
-                _debugCameraUtil.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                _debugCameraUtil.Camera.enabled = true;
-                _cameraUtil.CameraCO.enabled = false; 
-                Cursor.visible = false;
+                return;
             }
-            else
+
+            _freeCameraActive = !_freeCameraActive; // Toggle
+
+            _freeCamera.CameraCO.enabled = _freeCameraActive;
+            _cameraUtil.CameraCO.enabled = !_freeCameraActive;
+            Cursor.visible = !_freeCameraActive;
+
+            if (_habitatUI.UIActive == _freeCameraActive) // Toggle UI off when going to free cam and vice versa.
             {
-                _debugCameraUtil.transform.localPosition = new Vector3( 0,0,0);
-                _debugCameraUtil.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                _debugCameraUtil.Camera.enabled = false;
-                _cameraUtil.CameraCO.enabled = true;
-                Cursor.visible = true;
+                _habitatUI.ToggleUI();
+            }
+
+            if (_freeCameraActive == false)
+            {
+                _freeCamera.transform.localPosition = new Vector3(0, 0, 0);
+                _freeCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
     }

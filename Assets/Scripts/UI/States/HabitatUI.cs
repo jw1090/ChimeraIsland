@@ -40,6 +40,7 @@ public class HabitatUI : MonoBehaviour
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
+    public bool UIActive { get => _uiActive; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
 
@@ -198,7 +199,7 @@ public class HabitatUI : MonoBehaviour
     // Resets to the standard UI when nothing has been disabled.
     public void ResetStandardUI()
     {
-        if(_uiActive == false)
+        if (_uiActive == false)
         {
             _openDetailsButton.gameObject.SetActive(false);
             _standardUI.gameObject.SetActive(false);
@@ -247,7 +248,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenMarketplace()
     {
-        if (_uiActive == false) return;
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
@@ -325,7 +330,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedition()
     {
-        if (_uiActive == false) return;
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);

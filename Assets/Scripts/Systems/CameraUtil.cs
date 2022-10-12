@@ -13,14 +13,16 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _maxZoom = 90.0f;
 
     [Header("Edge Follow")]
-    [SerializeField] private float _moveSpeed = 12.0f;
     [SerializeField] private int _screenEdgeSize = 50;
 
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 2.0f;
     [SerializeField] private float _offset = 1.5f;
 
-    private Camera _cameraCO = null;
+    [Header("Referenes")]
+    [SerializeField] private FreeCamera _freeCamera = null;
+    [SerializeField ] private Camera _cameraCO = null;
+
     private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
@@ -46,7 +48,6 @@ public class CameraUtil : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _cameraCO = Camera.main;
 
         _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
         _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
@@ -55,30 +56,28 @@ public class CameraUtil : MonoBehaviour
 
         CameraZoom();
 
+        _freeCamera.Initialize(_speed);
+        _inputManager.SetFreeCamera(_freeCamera);
+
         _initialized = true;
 
         return this;
     }
 
-    private void Update()
+    public void CameraUpdate()
     {
         if (_initialized == false)
         {
             return;
         }
-
-        DragChimeraMovement();
 
         CameraCollisionCheck();
+        CameraMovement();
+        DragChimeraMovement();
     }
 
-    public void CameraMovement()
+    private void CameraMovement()
     {
-        if (_initialized == false)
-        {
-            return;
-        }
-
         Vector3 direction = Vector3.zero;
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? _sprintMultiplier * _speed : _speed;
 
@@ -110,7 +109,7 @@ public class CameraUtil : MonoBehaviour
         direction.z = moveUp ? 1 : moveDown ? -1 : 0;
         direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
 
-        transform.position = transform.position + direction * _moveSpeed * Time.deltaTime;
+        transform.position = transform.position + direction * _speed * Time.deltaTime;
     }
 
     public void CameraZoom()
