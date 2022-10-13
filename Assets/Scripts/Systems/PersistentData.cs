@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
+    private TutorialCompletionData _tutorialCompletion = null;
     private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private GlobalData _globalSaveData = null;
@@ -12,8 +13,8 @@ public class PersistentData : MonoBehaviour
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
-    private ResourceManager _resourceManager = null;
 
+    public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
@@ -21,15 +22,18 @@ public class PersistentData : MonoBehaviour
     public List<float> Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
-
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
 
+    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion)
+    {
+        _tutorialCompletion = tutorialCompletion;
+    }
+
     public PersistentData Initialize()
     {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
         LoadData();
 
@@ -70,7 +74,7 @@ public class PersistentData : MonoBehaviour
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA, true);
@@ -82,6 +86,7 @@ public class PersistentData : MonoBehaviour
         _chimeraSaveData = myData.chimeras;
         _habitatSaveData = myData.habitats;
         _facilitySaveData = myData.facilities;
+        _tutorialCompletion = myData._tutorialCompletion;
         _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
     }
 

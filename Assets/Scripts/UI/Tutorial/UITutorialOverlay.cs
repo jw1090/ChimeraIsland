@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private UITextInfo _textInfo = null;
@@ -7,27 +6,37 @@ public class UITutorialOverlay : MonoBehaviour
     private TutorialStageData _tutorialData = null;
     private HabitatManager _habitatManager = null;
     private int _tutorialStep = -1;
-
+    private TutorialStageType _tutorialType;
+    private TutorialManager _tutorialManager = null;
     public void Initialize(HabitatUI habitatUI)
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _habitatUI = habitatUI;
 
         this.gameObject.SetActive(false);
     }
 
-    public void ShowOverlay(TutorialStageData tutorialSteps)
+    public void ShowOverlay(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
     {
-        _tutorialStep = -1;
-        _tutorialData = tutorialSteps;
-        _textInfo.gameObject.SetActive(true);
-        NextStep();
+            _tutorialType = tutorialType;
+            _tutorialStep = -1;
+            _tutorialData = tutorialSteps;
+            _textInfo.gameObject.SetActive(true);
+            NextStep();
     }
 
     public void NextStep()
     {
-        _tutorialStep++;
-        ShowStep();
+        if (_textInfo.Finished == true)
+        {
+            _tutorialStep++;
+            ShowStep();
+        }
+        else
+        {
+            _textInfo.FinishNow();
+        }
 
         // Debug.Log($"Current Tutorial Step: { _tutorialStep}");
     }
@@ -36,8 +45,9 @@ public class UITutorialOverlay : MonoBehaviour
     {
         if (_tutorialStep >= _tutorialData.StepData.Length)
         {
-            _tutorialData.finished = true;
+            _tutorialManager.TutorialComplete(_tutorialType);
             _habitatUI.EndTutorial();
+            _textInfo.Done();
             return;
         }
 
