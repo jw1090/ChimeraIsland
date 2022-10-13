@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
+    private TutorialCompletion _tutorialCompletion = null;
     private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private GlobalData _globalSaveData = null;
@@ -12,9 +13,8 @@ public class PersistentData : MonoBehaviour
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
-    private bool[] _tutorialCompleted = null;
 
-    public bool[] TutorialCompleted { get => _tutorialCompleted; }
+    public TutorialCompletion MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
@@ -22,12 +22,15 @@ public class PersistentData : MonoBehaviour
     public List<float> Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
-
-    public void SetTutorialProgress(bool[] finished) { _tutorialCompleted = finished; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
+
+    public void SetTutorialCompletion(TutorialCompletion tutorialCompletion)
+    {
+        _tutorialCompletion = tutorialCompletion;
+    }
 
     public PersistentData Initialize()
     {
@@ -71,7 +74,7 @@ public class PersistentData : MonoBehaviour
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, TutorialCompleted);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA, true);
@@ -83,7 +86,7 @@ public class PersistentData : MonoBehaviour
         _chimeraSaveData = myData.chimeras;
         _habitatSaveData = myData.habitats;
         _facilitySaveData = myData.facilities;
-        _tutorialCompleted = myData.tutorialCompleted;
+        _tutorialCompletion = myData._tutorialCompletion;
         _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
     }
 
