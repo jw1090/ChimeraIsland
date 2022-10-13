@@ -10,7 +10,7 @@ public class TutorialManager : MonoBehaviour
     private bool _tutorialsEnabled = true;
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
-    private TutorialCompletion _tutorialCompletion = null;
+    private TutorialCompletionData _tutorialCompletion = null;
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
 

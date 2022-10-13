@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameSaveData
 {
     public GlobalData globalData = new GlobalData(HabitatType.None, 0, 0);
-    public TutorialCompletion _tutorialCompletion;
+    public TutorialCompletionData _tutorialCompletion = null;
     public float masterVolume = 0.0f;
     public float musicVolume = 0.0f;
     public float sfxVolume = 0.0f;
@@ -16,7 +16,7 @@ public class GameSaveData
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
 
-    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletion tutorialCompletion)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletionData tutorialCompletion)
     {
         habitats = newHabitatData;
         globalData = newGlobalData;

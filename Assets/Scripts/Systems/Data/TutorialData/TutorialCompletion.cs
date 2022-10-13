@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class TutorialCompletion
+public class TutorialCompletionData
 {
     public bool _intro = false;
     public bool _expeditionSelection = false;
@@ -59,6 +59,8 @@ public class TutorialCompletion
             case TutorialStageType.FacilityUpgrades:
                 _facilityUpgrades= true;
                 break;
+            default:
+                return;
         }
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
-    private TutorialCompletion _tutorialCompletion = null;
+    private TutorialCompletionData _tutorialCompletion = null;
     private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private GlobalData _globalSaveData = null;
@@ -14,7 +14,7 @@ public class PersistentData : MonoBehaviour
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
 
-    public TutorialCompletion MyTutorialCompletion { get => _tutorialCompletion; }
+    public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
@@ -27,7 +27,7 @@ public class PersistentData : MonoBehaviour
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
 
-    public void SetTutorialCompletion(TutorialCompletion tutorialCompletion)
+    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion)
     {
         _tutorialCompletion = tutorialCompletion;
     }
