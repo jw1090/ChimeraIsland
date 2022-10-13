@@ -65,7 +65,7 @@ public class TutorialManager : MonoBehaviour
 
         for(int i = 0; i < _tutorialData.Tutorials.Length; i++)
         {
-            if (_tutorialCompletion.IsCompleted((TutorialStageType) i))
+            if (_tutorialCompletion.IsCompleted( (TutorialStageType)i ))
             {
                 ++_currentStage;
             }

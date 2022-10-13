@@ -48,7 +48,7 @@ public class UITextInfo : MonoBehaviour
             _timePassed += Time.deltaTime;
             if (_timePassed >= _speed)
             {
-                ShowText(_count);
+                ShowText();
                 _count++;
                 _timePassed = 0;
             }
@@ -70,17 +70,28 @@ public class UITextInfo : MonoBehaviour
     }
 
 
-    private void ShowText(int length)
+    private void ShowText()
     {
-        if (length >= _text.Length)
+        if (_count >= _text.Length)
         {
             _finished = true;
             _tutorialText.text = _text;
             return;
         }
-
-        string visible = _text.Substring(0, length);
-        string notVisible = _text.Substring(length, _text.Length - (length + 1));
+        string s = _text.Substring(_count-1,1);
+        if (_text.Substring(_count-1,1).EndsWith("<"))
+        {
+            if(_text.Substring(_count + 1,1).EndsWith(">"))
+            {
+                _count += 2;
+            }
+            else
+            {
+                _count += 3;
+            }
+        }
+        string visible = _text.Substring(0, _count);
+        string notVisible = _text.Substring(_count, _text.Length - (_count + 1));
         _tutorialText.text = $"{visible}<color=#00000000>{notVisible}</color>";
     }
 }
