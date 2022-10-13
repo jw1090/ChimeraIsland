@@ -78,7 +78,6 @@ public class UITextInfo : MonoBehaviour
             _tutorialText.text = _text;
             return;
         }
-        string s = _text.Substring(_count-1,1);
         if (_text.Substring(_count-1,1).EndsWith("<"))
         {
             if(_text.Substring(_count + 1,1).EndsWith(">"))
