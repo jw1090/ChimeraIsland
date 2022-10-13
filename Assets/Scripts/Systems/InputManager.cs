@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     private CameraUtil _cameraUtil = null;
     private FreeCamera _freeCamera = null;
     private ChimeraBehavior _heldChimera = null;
+    private EvolutionLogic _evolution;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private TutorialManager _tutorialManager = null;
@@ -219,22 +220,44 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
-            if (_isHolding == true)
+            if(_cameraUtil.SceneType == SceneType.Habitat)
             {
-                return;
-            }
+                if (_isHolding == true)
+                {
+                    return;
+                }
 
-            _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
+                _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
 
-            if (_heldChimera.Chimera.ReadyToEvolve == true)
-            {
-                _heldChimera.Chimera.EvolveChimera();
+                if (_heldChimera.Chimera.ReadyToEvolve == true)
+                {
+                    _heldChimera.Chimera.EvolveChimera();
+                }
+                else
+                {
+                    _habitatManager.CurrentHabitat.ActivateGlow(true);
+                    HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
+                    _isHolding = true;
+                }
             }
-            else
+            else if(_cameraUtil.SceneType == SceneType.Starting)
             {
-                _habitatManager.CurrentHabitat.ActivateGlow(true);
-                HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
-                _isHolding = true;
+                _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
+
+                if (_evolution.Type == ChimeraType.A)
+                {
+                    _uiManager.StartingUI.StartingA.ChimeraClicked(_evolution.Type);
+
+                }
+                else if (_evolution.Type == ChimeraType.B)
+                {
+                    _uiManager.StartingUI.StartingB.ChimeraClicked(_evolution.Type);
+                }
+                else if(_evolution.Type == ChimeraType.C)
+                {
+                    _uiManager.StartingUI.StartingC.ChimeraClicked(_evolution.Type);
+                }
+
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))

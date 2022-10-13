@@ -6,6 +6,9 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private StartingChimeraButton _optionBChimeraButton;
     [SerializeField] private StartingChimeraButton _optionCChimeraButton;
 
+    public StartingChimeraButton StartingA { get => _optionAChimeraButton; }
+    public StartingChimeraButton StartingB { get => _optionBChimeraButton; }
+    public StartingChimeraButton StartingC { get => _optionCChimeraButton; }
     public void SetAudioManager(AudioManager audioManager)
     {
         _optionAChimeraButton.SetAudioManager(audioManager);
