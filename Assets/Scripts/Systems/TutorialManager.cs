@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
@@ -7,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = true;
     private HabitatManager _habitatManager = null;
+    private PersistentData _persistentData = null;
 
     public TutorialStageType CurrentStage { get => _currentStage; }
     public bool TutorialsEnabled { get => _tutorialsEnabled; }
@@ -18,6 +21,8 @@ public class TutorialManager : MonoBehaviour
         DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
 
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
         LoadTutorialFromJson();
 
@@ -44,6 +49,15 @@ public class TutorialManager : MonoBehaviour
     private void LoadTutorialFromJson()
     {
         _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
+        bool[] finished = _persistentData.TutorialCompleted;
+        if (finished.Length < _tutorialData.Tutorials.Length)
+        {
+            Array.Resize(ref finished, _tutorialData.Tutorials.Length);
+        }
+        for (int i = 0; i < _tutorialData.Tutorials.Length; i++)
+        {
+            _tutorialData.Tutorials[i].finished = finished[i];
+        }
     }
 
     private void CurrentStageInitialize()
@@ -73,8 +87,12 @@ public class TutorialManager : MonoBehaviour
     public void SaveTutorialProgress()
     {
         if (_tutorialsEnabled == false) { return; }
-
-        FileHandler.SaveToJSON(_tutorialData, GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
+        List<bool> finished = new List<bool>();
+        foreach (TutorialStageData tutorialStage in _tutorialData.Tutorials)
+        {
+            finished.Add(tutorialStage.finished);
+        }
+        _persistentData.SetTutorialProgress(finished.ToArray());
     }
 
     public void ResetTutorialProgress()
