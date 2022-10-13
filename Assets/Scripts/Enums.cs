@@ -139,6 +139,7 @@ public enum TutorialStageType
     ExpeditionSelection,
     ExpeditionSetup,
     Facilities,
+    ReccomendedTraits,
     FossilShop,
     FacilityUpgrades,
 }
