@@ -134,10 +134,10 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void StartTutorial(TutorialStageData tutorialSteps)
+    public void StartTutorial(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
     {
         _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps);
+        _tutorialOverlay.ShowOverlay(tutorialSteps, tutorialType);
 
         _standardUI.gameObject.SetActive(false);
 
