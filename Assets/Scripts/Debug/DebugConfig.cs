@@ -7,7 +7,6 @@ public class DebugConfig : MonoBehaviour, IGameModule
     public static event Action DebugConfigLoaded = null;
 
     [SerializeField] private bool _enableTutorials = true;
-    [SerializeField] private bool _enableDebugTutorialInput = false;
     [SerializeField] private bool _enableDebugCurrencyInput = true;
     [SerializeField] private bool _enableDebugHabitatUpgradeInput = true;
     [SerializeField] private bool _enableDebugViewInput = true;
@@ -15,7 +14,6 @@ public class DebugConfig : MonoBehaviour, IGameModule
     [SerializeField] private int _debugFossilGain = 1;
 
     public bool TutorialsEnabled { get => _enableTutorials; }
-    public bool DebugTutorialInputEnabled { get => _enableDebugTutorialInput; }
     public bool DebugCurrencyInputEnabled { get => _enableDebugCurrencyInput; }
     public bool DebugHabitatUpgradeInputEnabled { get => _enableDebugHabitatUpgradeInput; }
     public bool EnableDebugViewInput { get => _enableDebugViewInput; }
