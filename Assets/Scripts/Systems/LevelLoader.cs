@@ -81,7 +81,7 @@ public class LevelLoader : AsyncLoader
 
         if (_cameraUtil != null)
         {
-            ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
+            ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(_sceneType), true);
             _inputManager.SetCameraUtil(_cameraUtil);
         }
 

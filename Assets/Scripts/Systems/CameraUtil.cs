@@ -21,7 +21,7 @@ public class CameraUtil : MonoBehaviour
 
     [Header("Referenes")]
     [SerializeField] private FreeCamera _freeCamera = null;
-    [SerializeField ] private Camera _cameraCO = null;
+    [SerializeField] private Camera _cameraCO = null;
 
     private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
@@ -30,6 +30,7 @@ public class CameraUtil : MonoBehaviour
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
     private Rect _leftRect = new Rect();
+    private SceneType _sceneType = SceneType.None;
     private bool _initialized = false;
     private bool _canMoveUp = true;
     private bool _canMoveDown = true;
@@ -39,25 +40,31 @@ public class CameraUtil : MonoBehaviour
     private float _standardTransitionSpeed = 0.06f;
     private float _findTransitionSpeed = 0.05f;
 
-    public bool IsHolding { get; set; }
     public Camera CameraCO { get => _cameraCO; }
+    public SceneType SceneType { get => _sceneType; }
+    public bool IsHolding { get; set; }
 
-    public CameraUtil Initialize()
+    public CameraUtil Initialize(SceneType sceneType)
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
 
-        _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
-        _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
-        _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
-        _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
+        _sceneType = sceneType;
+        if (_sceneType == SceneType.Habitat)
+        {
+            _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
+            _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
+            _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
+            _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
 
-        CameraZoom();
+            CameraZoom();
 
-        _freeCamera.Initialize(_speed);
-        _inputManager.SetFreeCamera(_freeCamera);
+            _freeCamera.Initialize(_speed);
+
+            _inputManager.SetFreeCamera(_freeCamera);
+        }
 
         _initialized = true;
 
@@ -67,6 +74,11 @@ public class CameraUtil : MonoBehaviour
     public void CameraUpdate()
     {
         if (_initialized == false)
+        {
+            return;
+        }
+
+        if (_sceneType != SceneType.Habitat)
         {
             return;
         }
