@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class StartingUI : MonoBehaviour
 {
-    [SerializeField] private StartingChimeraButton _optionAChimeraButton;
-    [SerializeField] private StartingChimeraButton _optionBChimeraButton;
-    [SerializeField] private StartingChimeraButton _optionCChimeraButton;
+    [SerializeField] private StartingChimeraButton _optionAChimeraButton = null;
+    [SerializeField] private StartingChimeraButton _optionBChimeraButton = null;
+    [SerializeField] private StartingChimeraButton _optionCChimeraButton = null;
+    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
 
     public StartingChimeraButton StartingA { get => _optionAChimeraButton; }
     public StartingChimeraButton StartingB { get => _optionBChimeraButton; }
     public StartingChimeraButton StartingC { get => _optionCChimeraButton; }
+
     public void SetAudioManager(AudioManager audioManager)
     {
         _optionAChimeraButton.SetAudioManager(audioManager);

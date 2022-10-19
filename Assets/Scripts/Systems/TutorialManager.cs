@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
@@ -7,7 +5,7 @@ public class TutorialManager : MonoBehaviour
     private TutorialData _tutorialData = null;
     private HabitatUI _habitatUI = null;
     private TutorialStageType _currentStage = TutorialStageType.Intro;
-    private bool _tutorialsEnabled = true;
+    private bool _tutorialsEnabled = false;
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private TutorialCompletionData _tutorialCompletion = null;
@@ -26,8 +24,6 @@ public class TutorialManager : MonoBehaviour
 
         LoadTutorialFromJson();
 
-        CurrentStageInitialize();
-
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         return this;
     }
@@ -43,6 +39,10 @@ public class TutorialManager : MonoBehaviour
         if (_tutorialsEnabled == false)
         {
             Debug.LogWarning("Tutorials are DISABLED");
+        }
+        else
+        {
+            CurrentStageInitialize();
         }
     }
 
@@ -63,9 +63,9 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        for(int i = 0; i < _tutorialData.Tutorials.Length; i++)
+        for (int i = 0; i < _tutorialData.Tutorials.Length; i++)
         {
-            if (_tutorialCompletion.IsCompleted( (TutorialStageType)i ))
+            if (_tutorialCompletion.IsCompleted((TutorialStageType)i))
             {
                 ++_currentStage;
             }

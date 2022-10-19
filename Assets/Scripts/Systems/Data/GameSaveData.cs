@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class GameSaveData
 {
     public GlobalData globalData = new GlobalData(HabitatType.None, 0, 0);
-    public TutorialCompletionData _tutorialCompletion = null;
+    public TutorialCompletionData _tutorialCompletion = new TutorialCompletionData();
     public float masterVolume = 0.0f;
     public float musicVolume = 0.0f;
     public float sfxVolume = 0.0f;

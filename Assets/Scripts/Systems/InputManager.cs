@@ -24,7 +24,6 @@ public class InputManager : MonoBehaviour
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
-    private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
@@ -74,12 +73,6 @@ public class InputManager : MonoBehaviour
     private void OnDebugConfigLoaded()
     {
         _debugConfig = ServiceLocator.Get<DebugConfig>();
-
-        _debugTutorialInputEnabled = _debugConfig.DebugTutorialInputEnabled;
-        if (_debugTutorialInputEnabled == false)
-        {
-            Debug.Log("Debug Tutorial Input is DISABLED");
-        }
 
         _debugCurrencyInputEnabled = _debugConfig.DebugCurrencyInputEnabled;
         if (_debugCurrencyInputEnabled == false)
@@ -166,11 +159,6 @@ public class InputManager : MonoBehaviour
             {
                 _habitatUI.ToggleSettingsMenu();
             }
-        }
-
-        if (_debugTutorialInputEnabled == true)
-        {
-            DebugTutorialInput();
         }
 
         if (_debugCurrencyInputEnabled == true)
@@ -294,26 +282,6 @@ public class InputManager : MonoBehaviour
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
         _heldChimera = null;
-    }
-
-    private void DebugTutorialInput()
-    {
-        int currentStageId = (int)_tutorialManager.CurrentStage;
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            _tutorialManager.ResetTutorialProgress();
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            int newStageId = ++currentStageId;
-
-            if (newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
-            {
-                _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
-            }
-        }
     }
 
     private void DebugCurrencyInput()
