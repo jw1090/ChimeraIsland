@@ -21,6 +21,7 @@ public class StartingChimeraButton : MonoBehaviour
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
 
+
         //ChimeraName();
     }
 
@@ -40,23 +41,53 @@ public class StartingChimeraButton : MonoBehaviour
         _sceneChanger.LoadStonePlains();
     }
 
-    //private void ChimeraName()
-    //{
-    //    switch (_chimeraType)
-    //    {
-    //        case ChimeraType.None:
-    //            break;
-    //        case ChimeraType.A:
-    //            _nameText.text = "Nauphant";
-    //            break;
-    //        case ChimeraType.B:
-    //            _nameText.text = "Frolli";
-    //            break;
-    //        case ChimeraType.C:
-    //            _nameText.text = "Patchero";
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
+    public string GetChimeraName()
+    {
+        switch (_chimeraType)
+        {
+            case ChimeraType.None:
+                return null;
+            case ChimeraType.A:
+                return "Nauphant";
+            case ChimeraType.B:
+                return "Frolli";
+            case ChimeraType.C:
+                return "Patchero";
+            default:
+                return null;
+        }
+    }
+    public string GetChimeraBio()
+    {
+        switch (_chimeraType)
+        {
+            case ChimeraType.None:
+                return null;
+            case ChimeraType.A:
+                return "He's blue and likes water, like Squirtle but as an mini elephant.";
+            case ChimeraType.B:
+                return "Goofy ahh creature";
+            case ChimeraType.C:
+                return "Santiago's Favourite, this is HIM, this is THE chimera.";
+            default:
+                return null;
+        }
+    }
+
+    public ElementType GetChimeraElement()
+    {
+        switch (_chimeraType)
+        {
+            case ChimeraType.None:
+                return ElementType.None;
+            case ChimeraType.A:
+                return ElementType.Aqua;
+            case ChimeraType.B:
+                return ElementType.Fira;
+            case ChimeraType.C:
+                return ElementType.Bio;
+            default:
+                return ElementType.None;
+        }
+    }
 }
