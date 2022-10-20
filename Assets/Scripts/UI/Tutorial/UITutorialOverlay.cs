@@ -5,13 +5,15 @@ public class UITutorialOverlay : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private TutorialStageData _tutorialData = null;
     private HabitatManager _habitatManager = null;
-    private int _tutorialStep = -1;
-    private TutorialStageType _tutorialType;
     private TutorialManager _tutorialManager = null;
+    private TutorialStageType _tutorialType;
+    private int _tutorialStep = -1;
+
     public void Initialize(HabitatUI habitatUI)
     {
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
         _habitatUI = habitatUI;
 
         this.gameObject.SetActive(false);
@@ -30,7 +32,7 @@ public class UITutorialOverlay : MonoBehaviour
     {
         if (_textInfo.Finished == true)
         {
-            _tutorialStep++;
+            ++_tutorialStep;
             ShowStep();
         }
         else
@@ -51,12 +53,8 @@ public class UITutorialOverlay : MonoBehaviour
             return;
         }
 
-        TutorialStepData loadedStep = _tutorialData.StepData[_tutorialStep];
-
         Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
 
         _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
-
-        // Debug.Log($"Descrpition: { loadedStep.description }  Icon: { loadedStep.type }");
     }
 }

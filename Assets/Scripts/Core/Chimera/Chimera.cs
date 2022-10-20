@@ -228,8 +228,6 @@ public class Chimera : MonoBehaviour
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
 
-        _elementIcon = _resourceManager.GetElementSprite(_elementalType);
-
         if (_uniqueId == 1)
         {
             _uniqueId = gameObject.GetInstanceID();
@@ -237,6 +235,7 @@ public class Chimera : MonoBehaviour
 
         InitializeStats();
         _chimeraBehavior.Initialize();
+
         InitializeEvolution();
         _interactionIcon.Initialize();
 
@@ -281,9 +280,12 @@ public class Chimera : MonoBehaviour
     private void InitializeEvolution()
     {
         _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
+
         _currentEvolution.Initialize(this);
+
         _chimeraType = _currentEvolution.ChimeraType;
         _elementalType = _currentEvolution.ElementType;
+        _elementIcon = _resourceManager.GetElementSprite(_elementalType);
     }
 
     public void EnergyTick()
@@ -295,7 +297,7 @@ public class Chimera : MonoBehaviour
 
         ++_energyTickCounter;
 
-        if (_energyTickCounter >= 45)
+        if (_energyTickCounter >= DetermineTickRequired())
         {
             _energyTickCounter = 0;
 
@@ -305,6 +307,18 @@ public class Chimera : MonoBehaviour
                 _habitatUI.UpdateHabitatUI();
             }
         }
+    }
+
+    private int DetermineTickRequired()
+    {
+        float numerator = _stamina + 10.0f;
+        float denominator = 100.0f;
+        float exponent = -1.5f;
+        float flatModifer = 15.0f;
+
+        int amount = (int)(Mathf.Pow(numerator / denominator, exponent) + flatModifer);
+
+        return amount;
     }
 
     public void AddEnergy(int energyAmount)
@@ -412,7 +426,7 @@ public class Chimera : MonoBehaviour
             Debug.LogError($"Not ready for evolution!");
             return;
         }
-            
+
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsPanel.DetailsStatGlow();

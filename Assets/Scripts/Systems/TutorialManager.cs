@@ -4,13 +4,9 @@ public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
     private HabitatUI _habitatUI = null;
-    private TutorialStageType _currentStage = TutorialStageType.Intro;
     private bool _tutorialsEnabled = false;
-    private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private TutorialCompletionData _tutorialCompletion = null;
-    public TutorialStageType CurrentStage { get => _currentStage; }
-    public bool TutorialsEnabled { get => _tutorialsEnabled; }
 
     public void SetHabitatUI(HabitatUI habitatUI) { _habitatUI = habitatUI; }
 
@@ -24,7 +20,6 @@ public class TutorialManager : MonoBehaviour
 
         LoadTutorialFromJson();
 
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
         return this;
     }
 
@@ -40,40 +35,12 @@ public class TutorialManager : MonoBehaviour
         {
             Debug.LogWarning("Tutorials are DISABLED");
         }
-        else
-        {
-            CurrentStageInitialize();
-        }
     }
 
     private void LoadTutorialFromJson()
     {
         _tutorialData = FileHandler.ReadFromJSON<TutorialData>(GameConsts.JsonSaveKeys.TUTORIAL_DATA, false);
         _tutorialCompletion = _persistentData.MyTutorialCompletion;
-    }
-
-    private void CurrentStageInitialize()
-    {
-        if (_tutorialsEnabled == false) { return; }
-
-        if (_tutorialData == null)
-        {
-            Debug.LogWarning("No Tutorial Data Loaded! Disabling Tutorials!");
-            _tutorialsEnabled = false;
-            return;
-        }
-
-        for (int i = 0; i < _tutorialData.Tutorials.Length; i++)
-        {
-            if (_tutorialCompletion.IsCompleted((TutorialStageType)i))
-            {
-                ++_currentStage;
-            }
-            else
-            {
-                return;
-            }
-        }
     }
 
     public void SaveTutorialProgress()
@@ -83,14 +50,10 @@ public class TutorialManager : MonoBehaviour
 
     public void ResetTutorialProgress()
     {
-        if (_tutorialsEnabled == false) { return; }
-
         if (_tutorialData != null)
         {
             _tutorialCompletion.Reset();
         }
-
-        _currentStage = 0;
 
         SaveTutorialProgress();
 
@@ -99,46 +62,35 @@ public class TutorialManager : MonoBehaviour
 
     public void ShowTutorialStage(TutorialStageType tutorialType)
     {
-        if (_tutorialsEnabled == false) { return; }
+        if (_tutorialsEnabled == false)
+        {
+            return;
+        }
 
-        if (_tutorialCompletion.IsCompleted(tutorialType)) { return; }
+        if (_tutorialCompletion.IsCompleted(tutorialType))
+        {
+            return;
+        }
 
-        _currentStage = tutorialType;
-
-        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
-
-        Debug.Log($"Showing Tutorial Stage {(int)_currentStage}: {_currentStage}");
+        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)tutorialType];
         _habitatUI.StartTutorial(tutorialStage, tutorialType);
     }
 
     public void TutorialStageCheck()
     {
-        if (_tutorialsEnabled == false) { return; }
-
-        TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)_currentStage];
-
-        switch (_habitatManager.CurrentHabitat.Type)
+        if (_tutorialsEnabled == false)
         {
-            case HabitatType.StonePlains:
-                if (_currentStage == TutorialStageType.Intro && _tutorialCompletion.IsCompleted(TutorialStageType.Intro) == false)
-                {
-                    ShowTutorialStage(TutorialStageType.Intro);
-                }
-                else
-                {
-                    Debug.Log($"Last Tutorial was Stage {(int)_currentStage}: {_currentStage}");
-                }
-                break;
-            case HabitatType.TreeOfLife:
-                break;
-            default:
-                Debug.Log($"Habitat type \"{_habitatManager.CurrentHabitat.Type}\" shouldn't exist.");
-                break;
+            return;
+        }
+
+        if (_tutorialCompletion.IsCompleted(TutorialStageType.Intro) == false)
+        {
+            ShowTutorialStage(TutorialStageType.Intro);
         }
     }
 
-    public void TutorialComplete(TutorialStageType type)
+    public void TutorialComplete(TutorialStageType tutorialType)
     {
-        _tutorialCompletion.Complete(type);
+        _tutorialCompletion.Complete(tutorialType);
     }
 }
