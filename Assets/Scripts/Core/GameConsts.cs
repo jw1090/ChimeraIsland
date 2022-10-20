@@ -7,6 +7,7 @@ public static class GameConsts
         public const int MAIN_MENU = 1;
         public const int STARTER_SELECT = 2;
         public const int STONE_PLANES = 3;
+        public const int TEMPLE = 4;
     }
 
     public class JsonSaveKeys

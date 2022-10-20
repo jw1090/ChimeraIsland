@@ -11,16 +11,17 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
     private UIManager _uiManager = null;
 
-    public Button AcceptButton { get => _acceptButton.Button; }
+    public Button AcceptButton { get => _acceptButton.GetComponent<Button>(); }
     public Button DeclineButton { get => _declineButton; }
 
-    public ChimeraType ChimeraType { get => _acceptButton.ChimeraType; }
-    public void SetChimeraType(ChimeraType chimeraType) { _acceptButton.SetChimeraType(chimeraType); }
+    public void SetChimeraType(ChimeraType chimeraType) { }
 
     public void Initialize(UIManager uIManager)
     {
         _uiManager = uIManager;
+
         _acceptButton.Initialize();
+        _startingChimeraInfo.Initialize();
 
         SetupListeners();
     }
@@ -28,13 +29,13 @@ public class StartingUI : MonoBehaviour
     public void OnSceneStart()
     {
         _acceptButton.SetupStartingButton();
+
         ResetUI();
     }
 
     public void SetupListeners()
     {
-        _uiManager.CreateButtonListener(DeclineButton,ResetUI);
-        _uiManager.CreateButtonListener(AcceptButton, ChimeraDecision);
+        _uiManager.CreateButtonListener(DeclineButton, ResetUI);
     }
 
     public void OpenChimeraInfo()
@@ -42,9 +43,11 @@ public class StartingUI : MonoBehaviour
         _container.SetActive(true);
         _title.gameObject.SetActive(false);
     }
-    public void LoadChimeraInfo()
+
+    public void LoadChimeraInfo(EvolutionLogic evolutionLogic)
     {
-        _startingChimeraInfo.LoadChimeraData(_acceptButton.GetChimeraName(),_acceptButton.GetChimeraElement(),_acceptButton.GetChimeraBio());
+        _acceptButton.SetChimeraType(evolutionLogic.ChimeraType);
+        _startingChimeraInfo.LoadChimeraData(evolutionLogic);
     }
 
     private void ResetUI()
@@ -52,11 +55,4 @@ public class StartingUI : MonoBehaviour
         _container.SetActive(false);
         _title.gameObject.SetActive(true);
     }
-
-    private void ChimeraDecision()
-    {
-        _acceptButton.ChimeraClicked(ChimeraType);
-    }
-
-
 }

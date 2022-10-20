@@ -17,7 +17,6 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private StatefulObject _statefulButtons = null;
     [SerializeField] private Button _findButton = null;
     [SerializeField] private Button _addButton = null;
-    [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
 
@@ -56,7 +55,6 @@ public class ChimeraDetails : MonoBehaviour
 
     public void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_transferButton, TransferMapClicked);
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
         _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
         _uiManager.CreateButtonListener(_findButton, FindChimera);
@@ -163,11 +161,6 @@ public class ChimeraDetails : MonoBehaviour
         }
 
         return true;
-    }
-
-    private void TransferMapClicked()
-    {
-        _uiManager.HabitatUI.OpenTransferMap(_chimera);
     }
 
     private void AddChimeraClicked()
