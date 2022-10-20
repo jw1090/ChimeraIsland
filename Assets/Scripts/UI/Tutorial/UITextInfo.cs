@@ -80,17 +80,24 @@ public class UITextInfo : MonoBehaviour
         }
         if (_text.Substring(_count-1,1).EndsWith("<"))
         {
-            if(_text.Substring(_count + 1,1).EndsWith(">"))
+            while(true)
             {
-                _count += 2;
-            }
-            else
-            {
-                _count += 3;
+                if (_text.Substring(_count, 1).EndsWith(">"))
+                {
+                    _count++;
+                    break;
+                }
+                _count++;
             }
         }
         string visible = _text.Substring(0, _count);
-        string notVisible = _text.Substring(_count, _text.Length - (_count + 1));
+        string notVisible = _text.Substring(_count, Mathf.Max(_text.Length - (_count + 1),0));
+        notVisible = notVisible.Replace("<sprite name=fira>", "X");
+        notVisible = notVisible.Replace("<sprite name=bio>", "X");
+        notVisible = notVisible.Replace("<sprite name=aqua>", "X");
+        notVisible = notVisible.Replace("<sprite name=Wisdom>", "X");
+        notVisible = notVisible.Replace("<sprite name=Exploration>", "X");
+        notVisible = notVisible.Replace("<sprite name=Stamina>", "X");
         _tutorialText.text = $"{visible}<color=#00000000>{notVisible}</color>";
     }
 }
