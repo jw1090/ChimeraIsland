@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
@@ -498,12 +497,6 @@ public class ExpeditionManager : MonoBehaviour
                     _habitatManager.CurrentHabitat.Temple.Build();
                     _cameraUtil.TempleCameraShift();
                     _uiManager.EnableUIByType(UIElementType.FossilsWallets);
-                }
-
-                if (_selectedExpedition.UnlocksNewChimera == true)
-                {
-                    ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
-                    Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);

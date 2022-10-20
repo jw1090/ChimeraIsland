@@ -10,12 +10,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HabitatUI _habitatUI = null;
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
+    [SerializeField] private TempleUI _templeUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
     private bool _uiActive = true;
 
-    public HabitatUI HabitatUI { get => _habitatUI; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
+    public HabitatUI HabitatUI { get => _habitatUI; }
+    public TempleUI TempleUI { get => _templeUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public bool UIActive { get => _uiActive; }
 

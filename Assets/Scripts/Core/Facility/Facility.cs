@@ -113,7 +113,6 @@ public class Facility : MonoBehaviour
         }
 
         ++_currentTier;
-        _habitatUI.UpdateShopUI();
 
         if (moveCamera == true)
         {
