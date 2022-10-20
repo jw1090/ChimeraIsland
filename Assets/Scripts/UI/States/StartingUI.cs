@@ -42,6 +42,10 @@ public class StartingUI : MonoBehaviour
         _container.SetActive(true);
         _title.gameObject.SetActive(false);
     }
+    public void LoadChimeraInfo()
+    {
+        _startingChimeraInfo.LoadChimeraData(_acceptButton.GetChimeraName(),_acceptButton.GetChimeraElement(),_acceptButton.GetChimeraBio());
+    }
 
     private void ResetUI()
     {
@@ -53,5 +57,6 @@ public class StartingUI : MonoBehaviour
     {
         _acceptButton.ChimeraClicked(ChimeraType);
     }
+
 
 }

@@ -11,9 +11,14 @@ public class StartingChimeraInfo : MonoBehaviour
     [SerializeField] private List<GameObject> _staminaPreference = new List<GameObject>();
     [SerializeField] private List<GameObject> _wisdomPreference = new List<GameObject>();
     [SerializeField] private TextMeshProUGUI _chimeraInfo = null;
+    private ResourceManager _resourceManager = null;
 
-    public void LoadChimeraData(string name, ElementType iconType, int explorationPreference, int staminaPreference, int wisdomPreference, string info)
+    public void LoadChimeraData(string name, ElementType iconType, string info)// ElementType iconType, int explorationPreference, int staminaPreference, int wisdomPreference, string info)
     {
-
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _chimeraName.text = name;
+        _icon.sprite = _resourceManager.GetElementSprite(iconType);
+        _chimeraInfo.text = info;
     }
+
 }
