@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private UITextInfo _textInfo = null;
+    [SerializeField] private StatefulObject _darken = null;
     private HabitatUI _habitatUI = null;
     private TutorialStageData _tutorialData = null;
     private HabitatManager _habitatManager = null;
@@ -11,6 +13,7 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void Initialize(HabitatUI habitatUI)
     {
+        _darken.SetState("StandardBG");
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
@@ -21,7 +24,25 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowOverlay(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
     {
-            _tutorialType = tutorialType;
+        switch ((TutorialDarkenType)Enum.Parse(typeof(TutorialDarkenType), tutorialSteps.Darken, true))
+        {
+            case TutorialDarkenType.Standard:
+                _darken.SetState("StandardBG");
+                break;
+            case TutorialDarkenType.firstExpedition:
+                _darken.SetState("FirstExpeditionBG");
+                break;
+            case TutorialDarkenType.ChimeraList:
+                _darken.SetState("ChimeraListBG");
+                break;
+            case TutorialDarkenType.ReccomendedTraits:
+                _darken.SetState("ReccomendedTraitsBG");
+                break;
+            default:
+                Debug.LogError($"TutorialDarkenType: {tutorialSteps.Darken} not available");
+                break;
+        }
+        _tutorialType = tutorialType;
             _tutorialStep = -1;
             _tutorialData = tutorialSteps;
             _textInfo.gameObject.SetActive(true);
@@ -55,6 +76,6 @@ public class UITutorialOverlay : MonoBehaviour
 
         Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
 
-        _textInfo.Load(_tutorialData.StepData[_tutorialStep].description, icon);
+        _textInfo.Load(_tutorialData.StepData[_tutorialStep].Description, icon);
     }
 }

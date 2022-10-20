@@ -3,6 +3,6 @@ using System;
 [Serializable]
 public class TutorialStepData
 {
-    public string description;
-    public string type = TutorialIconType.None.ToString();
+    public string Description;
+    public string Type = TutorialIconType.None.ToString();
 }
