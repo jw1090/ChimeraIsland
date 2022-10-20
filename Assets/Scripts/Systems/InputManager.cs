@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     private EvolutionLogic _evolution;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
+    private StartingUI _startingUI = null;
     private TutorialManager _tutorialManager = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
@@ -50,6 +51,7 @@ public class InputManager : MonoBehaviour
     {
         _uiManager = uiManager;
         _habitatUI = _uiManager.HabitatUI;
+        _startingUI = _uiManager.StartingUI;
     }
 
     public InputManager Initialize()
@@ -232,20 +234,11 @@ public class InputManager : MonoBehaviour
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
-                if (_evolution.Type == ChimeraType.A)
-                {
-                    _uiManager.StartingUI.StartingA.ChimeraClicked(_evolution.Type);
+                _startingUI.OpenChimeraInfo();
 
-                }
-                else if (_evolution.Type == ChimeraType.B)
-                {
-                    _uiManager.StartingUI.StartingB.ChimeraClicked(_evolution.Type);
-                }
-                else if(_evolution.Type == ChimeraType.C)
-                {
-                    _uiManager.StartingUI.StartingC.ChimeraClicked(_evolution.Type);
-                }
-
+                _startingUI.SetChimeraType(_evolution.Type);
+                //Talk to the starting chimera button to set the chimera i want to work with. 
+                //Starting chimera info populated with the evolution information.
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))

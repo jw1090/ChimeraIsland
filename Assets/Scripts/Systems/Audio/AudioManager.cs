@@ -153,6 +153,7 @@ public class AudioManager : MonoBehaviour
     {
         MainMenuUI mainMenuUI = _uiManager.MainMenuUI;
         HabitatUI habitatUI = _uiManager.HabitatUI;
+        StartingUI startingUI = _uiManager.StartingUI;
         EvolutionBuilderUI builderUI = _uiManager.EvolutionBuilderUI;
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
@@ -171,6 +172,9 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.Marketplace.CloseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
+
+        _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);
 
         _uiManager.CreateButtonListener(builderUI.PlayButton, PlayClickSFX);
         _uiManager.CreateButtonListener(builderUI.ResetButton, PlayClickSFX);

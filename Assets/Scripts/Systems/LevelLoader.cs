@@ -194,7 +194,7 @@ public class LevelLoader : AsyncLoader
             case SceneType.MainMenu:
                 break;
             case SceneType.Starting:
-                _uiManager.StartingUI.SetupStartingButtons();
+                _uiManager.StartingUI.OnSceneStart();
                 break;
             case SceneType.Builder:
                 break;
