@@ -66,7 +66,6 @@ public enum HabitatType
 {
     None = -1,
     StonePlains,
-    TreeOfLife,
 }
 
 public enum HabitatRewardType
@@ -95,10 +94,10 @@ public enum ModifierType
 public enum SceneType
 {
     None = -1,
-    Habitat,
     MainMenu,
     Starting,
-    WorldMap,
+    Habitat,
+    Temple,
     Builder,
 }
 

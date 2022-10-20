@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelLoader : AsyncLoader
 {
@@ -48,12 +47,14 @@ public class LevelLoader : AsyncLoader
 
         switch (_sceneType)
         {
-            case SceneType.Habitat:
-                HabitatSceneSetup();
-                break;
             case SceneType.MainMenu:
             case SceneType.Starting:
                 PlayCurrentSceneMusic();
+                break;
+            case SceneType.Habitat:
+                HabitatSceneSetup();
+                break;
+            case SceneType.Temple:
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
@@ -114,18 +115,15 @@ public class LevelLoader : AsyncLoader
 
     private void HabitatSceneSetup()
     {
-        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
-        {
-            TempleBuildCheck();
+        TempleBuildCheck();
 
-            _habitatManager.PlayCurrentHabitatMusic();
-            _habitatManager.BuildFacilitiesForHabitat();
-            _habitatManager.SpawnChimerasForHabitat();
+        _habitatManager.PlayCurrentHabitatMusic();
+        _habitatManager.BuildFacilitiesForHabitat();
+        _habitatManager.SpawnChimerasForHabitat();
 
-            _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+        _habitatManager.CurrentHabitat.MoveChimerasToFacility();
 
-            StartHabitatTickTimer();
-        }
+        StartHabitatTickTimer();
 
         _tutorialManager.TutorialStageCheck();
     }
@@ -140,43 +138,6 @@ public class LevelLoader : AsyncLoader
         {
             _habitatManager.CurrentHabitat.Temple.Build();
         }
-    }
-
-    private bool LastSessionHabitatCheck()
-    {
-        HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
-
-        switch (lastSessionHabitat)
-        {
-            case HabitatType.StonePlains:
-            case HabitatType.TreeOfLife:
-                if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
-                {
-                    return true;
-                }
-                return false;
-            default:
-                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat.");
-                return false;
-        }
-    }
-
-    private bool LoadLastSessionScene(HabitatType habitatType)
-    {
-        if (habitatType == _habitatManager.CurrentHabitat.Type)
-        {
-            Debug.Log($"Habitat is already {habitatType}. No need to move.");
-            return false;
-        }
-
-        Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
-
-        _persistentData.ResetLastSessionHabitat();
-
-        int loadNum = (int)habitatType + 4;
-        SceneManager.LoadSceneAsync(loadNum);
-
-        return true;
     }
 
     private void LoadUIElements()

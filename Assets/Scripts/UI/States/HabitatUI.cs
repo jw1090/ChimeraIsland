@@ -18,7 +18,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
-    [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -114,7 +113,6 @@ public class HabitatUI : MonoBehaviour
 
         _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
-        _transferMap.Initialize();
 
         UIProgressCheck();
     }
@@ -218,7 +216,6 @@ public class HabitatUI : MonoBehaviour
         _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
-        _transferMap.gameObject.SetActive(false);
 
         _menuOpen = false;
     }
@@ -267,17 +264,6 @@ public class HabitatUI : MonoBehaviour
     public void CloseMarketplace()
     {
         _marketplacePanel.gameObject.SetActive(false);
-    }
-
-    public void OpenTransferMap(Chimera chimera)
-    {
-        ResetStandardUI();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-
-        _transferMap.Open(chimera);
-
-        _menuOpen = true;
     }
 
     public void ToggleSettingsMenu()

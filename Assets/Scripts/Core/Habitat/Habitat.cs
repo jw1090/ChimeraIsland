@@ -310,8 +310,8 @@ public class Habitat : MonoBehaviour
 
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
-        _audioManager.PlayHabitatMusic(_habitatType);
-        _audioManager.PlayHabitatAmbient(_habitatType);
+        _audioManager.PlayHabitatMusic();
+        _audioManager.PlayHabitatAmbient();
         LoadHabitatTier();
         EvaluateFireflies();
     }

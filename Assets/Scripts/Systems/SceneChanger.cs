@@ -63,6 +63,11 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
     }
 
+    public void LoadTemple()
+    {
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);
+    }
+
     private void SaveSessionData(bool quitGame)
     {
         if (_habitatManager.CurrentHabitat == null)

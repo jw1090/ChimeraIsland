@@ -42,16 +42,19 @@ public class UIManager : MonoBehaviour
 
         switch (uiSceneType)
         {
-            case SceneType.Habitat:
-                _uiStatefulObject.SetState("Habitat UI", true);
-                _habitatUI.ResetStandardUI();
-                _habitatUI.LoadCurrentUIProgress();
-                break;
             case SceneType.MainMenu:
                 _uiStatefulObject.SetState("Main Menu UI", true);
                 break;
             case SceneType.Starting:
                 _uiStatefulObject.SetState("Starting UI", true);
+                break;
+            case SceneType.Habitat:
+                _uiStatefulObject.SetState("Habitat UI", true);
+                _habitatUI.ResetStandardUI();
+                _habitatUI.LoadCurrentUIProgress();
+                break;
+            case SceneType.Temple:
+                _uiStatefulObject.SetState("Transparent", true);
                 break;
             case SceneType.Builder:
                 _uiStatefulObject.SetState("Builder UI", true);
