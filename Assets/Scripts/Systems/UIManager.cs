@@ -11,15 +11,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
+    private bool _uiActive = true;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
+    public bool UIActive { get => _uiActive; }
 
-    public void SetAudioManager(AudioManager audioManager) 
+    public void SetAudioManager(AudioManager audioManager) { _habitatUI.SetAudioManager(audioManager); }
+    public void ToggleUI()
     {
-        _habitatUI.SetAudioManager(audioManager);
+        _uiActive = !_uiActive;
+        gameObject.SetActive(_uiActive);
     }
 
     public UIManager Initialize()
@@ -32,6 +36,7 @@ public class UIManager : MonoBehaviour
         _evolutionBuilderUI.Initialize(this);
 
         _uiStatefulObject.SetState("Transparent", true);
+        _uiActive = true;
 
         return this;
     }

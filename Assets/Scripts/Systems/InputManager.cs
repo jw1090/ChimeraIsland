@@ -13,7 +13,6 @@ public class InputManager : MonoBehaviour
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private StartingUI _startingUI = null;
-    private TutorialManager _tutorialManager = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
@@ -37,7 +36,6 @@ public class InputManager : MonoBehaviour
 
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
-    public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
     {
         _cameraUtil = cameraUtil;
@@ -304,7 +302,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            _habitatUI.ToggleUI();
+            _uiManager.ToggleUI();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -320,9 +318,9 @@ public class InputManager : MonoBehaviour
             _cameraUtil.CameraCO.enabled = !_freeCameraActive;
             Cursor.visible = !_freeCameraActive;
 
-            if (_habitatUI.UIActive == _freeCameraActive) // Toggle UI off when going to free cam and vice versa.
+            if (_uiManager.UIActive == _freeCameraActive) // Toggle UI off when going to free cam and vice versa.
             {
-                _habitatUI.ToggleUI();
+                _uiManager.ToggleUI();
             }
 
             if (_freeCameraActive == false)
