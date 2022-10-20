@@ -26,9 +26,4 @@ public class MarketplaceUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_closeButton, _uiManager.HabitatUI.ResetStandardUI);
     }
-
-    public void UpdateShopUI()
-    {
-        _chimeraShop.UpdateUI();
-    }
 }
