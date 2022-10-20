@@ -131,8 +131,10 @@ public class InputManager : MonoBehaviour
                 {
                     return;
                 }
-
-                _cameraUtil.CameraZoom();
+                if(_cameraUtil.SceneType == SceneType.Habitat)
+                {
+                    _cameraUtil.CameraZoom();
+                }
             }
 
             if (_inTransition == true)
