@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
-    [Header("General Logic")]
-    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
-    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
+    [Header("General")]
     [SerializeField] private string _chimeraName = "";
+    [SerializeField] private ElementType _elementType = ElementType.None;
     [SerializeField] private StatType _statBonus = StatType.None;
+    [SerializeField][TextArea(3, 10)] private string _backgroundInfo = "";
+
+    [Header("Evolution")]
+    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
     [SerializeField] private int _reqExploration = 0;
     [SerializeField] private int _reqStamina = 0;
     [SerializeField] private int _reqWisdom = 0;
+    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
+
+    [Header("AI")]
     [SerializeField] private float _speed = 4.5f;
 
     [Header("Particles")]
@@ -22,7 +28,8 @@ public class EvolutionLogic : MonoBehaviour
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
-    public ChimeraType Type { get => _evolutionType; }
+    public ChimeraType ChimeraType { get => _evolutionType; }
+    public ElementType ElementType { get => _elementType; }
     public StatType StatBonus { get => _statBonus; }
     public Animator Animator { get => _animator; }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
@@ -32,6 +39,7 @@ public class EvolutionLogic : MonoBehaviour
     public int ReqStamina { get => _reqStamina; }
     public int ReqWisdom { get => _reqWisdom; }
     public string Name { get => _chimeraName; }
+    public string BackgroundInfo { get => _backgroundInfo; }
 
     public void Initialize(Chimera chimera)
     {

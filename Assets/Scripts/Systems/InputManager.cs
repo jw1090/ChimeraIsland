@@ -236,11 +236,8 @@ public class InputManager : MonoBehaviour
 
                 _startingUI.OpenChimeraInfo();
 
-                _startingUI.SetChimeraType(_evolution.Type);
-
-                _startingUI.LoadChimeraInfo();
-                //Talk to the starting chimera button to set the chimera i want to work with. 
-                //Starting chimera info populated with the evolution information.
+                _startingUI.SetChimeraType(_evolution.ChimeraType);
+                _startingUI.LoadChimeraInfo(_evolution);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))

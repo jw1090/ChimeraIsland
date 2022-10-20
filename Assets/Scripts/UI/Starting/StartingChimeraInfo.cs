@@ -13,12 +13,15 @@ public class StartingChimeraInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _chimeraInfo = null;
     private ResourceManager _resourceManager = null;
 
-    public void LoadChimeraData(string name, ElementType iconType, string info)// ElementType iconType, int explorationPreference, int staminaPreference, int wisdomPreference, string info)
+    public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _chimeraName.text = name;
-        _icon.sprite = _resourceManager.GetElementSprite(iconType);
-        _chimeraInfo.text = info;
     }
 
+    public void LoadChimeraData(EvolutionLogic evolutionLogic)
+    {
+        _chimeraName.text = evolutionLogic.Name;
+        _icon.sprite = _resourceManager.GetElementSprite(evolutionLogic.ElementType);
+        _chimeraInfo.text = evolutionLogic.BackgroundInfo;
+    }
 }

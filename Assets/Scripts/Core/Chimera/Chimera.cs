@@ -4,7 +4,6 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
-    [SerializeField] private ElementType _elementalType = ElementType.None;
     [SerializeField] private int _price = 5;
 
     [Header("Stat Growth")]
@@ -24,6 +23,7 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
+    private ElementType _elementalType = ElementType.None;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
@@ -282,7 +282,8 @@ public class Chimera : MonoBehaviour
     {
         _boxCollider = _currentEvolution.GetComponent<BoxCollider>();
         _currentEvolution.Initialize(this);
-        _chimeraType = _currentEvolution.Type;
+        _chimeraType = _currentEvolution.ChimeraType;
+        _elementalType = _currentEvolution.ElementType;
     }
 
     public void EnergyTick()
