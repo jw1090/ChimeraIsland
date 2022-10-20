@@ -54,6 +54,7 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager.HabitatUI.ResetStandardUI();
         SaveSessionData(true);
+        _uiManager.MainMenuUI.CheckHasSave();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
     }
 
