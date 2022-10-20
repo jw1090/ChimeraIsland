@@ -19,7 +19,6 @@ public class UIManager : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager) 
     {
-        _startingUI.SetAudioManager(audioManager);
         _habitatUI.SetAudioManager(audioManager);
     }
 
@@ -28,7 +27,7 @@ public class UIManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _mainMenuUI.Initialize(this);
-        _startingUI.Initialize();
+        _startingUI.Initialize(this);
         _habitatUI.Initialize(this);
         _evolutionBuilderUI.Initialize(this);
 

@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
-public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
+public class StartingChimeraButton : MonoBehaviour
 {
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
-    [SerializeField] private TextMeshProUGUI _nameText = null;
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
-    private AudioManager _audioManager = null;
     private bool _clicked = false;
 
-    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+    public Button Button { get => GetComponent<Button>(); }
+    public ChimeraType ChimeraType { get => _chimeraType; }
+    public void SetChimeraType(ChimeraType chimeraType) { _chimeraType = chimeraType; }
 
     public void Initialize()
     {
@@ -20,25 +21,12 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
 
-        ChimeraName();
+        //ChimeraName();
     }
 
     public void SetupStartingButton()
     {
         _clicked = false;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (_clicked == true)
-        {
-            return;
-        }
-
-        _clicked = true;
-
-        ChimeraClicked(_chimeraType);
-
     }
 
     public void ChimeraClicked(ChimeraType chimeraType)
@@ -49,28 +37,26 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         chimeraComp.SetHabitatType(HabitatType.StonePlains);
         _habitatManager.AddNewChimera(chimeraComp);
 
-        _audioManager.PlayUISFX(SFXUIType.ConfirmClick);
-
         _sceneChanger.LoadStonePlains();
     }
 
-    private void ChimeraName()
-    {
-        switch (_chimeraType)
-        {
-            case ChimeraType.None:
-                break;
-            case ChimeraType.A:
-                _nameText.text = "Nauphant";
-                break;
-            case ChimeraType.B:
-                _nameText.text = "Frolli";
-                break;
-            case ChimeraType.C:
-                _nameText.text = "Patchero";
-                break;
-            default:
-                break;
-        }
-    }
+    //private void ChimeraName()
+    //{
+    //    switch (_chimeraType)
+    //    {
+    //        case ChimeraType.None:
+    //            break;
+    //        case ChimeraType.A:
+    //            _nameText.text = "Nauphant";
+    //            break;
+    //        case ChimeraType.B:
+    //            _nameText.text = "Frolli";
+    //            break;
+    //        case ChimeraType.C:
+    //            _nameText.text = "Patchero";
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 }
