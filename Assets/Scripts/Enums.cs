@@ -143,6 +143,15 @@ public enum TutorialStageType
     FacilityUpgrades,
 }
 
+public enum TutorialDarkenType
+{
+    Standard,
+    firstExpedition,
+    ChimeraList,
+    ReccomendedTraits,
+}
+
+
 public enum SFXUIType
 {
     None = -1,
