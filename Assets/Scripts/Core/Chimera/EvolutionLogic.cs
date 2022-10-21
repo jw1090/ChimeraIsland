@@ -41,6 +41,33 @@ public class EvolutionLogic : MonoBehaviour
     public string Name { get => _chimeraName; }
     public string BackgroundInfo { get => _backgroundInfo; }
 
+    public void GetPreferredStat(ChimeraType chimeraType, out int explorationAmount, out int staminaAmount, out int wisdomAmount)
+    {
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                explorationAmount = 4;
+                staminaAmount = 3;
+                wisdomAmount = 2;
+                break;
+            case ChimeraType.B:
+                explorationAmount = 2;
+                staminaAmount = 4;
+                wisdomAmount = 3;
+                break;
+            case ChimeraType.C:
+                explorationAmount = 3;
+                staminaAmount = 4;
+                wisdomAmount = 2;
+                break;
+            default:
+                explorationAmount = 0;
+                staminaAmount = 0;
+                wisdomAmount = 0;
+                break;
+        }
+    }
+
     public void Initialize(Chimera chimera)
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();

@@ -23,5 +23,44 @@ public class StartingChimeraInfo : MonoBehaviour
         _chimeraName.text = evolutionLogic.Name;
         _icon.sprite = _resourceManager.GetElementSprite(evolutionLogic.ElementType);
         _chimeraInfo.text = evolutionLogic.BackgroundInfo;
+
+        LoadStatPreferences(evolutionLogic);
+    }
+
+    private void LoadStatPreferences(EvolutionLogic evolutionLogic)
+    {
+        evolutionLogic.GetPreferredStat(evolutionLogic.ChimeraType, out int explorationAmount, out int staminaAmount, out int wisdomAmount);
+
+        StatPreference(_explorationPreference, explorationAmount);
+        StatPreference(_staminaPreference, staminaAmount);
+        StatPreference(_wisdomPreference, wisdomAmount);
+    }
+
+    private void StatPreference(List<GameObject> iconList, int amount)
+    {
+        foreach (GameObject icon in iconList)
+        {
+            icon.SetActive(false);
+        }
+
+        for (int i = 0; i < Translation(amount); ++i)
+        {
+            iconList[i].SetActive(true);
+        }
+    }
+
+    private int Translation(int amount)
+    {
+        switch (amount)
+        {
+            case 2:
+                return 3;
+            case 3:
+                return 2;
+            case 4:
+                return 1;
+            default:
+                return 0;
+        }
     }
 }
