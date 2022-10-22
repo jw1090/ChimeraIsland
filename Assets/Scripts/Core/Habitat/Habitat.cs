@@ -210,7 +210,7 @@ public class Habitat : MonoBehaviour
 
     public void AddChimera(Transform newChimera, bool loadingIn = false)
     {
-        if(ActiveChimeras.Count == 0)
+        if (ActiveChimeras.Count == 0)
         {
             newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
         }
@@ -222,7 +222,7 @@ public class Habitat : MonoBehaviour
         {
             newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
         }
-        
+
         newChimera.rotation = Quaternion.identity;
         newChimera.parent = _chimeraFolder.transform;
 
@@ -310,8 +310,8 @@ public class Habitat : MonoBehaviour
 
         ++_currentTier;
         _habitatManager.SetHabitatTier(_currentTier, Type);
-        _audioManager.PlayHabitatMusic(_habitatType);
-        _audioManager.PlayHabitatAmbient(_habitatType);
+        _audioManager.PlayHabitatMusic();
+        _audioManager.PlayHabitatAmbient();
         LoadHabitatTier();
         EvaluateFireflies();
     }

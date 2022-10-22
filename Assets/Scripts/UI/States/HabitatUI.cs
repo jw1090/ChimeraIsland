@@ -18,7 +18,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private Marketplace _marketplacePanel = null;
-    [SerializeField] private TransferMap _transferMap = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -27,9 +26,10 @@ public class HabitatUI : MonoBehaviour
 
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
     private bool _tutorialOpen = false;
-    private TutorialManager _tutorialManager = null;
+    private bool _uiActive = true;
 
     public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
@@ -39,6 +39,7 @@ public class HabitatUI : MonoBehaviour
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
+    public bool UIActive { get => _uiActive; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
 
@@ -109,9 +110,9 @@ public class HabitatUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
+
         _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
-        _transferMap.Initialize();
 
         UIProgressCheck();
     }
@@ -131,10 +132,10 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void StartTutorial(TutorialStageData tutorialSteps)
+    public void StartTutorial(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
     {
         _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps);
+        _tutorialOverlay.ShowOverlay(tutorialSteps, tutorialType);
 
         _standardUI.gameObject.SetActive(false);
 
@@ -196,19 +197,25 @@ public class HabitatUI : MonoBehaviour
     // Resets to the standard UI when nothing has been disabled.
     public void ResetStandardUI()
     {
-        _openDetailsButton.gameObject.SetActive(true);
-
-        if (_tutorialOpen == false)
+        if (_uiActive == false)
         {
-            _standardUI.gameObject.SetActive(true);
+            _openDetailsButton.gameObject.SetActive(false);
+            _standardUI.gameObject.SetActive(false);
         }
+        else
+        {
+            _openDetailsButton.gameObject.SetActive(true);
 
+            if (_tutorialOpen == false)
+            {
+                _standardUI.gameObject.SetActive(true);
+            }
+        }
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
         _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
-        _transferMap.gameObject.SetActive(false);
 
         _menuOpen = false;
     }
@@ -238,6 +245,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenMarketplace()
     {
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
@@ -252,17 +264,6 @@ public class HabitatUI : MonoBehaviour
     public void CloseMarketplace()
     {
         _marketplacePanel.gameObject.SetActive(false);
-    }
-
-    public void OpenTransferMap(Chimera chimera)
-    {
-        ResetStandardUI();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-
-        _transferMap.Open(chimera);
-
-        _menuOpen = true;
     }
 
     public void ToggleSettingsMenu()
@@ -315,6 +316,11 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedition()
     {
+        if (_uiActive == false)
+        {
+            return;
+        }
+
         ResetStandardUI();
 
         _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);
@@ -369,5 +375,11 @@ public class HabitatUI : MonoBehaviour
     public void UpdateShopUI()
     {
         _marketplacePanel.UpdateShopUI();
+    }
+
+    public void ToggleUI()
+    {
+        _uiActive = !_uiActive;
+        ResetStandardUI();
     }
 }

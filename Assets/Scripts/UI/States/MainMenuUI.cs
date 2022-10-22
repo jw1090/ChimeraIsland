@@ -11,7 +11,7 @@ public class MainMenuUI : MonoBehaviour
 
     private UIManager _uiManager;
     private StatefulObject _statefulObject;
-
+    private PersistentData _persistentData;
     public Button NewGameButton { get => _newGameButton; }
     public Button LoadGameButton { get => _loadGameButton; }
     public Button OpenCreditsButton { get => _openCreditsButton; }
@@ -22,9 +22,22 @@ public class MainMenuUI : MonoBehaviour
     {
         _uiManager = uiManager;
         _statefulObject = GetComponent<StatefulObject>();
-
+        _persistentData = ServiceLocator.Get<PersistentData>();
         SetupButtons();
         CloseCredits();
+        CheckHasSave();
+    }
+
+    public void CheckHasSave()
+    {
+        if (_persistentData.ChimeraData == null || _persistentData.ChimeraData.Count == 0)
+        {
+            LoadGameButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            LoadGameButton.gameObject.SetActive(true);
+        }
     }
 
     private void SetupButtons()

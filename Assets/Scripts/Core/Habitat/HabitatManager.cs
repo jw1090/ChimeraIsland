@@ -317,8 +317,8 @@ public class HabitatManager : MonoBehaviour
 
     public void PlayCurrentHabitatMusic()
     {
-        _audioManager.PlayHabitatMusic(_currentHabitat.Type);
-        _audioManager.PlayHabitatAmbient(_currentHabitat.Type);
+        _audioManager.PlayHabitatMusic();
+        _audioManager.PlayHabitatAmbient();
     }
 
     public void BuildFacilitiesForHabitat()

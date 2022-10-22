@@ -7,14 +7,16 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject _sphereMarker = null;
     private Camera _cameraMain = null;
     private CameraUtil _cameraUtil = null;
+    private FreeCamera _freeCamera = null;
     private ChimeraBehavior _heldChimera = null;
+    private EvolutionLogic _evolution;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
-    private TutorialManager _tutorialManager = null;
+    private StartingUI _startingUI = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
-    ExpeditionManager _expeditionManager = null;
+    private ExpeditionManager _expeditionManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -22,10 +24,11 @@ public class InputManager : MonoBehaviour
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
-    private bool _debugTutorialInputEnabled = false;
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
+    private bool _debugViewEnabled = false;
     private const float _rotationAmount = 0.8f;
+    private bool _freeCameraActive = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -33,19 +36,20 @@ public class InputManager : MonoBehaviour
 
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
-    public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
     {
         _cameraUtil = cameraUtil;
         _cameraMain = _cameraUtil.CameraCO;
     }
 
+    public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
         _habitatUI = _uiManager.HabitatUI;
+        _startingUI = _uiManager.StartingUI;
     }
 
     public InputManager Initialize()
@@ -65,15 +69,10 @@ public class InputManager : MonoBehaviour
         return this;
     }
 
+
     private void OnDebugConfigLoaded()
     {
         _debugConfig = ServiceLocator.Get<DebugConfig>();
-
-        _debugTutorialInputEnabled = _debugConfig.DebugTutorialInputEnabled;
-        if (_debugTutorialInputEnabled == false)
-        {
-            Debug.Log("Debug Tutorial Input is DISABLED");
-        }
 
         _debugCurrencyInputEnabled = _debugConfig.DebugCurrencyInputEnabled;
         if (_debugCurrencyInputEnabled == false)
@@ -85,6 +84,12 @@ public class InputManager : MonoBehaviour
         if (_debugHabitatUpgradeInputEnabled == false)
         {
             Debug.Log("Debug Habitat Upgrade Input is DISABLED");
+        }
+
+        _debugViewEnabled = _debugConfig.EnableDebugViewInput;
+        if (_debugViewEnabled == false)
+        {
+            Debug.Log("Debug View Input is DISABLED");
         }
     }
 
@@ -118,7 +123,7 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (_cameraUtil != null)
+        if (_cameraUtil != null && _freeCameraActive == false)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
@@ -126,6 +131,7 @@ public class InputManager : MonoBehaviour
                 {
                     return;
                 }
+
                 _cameraUtil.CameraZoom();
             }
 
@@ -138,9 +144,13 @@ public class InputManager : MonoBehaviour
             {
                 if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
-                    _cameraUtil.CameraMovement();
+                    _cameraUtil.CameraUpdate();
                 }
             }
+        }
+        else if (_freeCamera != null)
+        {
+            _freeCamera.CameraUpdate();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -151,19 +161,19 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (_debugTutorialInputEnabled)
-        {
-            DebugTutorialInput();
-        }
-
-        if (_debugCurrencyInputEnabled)
+        if (_debugCurrencyInputEnabled == true)
         {
             DebugCurrencyInput();
         }
 
-        if (_debugHabitatUpgradeInputEnabled)
+        if (_debugHabitatUpgradeInputEnabled == true)
         {
             DebugHabitatUpgradeInput();
+        }
+
+        if (_debugViewEnabled == true)
+        {
+            DebugViewInput();
         }
     }
 
@@ -198,22 +208,34 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
-            if (_isHolding == true)
+            if(_cameraUtil.SceneType == SceneType.Habitat)
             {
-                return;
-            }
+                if (_isHolding == true)
+                {
+                    return;
+                }
 
-            _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
+                _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
 
-            if (_heldChimera.Chimera.ReadyToEvolve == true)
-            {
-                _heldChimera.Chimera.EvolveChimera();
+                if (_heldChimera.Chimera.ReadyToEvolve == true)
+                {
+                    _heldChimera.Chimera.EvolveChimera();
+                }
+                else
+                {
+                    _habitatManager.CurrentHabitat.ActivateGlow(true);
+                    HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
+                    _isHolding = true;
+                }
             }
-            else
+            else if(_cameraUtil.SceneType == SceneType.Starting)
             {
-                _habitatManager.CurrentHabitat.ActivateGlow(true);
-                HeldStateChange?.Invoke(true, _heldChimera.transform.GetHashCode());
-                _isHolding = true;
+                _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
+
+                _startingUI.OpenChimeraInfo();
+
+                _startingUI.SetChimeraType(_evolution.ChimeraType);
+                _startingUI.LoadChimeraInfo(_evolution);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
@@ -252,26 +274,6 @@ public class InputManager : MonoBehaviour
         _heldChimera = null;
     }
 
-    private void DebugTutorialInput()
-    {
-        int currentStageId = (int)_tutorialManager.CurrentStage;
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            _tutorialManager.ResetTutorialProgress();
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Intro);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            int newStageId = ++currentStageId;
-
-            if (newStageId < Enum.GetNames(typeof(TutorialStageType)).Length - 1)
-            {
-                _tutorialManager.ShowTutorialStage((TutorialStageType)newStageId);
-            }
-        }
-    }
-
     private void DebugCurrencyInput()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -290,9 +292,42 @@ public class InputManager : MonoBehaviour
 
     private void DebugHabitatUpgradeInput()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             _expeditionManager.CompleteCurrentUpgradeExpedition();
+        }
+    }
+
+    private void DebugViewInput()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            _uiManager.ToggleUI();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (_freeCamera == null)
+            {
+                return;
+            }
+
+            _freeCameraActive = !_freeCameraActive; // Toggle
+
+            _freeCamera.CameraCO.enabled = _freeCameraActive;
+            _cameraUtil.CameraCO.enabled = !_freeCameraActive;
+            Cursor.visible = !_freeCameraActive;
+
+            if (_uiManager.UIActive == _freeCameraActive) // Toggle UI off when going to free cam and vice versa.
+            {
+                _uiManager.ToggleUI();
+            }
+
+            if (_freeCameraActive == false)
+            {
+                _freeCamera.transform.localPosition = new Vector3(0, 0, 0);
+                _freeCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 }

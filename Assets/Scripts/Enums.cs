@@ -30,6 +30,13 @@ public enum ElementType
     Fira,
 }
 
+public enum EvolutionVFXType
+{
+    None = -1,
+    GrowingLight,
+    WaterDrop,
+}
+
 public enum ExpeditionType
 {
     None = -1,
@@ -59,7 +66,6 @@ public enum HabitatType
 {
     None = -1,
     StonePlains,
-    TreeOfLife,
 }
 
 public enum HabitatRewardType
@@ -88,10 +94,11 @@ public enum ModifierType
 public enum SceneType
 {
     None = -1,
-    Habitat,
     MainMenu,
     Starting,
-    WorldMap,
+    Habitat,
+    Temple,
+    Builder,
 }
 
 public enum StatType
@@ -131,9 +138,19 @@ public enum TutorialStageType
     ExpeditionSelection,
     ExpeditionSetup,
     Facilities,
+    ReccomendedTraits,
     FossilShop,
     FacilityUpgrades,
 }
+
+public enum TutorialDarkenType
+{
+    Standard,
+    firstExpedition,
+    ChimeraList,
+    ReccomendedTraits,
+}
+
 
 public enum SFXUIType
 {

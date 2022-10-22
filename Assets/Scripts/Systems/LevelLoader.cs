@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelLoader : AsyncLoader
 {
     [SerializeField] private SceneType _sceneType = SceneType.None;
+
+    [Header("Standard References")]
     [SerializeField] private CameraUtil _cameraUtil = null;
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
     [SerializeField] private LightingManager _lightingManager = null;
+
+    [Header("Builder References")]
+    [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
 
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
@@ -23,7 +27,6 @@ public class LevelLoader : AsyncLoader
 
     protected override void Awake()
     {
-        // TODO: Craig is not happy with this <.< (It's all his fault though)
         _instance = this;
         GameLoader.CallOnComplete(LevelSetup);
     }
@@ -44,16 +47,19 @@ public class LevelLoader : AsyncLoader
 
         switch (_sceneType)
         {
-            case SceneType.Habitat:
-                HabitatSceneSetup();
-                break;
             case SceneType.MainMenu:
-                PlayCurrentSceneMusic();
-                break;
             case SceneType.Starting:
                 PlayCurrentSceneMusic();
                 break;
-            case SceneType.WorldMap:
+            case SceneType.Habitat:
+                HabitatSceneSetup();
+                break;
+            case SceneType.Temple:
+                break;
+            case SceneType.Builder:
+                _evolutionBuilder.BuildAll();
+                _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
+                PlayCurrentSceneMusic();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
@@ -76,7 +82,7 @@ public class LevelLoader : AsyncLoader
 
         if (_cameraUtil != null)
         {
-            ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(), true);
+            ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(_sceneType), true);
             _inputManager.SetCameraUtil(_cameraUtil);
         }
 
@@ -99,22 +105,25 @@ public class LevelLoader : AsyncLoader
             ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
             _habitat.SetLightingManager(_lightingManager);
         }
+
+        if (_evolutionBuilder != null)
+        {
+            _evolutionBuilder.Initialize();
+            _uiManager.EvolutionBuilderUI.SetEvolutionBuilder(_evolutionBuilder);
+        }
     }
 
     private void HabitatSceneSetup()
     {
-        if (LastSessionHabitatCheck() == false) // Return false when there is no need to change habitat.
-        {
-            TempleBuildCheck();
+        TempleBuildCheck();
 
-            _habitatManager.PlayCurrentHabitatMusic();
-            _habitatManager.BuildFacilitiesForHabitat();
-            _habitatManager.SpawnChimerasForHabitat();
+        _habitatManager.PlayCurrentHabitatMusic();
+        _habitatManager.BuildFacilitiesForHabitat();
+        _habitatManager.SpawnChimerasForHabitat();
 
-            _habitatManager.CurrentHabitat.MoveChimerasToFacility();
+        _habitatManager.CurrentHabitat.MoveChimerasToFacility();
 
-            StartHabitatTickTimer();
-        }
+        StartHabitatTickTimer();
 
         _tutorialManager.TutorialStageCheck();
     }
@@ -129,43 +138,6 @@ public class LevelLoader : AsyncLoader
         {
             _habitatManager.CurrentHabitat.Temple.Build();
         }
-    }
-
-    private bool LastSessionHabitatCheck()
-    {
-        HabitatType lastSessionHabitat = _persistentData.LastSessionHabitat;
-
-        switch (lastSessionHabitat)
-        {
-            case HabitatType.StonePlains:
-            case HabitatType.TreeOfLife:
-                if (LoadLastSessionScene(lastSessionHabitat) == true) // Return false when there is no need to change habitat.
-                {
-                    return true;
-                }
-                return false;
-            default:
-                Debug.Log($"Invalid case: {lastSessionHabitat}. Staying in current Habitat.");
-                return false;
-        }
-    }
-
-    private bool LoadLastSessionScene(HabitatType habitatType)
-    {
-        if (habitatType == _habitatManager.CurrentHabitat.Type)
-        {
-            Debug.Log($"Habitat is already {habitatType}. No need to move.");
-            return false;
-        }
-
-        Debug.Log($"Moving to LastSessionHabitat: {habitatType}");
-
-        _persistentData.ResetLastSessionHabitat();
-
-        int loadNum = (int)habitatType + 4;
-        SceneManager.LoadSceneAsync(loadNum);
-
-        return true;
     }
 
     private void LoadUIElements()
@@ -183,9 +155,9 @@ public class LevelLoader : AsyncLoader
             case SceneType.MainMenu:
                 break;
             case SceneType.Starting:
-                _uiManager.StartingUI.SetupStartingButtons();
+                _uiManager.StartingUI.OnSceneStart();
                 break;
-            case SceneType.WorldMap:
+            case SceneType.Builder:
                 break;
             default:
                 Debug.LogWarning($"Scene Type: {_sceneType} is invalid.");

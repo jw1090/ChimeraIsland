@@ -26,7 +26,6 @@ public class SceneChanger : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
-        _uiManager.CreateButtonListener(_uiManager.WorldMapUI.StonePlainsButton, LoadStonePlains);
     }
 
     public void NewGame()
@@ -55,12 +54,18 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager.HabitatUI.ResetStandardUI();
         SaveSessionData(true);
+        _uiManager.MainMenuUI.CheckHasSave();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
     }
 
     public void LoadStonePlains()
     {
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
+    }
+
+    public void LoadTemple()
+    {
+        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);
     }
 
     private void SaveSessionData(bool quitGame)

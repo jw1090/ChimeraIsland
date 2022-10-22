@@ -74,8 +74,8 @@ public class TrainingUI : MonoBehaviour
     {
         CalculatePreferredDiscount();
 
-        _expNeeded = (int)(_chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal));
-        int ticksRequired = (int)(_expNeeded / _facility.StatModifier);
+        _expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
+        int ticksRequired = _expNeeded / _facility.StatModifier;
 
         if (_expNeeded % (_facility.StatModifier) != 0)
         {
@@ -111,7 +111,14 @@ public class TrainingUI : MonoBehaviour
 
     private int CalculateCost(int ticksRequired)
     {
-        return (int)((Mathf.Pow(ticksRequired * _priceScalar, _priceExponent) + _priceFlatModifier) * _preferredDiscount);
+        int amount = 0;
+
+        for (int i = 0; i < ticksRequired; ++i)
+        {
+            amount += (int)((Mathf.Pow(_priceScalar, _priceExponent) + _priceFlatModifier) * _preferredDiscount);
+        }
+
+        return amount;
     }
 
     public void DecreaseStatGoal()
