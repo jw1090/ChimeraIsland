@@ -6,13 +6,18 @@ public class LevelLoader : AsyncLoader
 {
     [SerializeField] private SceneType _sceneType = SceneType.None;
 
-    [Header("Standard References")]
+    [Header("Standard")]
     [SerializeField] private CameraUtil _cameraUtil = null;
-    [SerializeField] private Habitat _habitat = null;
-    [SerializeField] private ExpeditionManager _expeditionManager = null;
     [SerializeField] private LightingManager _lightingManager = null;
 
-    [Header("Builder References")]
+    [Header("Starter")]
+    [SerializeField] private StarterEnvironment _starterEnvironment = null;
+
+    [Header("Habitat")]
+    [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private ExpeditionManager _expeditionManager = null;
+
+    [Header("Builder")]
     [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
 
     private static LevelLoader _instance = null;
@@ -20,7 +25,6 @@ public class LevelLoader : AsyncLoader
 
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
-    private PersistentData _persistentData = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
@@ -75,7 +79,6 @@ public class LevelLoader : AsyncLoader
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _persistentData = ServiceLocator.Get<PersistentData>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();

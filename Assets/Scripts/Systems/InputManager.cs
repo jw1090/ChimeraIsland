@@ -131,8 +131,10 @@ public class InputManager : MonoBehaviour
                 {
                     return;
                 }
-
-                _cameraUtil.CameraZoom();
+                if (_cameraUtil.SceneType == SceneType.Habitat)
+                {
+                    _cameraUtil.CameraZoom();
+                }
             }
 
             if (_inTransition == true)
@@ -208,7 +210,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
-            if(_cameraUtil.SceneType == SceneType.Habitat)
+            if (_cameraUtil.SceneType == SceneType.Habitat)
             {
                 if (_isHolding == true)
                 {
@@ -228,7 +230,7 @@ public class InputManager : MonoBehaviour
                     _isHolding = true;
                 }
             }
-            else if(_cameraUtil.SceneType == SceneType.Starting)
+            else if (_cameraUtil.SceneType == SceneType.Starting)
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
