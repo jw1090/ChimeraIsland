@@ -114,6 +114,14 @@ public class LevelLoader : AsyncLoader
             _evolutionBuilder.Initialize();
             _uiManager.EvolutionBuilderUI.SetEvolutionBuilder(_evolutionBuilder);
         }
+
+        if (_starterEnvironment != null)
+        {
+            _starterEnvironment.Initialize();
+            _starterEnvironment.SetCameraUtil(_cameraUtil);
+            _inputManager.SetStarterEnvironment(_starterEnvironment);
+            _uiManager.SetStarterEnvironment(_starterEnvironment);
+        }
     }
 
     private void HabitatSceneSetup()

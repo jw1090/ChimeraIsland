@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public bool UIActive { get => _uiActive; }
 
     public void SetAudioManager(AudioManager audioManager) { _habitatUI.SetAudioManager(audioManager); }
+    public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _startingUI.SetStarterEnvironment(starterEnvironment); }
     public void ToggleUI()
     {
         _uiActive = !_uiActive;
