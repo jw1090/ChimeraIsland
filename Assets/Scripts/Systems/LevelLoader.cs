@@ -87,6 +87,7 @@ public class LevelLoader : AsyncLoader
         {
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(_sceneType), true);
             _inputManager.SetCameraUtil(_cameraUtil);
+            _cameraUtil.SetStarterEnvironment(_starterEnvironment);
         }
 
         if (_habitat != null)
@@ -117,9 +118,8 @@ public class LevelLoader : AsyncLoader
 
         if (_starterEnvironment != null)
         {
-            _starterEnvironment.Initialize();
+            _starterEnvironment.Initialize(_cameraUtil);
             _starterEnvironment.SetCameraUtil(_cameraUtil);
-            _inputManager.SetStarterEnvironment(_starterEnvironment);
             _uiManager.SetStarterEnvironment(_starterEnvironment);
         }
     }

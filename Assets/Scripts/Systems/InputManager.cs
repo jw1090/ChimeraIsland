@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
     private CameraUtil _cameraUtil = null;
     private FreeCamera _freeCamera = null;
     private ChimeraBehavior _heldChimera = null;
-    private StarterEnvironment _starterEnvironment = null;
     private EvolutionLogic _evolution;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
@@ -46,7 +45,6 @@ public class InputManager : MonoBehaviour
     public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
-    public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
 
     public void SetUIManager(UIManager uiManager)
     {
@@ -237,12 +235,11 @@ public class InputManager : MonoBehaviour
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
-                _starterEnvironment.ChimeraCloseUp(_evolution.ChimeraType);
-
                 _startingUI.OpenChimeraInfo();
-
                 _startingUI.SetChimeraType(_evolution.ChimeraType);
                 _startingUI.LoadChimeraInfo(_evolution);
+
+                _cameraUtil.ChimeraCloseUp(_evolution.ChimeraType);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))

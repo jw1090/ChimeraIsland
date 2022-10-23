@@ -26,6 +26,7 @@ public class CameraUtil : MonoBehaviour
     private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
+    private StarterEnvironment _starterEnvironment = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
@@ -39,10 +40,11 @@ public class CameraUtil : MonoBehaviour
     private float _zoom = 90.0f;
     private float _standardTransitionSpeed = 0.06f;
     private float _findTransitionSpeed = 0.05f;
-
     public Camera CameraCO { get => _cameraCO; }
     public SceneType SceneType { get => _sceneType; }
     public bool IsHolding { get; set; }
+
+    public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
 
     public CameraUtil Initialize(SceneType sceneType)
     {
@@ -65,7 +67,6 @@ public class CameraUtil : MonoBehaviour
 
             _inputManager.SetFreeCamera(_freeCamera);
         }
-
         _initialized = true;
 
         return this;
@@ -260,5 +261,23 @@ public class CameraUtil : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, chimeraPosition, time);
         }
         _inputManager.SetInTransition(false);
+    }
+    public void ChimeraCloseUp(ChimeraType chimeraType)
+    {
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.ANode.transform.position, 1f);
+                break;
+            case ChimeraType.B:
+                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.BNode.transform.position, 1f);
+                break;
+            case ChimeraType.C:
+                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.CNode.transform.position, 1f);
+                break;
+            default:
+                Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
+                break;
+        }
     }
 }
