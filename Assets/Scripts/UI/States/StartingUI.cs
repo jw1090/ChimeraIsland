@@ -11,12 +11,19 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
     private UIManager _uiManager = null;
     private StarterEnvironment _starterEnvironment = null;
+    private Camera _cameraMain = null;
+    private CameraUtil _camera = null;
 
     public Button AcceptButton { get => _acceptButton.GetComponent<Button>(); }
     public Button DeclineButton { get => _declineButton; }
 
     public void SetChimeraType(ChimeraType chimeraType) { }
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
+    public void SetCameraUtil(CameraUtil cameraUtil)
+    {
+        _camera = cameraUtil;
+        _cameraMain = _camera.CameraCO;
+    }
 
     public void Initialize(UIManager uIManager)
     {
@@ -61,6 +68,6 @@ public class StartingUI : MonoBehaviour
 
     private void ResetCamera()
     {
-        _starterEnvironment.CameraToOrigin();
+        _camera.CameraToOrigin();
     }
 }

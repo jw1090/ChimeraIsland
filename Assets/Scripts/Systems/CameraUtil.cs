@@ -267,17 +267,21 @@ public class CameraUtil : MonoBehaviour
         switch (chimeraType)
         {
             case ChimeraType.A:
-                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.ANode.transform.position, 1f);
+                CameraShift(_starterEnvironment.ANode.transform.position);
                 break;
             case ChimeraType.B:
-                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.BNode.transform.position, 1f);
+                CameraShift(_starterEnvironment.BNode.transform.position);
                 break;
             case ChimeraType.C:
-                _cameraCO.transform.position = Vector3.Lerp(_starterEnvironment.OriginNode.transform.position, _starterEnvironment.CNode.transform.position, 1f);
+                CameraShift(_starterEnvironment.CNode.transform.position);
                 break;
             default:
                 Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
                 break;
         }
+    }
+    public void CameraToOrigin()
+    {
+        CameraShift(_starterEnvironment.OriginNode.transform.position);
     }
 }

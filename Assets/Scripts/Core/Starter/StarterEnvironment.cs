@@ -28,8 +28,4 @@ public class StarterEnvironment : MonoBehaviour
         _camera = cameraUtil;
         return this;
     }
-    public void CameraToOrigin()
-    {
-        _cameraMain.transform.position = _originNode.transform.position;
-    }
 }

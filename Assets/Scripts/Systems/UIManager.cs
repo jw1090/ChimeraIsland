@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
+    private CameraUtil _camera = null;
     private bool _uiActive = true;
 
     public HabitatUI HabitatUI { get => _habitatUI; }
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     public StartingUI StartingUI { get => _startingUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public bool UIActive { get => _uiActive; }
-
+    public void SetCameraUtil(CameraUtil cameraUtil) { _startingUI.SetCameraUtil(cameraUtil); }
     public void SetAudioManager(AudioManager audioManager) { _habitatUI.SetAudioManager(audioManager); }
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _startingUI.SetStarterEnvironment(starterEnvironment); }
     public void ToggleUI()
