@@ -118,9 +118,6 @@ public class LevelLoader : AsyncLoader
 
         if (_starterEnvironment != null)
         {
-            _starterEnvironment.Initialize(_cameraUtil);
-            _starterEnvironment.SetCameraUtil(_cameraUtil);
-            _uiManager.SetStarterEnvironment(_starterEnvironment);
             _uiManager.SetCameraUtil(_cameraUtil);
             _inputManager.SetAudioManager(_audioManager);
         }
