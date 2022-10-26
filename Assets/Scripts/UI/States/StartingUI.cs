@@ -10,11 +10,12 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private Button _declineButton = null;
     [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
     private UIManager _uiManager = null;
+    private CameraUtil _camera = null;
 
     public Button AcceptButton { get => _acceptButton.GetComponent<Button>(); }
     public Button DeclineButton { get => _declineButton; }
 
-    public void SetChimeraType(ChimeraType chimeraType) { }
+    public void SetCameraUtil(CameraUtil cameraUtil) { _camera = cameraUtil; }
 
     public void Initialize(UIManager uIManager)
     {
@@ -36,6 +37,7 @@ public class StartingUI : MonoBehaviour
     public void SetupListeners()
     {
         _uiManager.CreateButtonListener(DeclineButton, ResetUI);
+        _uiManager.CreateButtonListener(DeclineButton, ResetCamera);
     }
 
     public void OpenChimeraInfo()
@@ -54,5 +56,10 @@ public class StartingUI : MonoBehaviour
     {
         _container.SetActive(false);
         _title.gameObject.SetActive(true);
+    }
+
+    private void ResetCamera()
+    {
+        _camera.CameraToOrigin();
     }
 }

@@ -63,14 +63,7 @@ public class HabitatManager : MonoBehaviour
         _habitatData[type].expeditionHabitatProgress = habitat;
         _habitatData[type].expeditionFossilProgress = fossil;
     }
-    public void SetHabitatUIProgressChimera(bool a, bool b, bool c)
-    {
-        int type = (int)CurrentHabitat.Type;
-        while (type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());
-        _habitatData[type].aUnlocked = a;
-        _habitatData[type].bUnlocked = b;
-        _habitatData[type].cUnlocked = c;
-    }
+
     public void SetHabitatUIProgressFacility(bool cave, bool rune, bool waterfall)
     {
         int type = (int)CurrentHabitat.Type;
@@ -79,6 +72,7 @@ public class HabitatManager : MonoBehaviour
         _habitatData[type].runeUnlocked = rune;
         _habitatData[type].waterfallUnlocked = waterfall;
     }
+
     public void SetHabitatTier(int num, HabitatType type)
     {
         while ((int)type + 1 > _habitatData.Count()) _habitatData.Add(new HabitatData());

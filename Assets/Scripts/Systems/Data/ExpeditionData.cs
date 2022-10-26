@@ -8,7 +8,6 @@ public class ExpeditionData : ScriptableObject
     public bool AutoSucceed = false;
     public ExpeditionType Type = ExpeditionType.None;
     public HabitatRewardType UpgradeType = HabitatRewardType.None;
-    public bool UnlocksNewChimera = false;
     public int BaseAmountGained = 0;
     public float BaseDuration = 5.0f;
     public int Difficulty = 0;
@@ -38,7 +37,6 @@ public class ExpeditionData : ScriptableObject
         deepCopy.AutoSucceed = AutoSucceed; 
         deepCopy.Type = Type;
         deepCopy.UpgradeType = UpgradeType;
-        deepCopy.UnlocksNewChimera = UnlocksNewChimera;
         deepCopy.BaseAmountGained = BaseAmountGained;
         deepCopy.Difficulty = Difficulty;
         deepCopy.EnergyDrain = EnergyDrain;

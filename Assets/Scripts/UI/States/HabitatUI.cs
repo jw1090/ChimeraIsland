@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class HabitatUI : MonoBehaviour
 {
-    [Header("Scene Changing")]
-    [SerializeField] private Button _worldMapButton = null;
-
     [Header("Elements")]
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
@@ -17,7 +14,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Settings _settingsPanel = null;
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
-    [SerializeField] private Marketplace _marketplacePanel = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -31,15 +27,12 @@ public class HabitatUI : MonoBehaviour
     private bool _tutorialOpen = false;
     private bool _uiActive = true;
 
-    public Marketplace Marketplace { get => _marketplacePanel; }
     public Settings Settings { get => _settingsPanel; }
-    public Button WorldMapButton { get => _worldMapButton; }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
-    public bool UIActive { get => _uiActive; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
 
@@ -111,7 +104,6 @@ public class HabitatUI : MonoBehaviour
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
 
-        _marketplacePanel.Initialize(_uiManager);
         _detailsFolder.HabitatDetailsSetup();
 
         UIProgressCheck();
@@ -157,24 +149,17 @@ public class HabitatUI : MonoBehaviour
         switch (uiElementType)
         {
             case UIElementType.None:
+            case UIElementType.MarketplaceChimeraTab:
+            case UIElementType.WorldMapButton:
+            case UIElementType.OtherFacilityButtons:
                 break;
             case UIElementType.All:
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
-                _worldMapButton.gameObject.SetActive(true);
-                _marketplacePanel.ChimeraTabSetActive(true);
-                break;
-            case UIElementType.MarketplaceChimeraTab:
-                _marketplacePanel.ChimeraTabSetActive(true);
                 break;
             case UIElementType.OpenDetailsButton:
                 _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
-                break;
-            case UIElementType.WorldMapButton:
-                _worldMapButton.gameObject.SetActive(true);
-                break;
-            case UIElementType.OtherFacilityButtons:
                 break;
             case UIElementType.FossilsWallets:
                 foreach (UIFossilWallet fossilWallet in _fossilWallets)
@@ -213,7 +198,6 @@ public class HabitatUI : MonoBehaviour
         }
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
-        _marketplacePanel.gameObject.SetActive(false);
         _settingsPanel.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
 
@@ -254,16 +238,9 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
-        _marketplacePanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
-        _marketplacePanel.ChimeraTabSetActive(true);
 
         _menuOpen = true;
-    }
-
-    public void CloseMarketplace()
-    {
-        _marketplacePanel.gameObject.SetActive(false);
     }
 
     public void ToggleSettingsMenu()
@@ -286,10 +263,8 @@ public class HabitatUI : MonoBehaviour
             _audioManager.PlayUISFX(SFXUIType.StandardClick);
         }
         else if (_settingsPanel.gameObject.activeInHierarchy == true ||
-            _marketplacePanel.gameObject.activeInHierarchy == true ||
             _expeditionPanel.gameObject.activeInHierarchy == true ||
-            _detailsPanel.gameObject.activeInHierarchy == true
-            )
+            _detailsPanel.gameObject.activeInHierarchy == true)
         {
             ResetStandardUI();
 
@@ -370,16 +345,5 @@ public class HabitatUI : MonoBehaviour
         {
             wallet.UpdateWallet();
         }
-    }
-
-    public void UpdateShopUI()
-    {
-        _marketplacePanel.UpdateShopUI();
-    }
-
-    public void ToggleUI()
-    {
-        _uiActive = !_uiActive;
-        ResetStandardUI();
     }
 }

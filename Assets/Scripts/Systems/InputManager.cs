@@ -17,6 +17,7 @@ public class InputManager : MonoBehaviour
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
     private ExpeditionManager _expeditionManager = null;
+    private AudioManager _audioManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -45,6 +46,8 @@ public class InputManager : MonoBehaviour
     public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -235,9 +238,11 @@ public class InputManager : MonoBehaviour
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
                 _startingUI.OpenChimeraInfo();
-
-                _startingUI.SetChimeraType(_evolution.ChimeraType);
                 _startingUI.LoadChimeraInfo(_evolution);
+
+                _cameraUtil.ChimeraCloseUp(_evolution.ChimeraType);
+
+                _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
