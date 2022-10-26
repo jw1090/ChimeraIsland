@@ -238,7 +238,6 @@ public class InputManager : MonoBehaviour
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
                 _startingUI.OpenChimeraInfo();
-                _startingUI.SetChimeraType(_evolution.ChimeraType);
                 _startingUI.LoadChimeraInfo(_evolution);
 
                 _cameraUtil.ChimeraCloseUp(_evolution.ChimeraType);

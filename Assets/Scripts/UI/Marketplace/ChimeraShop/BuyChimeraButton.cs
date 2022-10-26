@@ -18,15 +18,10 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
         _tmpText = GetComponentInChildren<TextMeshProUGUI>();
+        _tmpText.text = "5";
 
         _chimera = chimera;
         _habitat = habitat;
-        UpdateUI();
-    }
-
-    public void UpdateUI()
-    {
-        _tmpText.text = "5"; // TODO: Replace with chimera price update.
     }
 
     public void OnPointerClick(PointerEventData eventData)

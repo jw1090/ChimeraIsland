@@ -204,6 +204,16 @@ public class CameraUtil : MonoBehaviour
         _transitionCoroutine = StartCoroutine(MoveCamera(position, _standardTransitionSpeed));
     }
 
+    private void CameraShift(Vector3 position, Quaternion rotation)
+    {
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+        }
+
+        _transitionCoroutine = StartCoroutine(MoveCamera(position, rotation, _standardTransitionSpeed));
+    }
+
     public void TempleCameraShift()
     {
         Vector3 templeposition = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode.position;
@@ -242,6 +252,21 @@ public class CameraUtil : MonoBehaviour
         _inputManager.SetInTransition(false);
     }
 
+    private IEnumerator MoveCamera(Vector3 target, Quaternion rotation, float time)
+    {
+        _inputManager.SetInTransition(true);
+
+        while (Vector3.Distance(transform.position, target) > 0.2f)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            transform.position = Vector3.Lerp(transform.position, target, time);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, time);
+        }
+
+        _inputManager.SetInTransition(false);
+    }
+
     private IEnumerator TrackingChimeraCamera(Chimera chimera, float time)
     {
         _inputManager.SetInTransition(true);
@@ -260,28 +285,41 @@ public class CameraUtil : MonoBehaviour
 
             transform.position = Vector3.Lerp(transform.position, chimeraPosition, time);
         }
+
         _inputManager.SetInTransition(false);
     }
+
     public void ChimeraCloseUp(ChimeraType chimeraType)
     {
+        Vector3 nodePosition = Vector3.zero;
+        Quaternion nodeRotation = Quaternion.identity;
+
         switch (chimeraType)
         {
             case ChimeraType.A:
-                CameraShift(_starterEnvironment.ANode.transform.position);
+                nodePosition = _starterEnvironment.ANode.position;
+                nodeRotation = _starterEnvironment.ANode.rotation;
                 break;
             case ChimeraType.B:
-                CameraShift(_starterEnvironment.BNode.transform.position);
+                nodePosition = _starterEnvironment.BNode.position;
+                nodeRotation = _starterEnvironment.BNode.rotation;
                 break;
             case ChimeraType.C:
-                CameraShift(_starterEnvironment.CNode.transform.position);
+                nodePosition = _starterEnvironment.CNode.position;
+                nodeRotation = _starterEnvironment.CNode.rotation;
                 break;
             default:
                 Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
                 break;
         }
+
+        _starterEnvironment.ShowChimera(chimeraType);
+        CameraShift(nodePosition, nodeRotation);
     }
+
     public void CameraToOrigin()
     {
-        CameraShift(_starterEnvironment.OriginNode.transform.position);
+        _starterEnvironment.ShowAllChimeras();
+        CameraShift(_starterEnvironment.OriginNode.position, _starterEnvironment.OriginNode.rotation);
     }
 }

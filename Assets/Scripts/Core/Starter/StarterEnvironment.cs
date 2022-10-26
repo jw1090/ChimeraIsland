@@ -1,31 +1,49 @@
-using System.Collections;
 using UnityEngine;
 
 public class StarterEnvironment : MonoBehaviour
 {
-    [SerializeField] GameObject _originNode = null;
-    [SerializeField] GameObject _cameraANode = null;
-    [SerializeField] GameObject _cameraBNode = null;
-    [SerializeField] GameObject _cameraCNode = null;
+    [Header("Chimeras")]
+    [SerializeField] EvolutionLogic _chimeraA = null;
+    [SerializeField] EvolutionLogic _chimeraB = null;
+    [SerializeField] EvolutionLogic _chimeraC = null;
 
-    public GameObject OriginNode { get => _originNode; }
-    public GameObject ANode { get => _cameraANode; }
-    public GameObject BNode { get => _cameraBNode; }
-    public GameObject CNode { get => _cameraCNode; }
+    [Header("Position Nodes")]
+    [SerializeField] Transform _originNode = null;
+    [SerializeField] Transform _cameraANode = null;
+    [SerializeField] Transform _cameraBNode = null;
+    [SerializeField] Transform _cameraCNode = null;
 
-    private Camera _cameraMain = null;
-    private CameraUtil _camera = null;
+    public Transform OriginNode { get => _originNode; }
+    public Transform ANode { get => _cameraANode; }
+    public Transform BNode { get => _cameraBNode; }
+    public Transform CNode { get => _cameraCNode; }
 
-    public void SetCameraUtil(CameraUtil cameraUtil)
+    public void ShowAllChimeras()
     {
-        _camera = cameraUtil;
-        _cameraMain = _camera.CameraCO;
+        _chimeraA.gameObject.SetActive(true);
+        _chimeraB.gameObject.SetActive(true);
+        _chimeraC.gameObject.SetActive(true);
     }
 
-    public StarterEnvironment Initialize(CameraUtil cameraUtil)
+    public void ShowChimera(ChimeraType chimeraType)
     {
-        Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
-        _camera = cameraUtil;
-        return this;
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                _chimeraB.gameObject.SetActive(false);
+                _chimeraC.gameObject.SetActive(false);
+                break;
+            case ChimeraType.B:
+                _chimeraA.gameObject.SetActive(false);
+                _chimeraC.gameObject.SetActive(false);
+                break;
+            case ChimeraType.C:
+                _chimeraA.gameObject.SetActive(false);
+                _chimeraB.gameObject.SetActive(false);
+                break;
+            default:
+                Debug.LogError($"Chimera type {chimeraType} is invalid!");
+                break;
+        }
     }
 }
