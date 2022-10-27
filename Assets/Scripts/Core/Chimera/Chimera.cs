@@ -158,8 +158,15 @@ public class Chimera : MonoBehaviour
                     return "";
             }
         }
-
-        return _currentEvolution.Name;
+        
+        if(_currentEvolution.CustomName != "")
+        {
+            return _currentEvolution.CustomName;
+        }
+        else
+        {
+            return _currentEvolution.Name;
+        }
     }
 
     public bool GetStatByType(StatType statType, out int amount)

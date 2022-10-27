@@ -9,6 +9,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TMP_InputField _customName = null;
+    [SerializeField] private GameObject _panel = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
@@ -19,6 +20,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _findButton = null;
     [SerializeField] private Button _addButton = null;
     [SerializeField] private Button _removeButton = null;
+    [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
 
     [Header("Stat Preference")]
@@ -59,6 +61,7 @@ public class ChimeraDetails : MonoBehaviour
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
         _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
         _uiManager.CreateButtonListener(_findButton, FindChimera);
+        _uiManager.CreateButtonListener(_renameButton, LockCamera);
     }
 
     public void UpdateDetails()
@@ -228,20 +231,23 @@ public class ChimeraDetails : MonoBehaviour
         }
     }
 
-    public void LockCamera()
+    private void LockCamera()
     {
         _cameraUtil.IsNaming = true;
         _name.gameObject.SetActive(false);
+        _customName.gameObject.SetActive(true);
+        _customName.Select();
+        _panel.SetActive(false);
     }
 
     public void UnlockCamera()
     {
         _cameraUtil.IsNaming = false;
-        _name.text = _customName.text;
-        if(_customName.text == "")
-        {
-            _name.gameObject.SetActive(true);
-        }
+        _chimera.CurrentEvolution.SetCustomName(_customName.text);
+        _name.gameObject.SetActive(true);
+        _customName.gameObject.SetActive(false);
+        UpdateDetails();
+        _panel.SetActive(true);
     }
 
     private void NoPrefferedStat()
