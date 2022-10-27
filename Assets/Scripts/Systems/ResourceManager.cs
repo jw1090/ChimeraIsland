@@ -41,9 +41,9 @@ public class ResourceManager : MonoBehaviour
     private Sprite _tutorialSpeakingC = null;
     private Sprite _tutorialStandardC = null;
 
-    private Sprite _mouseDefault = null;
-    private Sprite _mouseClickable = null;
-    private Sprite _mouseDragable = null;
+    private Texture2D _mouseDefault = null;
+    private Texture2D _mouseClickable = null;
+    private Texture2D _mouseDragable = null;
 
     private GameObject _chimeraBasePrefabA = null;
     private GameObject _chimeraBasePrefabB = null;
@@ -110,9 +110,9 @@ public class ResourceManager : MonoBehaviour
         _tutorialSpeakingC = Resources.Load<Sprite>("Icons/Tutorial/Speaking C");
         _tutorialStandardC = Resources.Load<Sprite>("Icons/Tutorial/Standard C");
 
-        _mouseDefault = Resources.Load<Sprite>("Icons/Mouse/Default Cursor");
-        _mouseClickable = Resources.Load<Sprite>("Icons/Mouse/Clickable Cursor");
-        _mouseDragable = Resources.Load<Sprite>("Icons/Mouse/Dragable Cursor");
+        _mouseDefault = Resources.Load<Texture2D>("Icons/Mouse/Default Cursor");
+        _mouseClickable = Resources.Load<Texture2D>("Icons/Mouse/Clickable Cursor");
+        _mouseDragable = Resources.Load<Texture2D>("Icons/Mouse/Dragable Cursor");
 
         _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");
         _chimeraBasePrefabB = Resources.Load<GameObject>("Chimera/B");
@@ -141,11 +141,11 @@ public class ResourceManager : MonoBehaviour
         switch (cursorType)
         {
             case CursorType.Default:
-                return _mouseDefault.texture;
+                return _mouseDefault;
             case CursorType.Clickable:
-                return _mouseClickable.texture;
+                return _mouseClickable;
             case CursorType.Dragable:
-                return _mouseDragable.texture;
+                return _mouseDragable;
             default:
                 Debug.LogError($"Unhandled cursor type: {cursorType}. Please change!");
                 return null;

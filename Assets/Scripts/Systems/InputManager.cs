@@ -30,13 +30,14 @@ public class InputManager : MonoBehaviour
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
-    private const float _rotationAmount = 0.8f;
+    private float _rotationAmount = 0.8f;
     private bool _freeCameraActive = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
 
+    public void SetChimeraRotationSpeed(float speed) { _rotationAmount = speed; }
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)

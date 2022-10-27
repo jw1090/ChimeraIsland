@@ -13,6 +13,7 @@ public class PersistentData : MonoBehaviour
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
+    private float _cameraSpeed = 20.0f;
 
     public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
@@ -22,15 +23,16 @@ public class PersistentData : MonoBehaviour
     public List<float> Volumes { get => _volumes; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
+    public float CameraSpeed { get => _cameraSpeed; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
-
     public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion)
     {
         _tutorialCompletion = tutorialCompletion;
     }
+    public void SetCameraSpeed(float speed){ _cameraSpeed = speed;}
 
     public PersistentData Initialize()
     {
@@ -74,7 +76,7 @@ public class PersistentData : MonoBehaviour
         List<FacilityData> myFacilityData = FacilitiesToData();
         List<ChimeraData> myChimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion);
+        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion, _cameraSpeed);
         UpdateGameSaveData(myData);
 
         FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA, true);
@@ -88,6 +90,7 @@ public class PersistentData : MonoBehaviour
         _facilitySaveData = myData.facilities;
         _tutorialCompletion = myData._tutorialCompletion;
         _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
+        _cameraSpeed = myData.cameraSpeed;
     }
 
     public void ResetLastSessionHabitat()
