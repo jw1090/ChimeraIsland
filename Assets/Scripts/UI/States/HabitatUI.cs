@@ -11,7 +11,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
-    [SerializeField] private Settings _settingsPanel = null;
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
@@ -20,6 +19,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
+    private Settings _settingsPanel = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
@@ -51,7 +51,7 @@ public class HabitatUI : MonoBehaviour
     {
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
-
+        _settingsPanel = uiManager.SettingsPanel;
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
@@ -285,7 +285,7 @@ public class HabitatUI : MonoBehaviour
         _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
         _standardUI.gameObject.SetActive(false);
-
+        _settingsPanel.HideHabitatButtons(false);
         _menuOpen = true;
     }
 

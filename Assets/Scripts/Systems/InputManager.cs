@@ -68,14 +68,14 @@ public class InputManager : MonoBehaviour
         DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
+
         _chimeraLayer = LayerMask.GetMask("Chimera");
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
         _templeLayer = LayerMask.GetMask("Temple");
         _sphereMarker.SetActive(false);
-
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _persistentData = ServiceLocator.Get<PersistentData>();
 
         _rotationAmount = _persistentData.ChimeraSpinSpeed;
 
@@ -174,10 +174,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_habitatUI != null)
-            {
-                _habitatUI.ToggleSettingsMenu();
-            }
+            _uiManager.ToggleSettingsMenu();
         }
 
         if (_debugCurrencyInputEnabled == true)

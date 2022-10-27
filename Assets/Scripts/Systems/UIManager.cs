@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private TempleUI _templeUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
+    [SerializeField] private Settings _settings = null;
     private bool _uiActive = true;
 
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
@@ -19,6 +21,9 @@ public class UIManager : MonoBehaviour
     public HabitatUI HabitatUI { get => _habitatUI; }
     public TempleUI TempleUI { get => _templeUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
+
+    public Settings SettingsPanel { get => _settings; }
+
     public bool UIActive { get => _uiActive; }
 
     public void SetCameraUtil(CameraUtil cameraUtil) { _startingUI.SetCameraUtil(cameraUtil); }
@@ -61,6 +66,9 @@ public class UIManager : MonoBehaviour
                 break;
             case SceneType.Builder:
                 _uiStatefulObject.SetState("Builder UI", true);
+                break;
+            case SceneType.Settings:
+                _uiStatefulObject.SetState("Settings", true);
                 break;
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
@@ -124,5 +132,40 @@ public class UIManager : MonoBehaviour
     {
         _uiActive = !_uiActive;
         gameObject.SetActive(_uiActive);
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        if (_uiStatefulObject.CurrentState.StateName == "Habitat UI")
+        {
+            _habitatUI.ToggleSettingsMenu();
+            return;
+        }
+        if (_uiStatefulObject.CurrentState.StateName == "Settings")
+        {
+            ShowUIByScene(SceneType.MainMenu);
+            return;
+        }
+
+        if (_uiStatefulObject.CurrentState.StateName == "Main Menu UI")
+        {
+            ShowUIByScene(SceneType.Settings);
+            _settings.HideHabitatButtons(true);
+            return;
+        }
+    }
+
+    public void CloseSettings()
+    {
+        if (_uiStatefulObject.CurrentState.StateName == "Habitat UI")
+        {
+            _habitatUI.ResetStandardUI();
+            return;
+        }
+        if (_uiStatefulObject.CurrentState.StateName == "Settings")
+        {
+            ShowUIByScene(SceneType.MainMenu);
+            return;
+        }
     }
 }

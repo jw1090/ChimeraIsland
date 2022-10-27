@@ -17,7 +17,7 @@ public class GameSaveData
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
 
-    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletionData tutorialCompletion, float CameraSpeed, float ChimeraSpinSpeed)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletionData tutorialCompletion, float cameraSpeed, float chimeraSpinSpeed)
     {
         habitats = newHabitatData;
         globalData = newGlobalData;
@@ -29,8 +29,8 @@ public class GameSaveData
         ambientVolume = volumes[3];
         uiSfxVolume = volumes[4];
         _tutorialCompletion = tutorialCompletion;
-        cameraSpeed = CameraSpeed;
-        chimeraSpinSpeed = ChimeraSpinSpeed;
+        this.cameraSpeed = cameraSpeed;
+        this.chimeraSpinSpeed = chimeraSpinSpeed;
     }
 
     public GameSaveData() { }

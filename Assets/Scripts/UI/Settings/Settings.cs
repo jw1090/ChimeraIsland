@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Settings : MonoBehaviour
 {
@@ -8,10 +9,13 @@ public class Settings : MonoBehaviour
     [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _quitGameButton = null;
     [SerializeField] private Button _screenWideButton = null;
-    [SerializeField] Slider _cameraSensitivitySlider = null;
-    [SerializeField] Slider _chimeraSpinSpeedSlider = null;
+    [SerializeField] private Slider _cameraSensitivitySlider = null;
+    [SerializeField] private Slider _chimeraSpinSpeedSlider = null;
+    [SerializeField] private TextMeshProUGUI _resumeButtonText;
     private InputManager _inputManager = null;
     private CameraUtil _cameraUtil = null;
+    private RectTransform _resumeRectTransform = null;
+    private Image _backgroundImage = null;
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButton; }
     public Button ResumeButton { get => _resumeButton; }
@@ -25,6 +29,9 @@ public class Settings : MonoBehaviour
 
         _inputManager = ServiceLocator.Get<InputManager>();
 
+        _resumeRectTransform = _resumeButton.gameObject.GetComponent<RectTransform>();
+
+        _backgroundImage = gameObject.GetComponent<Image>();
 
         _chimeraSpinSpeedSlider.value = _inputManager.RotationSpeed;
 
@@ -43,8 +50,8 @@ public class Settings : MonoBehaviour
     {
         _cameraSensitivitySlider.onValueChanged.AddListener(SetCameraSpeed);
         _chimeraSpinSpeedSlider.onValueChanged.AddListener(SetChimeraRotationSpeed);
-        _uiManager.CreateButtonListener(_resumeButton, _uiManager.HabitatUI.ResetStandardUI);
-        _uiManager.CreateButtonListener(_screenWideButton, _uiManager.HabitatUI.ResetStandardUI);
+        _uiManager.CreateButtonListener(_resumeButton, _uiManager.CloseSettings);
+        _uiManager.CreateButtonListener(_screenWideButton, _uiManager.CloseSettings);
     }
 
     public void InitializeVolumeSettings()
@@ -60,5 +67,26 @@ public class Settings : MonoBehaviour
     private void SetCameraSpeed(float speed)
     {
         _cameraUtil.SetSpeed(speed);
+    }
+
+    public void HideHabitatButtons(bool hide)
+    {
+        _mainMenuButton.gameObject.SetActive(!hide);
+        _quitGameButton.gameObject.SetActive(!hide);
+        _backgroundImage.enabled = hide;
+        if (hide == true)
+        {
+            _resumeButtonText.text = "Back";
+            _resumeRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            _resumeRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            _resumeRectTransform.pivot = new Vector2(0.5f, 0.5f);
+        }
+        else
+        {
+            _resumeButtonText.text = "Resume";
+            _resumeRectTransform.anchorMin = new Vector2(0.5f, 1.0f);
+            _resumeRectTransform.anchorMax = new Vector2(0.5f, 1.0f);
+            _resumeRectTransform.pivot = new Vector2(0.5f, 1.0f);
+        }
     }
 }
