@@ -358,7 +358,7 @@ public class InputManager : MonoBehaviour
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
+        if (_isHolding == true || Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
             return CursorType.Dragable;
         }
