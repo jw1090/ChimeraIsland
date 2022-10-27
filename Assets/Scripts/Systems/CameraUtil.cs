@@ -27,6 +27,7 @@ public class CameraUtil : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private StarterEnvironment _starterEnvironment = null;
+    private PersistentData _persistentData = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
     private Rect _rightRect = new Rect();
@@ -43,16 +44,24 @@ public class CameraUtil : MonoBehaviour
     public Camera CameraCO { get => _cameraCO; }
     public SceneType SceneType { get => _sceneType; }
     public bool IsHolding { get; set; }
-    public bool IsNaming { get; set; }
+    public float Speed { get => _speed; }
+
+    public void SetSpeed(float speed) 
+    { 
+        _speed = speed;
+        _persistentData.SetCameraSpeed(speed);
+    }
+
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
 
     public CameraUtil Initialize(SceneType sceneType)
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-
+        _speed = _persistentData.CameraSpeed;
         _sceneType = sceneType;
         if (_sceneType == SceneType.Habitat)
         {
@@ -85,10 +94,7 @@ public class CameraUtil : MonoBehaviour
         }
 
         CameraCollisionCheck();
-        if(!IsNaming)
-        {
-            CameraMovement();
-        }
+        CameraMovement();
         DragChimeraMovement();
     }
 

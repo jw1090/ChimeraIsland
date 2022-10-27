@@ -1,4 +1,5 @@
 using System;
+using System.Resources;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,6 +19,8 @@ public class InputManager : MonoBehaviour
     private DebugConfig _debugConfig = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
+    private ResourceManager _resourceManager = null;
+    private PersistentData _persistentData = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -28,13 +31,19 @@ public class InputManager : MonoBehaviour
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
-    private const float _rotationAmount = 0.8f;
+    private float _rotationAmount = 0.8f;
     private bool _freeCameraActive = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
+    public float RotationSpeed { get => _rotationAmount; }
 
+    public void SetChimeraRotationSpeed(float speed) 
+    { 
+        _rotationAmount = speed;
+        _persistentData.SetChimeraSpinSpeed(speed);
+    }
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
@@ -47,7 +56,6 @@ public class InputManager : MonoBehaviour
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
-
     public void SetUIManager(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -58,7 +66,6 @@ public class InputManager : MonoBehaviour
     public InputManager Initialize()
     {
         DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
-
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _chimeraLayer = LayerMask.GetMask("Chimera");
@@ -66,6 +73,11 @@ public class InputManager : MonoBehaviour
         _portalLayer = LayerMask.GetMask("Portal");
         _templeLayer = LayerMask.GetMask("Temple");
         _sphereMarker.SetActive(false);
+
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
+
+        _rotationAmount = _persistentData.ChimeraSpinSpeed;
 
         _isInitialized = true;
 
@@ -107,6 +119,8 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
+
+        Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
 
         if (Input.GetMouseButton(0))
         {
@@ -336,5 +350,35 @@ public class InputManager : MonoBehaviour
                 _freeCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
+    }
+
+    private CursorType GetCursorSprite()
+    {
+
+        if (_cameraMain == null)
+        {
+            return CursorType.Default;
+        }
+
+        if (_inTransition == true)
+        {
+            return CursorType.Default;
+        }
+
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+
+        if (_isHolding == true || Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
+        {
+            return CursorType.Dragable;
+        }
+
+        if(Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer) 
+            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer) 
+            || Physics.Raycast(ray, out RaycastHit templeHit, 300.0f, _templeLayer))
+        {
+            return CursorType.Clickable;
+        }
+
+        return CursorType.Default;
     }
 }
