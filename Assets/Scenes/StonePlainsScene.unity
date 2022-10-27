@@ -295,8 +295,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 121048457710494149, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
+      propertyPath: _enableDebugViewInput
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 121048457710494149, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: _enableDebugCurrencyInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 121048457710494149, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: _enableDebugTutorialInput
@@ -304,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 121048457710494149, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: _enableDebugHabitatUpgradeInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2310533375070072511, guid: 9c3d6da4c789ea94da68acdcc8f55440, type: 3}
       propertyPath: MaxDistance
@@ -417,9 +421,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneType: 2
   _cameraUtil: {fileID: 963194229}
+  _lightingManager: {fileID: 292593569}
+  _starterEnvironment: {fileID: 0}
   _habitat: {fileID: 2136768068}
   _expeditionManager: {fileID: 1725134172}
-  _lightingManager: {fileID: 292593569}
   _evolutionBuilder: {fileID: 0}
 --- !u!114 &2136768068 stripped
 MonoBehaviour:

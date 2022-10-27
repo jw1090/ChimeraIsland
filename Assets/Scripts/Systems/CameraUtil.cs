@@ -43,7 +43,7 @@ public class CameraUtil : MonoBehaviour
     public Camera CameraCO { get => _cameraCO; }
     public SceneType SceneType { get => _sceneType; }
     public bool IsHolding { get; set; }
-
+    public bool IsNaming { get; set; }
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
 
     public CameraUtil Initialize(SceneType sceneType)
@@ -85,7 +85,10 @@ public class CameraUtil : MonoBehaviour
         }
 
         CameraCollisionCheck();
-        CameraMovement();
+        if(!IsNaming)
+        {
+            CameraMovement();
+        }
         DragChimeraMovement();
     }
 

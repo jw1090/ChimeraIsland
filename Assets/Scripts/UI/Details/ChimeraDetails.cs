@@ -8,6 +8,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _chimeraIcon = null;
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
+    [SerializeField] private TMP_InputField _customName = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
@@ -224,6 +225,22 @@ public class ChimeraDetails : MonoBehaviour
             default:
                 Debug.LogError($"Unhandled stat [{_chimera.PreferredStat}] please fix!");
                 break;
+        }
+    }
+
+    public void LockCamera()
+    {
+        _cameraUtil.IsNaming = true;
+        _name.gameObject.SetActive(false);
+    }
+
+    public void UnlockCamera()
+    {
+        _cameraUtil.IsNaming = false;
+        _name.text = _customName.text;
+        if(_customName.text == "")
+        {
+            _name.gameObject.SetActive(true);
         }
     }
 
