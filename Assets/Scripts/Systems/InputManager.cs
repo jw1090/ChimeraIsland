@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
     private ResourceManager _resourceManager = null;
+    private PersistentData _persistentData = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -36,8 +37,13 @@ public class InputManager : MonoBehaviour
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
+    public float RotationSpeed { get => _rotationAmount; }
 
-    public void SetChimeraRotationSpeed(float speed) { _rotationAmount = speed; }
+    public void SetChimeraRotationSpeed(float speed) 
+    { 
+        _rotationAmount = speed;
+        _persistentData.SetChimeraSpinSpeed(speed);
+    }
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
@@ -69,6 +75,9 @@ public class InputManager : MonoBehaviour
         _sphereMarker.SetActive(false);
 
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
+
+        _rotationAmount = _persistentData.ChimeraSpinSpeed;
 
         _isInitialized = true;
 

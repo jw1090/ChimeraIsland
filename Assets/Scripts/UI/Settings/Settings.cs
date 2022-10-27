@@ -25,12 +25,18 @@ public class Settings : MonoBehaviour
 
         _inputManager = ServiceLocator.Get<InputManager>();
 
-        _chimeraSpinSpeedSlider.value = 0.8f;
+
+        _chimeraSpinSpeedSlider.value = _inputManager.RotationSpeed;
+
         _cameraSensitivitySlider.value = 20.0f;
 
         SetupButtonListeners();
     }
     
+    public void SetStartingChimeraSpinSpeedValue(float speed)
+    {
+    }
+
     public void SetCameraUtil(CameraUtil camera)
     {
         _cameraUtil = camera;

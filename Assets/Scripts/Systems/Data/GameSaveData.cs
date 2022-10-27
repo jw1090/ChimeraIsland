@@ -12,11 +12,12 @@ public class GameSaveData
     public float ambientVolume = 0.0f;
     public float uiSfxVolume = 0.0f;
     public float cameraSpeed = 20.0f;
+    public float chimeraSpinSpeed = 0.8f;
     public List<HabitatData> habitats = new List<HabitatData>{new HabitatData(), new HabitatData()};
     public List<ChimeraData> chimeras = new List<ChimeraData>();
     public List<FacilityData> facilities = new List<FacilityData>();
 
-    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletionData tutorialCompletion, float CameraSpeed)
+    public GameSaveData(GlobalData newGlobalData, List<ChimeraData> newChimeraData, List<FacilityData> newFacilityData, List<HabitatData> newHabitatData, List<float> volumes, TutorialCompletionData tutorialCompletion, float CameraSpeed, float ChimeraSpinSpeed)
     {
         habitats = newHabitatData;
         globalData = newGlobalData;
@@ -29,6 +30,7 @@ public class GameSaveData
         uiSfxVolume = volumes[4];
         _tutorialCompletion = tutorialCompletion;
         cameraSpeed = CameraSpeed;
+        chimeraSpinSpeed = ChimeraSpinSpeed;
     }
 
     public GameSaveData() { }
