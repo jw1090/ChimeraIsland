@@ -32,10 +32,6 @@ public class Settings : MonoBehaviour
 
         SetupButtonListeners();
     }
-    
-    public void SetStartingChimeraSpinSpeedValue(float speed)
-    {
-    }
 
     public void SetCameraUtil(CameraUtil camera)
     {
