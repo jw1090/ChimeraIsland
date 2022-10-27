@@ -176,3 +176,10 @@ public enum DayType
     DayTime,
     NightTime,
 }
+
+public enum CursorType
+{
+    Default,
+    Clickable,
+    Dragable,
+}
