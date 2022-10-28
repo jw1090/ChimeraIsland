@@ -32,6 +32,7 @@ public class ChimeraDetails : MonoBehaviour
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private PersistentData _persitentData = null;
     private AudioManager _audioManager = null;
     private CameraUtil _cameraUtil = null;
     private int _chimeraSpot = 0;
@@ -40,6 +41,7 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
+        _persitentData = ServiceLocator.Get<PersistentData>();
         _uiManager = uiManager;
         NoPrefferedStat();
     }
@@ -243,7 +245,8 @@ public class ChimeraDetails : MonoBehaviour
     public void UnlockCamera()
     {
         _cameraUtil.IsNaming = false;
-        _chimera.CurrentEvolution.SetCustomName(_customName.text);
+        _chimera.SetCustomName(_customName.text);
+        _persitentData.SetCustomName(_customName.text);
         _name.gameObject.SetActive(true);
         _customName.gameObject.SetActive(false);
         UpdateDetails();

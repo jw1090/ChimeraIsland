@@ -5,7 +5,6 @@ public class EvolutionLogic : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private string _chimeraName = "";
-    [SerializeField] private string _customName = "";
     [SerializeField] private ElementType _elementType = ElementType.None;
     [SerializeField] private StatType _statBonus = StatType.None;
     [SerializeField][TextArea(3, 10)] private string _backgroundInfo = "";
@@ -40,9 +39,7 @@ public class EvolutionLogic : MonoBehaviour
     public int ReqStamina { get => _reqStamina; }
     public int ReqWisdom { get => _reqWisdom; }
     public string Name { get => _chimeraName; }
-    public string CustomName { get => _customName; }
     public string BackgroundInfo { get => _backgroundInfo; }
-    public void SetCustomName(string newName) { _customName = newName; }
 
     public void GetPreferredStat(ChimeraType chimeraType, out int explorationAmount, out int staminaAmount, out int wisdomAmount)
     {

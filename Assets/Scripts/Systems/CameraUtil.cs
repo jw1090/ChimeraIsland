@@ -44,6 +44,7 @@ public class CameraUtil : MonoBehaviour
     public Camera CameraCO { get => _cameraCO; }
     public SceneType SceneType { get => _sceneType; }
     public bool IsHolding { get; set; }
+    public bool IsNaming { get; set; }
     public float Speed { get => _speed; }
 
     public void SetSpeed(float speed) 
@@ -94,7 +95,10 @@ public class CameraUtil : MonoBehaviour
         }
 
         CameraCollisionCheck();
-        CameraMovement();
+        if(IsNaming == false)
+        { 
+            CameraMovement();
+        }
         DragChimeraMovement();
     }
 
