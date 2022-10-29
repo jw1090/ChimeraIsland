@@ -72,7 +72,7 @@ public class EvolutionBuilder : MonoBehaviour
         newChimera.SetActive(false);
 
         Chimera chimeraComp = newChimera.GetComponent<Chimera>();
-        chimeraComp.InitializeForBuilder();
+        chimeraComp.FindEvolution();
 
         _baseChimeras.Add(chimeraComp);
     }

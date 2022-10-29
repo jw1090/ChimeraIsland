@@ -14,7 +14,7 @@ public class PersistentData : MonoBehaviour
     private List<HabitatData> _habitatSaveData = null;
     private List<float> _volumes = new List<float>();
     private float _cameraSpeed = 20.0f;
-    private float _chimeraSpinSpeed = 0.8f;
+    private float _spinSpeed = 0.8f;
 
     public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
@@ -25,17 +25,15 @@ public class PersistentData : MonoBehaviour
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
     public float CameraSpeed { get => _cameraSpeed; }
-    public float ChimeraSpinSpeed { get => _chimeraSpinSpeed; }
+    public float ChimeraSpinSpeed { get => _spinSpeed; }
+
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
-    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion)
-    {
-        _tutorialCompletion = tutorialCompletion;
-    }
+    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion) { _tutorialCompletion = tutorialCompletion; }
     public void SetCameraSpeed(float speed){ _cameraSpeed = speed;}
-    public void SetChimeraSpinSpeed(float speed) { _chimeraSpinSpeed = speed; }
+    public void SetChimeraSpinSpeed(float speed) { _spinSpeed = speed; }
 
     public PersistentData Initialize()
     {
@@ -75,26 +73,26 @@ public class PersistentData : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
         _habitatManager.UpdateCurrentHabitatFacilities();
 
-        GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
-        List<FacilityData> myFacilityData = FacilitiesToData();
-        List<ChimeraData> myChimeraData = ChimerasToData();
+        GlobalData globalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
+        List<FacilityData> facilityData = FacilitiesToData();
+        List<ChimeraData> chimeraData = ChimerasToData();
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion, _cameraSpeed, _chimeraSpinSpeed);
-        UpdateGameSaveData(myData);
+        GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, _tutorialCompletion, _audioManager.Volumes, _cameraSpeed, _spinSpeed);
+        UpdateGameSaveData(data);
 
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA, true);
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GAME_DATA, true);
     }
 
     private void UpdateGameSaveData(GameSaveData myData)
     {
         _globalSaveData = myData.globalData;
-        _chimeraSaveData = myData.chimeras;
-        _habitatSaveData = myData.habitats;
-        _facilitySaveData = myData.facilities;
-        _tutorialCompletion = myData._tutorialCompletion;
+        _habitatSaveData = myData.habitatData;
+        _facilitySaveData = myData.facilityData;
+        _chimeraSaveData = myData.chimeraData;
+        _tutorialCompletion = myData.tutorialCompletionData;
         _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
         _cameraSpeed = myData.cameraSpeed;
-        _chimeraSpinSpeed = myData.chimeraSpinSpeed;
+        _spinSpeed = myData.spinSpeed;
     }
 
     public void ResetLastSessionHabitat()

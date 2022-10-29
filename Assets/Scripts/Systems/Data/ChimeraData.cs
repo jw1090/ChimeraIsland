@@ -11,6 +11,7 @@ public class ChimeraData
     public int currentEnergy = 0;
     public int uniqueId = 0;
     public bool first = false;
+    public string customName = null;
 
     public ChimeraData(Chimera chimera)
     {
@@ -21,6 +22,7 @@ public class ChimeraData
         wisdom = chimera.Wisdom;
         exploration = chimera.Exploration;
         currentEnergy = chimera.CurrentEnergy;
+        customName = chimera.CustomName;
         uniqueId = chimera.UniqueID;
     }
 }

@@ -8,6 +8,8 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _chimeraIcon = null;
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
+    [SerializeField] private TMP_InputField _customName = null;
+    [SerializeField] private GameObject _panel = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
@@ -18,6 +20,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _findButton = null;
     [SerializeField] private Button _addButton = null;
     [SerializeField] private Button _removeButton = null;
+    [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
 
     [Header("Stat Preference")]
@@ -29,6 +32,7 @@ public class ChimeraDetails : MonoBehaviour
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private PersistentData _persitentData = null;
     private AudioManager _audioManager = null;
     private CameraUtil _cameraUtil = null;
     private int _chimeraSpot = 0;
@@ -37,6 +41,7 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
+        _persitentData = ServiceLocator.Get<PersistentData>();
         _uiManager = uiManager;
         NoPrefferedStat();
     }
@@ -58,6 +63,7 @@ public class ChimeraDetails : MonoBehaviour
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
         _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
         _uiManager.CreateButtonListener(_findButton, FindChimera);
+        _uiManager.CreateButtonListener(_renameButton, LockCamera);
     }
 
     public void UpdateDetails()
@@ -225,6 +231,28 @@ public class ChimeraDetails : MonoBehaviour
                 Debug.LogError($"Unhandled stat [{_chimera.PreferredStat}] please fix!");
                 break;
         }
+    }
+
+    private void LockCamera()
+    {
+        _cameraUtil.IsNaming = true;
+        _name.gameObject.SetActive(false);
+        _customName.gameObject.SetActive(true);
+        _customName.Select();
+
+        _panel.SetActive(false);
+    }
+
+    public void UnlockCamera()
+    {
+        _cameraUtil.IsNaming = false;
+        _chimera.SetCustomName(_customName.text);
+        _name.gameObject.SetActive(true);
+        _customName.gameObject.SetActive(false);
+
+        UpdateDetails();
+
+        _panel.SetActive(true);
     }
 
     private void NoPrefferedStat()
