@@ -47,10 +47,10 @@ public class CameraUtil : MonoBehaviour
     public bool IsNaming { get; set; }
     public float Speed { get => _speed; }
 
-    public void SetSpeed(float speed) 
-    { 
+    public void SetSpeed(float speed)
+    {
         _speed = speed;
-        _persistentData.SetCameraSpeed(speed);
+        _persistentData.SetSpeed(speed);
     }
 
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
@@ -62,8 +62,10 @@ public class CameraUtil : MonoBehaviour
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _speed = _persistentData.CameraSpeed;
         _sceneType = sceneType;
+
+        _speed = _persistentData.SettingsData.cameraSpeed;
+
         if (_sceneType == SceneType.Habitat)
         {
             _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
@@ -95,8 +97,8 @@ public class CameraUtil : MonoBehaviour
         }
 
         CameraCollisionCheck();
-        if(IsNaming == false)
-        { 
+        if (IsNaming == false)
+        {
             CameraMovement();
         }
         DragChimeraMovement();

@@ -131,12 +131,13 @@ public class AudioManager : MonoBehaviour
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _masterVolume = _persistentData.Volumes[0];
-        _musicVolume = _persistentData.Volumes[1];
-        _sfxVolume = _persistentData.Volumes[2];
-        _ambientVolume = _persistentData.Volumes[3];
-        _uiSfxVolume= _persistentData.Volumes[4];
         _uiManager = ServiceLocator.Get<UIManager>();
+
+        _masterVolume = _persistentData.SettingsData.masterVolume;
+        _musicVolume = _persistentData.SettingsData.musicVolume;
+        _sfxVolume = _persistentData.SettingsData.sfxVolume;
+        _ambientVolume = _persistentData.SettingsData.ambientVolume;
+        _uiSfxVolume = _persistentData.SettingsData.uiSfxVolume;
 
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);

@@ -42,7 +42,7 @@ public class InputManager : MonoBehaviour
     public void SetChimeraRotationSpeed(float speed) 
     { 
         _rotationAmount = speed;
-        _persistentData.SetChimeraSpinSpeed(speed);
+        _persistentData.SetSpinSpeed(speed);
     }
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
@@ -77,7 +77,7 @@ public class InputManager : MonoBehaviour
         _templeLayer = LayerMask.GetMask("Temple");
         _sphereMarker.SetActive(false);
 
-        _rotationAmount = _persistentData.ChimeraSpinSpeed;
+        _rotationAmount = _persistentData.SettingsData.spinSpeed;
 
         _isInitialized = true;
 
