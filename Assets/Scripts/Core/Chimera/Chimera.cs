@@ -4,6 +4,7 @@ public class Chimera : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
+    [SerializeField] private string _customName = null;
     [SerializeField] private int _price = 5;
 
     [Header("Stat Growth")]
@@ -23,6 +24,7 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
+    private PersistentData _persitentData = null;
     private ElementType _elementalType = ElementType.None;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
@@ -67,7 +69,7 @@ public class Chimera : MonoBehaviour
     public int UniqueID { get => _uniqueId; }
     public float AveragePower { get => _averagePower; }
     public string Name { get => GetName(); }
-
+    public string CustomName { get => _customName; }
     public int GetStatThreshold(StatType statType)
     {
         switch (statType)
@@ -158,8 +160,15 @@ public class Chimera : MonoBehaviour
                     return "";
             }
         }
-
-        return _currentEvolution.Name;
+        
+        if(CustomName != "")
+        {
+            return CustomName;
+        }
+        else
+        {
+            return _currentEvolution.Name;
+        }
     }
 
     public bool GetStatByType(StatType statType, out int amount)
@@ -195,6 +204,7 @@ public class Chimera : MonoBehaviour
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
     public void SetCurrentEnergy(int currentEnergy) { _currentEnergy = currentEnergy; }
+    public void SetCustomName(string newName) { _customName = newName; }
 
     public void SetXPByType(StatType statType, int amount)
     {
@@ -222,11 +232,15 @@ public class Chimera : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>(); 
+        _persitentData = ServiceLocator.Get<PersistentData>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _chimeraBehavior = GetComponent<ChimeraBehavior>();
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
         _habitatType = _habitatManager.CurrentHabitat.Type;
+
+        _customName = _persitentData.CustomName;
 
         if (_uniqueId == 1)
         {
