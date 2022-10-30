@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private TempleUI _templeUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
-    [SerializeField] private Settings _settings = null;
+    [SerializeField] private SettingsUI _settings = null;
     private bool _uiActive = true;
 
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
@@ -21,9 +21,7 @@ public class UIManager : MonoBehaviour
     public HabitatUI HabitatUI { get => _habitatUI; }
     public TempleUI TempleUI { get => _templeUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
-
-    public Settings SettingsPanel { get => _settings; }
-
+    public SettingsUI SettingsPanel { get => _settings; }
     public bool UIActive { get => _uiActive; }
 
     public void SetCameraUtil(CameraUtil cameraUtil) { _startingUI.SetCameraUtil(cameraUtil); }

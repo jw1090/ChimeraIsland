@@ -79,6 +79,7 @@ public class CameraUtil : MonoBehaviour
 
             _inputManager.SetFreeCamera(_freeCamera);
         }
+
         _initialized = true;
 
         return this;

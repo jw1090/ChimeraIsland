@@ -19,7 +19,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
     [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
 
-    private Settings _settingsPanel = null;
+    private SettingsUI _settingsPanel = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
@@ -27,7 +27,7 @@ public class HabitatUI : MonoBehaviour
     private bool _tutorialOpen = false;
     private bool _uiActive = true;
 
-    public Settings Settings { get => _settingsPanel; }
+    public SettingsUI Settings { get => _settingsPanel; }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
@@ -52,6 +52,7 @@ public class HabitatUI : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
         _settingsPanel = uiManager.SettingsPanel;
+
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
