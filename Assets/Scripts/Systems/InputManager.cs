@@ -173,7 +173,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _uiManager.ToggleSettingsMenu();
+            _uiManager.HabitatUI.ToggleSettingsMenu();
         }
 
         if (_debugCurrencyInputEnabled == true)

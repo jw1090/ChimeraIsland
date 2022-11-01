@@ -158,19 +158,20 @@ public class AudioManager : MonoBehaviour
         TempleUI templeUI = _uiManager.TempleUI;
         EvolutionBuilderUI builderUI = _uiManager.EvolutionBuilderUI;
 
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.ResumeButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.ScreenWideButton, PlayClickSFX);
+
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.OpenCreditsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.CloseCreditsButton, PlayClickSFX);
 
-        _uiManager.CreateButtonListener(habitatUI.Settings.MainMenuButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.QuitGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.ResumeButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.ScreenWideButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
 

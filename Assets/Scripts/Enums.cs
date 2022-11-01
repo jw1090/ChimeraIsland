@@ -99,7 +99,6 @@ public enum SceneType
     Habitat,
     Temple,
     Builder,
-    Settings,
 }
 
 public enum StatType

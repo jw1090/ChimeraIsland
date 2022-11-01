@@ -12,12 +12,14 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Button _screenWideButton = null;
     [SerializeField] private TextMeshProUGUI _resumeButtonText;
     private UIManager _uiManager = null;
+    private AudioManager _audioManager = null;
 
     public Button ScreenWideButton { get => _screenWideButton; }
     public Button MainMenuButton { get => _mainMenuButton; }
     public Button QuitGameButton { get => _quitGameButton; }
     public Button ResumeButton { get => _resumeButton; }
 
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCameraUtil(CameraUtil cameraUtil) { _inputSettingsUI.SetCameraUtil(cameraUtil); }
 
     public void Initialize(UIManager uiManager)
@@ -31,8 +33,8 @@ public class SettingsUI : MonoBehaviour
 
     private void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_resumeButton, _uiManager.CloseSettings);
-        _uiManager.CreateButtonListener(_screenWideButton, _uiManager.CloseSettings);
+        _uiManager.CreateButtonListener(_resumeButton, CloseSettingsPanel);
+        _uiManager.CreateButtonListener(_screenWideButton, CloseSettingsPanel);
     }
 
     public void InitializeVolumeSettings()
@@ -40,12 +42,12 @@ public class SettingsUI : MonoBehaviour
         _volumeSettingsUI.Initialize();
     }
 
-    public void HideHabitatButtons(bool hide)
+    public void OpenSettingsPanel()
     {
-        _mainMenuButton.gameObject.SetActive(!hide);
-        _quitGameButton.gameObject.SetActive(!hide);
+        _mainMenuButton.gameObject.SetActive(_uiManager.InHabitatState);
+        _quitGameButton.gameObject.SetActive(_uiManager.InHabitatState);
 
-        if (hide == true)
+        if (_uiManager.InHabitatState == true)
         {
             _resumeButtonText.text = "Back";
         }
@@ -53,5 +55,15 @@ public class SettingsUI : MonoBehaviour
         {
             _resumeButtonText.text = "Resume";
         }
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        gameObject.SetActive(true);
+    }
+
+    private void CloseSettingsPanel()
+    {
+        gameObject.SetActive(false);
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 }
