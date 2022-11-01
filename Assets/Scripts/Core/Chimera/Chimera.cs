@@ -237,10 +237,8 @@ public class Chimera : MonoBehaviour
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _chimeraBehavior = GetComponent<ChimeraBehavior>();
-        _currentEvolution = GetComponentInChildren<EvolutionLogic>();
+        FindEvolution();
         _habitatType = _habitatManager.CurrentHabitat.Type;
-
-        _customName = _persitentData.CustomName;
 
         if (_uniqueId == 1)
         {
@@ -256,7 +254,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.StartAI();
     }
 
-    public void InitializeForBuilder()
+    public void FindEvolution()
     {
         _currentEvolution = GetComponentInChildren<EvolutionLogic>();
     }

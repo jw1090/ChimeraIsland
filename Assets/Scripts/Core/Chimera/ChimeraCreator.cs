@@ -33,6 +33,7 @@ public class ChimeraCreator : MonoBehaviour
     private void LoadChimeraStats(Chimera newChimera, ChimeraData chimeraInfo)
     {
         newChimera.SetIsFirstChimera(chimeraInfo.first);
+        newChimera.SetCustomName(chimeraInfo.customName);
         newChimera.SetStamina(chimeraInfo.stamina);
         newChimera.SetWisdom(chimeraInfo.wisdom);
         newChimera.SetExploration(chimeraInfo.exploration);

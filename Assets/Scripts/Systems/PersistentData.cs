@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PersistentData : MonoBehaviour
 {
-    private TutorialCompletionData _tutorialCompletion = null;
-    private AudioManager _audioManager = null;
     private CurrencyManager _currencyManager = null;
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
@@ -12,31 +10,25 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
-    private List<float> _volumes = new List<float>();
-    private float _cameraSpeed = 20.0f;
-    private float _chimeraSpinSpeed = 0.8f;
-    private string _customName = null;
+    private TutorialCompletionData _tutorialCompletionData = null;
+    private SettingsData _settingsData = null;
 
-    public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletion; }
     public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
     public List<HabitatData> HabitatData { get => _habitatSaveData; }
-    public List<float> Volumes { get => _volumes; }
+    public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletionData; }
+    public SettingsData SettingsData { get => _settingsData; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
     public int FossilData { get => _globalSaveData.lastSessionFossils; }
-    public float CameraSpeed { get => _cameraSpeed; }
-    public float ChimeraSpinSpeed { get => _chimeraSpinSpeed; }
-    public string CustomName { get => _customName; }
 
-    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetTutorialManager(TutorialManager tutorialManager) { _tutorialManager = tutorialManager; }
-    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion) { _tutorialCompletion = tutorialCompletion; }
-    public void SetCustomName(string customName) { _customName = customName; }
-    public void SetCameraSpeed(float speed){ _cameraSpeed = speed;}
-    public void SetChimeraSpinSpeed(float speed) { _chimeraSpinSpeed = speed; }
+    public void SetTutorialCompletion(TutorialCompletionData tutorialCompletion) { _tutorialCompletionData = tutorialCompletion; }
+    public void SetVolume(List<float> volumes) { _settingsData.SetVolume(volumes); }
+    public void SetSpeed(float speed) { _settingsData.cameraSpeed = speed; }
+    public void SetSpinSpeed(float speed) { _settingsData.spinSpeed = speed; }
 
     public PersistentData Initialize()
     {
@@ -76,27 +68,25 @@ public class PersistentData : MonoBehaviour
         _habitatManager.UpdateCurrentHabitatChimeras();
         _habitatManager.UpdateCurrentHabitatFacilities();
 
-        GlobalData myGlobalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
-        List<FacilityData> myFacilityData = FacilitiesToData();
-        List<ChimeraData> myChimeraData = ChimerasToData();
+        GlobalData globalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        GameSaveData myData = new GameSaveData(myGlobalData, myChimeraData, myFacilityData, habitatData, _audioManager.Volumes, _tutorialCompletion, _cameraSpeed, _chimeraSpinSpeed,_customName);
-        UpdateGameSaveData(myData);
+        List<FacilityData> facilityData = FacilitiesToData();
+        List<ChimeraData> chimeraData = ChimerasToData();
 
-        FileHandler.SaveToJSON(myData, GameConsts.JsonSaveKeys.GAME_DATA, true);
+        GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, _tutorialCompletionData, _settingsData);
+        UpdateGameSaveData(data);
+
+        FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GAME_DATA, true);
     }
 
     private void UpdateGameSaveData(GameSaveData myData)
     {
         _globalSaveData = myData.globalData;
-        _chimeraSaveData = myData.chimeras;
-        _habitatSaveData = myData.habitats;
-        _facilitySaveData = myData.facilities;
-        _tutorialCompletion = myData._tutorialCompletion;
-        _volumes = new List<float> { myData.masterVolume, myData.musicVolume, myData.sfxVolume, myData.ambientVolume, myData.uiSfxVolume };
-        _cameraSpeed = myData.cameraSpeed;
-        _chimeraSpinSpeed = myData.chimeraSpinSpeed;
-        _customName = myData.customName;
+        _habitatSaveData = myData.habitatData;
+        _facilitySaveData = myData.facilityData;
+        _chimeraSaveData = myData.chimeraData;
+        _tutorialCompletionData = myData.tutorialCompletionData;
+        _settingsData = myData.settingsData;
     }
 
     public void ResetLastSessionHabitat()
@@ -132,7 +122,7 @@ public class PersistentData : MonoBehaviour
 
     public void QuitGameSave()
     {
-        if(_habitatManager.CurrentHabitat == null)
+        if (_habitatManager.CurrentHabitat == null)
         {
             return;
         }

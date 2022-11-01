@@ -21,11 +21,12 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, QuitGame);
+
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.MainMenuButton, LoadMainMenu);
-        _uiManager.CreateButtonListener(_uiManager.HabitatUI.Settings.QuitGameButton, QuitGame);
     }
 
     public void NewGame()

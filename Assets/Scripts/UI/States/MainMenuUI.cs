@@ -8,10 +8,11 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _openCreditsButton = null;
     [SerializeField] private Button _closeCreditsButton = null;
     [SerializeField] private Button _quitGameButton = null;
-
+    [SerializeField] private Button _settingsButton = null;
     private UIManager _uiManager;
     private StatefulObject _statefulObject;
     private PersistentData _persistentData;
+
     public Button NewGameButton { get => _newGameButton; }
     public Button LoadGameButton { get => _loadGameButton; }
     public Button OpenCreditsButton { get => _openCreditsButton; }
@@ -21,9 +22,10 @@ public class MainMenuUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _statefulObject = GetComponent<StatefulObject>();
         _persistentData = ServiceLocator.Get<PersistentData>();
-        SetupButtons();
+        _statefulObject = GetComponent<StatefulObject>();
+
+        SetupButtonsListeners();
         CloseCredits();
         CheckHasSave();
     }
@@ -40,10 +42,11 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    private void SetupButtons()
+    private void SetupButtonsListeners()
     {
         _uiManager.CreateButtonListener(_openCreditsButton, OpenCredits);
         _uiManager.CreateButtonListener(_closeCreditsButton, CloseCredits);
+        _uiManager.CreateButtonListener(_settingsButton, _uiManager.SettingsUI.OpenSettingsPanel);
     }
 
     private void OpenCredits()

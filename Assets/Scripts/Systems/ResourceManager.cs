@@ -28,19 +28,6 @@ public class ResourceManager : MonoBehaviour
     private Sprite _fossilSprite = null;
     private Sprite _upgradeSprite = null;
 
-    private Sprite _tutorialHappyA = null;
-    private Sprite _tutorialShockedA = null;
-    private Sprite _tutorialSpeakingA = null;
-    private Sprite _tutorialStandardA = null;
-    private Sprite _tutorialHappyB = null;
-    private Sprite _tutorialShockedB = null;
-    private Sprite _tutorialSpeakingB = null;
-    private Sprite _tutorialStandardB = null;
-    private Sprite _tutorialHappyC = null;
-    private Sprite _tutorialShockedC = null;
-    private Sprite _tutorialSpeakingC = null;
-    private Sprite _tutorialStandardC = null;
-
     private Texture2D _mouseDefault = null;
     private Texture2D _mouseClickable = null;
     private Texture2D _mouseDragable = null;
@@ -96,19 +83,6 @@ public class ResourceManager : MonoBehaviour
         _essenceSprite = Resources.Load<Sprite>("Icons/Expedition/Essence");
         _fossilSprite = Resources.Load<Sprite>("Icons/Expedition/Fossil");
         _upgradeSprite = Resources.Load<Sprite>("Icons/Expedition/Upgrade");
-
-        _tutorialHappyA = Resources.Load<Sprite>("Icons/Tutorial/Happy A");
-        _tutorialShockedA = Resources.Load<Sprite>("Icons/Tutorial/Shocked A");
-        _tutorialSpeakingA = Resources.Load<Sprite>("Icons/Tutorial/Speaking A");
-        _tutorialStandardA = Resources.Load<Sprite>("Icons/Tutorial/Standard A");
-        _tutorialHappyB = Resources.Load<Sprite>("Icons/Tutorial/Happy B");
-        _tutorialShockedB = Resources.Load<Sprite>("Icons/Tutorial/Shocked B");
-        _tutorialSpeakingB = Resources.Load<Sprite>("Icons/Tutorial/Speaking B");
-        _tutorialStandardB = Resources.Load<Sprite>("Icons/Tutorial/Standard B");
-        _tutorialHappyC = Resources.Load<Sprite>("Icons/Tutorial/Happy C");
-        _tutorialShockedC = Resources.Load<Sprite>("Icons/Tutorial/Shocked C");
-        _tutorialSpeakingC = Resources.Load<Sprite>("Icons/Tutorial/Speaking C");
-        _tutorialStandardC = Resources.Load<Sprite>("Icons/Tutorial/Standard C");
 
         _mouseDefault = Resources.Load<Texture2D>("Icons/Mouse/Default Cursor");
         _mouseClickable = Resources.Load<Texture2D>("Icons/Mouse/Clickable Cursor");

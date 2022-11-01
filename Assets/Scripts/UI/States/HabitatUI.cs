@@ -7,11 +7,10 @@ public class HabitatUI : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
-    [SerializeField] private GameObject _topLeftButtonsFolder = null;
+    [SerializeField] private Button _settingsButton = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
-    [SerializeField] private Settings _settingsPanel = null;
     [SerializeField] private GameObject _detailsPanel = null;
     [SerializeField] private ChimeraDetailsFolder _detailsFolder = null;
     [SerializeField] private ReleaseSlider _releaseSlider = null;
@@ -27,7 +26,6 @@ public class HabitatUI : MonoBehaviour
     private bool _tutorialOpen = false;
     private bool _uiActive = true;
 
-    public Settings Settings { get => _settingsPanel; }
     public ChimeraDetailsFolder DetailsPanel { get => _detailsFolder; }
     public ReleaseSlider ReleaseSlider { get => _releaseSlider; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
@@ -44,20 +42,32 @@ public class HabitatUI : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager)
     {
+        _audioManager = audioManager;
+
         _expeditionPanel.SetAudioManager(audioManager);
     }
 
+    public void MenuClosed() { _menuOpen = false; }
+
     public void Initialize(UIManager uiManager)
     {
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
+        SetupButtonListeners();
 
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
-        _settingsPanel.Initialize(uiManager);
         _tutorialOverlay.Initialize(this);
+    }
+
+    private void SetupButtonListeners()
+    {
+        _uiManager.CreateButtonListener(_settingsButton, OpenHabitatSettings);
+        _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
+        _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
     }
 
     public void LoadCurrentUIProgress()
@@ -92,18 +102,8 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void InitializeVolumeSettings(AudioManager audioManager)
-    {
-        _audioManager = audioManager;
-
-        _settingsPanel.InitializeVolumeSettings();
-    }
-
     public void LoadHabitatSpecificUI()
     {
-        _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
-        _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
-
         _detailsFolder.HabitatDetailsSetup();
 
         UIProgressCheck();
@@ -196,9 +196,10 @@ public class HabitatUI : MonoBehaviour
                 _standardUI.gameObject.SetActive(true);
             }
         }
+
         _closeDetailsButton.gameObject.SetActive(false);
         _detailsPanel.gameObject.SetActive(false);
-        _settingsPanel.gameObject.SetActive(false);
+        _uiManager.SettingsUI.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
 
         _menuOpen = false;
@@ -262,7 +263,7 @@ public class HabitatUI : MonoBehaviour
 
             _audioManager.PlayUISFX(SFXUIType.StandardClick);
         }
-        else if (_settingsPanel.gameObject.activeInHierarchy == true ||
+        else if (_uiManager.SettingsUI.gameObject.activeInHierarchy == true ||
             _expeditionPanel.gameObject.activeInHierarchy == true ||
             _detailsPanel.gameObject.activeInHierarchy == true)
         {
@@ -272,19 +273,18 @@ public class HabitatUI : MonoBehaviour
         }
         else
         {
-            OpenSettingsMenu();
+            OpenHabitatSettings();
         }
     }
 
-    public void OpenSettingsMenu()
+    private void OpenHabitatSettings()
     {
         ResetStandardUI();
 
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-
-        _settingsPanel.gameObject.SetActive(true);
         _openDetailsButton.gameObject.SetActive(false);
-        _standardUI.gameObject.SetActive(false);
+        _uiManager.SettingsUI.gameObject.SetActive(false);
+
+        _uiManager.SettingsUI.OpenSettingsPanel();
 
         _menuOpen = true;
     }
@@ -318,7 +318,7 @@ public class HabitatUI : MonoBehaviour
         _trainingPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
-        _topLeftButtonsFolder.gameObject.SetActive(false);
+        _settingsButton.gameObject.SetActive(false);
 
         _menuOpen = true;
     }
@@ -326,7 +326,7 @@ public class HabitatUI : MonoBehaviour
     public void RevealElementsHiddenByTraining()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _topLeftButtonsFolder.gameObject.SetActive(true);
+        _settingsButton.gameObject.SetActive(true);
 
         _menuOpen = false;
     }
