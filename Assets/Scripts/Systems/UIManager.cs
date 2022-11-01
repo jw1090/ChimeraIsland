@@ -67,6 +67,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void CreateDropdownListener(TMP_Dropdown dropdown, Action action)
+    {
+        if (dropdown != null)
+        {
+            dropdown.onValueChanged.AddListener
+            (delegate
+            {
+                action?.Invoke();
+            });
+        }
+        else
+        {
+            Debug.LogError($"{dropdown} is null! Please Fix");
+        }
+    }
+
     public void ShowUIByScene(SceneType uiSceneType)
     {
         Debug.Log($"<color=Cyan> Show {uiSceneType} UI.</color>");
@@ -93,22 +109,6 @@ public class UIManager : MonoBehaviour
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
                 break;
-        }
-    }
-
-    public void CreateDropdownListener(TMP_Dropdown dropdown, Action action)
-    {
-        if (dropdown != null)
-        {
-            dropdown.onValueChanged.AddListener
-            (delegate
-            {
-                action?.Invoke();
-            });
-        }
-        else
-        {
-            Debug.LogError($"{dropdown} is null! Please Fix");
         }
     }
 

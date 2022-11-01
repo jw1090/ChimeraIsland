@@ -62,6 +62,7 @@ public class SettingsUI : MonoBehaviour
 
     private void CloseSettingsPanel()
     {
+        _uiManager.HabitatUI.MenuClosed();
         gameObject.SetActive(false);
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);

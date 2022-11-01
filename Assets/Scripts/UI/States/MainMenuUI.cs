@@ -22,10 +22,10 @@ public class MainMenuUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _statefulObject = GetComponent<StatefulObject>();
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _statefulObject = GetComponent<StatefulObject>();
 
-        SetupButtons();
+        SetupButtonsListeners();
         CloseCredits();
         CheckHasSave();
     }
@@ -42,7 +42,7 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    private void SetupButtons()
+    private void SetupButtonsListeners()
     {
         _uiManager.CreateButtonListener(_openCreditsButton, OpenCredits);
         _uiManager.CreateButtonListener(_closeCreditsButton, CloseCredits);

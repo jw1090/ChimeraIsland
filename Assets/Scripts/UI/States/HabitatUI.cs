@@ -8,7 +8,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _openDetailsButton = null;
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _settingsButton = null;
-    [SerializeField] private GameObject _topLeftButtonsFolder = null;
     [SerializeField] private GameObject _standardUI = null;
     [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
@@ -43,19 +42,32 @@ public class HabitatUI : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager)
     {
+        _audioManager = audioManager;
+
         _expeditionPanel.SetAudioManager(audioManager);
     }
 
+    public void MenuClosed() { _menuOpen = false; }
+
     public void Initialize(UIManager uiManager)
     {
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
+
+        SetupButtonListeners();
 
         InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
         _tutorialOverlay.Initialize(this);
+    }
+
+    private void SetupButtonListeners()
+    {
+        _uiManager.CreateButtonListener(_settingsButton, OpenHabitatSettings);
+        _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
+        _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
     }
 
     public void LoadCurrentUIProgress()
@@ -92,9 +104,6 @@ public class HabitatUI : MonoBehaviour
 
     public void LoadHabitatSpecificUI()
     {
-        _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
-        _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
-
         _detailsFolder.HabitatDetailsSetup();
 
         UIProgressCheck();
@@ -264,15 +273,20 @@ public class HabitatUI : MonoBehaviour
         }
         else
         {
-            ResetStandardUI();
-
-            _openDetailsButton.gameObject.SetActive(false);
-            _uiManager.SettingsUI.gameObject.SetActive(false);
-
-            _uiManager.SettingsUI.OpenSettingsPanel();
-
-            _menuOpen = true;
+            OpenHabitatSettings();
         }
+    }
+
+    private void OpenHabitatSettings()
+    {
+        ResetStandardUI();
+
+        _openDetailsButton.gameObject.SetActive(false);
+        _uiManager.SettingsUI.gameObject.SetActive(false);
+
+        _uiManager.SettingsUI.OpenSettingsPanel();
+
+        _menuOpen = true;
     }
 
     public void OpenExpedition()
@@ -304,7 +318,7 @@ public class HabitatUI : MonoBehaviour
         _trainingPanel.gameObject.SetActive(true);
 
         _openDetailsButton.gameObject.SetActive(false);
-        _topLeftButtonsFolder.gameObject.SetActive(false);
+        _settingsButton.gameObject.SetActive(false);
 
         _menuOpen = true;
     }
@@ -312,7 +326,7 @@ public class HabitatUI : MonoBehaviour
     public void RevealElementsHiddenByTraining()
     {
         _openDetailsButton.gameObject.SetActive(true);
-        _topLeftButtonsFolder.gameObject.SetActive(true);
+        _settingsButton.gameObject.SetActive(true);
 
         _menuOpen = false;
     }
