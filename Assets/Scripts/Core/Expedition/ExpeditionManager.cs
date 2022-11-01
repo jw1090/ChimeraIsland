@@ -496,7 +496,7 @@ public class ExpeditionManager : MonoBehaviour
                 {
                     _habitatManager.CurrentHabitat.Temple.Build();
                     _cameraUtil.TempleCameraShift();
-                    _uiManager.EnableUIByType(UIElementType.FossilsWallets);
+                    _uiManager.HabitatUI.EnableUIElementByType(UIElementType.FossilsWallets);
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
@@ -505,7 +505,7 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionType.HabitatUpgrade:
                 if (_currentHabitatProgress == 0)
                 {
-                    _uiManager.EnableUIByType(UIElementType.EssenceWallets);
+                    _uiManager.HabitatUI.EnableUIElementByType(UIElementType.EssenceWallets);
                     _habitatManager.CurrentHabitat.CrystalManager.TripleSpawn();
                 }
 

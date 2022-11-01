@@ -239,6 +239,7 @@ public class ChimeraDetails : MonoBehaviour
         _name.gameObject.SetActive(false);
         _customName.gameObject.SetActive(true);
         _customName.Select();
+
         _panel.SetActive(false);
     }
 
@@ -246,10 +247,11 @@ public class ChimeraDetails : MonoBehaviour
     {
         _cameraUtil.IsNaming = false;
         _chimera.SetCustomName(_customName.text);
-        _persitentData.SetCustomName(_customName.text);
         _name.gameObject.SetActive(true);
         _customName.gameObject.SetActive(false);
+
         UpdateDetails();
+
         _panel.SetActive(true);
     }
 

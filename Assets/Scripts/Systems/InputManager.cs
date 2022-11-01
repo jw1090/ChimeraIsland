@@ -1,5 +1,4 @@
 using System;
-using System.Resources;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -42,7 +41,7 @@ public class InputManager : MonoBehaviour
     public void SetChimeraRotationSpeed(float speed) 
     { 
         _rotationAmount = speed;
-        _persistentData.SetChimeraSpinSpeed(speed);
+        _persistentData.SetSpinSpeed(speed);
     }
     public void SetInTransition(bool value) { _inTransition = value; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
@@ -68,16 +67,16 @@ public class InputManager : MonoBehaviour
         DebugConfig.DebugConfigLoaded += OnDebugConfigLoaded;
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
+
         _chimeraLayer = LayerMask.GetMask("Chimera");
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
         _templeLayer = LayerMask.GetMask("Temple");
         _sphereMarker.SetActive(false);
 
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _persistentData = ServiceLocator.Get<PersistentData>();
-
-        _rotationAmount = _persistentData.ChimeraSpinSpeed;
+        _rotationAmount = _persistentData.SettingsData.spinSpeed;
 
         _isInitialized = true;
 
@@ -174,10 +173,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_habitatUI != null)
-            {
-                _habitatUI.ToggleSettingsMenu();
-            }
+            _uiManager.HabitatUI.ToggleSettingsMenu();
         }
 
         if (_debugCurrencyInputEnabled == true)
