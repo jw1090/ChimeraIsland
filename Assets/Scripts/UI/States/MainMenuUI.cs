@@ -9,10 +9,17 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _closeCreditsButton = null;
     [SerializeField] private Button _quitGameButton = null;
     [SerializeField] private Button _settingsButton = null;
+    [SerializeField] private GameObject _warningPanel = null;
+    [SerializeField] private Button _warningYesButton = null;
+    [SerializeField] private Button _warningNoButton = null;
+
     private UIManager _uiManager;
     private StatefulObject _statefulObject;
     private PersistentData _persistentData;
 
+    public GameObject WarningPanel { get => _warningPanel; }
+    public Button WarningYesButton { get => _warningYesButton; }
+    public Button WarningNoButton { get => _warningNoButton; }
     public Button NewGameButton { get => _newGameButton; }
     public Button LoadGameButton { get => _loadGameButton; }
     public Button OpenCreditsButton { get => _openCreditsButton; }
@@ -27,19 +34,17 @@ public class MainMenuUI : MonoBehaviour
 
         SetupButtonsListeners();
         CloseCredits();
-        CheckHasSave();
+        CheckShowLoadGameButton();
     }
 
-    public void CheckHasSave()
+    public void CheckShowLoadGameButton()
     {
-        if (_persistentData.ChimeraData == null || _persistentData.ChimeraData.Count == 0)
-        {
-            LoadGameButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            LoadGameButton.gameObject.SetActive(true);
-        }
+        LoadGameButton.gameObject.SetActive(CheckHasSave());
+    }
+
+    public bool CheckHasSave()
+    {
+        return _persistentData.ChimeraData != null && _persistentData.ChimeraData.Count != 0;
     }
 
     private void SetupButtonsListeners()
