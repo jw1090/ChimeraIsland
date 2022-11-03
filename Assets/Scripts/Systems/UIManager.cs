@@ -46,9 +46,17 @@ public class UIManager : MonoBehaviour
         _habitatUI.Initialize(this);
         _evolutionBuilderUI.Initialize(this);
 
+        InitializeWallets();
+
         _uiStatefulObject.SetState("Transparent", true);
 
         return this;
+    }
+
+    private void InitializeWallets()
+    {
+        _habitatUI.InitializeWallets();
+        _templeUI.InitializeWallets();
     }
 
     public void CreateButtonListener(Button button, Action action)
@@ -110,6 +118,18 @@ public class UIManager : MonoBehaviour
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
                 break;
         }
+    }
+
+    public void UpdateEssenceWallets()
+    {
+        _habitatUI.UpdateEssenceWallets();
+        _templeUI.UpdateEssenceWallets();
+    }
+
+    public void UpdateFossilWallets()
+    {
+        _habitatUI.UpdateFossilWallets();
+        _templeUI.UpdateFossilWallets();
     }
 
     public void ToggleUI()

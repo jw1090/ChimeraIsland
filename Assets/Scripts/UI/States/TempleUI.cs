@@ -2,10 +2,27 @@ using UnityEngine;
 
 public class TempleUI : MonoBehaviour
 {
-    [SerializeField] MarketplaceUI _marketplaceUI = null;
+    [SerializeField] private UIEssenceWallet _essenceWallet = null;
+    [SerializeField] private UIFossilWallet _fossilWallet = null;
 
     public void Initialize(UIManager uiManager)
     {
-        _marketplaceUI.Initialize(uiManager);
+        
+    }
+
+    public void InitializeWallets()
+    {
+        _essenceWallet.Initialize();
+        _fossilWallet.Initialize();
+    }
+
+    public void UpdateEssenceWallets()
+    {
+        _essenceWallet.UpdateWallet();
+    }
+
+    public void UpdateFossilWallets()
+    {
+        _fossilWallet.UpdateWallet();
     }
 }
