@@ -22,6 +22,9 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Gradient _nightLightColor = null;
     [SerializeField] private AnimationCurve _nightLightIntensity = null;
 
+    [Header("Sky")]
+    [SerializeField] private GameObject _sky = null;
+
     Vector3 _dayRotation = Vector3.zero;
     Vector3 _nightRotation = Vector3.zero;
     private Habitat _habitat = null;
@@ -63,6 +66,8 @@ public class LightingManager : MonoBehaviour
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+
+        _sky.transform.Rotate(Vector3.up * 1.5f * Time.deltaTime);
     }
 
     private void FirefliesToggle(bool shouldShow)

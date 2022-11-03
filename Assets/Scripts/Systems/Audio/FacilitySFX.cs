@@ -24,6 +24,7 @@ public class FacilitySFX : MonoBehaviour
         _trainingSource.clip = _trainingSFX;
 
     }
+
     public void BuildSFX()
     {
         _ambientSource.Play();
