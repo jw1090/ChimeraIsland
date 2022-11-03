@@ -8,6 +8,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private ElementType _elementType = ElementType.None;
     [SerializeField] private StatType _statBonus = StatType.None;
     [SerializeField][TextArea(3, 10)] private string _backgroundInfo = "";
+    [SerializeField] private int _chimeradexId = 0;
 
     [Header("Evolution")]
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;

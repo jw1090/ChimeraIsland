@@ -183,3 +183,11 @@ public enum CursorType
     Clickable,
     Dragable,
 }
+
+public enum ChimeraOrderType
+{ 
+    Type,
+    highestStat,
+    AveragePower,
+}
+
