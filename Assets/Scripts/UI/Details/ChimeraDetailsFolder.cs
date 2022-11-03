@@ -9,7 +9,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private Dropdown _dropdown = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ExpeditionManager _expeditionManager = null;
-    private ChimeraOrderType orderType = ChimeraOrderType.Type;
+    private ChimeraOrderType orderType = ChimeraOrderType.Default;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -92,9 +92,13 @@ public class ChimeraDetailsFolder : MonoBehaviour
             bool higher = false;
             switch (orderType)
             {
+                case ChimeraOrderType.Default:
+                    if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i - 1].Chimera.CurrentEvolution.ChimeradexId)
+                    {
+                        higher = true;
+                    }
+                    break;
                 case ChimeraOrderType.Type:
-                    int num = (int)_chimeraDetailsList[i].Chimera.ChimeraType;
-                    int num2 = (int)_chimeraDetailsList[i-1].Chimera.ChimeraType;
                     if ((int)_chimeraDetailsList[i].Chimera.ChimeraType > (int)_chimeraDetailsList[i-1].Chimera.ChimeraType)
                     {
                         higher = true;

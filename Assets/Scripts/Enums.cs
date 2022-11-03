@@ -186,6 +186,7 @@ public enum CursorType
 
 public enum ChimeraOrderType
 { 
+    Default,
     Type,
     highestStat,
     AveragePower,

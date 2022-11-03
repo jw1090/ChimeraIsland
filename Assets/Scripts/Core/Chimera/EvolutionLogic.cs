@@ -29,6 +29,7 @@ public class EvolutionLogic : MonoBehaviour
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
+    public int ChimeradexId { get => _chimeradexId; }
     public ChimeraType ChimeraType { get => _evolutionType; }
     public ElementType ElementType { get => _elementType; }
     public StatType StatBonus { get => _statBonus; }
