@@ -86,14 +86,6 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    public int GetHighestStat()
-    {
-        int highest = _wisdom;
-        if(highest < _stamina) highest = _stamina;
-        if (highest < _exploration) highest = _exploration;
-        return highest;
-    }
-
     public int GetXP(StatType statType)
     {
         switch (statType)

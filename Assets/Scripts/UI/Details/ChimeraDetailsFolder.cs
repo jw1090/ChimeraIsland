@@ -7,9 +7,55 @@ public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
     [SerializeField] private Dropdown _dropdown = null;
+    [SerializeField] private Image _bioButton = null;
+    [SerializeField] private Image _aquaButton = null;
+    [SerializeField] private Image _firaButton = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ExpeditionManager _expeditionManager = null;
     private ChimeraOrderType orderType = ChimeraOrderType.Default;
+    private bool _showBio = true;
+    private bool _showAqua = true;
+    private bool _showFira = true;
+
+    public void toggleShowBio() 
+    { 
+        _showBio = !_showBio;
+        if(_showBio == true)
+        {
+            _bioButton.color = Color.white;
+        }
+        else
+        {
+            _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+        CheckShowChimeraBasedOnElement();
+    }
+    public void toggleShowAqua() 
+    { 
+        _showAqua = !_showAqua;
+        if (_showAqua == true)
+        {
+            _aquaButton.color = Color.white;
+        }
+        else
+        {
+            _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+        CheckShowChimeraBasedOnElement();
+    }
+    public void toggleShowFira() 
+    { 
+        _showFira = !_showFira;
+        if (_showFira == true)
+        {
+            _firaButton.color = Color.white;
+        }
+        else
+        {
+            _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+        CheckShowChimeraBasedOnElement(); 
+    }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -84,11 +130,35 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
     }
 
+    private void CheckShowChimeraBasedOnElement()
+    {
+        foreach(var chimeraDetail in _chimeraDetailsList)
+        {
+            if (chimeraDetail.Chimera == null) return;
+            switch (chimeraDetail.Chimera.ElementalType)
+            {
+                case ElementType.Aqua:
+                    chimeraDetail.gameObject.SetActive(_showAqua);
+                    break;
+                case ElementType.Bio:
+                    chimeraDetail.gameObject.SetActive(_showBio);
+                    break;
+                case ElementType.Fira:
+                    chimeraDetail.gameObject.SetActive(_showFira);
+                    break;
+                default:
+                    Debug.LogError($"Unhandled chimera element type: {chimeraDetail.Chimera.ElementalType}. Please change!");
+                    chimeraDetail.gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+
     public void Sort()
     {
         for (int i = 1; i < _chimeraDetailsList.Count; i++)
         {
-            if (_chimeraDetailsList[i].gameObject.activeSelf == false) return;
+            if (_chimeraDetailsList[i].Chimera == null) return;
             bool higher = false;
             switch (orderType)
             {
@@ -98,14 +168,20 @@ public class ChimeraDetailsFolder : MonoBehaviour
                         higher = true;
                     }
                     break;
-                case ChimeraOrderType.Type:
-                    if ((int)_chimeraDetailsList[i].Chimera.ChimeraType > (int)_chimeraDetailsList[i-1].Chimera.ChimeraType)
+                case ChimeraOrderType.Exploration:
+                    if (_chimeraDetailsList[i].Chimera.Exploration > _chimeraDetailsList[i - 1].Chimera.Exploration)
                     {
                         higher = true;
                     }
                     break;
-                case ChimeraOrderType.highestStat:
-                    if (_chimeraDetailsList[i].Chimera.GetHighestStat() > _chimeraDetailsList[i - 1].Chimera.GetHighestStat())
+                case ChimeraOrderType.Stamina:
+                    if (_chimeraDetailsList[i].Chimera.Stamina > _chimeraDetailsList[i - 1].Chimera.Stamina)
+                    {
+                        higher = true;
+                    }
+                    break;
+                case ChimeraOrderType.Wisdom:
+                    if (_chimeraDetailsList[i].Chimera.Wisdom > _chimeraDetailsList[i - 1].Chimera.Wisdom)
                     {
                         higher = true;
                     }
