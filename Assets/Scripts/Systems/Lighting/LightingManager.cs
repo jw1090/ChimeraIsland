@@ -31,6 +31,7 @@ public class LightingManager : MonoBehaviour
     private bool _initialized = false;
     private float _timeRate = 0.0f;
     private float _speed = 0.0f;
+    private Material _skyMaterial = null;
 
     public event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
@@ -38,6 +39,7 @@ public class LightingManager : MonoBehaviour
     public LightingManager Initialize()
     {
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+        _skyMaterial = _sky.GetComponent<MeshRenderer>().material;
 
         DayTypeChanged = OnDayTypeChanged;
         _dayRotation = _dayLight.transform.eulerAngles;
@@ -68,6 +70,15 @@ public class LightingManager : MonoBehaviour
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
 
         _sky.transform.Rotate(Vector3.up * 1.5f * Time.deltaTime);
+
+        if (_dayType == DayType.NightTime)
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color,new Color(1.0f, 1.0f, 1.0f, 0.19607843137f),.05f);
+        }
+        else
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, new Color(1.0f, 1.0f, 1.0f, 0.5882353f), .05f);
+        }
     }
 
     private void FirefliesToggle(bool shouldShow)
