@@ -24,6 +24,9 @@ public class LightingManager : MonoBehaviour
 
     [Header("Sky")]
     [SerializeField] private GameObject _sky = null;
+    [SerializeField] private Color _daySky= new Color();
+    [SerializeField] private Color _nightSky = new Color();
+    [SerializeField] private float _transitionDuration = 0.5f;
 
     Vector3 _dayRotation = Vector3.zero;
     Vector3 _nightRotation = Vector3.zero;
@@ -73,11 +76,11 @@ public class LightingManager : MonoBehaviour
 
         if (_dayType == DayType.NightTime)
         {
-            _skyMaterial.color = Color.Lerp(_skyMaterial.color,new Color(1.0f, 1.0f, 1.0f, 0.19607843137f),.05f);
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _nightSky, _transitionDuration);
         }
         else
         {
-            _skyMaterial.color = Color.Lerp(_skyMaterial.color, new Color(1.0f, 1.0f, 1.0f, 0.5882353f), .05f);
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _daySky, _transitionDuration);
         }
     }
 
@@ -108,13 +111,13 @@ public class LightingManager : MonoBehaviour
         switch (_dayType)
         {
             case DayType.DayTime:
-                if(_nightLight.intensity > 0f)
+                if (_nightLight.intensity > 0f)
                 {
                     DayTypeChanged.Invoke(DayType.NightTime);
                 }
                 break;
             case DayType.NightTime:
-                if(_nightLight.intensity <= 0)
+                if (_nightLight.intensity <= 0)
                 {
                     DayTypeChanged.Invoke(DayType.DayTime);
                 }
