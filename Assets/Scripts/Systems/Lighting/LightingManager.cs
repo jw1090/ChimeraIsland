@@ -68,20 +68,12 @@ public class LightingManager : MonoBehaviour
 
         TimeEvaluate();
         LightRotation();
+        SkyTransition();
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
 
         _sky.transform.Rotate(Vector3.up * 1.5f * Time.deltaTime);
-
-        if (_dayType == DayType.NightTime)
-        {
-            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _nightSky, _transitionDuration);
-        }
-        else
-        {
-            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _daySky, _transitionDuration);
-        }
     }
 
     private void FirefliesToggle(bool shouldShow)
@@ -139,6 +131,18 @@ public class LightingManager : MonoBehaviour
         if (!_nightLight.gameObject.activeInHierarchy)
         {
             _dayType = DayType.DayTime;
+        }
+    }
+
+    private void SkyTransition()
+    {
+        if (_dayType == DayType.NightTime)
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _nightSky, _transitionDuration);
+        }
+        else
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _daySky, _transitionDuration);
         }
     }
 
