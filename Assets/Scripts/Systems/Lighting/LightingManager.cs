@@ -22,12 +22,19 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Gradient _nightLightColor = null;
     [SerializeField] private AnimationCurve _nightLightIntensity = null;
 
+    [Header("Sky")]
+    [SerializeField] private GameObject _sky = null;
+    [SerializeField] private Color _daySky= new Color();
+    [SerializeField] private Color _nightSky = new Color();
+    [SerializeField] private float _transitionDuration = 0.5f;
+
     Vector3 _dayRotation = Vector3.zero;
     Vector3 _nightRotation = Vector3.zero;
     private Habitat _habitat = null;
     private bool _initialized = false;
     private float _timeRate = 0.0f;
     private float _speed = 0.0f;
+    private Material _skyMaterial = null;
 
     public event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
@@ -35,6 +42,7 @@ public class LightingManager : MonoBehaviour
     public LightingManager Initialize()
     {
         _habitat = ServiceLocator.Get<HabitatManager>().CurrentHabitat;
+        _skyMaterial = _sky.GetComponent<MeshRenderer>().material;
 
         DayTypeChanged = OnDayTypeChanged;
         _dayRotation = _dayLight.transform.eulerAngles;
@@ -60,9 +68,12 @@ public class LightingManager : MonoBehaviour
 
         TimeEvaluate();
         LightRotation();
+        SkyTransition();
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+
+        _sky.transform.Rotate(Vector3.up * 1.5f * Time.deltaTime);
     }
 
     private void FirefliesToggle(bool shouldShow)
@@ -92,13 +103,13 @@ public class LightingManager : MonoBehaviour
         switch (_dayType)
         {
             case DayType.DayTime:
-                if(_nightLight.intensity > 0f)
+                if (_nightLight.intensity > 0f)
                 {
                     DayTypeChanged.Invoke(DayType.NightTime);
                 }
                 break;
             case DayType.NightTime:
-                if(_nightLight.intensity <= 0)
+                if (_nightLight.intensity <= 0)
                 {
                     DayTypeChanged.Invoke(DayType.DayTime);
                 }
@@ -120,6 +131,18 @@ public class LightingManager : MonoBehaviour
         if (!_nightLight.gameObject.activeInHierarchy)
         {
             _dayType = DayType.DayTime;
+        }
+    }
+
+    private void SkyTransition()
+    {
+        if (_dayType == DayType.NightTime)
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _nightSky, _transitionDuration);
+        }
+        else
+        {
+            _skyMaterial.color = Color.Lerp(_skyMaterial.color, _daySky, _transitionDuration);
         }
     }
 
