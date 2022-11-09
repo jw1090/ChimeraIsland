@@ -118,7 +118,6 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-        if(EventSystem.current.currentSelectedGameObject != null) Debug.Log(EventSystem.current.currentSelectedGameObject.name);
         Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
 
         if (Input.GetMouseButton(0))

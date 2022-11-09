@@ -106,7 +106,7 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionState.None:
             case ExpeditionState.Selection:
             case ExpeditionState.Setup:
-                _portalMaterial.material.color = new Vector4(.47f, .627f, .749f, 1f);
+                _portalMaterial.material.color = new Color(.47f, .627f, .749f, 1f);
                 break;
             case ExpeditionState.InProgress:
                 _portalMaterial.material.color = Color.black;
