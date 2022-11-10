@@ -10,7 +10,6 @@ public class ExpeditionManager : MonoBehaviour
     [SerializeField] private int _currentEssenceProgress = 0;
     [SerializeField] private int _currentFossilProgress = 0;
     [SerializeField] private int _currentHabitatProgress = 0;
-    [SerializeField] private MeshRenderer _portalMaterial = null;
     private ExpeditionData _selectedExpedition = null;
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
@@ -47,7 +46,16 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
 
-    public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
+    public void SetExpeditionState(ExpeditionState expeditionState) 
+    { 
+        _expeditionState = expeditionState; 
+        SetPortalColor();
+    }
+
+    public void SetPortalColor()
+    {
+        _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
+    }
 
     public void ResetSelectedExpedition()
     {
@@ -89,7 +97,7 @@ public class ExpeditionManager : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
         _currentEssenceProgress = data.expeditionEssenceProgress;
@@ -101,30 +109,6 @@ public class ExpeditionManager : MonoBehaviour
 
     public void Update()
     {
-        switch (_expeditionState)
-        {
-            case ExpeditionState.None:
-            case ExpeditionState.Selection:
-            case ExpeditionState.Setup:
-                _portalMaterial.material.color = new Color(.47f, .627f, .749f, 1f);
-                break;
-            case ExpeditionState.InProgress:
-                _portalMaterial.material.color = Color.black;
-                break;
-            case ExpeditionState.Result:
-                if(_uiExpedition.ExpeditionResult.ExpeditionSuccess == true)
-                {
-                    _portalMaterial.material.color = Color.green;
-                }
-                else
-                {
-                    _portalMaterial.material.color = Color.red;
-                }
-                break;
-            default:
-                Debug.LogError($"Unhandled expedition state: {_expeditionState}. Please change!");
-                break;
-        }
         if (_expeditionState != ExpeditionState.InProgress)
         {
             return;
@@ -253,14 +237,14 @@ public class ExpeditionManager : MonoBehaviour
     {
         _chimeras.Clear();
 
-        _expeditionState = ExpeditionState.Setup;
+        SetExpeditionState(ExpeditionState.Setup);
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
 
     public void EnterInProgressState()
     {
-        _expeditionState = ExpeditionState.InProgress;
+        SetExpeditionState(ExpeditionState.InProgress);
 
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
@@ -316,7 +300,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _selectedExpedition = null;
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
         _habitatUI.UpdateHabitatUI();
     }
 
