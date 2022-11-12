@@ -131,6 +131,14 @@ public enum UIElementType
     EssenceWallets,
 }
 
+public enum TempleSectionType
+{
+    None = -1,
+    Buying,
+    Upgrades,
+    Collection
+}
+
 public enum TutorialStageType
 {
     None = -1,
