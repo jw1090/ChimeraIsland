@@ -200,6 +200,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &706525349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5411779015779295080, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+  m_PrefabInstance: {fileID: 904453929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &904453929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,6 +212,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 636782902, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateName
+      value: Tier 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 636782902, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateObject
+      value: 
+      objectReference: {fileID: 706525349}
+    - target: {fileID: 2306436917181515463, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateName
+      value: Tier 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306436917181515463, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateObject
+      value: 
+      objectReference: {fileID: 904453930}
+    - target: {fileID: 3502456394595865440, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5304961219960109887, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5411779017660834402, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: m_Name
       value: Habitat 1 - Stone Plains
@@ -257,6 +286,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+--- !u!1 &904453930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5304961219960109887, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+  m_PrefabInstance: {fileID: 904453929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &963194229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1995555186315372895, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
@@ -274,7 +308,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-158042
+  m_Name: pb_Mesh-3519234
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
