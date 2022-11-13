@@ -160,13 +160,15 @@ public class LevelLoader : AsyncLoader
 
         switch (_sceneType)
         {
-            case SceneType.Habitat:
-                _uiManager.HabitatUI.LoadHabitatSpecificUI();
-                break;
             case SceneType.MainMenu:
                 break;
             case SceneType.Starting:
                 _uiManager.StartingUI.OnSceneStart();
+                break;
+            case SceneType.Habitat:
+                _uiManager.HabitatUI.LoadHabitatSpecificUI();
+                break;
+            case SceneType.Temple:
                 break;
             case SceneType.Builder:
                 break;

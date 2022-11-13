@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
+    private SceneChanger _sceneChanger = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -30,8 +31,8 @@ public class InputManager : MonoBehaviour
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
-    private float _rotationAmount = 0.8f;
     private bool _freeCameraActive = false;
+    private float _rotationAmount = 0.8f;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -51,6 +52,7 @@ public class InputManager : MonoBehaviour
         _cameraMain = _cameraUtil.CameraCO;
     }
 
+    public void SetSceneChanger(SceneChanger sceneChanger) { _sceneChanger = sceneChanger; }
     public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
@@ -257,7 +259,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
-            _habitatUI.OpenMarketplace();
+            _sceneChanger.LoadTemple();
         }
     }
 

@@ -6,9 +6,9 @@ public class HeldState : ChimeraBaseState
     private ChimeraBehavior _chimeraBehavior = null;
     private GameObject _sphereMarker = null;
     private InputManager _inputManager = null;
+    private AudioManager _audioManager = null;
     private Vector3 _lastValidPos = Vector3.zero;
     private string _heldAnim = "Held";
-    private AudioManager _audioManager = null;
 
     public override void Enter(ChimeraBehavior chimeraBehavior)
     {
@@ -24,6 +24,8 @@ public class HeldState : ChimeraBaseState
         _sphereMarker = _inputManager.SphereMarker;
         _sphereMarker.gameObject.SetActive(true);
 
+        _lastValidPos = _chimeraBehavior.transform.position;
+
         _chimeraBehavior.StopParticles();
 
         _chimeraBehavior.EnterAnim(_heldAnim);
@@ -33,10 +35,7 @@ public class HeldState : ChimeraBaseState
     {
         ObjFollowMouse();
 
-        if (_lastValidPos != Vector3.zero)
-        {
-            _sphereMarker.transform.position = _lastValidPos;
-        }
+        _sphereMarker.transform.position = _lastValidPos;
     }
 
     public override void Exit()
