@@ -40,7 +40,7 @@ public class GameLoader : AsyncLoader
         }
         else
         {
-            Debug.Log($"Scene index to load is set to {_sceneIndex}");
+            Debug.Log($"Scene index to load is set to {sceneIndexToLoad}");
             _sceneIndex = sceneIndexToLoad;
         }
 

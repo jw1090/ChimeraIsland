@@ -39,8 +39,8 @@ public class InputManager : MonoBehaviour
     public bool IsHolding { get => _isHolding; }
     public float RotationSpeed { get => _rotationAmount; }
 
-    public void SetChimeraRotationSpeed(float speed) 
-    { 
+    public void SetChimeraRotationSpeed(float speed)
+    {
         _rotationAmount = speed;
         _persistentData.SetSpinSpeed(speed);
     }
@@ -121,7 +121,10 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
+        if (MouseInScreenSpace() == true)
+        {
+            Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
+        }
 
         if (Input.GetMouseButton(0))
         {
@@ -352,7 +355,6 @@ public class InputManager : MonoBehaviour
 
     private CursorType GetCursorSprite()
     {
-
         if (_cameraMain == null)
         {
             return CursorType.Default;
@@ -370,13 +372,28 @@ public class InputManager : MonoBehaviour
             return CursorType.Dragable;
         }
 
-        if(Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer) 
-            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer) 
+        if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer)
+            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer)
             || Physics.Raycast(ray, out RaycastHit templeHit, 300.0f, _templeLayer))
         {
             return CursorType.Clickable;
         }
 
         return CursorType.Default;
+    }
+
+    private bool MouseInScreenSpace() // Return false if out of screen.
+    {
+        if (Input.mousePosition.x < 0 || Input.mousePosition.x > Screen.width)
+        {
+            return false;
+        }
+
+        if (Input.mousePosition.y < 0 || Input.mousePosition.x > Screen.height)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -126,9 +126,9 @@ public class LevelLoader : AsyncLoader
 
     private void HabitatSceneSetup()
     {
-        TempleBuildCheck();
-
         _habitatManager.PlayCurrentHabitatMusic();
+
+        TempleBuildCheck();
         _habitatManager.BuildFacilitiesForHabitat();
         _habitatManager.SpawnChimerasForHabitat();
 
