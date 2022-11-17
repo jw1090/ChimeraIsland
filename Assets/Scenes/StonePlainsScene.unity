@@ -207,10 +207,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1569868842, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
-      propertyPath: _portal
+    - target: {fileID: 2306436917181515463, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateName
+      value: Tier 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2306436917181515463, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: currentState.StateObject
       value: 
-      objectReference: {fileID: 904453931}
+      objectReference: {fileID: 904453930}
+    - target: {fileID: 3690498092416562393, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5411779017660834402, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: m_Name
       value: Habitat 1 - Stone Plains
@@ -267,26 +275,9 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
 --- !u!1 &904453930 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6399582019679733152, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5304961219960109887, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
   m_PrefabInstance: {fileID: 904453929}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &904453931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 904453930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8a139eba05dbe4bb981068115e7846, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _portalShader: {fileID: 2100000, guid: 3a3560fc97e343540a1a13652c841d6c, type: 2}
-  _standardPortal: {r: 4.9453964, g: 12.83901, b: 19.686481, a: 1}
-  _inProgressPortal: {r: 3.9340389, g: 3.7491055, b: 0.31943053, a: 1}
-  _successPortal: {r: 5.772549, g: 47.937256, b: 5.772549, a: 1}
-  _failurePortal: {r: 10.556064, g: 0.24837798, b: 0, a: 1}
 --- !u!114 &963194229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1995555186315372895, guid: b2d6ccc4f1218a5419112bd3356cb146, type: 3}
