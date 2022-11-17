@@ -40,7 +40,7 @@ public class GameLoader : AsyncLoader
         }
         else
         {
-            Debug.Log($"Scene index to load is set to {_sceneIndex}");
+            Debug.Log($"Scene index to load is set to {sceneIndexToLoad}");
             _sceneIndex = sceneIndexToLoad;
         }
 
@@ -121,6 +121,7 @@ public class GameLoader : AsyncLoader
         sceneChangerGO.transform.SetParent(systemsParent);
         var sceneChangerComp = sceneChangerGO.AddComponent<SceneChanger>().Initialize();
         ServiceLocator.Register<SceneChanger>(sceneChangerComp);
+        inputManagerComp.SetSceneChanger(sceneChangerComp);
 
         var uiManagerGO = Instantiate(resourceManagerComp.UIManager, systemsParent);
         uiManagerGO.name = "UI Manager";
@@ -128,9 +129,10 @@ public class GameLoader : AsyncLoader
         ServiceLocator.Register<UIManager>(uiManagerComp);
 
         inputManagerComp.SetUIManager(uiManagerComp);
-        currencyManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
+        currencyManagerComp.SetUIManager(uiManagerComp);
         habitatManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
         tutorialComp.SetHabitatUI(uiManagerComp.HabitatUI);
+
         sceneChangerComp.SetupUIListeners();
 
         yield return null;
