@@ -24,7 +24,6 @@ public class Chimera : MonoBehaviour
     private HabitatUI _habitatUI = null;
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
-    private PersistentData _persitentData = null;
     private ElementType _elementalType = ElementType.None;
     private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
@@ -232,8 +231,7 @@ public class Chimera : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _resourceManager = ServiceLocator.Get<ResourceManager>(); 
-        _persitentData = ServiceLocator.Get<PersistentData>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _chimeraBehavior = GetComponent<ChimeraBehavior>();

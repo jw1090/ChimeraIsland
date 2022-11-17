@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +15,8 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private ReleaseSlider _releaseSlider = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-    [SerializeField] private List<UIEssenceWallet> _essenceWallets = new List<UIEssenceWallet>();
-    [SerializeField] private List<UIFossilWallet> _fossilWallets = new List<UIFossilWallet>();
+    [SerializeField] private UIEssenceWallet _essenceWallet = null;
+    [SerializeField] private UIFossilWallet _fossilWallet = null;
 
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
@@ -34,6 +33,8 @@ public class HabitatUI : MonoBehaviour
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
 
+    public void MenuClosed() { _menuOpen = false; }
+
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _detailsFolder.SetExpeditionManager(expeditionManager);
@@ -47,8 +48,6 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.SetAudioManager(audioManager);
     }
 
-    public void MenuClosed() { _menuOpen = false; }
-
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -56,10 +55,10 @@ public class HabitatUI : MonoBehaviour
 
         SetupButtonListeners();
 
-        InitializeWallets();
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsFolder.Initialize(uiManager);
+
         _tutorialOverlay.Initialize(this);
     }
 
@@ -72,34 +71,21 @@ public class HabitatUI : MonoBehaviour
 
     public void LoadCurrentUIProgress()
     {
-        if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
-        {
-            foreach (var wallet in _fossilWallets)
-            {
-                wallet.gameObject.SetActive(false);
-            }
-        }
-
         if (_expeditionPanel.expeditionManager.CurrentHabitatProgress == 0)
         {
-            foreach (var wallet in _essenceWallets)
-            {
-                wallet.gameObject.SetActive(false);
-            }
+            _essenceWallet.gameObject.SetActive(false);
+        }
+
+        if (_expeditionPanel.expeditionManager.CurrentFossilProgress == 0)
+        {
+            _fossilWallet.gameObject.SetActive(false);
         }
     }
 
-    private void InitializeWallets()
+    public void InitializeWallets()
     {
-        foreach (var wallet in _essenceWallets)
-        {
-            wallet.Initialize();
-        }
-
-        foreach (var wallet in _fossilWallets)
-        {
-            wallet.Initialize();
-        }
+        _essenceWallet.Initialize();
+        _fossilWallet.Initialize();
     }
 
     public void LoadHabitatSpecificUI()
@@ -162,16 +148,10 @@ public class HabitatUI : MonoBehaviour
                 _openDetailsButton.gameObject.SetActive(true);
                 break;
             case UIElementType.FossilsWallets:
-                foreach (UIFossilWallet fossilWallet in _fossilWallets)
-                {
-                    fossilWallet.gameObject.SetActive(true);
-                }
+                _fossilWallet.gameObject.SetActive(true);
                 break;
             case UIElementType.EssenceWallets:
-                foreach (UIEssenceWallet essenceWallet in _essenceWallets)
-                {
-                    essenceWallet.gameObject.SetActive(true);
-                }
+                _essenceWallet.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogError($"{uiElementType} is invalid. Please change!");
@@ -226,22 +206,6 @@ public class HabitatUI : MonoBehaviour
     {
         ResetStandardUI();
         OpenDetails();
-    }
-
-    public void OpenMarketplace()
-    {
-        if (_uiActive == false)
-        {
-            return;
-        }
-
-        ResetStandardUI();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-
-        _openDetailsButton.gameObject.SetActive(false);
-
-        _menuOpen = true;
     }
 
     public void ToggleSettingsMenu()
@@ -333,17 +297,11 @@ public class HabitatUI : MonoBehaviour
 
     public void UpdateEssenceWallets()
     {
-        foreach (var wallet in _essenceWallets)
-        {
-            wallet.UpdateWallet();
-        }
+        _essenceWallet.UpdateWallet();
     }
 
     public void UpdateFossilWallets()
     {
-        foreach (var wallet in _fossilWallets)
-        {
-            wallet.UpdateWallet();
-        }
+        _fossilWallet.UpdateWallet();
     }
 }

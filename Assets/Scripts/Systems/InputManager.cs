@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
+    private SceneChanger _sceneChanger = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
@@ -30,16 +31,16 @@ public class InputManager : MonoBehaviour
     private bool _debugCurrencyInputEnabled = false;
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
-    private float _rotationAmount = 0.8f;
     private bool _freeCameraActive = false;
+    private float _rotationAmount = 0.8f;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
     public float RotationSpeed { get => _rotationAmount; }
 
-    public void SetChimeraRotationSpeed(float speed) 
-    { 
+    public void SetChimeraRotationSpeed(float speed)
+    {
         _rotationAmount = speed;
         _persistentData.SetSpinSpeed(speed);
     }
@@ -51,6 +52,7 @@ public class InputManager : MonoBehaviour
         _cameraMain = _cameraUtil.CameraCO;
     }
 
+    public void SetSceneChanger(SceneChanger sceneChanger) { _sceneChanger = sceneChanger; }
     public void SetFreeCamera(FreeCamera freeCamera) { _freeCamera = freeCamera; }
     public void SetHabitatManager(HabitatManager habitatManager) { _habitatManager = habitatManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
@@ -118,7 +120,11 @@ public class InputManager : MonoBehaviour
         {
             return;
         }
-        Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
+
+        if (MouseInScreenSpace() == true)
+        {
+            Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
+        }
 
         if (Input.GetMouseButton(0))
         {
@@ -256,7 +262,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
-            _habitatUI.OpenMarketplace();
+            _sceneChanger.LoadTemple();
         }
     }
 
@@ -349,7 +355,6 @@ public class InputManager : MonoBehaviour
 
     private CursorType GetCursorSprite()
     {
-
         if (_cameraMain == null)
         {
             return CursorType.Default;
@@ -367,13 +372,28 @@ public class InputManager : MonoBehaviour
             return CursorType.Dragable;
         }
 
-        if(Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer) 
-            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer) 
+        if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer)
+            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer)
             || Physics.Raycast(ray, out RaycastHit templeHit, 300.0f, _templeLayer))
         {
             return CursorType.Clickable;
         }
 
         return CursorType.Default;
+    }
+
+    private bool MouseInScreenSpace() // Return false if out of screen.
+    {
+        if (Input.mousePosition.x < 0 || Input.mousePosition.x > Screen.width)
+        {
+            return false;
+        }
+
+        if (Input.mousePosition.y < 0 || Input.mousePosition.x > Screen.height)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
