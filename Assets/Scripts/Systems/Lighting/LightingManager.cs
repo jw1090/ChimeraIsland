@@ -39,7 +39,6 @@ public class LightingManager : MonoBehaviour
     private float _speed = 0.0f;
     private Material _skyMaterial = null;
     private Material _starMaterial = null;
-    private bool _nightStarted = false;
 
     public event Action<DayType> DayTypeChanged = null;
     public DayType DayType { get => _dayType; }
