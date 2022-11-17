@@ -79,6 +79,7 @@ public class ChimeraDetails : MonoBehaviour
         if(GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
         {
             _explorationExplanation.SetActive(true);
+            return;
         }
         else
         {
@@ -87,6 +88,7 @@ public class ChimeraDetails : MonoBehaviour
         if (GetGlobalPosition(_staminaTransform).Contains(Input.mousePosition))
         {
             _staminaExplanation.SetActive(true);
+            return;
         }
         else
         {
@@ -95,12 +97,14 @@ public class ChimeraDetails : MonoBehaviour
         if (GetGlobalPosition(_wisdomTransform).Contains(Input.mousePosition))
         {
             _wisdomExplanation.SetActive(true);
+            return;
         }
         else
         {
             _wisdomExplanation.SetActive(false);
         }
     }
+
     public static Rect GetGlobalPosition(RectTransform rectTransform)
     {
         Vector3[] corners = new Vector3[4];

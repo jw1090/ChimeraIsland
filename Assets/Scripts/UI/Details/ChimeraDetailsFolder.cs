@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
@@ -156,53 +155,55 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Sort()
     {
-        for (int i = 1; i < _chimeraDetailsList.Count; i++)
+        for (int p = 0; p <= _chimeraDetailsList.Count - 2; p++)
         {
-            if (_chimeraDetailsList[i].Chimera == null) return;
-            bool higher = false;
-            switch (orderType)
+            for (int i = 0; i <= _chimeraDetailsList.Count - 2; i++)
             {
-                case ChimeraOrderType.Default:
-                    if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i - 1].Chimera.CurrentEvolution.ChimeradexId)
-                    {
-                        higher = true;
-                    }
-                    break;
-                case ChimeraOrderType.Exploration:
-                    if (_chimeraDetailsList[i].Chimera.Exploration > _chimeraDetailsList[i - 1].Chimera.Exploration)
-                    {
-                        higher = true;
-                    }
-                    break;
-                case ChimeraOrderType.Stamina:
-                    if (_chimeraDetailsList[i].Chimera.Stamina > _chimeraDetailsList[i - 1].Chimera.Stamina)
-                    {
-                        higher = true;
-                    }
-                    break;
-                case ChimeraOrderType.Wisdom:
-                    if (_chimeraDetailsList[i].Chimera.Wisdom > _chimeraDetailsList[i - 1].Chimera.Wisdom)
-                    {
-                        higher = true;
-                    }
-                    break;
-                case ChimeraOrderType.AveragePower:
-                    if (_chimeraDetailsList[i].Chimera.AveragePower > _chimeraDetailsList[i - 1].Chimera.AveragePower)
-                    {
-                        higher = true;
-                    }
-                    break;
-                default:
-                    Debug.LogError($"Unhandled chimera order type: {orderType}. Please change!");
-                    break;
-            }
-            if(higher == true)
-            {
-                _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i - 1);
-                ChimeraDetails temp = _chimeraDetailsList[i];
-                _chimeraDetailsList[i] = _chimeraDetailsList[i - 1];
-                _chimeraDetailsList[i - 1] = temp;
-                i = 0;
+                if (_chimeraDetailsList[i].Chimera == null || _chimeraDetailsList[i+1].Chimera == null) break;
+                bool higher = false;
+                switch (orderType)
+                {
+                    case ChimeraOrderType.Default:
+                        if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i + 1].Chimera.CurrentEvolution.ChimeradexId)
+                        {
+                            higher = true;
+                        }
+                        break;
+                    case ChimeraOrderType.Exploration:
+                        if (_chimeraDetailsList[i].Chimera.Exploration > _chimeraDetailsList[i + 1].Chimera.Exploration)
+                        {
+                            higher = true;
+                        }
+                        break;
+                    case ChimeraOrderType.Stamina:
+                        if (_chimeraDetailsList[i].Chimera.Stamina > _chimeraDetailsList[i + 1].Chimera.Stamina)
+                        {
+                            higher = true;
+                        }
+                        break;
+                    case ChimeraOrderType.Wisdom:
+                        if (_chimeraDetailsList[i].Chimera.Wisdom > _chimeraDetailsList[i + 1].Chimera.Wisdom)
+                        {
+                            higher = true;
+                        }
+                        break;
+                    case ChimeraOrderType.AveragePower:
+                        if (_chimeraDetailsList[i].Chimera.AveragePower > _chimeraDetailsList[i + 1].Chimera.AveragePower)
+                        {
+                            higher = true;
+                        }
+                        break;
+                    default:
+                        Debug.LogError($"Unhandled chimera order type: {orderType}. Please change!");
+                        break;
+                }
+                if (higher == true)
+                {
+                    _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i + 1);
+                    ChimeraDetails temp = _chimeraDetailsList[i];
+                    _chimeraDetailsList[i] = _chimeraDetailsList[i + 1];
+                    _chimeraDetailsList[i + 1] = temp;
+                }
             }
         }
     }

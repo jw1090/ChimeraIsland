@@ -36,9 +36,11 @@ public class SceneChanger : MonoBehaviour
         if(_uiManager.MainMenuUI.CheckHasSave() == false)
         {
             NewGame();
-            return;
         }
-        _uiManager.MainMenuUI.WarningPanel.SetActive(true);
+        else
+        {
+            _uiManager.MainMenuUI.WarningPanel.SetActive(true);
+        }
     }
 
     public void CloseNewGameWarning()
