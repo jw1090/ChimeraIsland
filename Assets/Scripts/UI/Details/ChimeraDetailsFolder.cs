@@ -16,7 +16,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private bool _showAqua = true;
     private bool _showFira = true;
 
-    public void toggleShowBio() 
+    public void ToggleShowBio() 
     { 
         _showBio = !_showBio;
         if(_showBio == true)
@@ -29,7 +29,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
         CheckShowChimeraBasedOnElement();
     }
-    public void toggleShowAqua() 
+    public void ToggleShowAqua() 
     { 
         _showAqua = !_showAqua;
         if (_showAqua == true)
@@ -42,7 +42,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
         CheckShowChimeraBasedOnElement();
     }
-    public void toggleShowFira() 
+    public void ToggleShowFira() 
     { 
         _showFira = !_showFira;
         if (_showFira == true)
