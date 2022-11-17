@@ -207,6 +207,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1569868842, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+      propertyPath: _portal
+      value: 
+      objectReference: {fileID: 1239517786}
     - target: {fileID: 2306436917181515463, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
       propertyPath: currentState.StateName
       value: Tier 0
@@ -289,6 +293,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ff54d215aeb56419e6064213d17685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1239517784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6399582019679733152, guid: fe29ee81aecc8d04b9788b88d5cfdeac, type: 3}
+  m_PrefabInstance: {fileID: 904453929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1239517786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239517784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8a139eba05dbe4bb981068115e7846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _portalShader: {fileID: 2100000, guid: 3a3560fc97e343540a1a13652c841d6c, type: 2}
+  _standardPortal: {r: 4.9453964, g: 12.83901, b: 19.686481, a: 1}
+  _inProgressPortal: {r: 3.9340389, g: 3.7491055, b: 0.31943053, a: 1}
+  _successPortal: {r: 5.772549, g: 47.937256, b: 5.772549, a: 1}
+  _failurePortal: {r: 10.556064, g: 0.24837798, b: 0, a: 1}
 --- !u!43 &1339208545
 Mesh:
   m_ObjectHideFlags: 0
