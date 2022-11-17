@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
     public bool UIActive { get => _uiVisible; }
 
-    public void SetCameraUtil(CameraUtil cameraUtil) { _startingUI.SetCameraUtil(cameraUtil); }
+    public void SetCameraUtil(CameraUtil cameraUtil) { _startingUI.SetCameraUtil(cameraUtil);}
     public void SetAudioManager(AudioManager audioManager) 
     {
         _settingsUI.SetAudioManager(audioManager);
