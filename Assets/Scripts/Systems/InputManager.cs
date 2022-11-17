@@ -389,7 +389,7 @@ public class InputManager : MonoBehaviour
             return false;
         }
 
-        if (Input.mousePosition.y < 0 || Input.mousePosition.x > Screen.height)
+        if (Input.mousePosition.y < 0 || Input.mousePosition.y > Screen.height)
         {
             return false;
         }
