@@ -38,6 +38,7 @@ public class Habitat : MonoBehaviour
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
     public HabitatType Type { get => _habitatType; }
     public int CurrentTier { get => _currentTier; }
+    public Environment Environment { get => _environment; }
 
     public Facility GetFacility(FacilityType facilityType)
     {

@@ -12,6 +12,8 @@ public class ExpeditionResultUI : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
     private bool _expeditionSuccess = false;
+
+    public bool ExpeditionSuccess { get => _expeditionSuccess; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {

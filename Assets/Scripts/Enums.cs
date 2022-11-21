@@ -191,3 +191,13 @@ public enum CursorType
     Clickable,
     Dragable,
 }
+
+public enum ChimeraOrderType
+{ 
+    Default,
+    Exploration,
+    Stamina,
+    Wisdom,
+    AveragePower,
+}
+
