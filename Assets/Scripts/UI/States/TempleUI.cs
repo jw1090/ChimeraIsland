@@ -11,9 +11,11 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private Button _goRightButton = null;
 
     private UIManager _uiManager = null;
+    private CameraUtil _cameraUtil = null;
     private SceneChanger _sceneChanger = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
+    public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -54,7 +56,7 @@ public class TempleUI : MonoBehaviour
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is not supported by left transitions.");
                 break;
         }
-
+        _cameraUtil.TempleTransition(_currentTempleSection);
         ChangeTempleUIState();
     }
 
@@ -74,7 +76,7 @@ public class TempleUI : MonoBehaviour
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is not supported by right transitions.");
                 break;
         }
-
+        _cameraUtil.TempleTransition(_currentTempleSection);
         ChangeTempleUIState();
     }
 
@@ -96,7 +98,6 @@ public class TempleUI : MonoBehaviour
                 break;
         }
     }
-
     public void UpdateEssenceWallets()
     {
         _essenceWallet.UpdateWallet();

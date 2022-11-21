@@ -27,6 +27,7 @@ public class CameraUtil : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private StarterEnvironment _starterEnvironment = null;
+    private TempleEnvironment _templeEnvironment = null;
     private PersistentData _persistentData = null;
     private Rect _upRect = new Rect();
     private Rect _downRect = new Rect();
@@ -54,6 +55,7 @@ public class CameraUtil : MonoBehaviour
     }
 
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
+    public void SetTempleEnvironment(TempleEnvironment templeEnvironment) { _templeEnvironment = templeEnvironment; }
 
     public CameraUtil Initialize(SceneType sceneType)
     {
@@ -330,6 +332,34 @@ public class CameraUtil : MonoBehaviour
         }
 
         _starterEnvironment.ShowChimera(chimeraType);
+        CameraShift(nodePosition, nodeRotation);
+    }
+
+    public void TempleTransition(TempleSectionType templeSectionType)
+    {
+        Vector3 nodePosition = Vector3.zero;
+        Quaternion nodeRotation = Quaternion.identity;
+
+        switch (templeSectionType)
+        {
+            case TempleSectionType.None:
+                break;
+            case TempleSectionType.Buying:
+                nodePosition = _templeEnvironment.BuyingNode.position;
+                nodeRotation = _templeEnvironment.BuyingNode.rotation;
+                break;
+            case TempleSectionType.Upgrades:
+                nodePosition = _templeEnvironment.UpgradeNode.position;
+                nodeRotation = _templeEnvironment.UpgradeNode.rotation;
+                break;
+            case TempleSectionType.Collection:
+                nodePosition = _templeEnvironment.CollectionNode.position;
+                nodeRotation = _templeEnvironment.CollectionNode.rotation;
+                break;
+            default:
+                Debug.LogWarning($"{templeSectionType} is not a valid type. Please fix!");
+                break;
+        }
         CameraShift(nodePosition, nodeRotation);
     }
 

@@ -164,6 +164,8 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.ScreenWideButton, PlayClickSFX);
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.WarningNoButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.WarningYesButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.OpenCreditsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.CloseCreditsButton, PlayClickSFX);

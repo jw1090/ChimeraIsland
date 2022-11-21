@@ -17,6 +17,9 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
 
+    [Header("Habitat")]
+    [SerializeField] private TempleEnvironment _templeEnvironment = null;
+
     [Header("Builder")]
     [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
 
@@ -121,6 +124,12 @@ public class LevelLoader : AsyncLoader
         {
             _uiManager.SetCameraUtil(_cameraUtil);
             _inputManager.SetAudioManager(_audioManager);
+        }
+
+        if (_templeEnvironment != null)
+        {
+            _cameraUtil.SetTempleEnvironment(_templeEnvironment);
+            _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
         }
     }
 

@@ -123,6 +123,8 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward();
+
+        _expeditionManager.SetPortalColor();
     }
 
     public void CompleteCurrentHabitatExpedition()
@@ -130,5 +132,7 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward(true);
+
+        _expeditionManager.SetPortalColor();
     }
 }
