@@ -22,7 +22,15 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
-
+    [SerializeField] private GameObject _explorationExplanation = null;
+    [SerializeField] private GameObject _staminaExplanation = null;
+    [SerializeField] private GameObject _wisdomExplanation = null;
+    [SerializeField] private TextMeshProUGUI _explorationPreference = null;
+    [SerializeField] private TextMeshProUGUI _staminaPreference = null;
+    [SerializeField] private TextMeshProUGUI _wisdomPreference = null;
+    [SerializeField] private RectTransform _explorationTransform = null;
+    [SerializeField] private RectTransform _staminaTransform = null;
+    [SerializeField] private RectTransform _wisdomTransform = null;
     [Header("Stat Preference")]
     [SerializeField] private Color _prefferedGoldColor = new Color();
     [SerializeField] private Color _defaultColor = new Color();
@@ -66,6 +74,44 @@ public class ChimeraDetails : MonoBehaviour
         _uiManager.CreateButtonListener(_renameButton, LockCamera);
     }
 
+    public void Update()
+    {
+        if(GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
+        {
+            _explorationExplanation.SetActive(true);
+            return;
+        }
+        else
+        {
+            _explorationExplanation.SetActive(false);
+        }
+        if (GetGlobalPosition(_staminaTransform).Contains(Input.mousePosition))
+        {
+            _staminaExplanation.SetActive(true);
+            return;
+        }
+        else
+        {
+            _staminaExplanation.SetActive(false);
+        }
+        if (GetGlobalPosition(_wisdomTransform).Contains(Input.mousePosition))
+        {
+            _wisdomExplanation.SetActive(true);
+            return;
+        }
+        else
+        {
+            _wisdomExplanation.SetActive(false);
+        }
+    }
+
+    public static Rect GetGlobalPosition(RectTransform rectTransform)
+    {
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
+        return new Rect(corners[0].x, corners[0].y, corners[2].x - corners[0].x, corners[2].y - corners[0].y);
+    }
+
     public void UpdateDetails()
     {
         if (_habitat == null)
@@ -93,6 +139,36 @@ public class ChimeraDetails : MonoBehaviour
         _wisdom.text = wisdomText;
         string explorationText = _chimera.GetStatByType(StatType.Exploration, out amount) ? amount.ToString() : "Invalid!";
         _exploration.text = explorationText;
+        switch (_chimera.ChimeraType)
+        {
+            case ChimeraType.A:
+            case ChimeraType.A1:
+            case ChimeraType.A2:
+            case ChimeraType.A3:
+                _explorationPreference.text = "dislike";
+                _staminaPreference.text = "neutral";
+                _wisdomPreference.text = "like";
+                break;
+            case ChimeraType.B:
+            case ChimeraType.B1:
+            case ChimeraType.B2:
+            case ChimeraType.B3:
+                _staminaPreference.text = "dislike";
+                _wisdomPreference.text = "neutral";
+                _explorationPreference.text = "like";
+                break;
+            case ChimeraType.C:
+            case ChimeraType.C1:
+            case ChimeraType.C2:
+            case ChimeraType.C3:
+                _staminaPreference.text = "dislike";
+                _explorationPreference.text = "neutral";
+                _wisdomPreference.text = "like";
+                break;
+            default:
+                Debug.LogError($"Unhandled chimera type: {_chimera.ChimeraType}. Please change!");
+                break;
+        }
 
         _energySlider.maxValue = _chimera.MaxEnergy;
         _energySlider.value = _chimera.CurrentEnergy;

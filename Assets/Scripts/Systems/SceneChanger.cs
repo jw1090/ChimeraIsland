@@ -24,13 +24,33 @@ public class SceneChanger : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, LoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, QuitGame);
 
-        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, NewGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, CheckNewGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningYesButton, NewGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningNoButton, CloseNewGameWarning);
+    }
+
+    public void CheckNewGame()
+    {
+        if(_uiManager.MainMenuUI.CheckHasSave() == false)
+        {
+            NewGame();
+        }
+        else
+        {
+            _uiManager.MainMenuUI.WarningPanel.SetActive(true);
+        }
+    }
+
+    public void CloseNewGameWarning()
+    {
+        _uiManager.MainMenuUI.WarningPanel.SetActive(false);
     }
 
     public void NewGame()
     {
+        CloseNewGameWarning();
         _persistentData.NewSaveData();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT);
     }
@@ -55,7 +75,7 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager.HabitatUI.ResetStandardUI();
         SaveSessionData(true);
-        _uiManager.MainMenuUI.CheckHasSave();
+        _uiManager.MainMenuUI.CheckShowLoadGameButton();
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
     }
 

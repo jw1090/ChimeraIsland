@@ -46,7 +46,16 @@ public class ExpeditionManager : MonoBehaviour
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
 
-    public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
+    public void SetExpeditionState(ExpeditionState expeditionState) 
+    { 
+        _expeditionState = expeditionState; 
+        SetPortalColor();
+    }
+
+    public void SetPortalColor()
+    {
+        _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
+    }
 
     public void ResetSelectedExpedition()
     {
@@ -88,7 +97,7 @@ public class ExpeditionManager : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
 
         HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
         _currentEssenceProgress = data.expeditionEssenceProgress;
@@ -228,14 +237,14 @@ public class ExpeditionManager : MonoBehaviour
     {
         _chimeras.Clear();
 
-        _expeditionState = ExpeditionState.Setup;
+        SetExpeditionState(ExpeditionState.Setup);
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
 
     public void EnterInProgressState()
     {
-        _expeditionState = ExpeditionState.InProgress;
+        SetExpeditionState(ExpeditionState.InProgress);
 
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
@@ -291,7 +300,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _selectedExpedition = null;
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
         _habitatUI.UpdateHabitatUI();
     }
 

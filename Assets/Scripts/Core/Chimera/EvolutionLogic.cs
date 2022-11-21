@@ -8,6 +8,7 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private ElementType _elementType = ElementType.None;
     [SerializeField] private StatType _statBonus = StatType.None;
     [SerializeField][TextArea(3, 10)] private string _backgroundInfo = "";
+    [SerializeField] private int _chimeradexId = 0;
 
     [Header("Evolution")]
     [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
@@ -28,6 +29,7 @@ public class EvolutionLogic : MonoBehaviour
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
+    public int ChimeradexId { get => _chimeradexId; }
     public ChimeraType ChimeraType { get => _evolutionType; }
     public ElementType ElementType { get => _elementType; }
     public StatType StatBonus { get => _statBonus; }
