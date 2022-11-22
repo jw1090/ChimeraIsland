@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class ChimeraDetailsFolder : MonoBehaviour
@@ -12,49 +11,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ExpeditionManager _expeditionManager = null;
     private ChimeraOrderType orderType = ChimeraOrderType.Default;
-    private bool _showBio = true;
-    private bool _showAqua = true;
-    private bool _showFira = true;
-
-    public void ToggleShowBio() 
-    { 
-        _showBio = !_showBio;
-        if(_showBio == true)
-        {
-            _bioButton.color = Color.white;
-        }
-        else
-        {
-            _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
-        }
-        CheckShowChimeraBasedOnElement();
-    }
-    public void ToggleShowAqua() 
-    { 
-        _showAqua = !_showAqua;
-        if (_showAqua == true)
-        {
-            _aquaButton.color = Color.white;
-        }
-        else
-        {
-            _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
-        }
-        CheckShowChimeraBasedOnElement();
-    }
-    public void ToggleShowFira() 
-    { 
-        _showFira = !_showFira;
-        if (_showFira == true)
-        {
-            _firaButton.color = Color.white;
-        }
-        else
-        {
-            _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
-        }
-        CheckShowChimeraBasedOnElement(); 
-    }
+    private bool _showGrass = true;
+    private bool _showWater = true;
+    private bool _showFire = true;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -69,6 +28,52 @@ public class ChimeraDetailsFolder : MonoBehaviour
         _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
 
         SetupListeners();
+    }
+
+    public void ToggleShowGrass() 
+    { 
+        _showGrass = !_showGrass;
+        if(_showGrass == true)
+        {
+            _bioButton.color = Color.white;
+        }
+        else
+        {
+            _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+        CheckShowChimeraBasedOnElement();
+    }
+
+    public void ToggleShowWater()
+    { 
+        _showWater = !_showWater;
+
+        if (_showWater == true)
+        {
+            _aquaButton.color = Color.white;
+        }
+        else
+        {
+            _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+
+        CheckShowChimeraBasedOnElement();
+    }
+
+    public void ToggleShowFire() 
+    { 
+        _showFire = !_showFire;
+
+        if (_showFire == true)
+        {
+            _firaButton.color = Color.white;
+        }
+        else
+        {
+            _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
+        }
+
+        CheckShowChimeraBasedOnElement(); 
     }
 
     private void DropdownValueChanged()
@@ -136,14 +141,14 @@ public class ChimeraDetailsFolder : MonoBehaviour
             if (chimeraDetail.Chimera == null) return;
             switch (chimeraDetail.Chimera.ElementalType)
             {
-                case ElementType.Aqua:
-                    chimeraDetail.gameObject.SetActive(_showAqua);
+                case ElementType.Water:
+                    chimeraDetail.gameObject.SetActive(_showWater);
                     break;
-                case ElementType.Bio:
-                    chimeraDetail.gameObject.SetActive(_showBio);
+                case ElementType.Grass:
+                    chimeraDetail.gameObject.SetActive(_showGrass);
                     break;
-                case ElementType.Fira:
-                    chimeraDetail.gameObject.SetActive(_showFira);
+                case ElementType.Fire:
+                    chimeraDetail.gameObject.SetActive(_showFire);
                     break;
                 default:
                     Debug.LogError($"Unhandled chimera element type: {chimeraDetail.Chimera.ElementalType}. Please change!");
@@ -197,6 +202,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
                         Debug.LogError($"Unhandled chimera order type: {orderType}. Please change!");
                         break;
                 }
+
                 if (higher == true)
                 {
                     _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i + 1);

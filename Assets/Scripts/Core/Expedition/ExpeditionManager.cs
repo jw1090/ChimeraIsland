@@ -421,11 +421,11 @@ public class ExpeditionManager : MonoBehaviour
     {
         switch (elementType)
         {
-            case ElementType.Aqua:
+            case ElementType.Water:
                 return _selectedExpedition.AquaBonus;
-            case ElementType.Bio:
+            case ElementType.Grass:
                 return _selectedExpedition.BioBonus;
-            case ElementType.Fira:
+            case ElementType.Fire:
                 return _selectedExpedition.FiraBonus;
             default:
                 Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
