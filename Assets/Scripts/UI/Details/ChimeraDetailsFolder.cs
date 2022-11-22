@@ -8,6 +8,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private Image _bioButton = null;
     [SerializeField] private Image _aquaButton = null;
     [SerializeField] private Image _firaButton = null;
+    private UIManager _uiManager = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ExpeditionManager _expeditionManager = null;
     private ChimeraOrderType orderType = ChimeraOrderType.Default;
@@ -20,6 +21,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
+
+        _uiManager = uiManager;
 
         foreach (var chimeraDetail in _chimeraDetailsList)
         {
@@ -88,6 +91,10 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             detail.SetupButtonListeners();
         }
+
+        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
+        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
+        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
     }
 
     public void HabitatDetailsSetup()
