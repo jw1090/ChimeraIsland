@@ -25,9 +25,9 @@ public enum DetailsButtonType
 public enum ElementType
 {
     None = -1,
-    Aqua,
-    Bio,
-    Fira,
+    Water,
+    Grass,
+    Fire,
 }
 
 public enum EvolutionVFXType

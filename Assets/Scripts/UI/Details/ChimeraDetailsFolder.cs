@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class ChimeraDetailsFolder : MonoBehaviour
@@ -13,14 +12,31 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ExpeditionManager _expeditionManager = null;
     private ChimeraOrderType orderType = ChimeraOrderType.Default;
-    private bool _showBio = true;
-    private bool _showAqua = true;
-    private bool _showFira = true;
+    private bool _showGrass = true;
+    private bool _showWater = true;
+    private bool _showFire = true;
 
-    public void ToggleShowBio() 
+    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
+
+    public void Initialize(UIManager uiManager)
+    {
+        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
+
+        _uiManager = uiManager;
+
+        foreach (var chimeraDetail in _chimeraDetailsList)
+        {
+            chimeraDetail.Initialize(uiManager);
+        }
+        _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
+
+        SetupListeners();
+    }
+
+    public void ToggleShowGrass() 
     { 
-        _showBio = !_showBio;
-        if(_showBio == true)
+        _showGrass = !_showGrass;
+        if(_showGrass == true)
         {
             _bioButton.color = Color.white;
         }
@@ -31,10 +47,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
         CheckShowChimeraBasedOnElement();
     }
 
-    public void ToggleShowAqua() 
+    public void ToggleShowWater()
     { 
-        _showAqua = !_showAqua;
-        if (_showAqua == true)
+        _showWater = !_showWater;
+
+        if (_showWater == true)
         {
             _aquaButton.color = Color.white;
         }
@@ -42,13 +59,15 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
+
         CheckShowChimeraBasedOnElement();
     }
 
-    public void ToggleShowFira() 
+    public void ToggleShowFire() 
     { 
-        _showFira = !_showFira;
-        if (_showFira == true)
+        _showFire = !_showFire;
+
+        if (_showFire == true)
         {
             _firaButton.color = Color.white;
         }
@@ -56,22 +75,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
+
         CheckShowChimeraBasedOnElement(); 
-    }
-
-    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
-
-    public void Initialize(UIManager uiManager)
-    {
-        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
-        _uiManager = uiManager;
-        foreach (var chimeraDetail in _chimeraDetailsList)
-        {
-            chimeraDetail.Initialize(uiManager);
-        }
-        _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
-
-        SetupListeners();
     }
 
     private void DropdownValueChanged()
@@ -84,11 +89,12 @@ public class ChimeraDetailsFolder : MonoBehaviour
     {
         foreach (var detail in _chimeraDetailsList)
         {
-            detail.SetupButtonListeners(); 
-            _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowAqua);
-            _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowBio);
-            _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFira);
+            detail.SetupButtonListeners();
         }
+
+        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
+        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
+        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
     }
 
     public void HabitatDetailsSetup()
@@ -142,14 +148,14 @@ public class ChimeraDetailsFolder : MonoBehaviour
             if (chimeraDetail.Chimera == null) return;
             switch (chimeraDetail.Chimera.ElementalType)
             {
-                case ElementType.Aqua:
-                    chimeraDetail.gameObject.SetActive(_showAqua);
+                case ElementType.Water:
+                    chimeraDetail.gameObject.SetActive(_showWater);
                     break;
-                case ElementType.Bio:
-                    chimeraDetail.gameObject.SetActive(_showBio);
+                case ElementType.Grass:
+                    chimeraDetail.gameObject.SetActive(_showGrass);
                     break;
-                case ElementType.Fira:
-                    chimeraDetail.gameObject.SetActive(_showFira);
+                case ElementType.Fire:
+                    chimeraDetail.gameObject.SetActive(_showFire);
                     break;
                 default:
                     Debug.LogError($"Unhandled chimera element type: {chimeraDetail.Chimera.ElementalType}. Please change!");
@@ -203,6 +209,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
                         Debug.LogError($"Unhandled chimera order type: {orderType}. Please change!");
                         break;
                 }
+
                 if (higher == true)
                 {
                     _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i + 1);

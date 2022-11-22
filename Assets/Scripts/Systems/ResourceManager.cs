@@ -16,9 +16,9 @@ public class ResourceManager : MonoBehaviour
     private Sprite _chimeraC2Sprite = null;
     private Sprite _chimeraC3Sprite = null;
 
-    private Sprite _aquaSprite = null;
-    private Sprite _bioSprite = null;
-    private Sprite _firaSprite = null;
+    private Sprite _waterSprite = null;
+    private Sprite _fireSprite = null;
+    private Sprite _grassSprite = null;
 
     private Sprite _staminaSprite = null;
     private Sprite _wisdomSprite = null;
@@ -72,9 +72,9 @@ public class ResourceManager : MonoBehaviour
         _chimeraC2Sprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
         _chimeraC3Sprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
 
-        _aquaSprite = Resources.Load<Sprite>("Icons/Elements/aqua");
-        _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
-        _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
+        _waterSprite = Resources.Load<Sprite>("Icons/Elements/water");
+        _fireSprite = Resources.Load<Sprite>("Icons/Elements/fire");
+        _grassSprite = Resources.Load<Sprite>("Icons/Elements/grass");
 
         _staminaSprite = Resources.Load<Sprite>("Icons/Stats/Stamina");
         _wisdomSprite = Resources.Load<Sprite>("Icons/Stats/Wisdom");
@@ -219,16 +219,16 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public Sprite GetElementSprite(ElementType elementalType)
+    public Sprite GetElementDetailsSprite(ElementType elementalType)
     {
         switch (elementalType)
         {
-            case ElementType.Aqua:
-                return _aquaSprite;
-            case ElementType.Bio:
-                return _bioSprite;
-            case ElementType.Fira:
-                return _firaSprite;
+            case ElementType.Water:
+                return _waterSprite;
+            case ElementType.Fire:
+                return _fireSprite;
+            case ElementType.Grass:
+                return _grassSprite;
             default:
                 Debug.LogWarning($"{elementalType} is invalid, please change!");
                 return null;
@@ -272,11 +272,11 @@ public class ResourceManager : MonoBehaviour
         switch (badgeType)
         {
             case ModifierType.Aqua:
-                return _aquaSprite;
+                return _waterSprite;
             case ModifierType.Bio:
-                return _bioSprite;
+                return _grassSprite;
             case ModifierType.Fira:
-                return _firaSprite;
+                return _fireSprite;
             case ModifierType.Stamina:
                 return _staminaSprite;
             case ModifierType.Wisdom:

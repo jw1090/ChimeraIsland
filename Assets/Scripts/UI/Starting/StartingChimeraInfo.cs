@@ -21,7 +21,7 @@ public class StartingChimeraInfo : MonoBehaviour
     public void LoadChimeraData(EvolutionLogic evolutionLogic)
     {
         _chimeraName.text = evolutionLogic.Name;
-        _icon.sprite = _resourceManager.GetElementSprite(evolutionLogic.ElementType);
+        _icon.sprite = _resourceManager.GetElementDetailsSprite(evolutionLogic.ElementType);
         _chimeraInfo.text = evolutionLogic.BackgroundInfo;
 
         LoadStatPreferences(evolutionLogic);
