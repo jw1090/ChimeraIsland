@@ -34,10 +34,22 @@ public class ChimeraDetailsFolder : MonoBehaviour
         SetupListeners();
     }
 
-    public void ToggleShowGrass() 
-    { 
+    private void SetupListeners()
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.SetupButtonListeners();
+        }
+
+        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
+        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
+        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
+    }
+
+    public void ToggleShowGrass()
+    {
         _showGrass = !_showGrass;
-        if(_showGrass == true)
+        if (_showGrass == true)
         {
             _bioButton.color = Color.white;
         }
@@ -45,11 +57,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
-        CheckShowChimeraBasedOnElement();
+        EvaluateVisibleChimera();
     }
 
     public void ToggleShowWater()
-    { 
+    {
         _showWater = !_showWater;
 
         if (_showWater == true)
@@ -61,11 +73,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
             _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
 
-        CheckShowChimeraBasedOnElement();
+        EvaluateVisibleChimera();
     }
 
-    public void ToggleShowFire() 
-    { 
+    public void ToggleShowFire()
+    {
         _showFire = !_showFire;
 
         if (_showFire == true)
@@ -77,25 +89,13 @@ public class ChimeraDetailsFolder : MonoBehaviour
             _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
 
-        CheckShowChimeraBasedOnElement(); 
+        EvaluateVisibleChimera();
     }
 
     private void DropdownValueChanged()
     {
         orderType = (ChimeraOrderType)_dropdown.value;
         Sort();
-    }
-
-    private void SetupListeners()
-    {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.SetupButtonListeners();
-        }
-
-        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
-        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
-        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
     }
 
     public void HabitatDetailsSetup()
@@ -121,7 +121,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
             detail.UpdateDetails();
             detail.ToggleButtons(detailsButtonType);
         }
+
         Sort();
+        EvaluateVisibleChimera();
     }
 
     public void CheckDetails()
@@ -142,11 +144,20 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
     }
 
-    private void CheckShowChimeraBasedOnElement()
+    private void EvaluateVisibleChimera()
     {
-        foreach(var chimeraDetail in _chimeraDetailsList)
+        foreach (var chimeraDetail in _chimeraDetailsList)
         {
-            if (chimeraDetail.Chimera == null) return;
+            if (chimeraDetail.Chimera == null)
+            {
+                return;
+            }
+
+            if (chimeraDetail.Chimera.ElementalType == ElementType.None)
+            {
+                return;
+            }
+
             switch (chimeraDetail.Chimera.ElementalType)
             {
                 case ElementType.Water:
@@ -180,37 +191,37 @@ public class ChimeraDetailsFolder : MonoBehaviour
                     break;
                 }
 
-                bool higher = false;
+                bool lower = false;
                 switch (orderType)
                 {
                     case ChimeraOrderType.Default:
                         if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i + 1].Chimera.CurrentEvolution.ChimeradexId)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Exploration:
-                        if (_chimeraDetailsList[i].Chimera.Exploration > _chimeraDetailsList[i + 1].Chimera.Exploration)
+                        if (_chimeraDetailsList[i].Chimera.Exploration < _chimeraDetailsList[i + 1].Chimera.Exploration)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Stamina:
-                        if (_chimeraDetailsList[i].Chimera.Stamina > _chimeraDetailsList[i + 1].Chimera.Stamina)
+                        if (_chimeraDetailsList[i].Chimera.Stamina < _chimeraDetailsList[i + 1].Chimera.Stamina)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Wisdom:
-                        if (_chimeraDetailsList[i].Chimera.Wisdom > _chimeraDetailsList[i + 1].Chimera.Wisdom)
+                        if (_chimeraDetailsList[i].Chimera.Wisdom < _chimeraDetailsList[i + 1].Chimera.Wisdom)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.AveragePower:
-                        if (_chimeraDetailsList[i].Chimera.AveragePower > _chimeraDetailsList[i + 1].Chimera.AveragePower)
+                        if (_chimeraDetailsList[i].Chimera.AveragePower < _chimeraDetailsList[i + 1].Chimera.AveragePower)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     default:
@@ -218,7 +229,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
                         break;
                 }
 
-                if (higher == true)
+                if (lower == true)
                 {
                     _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i + 1);
                     ChimeraDetails temp = _chimeraDetailsList[i];
