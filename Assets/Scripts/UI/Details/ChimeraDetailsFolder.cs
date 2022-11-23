@@ -20,8 +20,6 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
-        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
-
         _uiManager = uiManager;
 
         foreach (var chimeraDetail in _chimeraDetailsList)
