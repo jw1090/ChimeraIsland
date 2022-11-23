@@ -9,8 +9,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private Image _aquaButton = null;
     [SerializeField] private Image _firaButton = null;
     private UIManager _uiManager = null;
-    private List<Chimera> _chimerasList = new List<Chimera>();
+    private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
+    private List<Chimera> _chimerasList = new List<Chimera>();
     private ChimeraOrderType orderType = ChimeraOrderType.Default;
     private bool _showGrass = true;
     private bool _showWater = true;
@@ -20,9 +21,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
-        Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
-
         _uiManager = uiManager;
+
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         foreach (var chimeraDetail in _chimeraDetailsList)
         {
@@ -99,7 +100,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void HabitatDetailsSetup()
     {
-        _chimerasList = ServiceLocator.Get<HabitatManager>().CurrentHabitat.ActiveChimeras;
+        _chimerasList = _habitatManager.CurrentHabitat.ActiveChimeras;
 
         int chimeraSpot = 0;
         foreach (var chimeraDetail in _chimeraDetailsList)
@@ -167,11 +168,18 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Sort()
     {
+        //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        //sw.Start();
+
         for (int p = 0; p <= _chimeraDetailsList.Count - 2; p++)
         {
             for (int i = 0; i <= _chimeraDetailsList.Count - 2; i++)
             {
-                if (_chimeraDetailsList[i].Chimera == null || _chimeraDetailsList[i+1].Chimera == null) break;
+                if (_chimeraDetailsList[i].Chimera == null || _chimeraDetailsList[i + 1].Chimera == null)
+                {
+                    break;
+                }
+
                 bool higher = false;
                 switch (orderType)
                 {
@@ -219,5 +227,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
                 }
             }
         }
+
+        //sw.Stop();
+        //Debug.Log(sw.ElapsedMilliseconds);
     }
 }

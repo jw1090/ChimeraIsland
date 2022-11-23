@@ -439,7 +439,7 @@ public class Chimera : MonoBehaviour
 
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
-        _habitatUI.DetailsPanel.DetailsStatGlow();
+        _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
     }
 

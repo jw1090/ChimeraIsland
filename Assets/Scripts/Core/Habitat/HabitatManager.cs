@@ -306,7 +306,7 @@ public class HabitatManager : MonoBehaviour
         _currentHabitat.CreateChimerasFromData(chimerasToSpawn);
 
 
-        _habitatUI.DetailsPanel.DetailsStatGlow();
+        _habitatUI.DetailsManager.DetailsStatGlow();
     }
 
     public void PlayCurrentHabitatMusic()
