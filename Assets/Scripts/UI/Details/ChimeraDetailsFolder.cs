@@ -180,37 +180,37 @@ public class ChimeraDetailsFolder : MonoBehaviour
                     break;
                 }
 
-                bool higher = false;
+                bool lower = false;
                 switch (orderType)
                 {
                     case ChimeraOrderType.Default:
                         if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i + 1].Chimera.CurrentEvolution.ChimeradexId)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Exploration:
-                        if (_chimeraDetailsList[i].Chimera.Exploration > _chimeraDetailsList[i + 1].Chimera.Exploration)
+                        if (_chimeraDetailsList[i].Chimera.Exploration < _chimeraDetailsList[i + 1].Chimera.Exploration)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Stamina:
-                        if (_chimeraDetailsList[i].Chimera.Stamina > _chimeraDetailsList[i + 1].Chimera.Stamina)
+                        if (_chimeraDetailsList[i].Chimera.Stamina < _chimeraDetailsList[i + 1].Chimera.Stamina)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.Wisdom:
-                        if (_chimeraDetailsList[i].Chimera.Wisdom > _chimeraDetailsList[i + 1].Chimera.Wisdom)
+                        if (_chimeraDetailsList[i].Chimera.Wisdom < _chimeraDetailsList[i + 1].Chimera.Wisdom)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     case ChimeraOrderType.AveragePower:
-                        if (_chimeraDetailsList[i].Chimera.AveragePower > _chimeraDetailsList[i + 1].Chimera.AveragePower)
+                        if (_chimeraDetailsList[i].Chimera.AveragePower < _chimeraDetailsList[i + 1].Chimera.AveragePower)
                         {
-                            higher = true;
+                            lower = true;
                         }
                         break;
                     default:
@@ -218,7 +218,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
                         break;
                 }
 
-                if (higher == true)
+                if (lower == true)
                 {
                     _chimeraDetailsList[i].gameObject.transform.SetSiblingIndex(i + 1);
                     ChimeraDetails temp = _chimeraDetailsList[i];
