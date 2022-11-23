@@ -34,10 +34,22 @@ public class ChimeraDetailsFolder : MonoBehaviour
         SetupListeners();
     }
 
-    public void ToggleShowGrass() 
-    { 
+    private void SetupListeners()
+    {
+        foreach (var detail in _chimeraDetailsList)
+        {
+            detail.SetupButtonListeners();
+        }
+
+        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
+        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
+        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
+    }
+
+    public void ToggleShowGrass()
+    {
         _showGrass = !_showGrass;
-        if(_showGrass == true)
+        if (_showGrass == true)
         {
             _bioButton.color = Color.white;
         }
@@ -45,11 +57,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
         {
             _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
-        CheckShowChimeraBasedOnElement();
+        EvaluateVisibleChimera();
     }
 
     public void ToggleShowWater()
-    { 
+    {
         _showWater = !_showWater;
 
         if (_showWater == true)
@@ -61,11 +73,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
             _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
 
-        CheckShowChimeraBasedOnElement();
+        EvaluateVisibleChimera();
     }
 
-    public void ToggleShowFire() 
-    { 
+    public void ToggleShowFire()
+    {
         _showFire = !_showFire;
 
         if (_showFire == true)
@@ -77,25 +89,13 @@ public class ChimeraDetailsFolder : MonoBehaviour
             _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
         }
 
-        CheckShowChimeraBasedOnElement(); 
+        EvaluateVisibleChimera();
     }
 
     private void DropdownValueChanged()
     {
         orderType = (ChimeraOrderType)_dropdown.value;
         Sort();
-    }
-
-    private void SetupListeners()
-    {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.SetupButtonListeners();
-        }
-
-        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
-        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
-        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
     }
 
     public void HabitatDetailsSetup()
@@ -121,7 +121,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
             detail.UpdateDetails();
             detail.ToggleButtons(detailsButtonType);
         }
+
         Sort();
+        EvaluateVisibleChimera();
     }
 
     public void CheckDetails()
@@ -142,11 +144,20 @@ public class ChimeraDetailsFolder : MonoBehaviour
         }
     }
 
-    private void CheckShowChimeraBasedOnElement()
+    private void EvaluateVisibleChimera()
     {
-        foreach(var chimeraDetail in _chimeraDetailsList)
+        foreach (var chimeraDetail in _chimeraDetailsList)
         {
-            if (chimeraDetail.Chimera == null) return;
+            if (chimeraDetail.Chimera == null)
+            {
+                return;
+            }
+
+            if (chimeraDetail.Chimera.ElementalType == ElementType.None)
+            {
+                return;
+            }
+
             switch (chimeraDetail.Chimera.ElementalType)
             {
                 case ElementType.Water:
