@@ -17,19 +17,10 @@ public class ChimeraPopUp : MonoBehaviour
     [SerializeField] private Color _defaultColor = new Color();
     [SerializeField] private List<Image> _statIcons = new List<Image>();
 
-    public void Initialize()
-    {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-        NoPrefferedStat();
-    }
-
     public void SetChimera(Chimera chimera)
     {
         _chimera = chimera;
-        if(chimera == null)
-        {
-            return;
-        }
+
         _name.text = chimera.Name;
         _type.sprite = _resourceManager.GetElementDetailsSprite(_chimera.ElementalType);
         _exploration.text = chimera.Exploration.ToString();
@@ -37,6 +28,13 @@ public class ChimeraPopUp : MonoBehaviour
         _wisdom.text = chimera.Wisdom.ToString();
         DetermineStatGlow();
     }
+
+    public void Initialize()
+    {
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        NoPrefferedStat();
+    }
+
     public void DetermineStatGlow()
     {
         if (_chimera == null)
