@@ -61,6 +61,7 @@ public class ChimeraPopUp : MonoBehaviour
                 break;
         }
     }
+
     private void NoPrefferedStat()
     {
         foreach (Image statBG in _statIcons)
