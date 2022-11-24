@@ -14,6 +14,7 @@ public class HabitatManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
+    private List<ChimeraCollections> _chimeraCollections = new List<ChimeraCollections>();
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private HabitatUI _habitatUI = null;
