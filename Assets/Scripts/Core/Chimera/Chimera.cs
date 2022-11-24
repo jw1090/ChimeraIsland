@@ -441,6 +441,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
+        _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
     }
 
     // Increase stat at rate of the relevant statgrowth variable.
