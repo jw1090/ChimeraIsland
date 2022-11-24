@@ -40,7 +40,6 @@ public class ChimeraDetails : MonoBehaviour
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
-    private PersistentData _persitentData = null;
     private AudioManager _audioManager = null;
     private CameraUtil _cameraUtil = null;
     private int _chimeraSpot = 0;
@@ -49,7 +48,6 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Initialize(UIManager uiManager)
     {
-        _persitentData = ServiceLocator.Get<PersistentData>();
         _uiManager = uiManager;
         NoPrefferedStat();
     }

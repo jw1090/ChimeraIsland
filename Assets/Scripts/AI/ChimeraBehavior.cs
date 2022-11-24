@@ -13,6 +13,7 @@ public enum ChimeraBehaviorState
 
 public class ChimeraBehavior : MonoBehaviour
 {
+    private HabitatUI _habitatUI;
     private Animator _animator = null;
     private Camera _mainCamera = null;
     private CameraUtil _cameraUtil = null;
@@ -53,6 +54,7 @@ public class ChimeraBehavior : MonoBehaviour
     {
         ServiceLocator.Get<InputManager>().HeldStateChange += OnHeldStateChanged;
 
+        _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
         _nodes = ServiceLocator.Get<HabitatManager>().CurrentHabitat.PatrolNodes;
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -108,10 +110,12 @@ public class ChimeraBehavior : MonoBehaviour
             if (wasClicked == true)
             {
                 ChangeState(ChimeraBehaviorState.Held);
+                _habitatUI.ActivateChimeraPopUp(_chimera);
             }
             else
             {
                 ChangeState(ChimeraBehaviorState.Patrol);
+                _habitatUI.DeactivateChimeraPopUp();
             }
         }
     }
