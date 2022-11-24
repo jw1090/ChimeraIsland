@@ -19,6 +19,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private Environment _environment = null;
     [SerializeField] private Temple _temple = null;
     [SerializeField] private StatefulObject _tiers = null;
+    [SerializeField] private ChimeraPopUp _chimeraPopUp = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
@@ -103,6 +104,17 @@ public class Habitat : MonoBehaviour
 
     public void ToggleFireflies(bool toggleOn) { _environment.Tiers[_currentTier - 1].ToggleFireflies(toggleOn); }
 
+    public void ActivateChimeraPopUp(Chimera chimera)
+    {
+        _chimeraPopUp.SetChimera(chimera);
+        _chimeraPopUp.gameObject.SetActive(true);
+    }
+
+    public void DeactivateChimeraPopUp()
+    {
+        _chimeraPopUp.gameObject.SetActive(false);
+    }
+
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
@@ -116,6 +128,7 @@ public class Habitat : MonoBehaviour
         _crystalManager.Initialize(this);
         _patrolNodes.Initialize();
         _environment.Initialize();
+        _chimeraPopUp.Initialize();
 
         SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
 
