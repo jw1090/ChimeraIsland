@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,16 +5,16 @@ using UnityEngine.UI;
 
 public class ChimeraPopUp : MonoBehaviour
 {
-    private Chimera _chimera = null;
-    private ResourceManager _resourceManager = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private Image _type = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
     [SerializeField] private TextMeshProUGUI _wisdom = null;
+    [SerializeField] private List<Image> _statIcons = new List<Image>();
     [SerializeField] private Color _prefferedGoldColor = new Color();
     [SerializeField] private Color _defaultColor = new Color();
-    [SerializeField] private List<Image> _statIcons = new List<Image>();
+    private ResourceManager _resourceManager = null;
+    private Chimera _chimera = null;
 
     public void SetChimera(Chimera chimera)
     {
@@ -26,13 +25,17 @@ public class ChimeraPopUp : MonoBehaviour
         _exploration.text = chimera.Exploration.ToString();
         _stamina.text = chimera.Stamina.ToString();
         _wisdom.text = chimera.Wisdom.ToString();
+
         DetermineStatGlow();
     }
 
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+
         NoPrefferedStat();
+
+        gameObject.SetActive(false);
     }
 
     public void DetermineStatGlow()
