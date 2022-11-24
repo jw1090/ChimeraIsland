@@ -15,6 +15,7 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private UIEssenceWallet _essenceWallet = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
+    [SerializeField] private ChimeraPopUp _chimeraPopUp = null;
 
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
@@ -29,6 +30,17 @@ public class HabitatUI : MonoBehaviour
     public Button CloseDetailsButton { get => _closeDetailsButton; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
+
+    public void ActivateChimeraPopUp(Chimera chimera)
+    {
+        _chimeraPopUp.SetChimera(chimera);
+        _chimeraPopUp.gameObject.SetActive(true);
+    }
+
+    public void DeactivateChimeraPopUp()
+    {
+        _chimeraPopUp.gameObject.SetActive(false);
+    }
 
     public void MenuClosed() { _menuOpen = false; }
 
@@ -55,6 +67,7 @@ public class HabitatUI : MonoBehaviour
         _trainingPanel.Initialize(uiManager);
         _expeditionPanel.Initialize(uiManager);
         _detailsManager.Initialize(uiManager);
+        _chimeraPopUp.Initialize();
 
         _tutorialOverlay.Initialize(this);
     }
