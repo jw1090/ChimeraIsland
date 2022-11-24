@@ -1,8 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CrystalSpawn : MonoBehaviour
 {
     [SerializeField] private GameObject _crystal = null;
+    [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
     private Habitat _habitat = null;
@@ -35,7 +38,7 @@ public class CrystalSpawn : MonoBehaviour
         {
             return;
         }
-
+        ShowEffect();
         if (--_health == 0)
         {
             _isActive = false;
@@ -57,5 +60,33 @@ public class CrystalSpawn : MonoBehaviour
 
             _audioManager.PlayUISFX(SFXUIType.Hit);
         }
+    }
+
+    private void ShowEffect()
+    {
+        if (_tapMine[0].isPlaying != true)
+        {
+            _tapMine[0].gameObject.SetActive(true);
+            _tapMine[0].time = 0;
+            StartCoroutine(StopMineEffect(_tapMine[0]));
+        }
+        else if (_tapMine[1].isPlaying != true)
+        {
+            _tapMine[1].gameObject.SetActive(true);
+            _tapMine[1].time = 0;
+            StartCoroutine(StopMineEffect(_tapMine[1]));
+        }
+        else if (_tapMine[2].isPlaying != true)
+        {
+            _tapMine[2].gameObject.SetActive(true);
+            _tapMine[2].time = 0;
+            StartCoroutine(StopMineEffect(_tapMine[2]));
+        }
+    }
+
+    IEnumerator StopMineEffect(ParticleSystem _mine)
+    {
+        yield return new WaitForSeconds(.8f);
+        _mine.Stop();
     }
 }
