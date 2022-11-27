@@ -62,6 +62,7 @@ public class LevelLoader : AsyncLoader
                 HabitatSceneSetup();
                 break;
             case SceneType.Temple:
+                TempleSceneSetup();
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
@@ -91,7 +92,6 @@ public class LevelLoader : AsyncLoader
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(_sceneType), true);
             _inputManager.SetCameraUtil(_cameraUtil);
             _uiManager.SettingsUI.SetCameraUtil(_cameraUtil);
-            _cameraUtil.SetStarterEnvironment(_starterEnvironment);
         }
 
         if (_habitat != null)
@@ -110,7 +110,7 @@ public class LevelLoader : AsyncLoader
 
         if (_lightingManager != null)
         {
-            ServiceLocator.Register<LightingManager>(_lightingManager.Initialize(), true);
+            _lightingManager.Initialize();
             _habitat.SetLightingManager(_lightingManager);
         }
 
@@ -122,14 +122,16 @@ public class LevelLoader : AsyncLoader
 
         if (_starterEnvironment != null)
         {
-            _uiManager.SetCameraUtil(_cameraUtil);
+            _uiManager.StartingUI.SetCameraUtil(_cameraUtil);
+            _cameraUtil.SetStarterEnvironment(_starterEnvironment);
             _inputManager.SetAudioManager(_audioManager);
         }
 
         if (_templeEnvironment != null)
         {
-            _cameraUtil.SetTempleEnvironment(_templeEnvironment);
+            _templeEnvironment.Initialize();
             _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
+            _cameraUtil.SetTempleEnvironment(_templeEnvironment);
         }
     }
 
@@ -160,6 +162,11 @@ public class LevelLoader : AsyncLoader
         }
     }
 
+    private void TempleSceneSetup()
+    {
+        _templeEnvironment.SceneSetup();
+    }
+
     private void LoadUIElements()
     {
         if (_uiManager == null)
@@ -178,6 +185,7 @@ public class LevelLoader : AsyncLoader
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
             case SceneType.Temple:
+                _uiManager.TempleUI.ShowSharedUIState();
                 break;
             case SceneType.Builder:
                 break;

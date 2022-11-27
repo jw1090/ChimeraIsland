@@ -82,9 +82,9 @@ public enum ModifierType
 {
     None = -1,
     Random,
-    Aqua,
-    Bio,
-    Fira,
+    Water,
+    Grass,
+    Fire,
     Stamina,
     Wisdom,
     Exploration,

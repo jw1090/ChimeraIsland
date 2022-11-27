@@ -107,9 +107,9 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
                 case ModifierType.None:
                     _modifiers[i].gameObject.SetActive(false);
                     break;
-                case ModifierType.Aqua:
-                case ModifierType.Bio:
-                case ModifierType.Fira:
+                case ModifierType.Water:
+                case ModifierType.Grass:
+                case ModifierType.Fire:
                 case ModifierType.Stamina:
                 case ModifierType.Wisdom:
                 case ModifierType.Exploration:
