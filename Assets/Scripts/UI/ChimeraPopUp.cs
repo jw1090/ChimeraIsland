@@ -21,7 +21,7 @@ public class ChimeraPopUp : MonoBehaviour
         _chimera = chimera;
 
         _name.text = chimera.Name;
-        _type.sprite = _resourceManager.GetElementSprite(_chimera.ElementalType);
+        _type.sprite = _resourceManager.GetElementSimpleSprite(_chimera.ElementalType);
         _exploration.text = chimera.Exploration.ToString();
         _stamina.text = chimera.Stamina.ToString();
         _wisdom.text = chimera.Wisdom.ToString();

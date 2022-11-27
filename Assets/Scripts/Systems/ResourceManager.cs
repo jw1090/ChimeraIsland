@@ -241,7 +241,7 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public Sprite GetElementDetailsSprite(ElementType elementalType)
+    public Sprite GetElementSimpleSprite(ElementType elementalType)
     {
         switch (elementalType)
         {
@@ -293,12 +293,12 @@ public class ResourceManager : MonoBehaviour
     {
         switch (badgeType)
         {
-            case ModifierType.Aqua:
-                return _waterDetailsSprite;
-            case ModifierType.Bio:
-                return _grassDetailsSprite;
-            case ModifierType.Fira:
-                return _fireDetailsSprite;
+            case ModifierType.Water:
+                return _waterSprite;
+            case ModifierType.Grass:
+                return _grassSprite;
+            case ModifierType.Fire:
+                return _fireSprite;
             case ModifierType.Stamina:
                 return _staminaSprite;
             case ModifierType.Wisdom:

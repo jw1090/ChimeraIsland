@@ -3,12 +3,16 @@ using UnityEngine.UI;
 
 public class TempleUI : MonoBehaviour
 {
-    [SerializeField] private StatefulObject _templeUIStates = null;
+    [Header("Temple Shared UI")]
+    [SerializeField] private StatefulObject _sharedUIStates = null;
     [SerializeField] private UIEssenceWallet _essenceWallet = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
+
+    [Header("Temple Section UI")]
+    [SerializeField] private StatefulObject _sectionUIStates = null;
 
     private UIManager _uiManager = null;
     private CameraUtil _cameraUtil = null;
@@ -57,7 +61,7 @@ public class TempleUI : MonoBehaviour
                 break;
         }
         _cameraUtil.TempleTransition(_currentTempleSection);
-        ChangeTempleUIState();
+        ChangeSectionUIState();
     }
 
     private void TransitionRight()
@@ -77,27 +81,38 @@ public class TempleUI : MonoBehaviour
                 break;
         }
         _cameraUtil.TempleTransition(_currentTempleSection);
-        ChangeTempleUIState();
+        ChangeSectionUIState();
     }
 
-    private void ChangeTempleUIState()
+    public void ShowSharedUIState()
+    {
+        _sharedUIStates.SetState("Standard", true);
+    }
+
+    public void HideSharedUIState()
+    {
+        _sharedUIStates.SetState("Transparent", true);
+    }
+
+    private void ChangeSectionUIState()
     {
         switch (_currentTempleSection)
         {
             case TempleSectionType.Buying:
-                _templeUIStates.SetState("Buying UI", true);
+                _sectionUIStates.SetState("Buying UI", true);
                 break;
             case TempleSectionType.Upgrades:
-                _templeUIStates.SetState("Upgrades UI", true);
+                _sectionUIStates.SetState("Upgrades UI", true);
                 break;
             case TempleSectionType.Collection:
-                _templeUIStates.SetState("Collections UI", true);
+                _sectionUIStates.SetState("Collections UI", true);
                 break;
             default:
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is invalid!");
                 break;
         }
     }
+
     public void UpdateEssenceWallets()
     {
         _essenceWallet.UpdateWallet();
