@@ -8,6 +8,7 @@ public class Environment : MonoBehaviour
 
     public List<EnvironmentTier> Tiers { get => _tiers; }
     public Portal Portal { get => _portal; }
+
     public void Initialize()
     {
         foreach (var tier in _tiers)

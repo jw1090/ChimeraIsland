@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TempleCollections : MonoBehaviour
@@ -17,62 +15,28 @@ public class TempleCollections : MonoBehaviour
     [SerializeField] private GameObject _c1 = null;
     [SerializeField] private GameObject _c2 = null;
     [SerializeField] private GameObject _c3 = null;
-    private HabitatManager _habitatManager = null;
+    private ChimeraCollections _chimeraCollections = null;
 
-    private void Awake()
+    public void Initialize()
     {
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
-        Build();
+        _chimeraCollections = ServiceLocator.Get<HabitatManager>().ChimeraCollections;
     }
-    private void Build()
-    { 
-        if(_habitatManager.ChimeraCollections.AUnlocked == true)
-        {
-            _a.SetActive(true);
-        }
-        if(_habitatManager.ChimeraCollections.A1Unlocked == true)
-        {
-            _a1.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.A2Unlocked == true)
-        {
-            _a2.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.A3Unlocked == true)
-        {
-            _a3.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.BUnlocked == true)
-        {
-            _b.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.B1Unlocked == true)
-        {
-            _b1.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.B2Unlocked == true)
-        {
-            _b2.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.B3Unlocked == true)
-        {
-            _b3.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.CUnlocked == true)
-        {
-            _c.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.C1Unlocked == true)
-        {
-            _c1.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.C2Unlocked == true)
-        {
-            _c2.SetActive(true);
-        }
-        if (_habitatManager.ChimeraCollections.C3Unlocked == true)
-        {
-            _c3.SetActive(true);
-        }
+
+    public void Build()
+    {
+        _a.SetActive(_chimeraCollections.AUnlocked);
+        _a1.SetActive(_chimeraCollections.A1Unlocked);
+        _a2.SetActive(_chimeraCollections.A2Unlocked);
+        _a3.SetActive(_chimeraCollections.A3Unlocked);
+
+        _b.SetActive(_chimeraCollections.BUnlocked);
+        _b1.SetActive(_chimeraCollections.B1Unlocked);
+        _b2.SetActive(_chimeraCollections.B2Unlocked);
+        _b3.SetActive(_chimeraCollections.B3Unlocked);
+
+        _c.SetActive(_chimeraCollections.CUnlocked);
+        _c1.SetActive(_chimeraCollections.C1Unlocked);
+        _c2.SetActive(_chimeraCollections.C2Unlocked);
+        _c3.SetActive(_chimeraCollections.C3Unlocked);
     }
 }

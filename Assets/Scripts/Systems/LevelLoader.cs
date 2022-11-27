@@ -62,6 +62,7 @@ public class LevelLoader : AsyncLoader
                 HabitatSceneSetup();
                 break;
             case SceneType.Temple:
+                TempleSceneSetup();
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
@@ -128,6 +129,7 @@ public class LevelLoader : AsyncLoader
 
         if (_templeEnvironment != null)
         {
+            _templeEnvironment.Initialize();
             _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
             _cameraUtil.SetTempleEnvironment(_templeEnvironment);
         }
@@ -160,6 +162,11 @@ public class LevelLoader : AsyncLoader
         }
     }
 
+    private void TempleSceneSetup()
+    {
+        _templeEnvironment.SceneSetup();
+    }
+
     private void LoadUIElements()
     {
         if (_uiManager == null)
@@ -178,6 +185,7 @@ public class LevelLoader : AsyncLoader
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
             case SceneType.Temple:
+                _uiManager.TempleUI.ShowSharedUIState();
                 break;
             case SceneType.Builder:
                 break;
