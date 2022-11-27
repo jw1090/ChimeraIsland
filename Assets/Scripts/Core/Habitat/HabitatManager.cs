@@ -14,6 +14,7 @@ public class HabitatManager : MonoBehaviour
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
+    private ChimeraCollections _chimeraCollections = new ChimeraCollections();
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private HabitatUI _habitatUI = null;
@@ -21,6 +22,7 @@ public class HabitatManager : MonoBehaviour
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
+    public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
     public List<HabitatData> HabitatDataList { get => _habitatData; }

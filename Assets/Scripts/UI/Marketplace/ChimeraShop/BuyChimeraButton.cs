@@ -6,6 +6,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     private Chimera _chimera = null;
     private Habitat _habitat = null;
+    private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TextMeshProUGUI _tmpText = null;
     private CameraUtil _cameraUtil = null;
@@ -14,6 +15,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
     public void Initialize(Chimera chimera, Habitat habitat)
     {
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
@@ -31,6 +33,7 @@ public class BuyChimeraButton : MonoBehaviour, IPointerClickHandler
             _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
             _habitatUI.ResetStandardUI();
             _cameraUtil.TempleCameraShift();
+            _habitatManager.ChimeraCollections.CollectChimera(_chimera.ChimeraType);
         }
     }
 }
