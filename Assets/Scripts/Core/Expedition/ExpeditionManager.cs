@@ -354,13 +354,13 @@ public class ExpeditionManager : MonoBehaviour
             {
                 case ModifierType.None:
                     break;
-                case ModifierType.Aqua:
+                case ModifierType.Water:
                     _selectedExpedition.AquaBonus = 0.25f;
                     break;
-                case ModifierType.Bio:
+                case ModifierType.Grass:
                     _selectedExpedition.BioBonus = 0.25f;
                     break;
-                case ModifierType.Fira:
+                case ModifierType.Fire:
                     _selectedExpedition.FiraBonus = 0.25f;
                     break;
                 case ModifierType.Exploration:

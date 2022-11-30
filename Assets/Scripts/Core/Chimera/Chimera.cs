@@ -295,7 +295,7 @@ public class Chimera : MonoBehaviour
 
         _chimeraType = _currentEvolution.ChimeraType;
         _elementalType = _currentEvolution.ElementType;
-        _elementIcon = _resourceManager.GetElementDetailsSprite(_elementalType);
+        _elementIcon = _resourceManager.GetElementSimpleSprite(_elementalType);
     }
 
     public void EnergyTick()

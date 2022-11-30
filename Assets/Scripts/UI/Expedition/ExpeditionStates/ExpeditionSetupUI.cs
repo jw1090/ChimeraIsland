@@ -33,12 +33,13 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void Initialize(ExpeditionUI expeditionUI, UIManager uiManager)
     {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-
-        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
-        _habitatUI = _uiManager.HabitatUI;
         _expeditionUI = expeditionUI;
+
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
+
+        _habitatUI = _uiManager.HabitatUI;
     }
 
     public void SetupListeners()
