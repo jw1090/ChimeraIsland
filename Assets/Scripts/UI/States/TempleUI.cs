@@ -14,7 +14,6 @@ public class TempleUI : MonoBehaviour
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
-    private PersistentData _persistentData = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private ResourceManager _resourceManager = null;
@@ -32,7 +31,6 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
-        _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
@@ -176,7 +174,5 @@ public class TempleUI : MonoBehaviour
         _templeEnvironment.TempleCollections.Build();
 
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
-
-        _persistentData.SaveSessionData();
     }
 }

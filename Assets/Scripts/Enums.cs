@@ -176,6 +176,9 @@ public enum SFXUIType
     Hit,
     Harvest,
     PortalClick,
+    WaterHit,
+    StoneHit,
+    DirtHit
 }
 
 public enum DayType

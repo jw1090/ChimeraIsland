@@ -349,6 +349,27 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
+            case SFXUIType.WaterHit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Water Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case SFXUIType.StoneHit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Stone Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case SFXUIType.DirtHit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Dirt Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
                 break;

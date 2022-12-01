@@ -248,11 +248,6 @@ public class HabitatManager : MonoBehaviour
 
     public void UpdateCurrentHabitatChimeras()
     {
-        if (_currentScene != SceneType.Habitat)
-        {
-            return;
-        }
-
         if (_chimerasByHabitat.ContainsKey(_currentHabitat.Type) == false)
         {
             Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
