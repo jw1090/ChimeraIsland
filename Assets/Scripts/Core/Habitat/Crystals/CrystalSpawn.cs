@@ -64,23 +64,15 @@ public class CrystalSpawn : MonoBehaviour
 
     private void ShowEffect()
     {
-        if (_tapMine[0].isPlaying != true)
+        foreach(ParticleSystem p in _tapMine)
         {
-            _tapMine[0].gameObject.SetActive(true);
-            _tapMine[0].time = 0;
-            StartCoroutine(StopMineEffect(_tapMine[0]));
-        }
-        else if (_tapMine[1].isPlaying != true)
-        {
-            _tapMine[1].gameObject.SetActive(true);
-            _tapMine[1].time = 0;
-            StartCoroutine(StopMineEffect(_tapMine[1]));
-        }
-        else if (_tapMine[2].isPlaying != true)
-        {
-            _tapMine[2].gameObject.SetActive(true);
-            _tapMine[2].time = 0;
-            StartCoroutine(StopMineEffect(_tapMine[2]));
+            if (p.isPlaying != true)
+            {
+                p.gameObject.SetActive(true);
+                p.time = 0;
+                StartCoroutine(StopMineEffect(p));
+                break;
+            }
         }
     }
 

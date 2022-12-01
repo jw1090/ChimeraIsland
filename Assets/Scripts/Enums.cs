@@ -201,3 +201,10 @@ public enum ChimeraOrderType
     AveragePower,
 }
 
+public enum TapVFXType
+{
+    None = -1,
+    ground,
+    water,
+    stone
+}

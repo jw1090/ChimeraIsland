@@ -19,6 +19,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private Environment _environment = null;
     [SerializeField] private Temple _temple = null;
     [SerializeField] private StatefulObject _tiers = null;
+    [SerializeField] private TapVFX _tapVfx = null;
 
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
@@ -29,6 +30,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
+    public TapVFX TapVFX { get => _tapVfx; } 
     public Temple Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
