@@ -31,6 +31,7 @@ public class LevelLoader : AsyncLoader
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private TreadmillManager _treadmillManager = null;
 
     protected override void Awake()
     {

@@ -10,6 +10,7 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
+    private List<CollectionsData> _collectionsData = null;
     private TutorialCompletionData _tutorialCompletionData = null;
     private SettingsData _settingsData = null;
 
@@ -70,10 +71,12 @@ public class PersistentData : MonoBehaviour
 
         GlobalData globalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
+        List<CollectionsData> collectionData = _habitatManager.CollectionsDataList;
         List<FacilityData> facilityData = FacilitiesToData();
         List<ChimeraData> chimeraData = ChimerasToData();
+        //CollectionsData collectionsData = new CollectionsData(_habitatManager.ChimeraCollections);
 
-        GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, _tutorialCompletionData, _settingsData);
+        GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, collectionData, _tutorialCompletionData, _settingsData);
         UpdateGameSaveData(data);
 
         FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GAME_DATA, true);
@@ -85,6 +88,7 @@ public class PersistentData : MonoBehaviour
         _habitatSaveData = myData.habitatData;
         _facilitySaveData = myData.facilityData;
         _chimeraSaveData = myData.chimeraData;
+        _collectionsData = myData.collectionData;
         _tutorialCompletionData = myData.tutorialCompletionData;
         _settingsData = myData.settingsData;
     }
