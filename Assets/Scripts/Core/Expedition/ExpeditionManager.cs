@@ -46,9 +46,9 @@ public class ExpeditionManager : MonoBehaviour
     public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
-    public void SetExpeditionState(ExpeditionState expeditionState) 
-    { 
-        _expeditionState = expeditionState; 
+    public void SetExpeditionState(ExpeditionState expeditionState)
+    {
+        _expeditionState = expeditionState;
         SetPortalColor();
     }
 
@@ -622,15 +622,35 @@ public class ExpeditionManager : MonoBehaviour
 
     public void CompleteCurrentUpgradeExpedition()
     {
-        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
-
-        if (_habitatExpeditionOption == null)
+        if (_currentHabitatProgress == 0)
         {
-            Debug.Log("You've finished all habitat expeditions");
-            return;
-        }
+            SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
 
-        _selectedExpedition = _habitatExpeditionOption;
-        _uiExpedition.CompleteCurrentHabitatExpedition();
+            _selectedExpedition = _habitatExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
+        else if (_currentFossilProgress == 0)
+        {
+            if (_fossilExpeditionOption == null)
+            {
+                SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils);
+            }
+
+            _selectedExpedition = _fossilExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
+        else
+        {
+            SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+
+            if (_habitatExpeditionOption == null)
+            {
+                Debug.Log("You've finished all habitat expeditions");
+                return;
+            }
+
+            _selectedExpedition = _habitatExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
     }
 }

@@ -11,8 +11,5 @@ public class HabitatData
     public bool runeUnlocked = false;
     public bool waterfallUnlocked = false;
 
-    public HabitatData()
-    {
-
-    }
+    public HabitatData() { }
 }

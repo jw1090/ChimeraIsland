@@ -83,6 +83,8 @@ public class LevelLoader : AsyncLoader
         ServiceLocator.Register<LevelLoader>(this, true);
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _habitatManager.SetCurrentScene(_sceneType);
+
         _inputManager = ServiceLocator.Get<InputManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
@@ -130,7 +132,7 @@ public class LevelLoader : AsyncLoader
 
         if (_templeEnvironment != null)
         {
-            _templeEnvironment.Initialize();
+            ServiceLocator.Register<TempleEnvironment>(_templeEnvironment.Initialize(), true);
             _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
             _cameraUtil.SetTempleEnvironment(_templeEnvironment);
         }

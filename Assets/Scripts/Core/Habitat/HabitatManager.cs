@@ -8,6 +8,7 @@ public class HabitatManager : MonoBehaviour
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 9;
     [SerializeField] private float _tickTimer = 0.3f;
+
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private List<HabitatData> _habitatData = new List<HabitatData>();
@@ -18,19 +19,19 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private HabitatUI _habitatUI = null;
-    private List<CollectionsData> _collectionData = new List<CollectionsData>();
+    private SceneType _currentScene = SceneType.None;
 
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
-    //public CollectionsData CollectionsData { get => _collectionData; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
     public List<HabitatData> HabitatDataList { get => _habitatData; }
-    public List<CollectionsData> CollectionsDataList { get => _collectionData; }
+
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+    public void SetCurrentScene(SceneType sceneType) { _currentScene = sceneType; }
 
     private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
     {
@@ -120,6 +121,7 @@ public class HabitatManager : MonoBehaviour
         }
 
         InitializeHabitatData();
+        InitializeCollectionData();
     }
 
     public void ResetDictionaries()
@@ -163,11 +165,16 @@ public class HabitatManager : MonoBehaviour
 
         if (_habitatData == null)
         {
-            Debug.LogError("Facility save data is null!");
+            Debug.LogError("Habitat save data is null!");
             return false;
         }
 
         return true;
+    }
+
+    private void InitializeCollectionData()
+    {
+        _chimeraCollections.LoadData(_persistentData.CollectionData);
     }
 
     public void ChimeraDataDisplayInit()
@@ -229,11 +236,6 @@ public class HabitatManager : MonoBehaviour
         return false;
     }
 
-    private void AddFigurineToCollection(CollectionsData chimeraToAdd)
-    {
-        _collectionData.Add(chimeraToAdd);
-    }
-
     private void AddFacilityToHabitat(FacilityData facilityToAdd, HabitatType habitat)
     {
         if (_facilitiesByHabitat.ContainsKey(habitat) == false)
@@ -246,6 +248,11 @@ public class HabitatManager : MonoBehaviour
 
     public void UpdateCurrentHabitatChimeras()
     {
+        if (_currentScene != SceneType.Habitat)
+        {
+            return;
+        }
+
         if (_chimerasByHabitat.ContainsKey(_currentHabitat.Type) == false)
         {
             Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");
@@ -286,12 +293,6 @@ public class HabitatManager : MonoBehaviour
         }
 
         return false;
-    }
-    public void AddChimeraFigurine(ChimeraCollections chimeraToSave)
-    {
-        CollectionsData chimeraSavedData = new CollectionsData(chimeraToSave);
-
-        AddFigurineToCollection(chimeraSavedData);
     }
 
     public void AddNewFacility(Facility facilityToSave)

@@ -10,7 +10,7 @@ public class PersistentData : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private List<HabitatData> _habitatSaveData = null;
-    private List<CollectionsData> _collectionsData = null;
+    private CollectionData _collectionsData = null;
     private TutorialCompletionData _tutorialCompletionData = null;
     private SettingsData _settingsData = null;
 
@@ -18,6 +18,7 @@ public class PersistentData : MonoBehaviour
     public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
     public List<HabitatData> HabitatData { get => _habitatSaveData; }
+    public CollectionData CollectionData { get => _collectionsData; }
     public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletionData; }
     public SettingsData SettingsData { get => _settingsData; }
     public int EssenceData { get => _globalSaveData.lastSessionEssence; }
@@ -71,10 +72,9 @@ public class PersistentData : MonoBehaviour
 
         GlobalData globalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
         List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        List<CollectionsData> collectionData = _habitatManager.CollectionsDataList;
         List<FacilityData> facilityData = FacilitiesToData();
         List<ChimeraData> chimeraData = ChimerasToData();
-        //CollectionsData collectionsData = new CollectionsData(_habitatManager.ChimeraCollections);
+        CollectionData collectionData = new CollectionData(_habitatManager.ChimeraCollections);
 
         GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, collectionData, _tutorialCompletionData, _settingsData);
         UpdateGameSaveData(data);
