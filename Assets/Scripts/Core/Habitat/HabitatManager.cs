@@ -213,6 +213,12 @@ public class HabitatManager : MonoBehaviour
 
     public bool HabitatCapacityCheck(HabitatType habitat)
     {
+        if (_chimerasByHabitat.ContainsKey(habitat) == false)
+        {
+            Debug.Log($"Habitat dictionary does not exist!");
+            return false;
+        }
+
         if (_chimerasByHabitat[habitat].Count < _chimeraCapacity)
         {
             return true;

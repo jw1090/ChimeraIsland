@@ -1,3 +1,4 @@
+using System.Resources;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +15,26 @@ public class TempleUI : MonoBehaviour
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
+    private HabitatManager _habitatManager = null;
+    private CurrencyManager _currencyManager = null;
+    private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private CameraUtil _cameraUtil = null;
+    private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
 
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
 
         SetupButtonListeners();
 
@@ -121,5 +131,38 @@ public class TempleUI : MonoBehaviour
     public void UpdateFossilWallets()
     {
         _fossilWallet.UpdateWallet();
+    }
+
+    public void BuyChimera(EvolutionLogic evolutionLogic)
+    {
+        if (_habitatManager.HabitatCapacityCheck(HabitatType.StonePlains) == false)
+        {
+            Debug.Log("Habitat is full or does not exist yet.");
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+            return;
+        }
+
+        int price = 5;
+
+        if (_currencyManager.SpendFossils(price) == false)
+        {
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+            Debug.Log
+            (
+                $"Can't afford the {evolutionLogic.Name} chimera. It costs {price} " +
+                $"Fossils and you only have {_currencyManager.Fossils} Fossils."
+            );
+            return ;
+        }
+
+        var chimeraGO = _resourceManager.GetChimeraBasePrefab(evolutionLogic.ChimeraType);
+        Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
+        chimeraComp.SetIsFirstChimera(true);
+        chimeraComp.SetHabitatType(HabitatType.StonePlains);
+
+        _habitatManager.AddNewChimera(chimeraComp);
+        _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
+
+        _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
     }
 }

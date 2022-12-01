@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private StartingUI _startingUI = null;
+    private TempleUI _templeUI = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private DebugConfig _debugConfig = null;
@@ -63,6 +64,7 @@ public class InputManager : MonoBehaviour
         _uiManager = uiManager;
         _habitatUI = _uiManager.HabitatUI;
         _startingUI = _uiManager.StartingUI;
+        _templeUI = _uiManager.TempleUI;
     }
 
     public InputManager Initialize()
@@ -260,6 +262,12 @@ public class InputManager : MonoBehaviour
                 _cameraUtil.ChimeraCloseUp(_evolution.ChimeraType);
 
                 _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
+            }
+            else if (_cameraUtil.SceneType == SceneType.Temple)
+            {
+                _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
+
+                _templeUI.BuyChimera(_evolution);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
