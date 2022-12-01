@@ -1,4 +1,3 @@
-using System.Resources;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +14,7 @@ public class TempleUI : MonoBehaviour
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
+    private PersistentData _persistentData = null;
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private ResourceManager _resourceManager = null;
@@ -22,6 +22,7 @@ public class TempleUI : MonoBehaviour
     private CameraUtil _cameraUtil = null;
     private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
+    private TempleEnvironment _templeEnvironment = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
@@ -31,6 +32,7 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
+        _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
@@ -52,6 +54,15 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_backToHabitatButton, _sceneChanger.LoadStonePlains);
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
+    }
+
+    public void SceneSetup()
+    {
+        _templeEnvironment = ServiceLocator.Get<TempleEnvironment>();
+
+        _currentTempleSection = TempleSectionType.Buying;
+        _goLeftButton.gameObject.SetActive(true);
+        _goRightButton.gameObject.SetActive(true);
     }
 
     private void TransitionLeft()
@@ -162,7 +173,10 @@ public class TempleUI : MonoBehaviour
 
         _habitatManager.AddNewChimera(chimeraComp);
         _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
+        _templeEnvironment.TempleCollections.Build();
 
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
+
+        _persistentData.SaveSessionData();
     }
 }

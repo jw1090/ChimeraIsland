@@ -111,6 +111,7 @@ public class UIManager : MonoBehaviour
                 break;
             case SceneType.Temple:
                 _uiStatefulObject.SetState("Temple UI", true);
+                _templeUI.SceneSetup();
                 break;
             case SceneType.Builder:
                 _uiStatefulObject.SetState("Builder UI", true);

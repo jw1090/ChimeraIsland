@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChimeraCollections : MonoBehaviour
@@ -29,6 +27,22 @@ public class ChimeraCollections : MonoBehaviour
     public bool C1Unlocked { get => _c1Unlocked; }
     public bool C2Unlocked { get => _c2Unlocked; }
     public bool C3Unlocked { get => _c3Unlocked; }
+
+    public void LoadData (CollectionData collectionData)
+    {
+        _aUnlocked = collectionData.A;
+        _a1Unlocked = collectionData.A1;
+        _a2Unlocked = collectionData.A2;
+        _a3Unlocked = collectionData.A3;
+        _bUnlocked = collectionData.B;
+        _b1Unlocked = collectionData.B1;
+        _b2Unlocked = collectionData.B2;
+        _b3Unlocked = collectionData.B3;
+        _cUnlocked= collectionData.C;
+        _c1Unlocked = collectionData.C1;
+        _c2Unlocked = collectionData.C2;
+        _c3Unlocked = collectionData.C3;
+    }
 
     public void CollectChimera(ChimeraType chimeraType)
     {

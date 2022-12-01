@@ -8,6 +8,7 @@ public class HabitatManager : MonoBehaviour
     [SerializeField] private List<HabitatInfo> _displayDictionary = new List<HabitatInfo>();
     [SerializeField] private int _chimeraCapacity = 9;
     [SerializeField] private float _tickTimer = 0.3f;
+
     private readonly Dictionary<HabitatType, List<ChimeraData>> _chimerasByHabitat = new Dictionary<HabitatType, List<ChimeraData>>();
     private readonly Dictionary<HabitatType, List<FacilityData>> _facilitiesByHabitat = new Dictionary<HabitatType, List<FacilityData>>();
     private List<HabitatData> _habitatData = new List<HabitatData>();
@@ -18,6 +19,7 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private HabitatUI _habitatUI = null;
+    private SceneType _currentScene = SceneType.None;
 
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
@@ -29,6 +31,7 @@ public class HabitatManager : MonoBehaviour
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+    public void SetCurrentScene(SceneType sceneType) { _currentScene = sceneType; }
 
     private List<ChimeraData> GetChimerasForHabitat(HabitatType habitatType)
     {
@@ -118,6 +121,7 @@ public class HabitatManager : MonoBehaviour
         }
 
         InitializeHabitatData();
+        InitializeCollectionData();
     }
 
     public void ResetDictionaries()
@@ -161,11 +165,16 @@ public class HabitatManager : MonoBehaviour
 
         if (_habitatData == null)
         {
-            Debug.LogError("Facility save data is null!");
+            Debug.LogError("Habitat save data is null!");
             return false;
         }
 
         return true;
+    }
+
+    private void InitializeCollectionData()
+    {
+        _chimeraCollections.LoadData(_persistentData.CollectionData);
     }
 
     public void ChimeraDataDisplayInit()
@@ -239,6 +248,11 @@ public class HabitatManager : MonoBehaviour
 
     public void UpdateCurrentHabitatChimeras()
     {
+        if (_currentScene != SceneType.Habitat)
+        {
+            return;
+        }
+
         if (_chimerasByHabitat.ContainsKey(_currentHabitat.Type) == false)
         {
             Debug.Log($"Cannot update chimeras. Habitat key: {_currentHabitat.Type} not found");

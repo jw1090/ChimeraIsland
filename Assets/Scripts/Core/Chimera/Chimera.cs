@@ -15,6 +15,7 @@ public class Chimera : MonoBehaviour
     [Header("References")]
     [SerializeField] private ChimeraInteractionIcon _interactionIcon = null;
 
+    private PersistentData _persistentData = null;
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
@@ -231,7 +232,7 @@ public class Chimera : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
         _chimeraBehavior = GetComponent<ChimeraBehavior>();
@@ -441,7 +442,10 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
+
         _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
+
+        _persistentData.SaveSessionData();
     }
 
     // Increase stat at rate of the relevant statgrowth variable.

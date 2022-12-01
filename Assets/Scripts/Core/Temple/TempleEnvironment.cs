@@ -10,13 +10,16 @@ public class TempleEnvironment : MonoBehaviour
     [SerializeField] Transform _collectionNode = null;
     [SerializeField] Transform _upgradeNode = null;
 
+    public TempleCollections TempleCollections { get => _templeCollections; }
     public Transform BuyingNode { get => _buyingNode; }
     public Transform CollectionNode { get => _collectionNode; }
     public Transform UpgradeNode { get => _upgradeNode; }
 
-    public void Initialize()
+    public TempleEnvironment Initialize()
     {
         _templeCollections.Initialize();
+
+        return this;
     }
 
     public void SceneSetup()
