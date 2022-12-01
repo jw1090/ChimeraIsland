@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
     private LayerMask _templeLayer = new LayerMask();
+    private LayerMask _groundLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -76,6 +77,7 @@ public class InputManager : MonoBehaviour
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
         _templeLayer = LayerMask.GetMask("Temple");
+        _groundLayer = LayerMask.GetMask("Ground");
         _sphereMarker.SetActive(false);
 
         _rotationAmount = _persistentData.SettingsData.spinSpeed;
@@ -263,6 +265,21 @@ public class InputManager : MonoBehaviour
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
             _sceneChanger.LoadTemple();
+        }
+        else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
+        {
+            if (hit.collider.transform.gameObject.tag == "Water")
+            {
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.water, hit.point);
+            }
+            else if (hit.collider.transform.gameObject.tag == "Stone")
+            {
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.stone, hit.point);
+            }
+            else if (hit.collider.transform.gameObject.tag == "Dirt")
+            {
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.ground, hit.point);
+            }
         }
     }
 
