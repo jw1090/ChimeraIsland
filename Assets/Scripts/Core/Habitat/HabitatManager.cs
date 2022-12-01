@@ -18,15 +18,17 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
     private HabitatUI _habitatUI = null;
+    private List<CollectionsData> _collectionData = new List<CollectionsData>();
 
     public Dictionary<HabitatType, List<ChimeraData>> ChimerasDictionary { get => _chimerasByHabitat; }
     public Dictionary<HabitatType, List<FacilityData>> FacilityDictionary { get => _facilitiesByHabitat; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
+    //public CollectionsData CollectionsData { get => _collectionData; }
     public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
     public List<HabitatData> HabitatDataList { get => _habitatData; }
-
+    public List<CollectionsData> CollectionsDataList { get => _collectionData; }
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
@@ -221,6 +223,11 @@ public class HabitatManager : MonoBehaviour
         return false;
     }
 
+    private void AddFigurineToCollection(CollectionsData chimeraToAdd)
+    {
+        _collectionData.Add(chimeraToAdd);
+    }
+
     private void AddFacilityToHabitat(FacilityData facilityToAdd, HabitatType habitat)
     {
         if (_facilitiesByHabitat.ContainsKey(habitat) == false)
@@ -273,6 +280,12 @@ public class HabitatManager : MonoBehaviour
         }
 
         return false;
+    }
+    public void AddChimeraFigurine(ChimeraCollections chimeraToSave)
+    {
+        CollectionsData chimeraSavedData = new CollectionsData(chimeraToSave);
+
+        AddFigurineToCollection(chimeraSavedData);
     }
 
     public void AddNewFacility(Facility facilityToSave)
