@@ -4,20 +4,19 @@ using UnityEngine;
 public class PersistentData : MonoBehaviour
 {
     private CurrencyManager _currencyManager = null;
+    private TutorialManager _tutorialManager = null;
     private GlobalData _globalSaveData = null;
     private HabitatManager _habitatManager = null;
-    private TutorialManager _tutorialManager = null;
-    private List<ChimeraData> _chimeraSaveData = null;
+    private HabitatData _habitatSaveData = null;
     private List<FacilityData> _facilitySaveData = null;
-    private List<HabitatData> _habitatSaveData = null;
+    private List<ChimeraData> _chimeraSaveData = null;
     private CollectionData _collectionsData = null;
     private TutorialCompletionData _tutorialCompletionData = null;
     private SettingsData _settingsData = null;
 
-    public HabitatType LastSessionHabitat { get => _globalSaveData.lastSessionHabitat; }
-    public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
+    public HabitatData HabitatData { get => _habitatSaveData; }
     public List<FacilityData> FacilityData { get => _facilitySaveData; }
-    public List<HabitatData> HabitatData { get => _habitatSaveData; }
+    public List<ChimeraData> ChimeraData { get => _chimeraSaveData; }
     public CollectionData CollectionData { get => _collectionsData; }
     public TutorialCompletionData MyTutorialCompletion { get => _tutorialCompletionData; }
     public SettingsData SettingsData { get => _settingsData; }
@@ -59,24 +58,23 @@ public class PersistentData : MonoBehaviour
         _tutorialManager.ResetTutorialProgress();
 
         _currencyManager.ResetCurrency();
-        _habitatManager.ResetDictionaries();
+        _habitatManager.ResetHabitatData();
         _habitatManager.LoadHabitatData();
 
         FileHandler.SaveToJSON(newData, GameConsts.JsonSaveKeys.GAME_DATA, true);
     }
 
-    public void SaveSessionData(HabitatType habitatType = HabitatType.None)
+    public void SaveSessionData()
     {
-        _habitatManager.UpdateCurrentHabitatChimeras();
-        _habitatManager.UpdateCurrentHabitatFacilities();
+        Debug.Log("Saving Data!");
 
-        GlobalData globalData = new GlobalData(habitatType, _currencyManager.Essence, _currencyManager.Fossils);
-        List<HabitatData> habitatData = _habitatManager.HabitatDataList;
-        List<FacilityData> facilityData = FacilitiesToData();
-        List<ChimeraData> chimeraData = ChimerasToData();
+        _habitatManager.UpdateCurrentChimeras();
+        _habitatManager.UpdateCurrentFacilities();
+
+        GlobalData globalData = new GlobalData(_currencyManager.Essence, _currencyManager.Fossils);
         CollectionData collectionData = new CollectionData(_habitatManager.ChimeraCollections);
 
-        GameSaveData data = new GameSaveData(globalData, habitatData, facilityData, chimeraData, collectionData, _tutorialCompletionData, _settingsData);
+        GameSaveData data = new GameSaveData(globalData, _habitatManager.HabitatData, _habitatManager.FacilitiesInHabitat, _habitatManager.ChimerasInHabitat, collectionData, _tutorialCompletionData, _settingsData);
         UpdateGameSaveData(data);
 
         FileHandler.SaveToJSON(data, GameConsts.JsonSaveKeys.GAME_DATA, true);
@@ -93,37 +91,6 @@ public class PersistentData : MonoBehaviour
         _settingsData = myData.settingsData;
     }
 
-    public void ResetLastSessionHabitat()
-    {
-        _globalSaveData.lastSessionHabitat = HabitatType.None;
-    }
-
-    private List<ChimeraData> ChimerasToData()
-    {
-        List<ChimeraData> chimeraList = new List<ChimeraData>();
-        Dictionary<HabitatType, List<ChimeraData>> chimerasByHabitat = _habitatManager.ChimerasDictionary;
-
-        foreach (KeyValuePair<HabitatType, List<ChimeraData>> kvp in chimerasByHabitat)
-        {
-            chimeraList.AddRange(kvp.Value);
-        }
-
-        return chimeraList;
-    }
-
-    private List<FacilityData> FacilitiesToData()
-    {
-        List<FacilityData> facilityList = new List<FacilityData>();
-        Dictionary<HabitatType, List<FacilityData>> facilityByHabitat = _habitatManager.FacilityDictionary;
-
-        foreach (KeyValuePair<HabitatType, List<FacilityData>> kvp in facilityByHabitat)
-        {
-            facilityList.AddRange(kvp.Value);
-        }
-
-        return facilityList;
-    }
-
     public void QuitGameSave()
     {
         if (_habitatManager.CurrentHabitat == null)
@@ -131,7 +98,7 @@ public class PersistentData : MonoBehaviour
             return;
         }
 
-        SaveSessionData(_habitatManager.CurrentHabitat.Type);
+        SaveSessionData();
     }
 
     private void OnApplicationQuit()

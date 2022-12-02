@@ -3,13 +3,13 @@
 [Serializable]
 public class HabitatData
 {
-    public int expeditionEssenceProgress = 0;
-    public int expeditionFossilProgress = 0;
-    public int expeditionHabitatProgress = 0;
-    public int currentTier = 1;
-    public bool caveUnlocked = false;
-    public bool runeUnlocked = false;
-    public bool waterfallUnlocked = false;
+    public int ExpeditionEssenceProgress = 0;
+    public int ExpeditionFossilProgress = 0;
+    public int ExpeditionHabitatProgress = 0;
+    public int CurrentTier = 1;
+    public bool CaveUnlocked = false;
+    public bool RuneUnlocked = false;
+    public bool WaterfallUnlocked = false;
 
     public HabitatData() { }
 }

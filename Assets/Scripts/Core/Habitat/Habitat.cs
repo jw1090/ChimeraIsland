@@ -8,7 +8,6 @@ public class Habitat : MonoBehaviour
 {
     [Header("General Info")]
     [SerializeField] private List<Facility> _facilities = new List<Facility>();
-    [SerializeField] private HabitatType _habitatType = HabitatType.None;
 
     [Header("References")]
     [SerializeField] private GameObject _chimeraFolder = null;
@@ -38,7 +37,6 @@ public class Habitat : MonoBehaviour
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
-    public HabitatType Type { get => _habitatType; }
     public int CurrentTier { get => _currentTier; }
     public Environment Environment { get => _environment; }
 
@@ -119,7 +117,7 @@ public class Habitat : MonoBehaviour
         _patrolNodes.Initialize();
         _environment.Initialize();
 
-        SetTier(_habitatManager.HabitatDataList[(int)Type].currentTier);
+        SetTier(_habitatManager.HabitatData.CurrentTier);
 
         foreach (Facility facility in _facilities)
         {
@@ -147,10 +145,10 @@ public class Habitat : MonoBehaviour
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
-            Facility facility = GetFacility(facilityInfo.facilityType);
+            Facility facility = GetFacility(facilityInfo.Type);
 
             facility.SetFacilityData(facilityInfo);
-            for (int i = 0; i < facilityInfo.currentTier; ++i)
+            for (int i = 0; i < facilityInfo.CurrentTier; ++i)
             {
                 facility.BuildFacility();
             }
@@ -161,47 +159,17 @@ public class Habitat : MonoBehaviour
     {
         foreach (Facility facility in _facilities)
         {
-            if (facility.LoadedFacilityData != null && facility.LoadedFacilityData.storedChimeraId != 0)
+            if (facility.LoadedFacilityData != null && facility.LoadedFacilityData.StoredChimeraId != 0)
             {
                 foreach (Chimera chimera in _activeChimeras)
                 {
-                    if (chimera.UniqueID == facility.LoadedFacilityData.storedChimeraId)
+                    if (chimera.UniqueID == facility.LoadedFacilityData.StoredChimeraId)
                     {
                         facility.PlaceChimeraFromPersistantData(chimera);
                     }
                 }
             }
         }
-    }
-
-    public bool BuyChimera(Chimera chimeraPrefab)
-    {
-        if (_habitatManager.ChimeraCapacity == _activeChimeras.Count)
-        {
-            Debug.Log("You must increase the Chimera capacity to add more chimeras.");
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            return false;
-        }
-
-        int price = chimeraPrefab.Price;
-
-        if (_currencyManager.SpendFossils(price) == false)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            Debug.Log
-            (
-                $"Can't afford this chimera. It costs {price} " +
-                $"Fossil and you only have {_currencyManager.Fossils} Fossils."
-            );
-            return false;
-        }
-
-        GameObject newChimera = _chimeraCreator.CreateChimeraByType(chimeraPrefab.ChimeraType);
-        AddChimera(newChimera.transform);
-
-        _habitatManager.AddNewChimera(newChimera.GetComponent<Chimera>());
-
-        return true;
     }
 
     public Vector3 GetRandomPatrolNode()
@@ -248,27 +216,6 @@ public class Habitat : MonoBehaviour
         return spawnPoint;
     }
 
-    public bool TransferChimera(Chimera chimeraToTransfer, HabitatType habitatType)
-    {
-        chimeraToTransfer.SetHabitatType(habitatType);
-
-        if (_habitatManager.AddNewChimera(chimeraToTransfer) == false)
-        {
-            chimeraToTransfer.SetHabitatType(_habitatType); // Transfer was not successful, reset habitatType.
-            return false;
-        }
-
-        RemoveChimera(chimeraToTransfer);
-        return true;
-    }
-
-    private void RemoveChimera(Chimera chimeraToRemove)
-    {
-        _activeChimeras.Remove(chimeraToRemove);
-        Destroy(chimeraToRemove.gameObject);
-        _habitatManager.UpdateCurrentHabitatChimeras();
-    }
-
     public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
@@ -312,9 +259,11 @@ public class Habitat : MonoBehaviour
         }
 
         ++_currentTier;
-        _habitatManager.SetHabitatTier(_currentTier, Type);
+
+        _habitatManager.SetHabitatTier(_currentTier);
         _audioManager.PlayHabitatMusic();
         _audioManager.PlayHabitatAmbient();
+
         LoadHabitatTier();
         EvaluateFireflies();
     }

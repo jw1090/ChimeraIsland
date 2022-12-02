@@ -78,10 +78,10 @@ public class FacilityUpgradeMarketplace : MonoBehaviour
 
         _uiManager = uiManager;
 
-        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _waterfallUnlocked = data.waterfallUnlocked;
-        _runeUnlocked = data.runeUnlocked;
-        _caveUnlocked = data.caveUnlocked;
+        HabitatData data = _habitatManager.HabitatData;
+        _waterfallUnlocked = data.WaterfallUnlocked;
+        _runeUnlocked = data.RuneUnlocked;
+        _caveUnlocked = data.CaveUnlocked;
 
         _facilityShopItemWaterfall.Initialize(_uiManager.HabitatUI);
         _facilityShopItemCave.Initialize(_uiManager.HabitatUI);

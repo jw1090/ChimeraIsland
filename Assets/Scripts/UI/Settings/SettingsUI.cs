@@ -56,16 +56,19 @@ public class SettingsUI : MonoBehaviour
             _resumeButtonText.text = "Resume";
         }
 
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
         gameObject.SetActive(true);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     private void CloseSettingsPanel()
     {
-        _uiManager.HabitatUI.MenuClosed();
-        _uiManager.HabitatUI.ResetStandardUI();
-        gameObject.SetActive(false);
+        if(_uiManager.InHabitatState == true)
+        {
+            _uiManager.HabitatUI.MenuClosed();
+            _uiManager.HabitatUI.ResetStandardUI();
+        }
 
+        gameObject.SetActive(false);
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 }

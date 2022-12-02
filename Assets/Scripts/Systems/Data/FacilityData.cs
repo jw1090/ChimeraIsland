@@ -3,28 +3,26 @@
 [Serializable]
 public class FacilityData
 {
-    public FacilityType facilityType = FacilityType.None;
-    public HabitatType habitatType = HabitatType.None;
-    public int currentTier = 0;
-    public int storedChimeraId = 0;
-    public int trainToLevel = 0;
-    public int chimeraStatXp = 0;
-    public float sliderValue = 0.0f;
-    public float sliderMax = 0.0f;
+    public FacilityType Type = FacilityType.None;
+    public int CurrentTier = 0;
+    public int StoredChimeraId = 0;
+    public int TrainToLevel = 0;
+    public int ChimeraStatEXP = 0;
+    public float SliderValue = 0.0f;
+    public float SliderMax = 0.0f;
 
-    public FacilityData(Facility facility, HabitatType facilityHabitatType)
+    public FacilityData(Facility facility)
     {
-        facilityType = facility.Type;
-        habitatType = facilityHabitatType;
-        currentTier = facility.CurrentTier;
+        Type = facility.Type;
+        CurrentTier = facility.CurrentTier;
 
         if (facility.ActivateTraining == true)
         {
-            storedChimeraId = facility.StoredChimera.UniqueID;
-            trainToLevel = facility.TrainToLevel;
-            chimeraStatXp = facility.StoredChimera.GetXP(facility.StatType);
-            sliderValue = facility.TrainingIcon.currentValue;
-            sliderMax = facility.TrainingIcon.max;
+            StoredChimeraId = facility.StoredChimera.UniqueID;
+            TrainToLevel = facility.TrainToLevel;
+            ChimeraStatEXP = facility.StoredChimera.GetEXP(facility.StatType);
+            SliderValue = facility.TrainingIcon.currentValue;
+            SliderMax = facility.TrainingIcon.max;
         }
     }
 }

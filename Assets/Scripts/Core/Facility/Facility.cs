@@ -151,12 +151,12 @@ public class Facility : MonoBehaviour
             return false;
         }
 
-        _trainingIcon.SetSliderAttributes(0, _loadedFacilityData.sliderMax);
-        _trainingIcon.SetSliderValue(_loadedFacilityData.sliderValue);
+        _trainingIcon.SetSliderAttributes(0, _loadedFacilityData.SliderMax);
+        _trainingIcon.SetSliderValue(_loadedFacilityData.SliderValue);
 
-        SetTrainToLevel(_loadedFacilityData.trainToLevel);
+        SetTrainToLevel(_loadedFacilityData.TrainToLevel);
         SetActivateTraining(true);
-        chimera.SetXPByType(_statType, _loadedFacilityData.chimeraStatXp);
+        chimera.SetXPByType(_statType, _loadedFacilityData.ChimeraStatEXP);
 
         StoreChimera(chimera);
 
