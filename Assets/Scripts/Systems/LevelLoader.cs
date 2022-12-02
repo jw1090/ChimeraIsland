@@ -31,7 +31,6 @@ public class LevelLoader : AsyncLoader
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
-    private TreadmillManager _treadmillManager = null;
 
     protected override void Awake()
     {
@@ -83,7 +82,7 @@ public class LevelLoader : AsyncLoader
         ServiceLocator.Register<LevelLoader>(this, true);
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _habitatManager.SetCurrentScene(_sceneType);
+        _habitatManager.SetCurrentHabitat(_habitat);
 
         _inputManager = ServiceLocator.Get<InputManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
@@ -100,7 +99,6 @@ public class LevelLoader : AsyncLoader
         if (_habitat != null)
         {
             _habitat.Initialize();
-            _habitatManager.SetCurrentHabitat(_habitat);
         }
 
         if (_expeditionManager != null)

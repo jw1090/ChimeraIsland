@@ -23,7 +23,6 @@ public class ExpeditionManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
-    private TreadmillManager _treadmillManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
     private const float _difficultyFlatModifier = 10.0f;
     private const float _difficultyScalar = 14.5f;
@@ -99,10 +98,10 @@ public class ExpeditionManager : MonoBehaviour
 
         SetExpeditionState(ExpeditionState.Selection);
 
-        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _currentEssenceProgress = data.expeditionEssenceProgress;
-        _currentFossilProgress = data.expeditionFossilProgress;
-        _currentHabitatProgress = data.expeditionHabitatProgress;
+        HabitatData data = _habitatManager.HabitatData;
+        _currentEssenceProgress = data.ExpeditionEssenceProgress;
+        _currentFossilProgress = data.ExpeditionFossilProgress;
+        _currentHabitatProgress = data.ExpeditionHabitatProgress;
 
         return this;
     }

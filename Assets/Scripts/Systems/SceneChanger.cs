@@ -51,7 +51,9 @@ public class SceneChanger : MonoBehaviour
     public void NewGame()
     {
         CloseNewGameWarning();
+
         _persistentData.NewSaveData();
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT);
     }
 
@@ -74,8 +76,10 @@ public class SceneChanger : MonoBehaviour
     public void LoadMainMenu()
     {
         _uiManager.HabitatUI.ResetStandardUI();
-        SaveSessionData(true);
         _uiManager.MainMenuUI.CheckShowLoadGameButton();
+
+        SaveSessionData(true);
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
     }
 
@@ -86,6 +90,8 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadTemple()
     {
+        SaveSessionData(true);
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);
     }
 

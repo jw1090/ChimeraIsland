@@ -146,9 +146,9 @@ public class TempleUI : MonoBehaviour
 
     public void BuyChimera(EvolutionLogic evolutionLogic)
     {
-        if (_habitatManager.HabitatCapacityCheck(HabitatType.StonePlains) == false)
+        if (_habitatManager.HabitatCapacityCheck() == false)
         {
-            Debug.Log("Habitat is full or does not exist yet.");
+            Debug.Log("Habitat is full!");
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
             return;
         }
@@ -169,7 +169,6 @@ public class TempleUI : MonoBehaviour
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(evolutionLogic.ChimeraType);
         Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
         chimeraComp.SetIsFirstChimera(true);
-        chimeraComp.SetHabitatType(HabitatType.StonePlains);
 
         _habitatManager.AddNewChimera(chimeraComp);
         _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);

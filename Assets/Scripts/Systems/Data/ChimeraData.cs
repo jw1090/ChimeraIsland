@@ -3,26 +3,24 @@
 [Serializable]
 public class ChimeraData
 {
-    public ChimeraType chimeraType = ChimeraType.None;
-    public HabitatType habitatType = HabitatType.None;
-    public int exploration = 0;
-    public int stamina = 0;
-    public int wisdom = 0;
-    public int currentEnergy = 0;
-    public int uniqueId = 0;
-    public bool first = false;
-    public string customName = null;
+    public ChimeraType Type = ChimeraType.None;
+    public int Exploration = 0;
+    public int Stamina = 0;
+    public int Wisdom = 0;
+    public int CurrentEnergy = 0;
+    public int UniqueId = 0;
+    public bool First = false;
+    public string CustomName = null;
 
     public ChimeraData(Chimera chimera)
     {
-        first = chimera.FirstChimera;
-        habitatType = chimera.HabitatType;
-        chimeraType = chimera.ChimeraType;
-        stamina = chimera.Stamina;
-        wisdom = chimera.Wisdom;
-        exploration = chimera.Exploration;
-        currentEnergy = chimera.CurrentEnergy;
-        customName = chimera.CustomName;
-        uniqueId = chimera.UniqueID;
+        First = chimera.FirstChimera;
+        Type = chimera.ChimeraType;
+        Stamina = chimera.Stamina;
+        Wisdom = chimera.Wisdom;
+        Exploration = chimera.Exploration;
+        CurrentEnergy = chimera.CurrentEnergy;
+        CustomName = chimera.CustomName;
+        UniqueId = chimera.UniqueID;
     }
 }
