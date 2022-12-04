@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CrystalSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject _crystal = null;
+    [SerializeField] private StatefulObject _crystal = null;
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
@@ -22,14 +22,15 @@ public class CrystalSpawn : MonoBehaviour
         _habitat = habitat;
 
         _isActive = false;
-        _crystal.SetActive(false);
+        _crystal.gameObject.SetActive(false);
     }
 
     public void Activate()
     {
+        _crystal.SetState($"Crystal{_habitat.CurrentTier}");
         _health = 3;
         _isActive = true;
-        _crystal.SetActive(true);
+        _crystal.gameObject.SetActive(true);
     }
 
     public void Harvest()
@@ -42,7 +43,7 @@ public class CrystalSpawn : MonoBehaviour
         if (--_health == 0)
         {
             _isActive = false;
-            _crystal.SetActive(false);
+            _crystal.gameObject.SetActive(false);
             _currencyManager.IncreaseEssence(20 * _habitat.CurrentTier);
 
             _audioManager.PlayUISFX(SFXUIType.Harvest);
