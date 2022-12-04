@@ -12,7 +12,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
-    private ChimeraOrderType orderType = ChimeraOrderType.Default;
+    private ChimeraOrderType orderType = ChimeraOrderType.AveragePower;
     private bool _showGrass = true;
     private bool _showWater = true;
     private bool _showFire = true;
@@ -194,12 +194,6 @@ public class ChimeraDetailsFolder : MonoBehaviour
                 bool lower = false;
                 switch (orderType)
                 {
-                    case ChimeraOrderType.Default:
-                        if (_chimeraDetailsList[i].Chimera.CurrentEvolution.ChimeradexId > _chimeraDetailsList[i + 1].Chimera.CurrentEvolution.ChimeradexId)
-                        {
-                            lower = true;
-                        }
-                        break;
                     case ChimeraOrderType.Exploration:
                         if (_chimeraDetailsList[i].Chimera.Exploration < _chimeraDetailsList[i + 1].Chimera.Exploration)
                         {

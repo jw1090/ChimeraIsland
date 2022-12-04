@@ -188,7 +188,6 @@ public enum CursorType
 
 public enum ChimeraOrderType
 { 
-    Default,
     Exploration,
     Stamina,
     Wisdom,
