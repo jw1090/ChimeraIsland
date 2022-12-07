@@ -62,12 +62,6 @@ public enum FacilityType
     Waterfall,
 }
 
-public enum HabitatType
-{
-    None = -1,
-    StonePlains,
-}
-
 public enum HabitatRewardType
 {
     None = -1,
@@ -197,7 +191,6 @@ public enum CursorType
 
 public enum ChimeraOrderType
 { 
-    Default,
     Exploration,
     Stamina,
     Wisdom,

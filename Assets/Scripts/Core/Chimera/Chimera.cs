@@ -26,7 +26,6 @@ public class Chimera : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private ElementType _elementalType = ElementType.None;
-    private HabitatType _habitatType = HabitatType.None;
     private bool _inFacility = false;
     private bool _onExpedition = false;
     private bool _readyToEvolve = false;
@@ -50,7 +49,6 @@ public class Chimera : MonoBehaviour
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
-    public HabitatType HabitatType { get => _habitatType; }
     public StatType PreferredStat { get => _currentEvolution.StatBonus; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
@@ -86,7 +84,7 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    public int GetXP(StatType statType)
+    public int GetEXP(StatType statType)
     {
         switch (statType)
         {
@@ -197,7 +195,6 @@ public class Chimera : MonoBehaviour
     public void SetIsFirstChimera(bool IsFirstChimera) { _isFirstChimera = IsFirstChimera; }
     public void SetEvolutionIconActive() { _interactionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
-    public void SetHabitatType(HabitatType habitatType) { _habitatType = habitatType; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
     public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
     public void SetStamina(int stamina) { _stamina = stamina; }
@@ -237,7 +234,6 @@ public class Chimera : MonoBehaviour
 
         _chimeraBehavior = GetComponent<ChimeraBehavior>();
         FindEvolution();
-        _habitatType = _habitatManager.CurrentHabitat.Type;
 
         if (_uniqueId == 1)
         {
@@ -501,7 +497,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
         _currentEvolution.Animator.Play("Walk");
 
-        _habitatManager.UpdateCurrentHabitatChimeras();
+        _habitatManager.UpdateCurrentChimeras();
 
         LevelCalculation();
 

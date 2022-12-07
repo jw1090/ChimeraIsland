@@ -4,15 +4,15 @@ using System.Collections.Generic;
 [Serializable]
 public class GameSaveData
 {
-    public GlobalData globalData = new GlobalData(HabitatType.None, 0, 0);
-    public List<HabitatData> habitatData = new List<HabitatData>{new HabitatData(), new HabitatData()};
-    public List<ChimeraData> chimeraData = new List<ChimeraData>();
+    public GlobalData globalData = new GlobalData( 0, 0);
+    public HabitatData habitatData = new HabitatData();
     public List<FacilityData> facilityData = new List<FacilityData>();
+    public List<ChimeraData> chimeraData = new List<ChimeraData>();
     public CollectionData collectionData = new CollectionData();
     public TutorialCompletionData tutorialCompletionData = new TutorialCompletionData();
     public SettingsData settingsData = new SettingsData();
 
-    public GameSaveData(GlobalData globalData, List<HabitatData> habitatData, List<FacilityData> facilityData, List<ChimeraData> chimeraData, CollectionData collectionData, TutorialCompletionData tutorialCompletionData, SettingsData settingsData)
+    public GameSaveData(GlobalData globalData, HabitatData habitatData, List<FacilityData> facilityData, List<ChimeraData> chimeraData, CollectionData collectionData, TutorialCompletionData tutorialCompletionData, SettingsData settingsData)
     {
         this.globalData = globalData;
         this.habitatData = habitatData;
