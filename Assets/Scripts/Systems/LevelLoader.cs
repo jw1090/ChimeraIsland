@@ -63,6 +63,7 @@ public class LevelLoader : AsyncLoader
                 break;
             case SceneType.Temple:
                 TempleSceneSetup();
+                PlayCurrentSceneMusic();
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();

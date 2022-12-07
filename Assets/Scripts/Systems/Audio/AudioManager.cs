@@ -248,6 +248,14 @@ public class AudioManager : MonoBehaviour
                     _musicSource.Play();
                 }
                 break;
+            case SceneType.Temple:
+                {
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TempleMusic").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+                    StopAmbientSource();
+                    _musicSource.Play();
+                }
+                break;
             default:
                 Debug.LogError($"{sceneType} is invalid. Please change!");
                 break;
