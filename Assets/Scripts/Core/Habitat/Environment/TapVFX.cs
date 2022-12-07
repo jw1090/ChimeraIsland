@@ -15,7 +15,7 @@ public class TapVFX : MonoBehaviour
     {
         switch (type)
         {
-            case TapVFXType.ground:
+            case TapVFXType.Ground:
                 foreach( ParticleSystem p in _tapGround)
                 {
                     if (p.isPlaying != true)
@@ -26,7 +26,7 @@ public class TapVFX : MonoBehaviour
                 }
                 _audioManager.PlayUISFX(SFXUIType.DirtHit);
                 break;
-            case TapVFXType.water:
+            case TapVFXType.Water:
                 foreach (ParticleSystem p in _tapWater)
                 {
                     if (p.isPlaying != true)
@@ -37,7 +37,7 @@ public class TapVFX : MonoBehaviour
                 }
                 _audioManager.PlayUISFX(SFXUIType.WaterHit);
                 break;
-            case TapVFXType.stone:
+            case TapVFXType.Stone:
                 foreach (ParticleSystem p in _tapStone)
                 {
                     if (p.isPlaying != true)
@@ -47,6 +47,9 @@ public class TapVFX : MonoBehaviour
                     }
                 }
                 _audioManager.PlayUISFX(SFXUIType.StoneHit);
+                break;
+            case TapVFXType.Tree:
+                _audioManager.PlayUISFX(SFXUIType.TreeHit);
                 break;
             default:
                 Debug.LogError($"Unhandled TapVFXType [{type}] please fix!");

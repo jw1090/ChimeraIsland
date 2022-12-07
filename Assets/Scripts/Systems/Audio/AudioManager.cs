@@ -378,6 +378,13 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
+            case SFXUIType.TreeHit:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Tree Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
             default:
                 Debug.LogError($"{uIElementsSFX} is invalid. Please change!");
                 break;
