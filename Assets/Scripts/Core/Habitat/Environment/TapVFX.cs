@@ -7,6 +7,9 @@ public class TapVFX : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _tapGround = new List<ParticleSystem>();
     [SerializeField] private List<ParticleSystem> _tapWater = new List<ParticleSystem>();
     [SerializeField] private List<ParticleSystem> _tapStone = new List<ParticleSystem>();
+    private AudioManager _audioManager = null;
+
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public void ActivateEffect(TapVFXType type, Vector3 position)
     {
@@ -21,6 +24,7 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlayUISFX(SFXUIType.DirtHit);
                 break;
             case TapVFXType.water:
                 foreach (ParticleSystem p in _tapWater)
@@ -31,6 +35,7 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlayUISFX(SFXUIType.WaterHit);
                 break;
             case TapVFXType.stone:
                 foreach (ParticleSystem p in _tapStone)
@@ -41,6 +46,7 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlayUISFX(SFXUIType.StoneHit);
                 break;
             default:
                 Debug.LogError($"Unhandled TapVFXType [{type}] please fix!");

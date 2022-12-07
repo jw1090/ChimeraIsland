@@ -113,6 +113,7 @@ public class Habitat : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
 
         _audioManager.SetHabitat(this);
+        _tapVfx.SetAudioManager(_audioManager);
         _crystalManager.Initialize(this);
         _patrolNodes.Initialize();
         _environment.Initialize();
