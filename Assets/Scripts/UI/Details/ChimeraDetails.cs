@@ -59,6 +59,8 @@ public class ChimeraDetails : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
+        _customName.gameObject.SetActive(false);
+
         _chimeraSpot = chimeraSpot;
 
         UpdateDetails();
@@ -125,7 +127,14 @@ public class ChimeraDetails : MonoBehaviour
 
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
-        _name.text = $"{_chimera.Name}";
+        if (_chimera.GetName() == _customName.text)
+        {
+            _name.text = _customName.text;
+        }
+        else
+        {
+            _name.text = $"{_chimera.Name}";
+        }
         _level.text = $"Average Power: {_chimera.AveragePower.ToString("F1")}";
         _chimeraIcon.sprite = _chimera.ChimeraIcon;
         _elementIcon.sprite = _chimera.ElementIcon;
@@ -311,6 +320,7 @@ public class ChimeraDetails : MonoBehaviour
     {
         _cameraUtil.IsNaming = true;
         _name.gameObject.SetActive(false);
+        _name.text = "";
         _customName.gameObject.SetActive(true);
         _customName.Select();
 
