@@ -57,8 +57,8 @@ public class EvolutionLogic : MonoBehaviour
                 break;
             case ChimeraType.C:
                 explorationAmount = 3;
-                staminaAmount = 2;
-                wisdomAmount = 4;
+                staminaAmount = 4;
+                wisdomAmount = 2;
                 break;
             default:
                 explorationAmount = 0;
