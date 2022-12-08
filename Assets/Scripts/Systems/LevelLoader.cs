@@ -52,8 +52,6 @@ public class LevelLoader : AsyncLoader
 
         LoadUIElements();
 
-        _cameraUtil.SceneSetup();
-
         switch (_sceneType)
         {
             case SceneType.MainMenu:
@@ -141,7 +139,7 @@ public class LevelLoader : AsyncLoader
 
     private void HabitatSceneSetup()
     {
-        _habitatManager.PlayCurrentHabitatMusic();
+        _cameraUtil.SceneSetup();
 
         TempleBuildCheck();
         _habitatManager.BuildFacilitiesForHabitat();
@@ -152,6 +150,7 @@ public class LevelLoader : AsyncLoader
         StartHabitatTickTimer();
 
         _tutorialManager.TutorialStageCheck();
+        _habitatManager.PlayCurrentHabitatMusic();
     }
 
     private void TempleBuildCheck()
@@ -168,6 +167,7 @@ public class LevelLoader : AsyncLoader
 
     private void TempleSceneSetup()
     {
+        _cameraUtil.SceneSetup();
         _templeEnvironment.SceneSetup();
         _uiManager.TempleUI.EnteringTempleTransition();
     }

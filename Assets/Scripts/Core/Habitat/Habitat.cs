@@ -30,7 +30,7 @@ public class Habitat : MonoBehaviour
     private bool _isInitialized = false;
     private int _currentTier = 1;
 
-    public TapVFX TapVFX { get => _tapVfx; } 
+    public TapVFX TapVFX { get => _tapVfx; }
     public Temple Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
@@ -223,7 +223,14 @@ public class Habitat : MonoBehaviour
     {
         Facility facility = GetFacility(facilityType);
 
-        _uiManager.AlertText.CreateAlert($"You Have Unlocked The {facilityType} Facility!");
+        if (facilityType == FacilityType.RuneStone) // Enums don't have spaces
+        {
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Rune Stone Facility!");
+        }
+        else
+        {
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The {facilityType} Facility!");
+        }
 
         facility.BuildFacility(moveCamera);
         _habitatManager.AddNewFacility(facility);
