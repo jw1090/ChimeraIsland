@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 
-[Serializeable]
+[Serializable]
 public class SettingsData
 {
     public float masterVolume = 0.0f;
