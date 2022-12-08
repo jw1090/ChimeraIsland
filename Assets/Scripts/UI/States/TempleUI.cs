@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class TempleUI : MonoBehaviour
     private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
     private TempleEnvironment _templeEnvironment = null;
+    private InputManager _inputManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
@@ -35,6 +37,7 @@ public class TempleUI : MonoBehaviour
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
 
         SetupButtonListeners();
 
@@ -49,7 +52,7 @@ public class TempleUI : MonoBehaviour
 
     private void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_backToHabitatButton, _sceneChanger.LoadStonePlains);
+        _uiManager.CreateButtonListener(_backToHabitatButton, LeavingTempleTransition);
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
     }
@@ -59,8 +62,6 @@ public class TempleUI : MonoBehaviour
         _templeEnvironment = ServiceLocator.Get<TempleEnvironment>();
 
         _currentTempleSection = TempleSectionType.Buying;
-        _goLeftButton.gameObject.SetActive(true);
-        _goRightButton.gameObject.SetActive(true);
     }
 
     private void TransitionLeft()
@@ -101,6 +102,40 @@ public class TempleUI : MonoBehaviour
         }
         _cameraUtil.TempleTransition(_currentTempleSection);
         ChangeSectionUIState();
+    }
+
+    private void LeavingTempleTransition()
+    {
+        _currentTempleSection = TempleSectionType.Habitat;
+        _cameraUtil.TempleTransition(_currentTempleSection);
+
+        HideSharedUIState();
+        StartCoroutine(HabitatTransitionCoroutine(true));
+    }
+
+    private IEnumerator HabitatTransitionCoroutine(bool leavingTemple)
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        if (leavingTemple == true)
+        {
+            _inputManager.SetInTransition(false);
+            _sceneChanger.LoadStonePlains();
+        }
+        else
+        {
+            ShowSharedUIState();
+            _goLeftButton.gameObject.SetActive(true);
+            _goRightButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void EnteringTempleTransition()
+    {
+        _cameraUtil.TempleTransition(_currentTempleSection);
+
+        HideSharedUIState();
+        StartCoroutine(HabitatTransitionCoroutine(false));
     }
 
     public void ShowSharedUIState()
@@ -161,7 +196,7 @@ public class TempleUI : MonoBehaviour
                 $"Can't afford the {evolutionLogic.Name} chimera. It costs {price} " +
                 $"Fossils and you only have {_currencyManager.Fossils} Fossils."
             );
-            return ;
+            return;
         }
 
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(evolutionLogic.ChimeraType);
@@ -172,7 +207,7 @@ public class TempleUI : MonoBehaviour
         _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
         _templeEnvironment.TempleCollections.Build();
 
-        _uiManager.AlertText.CreateAlert($"You have acquired a {evolutionLogic.Name}");
+        _uiManager.AlertText.CreateAlert($"You Have Acquired {evolutionLogic.Name}!");
 
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
     }

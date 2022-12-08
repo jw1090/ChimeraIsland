@@ -434,7 +434,7 @@ public class Chimera : MonoBehaviour
             return;
         }
 
-        _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} has evolved to {_chimeraToBecome.Name}");
+        _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
@@ -491,7 +491,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        _audioManager.PlayUISFX(SFXUIType.Evolution);
+        _audioManager.PlaySFX(EnvironmentSFXType.Evolution);
 
         Destroy(_currentEvolution.gameObject);
 

@@ -223,7 +223,7 @@ public class Habitat : MonoBehaviour
     {
         Facility facility = GetFacility(facilityType);
 
-        _uiManager.AlertText.CreateAlert($"You Have Unlocked {facilityType} Facility!");
+        _uiManager.AlertText.CreateAlert($"You Have Unlocked The {facilityType} Facility!");
 
         facility.BuildFacility(moveCamera);
         _habitatManager.AddNewFacility(facility);
@@ -264,6 +264,8 @@ public class Habitat : MonoBehaviour
         }
 
         ++_currentTier;
+
+        _uiManager.AlertText.CreateAlert($"You Have Upgraded The Habitat To Tier {_currentTier}!");
 
         _habitatManager.SetHabitatTier(_currentTier);
         _audioManager.PlayHabitatMusic();

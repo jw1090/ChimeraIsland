@@ -52,6 +52,8 @@ public class LevelLoader : AsyncLoader
 
         LoadUIElements();
 
+        _cameraUtil.SceneSetup();
+
         switch (_sceneType)
         {
             case SceneType.MainMenu:
@@ -167,6 +169,7 @@ public class LevelLoader : AsyncLoader
     private void TempleSceneSetup()
     {
         _templeEnvironment.SceneSetup();
+        _uiManager.TempleUI.EnteringTempleTransition();
     }
 
     private void LoadUIElements()

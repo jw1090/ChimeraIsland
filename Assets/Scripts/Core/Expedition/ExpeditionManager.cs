@@ -504,6 +504,7 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionType.Fossils:
                 if (_habitatManager.CurrentHabitat.Temple.IsCompleted == false)
                 {
+                    _uiManager.AlertText.CreateAlert($"You Built The Chimera Temple!");
                     _habitatManager.CurrentHabitat.Temple.Build();
                     _cameraUtil.TempleCameraShift();
                     _uiManager.HabitatUI.EnableUIElementByType(UIElementType.FossilsWallets);

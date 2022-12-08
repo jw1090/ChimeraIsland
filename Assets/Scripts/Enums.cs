@@ -130,7 +130,8 @@ public enum TempleSectionType
     None = -1,
     Buying,
     Upgrades,
-    Collection
+    Collection,
+    Habitat,
 }
 
 public enum TutorialStageType
@@ -162,14 +163,19 @@ public enum SFXUIType
     PurchaseClick,
     PlaceChimera,
     RemoveChimera,
-    Evolution,
-    LevelUp,
     ErrorClick,
     Completion,
     Failure,
+}
+
+public enum EnvironmentSFXType
+{
+    None = -1,
+    Evolution,
+    LevelUp,
+    PortalClick,
     Hit,
     Harvest,
-    PortalClick,
     WaterHit,
     StoneHit,
     DirtHit,
