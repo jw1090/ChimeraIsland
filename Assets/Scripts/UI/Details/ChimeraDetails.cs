@@ -22,12 +22,10 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
-    [SerializeField] private GameObject _explorationExplanation = null;
-    [SerializeField] private GameObject _staminaExplanation = null;
-    [SerializeField] private GameObject _wisdomExplanation = null;
     [SerializeField] private RectTransform _explorationTransform = null;
     [SerializeField] private RectTransform _staminaTransform = null;
     [SerializeField] private RectTransform _wisdomTransform = null;
+
     [Header("Stat Preference")]
     [SerializeField] private Color _prefferedGoldColor = new Color();
     [SerializeField] private Color _defaultColor = new Color();
