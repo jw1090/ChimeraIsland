@@ -26,6 +26,8 @@ public class SettingsUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
+        gameObject.SetActive(false);
+
         _inputSettingsUI.Initialize();
 
         SetupButtonListeners();
@@ -46,21 +48,23 @@ public class SettingsUI : MonoBehaviour
     {
         _mainMenuButton.gameObject.SetActive(_uiManager.InHabitatState);
         _quitGameButton.gameObject.SetActive(_uiManager.InHabitatState);
-        if(_uiManager.InHabitatState == true)
+
+        if (_uiManager.InHabitatState == true)
         {
-            _panel.sizeDelta = new Vector2(500, 510);
+            _panel.sizeDelta = new Vector2(500, 800);
         }
         else
         {
-            _panel.sizeDelta = new Vector2(500,410);
+            _panel.sizeDelta = new Vector2(500, 660);
         }
+
         gameObject.SetActive(true);
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
     private void CloseSettingsPanel()
     {
-        if(_uiManager.InHabitatState == true)
+        if (_uiManager.InHabitatState == true)
         {
             _uiManager.HabitatUI.MenuClosed();
             _uiManager.HabitatUI.ResetStandardUI();
