@@ -172,6 +172,8 @@ public class TempleUI : MonoBehaviour
         _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
         _templeEnvironment.TempleCollections.Build();
 
+        _uiManager.AlertText.CreateAlert($"You have acquired a {evolutionLogic.Name}");
+
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
     }
 }

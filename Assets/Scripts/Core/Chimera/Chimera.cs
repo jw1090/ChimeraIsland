@@ -434,10 +434,13 @@ public class Chimera : MonoBehaviour
             return;
         }
 
+        _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} has evolved to {_chimeraToBecome.Name}");
+
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
+
 
         _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
 

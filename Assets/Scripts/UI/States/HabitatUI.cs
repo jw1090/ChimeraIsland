@@ -24,6 +24,7 @@ public class HabitatUI : MonoBehaviour
     private bool _tutorialOpen = false;
     private bool _uiActive = true;
 
+    public UIManager UIManager { get => _uiManager; }
     public DetailsManager DetailsManager { get => _detailsManager; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }

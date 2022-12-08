@@ -20,6 +20,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private StatefulObject _tiers = null;
     [SerializeField] private TapVFX _tapVfx = null;
 
+    private UIManager _uiManager = null;
     private ChimeraCreator _chimeraCreator = null;
     private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
@@ -111,6 +112,7 @@ public class Habitat : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
 
         _audioManager.SetHabitat(this);
         _tapVfx.SetAudioManager(_audioManager);
@@ -220,6 +222,8 @@ public class Habitat : MonoBehaviour
     public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
+
+        _uiManager.AlertText.CreateAlert($"You Have Unlocked {facilityType} Facility!");
 
         facility.BuildFacility(moveCamera);
         _habitatManager.AddNewFacility(facility);
