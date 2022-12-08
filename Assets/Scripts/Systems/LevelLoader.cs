@@ -17,7 +17,7 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
 
-    [Header("Habitat")]
+    [Header("Temple")]
     [SerializeField] private TempleEnvironment _templeEnvironment = null;
 
     [Header("Builder")]
