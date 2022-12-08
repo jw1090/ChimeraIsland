@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
     [SerializeField] private AlertText _alertText = null;
     [SerializeField] private Tooltip _tooltip = null;
+
     [Header("Settings")]
     [SerializeField] private SettingsUI _settingsUI = null;
     private bool _uiVisible = true;
