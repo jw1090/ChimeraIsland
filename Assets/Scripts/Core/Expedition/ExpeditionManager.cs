@@ -248,8 +248,6 @@ public class ExpeditionManager : MonoBehaviour
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
 
-        //_treadmillManager.CheckRotation();
-
         _selectedExpedition.ActiveInProgressTimer = true;
     }
 
@@ -485,11 +483,13 @@ public class ExpeditionManager : MonoBehaviour
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
+            _uiManager.AlertText.CreateAlert($"Expedition Complete!");
             return true;
         }
         else
         {
             _audioManager.PlayUISFX(SFXUIType.Failure);
+            _uiManager.AlertText.CreateAlert($"Expedition Complete!");
             return false;
         }
     }
