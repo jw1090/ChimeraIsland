@@ -91,30 +91,35 @@ public class AudioManager : MonoBehaviour
     {
         _masterVolume = masterVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetMusicVolume(float musicVolume)
     {
         _musicVolume = musicVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetSFXVolume(float sfxVolume)
     {
         _sfxVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetAmbientVolume(float sfxVolume)
     {
         _ambientVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.AMBIENT, _ambientVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetUISFXVolume(float sfxVolume)
     {
         _uiSfxVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.UISFX, _uiSfxVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetHabitat(Habitat habitat) { _habitat = habitat; }

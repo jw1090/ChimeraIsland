@@ -53,6 +53,7 @@ public class PersistentData : MonoBehaviour
     public void NewSaveData()
     {
         GameSaveData newData = new GameSaveData();
+        newData.settingsData = _settingsData;
         UpdateGameSaveData(newData);
 
         _tutorialManager.ResetTutorialProgress();
