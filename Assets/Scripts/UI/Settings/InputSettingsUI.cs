@@ -15,7 +15,7 @@ public class InputSettingsUI : MonoBehaviour
     public void SetCameraUtil(CameraUtil cameraUtil)
     {
         _cameraUtil = cameraUtil;
-        _cameraSensitivitySlider.value = cameraUtil.Speed;
+        SetCameraSpeed(_cameraSensitivitySlider.value);
     }
 
     public void Initialize()
@@ -24,7 +24,10 @@ public class InputSettingsUI : MonoBehaviour
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         _chimeraSpinSpeedSlider.value = _inputManager.RotationSpeed;
-        _cameraSensitivitySlider.value = 20.0f;
+        if (_cameraUtil == null)
+        {
+            _cameraSensitivitySlider.value = _persistentData.SettingsData.cameraSpeed;
+        }
 
         SetupListeners();
     }
