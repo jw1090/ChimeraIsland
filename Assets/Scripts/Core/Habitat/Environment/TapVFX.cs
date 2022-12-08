@@ -7,12 +7,15 @@ public class TapVFX : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _tapGround = new List<ParticleSystem>();
     [SerializeField] private List<ParticleSystem> _tapWater = new List<ParticleSystem>();
     [SerializeField] private List<ParticleSystem> _tapStone = new List<ParticleSystem>();
+    private AudioManager _audioManager = null;
+
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public void ActivateEffect(TapVFXType type, Vector3 position)
     {
         switch (type)
         {
-            case TapVFXType.ground:
+            case TapVFXType.Ground:
                 foreach( ParticleSystem p in _tapGround)
                 {
                     if (p.isPlaying != true)
@@ -21,8 +24,9 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlaySFX(EnvironmentSFXType.DirtHit);
                 break;
-            case TapVFXType.water:
+            case TapVFXType.Water:
                 foreach (ParticleSystem p in _tapWater)
                 {
                     if (p.isPlaying != true)
@@ -31,8 +35,9 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlaySFX(EnvironmentSFXType.WaterHit);
                 break;
-            case TapVFXType.stone:
+            case TapVFXType.Stone:
                 foreach (ParticleSystem p in _tapStone)
                 {
                     if (p.isPlaying != true)
@@ -41,6 +46,10 @@ public class TapVFX : MonoBehaviour
                         break;
                     }
                 }
+                _audioManager.PlaySFX(EnvironmentSFXType.StoneHit);
+                break;
+            case TapVFXType.Tree:
+                _audioManager.PlaySFX(EnvironmentSFXType.TreeHit);
                 break;
             default:
                 Debug.LogError($"Unhandled TapVFXType [{type}] please fix!");

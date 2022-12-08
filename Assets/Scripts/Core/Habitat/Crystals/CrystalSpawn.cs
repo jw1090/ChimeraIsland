@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class CrystalSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject _crystal = null;
+    [SerializeField] private StatefulObject _crystal = null;
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
-    private Habitat _habitat = null;
     private int _health = 3;
     private bool _isActive = false;
+    private int _currentTier = 1;
 
     public bool IsActive { get => _isActive; }
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 
-        _habitat = habitat;
-
         _isActive = false;
-        _crystal.SetActive(false);
+        _crystal.gameObject.SetActive(false);
     }
 
-    public void Activate()
+    public void Activate(int currentTier)
     {
-        _health = 3;
+        _crystal.SetState($"Crystal{currentTier}");
+
+        _currentTier = currentTier;
+        _health = _currentTier;
+
         _isActive = true;
-        _crystal.SetActive(true);
+        _crystal.gameObject.SetActive(true);
     }
 
     public void Harvest()
@@ -38,27 +40,29 @@ public class CrystalSpawn : MonoBehaviour
         {
             return;
         }
+
         ShowEffect();
+
         if (--_health == 0)
         {
             _isActive = false;
-            _crystal.SetActive(false);
-            _currencyManager.IncreaseEssence(20 * _habitat.CurrentTier);
+            _crystal.gameObject.SetActive(false);
+            _currencyManager.IncreaseEssence(20 * _currentTier);
 
-            _audioManager.PlayUISFX(SFXUIType.Harvest);
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningHarvest);
         }
         else
         {
             if (_health == 1)
             {
-                _currencyManager.IncreaseEssence(15 * _habitat.CurrentTier);
+                _currencyManager.IncreaseEssence(15 * _currentTier);
             }
             else
             {
-                _currencyManager.IncreaseEssence(10 * _habitat.CurrentTier);
+                _currencyManager.IncreaseEssence(10 * _currentTier);
             }
 
-            _audioManager.PlayUISFX(SFXUIType.Hit);
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
         }
     }
 

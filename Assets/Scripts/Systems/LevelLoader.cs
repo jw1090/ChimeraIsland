@@ -17,7 +17,7 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
 
-    [Header("Habitat")]
+    [Header("Temple")]
     [SerializeField] private TempleEnvironment _templeEnvironment = null;
 
     [Header("Builder")]
@@ -63,6 +63,7 @@ public class LevelLoader : AsyncLoader
                 break;
             case SceneType.Temple:
                 TempleSceneSetup();
+                PlayCurrentSceneMusic();
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
@@ -138,7 +139,7 @@ public class LevelLoader : AsyncLoader
 
     private void HabitatSceneSetup()
     {
-        _habitatManager.PlayCurrentHabitatMusic();
+        _cameraUtil.SceneSetup();
 
         TempleBuildCheck();
         _habitatManager.BuildFacilitiesForHabitat();
@@ -149,6 +150,7 @@ public class LevelLoader : AsyncLoader
         StartHabitatTickTimer();
 
         _tutorialManager.TutorialStageCheck();
+        _habitatManager.PlayCurrentHabitatMusic();
     }
 
     private void TempleBuildCheck()
@@ -165,7 +167,9 @@ public class LevelLoader : AsyncLoader
 
     private void TempleSceneSetup()
     {
+        _cameraUtil.SceneSetup();
         _templeEnvironment.SceneSetup();
+        _uiManager.TempleUI.EnteringTempleTransition();
     }
 
     private void LoadUIElements()

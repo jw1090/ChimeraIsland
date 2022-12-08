@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private TempleUI _templeUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
+    [SerializeField] private AlertText _alertText = null;
 
     [Header("Settings")]
     [SerializeField] private SettingsUI _settingsUI = null;
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     public TempleUI TempleUI { get => _templeUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public SettingsUI SettingsUI { get => _settingsUI; }
+    public AlertText AlertText { get => _alertText; }
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
     public bool UIActive { get => _uiVisible; }
 
@@ -40,6 +42,7 @@ public class UIManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _settingsUI.Initialize(this);
+        _alertText.Initialize();
 
         _mainMenuUI.Initialize(this);
         _startingUI.Initialize(this);

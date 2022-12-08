@@ -434,10 +434,13 @@ public class Chimera : MonoBehaviour
             return;
         }
 
+        _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
+
         Evolve(_chimeraToBecome);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
+
 
         _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
 
@@ -488,7 +491,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        _audioManager.PlayUISFX(SFXUIType.Evolution);
+        _audioManager.PlaySFX(EnvironmentSFXType.Evolution);
 
         Destroy(_currentEvolution.gameObject);
 
