@@ -9,6 +9,7 @@ public class AlertText : MonoBehaviour
     [SerializeField] private Image _image = null;
     [SerializeField] private float _maxDuration = 3.0f;
     [SerializeField] private float _initialDelay = 1.0f;
+    private Coroutine _fadeCoroutine = null;
     private float _progress = 0.0f;
 
     public void Initialize()
@@ -22,7 +23,12 @@ public class AlertText : MonoBehaviour
         gameObject.SetActive(true);
         UpdateAlpha(1.0f);
 
-        StartCoroutine(FadeAlertCoroutine());
+        if (_fadeCoroutine != null)
+        {
+            StopCoroutine(_fadeCoroutine);
+        }
+
+        _fadeCoroutine = StartCoroutine(FadeAlertCoroutine());
     }
 
     private IEnumerator FadeAlertCoroutine()
@@ -39,6 +45,8 @@ public class AlertText : MonoBehaviour
             UpdateAlpha(Mathf.Lerp(1.0f, 0.0f, _progress / _maxDuration));
         }
         gameObject.SetActive(false);
+
+        _fadeCoroutine = null;
     }
 
     private void UpdateAlpha(float currentAlpha)
