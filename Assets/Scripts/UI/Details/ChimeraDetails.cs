@@ -22,19 +22,19 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Button _removeButton = null;
     [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
-    [SerializeField] private GameObject _explorationExplanation = null;
-    [SerializeField] private GameObject _staminaExplanation = null;
-    [SerializeField] private GameObject _wisdomExplanation = null;
-    [SerializeField] private TextMeshProUGUI _explorationPreference = null;
-    [SerializeField] private TextMeshProUGUI _staminaPreference = null;
-    [SerializeField] private TextMeshProUGUI _wisdomPreference = null;
     [SerializeField] private RectTransform _explorationTransform = null;
     [SerializeField] private RectTransform _staminaTransform = null;
     [SerializeField] private RectTransform _wisdomTransform = null;
+
     [Header("Stat Preference")]
     [SerializeField] private Color _prefferedGoldColor = new Color();
     [SerializeField] private Color _defaultColor = new Color();
     [SerializeField] private List<Image> _statIcons = new List<Image>();
+
+
+    private string _explorationPreference = "";
+    private string _staminaPreference = "";
+    private string _wisdomPreference = "";
 
     private Chimera _chimera = null;
     private Habitat _habitat = null;
@@ -76,32 +76,50 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Update()
     {
-        if(GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
+        if (gameObject.activeInHierarchy == false)
         {
-            _explorationExplanation.SetActive(true);
             return;
         }
-        else
+
+        if (GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
         {
-            _explorationExplanation.SetActive(false);
+            _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
+            _uiManager.Tooltip.BeingUsed = true;
+            _uiManager.Tooltip.gameObject.SetActive(true);
+            if (_uiManager.Tooltip.HoveringOver == _explorationTransform)
+            {
+                return;
+            }
+            _uiManager.Tooltip.HoveringOver = _explorationTransform;
+            _uiManager.Tooltip.Explanation.text = $"{_explorationPreference}\nDecreases Expedition duration";
         }
-        if (GetGlobalPosition(_staminaTransform).Contains(Input.mousePosition))
+        else if (GetGlobalPosition(_staminaTransform).Contains(Input.mousePosition))
         {
-            _staminaExplanation.SetActive(true);
-            return;
+            _uiManager.Tooltip.BeingUsed = true;
+            _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
+            _uiManager.Tooltip.gameObject.SetActive(true);
+            if (_uiManager.Tooltip.HoveringOver == _staminaTransform)
+            {
+                return;
+            }
+            _uiManager.Tooltip.HoveringOver = _staminaTransform;
+            _uiManager.Tooltip.Explanation.text = $"{_staminaPreference}\nIncreases max energy and energy regen rate";
         }
-        else
+        else if (GetGlobalPosition(_wisdomTransform).Contains(Input.mousePosition))
         {
-            _staminaExplanation.SetActive(false);
+            _uiManager.Tooltip.BeingUsed = true;
+            _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
+            _uiManager.Tooltip.gameObject.SetActive(true);
+            if (_uiManager.Tooltip.HoveringOver == _wisdomTransform)
+            {
+                return;
+            }
+            _uiManager.Tooltip.HoveringOver = _wisdomTransform;
+            _uiManager.Tooltip.Explanation.text = $"{_wisdomPreference}\nIncreases currency gain from expeditions";
         }
-        if (GetGlobalPosition(_wisdomTransform).Contains(Input.mousePosition))
+        else if (_uiManager.Tooltip.BeingUsed == false)
         {
-            _wisdomExplanation.SetActive(true);
-            return;
-        }
-        else
-        {
-            _wisdomExplanation.SetActive(false);
+            _uiManager.Tooltip.gameObject.SetActive(false);
         }
     }
 
@@ -152,25 +170,25 @@ public class ChimeraDetails : MonoBehaviour
             case ChimeraType.A1:
             case ChimeraType.A2:
             case ChimeraType.A3:
-                _explorationPreference.text = "dislike";
-                _staminaPreference.text = "neutral";
-                _wisdomPreference.text = "like";
+                _explorationPreference = "Dislike";
+                _staminaPreference = "Neutral";
+                _wisdomPreference = "Like";
                 break;
             case ChimeraType.B:
             case ChimeraType.B1:
             case ChimeraType.B2:
             case ChimeraType.B3:
-                _staminaPreference.text = "dislike";
-                _wisdomPreference.text = "neutral";
-                _explorationPreference.text = "like";
+                _staminaPreference = "Dislike";
+                _wisdomPreference = "Neutral";
+                _explorationPreference = "Like";
                 break;
             case ChimeraType.C:
             case ChimeraType.C1:
             case ChimeraType.C2:
             case ChimeraType.C3:
-                _staminaPreference.text = "dislike";
-                _explorationPreference.text = "neutral";
-                _wisdomPreference.text = "like";
+                _staminaPreference = "Dislike";
+                _explorationPreference = "Neutral";
+                _wisdomPreference = "Like";
                 break;
             default:
                 Debug.LogError($"Unhandled chimera type: {_chimera.ChimeraType}. Please change!");
@@ -291,7 +309,7 @@ public class ChimeraDetails : MonoBehaviour
 
     public void DetermineStatGlow()
     {
-        if(_chimera == null)
+        if (_chimera == null)
         {
             return;
         }
