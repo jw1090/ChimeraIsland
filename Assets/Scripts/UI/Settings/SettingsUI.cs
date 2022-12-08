@@ -10,7 +10,7 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _quitGameButton = null;
     [SerializeField] private Button _screenWideButton = null;
-    [SerializeField] private TextMeshProUGUI _resumeButtonText;
+    [SerializeField] private RectTransform _panel = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
 
@@ -25,6 +25,8 @@ public class SettingsUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
+
+        gameObject.SetActive(false);
 
         _inputSettingsUI.Initialize();
 
@@ -49,11 +51,11 @@ public class SettingsUI : MonoBehaviour
 
         if (_uiManager.InHabitatState == true)
         {
-            _resumeButtonText.text = "Back";
+            _panel.sizeDelta = new Vector2(500, 800);
         }
         else
         {
-            _resumeButtonText.text = "Resume";
+            _panel.sizeDelta = new Vector2(500, 660);
         }
 
         gameObject.SetActive(true);
@@ -62,7 +64,7 @@ public class SettingsUI : MonoBehaviour
 
     private void CloseSettingsPanel()
     {
-        if(_uiManager.InHabitatState == true)
+        if (_uiManager.InHabitatState == true)
         {
             _uiManager.HabitatUI.MenuClosed();
             _uiManager.HabitatUI.ResetStandardUI();
