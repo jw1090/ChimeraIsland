@@ -130,7 +130,8 @@ public enum TempleSectionType
     None = -1,
     Buying,
     Upgrades,
-    Collection
+    Collection,
+    Habitat,
 }
 
 public enum TutorialStageType
@@ -162,14 +163,23 @@ public enum SFXUIType
     PurchaseClick,
     PlaceChimera,
     RemoveChimera,
-    Evolution,
-    LevelUp,
     ErrorClick,
     Completion,
     Failure,
-    Hit,
-    Harvest,
+}
+
+public enum EnvironmentSFXType
+{
+    None = -1,
+    Evolution,
+    LevelUp,
     PortalClick,
+    MiningTap,
+    MiningHarvest,
+    WaterHit,
+    StoneHit,
+    DirtHit,
+    TreeHit,
 }
 
 public enum DayType
@@ -197,7 +207,8 @@ public enum ChimeraOrderType
 public enum TapVFXType
 {
     None = -1,
-    ground,
-    water,
-    stone
+    Ground,
+    Water,
+    Stone,
+    Tree,
 }

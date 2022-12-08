@@ -12,9 +12,6 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _minZoom = 20.0f;
     [SerializeField] private float _maxZoom = 90.0f;
 
-    [Header("Edge Follow")]
-    [SerializeField] private int _screenEdgeSize = 50;
-
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 2.0f;
     [SerializeField] private float _offset = 1.5f;
@@ -29,10 +26,6 @@ public class CameraUtil : MonoBehaviour
     private StarterEnvironment _starterEnvironment = null;
     private TempleEnvironment _templeEnvironment = null;
     private PersistentData _persistentData = null;
-    private Rect _upRect = new Rect();
-    private Rect _downRect = new Rect();
-    private Rect _rightRect = new Rect();
-    private Rect _leftRect = new Rect();
     private SceneType _sceneType = SceneType.None;
     private bool _initialized = false;
     private bool _canMoveUp = true;
@@ -66,25 +59,26 @@ public class CameraUtil : MonoBehaviour
         _inputManager = ServiceLocator.Get<InputManager>();
         _sceneType = sceneType;
 
-        _speed = _persistentData.SettingsData.cameraSpeed;
+        _initialized = true;
 
+        return this;
+    }
+
+    public void SceneSetup()
+    {
         if (_sceneType == SceneType.Habitat)
         {
-            _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
-            _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
-            _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
-            _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
-
             CameraZoom();
 
+            _speed = _persistentData.SettingsData.cameraSpeed;
             _freeCamera.Initialize(_speed);
 
             _inputManager.SetFreeCamera(_freeCamera);
         }
-
-        _initialized = true;
-
-        return this;
+        else if (_sceneType == SceneType.Temple)
+        {
+            transform.position = _templeEnvironment.StartNode.position;
+        }
     }
 
     public void CameraUpdate()
@@ -104,7 +98,6 @@ public class CameraUtil : MonoBehaviour
         {
             CameraMovement();
         }
-        DragChimeraMovement();
     }
 
     private void CameraMovement()
@@ -121,26 +114,6 @@ public class CameraUtil : MonoBehaviour
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
         transform.position = transform.position + direction * panSpeed * Time.deltaTime;
-    }
-
-    private void DragChimeraMovement()
-    {
-        if (IsHolding == false)
-        {
-            return;
-        }
-
-        Vector3 direction = Vector3.zero;
-
-        bool moveDown = _upRect.Contains(Input.mousePosition) && _canMoveUp;
-        bool moveUp = _downRect.Contains(Input.mousePosition) && _canMoveDown;
-        bool moveLeft = _leftRect.Contains(Input.mousePosition) && _canMoveRight;
-        bool moveRight = _rightRect.Contains(Input.mousePosition) && _canMoveLeft;
-
-        direction.z = moveUp ? 1 : moveDown ? -1 : 0;
-        direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
-
-        transform.position = transform.position + direction * _speed * Time.deltaTime;
     }
 
     public void CameraZoom()
@@ -355,6 +328,10 @@ public class CameraUtil : MonoBehaviour
             case TempleSectionType.Collection:
                 nodePosition = _templeEnvironment.CollectionNode.position;
                 nodeRotation = _templeEnvironment.CollectionNode.rotation;
+                break;
+            case TempleSectionType.Habitat:
+                nodePosition = _templeEnvironment.StartNode.position;
+                nodeRotation = _templeEnvironment.StartNode.rotation;
                 break;
             default:
                 Debug.LogWarning($"{templeSectionType} is not a valid type. Please fix!");
