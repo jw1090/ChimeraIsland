@@ -31,6 +31,7 @@ Transform:
   - {fileID: 8225192882395589672}
   - {fileID: 4382457442739090499}
   - {fileID: 1144795618074967632}
+  - {fileID: 1283240671432249435}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,9 +48,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _templeCollections: {fileID: 4703141258209427552}
+  _startNode: {fileID: 4382457442059630600}
   _buyingNode: {fileID: 4382457442059630600}
   _collectionNode: {fileID: 5508450787379815233}
   _upgradeNode: {fileID: 2380121905883019126}
+--- !u!1 &4759382749391940053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1283240671432249435}
+  m_Layer: 0
+  m_Name: Starting Node
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1283240671432249435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759382749391940053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4382457442383143287}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4082044719002129324
 PrefabInstance:
   m_ObjectHideFlags: 0

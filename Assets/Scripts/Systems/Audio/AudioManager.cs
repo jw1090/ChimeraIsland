@@ -344,16 +344,16 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
-            case EnvironmentSFXType.Hit:
+            case EnvironmentSFXType.MiningTap:
                 {
-                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Mining Tap SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
-            case EnvironmentSFXType.Harvest:
+            case EnvironmentSFXType.MiningHarvest:
                 {
-                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Harvest SFX").FirstOrDefault();
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Mining Harvest SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }

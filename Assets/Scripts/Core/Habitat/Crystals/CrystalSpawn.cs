@@ -49,7 +49,7 @@ public class CrystalSpawn : MonoBehaviour
             _crystal.gameObject.SetActive(false);
             _currencyManager.IncreaseEssence(20 * _currentTier);
 
-            _audioManager.PlaySFX(EnvironmentSFXType.Harvest);
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningHarvest);
         }
         else
         {
@@ -62,7 +62,7 @@ public class CrystalSpawn : MonoBehaviour
                 _currencyManager.IncreaseEssence(10 * _currentTier);
             }
 
-            _audioManager.PlaySFX(EnvironmentSFXType.Hit);
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
         }
     }
 
