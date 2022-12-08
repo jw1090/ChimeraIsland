@@ -16,7 +16,7 @@ public class CrystalManager : MonoBehaviour
 
         foreach (CrystalSpawn crystal in crystals)
         {
-            crystal.Initialize(habitat);
+            crystal.Initialize();
         }
     }
 
@@ -60,7 +60,7 @@ public class CrystalManager : MonoBehaviour
         if (activeCount < _habitat.CurrentTier * 2 + 1)
         {
             int rand = Random.Range(0, inactiveCrystals.Count);
-            inactiveCrystals[rand].Activate();
+            inactiveCrystals[rand].Activate(_habitat.CurrentTier);
         }
     }
 
