@@ -28,6 +28,7 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private RectTransform _explorationTransform = null;
     [SerializeField] private RectTransform _staminaTransform = null;
     [SerializeField] private RectTransform _wisdomTransform = null;
+
     [Header("Stat Preference")]
     [SerializeField] private Color _prefferedGoldColor = new Color();
     [SerializeField] private Color _defaultColor = new Color();
