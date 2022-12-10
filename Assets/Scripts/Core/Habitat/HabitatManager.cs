@@ -13,7 +13,6 @@ public class HabitatManager : MonoBehaviour
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
-    private int _chimeraCapacity = 9;
     private float _tickTimer = 0.3f;
 
     public HabitatData HabitatData { get => _habitatData; }
@@ -21,10 +20,7 @@ public class HabitatManager : MonoBehaviour
     public List<ChimeraData> ChimerasInHabitat { get => _chimeraDataList; }
     public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
-    public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
-
-    public bool HabitatCapacityCheck() { return _chimeraDataList.Count < _chimeraCapacity; }
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -105,29 +101,11 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    public bool AddNewChimera(Chimera chimeraToSave)
+    public void AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
 
-        if (AddChimeraToHabitat(chimeraSavedData) == true)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    private bool AddChimeraToHabitat(ChimeraData chimeraToAdd)
-    {
-        if (HabitatCapacityCheck() == false)
-        {
-            Debug.Log($"Cannot add {chimeraToAdd.Type}, habitat is full.");
-            return false;
-        }
-
-        _chimeraDataList.Add(chimeraToAdd);
-
-        return true;
+        _chimeraDataList.Add(chimeraSavedData);
     }
 
     public void AddNewFacility(Facility facilityToSave)
