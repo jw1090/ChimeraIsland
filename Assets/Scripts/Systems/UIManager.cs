@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private SettingsUI _settingsUI = null;
+
     private bool _uiVisible = true;
 
     public Tooltip Tooltip { get => _tooltip; }
@@ -30,7 +31,7 @@ public class UIManager : MonoBehaviour
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
     public bool UIActive { get => _uiVisible; }
 
-    public void SetAudioManager(AudioManager audioManager) 
+    public void SetAudioManager(AudioManager audioManager)
     {
         _settingsUI.SetAudioManager(audioManager);
         _habitatUI.SetAudioManager(audioManager);
