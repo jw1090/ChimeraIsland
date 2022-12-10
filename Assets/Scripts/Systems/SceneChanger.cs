@@ -33,7 +33,6 @@ public class SceneChanger : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningYesButton, NewGame);
-        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningNoButton, CloseNewGameWarning);
     }
 
     public void CheckNewGame()
@@ -44,13 +43,8 @@ public class SceneChanger : MonoBehaviour
         }
         else
         {
-            _uiManager.MainMenuUI.WarningPanel.SetActive(true);
+            _uiManager.MainMenuUI.OpenWarningPanel();
         }
-    }
-
-    public void CloseNewGameWarning()
-    {
-        _uiManager.MainMenuUI.WarningPanel.SetActive(false);
     }
 
     public void NewGame()
@@ -60,7 +54,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        CloseNewGameWarning();
+        _uiManager.MainMenuUI.ResetToStandard();
 
         _persistentData.NewSaveData();
 
