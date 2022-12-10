@@ -15,14 +15,12 @@ public class TempleUI : MonoBehaviour
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
-    private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
-    private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private CameraUtil _cameraUtil = null;
     private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
-    private TempleEnvironment _templeEnvironment = null;
+    private Temple _templeEnvironment = null;
     private InputManager _inputManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
@@ -33,10 +31,8 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
 
         SetupButtonListeners();
@@ -59,7 +55,7 @@ public class TempleUI : MonoBehaviour
 
     public void SceneSetup()
     {
-        _templeEnvironment = ServiceLocator.Get<TempleEnvironment>();
+        _templeEnvironment = ServiceLocator.Get<Temple>();
 
         _currentTempleSection = TempleSectionType.Buying;
     }
@@ -179,14 +175,7 @@ public class TempleUI : MonoBehaviour
 
     public void BuyChimera(EvolutionLogic evolutionLogic)
     {
-        if (_habitatManager.HabitatCapacityCheck() == false)
-        {
-            Debug.Log("Habitat is full!");
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            return;
-        }
-
-        int price = 5;
+        int price = _templeEnvironment.TempleBuyChimeras.GetCurrentPrice(evolutionLogic.ChimeraType);
 
         if (_currencyManager.SpendFossils(price) == false)
         {
@@ -199,16 +188,6 @@ public class TempleUI : MonoBehaviour
             return;
         }
 
-        var chimeraGO = _resourceManager.GetChimeraBasePrefab(evolutionLogic.ChimeraType);
-        Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
-        chimeraComp.SetIsFirstChimera(true);
-
-        _habitatManager.AddNewChimera(chimeraComp);
-        _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
-        _templeEnvironment.TempleCollections.Build();
-
-        _uiManager.AlertText.CreateAlert($"You Have Acquired {evolutionLogic.Name}!");
-
-        _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
+        _templeEnvironment.TempleBuyChimeras.BuyChimera(evolutionLogic);
     }
 }

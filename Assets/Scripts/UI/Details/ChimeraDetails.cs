@@ -31,11 +31,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Color _defaultColor = new Color();
     [SerializeField] private List<Image> _statIcons = new List<Image>();
 
-
     private string _explorationPreference = "";
     private string _staminaPreference = "";
     private string _wisdomPreference = "";
-
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
@@ -76,20 +74,17 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Update()
     {
-        if (gameObject.activeInHierarchy == false)
-        {
-            return;
-        }
-
         if (GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
         {
             _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
             _uiManager.Tooltip.BeingUsed = true;
             _uiManager.Tooltip.gameObject.SetActive(true);
+
             if (_uiManager.Tooltip.HoveringOver == _explorationTransform)
             {
                 return;
             }
+
             _uiManager.Tooltip.HoveringOver = _explorationTransform;
             _uiManager.Tooltip.Explanation.text = $"{_explorationPreference}\nDecreases Expedition duration";
         }
@@ -98,10 +93,12 @@ public class ChimeraDetails : MonoBehaviour
             _uiManager.Tooltip.BeingUsed = true;
             _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
             _uiManager.Tooltip.gameObject.SetActive(true);
+
             if (_uiManager.Tooltip.HoveringOver == _staminaTransform)
             {
                 return;
             }
+
             _uiManager.Tooltip.HoveringOver = _staminaTransform;
             _uiManager.Tooltip.Explanation.text = $"{_staminaPreference}\nIncreases max energy and energy regen rate";
         }
@@ -110,10 +107,12 @@ public class ChimeraDetails : MonoBehaviour
             _uiManager.Tooltip.BeingUsed = true;
             _uiManager.Tooltip.transform.position = Input.mousePosition + new Vector3(200.0f, -100f, 0f);
             _uiManager.Tooltip.gameObject.SetActive(true);
+
             if (_uiManager.Tooltip.HoveringOver == _wisdomTransform)
             {
                 return;
             }
+
             _uiManager.Tooltip.HoveringOver = _wisdomTransform;
             _uiManager.Tooltip.Explanation.text = $"{_wisdomPreference}\nIncreases currency gain from expeditions";
         }
@@ -314,10 +313,11 @@ public class ChimeraDetails : MonoBehaviour
             return;
         }
 
+        NoPrefferedStat();
+
         switch (_chimera.PreferredStat)
         {
             case StatType.None:
-                NoPrefferedStat();
                 break;
             case StatType.Exploration:
                 _statIcons[0].color = _prefferedGoldColor;

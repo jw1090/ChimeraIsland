@@ -6,6 +6,7 @@ public class CrystalSpawn : MonoBehaviour
 {
     [SerializeField] private StatefulObject _crystal = null;
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
+    [SerializeField] private List<Crystal> _crystalList = new List<Crystal>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
     private int _health = 3;
@@ -25,6 +26,11 @@ public class CrystalSpawn : MonoBehaviour
 
     public void Activate(int currentTier)
     {
+        foreach (Crystal crystal in _crystalList)
+        {
+            crystal.ResetCrystal();
+        }
+
         _crystal.SetState($"Crystal{currentTier}");
 
         _currentTier = currentTier;
@@ -32,6 +38,7 @@ public class CrystalSpawn : MonoBehaviour
 
         _isActive = true;
         _crystal.gameObject.SetActive(true);
+        _crystal.CurrentState.StateObject.GetComponent<Crystal>().Grow(currentTier);
     }
 
     public void Harvest()
@@ -43,38 +50,40 @@ public class CrystalSpawn : MonoBehaviour
 
         ShowEffect();
 
-        if (--_health == 0)
+        _currencyManager.IncreaseEssence(25 * _currentTier);
+
+        --_health;
+
+        if (_health == 2)
+        {
+            _crystal.SetState($"Crystal{_health}");
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
+        }
+        else if (_health == 1)
+        {
+            _crystal.SetState($"Crystal{_health}");
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
+        }
+        else if (_health == 0)
         {
             _isActive = false;
             _crystal.gameObject.SetActive(false);
-            _currencyManager.IncreaseEssence(20 * _currentTier);
 
             _audioManager.PlaySFX(EnvironmentSFXType.MiningHarvest);
-        }
-        else
-        {
-            if (_health == 1)
-            {
-                _currencyManager.IncreaseEssence(15 * _currentTier);
-            }
-            else
-            {
-                _currencyManager.IncreaseEssence(10 * _currentTier);
-            }
-
-            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
         }
     }
 
     private void ShowEffect()
     {
-        foreach(ParticleSystem p in _tapMine)
+        foreach (ParticleSystem p in _tapMine)
         {
             if (p.isPlaying != true)
             {
                 p.gameObject.SetActive(true);
                 p.time = 0;
+
                 StartCoroutine(StopMineEffect(p));
+
                 break;
             }
         }
