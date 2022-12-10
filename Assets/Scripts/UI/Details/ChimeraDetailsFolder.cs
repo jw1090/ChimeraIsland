@@ -49,6 +49,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void IncreaseChimeraDetailsInstance()
     {
+        if (_detailsHierarchyParent.childCount > _habitatManager.ChimerasInHabitat.Count)
+        {
+            return;
+        }
+
         GameObject newDetailsGO = Instantiate(_detailsPrefab, _detailsHierarchyParent);
         ChimeraDetails newDetailsComp = newDetailsGO.GetComponent<ChimeraDetails>();
 

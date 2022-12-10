@@ -31,11 +31,9 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Color _defaultColor = new Color();
     [SerializeField] private List<Image> _statIcons = new List<Image>();
 
-
     private string _explorationPreference = "";
     private string _staminaPreference = "";
     private string _wisdomPreference = "";
-
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private UIManager _uiManager = null;

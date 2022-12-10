@@ -12,9 +12,9 @@ public class TempleBuyChimeras : MonoBehaviour
     private int _aPrice = 0;
     private int _bPrice = 0;
     private int _cPrice = 0;
-    private int _aPurchaseAmount = 0;
-    private int _bPurchaseAmount = 0;
-    private int _cPurchaseAmount = 0;
+    private int _ownedAFamilyMembers = 0;
+    private int _ownedBFamilyMembers = 0;
+    private int _ownedCFamilyMembers = 0;
 
     public int GetCurrentPrice(ChimeraType chimeraType)
     {
@@ -41,9 +41,42 @@ public class TempleBuyChimeras : MonoBehaviour
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 
+        LoadPurchaseAmounts();
+
         _aPrice = SetupPrice(ChimeraType.A);
         _bPrice = SetupPrice(ChimeraType.B);
         _cPrice = SetupPrice(ChimeraType.C);
+    }
+
+    private void LoadPurchaseAmounts()
+    {
+        foreach (ChimeraData chimera in _habitatManager.ChimerasInHabitat)
+        {
+            switch (chimera.Type)
+            {
+                case ChimeraType.A:
+                case ChimeraType.A1:
+                case ChimeraType.A2:
+                case ChimeraType.A3:
+                    ++_ownedAFamilyMembers;
+                    break;
+                case ChimeraType.B:
+                case ChimeraType.B1:
+                case ChimeraType.B2:
+                case ChimeraType.B3:
+                    ++_ownedBFamilyMembers;
+                    break;
+                case ChimeraType.C:
+                case ChimeraType.C1:
+                case ChimeraType.C2:
+                case ChimeraType.C3:
+                    ++_ownedCFamilyMembers;
+                    break;
+                default:
+                    Debug.LogError($"Chimera Type {chimera.Type} is invalid!");
+                    break;
+            }
+        }
     }
 
     private int SetupPrice(ChimeraType chimeraType)
@@ -53,13 +86,13 @@ public class TempleBuyChimeras : MonoBehaviour
         switch (chimeraType)
         {
             case ChimeraType.A:
-                loopAmount = _aPurchaseAmount;
+                loopAmount = _ownedAFamilyMembers;
                 break;
             case ChimeraType.B:
-                loopAmount = _bPurchaseAmount;
+                loopAmount = _ownedBFamilyMembers;
                 break;
             case ChimeraType.C:
-                loopAmount = _cPurchaseAmount;
+                loopAmount = _ownedCFamilyMembers;
                 break;
             default:
                 Debug.LogError($"Chimera Type {chimeraType} is invalid!");
@@ -105,15 +138,15 @@ public class TempleBuyChimeras : MonoBehaviour
         {
             case ChimeraType.A:
                 _aPrice = PriceFormula(_aPrice);
-                ++_aPurchaseAmount;
+                ++_ownedAFamilyMembers;
                 break;
             case ChimeraType.B:
                 _bPrice = PriceFormula(_bPrice);
-                ++_bPurchaseAmount;
+                ++_ownedBFamilyMembers;
                 break;
             case ChimeraType.C:
                 _cPrice = PriceFormula(_cPrice);
-                ++_cPurchaseAmount;
+                ++_ownedCFamilyMembers;
                 break;
             default:
                 Debug.LogError($"Chimera Type {chimeraType} is invalid!");
