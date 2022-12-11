@@ -31,6 +31,7 @@ public class LevelLoader : AsyncLoader
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private SceneChanger _sceneChanger = null;
 
     protected override void Awake()
     {
@@ -50,6 +51,7 @@ public class LevelLoader : AsyncLoader
         Initialize();
         ProcessQueuedCallbacks();
 
+        _sceneChanger.RecentSceneChange = false;
         LoadUIElements();
 
         switch (_sceneType)
@@ -89,6 +91,7 @@ public class LevelLoader : AsyncLoader
         _inputManager.SetCurrentScene(_sceneType);
 
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 

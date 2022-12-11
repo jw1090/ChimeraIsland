@@ -45,10 +45,11 @@ public class ChimeraPopUp : MonoBehaviour
             return;
         }
 
-        switch (_chimera.PreferredStat)
+        NoPrefferedStat();
+
+        switch (_chimera.EvolutionBonusStat)
         {
             case StatType.None:
-                NoPrefferedStat();
                 break;
             case StatType.Exploration:
                 _statIcons[0].color = _prefferedGoldColor;
@@ -60,7 +61,7 @@ public class ChimeraPopUp : MonoBehaviour
                 _statIcons[2].color = _prefferedGoldColor;
                 break;
             default:
-                Debug.LogError($"Unhandled stat [{_chimera.PreferredStat}] please fix!");
+                Debug.LogError($"Unhandled stat [{_chimera.EvolutionBonusStat}] please fix!");
                 break;
         }
     }

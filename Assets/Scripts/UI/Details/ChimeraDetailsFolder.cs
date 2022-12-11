@@ -35,11 +35,6 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     private void SetupListeners()
     {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.SetupButtonListeners();
-        }
-
         _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
         _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
         _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
