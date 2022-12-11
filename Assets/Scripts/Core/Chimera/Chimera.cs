@@ -49,7 +49,7 @@ public class Chimera : MonoBehaviour
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
-    public StatType PreferredStat { get => _currentEvolution.StatBonus; }
+    public StatType EvolutionBonusStat { get => _currentEvolution.StatBonus; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
@@ -68,6 +68,7 @@ public class Chimera : MonoBehaviour
     public float AveragePower { get => _averagePower; }
     public string Name { get => GetName(); }
     public string CustomName { get => _customName; }
+
     public int GetStatThreshold(StatType statType)
     {
         switch (statType)

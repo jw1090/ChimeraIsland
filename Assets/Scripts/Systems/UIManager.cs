@@ -13,20 +13,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TempleUI _templeUI = null;
     [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
     [SerializeField] private AlertText _alertText = null;
-    [SerializeField] private Tooltip _tooltip = null;
 
     [Header("Settings")]
     [SerializeField] private SettingsUI _settingsUI = null;
 
+    [Header("Tooltip")]
+    [SerializeField] private Tooltip _tooltip = null;
+
     private bool _uiVisible = true;
 
-    public Tooltip Tooltip { get => _tooltip; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
     public HabitatUI HabitatUI { get => _habitatUI; }
     public TempleUI TempleUI { get => _templeUI; }
     public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public SettingsUI SettingsUI { get => _settingsUI; }
+    public Tooltip Tooltip { get => _tooltip; }
     public AlertText AlertText { get => _alertText; }
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
     public bool UIActive { get => _uiVisible; }
@@ -46,6 +48,7 @@ public class UIManager : MonoBehaviour
 
         _settingsUI.Initialize(this);
         _alertText.Initialize();
+        _tooltip.Initialize();
 
         _mainMenuUI.Initialize(this);
         _startingUI.Initialize(this);

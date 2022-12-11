@@ -103,7 +103,7 @@ public class TrainingUI : MonoBehaviour
     {
         _preferredDiscount = 1.0f; // Discount of 1 is nothing.
 
-        if (_chimera.PreferredStat == _facility.StatType)
+        if (_chimera.EvolutionBonusStat == _facility.StatType)
         {
             _preferredDiscount = 0.5f;
         }
