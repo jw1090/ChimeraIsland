@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class AutoScroll : MonoBehaviour
 {
     [SerializeField] ScrollRect _scroll = null;
-    [SerializeField] float _speed = 0.5f;
+    [SerializeField] float _speed = 1.5f;
     private float _lastVal = 0f;
     private bool _scrolling = false;
+
     public void Initialize()
     {
         _scroll.onValueChanged.AddListener(StopScroll);
@@ -24,6 +25,7 @@ public class AutoScroll : MonoBehaviour
         }
         _lastVal = val.y;
     }
+
     public void StartScrolling()
     {
         _scrolling = true;
