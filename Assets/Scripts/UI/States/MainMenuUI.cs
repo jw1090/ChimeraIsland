@@ -23,7 +23,6 @@ public class MainMenuUI : MonoBehaviour
     private UIManager _uiManager;
     private PersistentData _persistentData;
 
-    public AutoScroll CreditsAutoScroll { get => _creditsAutoScroll; }
     public Button WarningYesButton { get => _warningYesButton; }
     public Button WarningNoButton { get => _warningNoButton; }
     public Button NewGameButton { get => _newGameButton; }
