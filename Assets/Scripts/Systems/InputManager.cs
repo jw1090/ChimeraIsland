@@ -146,11 +146,6 @@ public class InputManager : MonoBehaviour
             ExitHeldState();
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0 && _currentScene == SceneType.MainMenu)
-        {
-            _uiManager.MainMenuUI.CreditsAutoScroll.Scroll(false);
-        }
-
         if (_cameraUtil != null && _freeCameraActive == false)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)

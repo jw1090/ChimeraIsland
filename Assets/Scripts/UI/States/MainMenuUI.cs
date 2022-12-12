@@ -37,6 +37,7 @@ public class MainMenuUI : MonoBehaviour
         _uiManager = uiManager;
         _persistentData = ServiceLocator.Get<PersistentData>();
 
+        _creditsAutoScroll.Initialize();
         SetupButtonsListeners();
         ResetToStandard();
         CheckShowLoadGameButton();
@@ -64,7 +65,7 @@ public class MainMenuUI : MonoBehaviour
     private void OpenCredits()
     {
         _statefulObject.SetState("Credits Panel", true);
-        _creditsAutoScroll.Scroll(true);
+        _creditsAutoScroll.StartScrolling();
     }
 
     public void OpenWarningPanel()
