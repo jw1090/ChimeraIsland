@@ -35,12 +35,14 @@ public class InputManager : MonoBehaviour
     private bool _debugViewEnabled = false;
     private bool _freeCameraActive = false;
     private float _rotationAmount = 0.8f;
+    private SceneType _currentScene = SceneType.None;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
     public float RotationSpeed { get => _rotationAmount; }
 
+    public void SetCurrentScene(SceneType sceneType) { _currentScene = sceneType; }
     public void SetChimeraRotationSpeed(float speed)
     {
         _rotationAmount = speed;
@@ -127,13 +129,9 @@ public class InputManager : MonoBehaviour
 
         if (MouseInScreenSpace() == true)
         {
-            Cursor.SetCursor(_resourceManager.GetCursorTexture(GetCursorSprite()), Vector2.zero, CursorMode.Auto);
+            CursorChange();
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            HeldCheckAgainstUI();
-        }
         if (Input.GetMouseButton(1))
         {
             RotateChimeraCheck();
@@ -156,7 +154,8 @@ public class InputManager : MonoBehaviour
                 {
                     return;
                 }
-                if (_cameraUtil.SceneType == SceneType.Habitat)
+
+                if (_currentScene == SceneType.Habitat)
                 {
                     _cameraUtil.CameraZoom();
                 }
@@ -232,7 +231,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
-            if (_cameraUtil.SceneType == SceneType.Habitat)
+            if (_currentScene == SceneType.Habitat)
             {
                 if (_isHolding == true)
                 {
@@ -252,7 +251,7 @@ public class InputManager : MonoBehaviour
                     _isHolding = true;
                 }
             }
-            else if (_cameraUtil.SceneType == SceneType.Starting)
+            else if (_currentScene == SceneType.Starting)
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
@@ -263,7 +262,7 @@ public class InputManager : MonoBehaviour
 
                 _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
             }
-            else if (_cameraUtil.SceneType == SceneType.Temple)
+            else if (_currentScene == SceneType.Temple)
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
 
@@ -303,13 +302,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void HeldCheckAgainstUI()
+    private void CursorChange()
     {
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            ExitHeldState();
-            return;
-        }
+        CursorType newCursorType = GetCursorSprite();
+
+        Cursor.SetCursor(_resourceManager.GetCursorTexture(newCursorType), Vector2.zero, CursorMode.Auto);
     }
 
     private void ExitHeldState()

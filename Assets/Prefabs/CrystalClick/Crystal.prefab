@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2699960408804650499}
   - component: {fileID: 1220955266047372106}
-  - component: {fileID: 6825403660827690609}
+  - component: {fileID: 6533044731403251844}
+  - component: {fileID: 4303263873021012869}
   m_Layer: 8
   m_Name: Crystal
   m_TagString: Untagged
@@ -47,7 +48,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 3, z: 2.5}
   m_Center: {x: -0.5, y: 1.25, z: 0}
---- !u!95 &6825403660827690609
+--- !u!114 &6533044731403251844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612397747903302400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f52d751853116e4398bf86614582aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 4303263873021012869}
+  _light: {fileID: 948382558057887259}
+  _lightRange: 3
+  _lightIntensity: 28
+--- !u!95 &4303263873021012869
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -55,9 +72,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612397747903302400}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e8020b8b6345305449428da831571851, type: 2}
+  m_Controller: {fileID: 9100000, guid: b0692231388fcd748ba9252e6f62fd17, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -144,8 +161,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.48584908, g: 0.6596467, b: 1, a: 1}
-  m_Intensity: 5
-  m_Range: 2
+  m_Intensity: 28
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

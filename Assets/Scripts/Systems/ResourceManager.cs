@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -118,6 +119,11 @@ public class ResourceManager : MonoBehaviour
 
     public Texture2D GetCursorTexture(CursorType cursorType)
     {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return _mouseDefault;
+        }
+
         switch (cursorType)
         {
             case CursorType.Default:

@@ -4,6 +4,7 @@ using UnityEngine;
 public class CrystalManager : MonoBehaviour
 {
     [SerializeField] private List<CrystalSpawn> crystals = null;
+    [SerializeField] private float _spawnDelay = 20;
     private Habitat _habitat = null;
     private ExpeditionManager _expeditionManager = null;
     private int _tracker = 0;
@@ -27,7 +28,7 @@ public class CrystalManager : MonoBehaviour
             return;
         }
 
-        if (++_tracker >= 60)
+        if (++_tracker >= _spawnDelay)
         {
             _tracker = 0;
             SpawnCrystal();

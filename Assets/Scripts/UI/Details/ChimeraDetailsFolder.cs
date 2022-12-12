@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
@@ -8,42 +9,53 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private Image _bioButton = null;
     [SerializeField] private Image _aquaButton = null;
     [SerializeField] private Image _firaButton = null;
+    [SerializeField] private Transform _detailsHierarchyParent = null;
+
     private UIManager _uiManager = null;
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ChimeraOrderType orderType = ChimeraOrderType.AveragePower;
+    private GameObject _detailsPrefab = null;
     private bool _showGrass = true;
     private bool _showWater = true;
     private bool _showFire = true;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
-    public void Initialize(UIManager uiManager)
+    public void Initialize(UIManager uiManager, GameObject detailsPrefab)
     {
         _uiManager = uiManager;
+        _detailsPrefab = detailsPrefab;
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
-
-        foreach (var chimeraDetail in _chimeraDetailsList)
-        {
-            chimeraDetail.Initialize(uiManager);
-        }
-        _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
 
         SetupListeners();
     }
 
     private void SetupListeners()
     {
-        foreach (var detail in _chimeraDetailsList)
-        {
-            detail.SetupButtonListeners();
-        }
-
         _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
         _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
         _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
+
+        _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
+    }
+
+    public void IncreaseChimeraDetailsInstance()
+    {
+        if (_detailsHierarchyParent.childCount > _habitatManager.ChimerasInHabitat.Count)
+        {
+            return;
+        }
+
+        GameObject newDetailsGO = Instantiate(_detailsPrefab, _detailsHierarchyParent);
+        ChimeraDetails newDetailsComp = newDetailsGO.GetComponent<ChimeraDetails>();
+
+        newDetailsComp.Initialize(_uiManager);
+        _chimeraDetailsList.Add(newDetailsComp);
+
+        newDetailsGO.SetActive(false);
     }
 
     public void ToggleShowGrass()

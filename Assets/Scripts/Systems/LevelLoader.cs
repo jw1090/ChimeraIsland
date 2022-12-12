@@ -8,17 +8,17 @@ public class LevelLoader : AsyncLoader
 
     [Header("Standard")]
     [SerializeField] private CameraUtil _cameraUtil = null;
-    [SerializeField] private LightingManager _lightingManager = null;
 
     [Header("Starter")]
     [SerializeField] private StarterEnvironment _starterEnvironment = null;
 
     [Header("Habitat")]
     [SerializeField] private Habitat _habitat = null;
+    [SerializeField] private LightingManager _lightingManager = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
 
     [Header("Temple")]
-    [SerializeField] private TempleEnvironment _templeEnvironment = null;
+    [SerializeField] private Temple _templeEnvironment = null;
 
     [Header("Builder")]
     [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
@@ -31,6 +31,7 @@ public class LevelLoader : AsyncLoader
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private SceneChanger _sceneChanger = null;
 
     protected override void Awake()
     {
@@ -50,6 +51,7 @@ public class LevelLoader : AsyncLoader
         Initialize();
         ProcessQueuedCallbacks();
 
+        _sceneChanger.RecentSceneChange = false;
         LoadUIElements();
 
         switch (_sceneType)
@@ -86,7 +88,10 @@ public class LevelLoader : AsyncLoader
         _habitatManager.SetCurrentHabitat(_habitat);
 
         _inputManager = ServiceLocator.Get<InputManager>();
+        _inputManager.SetCurrentScene(_sceneType);
+
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
+        _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 
@@ -131,7 +136,7 @@ public class LevelLoader : AsyncLoader
 
         if (_templeEnvironment != null)
         {
-            ServiceLocator.Register<TempleEnvironment>(_templeEnvironment.Initialize(), true);
+            ServiceLocator.Register<Temple>(_templeEnvironment.Initialize(), true);
             _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
             _cameraUtil.SetTempleEnvironment(_templeEnvironment);
         }

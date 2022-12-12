@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Temple : MonoBehaviour
+public class TempleStructure : MonoBehaviour
 {
     [SerializeField] private StatefulObject _states = null;
     [SerializeField] private Transform _cameraTransitionNode = null;
