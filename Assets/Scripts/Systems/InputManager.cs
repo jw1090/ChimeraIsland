@@ -277,19 +277,19 @@ public class InputManager : MonoBehaviour
         {
             if (hit.collider.transform.gameObject.tag == "Water")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Water, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Water, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Stone")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Stone, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Stone, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Dirt")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Ground, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Ground, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Tree")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Tree, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Tree, hit);
             }
         }
     }
