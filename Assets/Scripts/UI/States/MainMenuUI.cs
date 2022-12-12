@@ -18,10 +18,12 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _warningYesButton = null;
     [SerializeField] private Button _warningNoButton = null;
     [SerializeField] private Button _screenWideWarningButton = null;
+    [SerializeField] private AutoScroll _creditsAutoScroll = null;
 
     private UIManager _uiManager;
     private PersistentData _persistentData;
 
+    public AutoScroll CreditsAutoScroll { get => _creditsAutoScroll; }
     public Button WarningYesButton { get => _warningYesButton; }
     public Button WarningNoButton { get => _warningNoButton; }
     public Button NewGameButton { get => _newGameButton; }
@@ -62,6 +64,7 @@ public class MainMenuUI : MonoBehaviour
     private void OpenCredits()
     {
         _statefulObject.SetState("Credits Panel", true);
+        _creditsAutoScroll.Scroll(true);
     }
 
     public void OpenWarningPanel()
