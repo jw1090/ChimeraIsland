@@ -37,6 +37,7 @@ public class MainMenuUI : MonoBehaviour
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         _creditsAutoScroll.Initialize();
+
         SetupButtonsListeners();
         ResetToStandard();
         CheckShowLoadGameButton();
