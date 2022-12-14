@@ -18,6 +18,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button _warningYesButton = null;
     [SerializeField] private Button _warningNoButton = null;
     [SerializeField] private Button _screenWideWarningButton = null;
+    [SerializeField] private AutoScroll _creditsAutoScroll = null;
 
     private UIManager _uiManager;
     private PersistentData _persistentData;
@@ -34,6 +35,8 @@ public class MainMenuUI : MonoBehaviour
     {
         _uiManager = uiManager;
         _persistentData = ServiceLocator.Get<PersistentData>();
+
+        _creditsAutoScroll.Initialize();
 
         SetupButtonsListeners();
         ResetToStandard();
@@ -62,6 +65,7 @@ public class MainMenuUI : MonoBehaviour
     private void OpenCredits()
     {
         _statefulObject.SetState("Credits Panel", true);
+        _creditsAutoScroll.StartScrolling();
     }
 
     public void OpenWarningPanel()
