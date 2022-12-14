@@ -11,7 +11,7 @@ public class TapVFX : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
-    public void ActivateEffect(TapVFXType type, Vector3 position)
+    public void ActivateEffect(TapVFXType type, RaycastHit hit)
     {
         switch (type)
         {
@@ -20,7 +20,7 @@ public class TapVFX : MonoBehaviour
                 {
                     if (p.isPlaying != true)
                     {
-                        StartCoroutine(StartEffect(p, position, 1.1f));
+                        StartCoroutine(StartEffect(p, hit, 1.1f));
                         break;
                     }
                 }
@@ -31,7 +31,7 @@ public class TapVFX : MonoBehaviour
                 {
                     if (p.isPlaying != true)
                     {
-                        StartCoroutine(StartEffect(p, position, .6f));
+                        StartCoroutine(StartEffect(p, hit, .6f));
                         break;
                     }
                 }
@@ -42,7 +42,7 @@ public class TapVFX : MonoBehaviour
                 {
                     if (p.isPlaying != true)
                     {
-                        StartCoroutine(StartEffect(p, position, 1.1f));
+                        StartCoroutine(StartEffect(p, hit, 1.1f));
                         break;
                     }
                 }
@@ -57,11 +57,13 @@ public class TapVFX : MonoBehaviour
         }
     }
 
-    private IEnumerator StartEffect(ParticleSystem effect, Vector3 position, float effectLength)
+    private IEnumerator StartEffect(ParticleSystem effect, RaycastHit hit, float effectLength)
     {
+        effect.transform.rotation = Quaternion.FromToRotation(hit.collider.transform.up, hit.normal) * hit.collider.transform.rotation;
+        effect.transform.Rotate(new Vector3(-90, 90, 0));
         effect.gameObject.SetActive(true);
         effect.time = 0;
-        effect.gameObject.transform.position = position;
+        effect.gameObject.transform.position = hit.point;
         yield return new WaitForSeconds(effectLength);
         effect.Stop();
     }
