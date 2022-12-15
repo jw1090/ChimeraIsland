@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class ChimeraCollections : MonoBehaviour
+public class Collections
 {
     private bool _aUnlocked = false;
     private bool _a1Unlocked = false;

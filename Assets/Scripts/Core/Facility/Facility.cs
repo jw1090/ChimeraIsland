@@ -29,8 +29,6 @@ public class Facility : MonoBehaviour
     private bool _isBuilt = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
-    //private int _upgradeProgress = 0;
-    //private int _upgradeGoal = 0;
     private bool _activateTraining = false;
 
     public Chimera StoredChimera { get => _storedChimera; }
@@ -70,7 +68,7 @@ public class Facility : MonoBehaviour
 
         _facilitySFX = GetComponent<FacilitySFX>();
         _trainingIcon.gameObject.SetActive(false);
-        _tiers.SetState("Tier 0");
+        _tiers.SetState("Tier 0", true);
 
         _facilitySign.Initialize(_facilityType);
     }
@@ -98,7 +96,7 @@ public class Facility : MonoBehaviour
         {
             debugString += $"{_facilityType} was purchased";
 
-            _tiers.SetState("Tier 1");
+            _tiers.SetState("Tier 1", true);
 
             _facilitySFX.Initialize(this);
             _facilitySFX.BuildSFX();
@@ -110,6 +108,15 @@ public class Facility : MonoBehaviour
             _price = (int)(_price * 4.0f);
             ++_statModifier;
             debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
+
+            if(_currentTier == 1)
+            {
+                _tiers.SetState("Tier 2", true);
+            }
+            else if(_currentTier == 2)
+            {
+                _tiers.SetState("Tier 3", true);
+            }
         }
 
         ++_currentTier;

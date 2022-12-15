@@ -25,4 +25,10 @@ public class FacilityData
             SliderMax = facility.TrainingIcon.max;
         }
     }
+
+    public FacilityData(UpgradeNode upgradeNode)
+    {
+        Type = upgradeNode.FacilityType;
+        CurrentTier = upgradeNode.Tier;
+    }
 }

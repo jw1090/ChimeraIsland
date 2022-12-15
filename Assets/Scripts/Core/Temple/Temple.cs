@@ -5,6 +5,7 @@ public class Temple : MonoBehaviour
     [Header("Sections")]
     [SerializeField] TempleCollections _templeCollections = null;
     [SerializeField] TempleBuyChimeras _templeBuyChimeras = null;
+    [SerializeField] TempleUpgrades _templeUpgrades = null;
 
     [Header("Position Nodes")]
     [SerializeField] Transform _startNode = null;
@@ -29,6 +30,7 @@ public class Temple : MonoBehaviour
 
     public TempleBuyChimeras TempleBuyChimeras { get => _templeBuyChimeras; }
     public TempleCollections TempleCollections { get => _templeCollections; }
+    public TempleUpgrades TempleUpgrades { get => _templeUpgrades; }
     public Transform StartNode { get => _startNode; }
     public Transform BuyingNode { get => _buyingNode; }
     public Transform CollectionNode { get => _collectionNode; }
@@ -47,6 +49,7 @@ public class Temple : MonoBehaviour
     {
         _templeBuyChimeras.Initialize(this);
         _templeCollections.Initialize();
+        _templeUpgrades.Initalize();
 
         return this;
     }
