@@ -24,7 +24,7 @@ public class CameraUtil : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
     private StarterEnvironment _starterEnvironment = null;
-    private TempleEnvironment _templeEnvironment = null;
+    private Temple _templeEnvironment = null;
     private PersistentData _persistentData = null;
     private SceneType _sceneType = SceneType.None;
     private bool _initialized = false;
@@ -35,11 +35,10 @@ public class CameraUtil : MonoBehaviour
     private float _zoom = 90.0f;
     private float _standardTransitionSpeed = 0.06f;
     private float _findTransitionSpeed = 0.05f;
+
     public Camera CameraCO { get => _cameraCO; }
-    public SceneType SceneType { get => _sceneType; }
     public bool IsHolding { get; set; }
     public bool IsNaming { get; set; }
-    public float Speed { get => _speed; }
 
     public void SetSpeed(float speed)
     {
@@ -48,7 +47,7 @@ public class CameraUtil : MonoBehaviour
     }
 
     public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
-    public void SetTempleEnvironment(TempleEnvironment templeEnvironment) { _templeEnvironment = templeEnvironment; }
+    public void SetTempleEnvironment(Temple templeEnvironment) { _templeEnvironment = templeEnvironment; }
 
     public CameraUtil Initialize(SceneType sceneType)
     {

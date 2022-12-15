@@ -3,21 +3,26 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
+    [Header("States")]
+    [SerializeField] private StatefulObject _statefulObject = null;
+
+    [Header("Main Buttons")]
     [SerializeField] private Button _newGameButton = null;
     [SerializeField] private Button _loadGameButton = null;
     [SerializeField] private Button _openCreditsButton = null;
     [SerializeField] private Button _closeCreditsButton = null;
     [SerializeField] private Button _quitGameButton = null;
     [SerializeField] private Button _settingsButton = null;
-    [SerializeField] private GameObject _warningPanel = null;
+
+    [Header("Warning Panel")]
     [SerializeField] private Button _warningYesButton = null;
     [SerializeField] private Button _warningNoButton = null;
+    [SerializeField] private Button _screenWideWarningButton = null;
+    [SerializeField] private AutoScroll _creditsAutoScroll = null;
 
     private UIManager _uiManager;
-    private StatefulObject _statefulObject;
     private PersistentData _persistentData;
 
-    public GameObject WarningPanel { get => _warningPanel; }
     public Button WarningYesButton { get => _warningYesButton; }
     public Button WarningNoButton { get => _warningNoButton; }
     public Button NewGameButton { get => _newGameButton; }
@@ -30,10 +35,11 @@ public class MainMenuUI : MonoBehaviour
     {
         _uiManager = uiManager;
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _statefulObject = GetComponent<StatefulObject>();
+
+        _creditsAutoScroll.Initialize();
 
         SetupButtonsListeners();
-        CloseCredits();
+        ResetToStandard();
         CheckShowLoadGameButton();
     }
 
@@ -50,16 +56,24 @@ public class MainMenuUI : MonoBehaviour
     private void SetupButtonsListeners()
     {
         _uiManager.CreateButtonListener(_openCreditsButton, OpenCredits);
-        _uiManager.CreateButtonListener(_closeCreditsButton, CloseCredits);
+        _uiManager.CreateButtonListener(_closeCreditsButton, ResetToStandard);
         _uiManager.CreateButtonListener(_settingsButton, _uiManager.SettingsUI.OpenSettingsPanel);
+        _uiManager.CreateButtonListener(_warningNoButton, ResetToStandard);
+        _uiManager.CreateButtonListener(_screenWideWarningButton, ResetToStandard);
     }
 
     private void OpenCredits()
     {
         _statefulObject.SetState("Credits Panel", true);
+        _creditsAutoScroll.StartScrolling();
     }
 
-    private void CloseCredits()
+    public void OpenWarningPanel()
+    {
+        _statefulObject.SetState("Warning Panel", true);
+    }
+
+    public void ResetToStandard()
     {
         _statefulObject.SetState("Main Panel", true);
     }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
@@ -7,24 +6,46 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraDataList = null;
     private List<FacilityData> _facilityDataList = null;
     private HabitatData _habitatData = new HabitatData();
-    private ChimeraCollections _chimeraCollections = new ChimeraCollections();
+    private Collections _collections = new Collections();
 
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
-    private int _chimeraCapacity = 9;
     private float _tickTimer = 0.3f;
 
     public HabitatData HabitatData { get => _habitatData; }
     public List<FacilityData> FacilitiesInHabitat { get => _facilityDataList; }
     public List<ChimeraData> ChimerasInHabitat { get => _chimeraDataList; }
-    public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
+    public Collections Collections { get => _collections; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
-    public int ChimeraCapacity { get => _chimeraCapacity; }
     public float TickTimer { get => _tickTimer; }
 
-    public bool HabitatCapacityCheck() { return _chimeraDataList.Count < _chimeraCapacity; }
+    public bool IsFacilityBuilt(UpgradeNode upgradeNode)
+    {
+        foreach (FacilityData facilityData in _facilityDataList)
+        {
+            if (facilityData.Type == upgradeNode.FacilityType && facilityData.CurrentTier >= upgradeNode.Tier)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int GetFacilityTier(FacilityType facilityType)
+    {
+        foreach (FacilityData facilityData in _facilityDataList)
+        {
+            if (facilityData.Type == facilityType)
+            {
+                return facilityData.CurrentTier;
+            }
+        }
+
+        return 0;
+    }
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -66,7 +87,7 @@ public class HabitatManager : MonoBehaviour
         _habitatData = _persistentData.HabitatData;
         _chimeraDataList = _persistentData.ChimeraData;
         _facilityDataList = _persistentData.FacilityData;
-        _chimeraCollections.LoadData(_persistentData.CollectionData);
+        _collections.LoadData(_persistentData.CollectionData);
     }
 
     public void ResetHabitatData()
@@ -105,29 +126,11 @@ public class HabitatManager : MonoBehaviour
         }
     }
 
-    public bool AddNewChimera(Chimera chimeraToSave)
+    public void AddNewChimera(Chimera chimeraToSave)
     {
         ChimeraData chimeraSavedData = new ChimeraData(chimeraToSave);
 
-        if (AddChimeraToHabitat(chimeraSavedData) == true)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    private bool AddChimeraToHabitat(ChimeraData chimeraToAdd)
-    {
-        if (HabitatCapacityCheck() == false)
-        {
-            Debug.Log($"Cannot add {chimeraToAdd.Type}, habitat is full.");
-            return false;
-        }
-
-        _chimeraDataList.Add(chimeraToAdd);
-
-        return true;
+        _chimeraDataList.Add(chimeraSavedData);
     }
 
     public void AddNewFacility(Facility facilityToSave)
@@ -137,6 +140,13 @@ public class HabitatManager : MonoBehaviour
         FacilityData facilitySavedData = new FacilityData(facilityToSave);
 
         _facilityDataList.Add(facilitySavedData);
+    }
+
+    public void AddNewFacility(FacilityData facilityToSave)
+    {
+        FacilityDeleteCheck(facilityToSave.Type);
+
+        _facilityDataList.Add(facilityToSave);
     }
 
     private void FacilityDeleteCheck(FacilityType facilityToSave)

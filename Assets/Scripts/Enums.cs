@@ -194,6 +194,8 @@ public enum CursorType
     Default,
     Clickable,
     Dragable,
+    Dragging,
+    Minable,
 }
 
 public enum ChimeraOrderType

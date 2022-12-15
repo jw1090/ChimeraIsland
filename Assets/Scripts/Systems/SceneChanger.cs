@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
     private HabitatManager _habitatManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
+
+    public bool RecentSceneChange { get; set; } = false;
 
     public SceneChanger Initialize()
     {
@@ -21,6 +24,8 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
+        Button mainMenuButton = _uiManager.SettingsUI.MainMenuButton;
+
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, LoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, QuitGame);
 
@@ -28,29 +33,28 @@ public class SceneChanger : MonoBehaviour
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningYesButton, NewGame);
-        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningNoButton, CloseNewGameWarning);
     }
 
     public void CheckNewGame()
     {
-        if(_uiManager.MainMenuUI.CheckHasSave() == false)
+        if (_uiManager.MainMenuUI.CheckHasSave() == false)
         {
             NewGame();
         }
         else
         {
-            _uiManager.MainMenuUI.WarningPanel.SetActive(true);
+            _uiManager.MainMenuUI.OpenWarningPanel();
         }
-    }
-
-    public void CloseNewGameWarning()
-    {
-        _uiManager.MainMenuUI.WarningPanel.SetActive(false);
     }
 
     public void NewGame()
     {
-        CloseNewGameWarning();
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
+        _uiManager.MainMenuUI.ResetToStandard();
 
         _persistentData.NewSaveData();
 
@@ -59,11 +63,21 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadGame()
     {
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
     }
 
     public void QuitGame()
     {
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
         SaveSessionData(true);
 
 #if UNITY_EDITOR
@@ -75,6 +89,11 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
         _uiManager.HabitatUI.ResetStandardUI();
         _uiManager.MainMenuUI.CheckShowLoadGameButton();
 
@@ -85,11 +104,21 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadStonePlains()
     {
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
     }
 
     public void LoadTemple()
     {
+        if (RecentSceneChange == true)
+        {
+            return;
+        }
+
         SaveSessionData(true);
 
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);

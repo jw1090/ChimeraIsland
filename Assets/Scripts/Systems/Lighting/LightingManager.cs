@@ -4,8 +4,7 @@ using UnityEngine;
 public class LightingManager : MonoBehaviour
 {
     [Header("Light Attributes")]
-    [Range(0.0f, 1.0f)]
-    [SerializeField] private float _time = 0.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] private float _time = 0.0f;
     [SerializeField] private float _fullDayLength = 0.0f;
     [SerializeField] private float _startTime = 0.0f;
     [SerializeField] private DayType _dayType = DayType.None;
@@ -41,6 +40,7 @@ public class LightingManager : MonoBehaviour
     private Material _starMaterial = null;
 
     public event Action<DayType> DayTypeChanged = null;
+
     public DayType DayType { get => _dayType; }
 
     public LightingManager Initialize()

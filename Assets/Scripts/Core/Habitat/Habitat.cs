@@ -16,7 +16,7 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _templeSpawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
-    [SerializeField] private Temple _temple = null;
+    [SerializeField] private TempleStructure _temple = null;
     [SerializeField] private StatefulObject _tiers = null;
     [SerializeField] private TapVFX _tapVfx = null;
 
@@ -31,7 +31,7 @@ public class Habitat : MonoBehaviour
     private int _currentTier = 1;
 
     public TapVFX TapVFX { get => _tapVfx; }
-    public Temple Temple { get => _temple; }
+    public TempleStructure Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
     public Transform TempleSpawnPoint { get => _templeSpawnPoint.transform; }
@@ -223,44 +223,17 @@ public class Habitat : MonoBehaviour
     {
         Facility facility = GetFacility(facilityType);
 
+        facility.BuildFacility(moveCamera);
+        _habitatManager.AddNewFacility(facility);
+
         if (facilityType == FacilityType.RuneStone) // Enums don't have spaces
         {
-            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Rune Stone Facility!");
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Tier {facility.CurrentTier} Rune Stone Facility!");
         }
         else
         {
-            _uiManager.AlertText.CreateAlert($"You Have Unlocked The {facilityType} Facility!");
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Tier {facility.CurrentTier}  {facilityType} Facility!");
         }
-
-        facility.BuildFacility(moveCamera);
-        _habitatManager.AddNewFacility(facility);
-    }
-
-    public bool BuyFacility(Facility facility)
-    {
-        if (facility.CurrentTier >= _currentTier)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            Debug.Log($"Cannot increase facility tier until habitat is upgraded. Requires Habitat Tier {_currentTier + 1}.");
-            return false;
-        }
-
-        if (_currencyManager.SpendEssence(facility.Price) == false)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            Debug.Log
-            (
-                $"Can't afford this facility." +
-                $"It costs {facility.Price} Essence and you" +
-                $"only have {_currencyManager.Essence} Essence."
-            );
-            return false;
-        }
-
-        facility.BuildFacility(true);
-        _habitatManager.AddNewFacility(facility);
-
-        return true;
     }
 
     public void UpgradeHabitatTier()

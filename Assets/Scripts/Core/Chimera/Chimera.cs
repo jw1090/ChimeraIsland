@@ -30,6 +30,7 @@ public class Chimera : MonoBehaviour
     private bool _onExpedition = false;
     private bool _readyToEvolve = false;
     private bool _isFirstChimera = false;
+    private bool _pauseEnergyRegen = false;
     private float _averagePower = 0;
     private int _uniqueId = 1;
     private int _exploration = 1;
@@ -49,7 +50,7 @@ public class Chimera : MonoBehaviour
     public bool ReadyToEvolve { get => _readyToEvolve; }
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
-    public StatType PreferredStat { get => _currentEvolution.StatBonus; }
+    public StatType EvolutionBonusStat { get => _currentEvolution.StatBonus; }
     public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
@@ -68,6 +69,7 @@ public class Chimera : MonoBehaviour
     public float AveragePower { get => _averagePower; }
     public string Name { get => GetName(); }
     public string CustomName { get => _customName; }
+
     public int GetStatThreshold(StatType statType)
     {
         switch (statType)
@@ -158,8 +160,8 @@ public class Chimera : MonoBehaviour
                     return "";
             }
         }
-        
-        if(CustomName != "")
+
+        if (CustomName != "")
         {
             return CustomName;
         }
@@ -192,11 +194,20 @@ public class Chimera : MonoBehaviour
         return false;
     }
 
-    public void SetIsFirstChimera(bool IsFirstChimera) { _isFirstChimera = IsFirstChimera; }
+    public void SetOnExpedition(bool onExpedition)
+    {
+        _onExpedition = onExpedition;
+
+        if (_onExpedition == false)
+        {
+            _pauseEnergyRegen = false;
+        }
+    }
+
+    public void SetIsFirstChimera(bool isFirstChimera) { _isFirstChimera = isFirstChimera; }
     public void SetEvolutionIconActive() { _interactionIcon.gameObject.SetActive(true); }
     public void SetUniqueID(int id) { _uniqueId = id; }
     public void SetInFacility(bool inFacility) { _inFacility = inFacility; }
-    public void SetOnExpedition(bool onExpedition) { _onExpedition = onExpedition; }
     public void SetStamina(int stamina) { _stamina = stamina; }
     public void SetWisdom(int wisdom) { _wisdom = wisdom; }
     public void SetExploration(int exploration) { _exploration = exploration; }
@@ -297,7 +308,7 @@ public class Chimera : MonoBehaviour
 
     public void EnergyTick()
     {
-        if (_onExpedition == true) // Nn energy gain on expeditions.
+        if (_pauseEnergyRegen == true || _onExpedition == true) // No energy gain on expeditions.
         {
             return;
         }
@@ -339,6 +350,8 @@ public class Chimera : MonoBehaviour
             _currentEnergy += energyAmount;
         }
 
+        _pauseEnergyRegen = false;
+
         _habitatUI.UpdateHabitatUI();
     }
 
@@ -353,6 +366,8 @@ public class Chimera : MonoBehaviour
         {
             _currentEnergy -= drainAmount;
         }
+
+        _pauseEnergyRegen = true;
 
         _habitatUI.UpdateHabitatUI();
     }
@@ -442,7 +457,7 @@ public class Chimera : MonoBehaviour
         _habitatUI.UpdateHabitatUI();
 
 
-        _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
+        _habitatManager.Collections.CollectChimera(_chimeraType);
 
         _persistentData.SaveSessionData();
     }

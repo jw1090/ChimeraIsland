@@ -46,9 +46,9 @@ public class EvolutionLogic : MonoBehaviour
         switch (chimeraType)
         {
             case ChimeraType.A:
-                explorationAmount = 4;
-                staminaAmount = 3;
-                wisdomAmount = 2;
+                explorationAmount = 3;
+                staminaAmount = 2;
+                wisdomAmount = 4;
                 break;
             case ChimeraType.B:
                 explorationAmount = 2;
@@ -56,8 +56,8 @@ public class EvolutionLogic : MonoBehaviour
                 wisdomAmount = 3;
                 break;
             case ChimeraType.C:
-                explorationAmount = 3;
-                staminaAmount = 4;
+                explorationAmount = 4;
+                staminaAmount = 3;
                 wisdomAmount = 2;
                 break;
             default:
