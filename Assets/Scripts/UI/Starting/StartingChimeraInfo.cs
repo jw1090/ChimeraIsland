@@ -7,9 +7,9 @@ public class StartingChimeraInfo : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _chimeraName = null;
     [SerializeField] private Image _icon = null;
-    [SerializeField] private List<GameObject> _explorationPreference = new List<GameObject>();
-    [SerializeField] private List<GameObject> _staminaPreference = new List<GameObject>();
-    [SerializeField] private List<GameObject> _wisdomPreference = new List<GameObject>();
+    [SerializeField] private List<StatefulObject> _explorationPreference = new List<StatefulObject>();
+    [SerializeField] private List<StatefulObject> _staminaPreference = new List<StatefulObject>();
+    [SerializeField] private List<StatefulObject> _wisdomPreference = new List<StatefulObject>();
     [SerializeField] private TextMeshProUGUI _chimeraInfo = null;
     private ResourceManager _resourceManager = null;
 
@@ -36,16 +36,16 @@ public class StartingChimeraInfo : MonoBehaviour
         StatPreference(_wisdomPreference, wisdomAmount);
     }
 
-    private void StatPreference(List<GameObject> iconList, int amount)
+    private void StatPreference(List<StatefulObject> iconList, int amount)
     {
-        foreach (GameObject icon in iconList)
+        foreach (StatefulObject icon in iconList)
         {
-            icon.SetActive(false);
+            icon.SetState("Empty", true);
         }
 
         for (int i = 0; i < Translation(amount); ++i)
         {
-            iconList[i].SetActive(true);
+            iconList[i].SetState("Filled", true);
         }
     }
 
