@@ -250,5 +250,6 @@ public class LevelLoader : AsyncLoader
     public void PlayCurrentSceneMusic()
     {
         _audioManager.PlaySceneMusic(_sceneType);
+        _audioManager.PlayTempleAmbient();
     }
 }

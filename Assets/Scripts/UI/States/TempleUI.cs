@@ -25,6 +25,9 @@ public class TempleUI : MonoBehaviour
     private InputManager _inputManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
+    public Button BackToHabitatButton { get => _backToHabitatButton; }
+    public Button GoLeftButton { get => _goLeftButton; }
+    public Button GoRightButton { get => _goRightButton; }
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
