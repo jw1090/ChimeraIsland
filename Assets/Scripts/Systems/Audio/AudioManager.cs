@@ -179,6 +179,10 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(builderUI.PlayButton, PlayClickSFX);
         _uiManager.CreateButtonListener(builderUI.ResetButton, PlayClickSFX);
         _uiManager.CreateButtonListener(builderUI.SaveButton, PlayClickSFX);
+
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.GoLeftButton, PlayWhooshSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.GoRightButton, PlayWhooshSFX);
     }
 
     public void PlayHabitatMusic()
@@ -220,6 +224,13 @@ public class AudioManager : MonoBehaviour
             AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient3").FirstOrDefault();
             _ambientSource.clip = item.Clip;
         }
+        _ambientSource.Play();
+    }
+
+    public void PlayTempleAmbient()
+    {
+        AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "Temple Ambient").FirstOrDefault();
+        _ambientSource.clip = item.Clip;
         _ambientSource.Play();
     }
 
@@ -314,6 +325,20 @@ public class AudioManager : MonoBehaviour
             case SFXUIType.Failure:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Failure SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case SFXUIType.StoneDrag:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Stone Drag SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case SFXUIType.Whoosh:
+                {
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Whoosh SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
@@ -499,6 +524,10 @@ public class AudioManager : MonoBehaviour
     private void PlayConfirmSFX()
     {
         PlayUISFX(SFXUIType.ConfirmClick);
+    }
+    private void PlayWhooshSFX()
+    {
+        PlayUISFX(SFXUIType.Whoosh);
     }
 
     private void StopAmbientSource()
