@@ -223,17 +223,17 @@ public class Habitat : MonoBehaviour
     {
         Facility facility = GetFacility(facilityType);
 
+        facility.BuildFacility(moveCamera);
+        _habitatManager.AddNewFacility(facility);
+
         if (facilityType == FacilityType.RuneStone) // Enums don't have spaces
         {
-            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Rune Stone Facility!");
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Tier {facility.CurrentTier} Rune Stone Facility!");
         }
         else
         {
-            _uiManager.AlertText.CreateAlert($"You Have Unlocked The {facilityType} Facility!");
+            _uiManager.AlertText.CreateAlert($"You Have Unlocked The Tier {facility.CurrentTier}  {facilityType} Facility!");
         }
-
-        facility.BuildFacility(moveCamera);
-        _habitatManager.AddNewFacility(facility);
     }
 
     public void UpgradeHabitatTier()

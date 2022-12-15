@@ -21,6 +21,32 @@ public class HabitatManager : MonoBehaviour
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public float TickTimer { get => _tickTimer; }
 
+    public bool IsFacilityBuilt(UpgradeNode upgradeNode)
+    {
+        foreach (FacilityData facilityData in _facilityDataList)
+        {
+            if (facilityData.Type == upgradeNode.FacilityType && facilityData.CurrentTier >= upgradeNode.Tier)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int GetFacilityTier(FacilityType facilityType)
+    {
+        foreach (FacilityData facilityData in _facilityDataList)
+        {
+            if (facilityData.Type == facilityType)
+            {
+                return facilityData.CurrentTier;
+            }
+        }
+
+        return 0;
+    }
+
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
@@ -114,6 +140,13 @@ public class HabitatManager : MonoBehaviour
         FacilityData facilitySavedData = new FacilityData(facilityToSave);
 
         _facilityDataList.Add(facilitySavedData);
+    }
+
+    public void AddNewFacility(FacilityData facilityToSave)
+    {
+        FacilityDeleteCheck(facilityToSave.Type);
+
+        _facilityDataList.Add(facilityToSave);
     }
 
     private void FacilityDeleteCheck(FacilityType facilityToSave)

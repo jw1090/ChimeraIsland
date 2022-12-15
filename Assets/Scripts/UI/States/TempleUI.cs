@@ -15,6 +15,7 @@ public class TempleUI : MonoBehaviour
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
+    private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
     private UIManager _uiManager = null;
     private CameraUtil _cameraUtil = null;
@@ -31,6 +32,7 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
@@ -179,15 +181,43 @@ public class TempleUI : MonoBehaviour
 
         if (_currencyManager.SpendFossils(price) == false)
         {
+            _uiManager.AlertText.CreateAlert($"Can't Afford The {evolutionLogic.Name} Chimera. It Costs {price} Fossils!");
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-            Debug.Log
-            (
-                $"Can't afford the {evolutionLogic.Name} chimera. It costs {price} " +
-                $"Fossils and you only have {_currencyManager.Fossils} Fossils."
-            );
+
             return;
         }
 
         _templeEnvironment.TempleBuyChimeras.BuyChimera(evolutionLogic);
+    }
+
+    public void BuyFacility(UpgradeNode upgradeNode)
+    {
+        if (_habitatManager.IsFacilityBuilt(upgradeNode) == true)
+        {
+            _uiManager.AlertText.CreateAlert($"This Facility Tier Has Already Been Built!");
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            return;
+        }
+
+        if (upgradeNode.Tier == 1)
+        {
+            _uiManager.AlertText.CreateAlert($"Complete More Expeditions To Unlock New Facility Upgrades!");
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            return;
+        }
+
+        int price = _templeEnvironment.TempleUpgrades.GetPrice(upgradeNode.Tier);
+
+        if (_currencyManager.SpendFossils(price) == false)
+        {
+            _uiManager.AlertText.CreateAlert($"Can't Afford The Facility Upgrade. It Costs {price} Fossils.");
+            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+
+            return;
+        }
+
+        _templeEnvironment.TempleUpgrades.BuyUpgrade(upgradeNode);
     }
 }
