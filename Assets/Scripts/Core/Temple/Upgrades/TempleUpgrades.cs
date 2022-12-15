@@ -56,7 +56,7 @@ public class TempleUpgrades : MonoBehaviour
 
         UpdateUpgradeNodes();
 
-        _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
+        _audioManager.PlayUISFX(SFXUIType.StoneDrag);
     }
 
     private void UpdateUpgradeNodes()
