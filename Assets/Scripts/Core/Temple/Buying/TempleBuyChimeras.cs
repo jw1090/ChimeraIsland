@@ -124,7 +124,7 @@ public class TempleBuyChimeras : MonoBehaviour
         chimeraComp.SetIsFirstChimera(true);
 
         _habitatManager.AddNewChimera(chimeraComp);
-        _habitatManager.ChimeraCollections.CollectChimera(evolutionLogic.ChimeraType);
+        _habitatManager.Collections.CollectChimera(evolutionLogic.ChimeraType);
         _temple.TempleCollections.Build();
 
         _uiManager.AlertText.CreateAlert($"You Have Acquired {evolutionLogic.Name}!");

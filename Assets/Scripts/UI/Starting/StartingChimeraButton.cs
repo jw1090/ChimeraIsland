@@ -37,7 +37,7 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         chimeraComp.SetIsFirstChimera(true);
 
         _habitatManager.AddNewChimera(chimeraComp);
-        _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
+        _habitatManager.Collections.CollectChimera(_chimeraType);
 
         _sceneChanger.LoadStonePlains();
     }

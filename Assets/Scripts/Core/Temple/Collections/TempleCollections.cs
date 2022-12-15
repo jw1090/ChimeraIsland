@@ -15,11 +15,11 @@ public class TempleCollections : MonoBehaviour
     [SerializeField] private GameObject _c1 = null;
     [SerializeField] private GameObject _c2 = null;
     [SerializeField] private GameObject _c3 = null;
-    private ChimeraCollections _chimeraCollections = null;
+    private Collections _chimeraCollections = null;
 
     public void Initialize()
     {
-        _chimeraCollections = ServiceLocator.Get<HabitatManager>().ChimeraCollections;
+        _chimeraCollections = ServiceLocator.Get<HabitatManager>().Collections;
     }
 
     public void Build()

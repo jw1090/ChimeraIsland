@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class InputManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
     private LayerMask _templeLayer = new LayerMask();
+    private LayerMask _upgradesLayer = new LayerMask();
     private LayerMask _groundLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
@@ -81,6 +83,7 @@ public class InputManager : MonoBehaviour
         _crystalLayer = LayerMask.GetMask("Crystal");
         _portalLayer = LayerMask.GetMask("Portal");
         _templeLayer = LayerMask.GetMask("Temple");
+        _upgradesLayer = LayerMask.GetMask("UpgradeNode");
         _groundLayer = LayerMask.GetMask("Ground");
         _sphereMarker.SetActive(false);
 
@@ -269,6 +272,15 @@ public class InputManager : MonoBehaviour
                 _templeUI.BuyChimera(_evolution);
             }
         }
+        else if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
+        {
+            if (_currentScene == SceneType.Temple)
+            {
+                UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
+
+                _templeUI.BuyFacility(upgrade);
+            }
+        }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
             _sceneChanger.LoadTemple();
@@ -340,6 +352,11 @@ public class InputManager : MonoBehaviour
 
     private void DebugHabitatUpgradeInput()
     {
+        if(_currentScene != SceneType.Habitat)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.H))
         {
             _expeditionManager.CompleteCurrentUpgradeExpedition();
@@ -399,6 +416,11 @@ public class InputManager : MonoBehaviour
         }
 
         if (Physics.Raycast(ray, 300.0f, _chimeraLayer))
+        {
+            return CursorType.Dragable;
+        }
+
+        if (Physics.Raycast(ray, 300.0f, _upgradesLayer))
         {
             return CursorType.Dragable;
         }
