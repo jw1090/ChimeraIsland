@@ -21,7 +21,7 @@ public class StartingUI : MonoBehaviour
     {
         _uiManager = uIManager;
 
-        _acceptButton.Initialize();
+        _acceptButton.Initialize(_uiManager);
         _startingChimeraInfo.Initialize();
 
         SetupListeners();
