@@ -125,6 +125,8 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.DetermineReward();
 
         _expeditionManager.SetPortalColor();
+
+        _uiManager.AlertText.CreateAlert("Expedition Complete!");
     }
 
     public void CompleteCurrentHabitatExpedition()
