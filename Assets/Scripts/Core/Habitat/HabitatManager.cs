@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class HabitatManager : MonoBehaviour
@@ -7,7 +6,7 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraDataList = null;
     private List<FacilityData> _facilityDataList = null;
     private HabitatData _habitatData = new HabitatData();
-    private ChimeraCollections _chimeraCollections = new ChimeraCollections();
+    private ChimeraCollections _chimeraCollections = null;
 
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
@@ -51,6 +50,8 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+
+        _chimeraCollections = gameObject.AddComponent<ChimeraCollections>();
 
         LoadHabitatData();
 

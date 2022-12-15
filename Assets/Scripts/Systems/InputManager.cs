@@ -277,19 +277,19 @@ public class InputManager : MonoBehaviour
         {
             if (hit.collider.transform.gameObject.tag == "Water")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Water, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Water, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Stone")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Stone, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Stone, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Dirt")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Ground, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Ground, hit);
             }
             else if (hit.collider.transform.gameObject.tag == "Tree")
             {
-                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Tree, hit.point);
+                _habitatManager.CurrentHabitat.TapVFX.ActivateEffect(TapVFXType.Tree, hit);
             }
         }
     }
@@ -393,14 +393,23 @@ public class InputManager : MonoBehaviour
 
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
 
-        if (_isHolding == true || Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
+        if (_isHolding == true)
+        {
+            return CursorType.Dragging;
+        }
+
+        if (Physics.Raycast(ray, 300.0f, _chimeraLayer))
         {
             return CursorType.Dragable;
         }
 
-        if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer)
-            || Physics.Raycast(ray, out RaycastHit portalHit, 300.0f, _portalLayer)
-            || Physics.Raycast(ray, out RaycastHit templeHit, 300.0f, _templeLayer))
+        if (Physics.Raycast(ray, 300.0f, _crystalLayer))
+        {
+            return CursorType.Minable;
+        }
+
+        if (Physics.Raycast(ray, 300.0f, _portalLayer)
+            || Physics.Raycast(ray, 300.0f, _templeLayer))
         {
             return CursorType.Clickable;
         }
