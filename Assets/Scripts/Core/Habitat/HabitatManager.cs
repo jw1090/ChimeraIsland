@@ -6,7 +6,7 @@ public class HabitatManager : MonoBehaviour
     private List<ChimeraData> _chimeraDataList = null;
     private List<FacilityData> _facilityDataList = null;
     private HabitatData _habitatData = new HabitatData();
-    private ChimeraCollections _chimeraCollections = null;
+    private Collections _collections = new Collections();
 
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
@@ -17,7 +17,7 @@ public class HabitatManager : MonoBehaviour
     public HabitatData HabitatData { get => _habitatData; }
     public List<FacilityData> FacilitiesInHabitat { get => _facilityDataList; }
     public List<ChimeraData> ChimerasInHabitat { get => _chimeraDataList; }
-    public ChimeraCollections ChimeraCollections { get => _chimeraCollections; }
+    public Collections Collections { get => _collections; }
     public Habitat CurrentHabitat { get => _currentHabitat; }
     public float TickTimer { get => _tickTimer; }
 
@@ -51,8 +51,6 @@ public class HabitatManager : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
 
-        _chimeraCollections = gameObject.AddComponent<ChimeraCollections>();
-
         LoadHabitatData();
 
         return this;
@@ -63,7 +61,7 @@ public class HabitatManager : MonoBehaviour
         _habitatData = _persistentData.HabitatData;
         _chimeraDataList = _persistentData.ChimeraData;
         _facilityDataList = _persistentData.FacilityData;
-        _chimeraCollections.LoadData(_persistentData.CollectionData);
+        _collections.LoadData(_persistentData.CollectionData);
     }
 
     public void ResetHabitatData()

@@ -443,7 +443,7 @@ public class Chimera : MonoBehaviour
         _habitatUI.UpdateHabitatUI();
 
 
-        _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
+        _habitatManager.Collections.CollectChimera(_chimeraType);
 
         _persistentData.SaveSessionData();
     }
