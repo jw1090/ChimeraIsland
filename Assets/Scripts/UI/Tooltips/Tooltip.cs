@@ -166,7 +166,7 @@ public class Tooltip : MonoBehaviour
                         _evolutionBonusExplanation.gameObject.SetActive(true);
                     }
                     _evolutionBonusExplanation.Title.text = "Evolution Bonus";
-                    _evolutionBonusExplanation.Description.text = $"Additional 50% Discount To {bonusStatType} Training";
+                    _evolutionBonusExplanation.Description.text = $"Additional Discount To {bonusStatType} Training";
                     break;
                 default:
                     Debug.LogError($"Unhandled stat type: {HoverStatType}. Please change!");
