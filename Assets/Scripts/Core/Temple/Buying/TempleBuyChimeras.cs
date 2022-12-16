@@ -8,6 +8,7 @@ public class TempleBuyChimeras : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private PersistentData _persistentData = null;
     private Temple _temple = null;
     private int _aPrice = 0;
     private int _bPrice = 0;
@@ -40,6 +41,7 @@ public class TempleBuyChimeras : MonoBehaviour
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
         LoadPurchaseAmounts();
 
@@ -128,6 +130,8 @@ public class TempleBuyChimeras : MonoBehaviour
         _temple.TempleCollections.Build();
 
         _uiManager.AlertText.CreateAlert($"You Have Acquired {evolutionLogic.Name}!");
+
+        _persistentData.SaveSessionData();
 
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
     }
