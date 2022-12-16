@@ -10,6 +10,7 @@ public class TempleUpgrades : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
+    private PersistentData _persistentData = null;
 
     public int GetPrice(int tier)
     {
@@ -28,6 +29,7 @@ public class TempleUpgrades : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _persistentData = ServiceLocator.Get<PersistentData>();
 
         foreach (UpgradeSections upgradeSection in _upgradeSections)
         {
@@ -55,6 +57,8 @@ public class TempleUpgrades : MonoBehaviour
         }
 
         UpdateUpgradeNodes();
+
+        _persistentData.SaveSessionData();
 
         _audioManager.PlayUISFX(SFXUIType.StoneDrag);
     }
