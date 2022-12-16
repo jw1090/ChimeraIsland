@@ -7,6 +7,7 @@ public class DetailsManager : MonoBehaviour
     [SerializeField] private StatefulObject _detailsStates = null;
     [SerializeField] private GameObject _detailsPrefab = null;
     private HabitatManager _habitatManager = null;
+    private UIManager _uiManager = null;
 
     public bool IsOpen { get => _detailsStates.CurrentState.StateName != "Transparent"; }
 
@@ -21,6 +22,8 @@ public class DetailsManager : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         Debug.Log($"<color=Yellow> Initializing {this.GetType()} ... </color>");
+
+        _uiManager = uiManager;
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
@@ -38,6 +41,7 @@ public class DetailsManager : MonoBehaviour
     public void CloseDetails()
     {
         _detailsStates.SetState("Transparent", true);
+        _uiManager.Tooltip.gameObject.SetActive(false);
     }
 
     public void OpenStandardDetails()
