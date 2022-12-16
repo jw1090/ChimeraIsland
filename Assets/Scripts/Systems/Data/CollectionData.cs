@@ -16,7 +16,7 @@ public class CollectionData
     public bool C2 = false;
     public bool C3 = false;
 
-    public CollectionData(ChimeraCollections chimeraCollections)
+    public CollectionData(Collections chimeraCollections)
     {
         A = chimeraCollections.AUnlocked;
         A1 = chimeraCollections.A1Unlocked;

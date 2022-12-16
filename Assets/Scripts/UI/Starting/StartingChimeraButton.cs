@@ -5,14 +5,17 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ChimeraType _chimeraType = ChimeraType.None;
     private HabitatManager _habitatManager = null;
+    private UIManager _uiManager = null;
     private ResourceManager _resourceManager = null;
     private SceneChanger _sceneChanger = null;
     private bool _clicked = false;
 
     public void SetChimeraType(ChimeraType chimeraType) { _chimeraType = chimeraType; }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
+        _uiManager = uiManager;
+
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
@@ -37,7 +40,9 @@ public class StartingChimeraButton : MonoBehaviour, IPointerClickHandler
         chimeraComp.SetIsFirstChimera(true);
 
         _habitatManager.AddNewChimera(chimeraComp);
-        _habitatManager.ChimeraCollections.CollectChimera(_chimeraType);
+        _habitatManager.Collections.CollectChimera(_chimeraType);
+
+        _uiManager.HabitatUI.DetailsManager.IncreaseChimeraSlots();
 
         _sceneChanger.LoadStonePlains();
     }

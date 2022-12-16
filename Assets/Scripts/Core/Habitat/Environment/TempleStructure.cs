@@ -11,13 +11,13 @@ public class TempleStructure : MonoBehaviour
 
     public void Build()
     {
-        _states.SetState("Completed Temple");
+        _states.SetState("Completed Temple", true);
         _isCompleted = true;
     }
 
     public void ResetTemple()
     {
-        _states.SetState("Ruined Temple");
+        _states.SetState("Ruined Temple", true);
         _isCompleted = false;
     }
 }

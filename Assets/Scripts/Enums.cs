@@ -166,6 +166,8 @@ public enum SFXUIType
     ErrorClick,
     Completion,
     Failure,
+    StoneDrag,
+    Whoosh,
 }
 
 public enum EnvironmentSFXType
