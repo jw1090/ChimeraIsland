@@ -34,7 +34,7 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
-    private float _transitionDuration = 1.0f;
+    private float _transitionDuration = 0.75f;
 
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }
@@ -186,44 +186,45 @@ public class CameraUtil : MonoBehaviour
 
     public void TempleCameraShift()
     {
-        Transform transform = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode;
+        Transform targetTransform = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode;
 
-        CameraShift(transform);
+        Vector3 targetPosition;
+        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
+
+        CameraShift(targetPosition, Quaternion.identity);
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        Transform transform = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode;
+        Transform targetTransform = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode;
 
-        CameraShift(transform);
-    }
+        Vector3 targetPosition;
+        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
 
-    private void CameraShift(Transform target, bool rotate = false)
-    {
-        if (_transitionCoroutine != null)
-        {
-            StopCoroutine(_transitionCoroutine);
-        }
-
-        MoveCamera(target, rotate);
+        CameraShift(targetPosition, Quaternion.identity);
     }
 
     public void FindChimeraCameraShift(Chimera chimera)
     {
+        Vector3 targetPosition;
+        targetPosition = new Vector3(chimera.transform.position.x, this.transform.position.y, chimera.transform.position.z + 10.0f); // Lock Camera Y
+
+        CameraShift(targetPosition, Quaternion.identity);
+    }
+
+    private void CameraShift(Transform target, bool rotate = false)
+    {
+        CameraShift(target.position, target.rotation, rotate);
+    }
+
+    private void CameraShift(Vector3 targetPosition, Quaternion targetRotation, bool rotate = false)
+    {
         if (_transitionCoroutine != null)
         {
             StopCoroutine(_transitionCoroutine);
         }
 
-        Vector3 targetPosition;
-        targetPosition = new Vector3(chimera.transform.position.x, this.transform.position.y, chimera.transform.position.z); // Lock Camera Y
-
-        _transitionCoroutine = StartCoroutine(MoveCamera(targetPosition, Quaternion.identity, false));
-    }
-
-    private void MoveCamera(Transform target, bool rotate)
-    {
-        _transitionCoroutine = StartCoroutine(MoveCamera(target.position, target.rotation, rotate));
+        _transitionCoroutine = StartCoroutine(MoveCamera(targetPosition, targetRotation, rotate));
     }
 
     private IEnumerator MoveCamera(Vector3 targetPosition, Quaternion targetRotation, bool rotate)

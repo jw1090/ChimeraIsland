@@ -281,30 +281,30 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySceneAmbience(SceneType sceneType)
     {
-        _ambientSource.Stop();
-
         switch (sceneType)
         {
             case SceneType.MainMenu:
+            case SceneType.Starting:
+            case SceneType.Builder:
+                _ambientSource.Stop();
                 break;
             case SceneType.Habitat:
                 PlayHabitatAmbient();
                 break;
-            case SceneType.Starting:
-            case SceneType.Builder:
-                break;
             case SceneType.Temple:
                 {
+                    _ambientSource.Stop();
+
                     AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "Temple Ambient").FirstOrDefault();
                     _ambientSource.clip = item.Clip;
+
+                    _ambientSource.Play();
                 }
                 break;
             default:
                 Debug.LogError($"{sceneType} is invalid. Please change!");
                 break;
         }
-
-        _ambientSource.Play();
     }
 
     public void PlayUISFX(SFXUIType uIElementsSFX)

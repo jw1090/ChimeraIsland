@@ -19,6 +19,11 @@ public class SceneChanger : MonoBehaviour
 
         return this;
     }
+    private void AdditionalClickPrevention()
+    {
+        RecentSceneChange = true;
+        _uiManager.EnableLoadingBlock(true);
+    }
 
     public void SetupUIListeners()
     {
@@ -54,7 +59,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         _uiManager.MainMenuUI.ResetToStandard();
 
@@ -70,7 +75,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
     }
@@ -82,7 +87,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         SaveSessionData(true);
 
@@ -100,7 +105,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         _uiManager.HabitatUI.ResetStandardUI();
         _uiManager.MainMenuUI.CheckShowLoadGameButton();
@@ -117,7 +122,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
     }
@@ -129,7 +134,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        RecentSceneChange = true;
+        AdditionalClickPrevention();
 
         SaveSessionData(true);
 
