@@ -135,11 +135,6 @@ public class InputManager : MonoBehaviour
             CursorChange();
         }
 
-        if (Input.GetMouseButton(1))
-        {
-            RotateChimeraCheck();
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             LeftClickDown();
@@ -200,6 +195,19 @@ public class InputManager : MonoBehaviour
         if (_debugViewEnabled == true)
         {
             DebugViewInput();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isInitialized == false)
+        {
+            return;
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            RotateChimeraCheck();
         }
     }
 

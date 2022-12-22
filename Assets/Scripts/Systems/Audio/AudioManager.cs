@@ -187,6 +187,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayHabitatMusic()
     {
+        _musicSource.Stop();
+
         if (_habitat.CurrentTier == 1)
         {
             AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
@@ -202,64 +204,72 @@ public class AudioManager : MonoBehaviour
             AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains3").FirstOrDefault();
             _musicSource.clip = item.Clip;
         }
+
         _musicSource.Play();
     }
 
     public void PlayHabitatAmbient()
     {
+        _ambientSource.Stop();
+
         if (_habitat.CurrentTier == 1)
         {
             AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
             _ambientSource.clip = item.Clip;
             _ambientSource.Play();
         }
-        if (_habitat.CurrentTier == 2)
+        else if (_habitat.CurrentTier == 2)
         {
             AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient2").FirstOrDefault();
             _ambientSource.clip = item.Clip;
 
         }
-        if (_habitat.CurrentTier == 3)
+        else if (_habitat.CurrentTier == 3)
         {
             AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient3").FirstOrDefault();
             _ambientSource.clip = item.Clip;
         }
-        _ambientSource.Play();
-    }
 
-    public void PlayTempleAmbient()
-    {
-        AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "Temple Ambient").FirstOrDefault();
-        _ambientSource.clip = item.Clip;
         _ambientSource.Play();
     }
 
     public void PlaySceneMusic(SceneType sceneType)
     {
-        switch(sceneType)
+        switch (sceneType)
         {
             case SceneType.MainMenu:
                 {
+                    _musicSource.Stop();
+
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "MainMenuMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
-                    StopAmbientSource();
+
                     _musicSource.Play();
+                }
+                break;
+            case SceneType.Habitat:
+                {
+                    PlayHabitatMusic();
                 }
                 break;
             case SceneType.Starting:
             case SceneType.Builder:
                 {
+                    _musicSource.Stop();
+
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StarterSceneMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
-                    StopAmbientSource();
+
                     _musicSource.Play();
                 }
                 break;
             case SceneType.Temple:
                 {
+                    _musicSource.Stop();
+
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TempleMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
-                    StopAmbientSource();
+
                     _musicSource.Play();
                 }
                 break;
@@ -267,6 +277,34 @@ public class AudioManager : MonoBehaviour
                 Debug.LogError($"{sceneType} is invalid. Please change!");
                 break;
         }
+    }
+
+    public void PlaySceneAmbience(SceneType sceneType)
+    {
+        _ambientSource.Stop();
+
+        switch (sceneType)
+        {
+            case SceneType.MainMenu:
+                break;
+            case SceneType.Habitat:
+                PlayHabitatAmbient();
+                break;
+            case SceneType.Starting:
+            case SceneType.Builder:
+                break;
+            case SceneType.Temple:
+                {
+                    AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "Temple Ambient").FirstOrDefault();
+                    _ambientSource.clip = item.Clip;
+                }
+                break;
+            default:
+                Debug.LogError($"{sceneType} is invalid. Please change!");
+                break;
+        }
+
+        _ambientSource.Play();
     }
 
     public void PlayUISFX(SFXUIType uIElementsSFX)
@@ -525,13 +563,9 @@ public class AudioManager : MonoBehaviour
     {
         PlayUISFX(SFXUIType.ConfirmClick);
     }
+
     private void PlayWhooshSFX()
     {
         PlayUISFX(SFXUIType.Whoosh);
-    }
-
-    private void StopAmbientSource()
-    {
-        _ambientSource.Stop();
     }
 }
