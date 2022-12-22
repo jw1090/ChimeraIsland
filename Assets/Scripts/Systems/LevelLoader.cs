@@ -58,24 +58,23 @@ public class LevelLoader : AsyncLoader
         {
             case SceneType.MainMenu:
             case SceneType.Starting:
-                PlayCurrentSceneMusic();
                 break;
             case SceneType.Habitat:
                 HabitatSceneSetup();
                 break;
             case SceneType.Temple:
                 TempleSceneSetup();
-                PlayCurrentSceneMusic();
                 break;
             case SceneType.Builder:
                 _evolutionBuilder.BuildAll();
                 _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
-                PlayCurrentSceneMusic();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
                 break;
         }
+
+        PlaySceneLoopingAudio();
 
         CallOnComplete(OnComplete);
     }
@@ -155,7 +154,6 @@ public class LevelLoader : AsyncLoader
         StartHabitatTickTimer();
 
         _tutorialManager.TutorialStageCheck();
-        _habitatManager.PlayCurrentHabitatMusic();
     }
 
     private void TempleBuildCheck()
@@ -245,11 +243,13 @@ public class LevelLoader : AsyncLoader
     private void OnComplete()
     {
         Debug.Log($"<color=Lime> {this.GetType()} finished setup. </color>");
+
+        _uiManager.EnableLoadingBlock(false);
     }
 
-    public void PlayCurrentSceneMusic()
+    public void PlaySceneLoopingAudio()
     {
         _audioManager.PlaySceneMusic(_sceneType);
-        _audioManager.PlayTempleAmbient();
+        _audioManager.PlaySceneAmbience(_sceneType);
     }
 }

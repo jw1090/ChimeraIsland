@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
     [Header("Tooltip")]
     [SerializeField] private Tooltip _tooltip = null;
 
+    [Header("Loading Block")]
+    [SerializeField] private GameObject _loadingBlock = null;
+
     private bool _uiVisible = true;
 
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
@@ -41,6 +44,8 @@ public class UIManager : MonoBehaviour
 
         _settingsUI.InitializeVolumeSettings();
     }
+
+    public void EnableLoadingBlock(bool enabled) { _loadingBlock.SetActive(enabled); }
 
     public UIManager Initialize()
     {

@@ -169,12 +169,6 @@ public class HabitatManager : MonoBehaviour
         _habitatUI.DetailsManager.DetailsStatGlow();
     }
 
-    public void PlayCurrentHabitatMusic()
-    {
-        _audioManager.PlayHabitatMusic();
-        _audioManager.PlayHabitatAmbient();
-    }
-
     public void BuildFacilitiesForHabitat()
     {
         _currentHabitat.CreateFacilitiesFromData(_facilityDataList);
