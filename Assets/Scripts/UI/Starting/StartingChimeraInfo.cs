@@ -29,38 +29,38 @@ public class StartingChimeraInfo : MonoBehaviour
 
     private void LoadStatPreferences(EvolutionLogic evolutionLogic)
     {
-        evolutionLogic.GetPreferredStat(evolutionLogic.ChimeraType, out int explorationAmount, out int staminaAmount, out int wisdomAmount);
-
-        StatPreference(_explorationPreference, explorationAmount);
-        StatPreference(_staminaPreference, staminaAmount);
-        StatPreference(_wisdomPreference, wisdomAmount);
+        StatPreference(_explorationPreference, evolutionLogic.ExplorationPreference);
+        StatPreference(_staminaPreference, evolutionLogic.StaminaPreference);
+        StatPreference(_wisdomPreference, evolutionLogic.WisdomPreference);
     }
 
-    private void StatPreference(List<StatefulObject> iconList, int amount)
+    private void StatPreference(List<StatefulObject> iconList, StatPreferenceType preference)
     {
         foreach (StatefulObject icon in iconList)
         {
             icon.SetState("Empty", true);
         }
 
-        for (int i = 0; i < Translation(amount); ++i)
+        int amount = 0;
+
+        switch (preference)
+        {
+            case StatPreferenceType.Dislike:
+                amount = 1;
+                break;
+            case StatPreferenceType.Neutral:
+                amount = 2;
+                break;
+            case StatPreferenceType.Like:
+                amount = 3;
+                break;
+            default:
+                break;
+        }
+
+        for (int i = 0; i < amount; ++i)
         {
             iconList[i].SetState("Filled", true);
-        }
-    }
-
-    private int Translation(int amount)
-    {
-        switch (amount)
-        {
-            case 2:
-                return 3;
-            case 3:
-                return 2;
-            case 4:
-                return 1;
-            default:
-                return 0;
         }
     }
 }

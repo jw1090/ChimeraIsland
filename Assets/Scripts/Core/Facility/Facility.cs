@@ -5,8 +5,6 @@ public class Facility : MonoBehaviour
     [Header("General Info")]
     [SerializeField] private FacilityType _facilityType = FacilityType.None;
     [SerializeField] private StatType _statType = StatType.None;
-    [SerializeField] private int _statModifier = 1;
-    [SerializeField] private int _price = 30;
 
     [Header("Reference")]
     [SerializeField] private StatefulObject _tiers = null;
@@ -23,13 +21,14 @@ public class Facility : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private TrainingUI _uiTraining = null;
-    private ExpeditionManager _expeditionManager = null;
     private FacilityData _loadedFacilityData = null;
     private InputManager _inputManager = null;
+    private Habitat _habitat = null;
     private bool _isBuilt = false;
+    private bool _activateTraining = false;
     private int _currentTier = 0;
     private int _trainToLevel = 0;
-    private bool _activateTraining = false;
+    private int _experienceRate = 0;
 
     public Chimera StoredChimera { get => _storedChimera; }
     public FacilityData LoadedFacilityData { get => _loadedFacilityData; }
@@ -40,19 +39,18 @@ public class Facility : MonoBehaviour
     public FacilityType Type { get => _facilityType; }
     public bool ActivateTraining { get => _activateTraining; }
     public bool IsBuilt { get => _isBuilt; }
-    public int StatModifier { get => _statModifier; }
     public int CurrentTier { get => _currentTier; }
-    public int Price { get => _price; }
     public int TrainToLevel { get => _trainToLevel; }
 
     public void SetFacilityData(FacilityData data) { _loadedFacilityData = data; }
-    public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
     public void SetActivateTraining(bool Active) { _activateTraining = Active; }
     public void SetTrainToLevel(int trainTo) { _trainToLevel = trainTo; }
 
-    public void Initialize()
+    public void Initialize(Habitat habitat)
     {
         Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
+
+        _habitat = habitat;
 
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
@@ -105,15 +103,13 @@ public class Facility : MonoBehaviour
         }
         else
         {
-            _price = (int)(_price * 4.0f);
-            ++_statModifier;
             debugString += $"{_facilityType} was upgraded to Tier {_currentTier + 1}";
 
-            if(_currentTier == 1)
+            if (_currentTier == 1)
             {
                 _tiers.SetState("Tier 2", true);
             }
-            else if(_currentTier == 2)
+            else if (_currentTier == 2)
             {
                 _tiers.SetState("Tier 3", true);
             }
@@ -127,7 +123,7 @@ public class Facility : MonoBehaviour
             _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
         }
 
-        Debug.Log($" {debugString} and now generates {_statModifier} {_statType}!");
+        Debug.Log($" {debugString} and now generates {_currentTier} {_statType}!");
     }
 
     public bool PlaceChimeraFromUI(Chimera chimera)
@@ -137,6 +133,7 @@ public class Facility : MonoBehaviour
             Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
+
         _audioManager.PlayUISFX(SFXUIType.PlaceChimera);
         _habitatUI.ResetStandardUI();
         _habitatUI.OpenTrainingPanel();
@@ -163,7 +160,7 @@ public class Facility : MonoBehaviour
 
         SetTrainToLevel(_loadedFacilityData.TrainToLevel);
         SetActivateTraining(true);
-        chimera.SetXPByType(_statType, _loadedFacilityData.ChimeraStatEXP);
+        chimera.SetEXPByType(_statType, _loadedFacilityData.ChimeraStatEXP);
 
         StoreChimera(chimera);
 
@@ -180,6 +177,8 @@ public class Facility : MonoBehaviour
         _storedChimera.gameObject.transform.position = _glowMarker.transform.position;
 
         _storedChimera.RevealChimera(false);
+
+        CalculateExperienceRate();
 
         Debug.Log($"{_storedChimera} added to the facility.");
     }
@@ -233,18 +232,28 @@ public class Facility : MonoBehaviour
             return;
         }
 
-        _storedChimera.GetStatByType(_statType, out int currentStatAmount);
-
+        int currentStatAmount = _storedChimera.GetCurrentStatAmount(_statType);
         if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
             return;
         }
 
-        _trainingIcon.UpdateSlider(_statModifier);
+        _trainingIcon.UpdateSlider(_experienceRate);
+        _storedChimera.ExperienceTick(_statType, _experienceRate);
+    }
 
-        _storedChimera.ExperienceTick(_statType, _statModifier);
-        _trainingIcon.SetIcon(_storedChimera.ChimeraIcon);
+    private void CalculateExperienceRate()
+    {
+        int staminaBonus = Mathf.CeilToInt(_storedChimera.Stamina / 5.0f);
+
+        int evolutionBonusSpeed = 0;
+        if (_storedChimera.EvolutionBonusStat == _statType)
+        {
+            ++_experienceRate;
+        }
+
+        _experienceRate = _currentTier + _habitat.CurrentTier + staminaBonus + evolutionBonusSpeed;
     }
 
     public void PlayTrainingSFX()

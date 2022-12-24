@@ -23,12 +23,8 @@ public class TrainingUI : MonoBehaviour
     private UIManager _uiManager = null;
     private int _cost = 0;
     private int _levelGoal = 0;
-    private int _attribute = 0;
+    private int _statAmount = 0;
     private int _expNeeded = 1;
-    private float _preferredDiscount = 1.0f;
-    private const float _priceScalar = 4.0f;
-    private const float _priceExponent = 1.35f;
-    private const float _priceFlatModifier = 15.0f;
 
     public Button IncreaseButton { get => _increaseButton; }
     public Button DecreaseButton { get => _decreaseButton; }
@@ -59,30 +55,46 @@ public class TrainingUI : MonoBehaviour
         _chimera = chimera;
         _facility = facility;
 
-        chimera.GetStatByType(_facility.StatType, out _attribute);
+        _statAmount = chimera.GetCurrentStatAmount(_facility.StatType);
 
-        _slider.minValue = _attribute;
-        _slider.maxValue = 5 + _attribute;
-        _levelGoal = _attribute + 1;
+        _slider.minValue = _statAmount;
+        _slider.maxValue = 5 + _statAmount;
+        _levelGoal = _statAmount + 1;
 
         _slider.value = _levelGoal;
 
         DetermineCost();
     }
 
-    public void DetermineCost()
+    private void DetermineCost()
     {
-        CalculatePreferredDiscount();
+        _expNeeded = _chimera.ThresholdDifference(_facility.StatType, _levelGoal);
 
-        _expNeeded = _chimera.GetEXPThresholdDifference(_facility.StatType, _levelGoal);
-        int ticksRequired = _expNeeded / _facility.StatModifier;
+        int baseCost = _expNeeded / _facility.CurrentTier;
+        int preferenceBonus = CalculatePreferenceBonus(baseCost);
+        int evolutionBonusModifier = CalculateEvolutionBonus(baseCost);
 
-        if (_expNeeded % (_facility.StatModifier) != 0)
-        {
-            ++ticksRequired;
-        }
+        _cost = baseCost;// + preferenceBonus + evolutionBonusModifier;
 
-        _cost = CalculateCost(ticksRequired);
+        UpdateCostUI();
+    }
+
+    private int CalculatePreferenceBonus(float baseCost)
+    {
+        float modifier = _chimera.CurrentEvolution.GetPreferenceModifier(_facility.StatType);
+
+        return Mathf.RoundToInt(baseCost * modifier);
+    }
+
+    private int CalculateEvolutionBonus(float baseCost)
+    {
+        float modifier = _chimera.CurrentEvolution.GetEvolutionBonusAmount(_facility.StatType);
+
+        return Mathf.RoundToInt(baseCost * modifier);
+    }
+
+    private void UpdateCostUI()
+    {
         _costText.text = $"Cost: {_cost} Essence";
 
         if (_cost > _currencyManager.Essence)
@@ -96,34 +108,12 @@ public class TrainingUI : MonoBehaviour
             _sliderFill.color = _validColor;
         }
 
-        _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _attribute})";
-    }
-
-    private void CalculatePreferredDiscount()
-    {
-        _preferredDiscount = 1.0f; // Discount of 1 is nothing.
-
-        if (_chimera.EvolutionBonusStat == _facility.StatType)
-        {
-            _preferredDiscount = 0.5f;
-        }
-    }
-
-    private int CalculateCost(int ticksRequired)
-    {
-        int amount = 0;
-
-        for (int i = 0; i < ticksRequired; ++i)
-        {
-            amount += (int)((Mathf.Pow(_priceScalar, _priceExponent) + _priceFlatModifier) * _preferredDiscount);
-        }
-
-        return amount;
+        _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _statAmount})";
     }
 
     public void DecreaseStatGoal()
     {
-        if (_levelGoal <= _attribute + 1)
+        if (_levelGoal <= _statAmount + 1)
         {
             return;
         }
@@ -135,7 +125,7 @@ public class TrainingUI : MonoBehaviour
 
     public void IncreaseStatGoal()
     {
-        if (_levelGoal >= 5 + _attribute)
+        if (_levelGoal >= 5 + _statAmount)
         {
             return;
         }
@@ -161,7 +151,7 @@ public class TrainingUI : MonoBehaviour
 
     public void Confirm()
     {
-        if (_levelGoal > 5 + _attribute)
+        if (_levelGoal > 5 + _statAmount)
         {
             Debug.Log($"Level goal [{_levelGoal}] is too high.");
             return;

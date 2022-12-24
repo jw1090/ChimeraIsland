@@ -94,11 +94,6 @@ public class Habitat : MonoBehaviour
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
-        foreach (Facility facility in _facilities)
-        {
-            facility.SetExpeditionManager(expeditionManager);
-        }
-
         _crystalManager.SetExpeditionManager(expeditionManager);
     }
 
@@ -124,7 +119,7 @@ public class Habitat : MonoBehaviour
 
         foreach (Facility facility in _facilities)
         {
-            facility.Initialize();
+            facility.Initialize(this);
         }
 
         ToggleFireflies(false);
@@ -288,14 +283,15 @@ public class Habitat : MonoBehaviour
 
     public void StartTickTimer()
     {
-        StartCoroutine(TickTimer());
+        StartCoroutine(StandardTickTimer());
+        StartCoroutine(FacilityTickTimer());
     }
 
-    private IEnumerator TickTimer()
+    private IEnumerator StandardTickTimer()
     {
         while (_isInitialized)
         {
-            yield return new WaitForSeconds(_habitatManager.TickTimer);
+            yield return new WaitForSeconds(_habitatManager.TickTimer * 10);
 
             foreach (Chimera chimera in _activeChimeras)
             {
@@ -303,6 +299,14 @@ public class Habitat : MonoBehaviour
             }
 
             _crystalManager.SpawnTick();
+        }
+    }
+
+    private IEnumerator FacilityTickTimer()
+    {
+        while (_isInitialized)
+        {
+            yield return new WaitForSeconds(_habitatManager.TickTimer);
 
             foreach (Facility facility in _facilities)
             {
