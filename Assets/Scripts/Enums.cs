@@ -157,7 +157,7 @@ public enum TutorialStageType
 public enum TutorialDarkenType
 {
     Standard,
-    firstExpedition,
+    FirstExpedition,
     ChimeraList,
     ReccomendedTraits,
 }
