@@ -210,10 +210,10 @@ public enum CursorType
 
 public enum ChimeraOrderType
 { 
+    AveragePower,
     Exploration,
     Stamina,
     Wisdom,
-    AveragePower,
 }
 
 public enum TapVFXType

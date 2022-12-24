@@ -15,7 +15,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private ExpeditionManager _expeditionManager = null;
     private List<Chimera> _chimerasList = new List<Chimera>();
-    private ChimeraOrderType orderType = ChimeraOrderType.AveragePower;
+    private ChimeraOrderType _orderType = ChimeraOrderType.AveragePower;
     private GameObject _detailsPrefab = null;
     private bool _showGrass = true;
     private bool _showWater = true;
@@ -106,7 +106,7 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     private void DropdownValueChanged()
     {
-        orderType = (ChimeraOrderType)_dropdown.value;
+        _orderType = (ChimeraOrderType)_dropdown.value;
         Sort();
     }
 
@@ -204,8 +204,14 @@ public class ChimeraDetailsFolder : MonoBehaviour
                 }
 
                 bool lower = false;
-                switch (orderType)
+                switch (_orderType)
                 {
+                    case ChimeraOrderType.AveragePower:
+                        if (_chimeraDetailsList[i].Chimera.AveragePower < _chimeraDetailsList[i + 1].Chimera.AveragePower)
+                        {
+                            lower = true;
+                        }
+                        break;
                     case ChimeraOrderType.Exploration:
                         if (_chimeraDetailsList[i].Chimera.Exploration < _chimeraDetailsList[i + 1].Chimera.Exploration)
                         {
@@ -224,14 +230,8 @@ public class ChimeraDetailsFolder : MonoBehaviour
                             lower = true;
                         }
                         break;
-                    case ChimeraOrderType.AveragePower:
-                        if (_chimeraDetailsList[i].Chimera.AveragePower < _chimeraDetailsList[i + 1].Chimera.AveragePower)
-                        {
-                            lower = true;
-                        }
-                        break;
                     default:
-                        Debug.LogError($"Unhandled chimera order type: {orderType}. Please change!");
+                        Debug.LogError($"Unhandled chimera order type: {_orderType}. Please change!");
                         break;
                 }
 
