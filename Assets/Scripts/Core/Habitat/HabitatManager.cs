@@ -7,12 +7,10 @@ public class HabitatManager : MonoBehaviour
     private List<FacilityData> _facilityDataList = null;
     private HabitatData _habitatData = new HabitatData();
     private Collections _collections = new Collections();
-
-    private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
-    private float _tickTimer = 0.3f;
+    private float _tickTimer = 0.06f;
 
     public HabitatData HabitatData { get => _habitatData; }
     public List<FacilityData> FacilitiesInHabitat { get => _facilityDataList; }
@@ -48,7 +46,6 @@ public class HabitatManager : MonoBehaviour
     }
 
     public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
-    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public void SetCurrentHabitat(Habitat habitat)
     {

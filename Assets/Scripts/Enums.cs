@@ -95,6 +95,14 @@ public enum SceneType
     Builder,
 }
 
+public enum StatPreferenceType
+{
+    None = -1,
+    Dislike,
+    Neutral,
+    Like
+}
+
 public enum StatType
 {
     None = -1,

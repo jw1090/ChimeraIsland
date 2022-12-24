@@ -148,13 +148,9 @@ public class ChimeraDetails : MonoBehaviour
         _chimeraIcon.sprite = _chimera.ChimeraIcon;
         _elementIcon.sprite = _chimera.ElementIcon;
 
-        int amount = 0;
-        string staminaText = _chimera.GetStatByType(StatType.Stamina, out amount) ? amount.ToString() : "Invalid!";
-        _stamina.text = staminaText;
-        string wisdomText = _chimera.GetStatByType(StatType.Wisdom, out amount) ? amount.ToString() : "Invalid!";
-        _wisdom.text = wisdomText;
-        string explorationText = _chimera.GetStatByType(StatType.Exploration, out amount) ? amount.ToString() : "Invalid!";
-        _exploration.text = explorationText;
+        _exploration.text = _chimera.GetCurrentStatAmount(StatType.Exploration).ToString();
+        _stamina.text = _chimera.GetCurrentStatAmount(StatType.Stamina).ToString();
+        _wisdom.text = _chimera.GetCurrentStatAmount(StatType.Wisdom).ToString();
 
         _energySlider.maxValue = _chimera.MaxEnergy;
         _energySlider.value = _chimera.CurrentEnergy;
