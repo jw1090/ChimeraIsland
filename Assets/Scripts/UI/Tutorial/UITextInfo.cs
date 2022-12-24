@@ -6,7 +6,7 @@ public class UITextInfo : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _tutorialText = null;
     [SerializeField] private Image _icon = null;
-    [SerializeField] private float _speed = 0.01f;
+    [SerializeField] private float _speed = 0.015f;
     private bool _finished = true;
     private bool _finishNow = false;
     private string _text = "";
@@ -25,7 +25,7 @@ public class UITextInfo : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         if (_isLoaded == false)
         {
