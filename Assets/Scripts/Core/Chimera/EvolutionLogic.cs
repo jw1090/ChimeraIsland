@@ -75,12 +75,12 @@ public class EvolutionLogic : MonoBehaviour
         switch (statPreferenceType)
         {
             case StatPreferenceType.Dislike:
-                amount = -10.0f;
+                amount = -0.1f;
                 break;
             case StatPreferenceType.Neutral:
                 break;
             case StatPreferenceType.Like:
-                amount = 20.0f;
+                amount = 0.2f;
                 break;
             default:
                 Debug.LogError($"Invalid Preference Stat Type: {statPreferenceType}");
@@ -96,7 +96,7 @@ public class EvolutionLogic : MonoBehaviour
 
         if (trainingStat == _evolutionStat)
         {
-            amount = 50.0f;
+            amount = 0.5f;
         }
 
         return amount;

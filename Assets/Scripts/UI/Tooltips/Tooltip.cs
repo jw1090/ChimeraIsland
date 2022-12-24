@@ -43,7 +43,7 @@ public class Tooltip : MonoBehaviour
                 LoadStatText("Exploration", "Decreases Expedition Duration");
                 break;
             case StatType.Stamina:
-                LoadStatText("Stamina", "Increases Max Energy And Energy Regen Rate");
+                LoadStatText("Stamina", "Increases Max Energy, Energy Regen Rate, And Training Speeds");
                 break;
             case StatType.Wisdom:
                 LoadStatText("Wisdom", "Increases Currency Gain From Expeditions");

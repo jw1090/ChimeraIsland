@@ -36,7 +36,7 @@ public class Chimera : MonoBehaviour
     private int _explorationThreshold = 0;
     private int _staminaThreshold = 0;
     private int _wisdomThreshold = 0;
-    private int _currentEnergy = 0;
+    private int _currentEnergy = 5;
     private int _maxEnergy = 5;
     private int _levelCap = 99;
     private int _energyTickCounter = 0;
@@ -241,7 +241,7 @@ public class Chimera : MonoBehaviour
 
         float frontFraction = 1.0f / 8.0f;
         float levelExponentiaCalc = Mathf.Pow(thresholdGoal, 2.0f) - thresholdGoal;
-        float modifier = 100.0f;
+        float modifier = 150.0f;
         float numerator = Mathf.Pow(2.0f, thresholdGoal / 7.0f) - Mathf.Pow(2.0f, 1.0f / 7.0f);
         float denominator = Mathf.Pow(2.0f, 1.0f / 7.0f) - 1.0f;
 

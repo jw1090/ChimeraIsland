@@ -10,7 +10,7 @@ public class HabitatManager : MonoBehaviour
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
-    private float _tickTimer = 0.03f;
+    private float _tickTimer = 0.06f;
 
     public HabitatData HabitatData { get => _habitatData; }
     public List<FacilityData> FacilitiesInHabitat { get => _facilityDataList; }

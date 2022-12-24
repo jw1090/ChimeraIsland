@@ -291,7 +291,7 @@ public class Habitat : MonoBehaviour
     {
         while (_isInitialized)
         {
-            yield return new WaitForSeconds(_habitatManager.TickTimer * 10);
+            yield return new WaitForSeconds(_habitatManager.TickTimer * 5);
 
             foreach (Chimera chimera in _activeChimeras)
             {

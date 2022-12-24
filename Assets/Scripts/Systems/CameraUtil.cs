@@ -1,4 +1,3 @@
-using Cinemachine.Utility;
 using System.Collections;
 using UnityEngine;
 
@@ -34,7 +33,7 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
-    private float _transitionDuration = 0.75f;
+    private float _transitionDuration = 0.6f;
 
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }

@@ -74,7 +74,7 @@ public class TrainingUI : MonoBehaviour
         int preferenceBonus = CalculatePreferenceBonus(baseCost);
         int evolutionBonusModifier = CalculateEvolutionBonus(baseCost);
 
-        _cost = baseCost;// + preferenceBonus + evolutionBonusModifier;
+        _cost = baseCost - preferenceBonus - evolutionBonusModifier;
 
         UpdateCostUI();
     }
