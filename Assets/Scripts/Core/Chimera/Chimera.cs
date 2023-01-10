@@ -504,5 +504,9 @@ public class Chimera : MonoBehaviour
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
             _currentEvolution.Animator.Play("Walk");
         }
+        else
+        {
+            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+        }
     }
 }
