@@ -1,29 +1,65 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartingUI : MonoBehaviour
 {
-    [SerializeField] private StartingChimeraButton _optionAChimeraButton;
-    [SerializeField] private StartingChimeraButton _optionBChimeraButton;
-    [SerializeField] private StartingChimeraButton _optionCChimeraButton;
+    [SerializeField] private TextMeshProUGUI _title = null;
+    [SerializeField] private GameObject _container = null;
+    [SerializeField] private StartingChimeraButton _acceptButton = null;
+    [SerializeField] private Button _declineButton = null;
+    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
+    private UIManager _uiManager = null;
+    private CameraUtil _camera = null;
 
-    public void SetAudioManager(AudioManager audioManager)
+    public Button AcceptButton { get => _acceptButton.GetComponent<Button>(); }
+    public Button DeclineButton { get => _declineButton; }
+
+    public void SetCameraUtil(CameraUtil cameraUtil) { _camera = cameraUtil; }
+
+    public void Initialize(UIManager uIManager)
     {
-        _optionAChimeraButton.SetAudioManager(audioManager);
-        _optionBChimeraButton.SetAudioManager(audioManager);
-        _optionCChimeraButton.SetAudioManager(audioManager);
+        _uiManager = uIManager;
+
+        _acceptButton.Initialize(_uiManager);
+        _startingChimeraInfo.Initialize();
+
+        SetupListeners();
     }
 
-    public void Initialize()
+    public void OnSceneStart()
     {
-        _optionAChimeraButton.Initialize();
-        _optionBChimeraButton.Initialize();
-        _optionCChimeraButton.Initialize();
+        _acceptButton.SetupStartingButton();
+
+        ResetUI();
     }
 
-    public void SetupStartingButtons()
+    public void SetupListeners()
     {
-        _optionAChimeraButton.SetupStartingButton();
-        _optionBChimeraButton.SetupStartingButton();
-        _optionCChimeraButton.SetupStartingButton();
+        _uiManager.CreateButtonListener(DeclineButton, ResetUI);
+        _uiManager.CreateButtonListener(DeclineButton, ResetCamera);
+    }
+
+    public void OpenChimeraInfo()
+    {
+        _container.SetActive(true);
+        _title.gameObject.SetActive(false);
+    }
+
+    public void LoadChimeraInfo(EvolutionLogic evolutionLogic)
+    {
+        _acceptButton.SetChimeraType(evolutionLogic.ChimeraType);
+        _startingChimeraInfo.LoadChimeraData(evolutionLogic);
+    }
+
+    private void ResetUI()
+    {
+        _container.SetActive(false);
+        _title.gameObject.SetActive(true);
+    }
+
+    private void ResetCamera()
+    {
+        _camera.CameraToOrigin();
     }
 }

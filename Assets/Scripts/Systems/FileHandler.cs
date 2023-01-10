@@ -31,7 +31,7 @@ public static class FileHandler
         {
             folder = "PersistentData";
 
-            Debug.Log($"Loading Tutorial Data From: {Application.dataPath}/{folder}/{filename}");
+            Debug.Log($"Loading Data From: {Application.dataPath}/{folder}/{filename}");
 
             return System.IO.Path.Combine(Application.dataPath, folder, $"{filename}");
         }

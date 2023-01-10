@@ -14,23 +14,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _ambientSource = null;
     [SerializeField] private AudioSource _uiSource = null;
 
-    [Header("Music")]
+    [Header("Manifests")]
     [SerializeField] private AudioManifest _musicManifest = null;
-
-    [Header("Ambient")]
-    [SerializeField] private AudioManifest _ambientManifest = null;
-
-    [Header("UI SFX")]
-    [SerializeField] private AudioManifest _uiSFXManifest = null;
-
-    [Header("Ambient SFX")]
-    [SerializeField] private AudioManifest _ambientSFXManifest = null;
-
-    [Header("Facility SFX")]
-    [SerializeField] private AudioManifest _facilitySFXManifest = null;
-    
-    [Header("Chimeras SFX")]
     [SerializeField] private AudioManifest _chimeraSFXManifest = null;
+    [SerializeField] private AudioManifest _environmentSFXManifest = null;
+    [SerializeField] private AudioManifest _facilityAmbientManifest = null;
+    [SerializeField] private AudioManifest _facilityTrainingManifest = null;
+    [SerializeField] private AudioManifest _habitatAmbientManifest = null;
+    [SerializeField] private AudioManifest _uiSFXManifest = null;
 
     private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
@@ -54,17 +45,17 @@ public class AudioManager : MonoBehaviour
         {
             case FacilityType.Cave:
                 {
-                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Cave Ambient SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityAmbientManifest.AudioItems.Where(c => c.Name == "Cave Ambient SFX").FirstOrDefault();
                     return item.Clip;
                 }
             case FacilityType.RuneStone:
                 {
-                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Rune Ambient SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityAmbientManifest.AudioItems.Where(c => c.Name == "Rune Ambient SFX").FirstOrDefault();
                     return item.Clip;
                 }
             case FacilityType.Waterfall:
                 {
-                    AudioClipItem item = _ambientSFXManifest.AudioItems.Where(c => c.Name == "Waterfall Ambient SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityAmbientManifest.AudioItems.Where(c => c.Name == "Waterfall Ambient SFX").FirstOrDefault();
                     return item.Clip;
                 }
             default:
@@ -78,17 +69,17 @@ public class AudioManager : MonoBehaviour
         {
             case FacilityType.Cave:
                 {
-                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Cave Training SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityTrainingManifest.AudioItems.Where(c => c.Name == "Cave Training SFX").FirstOrDefault();
                     return item.Clip;
                 }
             case FacilityType.RuneStone:
                 {
-                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Rune Training SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityTrainingManifest.AudioItems.Where(c => c.Name == "Rune Training SFX").FirstOrDefault();
                     return item.Clip;
                 }
             case FacilityType.Waterfall:
                 {
-                    AudioClipItem item = _facilitySFXManifest.AudioItems.Where(c => c.Name == "Waterfall Training SFX").FirstOrDefault();
+                    AudioClipItem item = _facilityTrainingManifest.AudioItems.Where(c => c.Name == "Waterfall Training SFX").FirstOrDefault();
                     return item.Clip;
                 }
             default:
@@ -100,30 +91,35 @@ public class AudioManager : MonoBehaviour
     {
         _masterVolume = masterVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetMusicVolume(float musicVolume)
     {
         _musicVolume = musicVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetSFXVolume(float sfxVolume)
     {
         _sfxVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.SFX, _sfxVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetAmbientVolume(float sfxVolume)
     {
         _ambientVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.AMBIENT, _ambientVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetUISFXVolume(float sfxVolume)
     {
         _uiSfxVolume = sfxVolume;
         _mixer.SetFloat(GameConsts.AudioMixerKeys.UISFX, _uiSfxVolume);
+        _persistentData.SetVolume(Volumes);
     }
 
     public void SetHabitat(Habitat habitat) { _habitat = habitat; }
@@ -131,12 +127,13 @@ public class AudioManager : MonoBehaviour
     public AudioManager Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
-        _masterVolume = _persistentData.Volumes[0];
-        _musicVolume = _persistentData.Volumes[1];
-        _sfxVolume = _persistentData.Volumes[2];
-        _ambientVolume = _persistentData.Volumes[3];
-        _uiSfxVolume= _persistentData.Volumes[4];
         _uiManager = ServiceLocator.Get<UIManager>();
+
+        _masterVolume = _persistentData.SettingsData.masterVolume;
+        _musicVolume = _persistentData.SettingsData.musicVolume;
+        _sfxVolume = _persistentData.SettingsData.sfxVolume;
+        _ambientVolume = _persistentData.SettingsData.ambientVolume;
+        _uiSfxVolume = _persistentData.SettingsData.uiSfxVolume;
 
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MASTER, _masterVolume);
         _mixer.SetFloat(GameConsts.AudioMixerKeys.MUSIC, _musicVolume);
@@ -152,84 +149,156 @@ public class AudioManager : MonoBehaviour
     public void SetupAudioListeners()
     {
         MainMenuUI mainMenuUI = _uiManager.MainMenuUI;
+        StartingUI startingUI = _uiManager.StartingUI;
         HabitatUI habitatUI = _uiManager.HabitatUI;
-        WorldMapUI worldMapUI = _uiManager.WorldMapUI;
+        TempleUI templeUI = _uiManager.TempleUI;
+        EvolutionBuilderUI builderUI = _uiManager.EvolutionBuilderUI;
+
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.ResumeButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.ScreenWideButton, PlayClickSFX);
 
         _uiManager.CreateButtonListener(mainMenuUI.NewGameButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.WarningNoButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(mainMenuUI.WarningYesButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.LoadGameButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.OpenCreditsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(mainMenuUI.CloseCreditsButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.MainMenuButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.QuitGameButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.WorldMapButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(worldMapUI.StonePlainsButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(worldMapUI.TreeOfLifeButton, PlayClickSFX);
+
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DecreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.ResumeButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Settings.ScreenWideButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(habitatUI.Marketplace.CloseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
+
+        _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);
+
+        _uiManager.CreateButtonListener(builderUI.PlayButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(builderUI.ResetButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(builderUI.SaveButton, PlayClickSFX);
+
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.GoLeftButton, PlayWhooshSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.GoRightButton, PlayWhooshSFX);
     }
 
-    public void PlayHabitatMusic(HabitatType habitatType)
+    public void PlayHabitatMusic()
     {
-        switch (habitatType)
+        _musicSource.Stop();
+
+        if (_habitat.CurrentTier == 1)
         {
-            case HabitatType.StonePlains:
-                {
-                   PlayMusicOnTier();
-                }
-                break;
-            case HabitatType.TreeOfLife:
-                {
-                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TreeOfLife").FirstOrDefault();
-                    _musicSource.clip = item.Clip;
-                    _musicSource.Play();
-                }
-                break;
-            default:
-                Debug.LogError($"{habitatType} is invalid. Please change!");
-                break;
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
+            _musicSource.clip = item.Clip;
         }
+        if (_habitat.CurrentTier == 2)
+        {
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains2").FirstOrDefault();
+            _musicSource.clip = item.Clip;
+        }
+        if (_habitat.CurrentTier == 3)
+        {
+            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains3").FirstOrDefault();
+            _musicSource.clip = item.Clip;
+        }
+
+        _musicSource.Play();
     }
 
-    public void PlayHabitatAmbient(HabitatType habitatType)
+    public void PlayHabitatAmbient()
     {
-        switch (habitatType)
+        _ambientSource.Stop();
+
+        if (_habitat.CurrentTier == 1)
         {
-            case HabitatType.StonePlains:
-                {
-                    PlayAmbientOnTier();
-                }
-                break;
-            default:
-                Debug.LogError($"{habitatType} is invalid. Please change!");
-                break;
+            AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+            _ambientSource.Play();
         }
+        else if (_habitat.CurrentTier == 2)
+        {
+            AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient2").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+
+        }
+        else if (_habitat.CurrentTier == 3)
+        {
+            AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient3").FirstOrDefault();
+            _ambientSource.clip = item.Clip;
+        }
+
+        _ambientSource.Play();
     }
 
     public void PlaySceneMusic(SceneType sceneType)
     {
-        switch(sceneType)
+        switch (sceneType)
         {
             case SceneType.MainMenu:
                 {
+                    _musicSource.Stop();
+
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "MainMenuMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
-                    StopAmbientSource();
+
                     _musicSource.Play();
                 }
                 break;
-            case SceneType.Starting:
+            case SceneType.Habitat:
                 {
+                    PlayHabitatMusic();
+                }
+                break;
+            case SceneType.Starting:
+            case SceneType.Builder:
+                {
+                    _musicSource.Stop();
+
                     AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StarterSceneMusic").FirstOrDefault();
                     _musicSource.clip = item.Clip;
-                    StopAmbientSource();
+
                     _musicSource.Play();
+                }
+                break;
+            case SceneType.Temple:
+                {
+                    _musicSource.Stop();
+
+                    AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "TempleMusic").FirstOrDefault();
+                    _musicSource.clip = item.Clip;
+
+                    _musicSource.Play();
+                }
+                break;
+            default:
+                Debug.LogError($"{sceneType} is invalid. Please change!");
+                break;
+        }
+    }
+
+    public void PlaySceneAmbience(SceneType sceneType)
+    {
+        switch (sceneType)
+        {
+            case SceneType.MainMenu:
+            case SceneType.Starting:
+            case SceneType.Builder:
+                _ambientSource.Stop();
+                break;
+            case SceneType.Habitat:
+                PlayHabitatAmbient();
+                break;
+            case SceneType.Temple:
+                {
+                    _ambientSource.Stop();
+
+                    AudioClipItem item = _habitatAmbientManifest.AudioItems.Where(c => c.Name == "Temple Ambient").FirstOrDefault();
+                    _ambientSource.clip = item.Clip;
+
+                    _ambientSource.Play();
                 }
                 break;
             default:
@@ -277,30 +346,9 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
-            case SFXUIType.Evolution:
-                {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Evolution SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.PlayOneShot(_sfxSource.clip);
-                }
-                break;
-            case SFXUIType.LevelUp:
-                {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Level Up SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.PlayOneShot(_sfxSource.clip);
-                }
-                break; 
             case SFXUIType.ErrorClick:
                 {
                     AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Error SFX").FirstOrDefault();
-                    _sfxSource.clip = item.Clip;
-                    _sfxSource.PlayOneShot(_sfxSource.clip);
-                }
-                break;
-            case SFXUIType.PortalClick:
-                {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
@@ -319,16 +367,16 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
-            case SFXUIType.Hit:
+            case SFXUIType.StoneDrag:
                 {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Hit SFX").FirstOrDefault();
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Stone Drag SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
-            case SFXUIType.Harvest:
+            case SFXUIType.Whoosh:
                 {
-                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Harvest SFX").FirstOrDefault();
+                    AudioClipItem item = _uiSFXManifest.AudioItems.Where(c => c.Name == "Whoosh SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
@@ -338,6 +386,80 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
+
+    public void PlaySFX(EnvironmentSFXType environmentSFXType)
+    {
+        switch (environmentSFXType)
+        {
+            case EnvironmentSFXType.Evolution:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Evolution SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.LevelUp:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Level Up SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.PortalClick:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.MiningTap:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Mining Tap SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.MiningHarvest:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Mining Harvest SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.WaterHit:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Water Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.StoneHit:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Stone Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.DirtHit:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Dirt Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.TreeHit:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Tree Hit SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            default:
+                Debug.LogError($"{environmentSFXType} is invalid. Please change!");
+                break;
+        }
+    }
+
     public void PlayHeldChimeraSFX(ChimeraType chimeraType)
     {
         switch (chimeraType)
@@ -442,50 +564,8 @@ public class AudioManager : MonoBehaviour
         PlayUISFX(SFXUIType.ConfirmClick);
     }
 
-    private void StopAmbientSource()
+    private void PlayWhooshSFX()
     {
-        _ambientSource.Stop();
-    }
-
-    private void PlayMusicOnTier()
-    {
-        if (_habitat.CurrentTier == 1)
-        {
-            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains").FirstOrDefault();
-            _musicSource.clip = item.Clip;
-        }
-        if (_habitat.CurrentTier == 2)
-        {
-            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains2").FirstOrDefault();
-            _musicSource.clip = item.Clip;
-        }
-        if (_habitat.CurrentTier == 3)
-        {
-            AudioClipItem item = _musicManifest.AudioItems.Where(c => c.Name == "StonePlains3").FirstOrDefault();
-            _musicSource.clip = item.Clip;
-        }
-        _musicSource.Play();
-    }
-
-    private void PlayAmbientOnTier()
-    {
-        if (_habitat.CurrentTier == 1)
-        {
-             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient").FirstOrDefault();
-            _ambientSource.clip = item.Clip;
-            _ambientSource.Play();
-        }
-        if (_habitat.CurrentTier == 2)
-        {
-             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient2").FirstOrDefault();
-            _ambientSource.clip = item.Clip;
-
-        }
-        if (_habitat.CurrentTier == 3)
-        {
-             AudioClipItem item = _ambientManifest.AudioItems.Where(c => c.Name == "StonePlainsAmbient3").FirstOrDefault();
-            _ambientSource.clip = item.Clip;
-        }
-        _ambientSource.Play();
+        PlayUISFX(SFXUIType.Whoosh);
     }
 }

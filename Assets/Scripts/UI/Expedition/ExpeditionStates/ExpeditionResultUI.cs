@@ -12,6 +12,8 @@ public class ExpeditionResultUI : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
     private bool _expeditionSuccess = false;
+
+    public bool ExpeditionSuccess { get => _expeditionSuccess; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -73,14 +75,7 @@ public class ExpeditionResultUI : MonoBehaviour
                     _resultsDescription.text = $"You've gained {expeditionData.ActualAmountGained} Essence!";
                     break;
                 case ExpeditionType.Fossils:
-                    if (expeditionData.UnlocksNewChimera == true)
-                    {
-                        _resultsDescription.text = $"You unlocked a new Chimera in the Marketplace and gained {expeditionData.ActualAmountGained} Fossils!";
-                    }
-                    else
-                    {
-                        _resultsDescription.text = $"You gained {expeditionData.ActualAmountGained} Fossils!";
-                    }
+                    _resultsDescription.text = $"You gained {expeditionData.ActualAmountGained} Fossils!";
                     break;
                 case ExpeditionType.HabitatUpgrade:
                     switch (expeditionData.UpgradeType)
@@ -108,6 +103,7 @@ public class ExpeditionResultUI : MonoBehaviour
             }
 
             _expeditionSuccess = true;
+
             if (bypass == true)
             {
                 ResultsCloseClick();

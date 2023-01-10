@@ -14,7 +14,6 @@ public class ExpeditionUI : MonoBehaviour
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
-    private AudioManager _audioManager = null;
 
     public ExpeditionManager expeditionManager { get => _expeditionManager; }
     public ExpeditionSetupUI SetupUI { get => _setupPanel; }
@@ -34,7 +33,6 @@ public class ExpeditionUI : MonoBehaviour
 
     public void SetAudioManager(AudioManager audioManager)
     {
-        _audioManager = audioManager;
         _selectionPanel.SetAudioManager(audioManager);
         _setupPanel.SetAudioManager(audioManager);
         _resultPanel.SetAudioManager(audioManager);
@@ -125,6 +123,8 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward();
+
+        _expeditionManager.SetPortalColor();
     }
 
     public void CompleteCurrentHabitatExpedition()
@@ -132,5 +132,7 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward(true);
+
+        _expeditionManager.SetPortalColor();
     }
 }

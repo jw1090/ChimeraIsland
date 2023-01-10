@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
-    private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private PersistentData _persistentData = null;
     private bool _currencyLoaded = false;
     private int _essence = 0;
@@ -11,7 +11,7 @@ public class CurrencyManager : MonoBehaviour
     public int Essence { get => _essence; }
     public int Fossils { get => _fossils; }
 
-    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
+    public void SetUIManager(UIManager uiManager) { _uiManager = uiManager; }
 
     public CurrencyManager Initialize()
     {
@@ -27,7 +27,6 @@ public class CurrencyManager : MonoBehaviour
     {
         if (_persistentData != null && _currencyLoaded == false)
         {
-            // Craig's Note: be careful when using properties that implement 'get' calls that are not exception safe, like this one.
             _essence = _persistentData.EssenceData;
             _fossils = _persistentData.FossilData;
             _currencyLoaded = true;
@@ -39,23 +38,23 @@ public class CurrencyManager : MonoBehaviour
         _essence = 0;
         _fossils = 0;
 
-        if (_habitatUI != null)
+        if (_uiManager != null)
         {
-            _habitatUI.UpdateEssenceWallets();
-            _habitatUI.UpdateFossilWallets();
+            _uiManager.UpdateEssenceWallets();
+            _uiManager.UpdateFossilWallets();
         }
     }
 
     public void IncreaseEssence(int amount)
     {
         _essence += amount;
-        _habitatUI.UpdateEssenceWallets();
+        _uiManager.UpdateEssenceWallets();
     }
 
     public void IncreaseFossils(int amount)
     {
         _fossils += amount;
-        _habitatUI.UpdateFossilWallets();
+        _uiManager.UpdateFossilWallets();
     }
 
     public bool SpendEssence(int amount)
@@ -67,9 +66,9 @@ public class CurrencyManager : MonoBehaviour
 
         _essence -= amount;
 
-        if (_habitatUI != null)
+        if (_uiManager != null)
         {
-            _habitatUI.UpdateEssenceWallets();
+            _uiManager.UpdateEssenceWallets();
         }
 
         return true;
@@ -84,9 +83,9 @@ public class CurrencyManager : MonoBehaviour
 
         _fossils -= amount;
 
-        if (_habitatUI != null)
+        if (_uiManager != null)
         {
-            _habitatUI.UpdateFossilWallets();
+            _uiManager.UpdateFossilWallets();
         }
 
         return true;

@@ -14,10 +14,7 @@ public class AudioManagerModule : MonoBehaviour, IGameModule
         AudioManager audioManagerComp = sysObj.GetComponent<AudioManager>();
         ServiceLocator.Register<AudioManager>(audioManagerComp.Initialize());
 
-        ServiceLocator.Get<PersistentData>().SetAudioManager(audioManagerComp);
-        ServiceLocator.Get<HabitatManager>().SetAudioManager(audioManagerComp);
         ServiceLocator.Get<UIManager>().SetAudioManager(audioManagerComp);
-        ServiceLocator.Get<UIManager>().HabitatUI.InitializeVolumeSettings(audioManagerComp);
 
         yield return null;
     }

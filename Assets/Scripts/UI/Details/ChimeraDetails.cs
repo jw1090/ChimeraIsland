@@ -8,6 +8,8 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _chimeraIcon = null;
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
+    [SerializeField] private TMP_InputField _customName = null;
+    [SerializeField] private GameObject _panel = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
@@ -17,9 +19,12 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private StatefulObject _statefulButtons = null;
     [SerializeField] private Button _findButton = null;
     [SerializeField] private Button _addButton = null;
-    [SerializeField] private Button _transferButton = null;
     [SerializeField] private Button _removeButton = null;
+    [SerializeField] private Button _renameButton = null;
     [SerializeField] private TextMeshProUGUI _occupiedText = null;
+    [SerializeField] private RectTransform _explorationTransform = null;
+    [SerializeField] private RectTransform _staminaTransform = null;
+    [SerializeField] private RectTransform _wisdomTransform = null;
 
     [Header("Stat Preference")]
     [SerializeField] private Color _prefferedGoldColor = new Color();
@@ -29,6 +34,7 @@ public class ChimeraDetails : MonoBehaviour
     private Chimera _chimera = null;
     private Habitat _habitat = null;
     private UIManager _uiManager = null;
+    private Tooltip _tooltip = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
     private CameraUtil _cameraUtil = null;
@@ -36,10 +42,21 @@ public class ChimeraDetails : MonoBehaviour
 
     public Chimera Chimera { get => _chimera; }
 
+    private Rect GetGlobalPosition(RectTransform rectTransform)
+    {
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
+        return new Rect(corners[0].x, corners[0].y, corners[2].x - corners[0].x, corners[2].y - corners[0].y);
+    }
+
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
+        _tooltip = _uiManager.Tooltip;
+
         NoPrefferedStat();
+
+        SetupButtonListeners();
     }
 
     public void HabitatDetailsSetup(int chimeraSpot)
@@ -49,17 +66,59 @@ public class ChimeraDetails : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
+        _customName.gameObject.SetActive(false);
+
         _chimeraSpot = chimeraSpot;
 
         UpdateDetails();
     }
 
-    public void SetupButtonListeners()
+    private void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_transferButton, TransferMapClicked);
         _uiManager.CreateButtonListener(_addButton, AddChimeraClicked);
         _uiManager.CreateButtonListener(_removeButton, RemoveChimeraClicked);
         _uiManager.CreateButtonListener(_findButton, FindChimera);
+        _uiManager.CreateButtonListener(_renameButton, LockCamera);
+    }
+
+    public void Update()
+    {
+        if (GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
+        {
+            _uiManager.Tooltip.BeingUsed = true;
+            _tooltip.HoverDetails = this;
+            _uiManager.Tooltip.HoverStatType = StatType.Exploration;
+        }
+        else if (GetGlobalPosition(_staminaTransform).Contains(Input.mousePosition))
+        {
+            _uiManager.Tooltip.BeingUsed = true;
+            _tooltip.HoverDetails = this;
+            _uiManager.Tooltip.HoverStatType = StatType.Stamina;
+        }
+        else if (GetGlobalPosition(_wisdomTransform).Contains(Input.mousePosition))
+        {
+            _uiManager.Tooltip.BeingUsed = true;
+            _tooltip.HoverDetails = this;
+            _uiManager.Tooltip.HoverStatType = StatType.Wisdom;
+        }
+
+        if (_tooltip.BeingUsed == false)
+        {
+            _tooltip.gameObject.SetActive(false);
+        }
+
+        if (_tooltip.HoverDetails != this)
+        {
+            return;
+        }
+
+        if (_tooltip.BeingUsed == true)
+        {
+            _tooltip.FollowMouse();
+            _tooltip.LoadStatText();
+            _tooltip.LoadPreferenceText(_chimera.ChimeraType);
+            _tooltip.LoadEvolutionBonusText(_chimera.EvolutionBonusStat);
+        }
     }
 
     public void UpdateDetails()
@@ -77,18 +136,21 @@ public class ChimeraDetails : MonoBehaviour
 
         _chimera = _habitat.ActiveChimeras[_chimeraSpot];
 
-        _name.text = $"{_chimera.Name}";
+        if (_chimera.GetName() == _customName.text)
+        {
+            _name.text = _customName.text;
+        }
+        else
+        {
+            _name.text = $"{_chimera.Name}";
+        }
         _level.text = $"Average Power: {_chimera.AveragePower.ToString("F1")}";
         _chimeraIcon.sprite = _chimera.ChimeraIcon;
         _elementIcon.sprite = _chimera.ElementIcon;
 
-        int amount = 0;
-        string staminaText = _chimera.GetStatByType(StatType.Stamina, out amount) ? amount.ToString() : "Invalid!";
-        _stamina.text = staminaText;
-        string wisdomText = _chimera.GetStatByType(StatType.Wisdom, out amount) ? amount.ToString() : "Invalid!";
-        _wisdom.text = wisdomText;
-        string explorationText = _chimera.GetStatByType(StatType.Exploration, out amount) ? amount.ToString() : "Invalid!";
-        _exploration.text = explorationText;
+        _exploration.text = _chimera.GetCurrentStatAmount(StatType.Exploration).ToString();
+        _stamina.text = _chimera.GetCurrentStatAmount(StatType.Stamina).ToString();
+        _wisdom.text = _chimera.GetCurrentStatAmount(StatType.Wisdom).ToString();
 
         _energySlider.maxValue = _chimera.MaxEnergy;
         _energySlider.value = _chimera.CurrentEnergy;
@@ -165,11 +227,6 @@ public class ChimeraDetails : MonoBehaviour
         return true;
     }
 
-    private void TransferMapClicked()
-    {
-        _uiManager.HabitatUI.OpenTransferMap(_chimera);
-    }
-
     private void AddChimeraClicked()
     {
         if (_expeditionManager.AddChimera(_chimera) == true) // Success
@@ -209,15 +266,16 @@ public class ChimeraDetails : MonoBehaviour
 
     public void DetermineStatGlow()
     {
-        if(_chimera == null)
+        if (_chimera == null)
         {
             return;
         }
 
-        switch (_chimera.PreferredStat)
+        NoPrefferedStat();
+
+        switch (_chimera.EvolutionBonusStat)
         {
             case StatType.None:
-                NoPrefferedStat();
                 break;
             case StatType.Exploration:
                 _statIcons[0].color = _prefferedGoldColor;
@@ -229,9 +287,32 @@ public class ChimeraDetails : MonoBehaviour
                 _statIcons[2].color = _prefferedGoldColor;
                 break;
             default:
-                Debug.LogError($"Unhandled stat [{_chimera.PreferredStat}] please fix!");
+                Debug.LogError($"Unhandled stat [{_chimera.EvolutionBonusStat}] please fix!");
                 break;
         }
+    }
+
+    private void LockCamera()
+    {
+        _cameraUtil.IsNaming = true;
+        _name.gameObject.SetActive(false);
+        _name.text = "";
+        _customName.gameObject.SetActive(true);
+        _customName.Select();
+
+        _panel.SetActive(false);
+    }
+
+    public void UnlockCamera()
+    {
+        _cameraUtil.IsNaming = false;
+        _chimera.SetCustomName(_customName.text);
+        _name.gameObject.SetActive(true);
+        _customName.gameObject.SetActive(false);
+
+        UpdateDetails();
+
+        _panel.SetActive(true);
     }
 
     private void NoPrefferedStat()

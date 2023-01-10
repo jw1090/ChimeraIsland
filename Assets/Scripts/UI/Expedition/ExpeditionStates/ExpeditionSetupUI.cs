@@ -31,14 +31,15 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager = expeditionManager;
     }
 
-    public void Initialize(ExpeditionUI expeditionUI,UIManager uiManager)
+    public void Initialize(ExpeditionUI expeditionUI, UIManager uiManager)
     {
-        _resourceManager = ServiceLocator.Get<ResourceManager>();
-
-        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
         _uiManager = uiManager;
-        _habitatUI = _uiManager.HabitatUI;
         _expeditionUI = expeditionUI;
+
+        _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
+
+        _habitatUI = _uiManager.HabitatUI;
     }
 
     public void SetupListeners()
@@ -91,7 +92,15 @@ public class ExpeditionSetupUI : MonoBehaviour
         LoadModifiers(data.Modifiers);
 
         _backButton.gameObject.SetActive(true);
-        _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
+
+        if (_expeditionManager.CurrentHabitatProgress == 0)
+        {
+            _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
+        }
+        else if (_expeditionManager.CurrentFossilProgress == 0)
+        {
+            _tutoiralManager.ShowTutorialStage(TutorialStageType.ReccomendedTraits);
+        }
     }
 
     public void UpdateRewards(ExpeditionData data)

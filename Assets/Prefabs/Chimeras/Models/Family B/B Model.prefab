@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 8298492941554845350}
   - component: {fileID: 2722997207359511772}
   - component: {fileID: -69531750890384351}
-  - component: {fileID: 3977368657724177763}
+  - component: {fileID: 1155191189033711380}
   m_Layer: 6
   m_Name: B Model
   m_TagString: Chimera
@@ -793,16 +793,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818941f77a401d943944bdce340c8a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _evolutionPaths:
-  - {fileID: 4190063956345062447, guid: 4e37ef3b1fa2e0542a3fc19c91733d68, type: 3}
-  - {fileID: 5435247125041161158, guid: 4253e06ad40ef8649829f1ccfd8259f3, type: 3}
-  - {fileID: 410566253138147720, guid: cf97a984b0237f146be655f2811f8e58, type: 3}
-  _evolutionType: 4
   _chimeraName: Frolli
-  _statBonus: -1
-  _reqExploration: 0
-  _reqStamina: 0
-  _reqWisdom: 0
+  _evolutionType: 4
+  _elementType: 2
+  _backgroundInfo: "Its cheery smile, warm jets, and swaying will soothe all who
+    may meet it. Rolling on soil and sand will massage the creature and help Frolli
+    relax.\r"
+  _explorationPreference: 2
+  _staminaPreference: 0
+  _wisdomPreference: 1
+  _evolutionStat: -1
+  _evolutionPaths:
+  - {fileID: 1980380281988053841, guid: 1d676ccb1a4af534283069aa1be1e380, type: 3}
+  - {fileID: 7937252336387404771, guid: 44834f829fe742d4fa25cdc2ed170d10, type: 3}
+  - {fileID: -5181179335705840298, guid: d7ce0eaf9e1ebaf428d494db36dc920f, type: 3}
+  _evolutionStatThreshold: 7
   _speed: 4.5
   _idleParticles:
   - {fileID: 6932456625226055750}
@@ -810,7 +815,7 @@ MonoBehaviour:
   - {fileID: 4902260095049092671}
   - {fileID: 3047884427814190846}
   _patrolParticles: []
---- !u!65 &3977368657724177763
+--- !u!65 &1155191189033711380
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -821,8 +826,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.33298057, y: 0.23744486, z: 0.29724392}
-  m_Center: {x: 0, y: 0.05, z: 0}
+  m_Size: {x: 0.15, y: 0.15, z: 0.2}
+  m_Center: {x: 0, y: 0.06, z: 0}
 --- !u!1 &8770495829137555810
 GameObject:
   m_ObjectHideFlags: 0

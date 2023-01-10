@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class ExpeditionManager : MonoBehaviour
@@ -46,8 +45,16 @@ public class ExpeditionManager : MonoBehaviour
     public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
+    public void SetExpeditionState(ExpeditionState expeditionState)
+    {
+        _expeditionState = expeditionState;
+        SetPortalColor();
+    }
 
-    public void SetExpeditionState(ExpeditionState expeditionState) { _expeditionState = expeditionState; }
+    public void SetPortalColor()
+    {
+        _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
+    }
 
     public void ResetSelectedExpedition()
     {
@@ -89,12 +96,12 @@ public class ExpeditionManager : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
 
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
 
-        HabitatData data = _habitatManager.HabitatDataList[(int)_habitatManager.CurrentHabitat.Type];
-        _currentEssenceProgress = data.expeditionEssenceProgress;
-        _currentFossilProgress = data.expeditionFossilProgress;
-        _currentHabitatProgress = data.expeditionHabitatProgress;
+        HabitatData data = _habitatManager.HabitatData;
+        _currentEssenceProgress = data.ExpeditionEssenceProgress;
+        _currentFossilProgress = data.ExpeditionFossilProgress;
+        _currentHabitatProgress = data.ExpeditionHabitatProgress;
 
         return this;
     }
@@ -229,17 +236,19 @@ public class ExpeditionManager : MonoBehaviour
     {
         _chimeras.Clear();
 
-        _expeditionState = ExpeditionState.Setup;
+        SetExpeditionState(ExpeditionState.Setup);
         CalculateCurrentDifficultyValue();
         CalculateChimeraPower();
     }
 
     public void EnterInProgressState()
     {
-        _expeditionState = ExpeditionState.InProgress;
+        SetExpeditionState(ExpeditionState.InProgress);
 
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
+
+        //_treadmillManager.CheckRotation();
 
         _selectedExpedition.ActiveInProgressTimer = true;
     }
@@ -292,7 +301,7 @@ public class ExpeditionManager : MonoBehaviour
         }
 
         _selectedExpedition = null;
-        _expeditionState = ExpeditionState.Selection;
+        SetExpeditionState(ExpeditionState.Selection);
         _habitatUI.UpdateHabitatUI();
     }
 
@@ -346,13 +355,13 @@ public class ExpeditionManager : MonoBehaviour
             {
                 case ModifierType.None:
                     break;
-                case ModifierType.Aqua:
+                case ModifierType.Water:
                     _selectedExpedition.AquaBonus = 0.25f;
                     break;
-                case ModifierType.Bio:
+                case ModifierType.Grass:
                     _selectedExpedition.BioBonus = 0.25f;
                     break;
-                case ModifierType.Fira:
+                case ModifierType.Fire:
                     _selectedExpedition.FiraBonus = 0.25f;
                     break;
                 case ModifierType.Exploration:
@@ -413,11 +422,11 @@ public class ExpeditionManager : MonoBehaviour
     {
         switch (elementType)
         {
-            case ElementType.Aqua:
+            case ElementType.Water:
                 return _selectedExpedition.AquaBonus;
-            case ElementType.Bio:
+            case ElementType.Grass:
                 return _selectedExpedition.BioBonus;
-            case ElementType.Fira:
+            case ElementType.Fire:
                 return _selectedExpedition.FiraBonus;
             default:
                 Debug.LogWarning($"Modifier type is not valid [{elementType}]. Please fix.");
@@ -495,15 +504,10 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionType.Fossils:
                 if (_habitatManager.CurrentHabitat.Temple.IsCompleted == false)
                 {
+                    _uiManager.AlertText.CreateAlert($"You Built The Chimera Temple!");
                     _habitatManager.CurrentHabitat.Temple.Build();
                     _cameraUtil.TempleCameraShift();
-                    _uiManager.EnableUIByType(UIElementType.FossilsWallets);
-                }
-
-                if (_selectedExpedition.UnlocksNewChimera == true)
-                {
-                    ChimeraType chimeraType = _uiManager.HabitatUI.Marketplace.ActivateRandomChimera();
-                    Debug.Log($"You've unlocked Chimera of type {chimeraType}!");
+                    _uiManager.HabitatUI.EnableUIElementByType(UIElementType.FossilsWallets);
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
@@ -512,7 +516,7 @@ public class ExpeditionManager : MonoBehaviour
             case ExpeditionType.HabitatUpgrade:
                 if (_currentHabitatProgress == 0)
                 {
-                    _uiManager.EnableUIByType(UIElementType.EssenceWallets);
+                    _uiManager.HabitatUI.EnableUIElementByType(UIElementType.EssenceWallets);
                     _habitatManager.CurrentHabitat.CrystalManager.TripleSpawn();
                 }
 
@@ -618,15 +622,35 @@ public class ExpeditionManager : MonoBehaviour
 
     public void CompleteCurrentUpgradeExpedition()
     {
-        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
-
-        if (_habitatExpeditionOption == null)
+        if (_currentHabitatProgress == 0)
         {
-            Debug.Log("You've finished all habitat expeditions");
-            return;
-        }
+            SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
 
-        _selectedExpedition = _habitatExpeditionOption;
-        _uiExpedition.CompleteCurrentHabitatExpedition();
+            _selectedExpedition = _habitatExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
+        else if (_currentFossilProgress == 0)
+        {
+            if (_fossilExpeditionOption == null)
+            {
+                SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils);
+            }
+
+            _selectedExpedition = _fossilExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
+        else
+        {
+            SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+
+            if (_habitatExpeditionOption == null)
+            {
+                Debug.Log("You've finished all habitat expeditions");
+                return;
+            }
+
+            _selectedExpedition = _habitatExpeditionOption;
+            _uiExpedition.CompleteCurrentHabitatExpedition();
+        }
     }
 }

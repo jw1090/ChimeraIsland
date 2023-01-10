@@ -25,9 +25,16 @@ public enum DetailsButtonType
 public enum ElementType
 {
     None = -1,
-    Aqua,
-    Bio,
-    Fira,
+    Water,
+    Grass,
+    Fire,
+}
+
+public enum EvolutionVFXType
+{
+    None = -1,
+    GrowingLight,
+    WaterDrop,
 }
 
 public enum ExpeditionType
@@ -55,13 +62,6 @@ public enum FacilityType
     Waterfall,
 }
 
-public enum HabitatType
-{
-    None = -1,
-    StonePlains,
-    TreeOfLife,
-}
-
 public enum HabitatRewardType
 {
     None = -1,
@@ -76,9 +76,9 @@ public enum ModifierType
 {
     None = -1,
     Random,
-    Aqua,
-    Bio,
-    Fira,
+    Water,
+    Grass,
+    Fire,
     Stamina,
     Wisdom,
     Exploration,
@@ -88,10 +88,19 @@ public enum ModifierType
 public enum SceneType
 {
     None = -1,
-    Habitat,
     MainMenu,
     Starting,
-    WorldMap,
+    Habitat,
+    Temple,
+    Builder,
+}
+
+public enum StatPreferenceType
+{
+    None = -1,
+    Dislike,
+    Neutral,
+    Like
 }
 
 public enum StatType
@@ -124,6 +133,15 @@ public enum UIElementType
     EssenceWallets,
 }
 
+public enum TempleSectionType
+{
+    None = -1,
+    Buying,
+    Upgrades,
+    Collection,
+    Habitat,
+}
+
 public enum TutorialStageType
 {
     None = -1,
@@ -131,9 +149,19 @@ public enum TutorialStageType
     ExpeditionSelection,
     ExpeditionSetup,
     Facilities,
+    ReccomendedTraits,
     FossilShop,
     FacilityUpgrades,
 }
+
+public enum TutorialDarkenType
+{
+    Standard,
+    FirstExpedition,
+    ChimeraList,
+    ReccomendedTraits,
+}
+
 
 public enum SFXUIType
 {
@@ -143,14 +171,25 @@ public enum SFXUIType
     PurchaseClick,
     PlaceChimera,
     RemoveChimera,
-    Evolution,
-    LevelUp,
     ErrorClick,
     Completion,
     Failure,
-    Hit,
-    Harvest,
+    StoneDrag,
+    Whoosh,
+}
+
+public enum EnvironmentSFXType
+{
+    None = -1,
+    Evolution,
+    LevelUp,
     PortalClick,
+    MiningTap,
+    MiningHarvest,
+    WaterHit,
+    StoneHit,
+    DirtHit,
+    TreeHit,
 }
 
 public enum DayType
@@ -158,4 +197,30 @@ public enum DayType
     None = -1,
     DayTime,
     NightTime,
+}
+
+public enum CursorType
+{
+    Default,
+    Clickable,
+    Dragable,
+    Dragging,
+    Minable,
+}
+
+public enum ChimeraOrderType
+{ 
+    AveragePower,
+    Exploration,
+    Stamina,
+    Wisdom,
+}
+
+public enum TapVFXType
+{
+    None = -1,
+    Ground,
+    Water,
+    Stone,
+    Tree,
 }

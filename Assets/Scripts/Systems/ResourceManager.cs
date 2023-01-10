@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class ResourceManager : MonoBehaviour
     private Sprite _chimeraC2Sprite = null;
     private Sprite _chimeraC3Sprite = null;
 
-    private Sprite _aquaSprite = null;
-    private Sprite _bioSprite = null;
-    private Sprite _firaSprite = null;
+    private Sprite _waterSprite = null;
+    private Sprite _fireSprite = null;
+    private Sprite _grassSprite = null;
+    private Sprite _waterDetailsSprite = null;
+    private Sprite _fireDetailsSprite = null;
+    private Sprite _grassDetailsSprite = null;
 
     private Sprite _staminaSprite = null;
     private Sprite _wisdomSprite = null;
@@ -28,18 +32,11 @@ public class ResourceManager : MonoBehaviour
     private Sprite _fossilSprite = null;
     private Sprite _upgradeSprite = null;
 
-    private Sprite _tutorialHappyA = null;
-    private Sprite _tutorialShockedA = null;
-    private Sprite _tutorialSpeakingA = null;
-    private Sprite _tutorialStandardA = null;
-    private Sprite _tutorialHappyB = null;
-    private Sprite _tutorialShockedB = null;
-    private Sprite _tutorialSpeakingB = null;
-    private Sprite _tutorialStandardB = null;
-    private Sprite _tutorialHappyC = null;
-    private Sprite _tutorialShockedC = null;
-    private Sprite _tutorialSpeakingC = null;
-    private Sprite _tutorialStandardC = null;
+    private Texture2D _mouseDefault = null;
+    private Texture2D _mouseClickable = null;
+    private Texture2D _mouseDragable = null;
+    private Texture2D _mouseDragging = null;
+    private Texture2D _mouseMinable = null;
 
     private GameObject _chimeraBasePrefabA = null;
     private GameObject _chimeraBasePrefabB = null;
@@ -67,65 +64,86 @@ public class ResourceManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _defaultChimeraSprite = Resources.Load<Sprite>("Icons/Chimera/DefaultChimera-Icon");
-        _chimeraASprite = Resources.Load<Sprite>("Icons/Chimera/A-Icon");
-        _chimeraA1Sprite = Resources.Load<Sprite>("Icons/Chimera/A1-Icon");
-        _chimeraA2Sprite = Resources.Load<Sprite>("Icons/Chimera/A2-Icon");
-        _chimeraA3Sprite = Resources.Load<Sprite>("Icons/Chimera/A3-Icon");
-        _chimeraBSprite = Resources.Load<Sprite>("Icons/Chimera/B-Icon");
-        _chimeraB1Sprite = Resources.Load<Sprite>("Icons/Chimera/B1-Icon");
-        _chimeraB2Sprite = Resources.Load<Sprite>("Icons/Chimera/B2-Icon");
-        _chimeraB3Sprite = Resources.Load<Sprite>("Icons/Chimera/B3-Icon");
-        _chimeraCSprite = Resources.Load<Sprite>("Icons/Chimera/C-Icon");
-        _chimeraC1Sprite = Resources.Load<Sprite>("Icons/Chimera/C1-Icon");
-        _chimeraC2Sprite = Resources.Load<Sprite>("Icons/Chimera/C2-Icon");
-        _chimeraC3Sprite = Resources.Load<Sprite>("Icons/Chimera/C3-Icon");
+        _defaultChimeraSprite       = Resources.Load<Sprite>("Chimera/DefaultChimera-Icon");
+        _chimeraASprite             = Resources.Load<Sprite>("Chimera/A-Icon");
+        _chimeraA1Sprite            = Resources.Load<Sprite>("Chimera/A1-Icon");
+        _chimeraA2Sprite            = Resources.Load<Sprite>("Chimera/A2-Icon");
+        _chimeraA3Sprite            = Resources.Load<Sprite>("Chimera/A3-Icon");
+        _chimeraBSprite             = Resources.Load<Sprite>("Chimera/B-Icon");
+        _chimeraB1Sprite            = Resources.Load<Sprite>("Chimera/B1-Icon");
+        _chimeraB2Sprite            = Resources.Load<Sprite>("Chimera/B2-Icon");
+        _chimeraB3Sprite            = Resources.Load<Sprite>("Chimera/B3-Icon");
+        _chimeraCSprite             = Resources.Load<Sprite>("Chimera/C-Icon");
+        _chimeraC1Sprite            = Resources.Load<Sprite>("Chimera/C1-Icon");
+        _chimeraC2Sprite            = Resources.Load<Sprite>("Chimera/C2-Icon");
+        _chimeraC3Sprite            = Resources.Load<Sprite>("Chimera/C3-Icon");
 
-        _aquaSprite = Resources.Load<Sprite>("Icons/Elements/aqua");
-        _bioSprite = Resources.Load<Sprite>("Icons/Elements/bio");
-        _firaSprite = Resources.Load<Sprite>("Icons/Elements/fira");
+        _waterSprite                = Resources.Load<Sprite>("Elements/water");
+        _fireSprite                 = Resources.Load<Sprite>("Elements/fire");
+        _grassSprite                = Resources.Load<Sprite>("Elements/grass");
+        _waterDetailsSprite         = Resources.Load<Sprite>("Elements/waterDetails");
+        _fireDetailsSprite          = Resources.Load<Sprite>("Elements/fireDetails");
+        _grassDetailsSprite         = Resources.Load<Sprite>("Elements/grassDetails");
 
-        _staminaSprite = Resources.Load<Sprite>("Icons/Stats/Stamina");
-        _wisdomSprite = Resources.Load<Sprite>("Icons/Stats/Wisdom");
-        _explorationSprite = Resources.Load<Sprite>("Icons/Stats/Exploration");
+        _staminaSprite              = Resources.Load<Sprite>("Stats/Stamina");
+        _wisdomSprite               = Resources.Load<Sprite>("Stats/Wisdom");
+        _explorationSprite          = Resources.Load<Sprite>("Stats/Exploration");
 
-        _essenceSprite = Resources.Load<Sprite>("Icons/Expedition/Essence");
-        _fossilSprite = Resources.Load<Sprite>("Icons/Expedition/Fossil");
-        _upgradeSprite = Resources.Load<Sprite>("Icons/Expedition/Upgrade");
+        _essenceSprite              = Resources.Load<Sprite>("Expedition/Essence");
+        _fossilSprite               = Resources.Load<Sprite>("Expedition/Fossil");
+        _upgradeSprite              = Resources.Load<Sprite>("Expedition/Upgrade");
 
-        _tutorialHappyA = Resources.Load<Sprite>("Icons/Tutorial/Happy A");
-        _tutorialShockedA = Resources.Load<Sprite>("Icons/Tutorial/Shocked A");
-        _tutorialSpeakingA = Resources.Load<Sprite>("Icons/Tutorial/Speaking A");
-        _tutorialStandardA = Resources.Load<Sprite>("Icons/Tutorial/Standard A");
-        _tutorialHappyB = Resources.Load<Sprite>("Icons/Tutorial/Happy B");
-        _tutorialShockedB = Resources.Load<Sprite>("Icons/Tutorial/Shocked B");
-        _tutorialSpeakingB = Resources.Load<Sprite>("Icons/Tutorial/Speaking B");
-        _tutorialStandardB = Resources.Load<Sprite>("Icons/Tutorial/Standard B");
-        _tutorialHappyC = Resources.Load<Sprite>("Icons/Tutorial/Happy C");
-        _tutorialShockedC = Resources.Load<Sprite>("Icons/Tutorial/Shocked C");
-        _tutorialSpeakingC = Resources.Load<Sprite>("Icons/Tutorial/Speaking C");
-        _tutorialStandardC = Resources.Load<Sprite>("Icons/Tutorial/Standard C");
+        _mouseDefault               = Resources.Load<Texture2D>("Mouse/Default Cursor");
+        _mouseClickable             = Resources.Load<Texture2D>("Mouse/Clickable Cursor");
+        _mouseDragable              = Resources.Load<Texture2D>("Mouse/Dragable Cursor");
+        _mouseDragging              = Resources.Load<Texture2D>("Mouse/Dragging Cursor");
+        _mouseMinable              = Resources.Load<Texture2D>("Mouse/Minable Cursor");
 
-        _chimeraBasePrefabA = Resources.Load<GameObject>("Chimera/A");
-        _chimeraBasePrefabB = Resources.Load<GameObject>("Chimera/B");
-        _chimeraBasePrefabC = Resources.Load<GameObject>("Chimera/C");
-        _chimeraEvolutionPrefabA = Resources.Load<GameObject>("Chimera/Models/Family A/A Model");
-        _chimeraEvolutionPrefabA1 = Resources.Load<GameObject>("Chimera/Models/Family A/A1 Model");
-        _chimeraEvolutionPrefabA2 = Resources.Load<GameObject>("Chimera/Models/Family A/A2 Model");
-        _chimeraEvolutionPrefabA3 = Resources.Load<GameObject>("Chimera/Models/Family A/A3 Model");
-        _chimeraEvolutionPrefabB = Resources.Load<GameObject>("Chimera/Models/Family B/B Model");
-        _chimeraEvolutionPrefabB1 = Resources.Load<GameObject>("Chimera/Models/Family B/B1 Model");
-        _chimeraEvolutionPrefabB2 = Resources.Load<GameObject>("Chimera/Models/Family B/B2 Model");
-        _chimeraEvolutionPrefabB3 = Resources.Load<GameObject>("Chimera/Models/Family B/B3 Model");
-        _chimeraEvolutionPrefabC = Resources.Load<GameObject>("Chimera/Models/Family C/C Model");
-        _chimeraEvolutionPrefabC1 = Resources.Load<GameObject>("Chimera/Models/Family C/C1 Model");
-        _chimeraEvolutionPrefabC2 = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
-        _chimeraEvolutionPrefabC3 = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
+        _chimeraBasePrefabA         = Resources.Load<GameObject>("Chimera/A");
+        _chimeraBasePrefabB         = Resources.Load<GameObject>("Chimera/B");
+        _chimeraBasePrefabC         = Resources.Load<GameObject>("Chimera/C");
+        _chimeraEvolutionPrefabA    = Resources.Load<GameObject>("Chimera/Models/Family A/A Model");
+        _chimeraEvolutionPrefabA1   = Resources.Load<GameObject>("Chimera/Models/Family A/A1 Model");
+        _chimeraEvolutionPrefabA2   = Resources.Load<GameObject>("Chimera/Models/Family A/A2 Model");
+        _chimeraEvolutionPrefabA3   = Resources.Load<GameObject>("Chimera/Models/Family A/A3 Model");
+        _chimeraEvolutionPrefabB    = Resources.Load<GameObject>("Chimera/Models/Family B/B Model");
+        _chimeraEvolutionPrefabB1   = Resources.Load<GameObject>("Chimera/Models/Family B/B1 Model");
+        _chimeraEvolutionPrefabB2   = Resources.Load<GameObject>("Chimera/Models/Family B/B2 Model");
+        _chimeraEvolutionPrefabB3   = Resources.Load<GameObject>("Chimera/Models/Family B/B3 Model");
+        _chimeraEvolutionPrefabC    = Resources.Load<GameObject>("Chimera/Models/Family C/C Model");
+        _chimeraEvolutionPrefabC1   = Resources.Load<GameObject>("Chimera/Models/Family C/C1 Model");
+        _chimeraEvolutionPrefabC2   = Resources.Load<GameObject>("Chimera/Models/Family C/C2 Model");
+        _chimeraEvolutionPrefabC3   = Resources.Load<GameObject>("Chimera/Models/Family C/C3 Model");
 
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
         _inputManager = Resources.Load<GameObject>("Input Manager");
 
         return this;
+    }
+
+    public Texture2D GetCursorTexture(CursorType cursorType)
+    {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return _mouseDefault;
+        }
+
+        switch (cursorType)
+        {
+            case CursorType.Default:
+                return _mouseDefault;
+            case CursorType.Clickable:
+                return _mouseClickable;
+            case CursorType.Dragable:
+                return _mouseDragable;
+            case CursorType.Dragging:
+                return _mouseDragging;
+            case CursorType.Minable:
+                return _mouseMinable;
+            default:
+                Debug.LogError($"Unhandled cursor type: {cursorType}. Please change!");
+                return null;
+        }
     }
 
     public GameObject GetChimeraBasePrefab(ChimeraType chimeraType)
@@ -225,12 +243,28 @@ public class ResourceManager : MonoBehaviour
     {
         switch (elementalType)
         {
-            case ElementType.Aqua:
-                return _aquaSprite;
-            case ElementType.Bio:
-                return _bioSprite;
-            case ElementType.Fira:
-                return _firaSprite;
+            case ElementType.Water:
+                return _waterSprite;
+            case ElementType.Fire:
+                return _fireSprite;
+            case ElementType.Grass:
+                return _grassSprite;
+            default:
+                Debug.LogWarning($"{elementalType} is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetElementSimpleSprite(ElementType elementalType)
+    {
+        switch (elementalType)
+        {
+            case ElementType.Water:
+                return _waterDetailsSprite;
+            case ElementType.Fire:
+                return _fireDetailsSprite;
+            case ElementType.Grass:
+                return _grassDetailsSprite;
             default:
                 Debug.LogWarning($"{elementalType} is invalid, please change!");
                 return null;
@@ -273,12 +307,12 @@ public class ResourceManager : MonoBehaviour
     {
         switch (badgeType)
         {
-            case ModifierType.Aqua:
-                return _aquaSprite;
-            case ModifierType.Bio:
-                return _bioSprite;
-            case ModifierType.Fira:
-                return _firaSprite;
+            case ModifierType.Water:
+                return _waterSprite;
+            case ModifierType.Grass:
+                return _grassSprite;
+            case ModifierType.Fire:
+                return _fireSprite;
             case ModifierType.Stamina:
                 return _staminaSprite;
             case ModifierType.Wisdom:

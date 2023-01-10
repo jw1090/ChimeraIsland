@@ -3,14 +3,23 @@ using UnityEngine;
 
 public class EvolutionLogic : MonoBehaviour
 {
-    [Header("General Logic")]
-    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
-    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
+    [Header("General")]
     [SerializeField] private string _chimeraName = "";
-    [SerializeField] private StatType _statBonus = StatType.None;
-    [SerializeField] private int _reqExploration = 0;
-    [SerializeField] private int _reqStamina = 0;
-    [SerializeField] private int _reqWisdom = 0;
+    [SerializeField] private ChimeraType _evolutionType = ChimeraType.None;
+    [SerializeField] private ElementType _elementType = ElementType.None;
+    [SerializeField][TextArea(3, 10)] private string _backgroundInfo = "";
+
+    [Header("Stat Preferences")]
+    [SerializeField] private StatPreferenceType _explorationPreference = StatPreferenceType.Neutral;
+    [SerializeField] private StatPreferenceType _staminaPreference = StatPreferenceType.Neutral;
+    [SerializeField] private StatPreferenceType _wisdomPreference = StatPreferenceType.Neutral;
+
+    [Header("Evolution")]
+    [SerializeField] private StatType _evolutionStat = StatType.None;
+    [SerializeField] private List<EvolutionLogic> _evolutionPaths = null;
+    private int _evolutionStatThreshold = 7;
+
+    [Header("AI")]
     [SerializeField] private float _speed = 4.5f;
 
     [Header("Particles")]
@@ -22,15 +31,76 @@ public class EvolutionLogic : MonoBehaviour
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
-    public ChimeraType Type { get => _evolutionType; }
+    public ChimeraType ChimeraType { get => _evolutionType; }
+    public ElementType ElementType { get => _elementType; }
+    public StatType EvolutionStat { get => _evolutionStat; }
+    public StatPreferenceType ExplorationPreference { get => _explorationPreference; }
+    public StatPreferenceType StaminaPreference { get => _staminaPreference; }
+    public StatPreferenceType WisdomPreference { get => _wisdomPreference; }
     public Animator Animator { get => _animator; }
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
-    public StatType StatBonus { get => _statBonus; }
-    public int ReqExploration { get => _reqExploration; }
-    public int ReqStamina { get => _reqStamina; }
-    public int ReqWisdom { get => _reqWisdom; }
+    public List<EvolutionLogic> PossibleEvolutions { get => _evolutionPaths; }
     public string Name { get => _chimeraName; }
+    public string BackgroundInfo { get => _backgroundInfo; }
+    public int EvolutionStatThreshold { get => _evolutionStatThreshold; }
+
+    public float GetPreferenceModifier(StatType trainingStat)
+    {
+        float amount = 0.0f;
+
+        switch (trainingStat)
+        {
+            case StatType.Exploration:
+                amount = DeterminePreferenceBonusAmount(_explorationPreference);
+                break;
+            case StatType.Stamina:
+                amount = DeterminePreferenceBonusAmount(_staminaPreference);
+                break;
+            case StatType.Wisdom:
+                amount = DeterminePreferenceBonusAmount(_wisdomPreference);
+                break;
+            default:
+                Debug.LogError($"Invalid Training Stat Type: {trainingStat}");
+                break;
+        }
+
+        return amount;
+    }
+
+    private float DeterminePreferenceBonusAmount(StatPreferenceType statPreferenceType)
+    {
+        float amount = 0.0f;
+
+        switch (statPreferenceType)
+        {
+            case StatPreferenceType.Dislike:
+                amount = -0.1f;
+                break;
+            case StatPreferenceType.Neutral:
+                break;
+            case StatPreferenceType.Like:
+                amount = 0.2f;
+                break;
+            default:
+                Debug.LogError($"Invalid Preference Stat Type: {statPreferenceType}");
+                break;
+        }
+
+        return amount;
+    }
+
+    public float GetEvolutionBonusAmount(StatType trainingStat)
+    {
+        float amount = 0.0f;
+
+        if (trainingStat == _evolutionStat)
+        {
+            amount = 0.5f;
+        }
+
+        return amount;
+    }
 
     public void Initialize(Chimera chimera)
     {
@@ -46,7 +116,7 @@ public class EvolutionLogic : MonoBehaviour
         TogglePatrolParticles(false);
     }
 
-    public bool CheckEvolution(int exploration, int staminan, int wisdom, out EvolutionLogic newEvolution)
+    public bool CheckEvolution(int exploration, int stamina, int wisdom, out EvolutionLogic newEvolution)
     {
         newEvolution = null;
 
@@ -57,21 +127,35 @@ public class EvolutionLogic : MonoBehaviour
 
         foreach (var possibleEvolution in _evolutionPaths)
         {
-            if (staminan < possibleEvolution.ReqStamina)
+            switch (possibleEvolution.EvolutionStat)
             {
-                continue;
+                case StatType.None: // No way to evolve into this
+                    break;
+                case StatType.Exploration:
+                    if (exploration >= possibleEvolution.EvolutionStatThreshold)
+                    {
+                        newEvolution = possibleEvolution;
+                        return true;
+                    }
+                    break;
+                case StatType.Stamina:
+                    if (stamina >= possibleEvolution.EvolutionStatThreshold)
+                    {
+                        newEvolution = possibleEvolution;
+                        return true;
+                    }
+                    break;
+                case StatType.Wisdom:
+                    if (wisdom >= possibleEvolution.EvolutionStatThreshold)
+                    {
+                        newEvolution = possibleEvolution;
+                        return true;
+                    }
+                    break;
+                default:
+                    Debug.LogError($"Invalid Stat Type: {possibleEvolution.EvolutionStatThreshold}");
+                    break;
             }
-            else if (wisdom < possibleEvolution.ReqWisdom)
-            {
-                continue;
-            }
-            if (exploration < possibleEvolution.ReqExploration)
-            {
-                continue;
-            }
-
-            newEvolution = possibleEvolution;
-            return true;
         }
 
         return false;
@@ -79,7 +163,7 @@ public class EvolutionLogic : MonoBehaviour
 
     public void ToggleIdleParticles(bool toggle)
     {
-        if (toggle == true &&_idleParticles != _patrolParticles)
+        if (toggle == true && _idleParticles != _patrolParticles)
         {
             ToggleParticles(false, _patrolParticles);
         }

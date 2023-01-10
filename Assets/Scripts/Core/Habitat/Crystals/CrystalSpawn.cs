@@ -1,32 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CrystalSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject _crystal = null;
+    [SerializeField] private StatefulObject _crystal = null;
+    [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
+    [SerializeField] private List<Crystal> _crystalList = new List<Crystal>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
-    private Habitat _habitat = null;
     private int _health = 3;
     private bool _isActive = false;
+    private int _currentTier = 1;
 
     public bool IsActive { get => _isActive; }
 
-    public void Initialize(Habitat habitat)
+    public void Initialize()
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
 
-        _habitat = habitat;
-
         _isActive = false;
-        _crystal.SetActive(false);
+        _crystal.gameObject.SetActive(false);
     }
 
-    public void Activate()
+    public void Activate(int currentTier)
     {
-        _health = 3;
+        foreach (Crystal crystal in _crystalList)
+        {
+            crystal.ResetCrystal();
+        }
+
+        _crystal.SetState($"Crystal{currentTier}");
+
+        _currentTier = currentTier;
+        _health = _currentTier;
+
         _isActive = true;
-        _crystal.SetActive(true);
+        _crystal.gameObject.SetActive(true);
+        _crystal.CurrentState.StateObject.GetComponent<Crystal>().Grow(currentTier);
     }
 
     public void Harvest()
@@ -36,26 +48,50 @@ public class CrystalSpawn : MonoBehaviour
             return;
         }
 
-        if (--_health == 0)
+        ShowEffect();
+
+        _currencyManager.IncreaseEssence(25 * _currentTier);
+
+        --_health;
+
+        if (_health == 2)
+        {
+            _crystal.SetState($"Crystal{_health}");
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
+        }
+        else if (_health == 1)
+        {
+            _crystal.SetState($"Crystal{_health}");
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningTap);
+        }
+        else if (_health == 0)
         {
             _isActive = false;
-            _crystal.SetActive(false);
-            _currencyManager.IncreaseEssence(20 * _habitat.CurrentTier);
+            _crystal.gameObject.SetActive(false);
 
-            _audioManager.PlayUISFX(SFXUIType.Harvest);
+            _audioManager.PlaySFX(EnvironmentSFXType.MiningHarvest);
         }
-        else
+    }
+
+    private void ShowEffect()
+    {
+        foreach (ParticleSystem p in _tapMine)
         {
-            if (_health == 1)
+            if (p.isPlaying != true)
             {
-                _currencyManager.IncreaseEssence(15 * _habitat.CurrentTier);
-            }
-            else
-            {
-                _currencyManager.IncreaseEssence(10 * _habitat.CurrentTier);
-            }
+                p.gameObject.SetActive(true);
+                p.time = 0;
 
-            _audioManager.PlayUISFX(SFXUIType.Hit);
+                StartCoroutine(StopMineEffect(p));
+
+                break;
+            }
         }
+    }
+
+    IEnumerator StopMineEffect(ParticleSystem _mine)
+    {
+        yield return new WaitForSeconds(.8f);
+        _mine.Stop();
     }
 }

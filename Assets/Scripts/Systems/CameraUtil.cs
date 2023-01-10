@@ -12,105 +12,106 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _minZoom = 20.0f;
     [SerializeField] private float _maxZoom = 90.0f;
 
-    [Header("Edge Follow")]
-    [SerializeField] private float _moveSpeed = 12.0f;
-    [SerializeField] private int _screenEdgeSize = 50;
-
     [Header("Collision")]
     [SerializeField] private float _sphereRadius = 2.0f;
     [SerializeField] private float _offset = 1.5f;
 
-    private Camera _cameraCO = null;
+    [Header("Referenes")]
+    [SerializeField] private FreeCamera _freeCamera = null;
+    [SerializeField] private Camera _cameraCO = null;
+
     private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
-    private Rect _upRect = new Rect();
-    private Rect _downRect = new Rect();
-    private Rect _rightRect = new Rect();
-    private Rect _leftRect = new Rect();
+    private StarterEnvironment _starterEnvironment = null;
+    private Temple _templeEnvironment = null;
+    private PersistentData _persistentData = null;
+    private SceneType _sceneType = SceneType.None;
     private bool _initialized = false;
     private bool _canMoveUp = true;
     private bool _canMoveDown = true;
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
-    private float _standardTransitionSpeed = 0.06f;
-    private float _findTransitionSpeed = 0.05f;
+    private float _transitionDuration = 0.6f;
 
-    public bool IsHolding { get; set; }
     public Camera CameraCO { get => _cameraCO; }
+    public bool IsHolding { get; set; }
+    public bool IsNaming { get; set; }
 
-    public CameraUtil Initialize()
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+        _persistentData.SetSpeed(speed);
+    }
+
+    public void SetStarterEnvironment(StarterEnvironment starterEnvironment) { _starterEnvironment = starterEnvironment; }
+    public void SetTempleEnvironment(Temple templeEnvironment) { _templeEnvironment = templeEnvironment; }
+
+    public CameraUtil Initialize(SceneType sceneType)
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
-        _cameraCO = Camera.main;
-
-        _upRect = new Rect(1f, Screen.height - _screenEdgeSize, Screen.width, _screenEdgeSize);
-        _downRect = new Rect(1f, 1f, Screen.width, _screenEdgeSize);
-        _rightRect = new Rect(1f, 1f, _screenEdgeSize, Screen.height);
-        _leftRect = new Rect(Screen.width - _screenEdgeSize, 1f, _screenEdgeSize, Screen.height);
-
-        CameraZoom();
+        _sceneType = sceneType;
 
         _initialized = true;
 
         return this;
     }
 
-    private void Update()
+    public void SceneSetup()
     {
-        if (_initialized == false)
+        if (_sceneType == SceneType.Habitat)
         {
-            return;
+            CameraZoom();
+
+            _speed = _persistentData.SettingsData.cameraSpeed;
+            _freeCamera.Initialize(_speed);
+
+            _inputManager.SetFreeCamera(_freeCamera);
         }
-
-        DragChimeraMovement();
-
-        CameraCollisionCheck();
+        else if (_sceneType == SceneType.Temple)
+        {
+            transform.position = _templeEnvironment.StartNode.position;
+        }
     }
 
-    public void CameraMovement()
+    public void CameraUpdate()
     {
         if (_initialized == false)
         {
             return;
         }
 
+        if (_sceneType != SceneType.Habitat)
+        {
+            return;
+        }
+
+        CameraCollisionCheck();
+        if (IsNaming == false)
+        {
+            CameraMovement();
+        }
+    }
+
+    private void CameraMovement()
+    {
         Vector3 direction = Vector3.zero;
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? _sprintMultiplier * _speed : _speed;
 
-        bool moveUp = Input.GetKey(KeyCode.W) && _canMoveUp;
-        bool moveDown = Input.GetKey(KeyCode.S) && _canMoveDown;
-        bool moveLeft = Input.GetKey(KeyCode.A) && _canMoveLeft;
-        bool moveRight = Input.GetKey(KeyCode.D) && _canMoveRight;
+        bool moveUp = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && _canMoveUp;
+        bool moveDown = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && _canMoveDown;
+        bool moveLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && _canMoveLeft;
+        bool moveRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && _canMoveRight;
 
         direction.z = moveUp ? -1 : moveDown ? 1 : 0;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
         transform.position = transform.position + direction * panSpeed * Time.deltaTime;
-    }
-
-    private void DragChimeraMovement()
-    {
-        if (IsHolding == false)
-        {
-            return;
-        }
-
-        Vector3 direction = Vector3.zero;
-
-        bool moveDown = _upRect.Contains(Input.mousePosition) && _canMoveUp;
-        bool moveUp = _downRect.Contains(Input.mousePosition) && _canMoveDown;
-        bool moveLeft = _leftRect.Contains(Input.mousePosition) && _canMoveRight;
-        bool moveRight = _rightRect.Contains(Input.mousePosition) && _canMoveLeft;
-
-        direction.z = moveUp ? 1 : moveDown ? -1 : 0;
-        direction.x = moveLeft ? -1 : moveRight ? 1 : 0;
-
-        transform.position = transform.position + direction * _moveSpeed * Time.deltaTime;
     }
 
     public void CameraZoom()
@@ -182,72 +183,130 @@ public class CameraUtil : MonoBehaviour
         }
     }
 
-    private void CameraShift(Vector3 position)
-    {
-        if (_transitionCoroutine != null)
-        {
-            StopCoroutine(_transitionCoroutine);
-        }
-
-        _transitionCoroutine = StartCoroutine(MoveCamera(position, _standardTransitionSpeed));
-    }
-
     public void TempleCameraShift()
     {
-        Vector3 templeposition = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode.position;
-        templeposition.y = this.transform.position.y;
+        Transform targetTransform = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode;
 
-        CameraShift(templeposition);
+        Vector3 targetPosition;
+        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
+
+        CameraShift(targetPosition, Quaternion.identity);
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
-        Vector3 facilityPosition = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode.position;
-        facilityPosition.y = this.transform.position.y;
+        Transform targetTransform = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode;
 
-        CameraShift(facilityPosition);
+        Vector3 targetPosition;
+        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
+
+        CameraShift(targetPosition, Quaternion.identity);
     }
 
     public void FindChimeraCameraShift(Chimera chimera)
+    {
+        Vector3 targetPosition;
+        targetPosition = new Vector3(chimera.transform.position.x, this.transform.position.y, chimera.transform.position.z + 10.0f); // Lock Camera Y
+
+        CameraShift(targetPosition, Quaternion.identity);
+    }
+
+    private void CameraShift(Transform target, bool rotate = false)
+    {
+        CameraShift(target.position, target.rotation, rotate);
+    }
+
+    private void CameraShift(Vector3 targetPosition, Quaternion targetRotation, bool rotate = false)
     {
         if (_transitionCoroutine != null)
         {
             StopCoroutine(_transitionCoroutine);
         }
 
-        _transitionCoroutine = StartCoroutine(TrackingChimeraCamera(chimera, _findTransitionSpeed));
+        _transitionCoroutine = StartCoroutine(MoveCamera(targetPosition, targetRotation, rotate));
     }
 
-    private IEnumerator MoveCamera(Vector3 target, float time)
-    {
-        _inputManager.SetInTransition(true);
-        while (Vector3.Distance(transform.position, target) > 0.5f)
-        {
-            yield return new WaitForSeconds(0.01f);
-
-            transform.position = Vector3.Lerp(transform.position, target, time);
-        }
-        _inputManager.SetInTransition(false);
-    }
-
-    private IEnumerator TrackingChimeraCamera(Chimera chimera, float time)
+    private IEnumerator MoveCamera(Vector3 targetPosition, Quaternion targetRotation, bool rotate)
     {
         _inputManager.SetInTransition(true);
 
-        Vector3 chimeraPosition = chimera.transform.position;
-        chimeraPosition.y = this.transform.position.y;
-        chimeraPosition.z += 10.0f;
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
 
-        while (Vector3.Distance(transform.position, chimeraPosition) > 2.0f)
+        float time = 0.0f;
+        while (time < _transitionDuration)
         {
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.001f);
 
-            chimeraPosition = chimera.transform.position;
-            chimeraPosition.y = this.transform.position.y;
-            chimeraPosition.z += 10.0f;
+            time += Time.deltaTime;
+            float progress = time / _transitionDuration;
 
-            transform.position = Vector3.Lerp(transform.position, chimeraPosition, time);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
+
+            if (rotate == true)
+            {
+                transform.rotation = Quaternion.Lerp(startRotation, targetRotation, progress);
+            }
         }
+
         _inputManager.SetInTransition(false);
+    }
+
+    public void ChimeraCloseUp(ChimeraType chimeraType)
+    {
+        Transform nodeTransform = null;
+
+        switch (chimeraType)
+        {
+            case ChimeraType.A:
+                nodeTransform = _starterEnvironment.ANode;
+                break;
+            case ChimeraType.B:
+                nodeTransform = _starterEnvironment.BNode;
+                break;
+            case ChimeraType.C:
+                nodeTransform = _starterEnvironment.CNode;
+                break;
+            default:
+                Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
+                break;
+        }
+
+        _starterEnvironment.ShowChimera(chimeraType);
+        CameraShift(nodeTransform, true);
+    }
+
+    public void TempleTransition(TempleSectionType templeSectionType)
+    {
+        Transform nodeTransform = null;
+
+        switch (templeSectionType)
+        {
+            case TempleSectionType.None:
+                break;
+            case TempleSectionType.Buying:
+                nodeTransform = _templeEnvironment.BuyingNode;
+                break;
+            case TempleSectionType.Upgrades:
+                nodeTransform = _templeEnvironment.UpgradeNode;
+                break;
+            case TempleSectionType.Collection:
+                nodeTransform = _templeEnvironment.CollectionNode;
+                break;
+            case TempleSectionType.Habitat:
+                nodeTransform = _templeEnvironment.StartNode;
+                break;
+            default:
+                Debug.LogWarning($"{templeSectionType} is not a valid type. Please fix!");
+                break;
+        }
+
+        CameraShift(nodeTransform, true);
+    }
+
+    public void CameraToOrigin()
+    {
+        _starterEnvironment.ShowAllChimeras();
+        CameraShift(_starterEnvironment.OriginNode, true);
     }
 }
