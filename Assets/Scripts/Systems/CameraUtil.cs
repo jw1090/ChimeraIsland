@@ -103,10 +103,10 @@ public class CameraUtil : MonoBehaviour
         Vector3 direction = Vector3.zero;
         float panSpeed = (Input.GetKey(KeyCode.LeftShift)) ? _sprintMultiplier * _speed : _speed;
 
-        bool moveUp = Input.GetKey(KeyCode.W) && _canMoveUp;
-        bool moveDown = Input.GetKey(KeyCode.S) && _canMoveDown;
-        bool moveLeft = Input.GetKey(KeyCode.A) && _canMoveLeft;
-        bool moveRight = Input.GetKey(KeyCode.D) && _canMoveRight;
+        bool moveUp = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && _canMoveUp;
+        bool moveDown = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && _canMoveDown;
+        bool moveLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && _canMoveLeft;
+        bool moveRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && _canMoveRight;
 
         direction.z = moveUp ? -1 : moveDown ? 1 : 0;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
