@@ -274,7 +274,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-541152
+  m_Name: pb_Mesh-188780
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -438,7 +438,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-541162
+  m_Name: pb_Mesh-188790
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -982,7 +982,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.size
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _nightLightIntensity.m_Curve.Array.size
@@ -990,15 +994,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[0].time
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[1].time
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].time
-      value: 0.8
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].time
@@ -1006,27 +1010,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[4].time
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[5].time
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].time
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].time
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[3].time
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[0].value
-      value: 0.2
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[1].value
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].value
-      value: 0.2
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].value
-      value: 0.2
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[4].value
-      value: 0.2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[5].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].value
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[0].value
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].value
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].value
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[3].value
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _nightLightIntensity.m_Curve.Array.data[0].time
@@ -1050,7 +1098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[1].inSlope
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].inSlope
@@ -1059,6 +1107,18 @@ PrefabInstance:
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].inSlope
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[4].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].inSlope
+      value: 2.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].inSlope
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _nightLightIntensity.m_Curve.Array.data[0].value
@@ -1077,6 +1137,10 @@ PrefabInstance:
       value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[0].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[0].outSlope
       value: 0
       objectReference: {fileID: 0}
@@ -1086,7 +1150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].outSlope
-      value: 0
+      value: -1.0000001
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].inWeight
@@ -1101,12 +1165,68 @@ PrefabInstance:
       value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[4].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[5].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].outSlope
+      value: 2.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].outSlope
+      value: -1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[3].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].outWeight
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[4].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[5].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].outWeight
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _nightLightIntensity.m_Curve.Array.data[0].inSlope
@@ -1150,23 +1270,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[0].tangentMode
-      value: 136
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[1].tangentMode
-      value: 136
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[2].tangentMode
-      value: 136
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[3].tangentMode
-      value: 34
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _dayLightIntensity.m_Curve.Array.data[4].tangentMode
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[5].tangentMode
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _dayLightIntensity.m_Curve.Array.data[6].tangentMode
       value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[1].tangentMode
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
+      propertyPath: _lightingIntensity.m_Curve.Array.data[2].tangentMode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5191122469028125093, guid: 5295bf6867c0178469bdb6193cc8a734, type: 3}
       propertyPath: _nightLightIntensity.m_Curve.Array.data[0].tangentMode

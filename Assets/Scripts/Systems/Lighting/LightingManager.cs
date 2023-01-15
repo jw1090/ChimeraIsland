@@ -5,38 +5,33 @@ public class LightingManager : MonoBehaviour
 {
     [Header("Light Attributes")]
     [SerializeField] [Range(0.0f, 1.0f)] private float _time = 0.0f;
-    [SerializeField] private Light _mainLight = null;
     [SerializeField] private float _fullDayLength = 0.0f;
     [SerializeField] private float _startTime = 0.0f;
-    [SerializeField] private DayType _dayType = DayType.None;
-    [SerializeField] private AnimationCurve _lightingIntensityMultiplier = null;
 
     [Header("Day Light")]
-    [SerializeField] private Light _dayLight = null;
+    [SerializeField] private Light _sourceLight = null;
+    [SerializeField] private Light _ambientColorLight = null;
     [SerializeField] private Gradient _dayLightColor = null;
-    [SerializeField] private AnimationCurve _dayLightIntensity = null;
-
-    [Header("Night Light")]
-    [SerializeField] private Light _nightLight = null;
     [SerializeField] private Gradient _nightLightColor = null;
-    [SerializeField] private AnimationCurve _nightLightIntensity = null;
+    [SerializeField] private AnimationCurve _lightingIntensity = null;
 
     [Header("Sky")]
     [SerializeField] private GameObject _sky = null;
     [SerializeField] private GameObject _stars = null;
-    [SerializeField] private Color _daySky= new Color();
+    [SerializeField] private Color _daySky = new Color();
     [SerializeField] private Color _nightSky = new Color();
     [SerializeField] private Color _nightStarsSky = new Color();
     [SerializeField] private float _transitionDuration = 0.5f;
     [SerializeField] private float _transitionDurationDay = 0.5f;
 
-    Vector3 _mainLightRotation = Vector3.zero;
     private Habitat _habitat = null;
+    private Material _skyMaterial = null;
+    private Material _starMaterial = null;
+    private DayType _dayType = DayType.None;
+    private Vector3 _mainLightRotation = Vector3.zero;
     private bool _initialized = false;
     private float _timeRate = 0.0f;
     private float _speed = 0.0f;
-    private Material _skyMaterial = null;
-    private Material _starMaterial = null;
 
     public event Action<DayType> DayTypeChanged = null;
 
@@ -49,7 +44,7 @@ public class LightingManager : MonoBehaviour
         _starMaterial = _stars.GetComponent<MeshRenderer>().material;
 
         DayTypeChanged = OnDayTypeChanged;
-        _mainLightRotation = _dayLight.transform.eulerAngles;
+        _mainLightRotation = _ambientColorLight.transform.eulerAngles;
 
         _timeRate = 1.0f / _fullDayLength;
         _time = _startTime;
@@ -73,8 +68,8 @@ public class LightingManager : MonoBehaviour
         LightRotation();
         SkyTransition();
 
-        RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
-        RenderSettings.reflectionIntensity = _lightingIntensityMultiplier.Evaluate(_time);
+        RenderSettings.ambientIntensity = _lightingIntensity.Evaluate(_time);
+        RenderSettings.reflectionIntensity = _lightingIntensity.Evaluate(_time);
 
         _sky.transform.Rotate(Vector3.up * 1.5f * Time.deltaTime);
         _stars.transform.Rotate(Vector3.down * 0.2f * Time.deltaTime);
@@ -95,25 +90,20 @@ public class LightingManager : MonoBehaviour
             _time = 0.0f;
         }
 
-        // Update the light intensity
-        _dayLight.intensity = _dayLightIntensity.Evaluate(_time);
-        _nightLight.intensity = _nightLightIntensity.Evaluate(_time);
-
-        // Update the light color
-        _dayLight.color = _dayLightColor.Evaluate(_time);
-        _nightLight.color = _nightLightColor.Evaluate(_time);
+        _ambientColorLight.intensity = _lightingIntensity.Evaluate(_time);
+        _ambientColorLight.color = ColorEvaluate();
 
         // Check for DayType change
         switch (_dayType)
         {
             case DayType.DayTime:
-                if (_nightLight.intensity > 0.0f)
+                if (_ambientColorLight.intensity > 0.0f)
                 {
                     DayTypeChanged.Invoke(DayType.NightTime);
                 }
                 break;
             case DayType.NightTime:
-                if (_nightLight.intensity <= 0.0f)
+                if (_ambientColorLight.intensity <= 0.0f)
                 {
                     DayTypeChanged.Invoke(DayType.DayTime);
                 }
@@ -124,11 +114,21 @@ public class LightingManager : MonoBehaviour
         }
     }
 
+    private Color ColorEvaluate()
+    {
+        Color dayColor = _dayLightColor.Evaluate(_time);
+        Color nightColor = _nightLightColor.Evaluate(_time);
+
+        Color result = Color.Lerp(dayColor, nightColor, _time);
+
+        return result;
+    }
+
     // Lights are opposite directions.
     private void LightRotation()
     {
         _mainLightRotation.x = (_time - 0.25f) * (360f);
-        _mainLight.transform.eulerAngles = _mainLightRotation;
+        _sourceLight.transform.eulerAngles = _mainLightRotation;
     }
 
     private void SkyTransition()
@@ -136,7 +136,7 @@ public class LightingManager : MonoBehaviour
         if (_dayType == DayType.NightTime)
         {
             _skyMaterial.color = Color.Lerp(_skyMaterial.color, _nightSky, _transitionDuration);
-            if(_nightLight.intensity > 0.07f)
+            if (_ambientColorLight.intensity > 0.07f)
             {
                 _starMaterial.color = Color.Lerp(_starMaterial.color, _daySky, _transitionDuration);
             }
@@ -161,18 +161,12 @@ public class LightingManager : MonoBehaviour
 
                 FirefliesToggle(true);
 
-                _nightLight.gameObject.SetActive(true);
-                _dayLight.gameObject.SetActive(false);
-
-                _speed = 2.0f;
+                _speed = 1.0f;
                 break;
             case DayType.DayTime:
                 _dayType = DayType.DayTime;
 
                 FirefliesToggle(false);
-
-                _dayLight.gameObject.SetActive(true);
-                _nightLight.gameObject.SetActive(false);
 
                 _speed = 1.0f;
                 break;
