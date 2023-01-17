@@ -193,7 +193,7 @@ public class HabitatManager : MonoBehaviour
     {
         FacilityType upgradeFacility = _upgradeQueue.Peek();
         _cameraUtil.FacilityCameraShift(upgradeFacility);
-        yield return new WaitUntil(_cameraUtil.InTransition == false);
+        yield return new WaitUntil(() => _cameraUtil.InTransition == false);
 
         CurrentHabitat.GetFacility(upgradeFacility).BuildFacility();
         yield return new WaitForSeconds(1.0f);
