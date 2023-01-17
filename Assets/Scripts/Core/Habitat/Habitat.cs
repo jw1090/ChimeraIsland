@@ -22,7 +22,6 @@ public class Habitat : MonoBehaviour
 
     private UIManager _uiManager = null;
     private ChimeraCreator _chimeraCreator = null;
-    private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private LightingManager _lightingManager = null;
@@ -104,7 +103,6 @@ public class Habitat : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
@@ -139,14 +137,23 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    public void CreateFacilitiesFromData(List<FacilityData> facilitiesToBuild)
+    public void CreateFacilitiesFromData(List<FacilityData> facilitiesToBuild, Queue<FacilityType> upgradeQueue)
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
             Facility facility = GetFacility(facilityInfo.Type);
 
+            int upgrades = 0;
+            foreach (var upgrade in upgradeQueue)
+            {
+                if (facilityInfo.Type == upgrade)
+                {
+                    upgrades++;
+                }
+            }
+
             facility.SetFacilityData(facilityInfo);
-            for (int i = 0; i < facilityInfo.CurrentTier; ++i)
+            for (int i = 0; i < facilityInfo.CurrentTier - upgrades; ++i)
             {
                 facility.BuildFacility();
             }
