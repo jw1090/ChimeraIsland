@@ -21,7 +21,6 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _transitionDuration = 0.8f;
     [SerializeField] private float _distanceMultiplier = 1.0f;
 
-
     [Header("Referenes")]
     [SerializeField] private FreeCamera _freeCamera = null;
     [SerializeField] private Camera _cameraCO = null;
