@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class InputManager : MonoBehaviour
 {
@@ -164,7 +163,7 @@ public class InputManager : MonoBehaviour
                 return;
             }
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow))
+            if (MovementInputCheck() == true)
             {
                 if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
                 {
@@ -211,6 +210,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private bool MovementInputCheck()
+    {
+        return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow);
+    }
+
     private void LeftClickDown()
     {
         if (_cameraMain == null)
@@ -228,6 +232,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
+        // Ray Priority: Crystal > Chimera > Portal > Temple > Upgrades > Ground
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
         {
@@ -235,10 +240,6 @@ public class InputManager : MonoBehaviour
             crystal.Harvest();
 
             return;
-        }
-        else if (Physics.Raycast(ray, 300.0f, _portalLayer))
-        {
-            _habitatUI.OpenExpedition();
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
@@ -280,6 +281,14 @@ public class InputManager : MonoBehaviour
                 _templeUI.BuyChimera(_evolution);
             }
         }
+        else if (Physics.Raycast(ray, 300.0f, _portalLayer))
+        {
+            _habitatUI.OpenExpedition();
+        }
+        else if (Physics.Raycast(ray, 300.0f, _templeLayer))
+        {
+            _sceneChanger.LoadTemple();
+        }
         else if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
         {
             if (_currentScene == SceneType.Temple)
@@ -288,10 +297,6 @@ public class InputManager : MonoBehaviour
 
                 _templeUI.BuyFacility(upgrade);
             }
-        }
-        else if (Physics.Raycast(ray, 300.0f, _templeLayer))
-        {
-            _sceneChanger.LoadTemple();
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
         {
@@ -410,38 +415,33 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Default;
         }
-
-        if (_inTransition == true)
+        else  if (_inTransition == true)
         {
             return CursorType.Default;
         }
-
-        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-
-        if (_isHolding == true)
+        else if (_isHolding == true)
         {
             return CursorType.Dragging;
         }
 
-        if (Physics.Raycast(ray, 300.0f, _chimeraLayer))
-        {
-            return CursorType.Dragable;
-        }
-
-        if (Physics.Raycast(ray, 300.0f, _upgradesLayer))
-        {
-            return CursorType.Dragable;
-        }
-
+        // Ray Priority: Crystal > Chimera > Portal > Temple > Upgrades > Ground
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, 300.0f, _crystalLayer))
         {
             return CursorType.Minable;
         }
-
-        if (Physics.Raycast(ray, 300.0f, _portalLayer)
+        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer))
+        {
+            return CursorType.Dragable;
+        }
+        else if (Physics.Raycast(ray, 300.0f, _portalLayer)
             || Physics.Raycast(ray, 300.0f, _templeLayer))
         {
             return CursorType.Clickable;
+        }
+        else if (Physics.Raycast(ray, 300.0f, _upgradesLayer))
+        {
+            return CursorType.Dragable;
         }
 
         return CursorType.Default;
