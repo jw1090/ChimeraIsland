@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class LightingManager : MonoBehaviour
 {
     [Header("Light Attributes")]
-    [SerializeField][Range(0.0f, 1.0f)] private float _time = 0.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] private float _time = 0.0f;
     [SerializeField] private float _fullDayLength = 0.0f;
     [SerializeField] private float _dayStartTime = 0.15f;
     [SerializeField] private float _nightStartTime = 0.8f;
@@ -25,11 +25,13 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private float _nightFadeDuration = 5.0f;
     [SerializeField] private float _skyNightAlpha = 0.05f;
     [SerializeField] private float _starsNightAlpha = 0.85f;
+    [SerializeField] private float _nightShadowStrength = 0.0f;
 
     [Header("Day Fade")]
     [SerializeField] private float _dayFadeDuration = 15.0f;
     [SerializeField] private float _skyDayAlpha = 0.55f;
     [SerializeField] private float _starsDayAlpha = 0.0f;
+    [SerializeField] private float _dayShadowStrength = 0.0f;
 
     [Header("References")]
     [SerializeField] private Light _sourceLight = null;
@@ -160,10 +162,11 @@ public class LightingManager : MonoBehaviour
             _speed = 1.0f;
         }
 
-        StartCoroutine(StartSkyFade());
+        StartCoroutine(DayTransitionCoroutine());
+        StartCoroutine(ShadowTransitionCoroutine());
     }
 
-    private IEnumerator StartSkyFade()
+    private IEnumerator DayTransitionCoroutine()
     {
         float timer = 0.0f;
 
@@ -216,5 +219,47 @@ public class LightingManager : MonoBehaviour
 
         _skyMaterial.color = Color.Lerp(startSkyColor, endSkyColor, progress);
         _starMaterial.color = Color.Lerp(startStarColor, endStarColor, progress);
+    }
+
+    private IEnumerator ShadowTransitionCoroutine()
+    {
+        float timer = 0.0f;
+        float startingShadowIntensity = _ambientColorLight.shadowStrength;
+
+        float duration;
+        if (_dayType == DayType.NightTime)
+        {
+            duration = _nightFadeDuration * 2.5f;
+        }
+        else
+        {
+            duration = _dayFadeDuration * 2.5f;
+        }
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float dayFadeProgress = timer / duration;
+
+            EvaluateShadowFade(dayFadeProgress, startingShadowIntensity);
+
+            yield return null;
+        }
+    }
+
+    private void EvaluateShadowFade(float progress, float startingShadowStrength)
+    {
+        if (_dayType == DayType.NightTime)
+        {
+            _ambientColorLight.shadowStrength = Mathf.Lerp(startingShadowStrength, _nightShadowStrength, progress);
+        }
+        else if (_dayType == DayType.DayTime)
+        {
+            _ambientColorLight.shadowStrength = Mathf.Lerp(startingShadowStrength, _dayShadowStrength, progress);
+        }
+        else
+        {
+            Debug.LogError($"Error in shadow fade evaluation!");
+        }
     }
 }

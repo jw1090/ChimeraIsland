@@ -128,25 +128,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65792a7f7a5b05d4eb8929c7a75e64ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 0.543
-  _fullDayLength: 100
+  _time: 0.246
+  _fullDayLength: 200
   _dayStartTime: 0.15
   _nightStartTime: 0.8
-  _speed: 1
   _dayLightColor:
     serializedVersion: 2
     key0: {r: 1, g: 0.61090636, b: 0.11792451, a: 1}
-    key1: {r: 1, g: 0.8394752, b: 0.6367924, a: 1}
-    key2: {r: 1, g: 0.6117647, b: 0.12156863, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 1, g: 0.9395161, b: 0.44758064, a: 1}
+    key2: {r: 1, g: 0.9411765, b: 0.44705883, a: 0}
+    key3: {r: 1, g: 0.6117647, b: 0.12156863, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 32768
-    ctime2: 65535
-    ctime3: 0
+    ctime1: 16191
+    ctime2: 48766
+    ctime3: 65535
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -160,7 +159,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   _nightLightColor:
     serializedVersion: 2
@@ -236,9 +235,11 @@ MonoBehaviour:
   _nightFadeDuration: 5
   _skyNightAlpha: 0.2
   _starsNightAlpha: 0.3
+  _nightShadowStrength: 0
   _dayFadeDuration: 10
   _skyDayAlpha: 0.55
   _starsDayAlpha: 0
+  _dayShadowStrength: 0
   _sourceLight: {fileID: 478357827099149152}
   _ambientColorLight: {fileID: 826804867159847570}
   _sky: {fileID: 2075341081331054820}
@@ -295,7 +296,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.5
+    m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
