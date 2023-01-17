@@ -16,6 +16,12 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _sphereRadius = 2.0f;
     [SerializeField] private float _offset = 1.5f;
 
+    [Header("Transition")]
+    [SerializeField] private AnimationCurve _transitionCurve = new AnimationCurve();
+    [SerializeField] private float _transitionDuration = 0.8f;
+    [SerializeField] private float _distanceMultiplier = 1.0f;
+
+
     [Header("Referenes")]
     [SerializeField] private FreeCamera _freeCamera = null;
     [SerializeField] private Camera _cameraCO = null;
@@ -33,7 +39,6 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
-    private float _transitionDuration = 0.6f;
 
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }
@@ -233,20 +238,24 @@ public class CameraUtil : MonoBehaviour
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
 
-        float time = 0.0f;
-        while (time < _transitionDuration)
+        float distance = 1.0f + (Vector3.Distance(targetPosition, startPosition) * 0.001f);
+        float td = _transitionDuration + _distanceMultiplier * distance;
+
+        float timer = 0.0f;
+        while (timer < td)
         {
-            yield return new WaitForSeconds(0.001f);
+            timer += Time.deltaTime;
+            float linearProgress = timer / td;
 
-            time += Time.deltaTime;
-            float progress = time / _transitionDuration;
-
-            transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
+            float easeProgress = _transitionCurve.Evaluate(linearProgress);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, easeProgress);
 
             if (rotate == true)
             {
-                transform.rotation = Quaternion.Lerp(startRotation, targetRotation, progress);
+                transform.rotation = Quaternion.Lerp(startRotation, targetRotation, easeProgress);
             }
+
+            yield return null;
         }
 
         _inputManager.SetInTransition(false);
