@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnvironmentTier : MonoBehaviour
 {
     [SerializeField] private FireflyFolder _fireflyFolder = null;
-
     public void Initialize()
     {
         _fireflyFolder.Initialize();
