@@ -130,7 +130,7 @@ public class GameLoader : AsyncLoader
 
         inputManagerComp.SetUIManager(uiManagerComp);
         currencyManagerComp.SetUIManager(uiManagerComp);
-        habitatManagerComp.SetHabitatUI(uiManagerComp.HabitatUI);
+        habitatManagerComp.SetHabitatUI(uiManagerComp);
         tutorialComp.SetHabitatUI(uiManagerComp.HabitatUI);
 
         sceneChangerComp.SetupUIListeners();

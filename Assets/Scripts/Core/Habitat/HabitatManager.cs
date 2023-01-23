@@ -11,6 +11,7 @@ public class HabitatManager : MonoBehaviour
     private PersistentData _persistentData = null;
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
+    private UIManager _uiManager = null;
     private float _tickTimer = 0.06f;
     private Queue<FacilityType> _upgradeQueue = new Queue<FacilityType>();
     private CameraUtil _cameraUtil = null;
@@ -50,7 +51,11 @@ public class HabitatManager : MonoBehaviour
 
     public void SetCamera(CameraUtil camera) { _cameraUtil = camera; }
 
-    public void SetHabitatUI(HabitatUI habiatUI) { _habitatUI = habiatUI; }
+    public void SetHabitatUI(UIManager uiManager) 
+    {
+        _uiManager = uiManager;
+        _habitatUI = uiManager.HabitatUI; 
+    }
 
     public void SetCurrentHabitat(Habitat habitat)
     {
@@ -196,6 +201,22 @@ public class HabitatManager : MonoBehaviour
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
 
         CurrentHabitat.GetFacility(upgradeFacility).BuildFacility();
+
+        switch (upgradeFacility)
+        {
+            case FacilityType.Cave:
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Cave Facility!");
+                break;
+            case FacilityType.RuneStone:
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Rune Stone Facility!");
+                break;
+            case FacilityType.Waterfall:
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Waterfall Facility!");
+                break;
+            default:
+                break;
+        }
+        
         yield return new WaitForSeconds(1.0f);
         _upgradeQueue.Dequeue();
 
