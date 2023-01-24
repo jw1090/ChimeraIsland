@@ -70,6 +70,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionManager.RemoveAllChimeras();
         _expeditionUI.BackgroundStates.SetState("Selection Panel");
         _habitatUI.UpdateHabitatUI();
+        _habitatUI.DetailsManager.CloseDetails();
 
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }

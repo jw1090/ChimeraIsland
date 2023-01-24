@@ -64,6 +64,8 @@ public class ExpeditionUI : MonoBehaviour
 
     public void OpenExpeditionUI()
     {
+        _habitatUI.HideButtonsForExpeditions();
+
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
@@ -76,12 +78,12 @@ public class ExpeditionUI : MonoBehaviour
             case ExpeditionState.InProgress:
                 _backgroundUIStates.SetState("Setup Panel", true);
                 _foregroundUIStates.SetState("In Progress Panel", true);
-                _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
+                _uiManager.HabitatUI.OpenExpeditionDetails();
                 break;
             case ExpeditionState.Result:
                 _backgroundUIStates.SetState("Setup Panel", true);
                 _foregroundUIStates.SetState("Results Panel", true);
-                _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
+                _uiManager.HabitatUI.OpenExpeditionDetails();
                 break;
             default:
                 Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");
@@ -98,6 +100,8 @@ public class ExpeditionUI : MonoBehaviour
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
 
+        _uiManager.HabitatUI.OpenExpeditionDetails();
+
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();
 
@@ -108,10 +112,13 @@ public class ExpeditionUI : MonoBehaviour
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
+
         if (_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.RemoveAllChimeras();
         }
+
+        _habitatUI.RevealButtonsForExpeditions();
     }
 
     public void TimerComplete()
