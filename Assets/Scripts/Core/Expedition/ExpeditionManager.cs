@@ -604,7 +604,7 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
-            //chimera.RevealChimera(!onExpedition);
+            chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
 
             if (onExpedition == true)

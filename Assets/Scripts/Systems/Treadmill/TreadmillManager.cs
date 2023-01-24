@@ -66,7 +66,7 @@ public class TreadmillManager : MonoBehaviour
     {
         foreach(Chimera chimera in _chimeraList)
         {
-            chimera.gameObject.transform.position = FirstChimeraPosition.position;
+             chimera.gameObject.transform.position = FirstChimeraPosition.position;
         }
     }
 
