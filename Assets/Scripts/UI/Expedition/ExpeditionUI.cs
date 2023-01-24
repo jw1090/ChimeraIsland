@@ -65,6 +65,7 @@ public class ExpeditionUI : MonoBehaviour
     public void OpenExpeditionUI()
     {
         _habitatUI.HideButtonsForExpeditions();
+        _habitatUI.DetailsManager.CheckDetails();
 
         switch (_expeditionManager.State)
         {
@@ -78,12 +79,10 @@ public class ExpeditionUI : MonoBehaviour
             case ExpeditionState.InProgress:
                 _backgroundUIStates.SetState("Setup Panel", true);
                 _foregroundUIStates.SetState("In Progress Panel", true);
-                _uiManager.HabitatUI.OpenExpeditionDetails();
                 break;
             case ExpeditionState.Result:
                 _backgroundUIStates.SetState("Setup Panel", true);
                 _foregroundUIStates.SetState("Results Panel", true);
-                _uiManager.HabitatUI.OpenExpeditionDetails();
                 break;
             default:
                 Debug.LogWarning($"Expedition state is not valid [{_expeditionManager.State}]. Please change!");
@@ -99,8 +98,6 @@ public class ExpeditionUI : MonoBehaviour
 
         _backgroundUIStates.SetState("Setup Panel");
         _foregroundUIStates.SetState("Transparent");
-
-        _uiManager.HabitatUI.OpenExpeditionDetails();
 
         _setupPanel.LoadExpeditionData();
         _expeditionManager.ExpeditionSetup();

@@ -196,14 +196,6 @@ public class HabitatUI : MonoBehaviour
         _menuOpen = false;
     }
 
-    public void OpenExpeditionDetails()
-    {
-        _detailsManager.CheckDetails();
-        _detailsManager.OpenExpeditionDetails();
-
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
-    }
-
     public void HideButtonsForExpeditions()
     {
         _openDetailsButton.gameObject.SetActive(false);
@@ -225,6 +217,10 @@ public class HabitatUI : MonoBehaviour
     public void OpenStandardDetails()
     {
         ResetStandardUI();
+
+        _menuOpen = true;
+
+        _detailsManager.OpenStandardDetails();
         _closeDetailsButton.gameObject.SetActive(true);
     }
 

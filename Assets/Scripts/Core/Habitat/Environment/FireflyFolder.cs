@@ -23,9 +23,11 @@ public class FireflyFolder : MonoBehaviour
 
     public void PlayFireflies()
     {
-        int counter;
+        int counter = 0;
         switch (_tier)
         {
+            case 1:
+                break;
             case 2:
                 counter = _fireflies.Count - 2;
                 break;
@@ -39,7 +41,11 @@ public class FireflyFolder : MonoBehaviour
 
         foreach (var fireflies in _fireflies)
         {
-            if (counter <= 0) return;
+            if (counter <= 0)
+            {
+                return;
+            }
+
             fireflies.PlayFireflies();
             counter--;
         }
@@ -47,9 +53,11 @@ public class FireflyFolder : MonoBehaviour
 
     public void StopFireflies()
     {
-        int counter;
+        int counter = 0;
         switch (_tier)
         {
+            case 1:
+                break;
             case 2:
                 counter = _fireflies.Count - 2;
                 break;
