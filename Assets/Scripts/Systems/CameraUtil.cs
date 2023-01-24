@@ -38,7 +38,9 @@ public class CameraUtil : MonoBehaviour
     private bool _canMoveLeft = true;
     private bool _canMoveRight = true;
     private float _zoom = 90.0f;
+    private bool _inTransition = false;
 
+    public bool InTransition { get => _inTransition; }
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }
     public bool IsNaming { get; set; }
@@ -233,6 +235,7 @@ public class CameraUtil : MonoBehaviour
     private IEnumerator MoveCamera(Vector3 targetPosition, Quaternion targetRotation, bool rotate)
     {
         _inputManager.SetInTransition(true);
+        _inTransition = true;
 
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
@@ -258,6 +261,7 @@ public class CameraUtil : MonoBehaviour
         }
 
         _inputManager.SetInTransition(false);
+        _inTransition = false;
     }
 
     public void ChimeraCloseUp(ChimeraType chimeraType)
