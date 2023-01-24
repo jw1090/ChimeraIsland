@@ -65,10 +65,9 @@ public class Environment : MonoBehaviour
                 }
                 break;
             default:
-                Debug.LogWarning($"facilityTier is not valid [{tier}] please change!");
+                Debug.LogError($"facilityTier is not valid [{tier}] please change!");
                 break;
         }
-
     }
 
     public void SwitchTier(int tier)
@@ -110,7 +109,7 @@ public class Environment : MonoBehaviour
                 _tierThreeOnlyGO.SetActive(true);
                 break;
             default:
-                Debug.LogWarning($"facilityTier is not valid [{tier}] please change!");
+                Debug.LogError($"facilityTier is not valid [{tier}] please change!");
                 break;
         }
     }

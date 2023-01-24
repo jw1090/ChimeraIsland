@@ -214,7 +214,7 @@ public class HabitatManager : MonoBehaviour
                 _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Waterfall Facility!");
                 break;
             default:
-                Debug.LogWarning($"facilityType is not valid [{upgradeFacility}] please change!");
+                Debug.LogError($"facilityType is not valid [{upgradeFacility}] please change!");
                 break;
         }
         

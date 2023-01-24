@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class FireflyFolder : MonoBehaviour
@@ -16,6 +15,7 @@ public class FireflyFolder : MonoBehaviour
             fireflies.Initialize();
         }
     }
+
     public void SwitchTier(int tier)
     {
         _tier = tier;
@@ -33,8 +33,10 @@ public class FireflyFolder : MonoBehaviour
                 counter = _fireflies.Count;
                 break;
             default:
+                Debug.LogError($"Habitat Tier is not valid [{_tier}] please change!");
                 return;
         }
+
         foreach (var fireflies in _fireflies)
         {
             if (counter <= 0) return;
@@ -55,8 +57,10 @@ public class FireflyFolder : MonoBehaviour
                 counter = _fireflies.Count;
                 break;
             default:
+                Debug.LogError($"Habitat Tier is not valid [{_tier}] please change!");
                 return;
         }
+
         foreach (var fireflies in _fireflies)
         {
             if (counter <= 0) return;
