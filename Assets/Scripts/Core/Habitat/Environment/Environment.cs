@@ -1,20 +1,21 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Environment : MonoBehaviour
 {
-    private int _tier = 1;
-
     [SerializeField] private Portal _portal = null;
     [SerializeField] private FireflyFolder _fireflyFolder = null;
-    [SerializeField] private List<GameObject> _tierOneOnlyParts = null;
-    [SerializeField] private List<GameObject> _tierOneAndTwoOnlyParts = null;
-    [SerializeField] private List<GameObject> _tierTwoOnlyParts = null;
-    [SerializeField] private List<GameObject> _tierTwoParts = null;
-    [SerializeField] private List<GameObject> _tierThreeParts = null;
+    [SerializeField] private GameObject _tierOneOnlyParts = null;
+    [SerializeField] private GameObject _tierOneAndTwoOnlyParts = null;
+    [SerializeField] private GameObject _tierTwoOnlyParts = null;
+    [SerializeField] private GameObject _tierTwoAndThreeParts = null;
+    [SerializeField] private GameObject _tierThreeOnlyParts = null;
     [SerializeField] private GameObject _cliffMaterials = null;
-    [SerializeField] private Material BrownCliff = null;
-    [SerializeField] private Material GreenCliff = null;
+    [SerializeField] private GameObject _waterfallMaterials = null;
+    [SerializeField] private Material _brownCliff = null;
+    [SerializeField] private Material _greenCliff = null;
+    [SerializeField] private Material _greenCliffWaterfall = null;
     public Portal Portal { get => _portal; }
 
 
@@ -40,92 +41,73 @@ public class Environment : MonoBehaviour
         }
     }
 
+    public void SwitchWaterfallTier(int tier)
+    {
+        Renderer[] cliffs = _waterfallMaterials.transform.GetComponentsInChildren<Renderer>(true);
+        switch (tier)
+        {
+            case 0:
+                for (int i = 0; i < cliffs.Length; i++)
+                {
+                    cliffs[i].material = _brownCliff;
+                }
+                break;
+            case 1:
+            case 2:
+            case 3:
+                for (int i = 0; i < cliffs.Length; i++)
+                {
+                    cliffs[i].material = _greenCliffWaterfall;
+                }
+                break;
+            default:
+                Debug.LogWarning($"facilityTier is not valid [{tier}] please change!");
+                break;
+        }
+
+    }
+
     public void SwitchTier(int tier)
     {
         _fireflyFolder.SwitchTier(tier);
-        _tier = tier;
         Renderer[] cliffs = _cliffMaterials.transform.GetComponentsInChildren<Renderer>(true);
-        switch (_tier)
+        switch (tier)
         {
             case 1:
                 for (int i = 0; i < cliffs.Length; i++)
                 {
-                    cliffs[i].material = BrownCliff;
+                    cliffs[i].material = _brownCliff;
                 }
-                foreach (var part in _tierTwoParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierThreeParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierOneOnlyParts)
-                {
-                    part.SetActive(true);
-                }
-                foreach (var part in _tierTwoOnlyParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierOneAndTwoOnlyParts)
-                {
-                    part.SetActive(true);
-                }
+                _tierOneOnlyParts.SetActive(true);
+                _tierOneAndTwoOnlyParts.SetActive(true);
+                _tierTwoOnlyParts.SetActive(false);
+                _tierTwoAndThreeParts.SetActive(false);
+                _tierThreeOnlyParts.SetActive(false);
                 break;
             case 2:
                 for (int i = 0; i < cliffs.Length; i++)
                 {
-                    cliffs[i].material = GreenCliff;
+                    cliffs[i].material = _greenCliff;
                 }
-                foreach (var part in _tierTwoParts)
-                {
-                    part.SetActive(true);
-                }
-                foreach (var part in _tierThreeParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierOneOnlyParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierTwoOnlyParts)
-                {
-                    part.SetActive(true);
-                }
-                foreach (var part in _tierOneAndTwoOnlyParts)
-                {
-                    part.SetActive(true);
-                }
+                _tierOneOnlyParts.SetActive(false);
+                _tierOneAndTwoOnlyParts.SetActive(true);
+                _tierTwoOnlyParts.SetActive(true);
+                _tierTwoAndThreeParts.SetActive(true);
+                _tierThreeOnlyParts.SetActive(false);
                 break;
             case 3:
                 for (int i = 0; i < cliffs.Length; i++)
                 {
-                    cliffs[i].material = GreenCliff;
+                    cliffs[i].material = _greenCliff;
                 }
-                foreach (var part in _tierTwoParts)
-                {
-                    part.SetActive(true);
-                }
-                foreach (var part in _tierThreeParts)
-                {
-                    part.SetActive(true);
-                }
-                foreach (var part in _tierOneOnlyParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierTwoOnlyParts)
-                {
-                    part.SetActive(false);
-                }
-                foreach (var part in _tierOneAndTwoOnlyParts)
-                {
-                    part.SetActive(false);
-                }
+                _tierOneOnlyParts.SetActive(false);
+                _tierOneAndTwoOnlyParts.SetActive(false);
+                _tierTwoOnlyParts.SetActive(false);
+                _tierTwoAndThreeParts.SetActive(true);
+                _tierThreeOnlyParts.SetActive(true);
                 break;
             default:
+                Debug.LogWarning($"facilityTier is not valid [{tier}] please change!");
                 break;
         }
     }
