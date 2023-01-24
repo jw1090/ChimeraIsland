@@ -50,7 +50,6 @@ public class HabitatUI : MonoBehaviour
         _detailsManager.SetExpeditionManager(expeditionManager);
         _expeditionPanel.SetExpeditionManager(expeditionManager);
     }
-
     public void SetAudioManager(AudioManager audioManager)
     {
         _audioManager = audioManager;

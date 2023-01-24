@@ -23,6 +23,7 @@ public class ExpeditionManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
+    private TreadmillManager _treadmillManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
     private const float _difficultyFlatModifier = 10.0f;
     private const float _difficultyScalar = 14.5f;
@@ -49,6 +50,10 @@ public class ExpeditionManager : MonoBehaviour
     {
         _expeditionState = expeditionState;
         SetPortalColor();
+    }
+    public void SetTreadmillManager(TreadmillManager treadmillManager)
+    {
+        _treadmillManager = treadmillManager;
     }
 
     public void SetPortalColor()
@@ -247,8 +252,6 @@ public class ExpeditionManager : MonoBehaviour
 
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
-
-        //_treadmillManager.CheckRotation();
 
         _selectedExpedition.ActiveInProgressTimer = true;
     }
@@ -601,22 +604,28 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
-            chimera.RevealChimera(!onExpedition);
+            //chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
 
             if (onExpedition == true)
             {
-                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+                _treadmillManager.IsRunning = true;
+                _treadmillManager.ChimeraList.Add(chimera);
 
-                chimera.gameObject.transform.position = positionAttempt;
+                //Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+
+                //chimera.gameObject.transform.position = _treadmillManager.FirstChimeraPosition.position;
             }
         }
+
+         _treadmillManager.Warp();
 
         _habitatUI.UpdateHabitatUI();
 
         if (onExpedition == false)
         {
             _chimeras.Clear();
+            _treadmillManager.IsRunning = false;
         }
     }
 
