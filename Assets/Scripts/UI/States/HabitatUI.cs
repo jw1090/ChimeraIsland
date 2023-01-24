@@ -196,27 +196,32 @@ public class HabitatUI : MonoBehaviour
         _menuOpen = false;
     }
 
-    private void OpenDetails()
+    public void HideButtonsForExpeditions()
     {
-        _detailsManager.CheckDetails();
-
-        _detailsManager.OpenStandardDetails();
         _openDetailsButton.gameObject.SetActive(false);
+        _settingsButton.gameObject.SetActive(false);
+        _fossilWallet.gameObject.SetActive(false);
+        _essenceWallet.gameObject.SetActive(false);
+    }
 
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+    public void RevealButtonsForExpeditions()
+    {
+        _openDetailsButton.gameObject.SetActive(true);
+        _settingsButton.gameObject.SetActive(true);
+        _fossilWallet.gameObject.SetActive(true);
+        _essenceWallet.gameObject.SetActive(true);
+
+        LoadCurrentUIProgress(); // Check for tutuorial steps
     }
 
     public void OpenStandardDetails()
     {
         ResetStandardUI();
-        _closeDetailsButton.gameObject.SetActive(true);
-        OpenDetails();
-    }
 
-    public void OpenExpedtionSelectionDetails()
-    {
-        ResetStandardUI();
-        OpenDetails();
+        _menuOpen = true;
+
+        _detailsManager.OpenStandardDetails();
+        _closeDetailsButton.gameObject.SetActive(true);
     }
 
     public void ToggleSettingsMenu()
@@ -277,7 +282,7 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlaySFX(EnvironmentSFXType.PortalClick);
 
-        _expeditionPanel.ExpeditionButtonClick();
+        _expeditionPanel.OpenExpeditionUI();
 
         _menuOpen = true;
     }

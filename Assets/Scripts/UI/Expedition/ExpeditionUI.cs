@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class ExpeditionUI : MonoBehaviour
     [SerializeField] private ExpeditionResultUI _resultPanel = null;
     [SerializeField] private StatefulObject _backgroundUIStates = null;
     [SerializeField] private StatefulObject _foregroundUIStates = null;
-    [SerializeField] private Button _closeButton = null;
+    [SerializeField] private List<Button> _closeButtons = null;
 
     private ExpeditionManager _expeditionManager = null;
     private UIManager _uiManager = null;
@@ -21,7 +22,7 @@ public class ExpeditionUI : MonoBehaviour
     public StatefulObject ForegroundUIStates { get => _foregroundUIStates; }
     public StatefulObject BackgroundStates { get => _backgroundUIStates; }
     public ExpeditionResultUI ExpeditionResult { get => _resultPanel; }
-    public Button CloseButton { get => _closeButton; }
+    public List<Button> CloseButtons { get => _closeButtons; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -52,21 +53,20 @@ public class ExpeditionUI : MonoBehaviour
 
     public void SetupListeners()
     {
-        _uiManager.CreateButtonListener(_closeButton, _uiManager.HabitatUI.ResetStandardUI);
+        foreach (Button closeButton in _closeButtons)
+        {
+            _uiManager.CreateButtonListener(closeButton, _uiManager.HabitatUI.ResetStandardUI);
+        }
 
         _setupPanel.SetupListeners();
         _resultPanel.SetupListeners();
     }
 
-    public void ExpeditionButtonClick()
-    {
-        _uiManager.HabitatUI.OpenExpedtionSelectionDetails();
-
-        OpenExpeditionUI();
-    }
-
     public void OpenExpeditionUI()
     {
+        _habitatUI.HideButtonsForExpeditions();
+        _habitatUI.DetailsManager.CheckDetails();
+
         switch (_expeditionManager.State)
         {
             case ExpeditionState.Selection:
@@ -109,10 +109,13 @@ public class ExpeditionUI : MonoBehaviour
     {
         _foregroundUIStates.SetState("Transparent");
         this.gameObject.SetActive(false);
-        if(_expeditionManager.State == ExpeditionState.Setup)
+
+        if (_expeditionManager.State == ExpeditionState.Setup)
         {
             _expeditionManager.RemoveAllChimeras();
         }
+
+        _habitatUI.RevealButtonsForExpeditions();
     }
 
     public void TimerComplete()
