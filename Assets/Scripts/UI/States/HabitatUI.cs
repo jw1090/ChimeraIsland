@@ -215,7 +215,6 @@ public class HabitatUI : MonoBehaviour
 
     public void OpenExpedtionSelectionDetails()
     {
-        ResetStandardUI();
         OpenDetails();
     }
 
@@ -277,7 +276,7 @@ public class HabitatUI : MonoBehaviour
 
         _audioManager.PlaySFX(EnvironmentSFXType.PortalClick);
 
-        _expeditionPanel.ExpeditionButtonClick();
+        _expeditionPanel.OpenExpeditionUI();
 
         _menuOpen = true;
     }
