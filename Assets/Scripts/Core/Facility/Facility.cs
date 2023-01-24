@@ -117,6 +117,11 @@ public class Facility : MonoBehaviour
 
         ++_currentTier;
 
+        if (Type == FacilityType.Waterfall)
+        {
+            _habitat.Environment.SwitchWaterfallTier(_currentTier);
+        }
+
         if (moveCamera == true)
         {
             _cameraUtil.FacilityCameraShift(Type);

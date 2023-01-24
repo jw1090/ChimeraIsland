@@ -99,6 +99,7 @@ public class LevelLoader : AsyncLoader
             ServiceLocator.Register<CameraUtil>(_cameraUtil.Initialize(_sceneType), true);
             _inputManager.SetCameraUtil(_cameraUtil);
             _uiManager.SettingsUI.SetCameraUtil(_cameraUtil);
+            _habitatManager.SetCamera(_cameraUtil);
         }
 
         if (_habitat != null)
@@ -146,8 +147,7 @@ public class LevelLoader : AsyncLoader
         _cameraUtil.SceneSetup();
 
         TempleBuildCheck();
-        _habitatManager.BuildFacilitiesForHabitat();
-        _habitatManager.SpawnChimerasForHabitat();
+        _habitatManager.HabitatSetup();
 
         _habitatManager.CurrentHabitat.MoveChimerasToFacility();
 
