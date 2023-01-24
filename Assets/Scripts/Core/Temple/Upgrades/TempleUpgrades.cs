@@ -41,6 +41,7 @@ public class TempleUpgrades : MonoBehaviour
     {
         FacilityData facilityData = new FacilityData(upgradeNode);
         _habitatManager.AddNewFacility(facilityData);
+        _habitatManager.AddToUpgradeQueue(facilityData.Type);
 
         switch (facilityData.Type)
         {

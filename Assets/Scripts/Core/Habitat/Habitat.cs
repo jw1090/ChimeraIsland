@@ -17,12 +17,10 @@ public class Habitat : MonoBehaviour
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
     [SerializeField] private TempleStructure _temple = null;
-    [SerializeField] private StatefulObject _tiers = null;
     [SerializeField] private TapVFX _tapVfx = null;
 
     private UIManager _uiManager = null;
     private ChimeraCreator _chimeraCreator = null;
-    private CurrencyManager _currencyManager = null;
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private LightingManager _lightingManager = null;
@@ -97,14 +95,13 @@ public class Habitat : MonoBehaviour
         _crystalManager.SetExpeditionManager(expeditionManager);
     }
 
-    public void ToggleFireflies(bool toggleOn) { _environment.Tiers[_currentTier - 1].ToggleFireflies(toggleOn); }
+    public void ToggleFireflies(bool toggleOn) { _environment.ToggleFireflies(toggleOn); }
 
     public Habitat Initialize()
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
-        _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
@@ -139,14 +136,23 @@ public class Habitat : MonoBehaviour
         }
     }
 
-    public void CreateFacilitiesFromData(List<FacilityData> facilitiesToBuild)
+    public void CreateFacilitiesFromData(List<FacilityData> facilitiesToBuild, Queue<FacilityType> upgradeQueue)
     {
         foreach (var facilityInfo in facilitiesToBuild)
         {
             Facility facility = GetFacility(facilityInfo.Type);
 
+            int upgrades = 0;
+            foreach (var upgrade in upgradeQueue)
+            {
+                if (facilityInfo.Type == upgrade)
+                {
+                    upgrades++;
+                }
+            }
+
             facility.SetFacilityData(facilityInfo);
-            for (int i = 0; i < facilityInfo.CurrentTier; ++i)
+            for (int i = 0; i < facilityInfo.CurrentTier - upgrades; ++i)
             {
                 facility.BuildFacility();
             }
@@ -255,13 +261,9 @@ public class Habitat : MonoBehaviour
         switch (_currentTier)
         {
             case 1:
-                _tiers.SetState("Tier 1", true);
-                break;
             case 2:
-                _tiers.SetState("Tier 2", true);
-                break;
             case 3:
-                _tiers.SetState("Tier 3", true);
+                _environment.SwitchTier(_currentTier);
                 break;
             default:
                 Debug.LogWarning($"Habitat tier [{_currentTier}] is invalid. Please fix!");
