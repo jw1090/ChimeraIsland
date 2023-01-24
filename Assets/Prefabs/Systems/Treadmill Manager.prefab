@@ -927,6 +927,36 @@ TerrainCollider:
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 258c23525b1dec641bb8ee8f049d5e61, type: 2}
   m_EnableTreeColliders: 1
+--- !u!1 &219331734623445049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5748885911553494832}
+  m_Layer: 0
+  m_Name: 3rd Chimera
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5748885911553494832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219331734623445049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.5, y: -14.379999, z: -25.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5284944950283253657}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1652227366
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -941,6 +971,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6820495421317928600, guid: d6f0ea17b20ec8a4fb1f8db6107abe1e, type: 3}
+--- !u!1 &3255198636370923870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402732381113603234}
+  m_Layer: 0
+  m_Name: 1st Chimera
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402732381113603234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255198636370923870}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -14.379999, z: -25.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5284944950283253657}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3649308211054382650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1259,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5076798556035486163, guid: 8be9529bf9663d449846b8e5008f06a2, type: 3}
+--- !u!1 &7569651577775399488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109120333954963177}
+  m_Layer: 0
+  m_Name: 2nd Chimera
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &109120333954963177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569651577775399488}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.75, y: -14.379999, z: -25.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5284944950283253657}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7785731255856503512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,7 +1381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5284944950283253657}
   m_Layer: 0
-  m_Name: Chimeras
+  m_Name: Chimeras Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,6 +1401,9 @@ Transform:
   - {fileID: 492343784499258142}
   - {fileID: 801854442075315053}
   - {fileID: 963210865010405578}
+  - {fileID: 402732381113603234}
+  - {fileID: 109120333954963177}
+  - {fileID: 5748885911553494832}
   m_Father: {fileID: 8502518249936474670}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1392,6 +1485,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startNode: {fileID: 8502518250512280183}
   _endNode: {fileID: 8502518249815413593}
+  _firstChimera: {fileID: 402732381113603234}
+  _secondChimera: {fileID: 109120333954963177}
+  _thirdChimera: {fileID: 5748885911553494832}
   _plane1:
   - {fileID: 7785731255856503512}
   - {fileID: 1803900679}
