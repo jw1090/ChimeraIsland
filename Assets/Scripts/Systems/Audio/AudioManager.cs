@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -170,8 +171,12 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.IncreaseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
-        _uiManager.CreateButtonListener(habitatUI.ExpeditionPanel.CloseButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
+
+        foreach(Button closeButton in habitatUI.ExpeditionPanel.CloseButtons)
+        {
+            _uiManager.CreateButtonListener(closeButton, PlayClickSFX);
+        }
 
         _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
         _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);

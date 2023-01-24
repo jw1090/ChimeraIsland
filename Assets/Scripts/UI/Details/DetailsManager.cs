@@ -4,12 +4,12 @@ using UnityEngine;
 public class DetailsManager : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetailsFolder> _detailsFolders = new List<ChimeraDetailsFolder>();
-    [SerializeField] private StatefulObject _detailsStates = null;
+    [SerializeField] private GameObject _details4Wide = null;
     [SerializeField] private GameObject _detailsPrefab = null;
     private HabitatManager _habitatManager = null;
     private UIManager _uiManager = null;
 
-    public bool IsOpen { get => _detailsStates.CurrentState.StateName != "Transparent"; }
+    public bool IsOpen { get => _details4Wide.activeInHierarchy; }
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
@@ -40,18 +40,14 @@ public class DetailsManager : MonoBehaviour
 
     public void CloseDetails()
     {
-        _detailsStates.SetState("Transparent", true);
+        _details4Wide.SetActive(false);
         _uiManager.Tooltip.gameObject.SetActive(false);
     }
 
     public void OpenStandardDetails()
     {
-        _detailsStates.SetState("Details 2-Wide", true);
-    }
-
-    public void OpenExpeditionDetails()
-    {
-        _detailsStates.SetState("Details 2-Wide", true);
+        CheckDetails();
+        _details4Wide.SetActive(true);
     }
 
     public void HabitatDetailsSetup()
