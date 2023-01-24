@@ -12,6 +12,7 @@ public class HabitatManager : MonoBehaviour
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
     private UIManager _uiManager = null;
+    private InputManager _inputManager = null;
     private float _tickTimer = 0.06f;
     private Queue<FacilityType> _upgradeQueue = new Queue<FacilityType>();
     private CameraUtil _cameraUtil = null;
@@ -82,6 +83,7 @@ public class HabitatManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
+        _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         LoadHabitatData();
@@ -199,7 +201,7 @@ public class HabitatManager : MonoBehaviour
         FacilityType upgradeFacility = _upgradeQueue.Peek();
         _cameraUtil.FacilityCameraShift(upgradeFacility);
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
-
+        _inputManager.SetInTransition(true);
         CurrentHabitat.GetFacility(upgradeFacility).BuildFacility();
 
         switch (upgradeFacility)
@@ -224,6 +226,10 @@ public class HabitatManager : MonoBehaviour
         if (_upgradeQueue.Count != 0)
         {
             StartCoroutine(CamQueue());
+        }
+        else
+        {
+            _inputManager.SetInTransition(false);
         }
     }
 }
