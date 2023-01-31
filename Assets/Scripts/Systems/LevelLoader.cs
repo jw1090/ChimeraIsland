@@ -137,6 +137,7 @@ public class LevelLoader : AsyncLoader
         if (_templeEnvironment != null)
         {
             ServiceLocator.Register<Temple>(_templeEnvironment.Initialize(), true);
+            _inputManager.SetTemple(_templeEnvironment);
             _uiManager.TempleUI.SetCameraUtil(_cameraUtil);
             _cameraUtil.SetTempleEnvironment(_templeEnvironment);
         }
