@@ -504,7 +504,7 @@ public class Chimera : MonoBehaviour
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
             _currentEvolution.Animator.Play("Walk");
         }
-        else if (reveal == false && _onExpedition == true)
+        else if (reveal == false)
         {
             _currentEvolution.gameObject.SetActive(!reveal);
 

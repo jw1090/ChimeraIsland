@@ -606,19 +606,20 @@ public class ExpeditionManager : MonoBehaviour
         {
             chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
+            chimera.Behavior.Agent.enabled = false;
 
             if (onExpedition == true)
             {
                 _treadmillManager.IsRunning = true;
                 _treadmillManager.ChimeraList.Add(chimera);
-
-                //Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
-
-                //chimera.gameObject.transform.position = _treadmillManager.FirstChimeraPosition.position;
+                _treadmillManager.Warp();
+            }
+            else
+            {
+                
             }
         }
 
-         _treadmillManager.Warp();
 
         _habitatUI.UpdateHabitatUI();
 
