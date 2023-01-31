@@ -604,26 +604,31 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
-            chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
-            chimera.Behavior.Agent.enabled = false;
 
             if (onExpedition == true)
             {
+                chimera.Behavior.enabled = false;
+                chimera.Behavior.Agent.enabled = false;
+
                 _treadmillManager.IsRunning = true;
                 _treadmillManager.ChimeraList.Add(chimera);
                 _treadmillManager.Warp();
             }
             else
             {
-                
+                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+                chimera.gameObject.transform.position = positionAttempt;
+
+                chimera.Behavior.enabled = true;
+                chimera.Behavior.Agent.enabled = true;
             }
         }
 
 
         _habitatUI.UpdateHabitatUI();
 
-        if (onExpedition == false)
+        if (onExpedition == false) 
         {
             _chimeras.Clear();
             _treadmillManager.IsRunning = false;

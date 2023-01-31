@@ -10,6 +10,7 @@ public class TreadmillManager : MonoBehaviour
 
     [Header("Chimera Information")]
     [SerializeField] private List<Chimera> _chimeraList = null;
+    [SerializeField] private List<Transform> _chimeraNodes = null;
     [SerializeField] Transform _firstChimera = null;
     [SerializeField] Transform _secondChimera = null;
     [SerializeField] Transform _thirdChimera = null;
@@ -19,6 +20,9 @@ public class TreadmillManager : MonoBehaviour
     
 
     private bool _initialized = false;
+    private bool _firstPositionOccupied = false;
+    private bool _secondPositionOccupied = false;
+    private bool _thirdPositionOccupied = false;
 
     public List<Chimera> ChimeraList { get => _chimeraList;}
 
@@ -62,11 +66,23 @@ public class TreadmillManager : MonoBehaviour
         gameObject.transform.position = _startNode.position;
     }
 
+    int index = 0;
     public void Warp()
     {
         foreach(Chimera chimera in _chimeraList)
         {
-            chimera.gameObject.transform.position = FirstChimeraPosition.position;
+            chimera.transform.position = FirstChimeraPosition.position;
+            ++index;
+            if(index == 1)
+            {
+                chimera.transform.position = SecondChimeraPosition.position;
+                index = -1;
+            }
+            if (index == 2)
+            {
+                chimera.transform.position = ThirdChimeraPosition.position;
+                index = -1;
+            }
         }
     }
 
