@@ -22,12 +22,14 @@ public class InputManager : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
     private SceneChanger _sceneChanger = null;
+    private Temple _temple = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
     private LayerMask _templeLayer = new LayerMask();
     private LayerMask _upgradesLayer = new LayerMask();
     private LayerMask _groundLayer = new LayerMask();
+    private LayerMask _figurineLayer = new LayerMask();
     private bool _isInitialized = false;
     private bool _inTransition = false;
     private bool _isHolding = false;
@@ -69,6 +71,10 @@ public class InputManager : MonoBehaviour
         _startingUI = _uiManager.StartingUI;
         _templeUI = _uiManager.TempleUI;
     }
+    public void SetTemple(Temple temple)
+    {
+        _temple = temple;
+    }
 
     public InputManager Initialize()
     {
@@ -84,6 +90,7 @@ public class InputManager : MonoBehaviour
         _templeLayer = LayerMask.GetMask("Temple");
         _upgradesLayer = LayerMask.GetMask("UpgradeNode");
         _groundLayer = LayerMask.GetMask("Ground");
+        _figurineLayer = LayerMask.GetMask("Figurine");
         _sphereMarker.SetActive(false);
 
         _rotationAmount = _persistentData.SettingsData.spinSpeed;
@@ -241,6 +248,13 @@ public class InputManager : MonoBehaviour
 
             return;
         }
+        else if (Physics.Raycast(ray, out RaycastHit figurineHit, 300.0f, _figurineLayer))
+        {
+            if (_currentScene == SceneType.Temple)
+            {
+                _temple.ChimeraGallery.StartGallery(figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType);
+            }
+        }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
         {
             if (_currentScene == SceneType.Habitat)
@@ -276,9 +290,12 @@ public class InputManager : MonoBehaviour
             }
             else if (_currentScene == SceneType.Temple)
             {
-                _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
+                if(_templeUI.InGallery == false)
+                {
+                    _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
 
-                _templeUI.BuyChimera(_evolution);
+                    _templeUI.BuyChimera(_evolution);
+                }
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _portalLayer))
@@ -430,7 +447,8 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Minable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer))
+        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer) 
+            || Physics.Raycast(ray, 300.0f, _figurineLayer))
         {
             return CursorType.Dragable;
         }
