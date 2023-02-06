@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChimeraDetailsFolder : MonoBehaviour
 {
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
-    [SerializeField] private Dropdown _dropdown = null;
-    [SerializeField] private Image _bioButton = null;
-    [SerializeField] private Image _aquaButton = null;
-    [SerializeField] private Image _firaButton = null;
+    [SerializeField] private TMP_Dropdown _dropdown = null;
+    [SerializeField] private Image _waterButton = null;
+    [SerializeField] private Image _fireButton = null;
+    [SerializeField] private Image _grassButton = null;
+    [SerializeField] private Color _activeFilterColor = new Color();
+    [SerializeField] private Color _inActiveColor = new Color();
     [SerializeField] private Transform _detailsHierarchyParent = null;
 
     private UIManager _uiManager = null;
@@ -17,9 +20,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
     private List<Chimera> _chimerasList = new List<Chimera>();
     private ChimeraOrderType _orderType = ChimeraOrderType.AveragePower;
     private GameObject _detailsPrefab = null;
-    private bool _showGrass = true;
     private bool _showWater = true;
     private bool _showFire = true;
+    private bool _showGrass = true;
 
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -30,14 +33,18 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
+        _waterButton.color = _activeFilterColor;
+        _fireButton.color = _activeFilterColor;
+        _grassButton.color = _activeFilterColor;
+
         SetupListeners();
     }
 
     private void SetupListeners()
     {
-        _uiManager.CreateButtonListener(_aquaButton.gameObject.GetComponent<Button>(), ToggleShowWater);
-        _uiManager.CreateButtonListener(_bioButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
-        _uiManager.CreateButtonListener(_firaButton.gameObject.GetComponent<Button>(), ToggleShowFire);
+        _uiManager.CreateButtonListener(_waterButton.gameObject.GetComponent<Button>(), ToggleShowWater);
+        _uiManager.CreateButtonListener(_grassButton.gameObject.GetComponent<Button>(), ToggleShowGrass);
+        _uiManager.CreateButtonListener(_fireButton.gameObject.GetComponent<Button>(), ToggleShowFire);
 
         _dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(); });
     }
@@ -63,11 +70,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
         _showGrass = !_showGrass;
         if (_showGrass == true)
         {
-            _bioButton.color = Color.white;
+            _grassButton.color = _activeFilterColor;
         }
         else
         {
-            _bioButton.color = new Color(0.63f, 0.63f, 0.63f);
+            _grassButton.color = _inActiveColor;
         }
         EvaluateVisibleChimera();
     }
@@ -78,11 +85,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         if (_showWater == true)
         {
-            _aquaButton.color = Color.white;
+            _waterButton.color = _activeFilterColor;
         }
         else
         {
-            _aquaButton.color = new Color(0.63f, 0.63f, 0.63f);
+            _waterButton.color = _inActiveColor;
         }
 
         EvaluateVisibleChimera();
@@ -94,11 +101,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         if (_showFire == true)
         {
-            _firaButton.color = Color.white;
+            _fireButton.color = _activeFilterColor;
         }
         else
         {
-            _firaButton.color = new Color(0.63f, 0.63f, 0.63f);
+            _fireButton.color = _inActiveColor;
         }
 
         EvaluateVisibleChimera();
@@ -191,9 +198,6 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
     public void Sort()
     {
-        //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-        //sw.Start();
-
         for (int p = 0; p <= _chimeraDetailsList.Count - 2; p++)
         {
             for (int i = 0; i <= _chimeraDetailsList.Count - 2; i++)
@@ -244,8 +248,5 @@ public class ChimeraDetailsFolder : MonoBehaviour
                 }
             }
         }
-
-        //sw.Stop();
-        //Debug.Log(sw.ElapsedMilliseconds);
     }
 }

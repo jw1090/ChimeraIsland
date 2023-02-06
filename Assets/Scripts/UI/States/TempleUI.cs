@@ -11,6 +11,7 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
+    [SerializeField] private Button _backToTempleButton = null;
 
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
@@ -23,11 +24,13 @@ public class TempleUI : MonoBehaviour
     private SceneChanger _sceneChanger = null;
     private Temple _templeEnvironment = null;
     private InputManager _inputManager = null;
+    private bool _inGallery = false;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public Button BackToHabitatButton { get => _backToHabitatButton; }
     public Button GoLeftButton { get => _goLeftButton; }
     public Button GoRightButton { get => _goRightButton; }
+    public bool InGallery { get => _inGallery; }
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
@@ -56,13 +59,21 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_backToHabitatButton, LeavingTempleTransition);
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
+        _uiManager.CreateButtonListener(_backToTempleButton, ExitGallery);
+
     }
 
     public void SceneSetup()
     {
         _templeEnvironment = ServiceLocator.Get<Temple>();
-
+        _templeEnvironment.ChimeraGallery.SetTempleUI(this);
         _currentTempleSection = TempleSectionType.Buying;
+    }
+
+    private void ExitGallery()
+    {
+        _templeEnvironment.ChimeraGallery.ExitGallery();
+        ShowSharedUIState();
     }
 
     private void TransitionLeft()
@@ -139,9 +150,16 @@ public class TempleUI : MonoBehaviour
         StartCoroutine(HabitatTransitionCoroutine(false));
     }
 
+    public void ShowGalleryUIState()
+    {
+        _sharedUIStates.SetState("ChimeraGallery", true);
+        _inGallery = true;
+    }
+
     public void ShowSharedUIState()
     {
         _sharedUIStates.SetState("Standard", true);
+        _inGallery = false;
     }
 
     public void HideSharedUIState()
