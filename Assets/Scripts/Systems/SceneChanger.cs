@@ -105,11 +105,6 @@ public class SceneChanger : MonoBehaviour
         FadeInLoadScreen(SceneType.MainMenu);
     }
 
-    public void LoadMainMenu()
-    {
-
-    }
-
     public void LoadStonePlains()
     {
         if (RecentSceneChange == true)
