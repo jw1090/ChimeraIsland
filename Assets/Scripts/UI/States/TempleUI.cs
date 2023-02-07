@@ -12,6 +12,7 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
     [SerializeField] private Button _backToTempleButton = null;
+    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
 
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
@@ -28,12 +29,12 @@ public class TempleUI : MonoBehaviour
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public Button BackToHabitatButton { get => _backToHabitatButton; }
+    public StartingChimeraInfo ChimeraInfo { get => _startingChimeraInfo; }
     public Button GoLeftButton { get => _goLeftButton; }
     public Button GoRightButton { get => _goRightButton; }
     public bool InGallery { get => _inGallery; }
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
-
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
