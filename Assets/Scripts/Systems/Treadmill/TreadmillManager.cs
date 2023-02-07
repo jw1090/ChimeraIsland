@@ -9,7 +9,6 @@ public class TreadmillManager : MonoBehaviour
 
     [Header("Chimera Information")]
     [SerializeField] private List<Chimera> _chimeraList = null;
-    [SerializeField] private List<Transform> _chimeraNodes = null;
     [SerializeField] Transform _firstChimera = null;
     [SerializeField] Transform _secondChimera = null;
     [SerializeField] Transform _thirdChimera = null;
@@ -18,6 +17,9 @@ public class TreadmillManager : MonoBehaviour
 
     [Header("Planes")]
     [SerializeField] List<GameObject> _planes = null;
+
+    [Header("Planes")]
+    [SerializeField] Camera _expeditionCamera = null;
 
     private bool _initialized = false;
     public List<Chimera> ChimeraList { get => _chimeraList;}
@@ -35,6 +37,8 @@ public class TreadmillManager : MonoBehaviour
         IsRunning = false;
 
         _initialized = true;
+
+        _expeditionCamera.gameObject.SetActive(false);
 
         return this;
     }
