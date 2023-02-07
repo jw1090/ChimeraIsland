@@ -14,6 +14,8 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] Transform _firstChimera = null;
     [SerializeField] Transform _secondChimera = null;
     [SerializeField] Transform _thirdChimera = null;
+    [SerializeField] Transform _fourthChimera = null;
+    [SerializeField] Transform _fifthChimera = null;
 
     [Header("Planes")]
     [SerializeField] List<GameObject> _planes = null;
@@ -29,6 +31,8 @@ public class TreadmillManager : MonoBehaviour
     public Transform FirstChimeraPosition { get => _firstChimera; }
     public Transform SecondChimeraPosition { get => _secondChimera; }
     public Transform ThirdChimeraPosition { get => _thirdChimera; }
+    public Transform FourthChimeraPosition { get => _fourthChimera; }
+    public Transform FifthChimeraPosition { get => _fifthChimera; }
 
     public bool IsRunning { get; set; }
 
@@ -66,22 +70,36 @@ public class TreadmillManager : MonoBehaviour
         gameObject.transform.position = _startNode.position;
     }
 
-    int index = 0;
     public void Warp()
     {
+        int index = 0;
         foreach(Chimera chimera in _chimeraList)
         {
             chimera.transform.position = FirstChimeraPosition.position;
-            ++index;
-            if(index == 1)
+            Debug.Log(_chimeraList.Count);
+            Debug.Log(index);
+           
+            if(_chimeraList.Count == 2)
             {
+                ++index;
                 chimera.transform.position = SecondChimeraPosition.position;
-                index = -1;
+                if(index == 1)
+                {
+                    chimera.transform.position = ThirdChimeraPosition.position;
+                }
             }
-            if (index == 2)
+            else if(_chimeraList.Count == 3)
             {
-                chimera.transform.position = ThirdChimeraPosition.position;
-                index = -1;
+                index++;
+                chimera.transform.position = FirstChimeraPosition.position;
+                if (index == 1)
+                {
+                    chimera.transform.position = FourthChimeraPosition.position;
+                }
+                if (index == 2)
+                {
+                    chimera.transform.position = FifthChimeraPosition.position;
+                }
             }
         }
     }

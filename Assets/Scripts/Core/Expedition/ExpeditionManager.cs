@@ -631,6 +631,7 @@ public class ExpeditionManager : MonoBehaviour
         if (onExpedition == false) 
         {
             _chimeras.Clear();
+            _treadmillManager.ChimeraList.Clear();
             _treadmillManager.IsRunning = false;
         }
     }
