@@ -608,15 +608,15 @@ public class ExpeditionManager : MonoBehaviour
 
             if (onExpedition == true)
             {
-                chimera.EnableAgent(!onExpedition);
                 _treadmillManager.IsRunning = true;
                 _treadmillManager.ChimeraList.Add(chimera);
+                chimera.EnableAgent(!onExpedition); //DID THIS BECAUSE THE AGENT NEEDS TO BE OFF WHEN IT TELEPORTS TO THE AGENT
             }
             else
             {
                 Vector3 position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
                 chimera.gameObject.transform.position = position;
-                chimera.EnableAgent(!onExpedition);
+                chimera.EnableAgent(!onExpedition); // AND TO GO BACK
             }
         }
 
