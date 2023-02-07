@@ -10,6 +10,7 @@ public class ExpeditionManager : MonoBehaviour
     [SerializeField] private int _currentEssenceProgress = 0;
     [SerializeField] private int _currentFossilProgress = 0;
     [SerializeField] private int _currentHabitatProgress = 0;
+    [SerializeField] private TreadmillManager _treadmillManager = null;
     private ExpeditionData _selectedExpedition = null;
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
@@ -23,7 +24,6 @@ public class ExpeditionManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
-    private TreadmillManager _treadmillManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
     private const float _difficultyFlatModifier = 10.0f;
     private const float _difficultyScalar = 14.5f;
@@ -608,24 +608,19 @@ public class ExpeditionManager : MonoBehaviour
 
             if (onExpedition == true)
             {
-                chimera.Behavior.enabled = false;
-                chimera.Behavior.Agent.enabled = false;
-
+                chimera.EnableAgent(!onExpedition);
                 _treadmillManager.IsRunning = true;
                 _treadmillManager.ChimeraList.Add(chimera);
-                _treadmillManager.Warp();
             }
             else
             {
-                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
-                chimera.gameObject.transform.position = positionAttempt;
-
-                chimera.Behavior.enabled = true;
-                chimera.Behavior.Agent.enabled = true;
+                Vector3 position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+                chimera.gameObject.transform.position = position;
+                chimera.EnableAgent(!onExpedition);
             }
         }
 
-
+        _treadmillManager.Warp();
         _habitatUI.UpdateHabitatUI();
 
         if (onExpedition == false) 

@@ -491,14 +491,19 @@ public class Chimera : MonoBehaviour
         _chimeraToBecome = null;
     }
 
+    public void EnableAgent(bool enable)
+    {
+        _chimeraBehavior.enabled = enable;
+        _chimeraBehavior.Agent.enabled = enable;
+    }
+
     public void RevealChimera(bool reveal)
     {
         _currentEvolution.gameObject.SetActive(reveal);
 
         _boxCollider.enabled = reveal;
 
-        _chimeraBehavior.enabled = reveal;
-        _chimeraBehavior.Agent.enabled = reveal;
+        EnableAgent(reveal);
 
         if (reveal == true)
         {

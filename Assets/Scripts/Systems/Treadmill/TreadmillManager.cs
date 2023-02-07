@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,13 +18,8 @@ public class TreadmillManager : MonoBehaviour
 
     [Header("Planes")]
     [SerializeField] List<GameObject> _planes = null;
-    
 
     private bool _initialized = false;
-    private bool _firstPositionOccupied = false;
-    private bool _secondPositionOccupied = false;
-    private bool _thirdPositionOccupied = false;
-
     public List<Chimera> ChimeraList { get => _chimeraList;}
 
     public Transform FirstChimeraPosition { get => _firstChimera; }
@@ -33,7 +27,6 @@ public class TreadmillManager : MonoBehaviour
     public Transform ThirdChimeraPosition { get => _thirdChimera; }
     public Transform FourthChimeraPosition { get => _fourthChimera; }
     public Transform FifthChimeraPosition { get => _fifthChimera; }
-
     public bool IsRunning { get; set; }
 
     public TreadmillManager Initialize()
@@ -45,6 +38,7 @@ public class TreadmillManager : MonoBehaviour
 
         return this;
     }
+
     private void FixedUpdate()
     {
         if (_initialized == false)
@@ -76,9 +70,7 @@ public class TreadmillManager : MonoBehaviour
         foreach(Chimera chimera in _chimeraList)
         {
             chimera.transform.position = FirstChimeraPosition.position;
-            Debug.Log(_chimeraList.Count);
-            Debug.Log(index);
-           
+
             if(_chimeraList.Count == 2)
             {
                 ++index;
