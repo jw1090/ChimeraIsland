@@ -245,7 +245,7 @@ public class LevelLoader : AsyncLoader
     {
         Debug.Log($"<color=Lime> {this.GetType()} finished setup. </color>");
 
-        _uiManager.EnableLoadingBlock(false);
+        StartCoroutine(_uiManager.FadeOutLoadingScreen());
     }
 
     public void PlaySceneLoopingAudio()

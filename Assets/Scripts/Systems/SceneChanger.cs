@@ -19,10 +19,10 @@ public class SceneChanger : MonoBehaviour
 
         return this;
     }
-    private void AdditionalClickPrevention()
+    private void FadeInLoadScreen(SceneType sceneType)
     {
         RecentSceneChange = true;
-        _uiManager.EnableLoadingBlock(true);
+        StartCoroutine(_uiManager.FadeInLoadingScreen(sceneType));
     }
 
     public void SetupUIListeners()
@@ -31,20 +31,20 @@ public class SceneChanger : MonoBehaviour
 
         Button mainMenuButton = _uiManager.SettingsUI.MainMenuButton;
 
-        _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, LoadMainMenu);
+        _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, StartLoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, QuitGame);
 
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.NewGameButton, CheckNewGame);
-        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, LoadGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.LoadGameButton, StartLoadGame);
         _uiManager.CreateButtonListener(_uiManager.MainMenuUI.QuitGameButton, QuitGame);
-        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningYesButton, NewGame);
+        _uiManager.CreateButtonListener(_uiManager.MainMenuUI.WarningYesButton, StartNewGame);
     }
 
     public void CheckNewGame()
     {
         if (_uiManager.MainMenuUI.CheckHasSave() == false)
         {
-            NewGame();
+            StartNewGame();
         }
         else
         {
@@ -52,32 +52,26 @@ public class SceneChanger : MonoBehaviour
         }
     }
 
-    public void NewGame()
+    public void StartNewGame()
     {
         if (RecentSceneChange == true)
         {
             return;
         }
-
-        AdditionalClickPrevention();
 
         _uiManager.MainMenuUI.ResetToStandard();
-
         _persistentData.NewSaveData();
-
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT);
+        FadeInLoadScreen(SceneType.Starting);
     }
 
-    public void LoadGame()
+    public void StartLoadGame()
     {
         if (RecentSceneChange == true)
         {
             return;
         }
 
-        AdditionalClickPrevention();
-
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
+        FadeInLoadScreen(SceneType.Habitat);
     }
 
     public void QuitGame()
@@ -86,8 +80,6 @@ public class SceneChanger : MonoBehaviour
         {
             return;
         }
-
-        AdditionalClickPrevention();
 
         SaveSessionData(true);
 
@@ -98,21 +90,24 @@ public class SceneChanger : MonoBehaviour
 #endif
     }
 
-    public void LoadMainMenu()
+    public void StartLoadMainMenu()
     {
         if (RecentSceneChange == true)
         {
             return;
         }
 
-        AdditionalClickPrevention();
-
         _uiManager.HabitatUI.ResetStandardUI();
         _uiManager.MainMenuUI.CheckShowLoadGameButton();
 
         SaveSessionData(true);
 
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
+        FadeInLoadScreen(SceneType.MainMenu);
+    }
+
+    public void LoadMainMenu()
+    {
+
     }
 
     public void LoadStonePlains()
@@ -122,9 +117,7 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        AdditionalClickPrevention();
-
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
+        FadeInLoadScreen(SceneType.Habitat);
     }
 
     public void LoadTemple()
@@ -133,12 +126,9 @@ public class SceneChanger : MonoBehaviour
         {
             return;
         }
-
-        AdditionalClickPrevention();
-
+        
         SaveSessionData(true);
-
-        SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);
+        FadeInLoadScreen(SceneType.Temple);
     }
 
     private void SaveSessionData(bool quitGame)
