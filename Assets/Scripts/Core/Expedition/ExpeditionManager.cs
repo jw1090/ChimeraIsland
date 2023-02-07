@@ -10,6 +10,7 @@ public class ExpeditionManager : MonoBehaviour
     [SerializeField] private int _currentEssenceProgress = 0;
     [SerializeField] private int _currentFossilProgress = 0;
     [SerializeField] private int _currentHabitatProgress = 0;
+    [SerializeField] private TreadmillManager _treadmillManager = null;
     private ExpeditionData _selectedExpedition = null;
     private ExpeditionData _essenceExpeditionOption = null;
     private ExpeditionData _fossilExpeditionOption = null;
@@ -49,6 +50,10 @@ public class ExpeditionManager : MonoBehaviour
     {
         _expeditionState = expeditionState;
         SetPortalColor();
+    }
+    public void SetTreadmillManager(TreadmillManager treadmillManager)
+    {
+        _treadmillManager = treadmillManager;
     }
 
     public void SetPortalColor()
@@ -247,8 +252,6 @@ public class ExpeditionManager : MonoBehaviour
 
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
-
-        //_treadmillManager.CheckRotation();
 
         _selectedExpedition.ActiveInProgressTimer = true;
     }
@@ -601,22 +604,30 @@ public class ExpeditionManager : MonoBehaviour
     {
         foreach (Chimera chimera in _chimeras)
         {
-            chimera.RevealChimera(!onExpedition);
             chimera.SetOnExpedition(onExpedition);
 
             if (onExpedition == true)
             {
-                Vector3 positionAttempt = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
-
-                chimera.gameObject.transform.position = positionAttempt;
+                chimera.EnableAgent(!onExpedition);
+                _treadmillManager.IsRunning = true;
+                _treadmillManager.ChimeraList.Add(chimera);
+            }
+            else
+            {
+                Vector3 position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
+                chimera.gameObject.transform.position = position;
+                chimera.EnableAgent(!onExpedition);
             }
         }
 
+        _treadmillManager.Warp();
         _habitatUI.UpdateHabitatUI();
 
-        if (onExpedition == false)
+        if (onExpedition == false) 
         {
             _chimeras.Clear();
+            _treadmillManager.ChimeraList.Clear();
+            _treadmillManager.IsRunning = false;
         }
     }
 

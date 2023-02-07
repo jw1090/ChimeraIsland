@@ -491,20 +491,26 @@ public class Chimera : MonoBehaviour
         _chimeraToBecome = null;
     }
 
+    public void EnableAgent(bool enable)
+    {
+        _chimeraBehavior.enabled = enable;
+        _chimeraBehavior.Agent.enabled = enable;
+    }
+
     public void RevealChimera(bool reveal)
     {
         _currentEvolution.gameObject.SetActive(reveal);
 
-        _chimeraBehavior.enabled = reveal;
-        _chimeraBehavior.Agent.enabled = reveal;
         _boxCollider.enabled = reveal;
+
+        EnableAgent(reveal);
 
         if (reveal == true)
         {
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
             _currentEvolution.Animator.Play("Walk");
         }
-        else
+        else if (reveal == false)
         {
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
         }
