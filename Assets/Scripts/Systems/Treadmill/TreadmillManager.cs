@@ -52,6 +52,7 @@ public class TreadmillManager : MonoBehaviour
 
         if(IsRunning == true)
         {
+            _expeditionCamera.gameObject.SetActive(true);
             foreach (GameObject planes in _planes)
             {
                 planes.transform.position += new Vector3(-2.0f * Time.deltaTime, 0, 0);
