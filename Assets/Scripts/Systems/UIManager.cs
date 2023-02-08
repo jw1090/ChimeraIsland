@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -20,8 +22,11 @@ public class UIManager : MonoBehaviour
     [Header("Tooltip")]
     [SerializeField] private Tooltip _tooltip = null;
 
-    [Header("Loading Block")]
-    [SerializeField] private GameObject _loadingBlock = null;
+    [Header("Loading")]
+    [SerializeField] private float _fadeInDuration = 1.0f;
+    [SerializeField] private float _fadeOutDuration = 0.5f;
+    [SerializeField] private float _waitDuration = 1.0f;
+    [SerializeField] private Image _loadingImage = null;
 
     private bool _uiVisible = true;
 
@@ -45,7 +50,64 @@ public class UIManager : MonoBehaviour
         _settingsUI.InitializeVolumeSettings();
     }
 
-    public void EnableLoadingBlock(bool enabled) { _loadingBlock.SetActive(enabled); }
+
+    public IEnumerator FadeInLoadingScreen(SceneType sceneType)
+    {
+        _loadingImage.gameObject.SetActive(true);
+        Color startColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        Color endColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+
+        float timer = 0.0f;
+        while (timer < _fadeInDuration)
+        {
+            timer += Time.deltaTime;
+
+            float progress = timer / _fadeInDuration;
+            _loadingImage.color = Color.Lerp(startColor, endColor, progress);
+
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(_waitDuration);
+
+        switch (sceneType)
+        {
+            case SceneType.MainMenu:
+                SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.MAIN_MENU);
+                break;
+            case SceneType.Starting:
+                SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STARTER_SELECT);
+                break;
+            case SceneType.Habitat:
+                SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.STONE_PLANES);
+                break;
+            case SceneType.Temple:
+                SceneManager.LoadSceneAsync(GameConsts.LevelToLoadInts.TEMPLE);
+                break;
+            default:
+                Debug.LogError($"{sceneType} is invalid. Please change!");
+                break;
+        }
+    }
+
+    public IEnumerator FadeOutLoadingScreen()
+    {
+        Color startColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        Color endColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+
+        float timer = 0.0f;
+        while (timer < _fadeOutDuration)
+        {
+            timer += Time.deltaTime;
+
+            float progress = timer / _fadeOutDuration;
+            _loadingImage.color = Color.Lerp(startColor, endColor, progress);
+
+            yield return null;
+        }
+        _loadingImage.gameObject.SetActive(false);
+
+    }
 
     public UIManager Initialize()
     {
