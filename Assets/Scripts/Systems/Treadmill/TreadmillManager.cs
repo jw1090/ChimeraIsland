@@ -19,7 +19,7 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] List<GameObject> _planes = null;
 
     [Header("Planes")]
-    [SerializeField] Camera _expeditionCamera = null;
+    [SerializeField] Camera _treadmillCamera = null;
 
     private bool _initialized = false;
     public List<Chimera> ChimeraList { get => _chimeraList;}
@@ -29,6 +29,7 @@ public class TreadmillManager : MonoBehaviour
     public Transform ThirdChimeraPosition { get => _thirdChimera; }
     public Transform FourthChimeraPosition { get => _fourthChimera; }
     public Transform FifthChimeraPosition { get => _fifthChimera; }
+    public Camera TreadmillCamera { get => _treadmillCamera; }
     public bool IsRunning { get; set; }
 
     public TreadmillManager Initialize()
@@ -38,7 +39,7 @@ public class TreadmillManager : MonoBehaviour
 
         _initialized = true;
 
-        _expeditionCamera.gameObject.SetActive(false);
+        _treadmillCamera.gameObject.SetActive(false);
 
         return this;
     }
@@ -52,7 +53,7 @@ public class TreadmillManager : MonoBehaviour
 
         if(IsRunning == true)
         {
-            _expeditionCamera.gameObject.SetActive(true);
+            _treadmillCamera.gameObject.SetActive(true);
             foreach (GameObject planes in _planes)
             {
                 planes.transform.position += new Vector3(-2.0f * Time.deltaTime, 0, 0);
@@ -74,28 +75,28 @@ public class TreadmillManager : MonoBehaviour
         int index = 0;
         foreach(Chimera chimera in _chimeraList)
         {
-            chimera.transform.position = FirstChimeraPosition.position;
+            chimera.ChimeraPosition(FirstChimeraPosition);
 
             if(_chimeraList.Count == 2)
             {
                 ++index;
-                chimera.transform.position = SecondChimeraPosition.position;
-                if(index == 1)
+                chimera.ChimeraPosition(SecondChimeraPosition);
+                if (index == 1)
                 {
-                    chimera.transform.position = ThirdChimeraPosition.position;
+                    chimera.ChimeraPosition(ThirdChimeraPosition);
                 }
             }
             else if(_chimeraList.Count == 3)
             {
                 index++;
-                chimera.transform.position = FirstChimeraPosition.position;
+                chimera.ChimeraPosition(FirstChimeraPosition);
                 if (index == 1)
                 {
-                    chimera.transform.position = FourthChimeraPosition.position;
+                    chimera.ChimeraPosition(FourthChimeraPosition);
                 }
                 if (index == 2)
                 {
-                    chimera.transform.position = FifthChimeraPosition.position;
+                    chimera.ChimeraPosition(FifthChimeraPosition);
                 }
             }
         }

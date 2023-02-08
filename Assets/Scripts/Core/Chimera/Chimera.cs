@@ -497,6 +497,12 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.Agent.enabled = enable;
     }
 
+    public void ChimeraPosition(Transform transform)
+    {
+        this.transform.position = transform.position;
+        this.transform.rotation = transform.rotation;
+    }
+
     public void RevealChimera(bool reveal)
     {
         _currentEvolution.gameObject.SetActive(reveal);
