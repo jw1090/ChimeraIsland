@@ -33,7 +33,7 @@ public class ChimeraGallery : MonoBehaviour
     private Vector3 mPrevMousePos = Vector3.zero;
     private Vector3 mPosDelta = Vector3.zero;
     private string _currentAnim = "";
-    private Animator _currentAniamtor = null;
+    private Animator _currentAnimator = null;
     private bool _clickedDownOnChimera = false;
 
     public void Initialize()
@@ -53,7 +53,7 @@ public class ChimeraGallery : MonoBehaviour
         _templeUI.ShowGalleryUIState();
         GetCurrentChimera(chimeraType);
         _currentChimera.SetActive(true);
-        _currentAniamtor = _currentChimera.GetComponent<Animator>();
+        _currentAnimator = _currentChimera.GetComponent<Animator>();
         switch (chimeraType)
         {
             case ChimeraType.A3:
@@ -113,16 +113,16 @@ public class ChimeraGallery : MonoBehaviour
 
     public void SetAnim(string anim)
     {
-        if(_currentAniamtor == null)
+        if(_currentAnimator == null)
         {
             return;
         }
         if (_currentAnim != "")
         {
-            _currentAniamtor.SetBool(_currentAnim, false);
+            _currentAnimator.SetBool(_currentAnim, false);
         }
         _currentAnim = anim;
-        _currentAniamtor.SetBool(_currentAnim, true);
+        _currentAnimator.SetBool(_currentAnim, true);
     }
 
     private void GetCurrentChimera(ChimeraType chimeraType)
