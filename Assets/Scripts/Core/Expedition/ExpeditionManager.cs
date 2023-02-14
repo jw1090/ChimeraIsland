@@ -468,8 +468,15 @@ public class ExpeditionManager : MonoBehaviour
         {
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
+            _treadmillManager.IsRunning = false;
 
             _uiExpedition.TimerComplete();
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.Behavior.ExitAnim("Walk");
+                chimera.Animator.Play("Idle");
+            }
         }
     }
 
@@ -605,6 +612,7 @@ public class ExpeditionManager : MonoBehaviour
         foreach (Chimera chimera in _chimeras)
         {
             chimera.SetOnExpedition(onExpedition);
+            chimera.Animator.Play("Walk");
 
             if (onExpedition == true)
             {
@@ -628,6 +636,13 @@ public class ExpeditionManager : MonoBehaviour
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
             _treadmillManager.IsRunning = false;
+        }
+        else
+        {
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.Animator.Play("Walk");
+            }
         }
     }
 
