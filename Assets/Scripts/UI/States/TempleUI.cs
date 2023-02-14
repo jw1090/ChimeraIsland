@@ -11,12 +11,12 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
-    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
 
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
 
     [Header("Gallery UI")]
+    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
     [SerializeField] private Button _backToTempleButton = null;
     [SerializeField] private Button _walkButton = null;
     [SerializeField] private Button _idleButton = null;
