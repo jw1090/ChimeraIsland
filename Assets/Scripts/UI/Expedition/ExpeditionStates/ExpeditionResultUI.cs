@@ -90,7 +90,7 @@ public class ExpeditionResultUI : MonoBehaviour
                             _resultsDescription.text = $"You unlocked the Rune Stones Facility!";
                             break;
                         case HabitatRewardType.Habitat:
-                            _resultsDescription.text = $"You upgraded the Habitat. Facilities can be upgraded in the Marketplace!";
+                            _resultsDescription.text = $"You upgraded the Habitat";
                             break;
                         default:
                             Debug.LogError($"Upgrade type is invalid [{expeditionData.UpgradeType}], please change!");
