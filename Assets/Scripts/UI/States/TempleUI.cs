@@ -11,11 +11,17 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
-    [SerializeField] private Button _backToTempleButton = null;
     [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
 
     [Header("Temple Section UI")]
     [SerializeField] private StatefulObject _sectionUIStates = null;
+
+    [Header("Gallery UI")]
+    [SerializeField] private Button _backToTempleButton = null;
+    [SerializeField] private Button _walkButton = null;
+    [SerializeField] private Button _idleButton = null;
+    [SerializeField] private Button _successButton = null;
+    [SerializeField] private Button _failureButton = null;
 
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
@@ -61,6 +67,10 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
         _uiManager.CreateButtonListener(_backToTempleButton, ExitGallery);
+        _uiManager.CreateButtonListener(_walkButton, SetAnimWalk);
+        _uiManager.CreateButtonListener(_idleButton, SetAnimIdle);
+        _uiManager.CreateButtonListener(_successButton, SetAnimSuccess);
+        _uiManager.CreateButtonListener(_failureButton, SetAnimFailure);
 
     }
 
@@ -75,6 +85,20 @@ public class TempleUI : MonoBehaviour
     {
         _templeEnvironment.ChimeraGallery.ExitGallery();
         ShowSharedUIState();
+    }
+
+    private void SetAnimIdle() { SetAnim("Idle"); }
+    private void SetAnimWalk() { SetAnim("Walk"); }
+    private void SetAnimSuccess() { SetAnim("Success"); }
+    private void SetAnimFailure() { SetAnim("Failure"); }
+    
+    private void SetAnim(string anim)
+    {
+        if (anim == null || anim == "") 
+        {
+            return;
+        }
+        _templeEnvironment.ChimeraGallery.SetAnim(anim);
     }
 
     private void TransitionLeft()
