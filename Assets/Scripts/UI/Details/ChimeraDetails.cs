@@ -83,6 +83,20 @@ public class ChimeraDetails : MonoBehaviour
 
     public void Update()
     {
+        if (_uiManager.HabitatUI.ExpeditionPanel.isActiveAndEnabled == true)
+        {
+            if (_expeditionManager.State == ExpeditionState.InProgress || _expeditionManager.State == ExpeditionState.Result)
+            {
+                if (_uiManager.Tooltip.BeingUsed == true)
+                {
+                    _uiManager.Tooltip.BeingUsed = false;
+                    _tooltip.gameObject.SetActive(false);
+                }
+
+                return;
+            }
+        }
+
         if (GetGlobalPosition(_explorationTransform).Contains(Input.mousePosition))
         {
             _uiManager.Tooltip.BeingUsed = true;
