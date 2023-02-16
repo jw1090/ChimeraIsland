@@ -22,7 +22,6 @@ public class TreadmillManager : MonoBehaviour
     [Header("Camera")]
     [SerializeField] RawImage _panel = null; 
     [SerializeField] Camera _treadmillCamera = null;
-    private RenderTexture _renderTexture = null;
 
     private bool _initialized = false;
     public List<Chimera> ChimeraList { get => _chimeraList;}
@@ -55,14 +54,7 @@ public class TreadmillManager : MonoBehaviour
         }
 
         if(IsRunning == true)
-        {
-            //RenderTexture render = new RenderTexture(1000,1000,6);
-            //_treadmillCamera.targetTexture = render;
-            //_panel.texture = render;
-            //Debug.Log(_treadmillCamera.targetTexture);
-            ////_treadmillCamera.GetComponent<Camera>().targetTexture = _renderTexture;
-            ////_panel.texture = _renderTexture;
-            
+        {   
             _treadmillCamera.gameObject.SetActive(true);
             foreach (GameObject planes in _planes)
             {
@@ -77,12 +69,9 @@ public class TreadmillManager : MonoBehaviour
 
     public void Render(RawImage image)
     {
-        RenderTexture render = new RenderTexture(1000, 1000, 6);
+        RenderTexture render = new RenderTexture(1920,1080,0);
         _treadmillCamera.targetTexture = render;
         image.texture = render;
-        Debug.Log(_treadmillCamera.targetTexture);
-        //_treadmillCamera.GetComponent<Camera>().targetTexture = _renderTexture;
-        //_panel.texture = _renderTexture;
     }
 
 

@@ -32,7 +32,11 @@ public class ExpeditionUI : MonoBehaviour
         _resultPanel.SetExpeditionManager(expeditionManager);
     }
 
-    public void SetTreadmillManager(TreadmillManager treadmillManager) { _inProgressPanel.SetTreadmillManager(treadmillManager); }
+    public void SetTreadmillManager(TreadmillManager treadmillManager)
+    { 
+        _inProgressPanel.SetTreadmillManager(treadmillManager);
+        _resultPanel.SetTreadmillManager(treadmillManager);
+    }
     public void SetAudioManager(AudioManager audioManager)
     {
         _selectionPanel.SetAudioManager(audioManager);
