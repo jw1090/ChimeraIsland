@@ -16,7 +16,6 @@ public class LevelLoader : AsyncLoader
     [SerializeField] private Habitat _habitat = null;
     [SerializeField] private LightingManager _lightingManager = null;
     [SerializeField] private ExpeditionManager _expeditionManager = null;
-    [SerializeField] private TreadmillManager _treadmillManager = null;
 
     [Header("Temple")]
     [SerializeField] private Temple _templeEnvironment = null;
@@ -120,12 +119,6 @@ public class LevelLoader : AsyncLoader
         {
             _lightingManager.Initialize();
             _habitat.SetLightingManager(_lightingManager);
-        }
-
-        if(_treadmillManager != null)
-        {
-            _treadmillManager.Initialize();
-            _expeditionManager.SetTreadmillManager(_treadmillManager);
         }
 
         if (_evolutionBuilder != null)

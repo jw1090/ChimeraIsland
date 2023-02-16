@@ -40,6 +40,7 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
+    public TreadmillManager TreadmillManager { get => _treadmillManager; }
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
@@ -51,11 +52,6 @@ public class ExpeditionManager : MonoBehaviour
         _expeditionState = expeditionState;
         SetPortalColor();
     }
-    public void SetTreadmillManager(TreadmillManager treadmillManager)
-    {
-        _treadmillManager = treadmillManager;
-    }
-
     public void SetPortalColor()
     {
         _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
@@ -100,6 +96,10 @@ public class ExpeditionManager : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+
+        _treadmillManager.Initialize();
+
+        _uiExpedition.SetTreadmillManager(_treadmillManager);
 
         SetExpeditionState(ExpeditionState.Selection);
 

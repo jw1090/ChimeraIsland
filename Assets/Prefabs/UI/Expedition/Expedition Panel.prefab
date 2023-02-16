@@ -989,7 +989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4584313025943422524}
   - component: {fileID: 551671834279720991}
-  - component: {fileID: 828853291853555399}
+  - component: {fileID: 4001162323252746417}
   m_Layer: 5
   m_Name: Camera Slot
   m_TagString: Untagged
@@ -1025,7 +1025,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013423094249998471}
   m_CullTransparentMesh: 1
---- !u!114 &828853291853555399
+--- !u!114 &4001162323252746417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1013423094249998471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1045,16 +1045,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &1031443108272359323
 GameObject:
   m_ObjectHideFlags: 0
@@ -5179,7 +5176,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.813, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6050,7 +6047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4786650926508597269
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6125,6 +6122,8 @@ MonoBehaviour:
   _inProgressSuccessChance: {fileID: 2691915915259992758}
   _durationSlider: {fileID: 8496270477240342439}
   _timeRemainingText: {fileID: 1933984209097847754}
+  _progressImage: {fileID: 4001162323252746417}
+  _treadmillManager: {fileID: 0}
 --- !u!1 &6252678796626722660
 GameObject:
   m_ObjectHideFlags: 0
@@ -6631,8 +6630,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultStateName: Transparent
   currentState:
-    StateName: Results Panel
-    StateObject: {fileID: 8414182768606842413}
+    StateName: In Progress Panel
+    StateObject: {fileID: 6135610633694513328}
   stateEntries:
   - StateName: Transparent
     StateObject: {fileID: 6629629786150950605}
@@ -8332,7 +8331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2817531370414315610
 RectTransform:
   m_ObjectHideFlags: 0
