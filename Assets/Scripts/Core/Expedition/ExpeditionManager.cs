@@ -40,6 +40,7 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
+    public TreadmillManager TreadmillManager { get => _treadmillManager; }
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
@@ -51,11 +52,6 @@ public class ExpeditionManager : MonoBehaviour
         _expeditionState = expeditionState;
         SetPortalColor();
     }
-    public void SetTreadmillManager(TreadmillManager treadmillManager)
-    {
-        _treadmillManager = treadmillManager;
-    }
-
     public void SetPortalColor()
     {
         _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
@@ -100,6 +96,10 @@ public class ExpeditionManager : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+
+        _treadmillManager.Initialize();
+
+        _uiExpedition.SetTreadmillManager(_treadmillManager);
 
         SetExpeditionState(ExpeditionState.Selection);
 
@@ -468,8 +468,15 @@ public class ExpeditionManager : MonoBehaviour
         {
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
+            _treadmillManager.IsRunning = false;
 
             _uiExpedition.TimerComplete();
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.Behavior.ExitAnim("Walk");
+                chimera.Animator.Play("Idle");
+            }
         }
     }
 
@@ -605,6 +612,7 @@ public class ExpeditionManager : MonoBehaviour
         foreach (Chimera chimera in _chimeras)
         {
             chimera.SetOnExpedition(onExpedition);
+            chimera.Animator.Play("Walk");
 
             if (onExpedition == true)
             {
@@ -628,6 +636,13 @@ public class ExpeditionManager : MonoBehaviour
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
             _treadmillManager.IsRunning = false;
+        }
+        else
+        {
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.Animator.Play("Walk");
+            }
         }
     }
 
