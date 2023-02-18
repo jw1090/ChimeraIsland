@@ -426,7 +426,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private CursorType GetCursorSprite()
+    public CursorType GetCursorSprite()
     {
         if (_cameraMain == null)
         {
