@@ -18,16 +18,16 @@ public class TempleStructure : MonoBehaviour
 
         yield return new WaitUntil(() => cameraUtil.InTransition == false);
 
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
+        float stopwatch = 0.0f;
         _templeVFX.SetActive(true);
-        while (stopwatch.ElapsedMilliseconds < 5000)
+        while (stopwatch < 5)
         {
-            if (facilityBuilt == false && stopwatch.ElapsedMilliseconds >= 3000)
+            if (facilityBuilt == false && stopwatch >= 3)
             {
                 facilityBuilt = true;
                 Build();
             }
+            stopwatch += Time.deltaTime;
             yield return null;
         }
         _templeVFX.SetActive(false);

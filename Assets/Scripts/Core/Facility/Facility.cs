@@ -100,7 +100,6 @@ public class Facility : MonoBehaviour
 
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
 
-
         switch (_currentTier)
         {
             case 0:
@@ -118,17 +117,17 @@ public class Facility : MonoBehaviour
                 yield break;
         }
 
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
+        float stopwatch = 0.0f;
         vfx.SetActive(true);
-        while (stopwatch.ElapsedMilliseconds < 5000)
+        while (stopwatch < 5.0f)
         {
-            if (facilityBuilt == false && stopwatch.ElapsedMilliseconds >= 3000)
+            if (facilityBuilt == false && stopwatch >= 3.0f)
             {
                 facilityBuilt = true;
                 BuildFacility();
                 _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
             }
+            stopwatch += Time.deltaTime;
             yield return null;
         }
         vfx.SetActive(false);
