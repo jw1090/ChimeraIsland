@@ -202,7 +202,7 @@ public class HabitatManager : MonoBehaviour
         _cameraUtil.FacilityCameraShift(upgradeFacility);
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
         _inputManager.SetInTransition(true);
-        CurrentHabitat.GetFacility(upgradeFacility).BuildFacility();
+        StartCoroutine(CurrentHabitat.GetFacility(upgradeFacility).BuildFacilityWithVFX());
 
         switch (upgradeFacility)
         {
@@ -220,7 +220,7 @@ public class HabitatManager : MonoBehaviour
                 break;
         }
         
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(6.0f);
         _upgradeQueue.Dequeue();
 
         if (_upgradeQueue.Count != 0)

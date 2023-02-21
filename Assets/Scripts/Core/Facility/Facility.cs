@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Facility : MonoBehaviour
@@ -12,6 +14,9 @@ public class Facility : MonoBehaviour
     [SerializeField] private TrainingFacilityIcon _trainingIcon = null;
     [SerializeField] private FacilitySign _facilitySign = null;
     [SerializeField] private Transform _cameraTransitionNode = null;
+    [SerializeField] private GameObject _tier1VFX = null;
+    [SerializeField] private GameObject _tier2VFX = null;
+    [SerializeField] private GameObject _tier3VFX = null;
 
     private CameraUtil _cameraUtil;
     private FacilitySFX _facilitySFX = null;
@@ -48,7 +53,7 @@ public class Facility : MonoBehaviour
 
     public void Initialize(Habitat habitat)
     {
-        Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
+        UnityEngine.Debug.Log($"<color=Cyan> Initializing {this.GetType()} ... </color>");
 
         _habitat = habitat;
 
@@ -86,7 +91,49 @@ public class Facility : MonoBehaviour
         return true;
     }
 
-    public void BuildFacility(bool moveCamera = false)
+    public IEnumerator BuildFacilityWithVFX()
+    {
+        GameObject vfx;
+        bool facilityBuilt = false;
+
+        _cameraUtil.FacilityCameraShift(Type);
+
+        yield return new WaitUntil(() => _cameraUtil.InTransition == false);
+
+        switch (_currentTier)
+        {
+            case 0:
+                vfx = _tier1VFX;
+                _isBuilt = true;
+                break;
+            case 1:
+                vfx = _tier2VFX;
+                break;
+            case 2:
+                vfx = _tier3VFX;
+                break;
+            default:
+                UnityEngine.Debug.LogError($"facilityTier is not valid [{_currentTier+1}]!");
+                yield break;
+        }
+
+        float stopwatch = 0.0f;
+        vfx.SetActive(true);
+        while (stopwatch < 5.0f)
+        {
+            if (facilityBuilt == false && stopwatch >= 3.0f)
+            {
+                facilityBuilt = true;
+                BuildFacility();
+                _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
+            }
+            stopwatch += Time.deltaTime;
+            yield return null;
+        }
+        vfx.SetActive(false);
+    }
+
+    public void BuildFacility()
     {
         string debugString = "";
 
@@ -122,20 +169,14 @@ public class Facility : MonoBehaviour
             _habitat.Environment.SwitchWaterfallTier(_currentTier);
         }
 
-        if (moveCamera == true)
-        {
-            _cameraUtil.FacilityCameraShift(Type);
-            _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
-        }
-
-        Debug.Log($" {debugString} and now generates {_currentTier} {_statType}!");
+        UnityEngine.Debug.Log($" {debugString} and now generates {_currentTier} {_statType}!");
     }
 
     public bool PlaceChimeraFromUI(Chimera chimera)
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
-            Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
+            UnityEngine.Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
 
@@ -156,7 +197,7 @@ public class Facility : MonoBehaviour
     {
         if (_storedChimera != null) // Something is already in the facility.
         {
-            Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
+            UnityEngine.Debug.Log($"Cannot add {chimera}. {_storedChimera} is already in this facility.");
             return false;
         }
 
@@ -185,7 +226,7 @@ public class Facility : MonoBehaviour
 
         CalculateExperienceRate();
 
-        Debug.Log($"{_storedChimera} added to the facility.");
+        UnityEngine.Debug.Log($"{_storedChimera} added to the facility.");
     }
 
     // Removes Chimera from facility and cleans up chimera and facility logic.
@@ -193,7 +234,7 @@ public class Facility : MonoBehaviour
     {
         if (_storedChimera == null) // Facility is empty.
         {
-            Debug.LogWarning("Cannot remove Chimera, facility is empty.");
+            UnityEngine.Debug.LogWarning("Cannot remove Chimera, facility is empty.");
             return;
         }
 
@@ -218,7 +259,7 @@ public class Facility : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.RemoveChimera);
         _facilitySFX.StopSFX();
 
-        Debug.Log($"{_storedChimera} has been removed from the facility.");
+        UnityEngine.Debug.Log($"{_storedChimera} has been removed from the facility.");
 
         _storedChimera = null;
 
