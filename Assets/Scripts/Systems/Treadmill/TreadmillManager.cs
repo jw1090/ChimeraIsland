@@ -20,7 +20,6 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] List<GameObject> _planes = null;
 
     [Header("Camera")]
-    [SerializeField] RawImage _panel = null; 
     [SerializeField] Camera _treadmillCamera = null;
 
     private bool _initialized = false;
@@ -31,7 +30,6 @@ public class TreadmillManager : MonoBehaviour
     public Transform ThirdChimeraPosition { get => _thirdChimera; }
     public Transform FourthChimeraPosition { get => _fourthChimera; }
     public Transform FifthChimeraPosition { get => _fifthChimera; }
-    public Camera TreadmillCamera { get => _treadmillCamera; }
     public bool IsRunning { get; set; }
 
     public TreadmillManager Initialize()
