@@ -109,5 +109,4 @@ public class TreadmillManager : MonoBehaviour
             }
         }
     }
-
 }

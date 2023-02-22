@@ -474,8 +474,22 @@ public class ExpeditionManager : MonoBehaviour
 
             foreach (Chimera chimera in _chimeras)
             {
+                if(chimera.ChimeraType == ChimeraType.B1)
+                {
+                    chimera.Behavior.StopParticles();
+                }
+
                 chimera.Behavior.ExitAnim("Walk");
-                chimera.Animator.Play("Idle");
+                if(RandomSuccesRate() == true)
+                {
+                    chimera.Animator.Play("Success");
+                    chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                }
+                else
+                {
+                    chimera.Animator.Play("Fail");
+                    chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                }
             }
         }
     }
