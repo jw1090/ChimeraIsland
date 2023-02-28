@@ -90,7 +90,7 @@ public class TempleUI : MonoBehaviour
     private void SetAnimIdle() { SetAnim("Idle"); }
     private void SetAnimWalk() { SetAnim("Walk"); }
     private void SetAnimSuccess() { SetAnim("Success"); }
-    private void SetAnimFailure() { SetAnim("Failure"); }
+    private void SetAnimFailure() { SetAnim("Fail"); }
     
     private void SetAnim(string anim)
     {
