@@ -268,7 +268,7 @@ public class InputManager : MonoBehaviour
 
                 if (_heldChimera.Chimera.ReadyToEvolve == true)
                 {
-                    _heldChimera.Chimera.EvolveChimera();
+                    StartCoroutine(_heldChimera.Chimera.EvolveChimera());
                 }
                 else
                 {
