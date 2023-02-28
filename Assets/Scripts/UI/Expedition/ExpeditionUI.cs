@@ -72,6 +72,7 @@ public class ExpeditionUI : MonoBehaviour
     {
         _habitatUI.HideButtonsForExpeditions();
         _habitatUI.DetailsManager.CheckDetails();
+        _expeditionManager.TreadmillManager.EnableCamera(true);
 
         switch (_expeditionManager.State)
         {
@@ -95,7 +96,7 @@ public class ExpeditionUI : MonoBehaviour
                 break;
         }
 
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void LoadExpeditionSetup()
@@ -121,6 +122,8 @@ public class ExpeditionUI : MonoBehaviour
             _expeditionManager.RemoveAllChimeras();
         }
 
+        _expeditionManager.TreadmillManager.EnableCamera(false);
+
         _habitatUI.RevealButtonsForExpeditions();
     }
 
@@ -132,6 +135,7 @@ public class ExpeditionUI : MonoBehaviour
         _expeditionManager.SetExpeditionState(ExpeditionState.Result);
 
         _resultPanel.DetermineReward();
+        _resultPanel.EnableRenderImage();
 
         _expeditionManager.SetPortalColor();
     }

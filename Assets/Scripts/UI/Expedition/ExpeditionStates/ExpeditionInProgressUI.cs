@@ -11,7 +11,6 @@ public class ExpeditionInProgressUI : MonoBehaviour
     private TreadmillManager _treadmillManager = null;
 
     public void SetTreadmillManager(TreadmillManager treadmillManager) { _treadmillManager = treadmillManager; }
-
     public void SetSuccesText(string successChance) { _inProgressSuccessChance.text = $"Success Chance: {successChance}%"; }
 
     public void SetupSliderInfo(float duration)
@@ -27,8 +26,8 @@ public class ExpeditionInProgressUI : MonoBehaviour
         _durationSlider.value = timeRemaining;
     }
 
-    private void FixedUpdate()
+    public void EnableRenderImage()
     {
-        _treadmillManager.Render(_progressImage);
+        _progressImage.texture = _treadmillManager.Render(_progressImage.rectTransform.rect);
     }
 }

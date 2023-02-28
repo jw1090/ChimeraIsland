@@ -251,7 +251,9 @@ public class ExpeditionManager : MonoBehaviour
     {
         SetExpeditionState(ExpeditionState.InProgress);
 
+        _uiExpedition.InProgressUI.EnableRenderImage();
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
+
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
 
         _selectedExpedition.ActiveInProgressTimer = true;
@@ -470,22 +472,8 @@ public class ExpeditionManager : MonoBehaviour
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
 
-            _treadmillManager.SetIsRunning(false);
+            _treadmillManager.SetRunning(false);
             _uiExpedition.TimerComplete();
-
-            foreach (Chimera chimera in _chimeras)
-            {
-                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
-
-                if (RandomSuccesRate() == true)
-                {
-                    chimera.Behavior.EnterAnim(AnimationType.Success);
-                }
-                else
-                {
-                    chimera.Behavior.EnterAnim(AnimationType.Fail);
-                }
-            }
         }
     }
 
@@ -504,11 +492,25 @@ public class ExpeditionManager : MonoBehaviour
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                chimera.Behavior.EnterAnim(AnimationType.Success);
+            }
+
             return true;
         }
         else
         {
             _audioManager.PlayUISFX(SFXUIType.Failure);
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                chimera.Behavior.EnterAnim(AnimationType.Fail);
+            }
+
             return false;
         }
     }
@@ -623,7 +625,7 @@ public class ExpeditionManager : MonoBehaviour
             chimera.SetOnExpedition(onExpedition);
             if (onExpedition == true)
             {
-                _treadmillManager.SetIsRunning(true);
+                _treadmillManager.SetRunning(true);
                 _treadmillManager.ChimeraList.Add(chimera);
 
                 chimera.Behavior.ChangeState(ChimeraBehaviorState.Treadmill);
@@ -644,7 +646,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
-            _treadmillManager.SetIsRunning(false);
+            _treadmillManager.SetRunning(false);
         }
     }
 

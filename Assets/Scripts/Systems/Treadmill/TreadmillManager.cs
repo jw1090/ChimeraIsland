@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TreadmillManager : MonoBehaviour
 {
@@ -16,28 +15,29 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] Transform _fourthChimera = null;
     [SerializeField] Transform _fifthChimera = null;
 
-    [Header("Planes")]
+    [Header("References")]
     [SerializeField] List<GameObject> _planes = null;
-
-    [Header("Camera")]
     [SerializeField] Camera _treadmillCamera = null;
 
     private bool _initialized = false;
     private bool _isRunning = false;
 
     public List<Chimera> ChimeraList { get => _chimeraList; }
-    public bool IsRunning { get => _isRunning; }
 
-    public void SetIsRunning(bool isRunning) { _isRunning = isRunning; }
+    public RenderTexture Render(Rect rect) { return _treadmillCamera.targetTexture = new RenderTexture((int)rect.width * 2, (int)rect.height * 2, 0); }
 
+    public void EnableCamera(bool enable) { _treadmillCamera.gameObject.SetActive(enable); }
 
     public TreadmillManager Initialize()
     {
         _initialized = true;
-        _treadmillCamera.gameObject.SetActive(false);
+
+        EnableCamera(false);
 
         return this;
     }
+
+    public void SetRunning(bool isRunning) { _isRunning = isRunning; }
 
     private void FixedUpdate()
     {
@@ -48,29 +48,15 @@ public class TreadmillManager : MonoBehaviour
 
         if (_isRunning == true)
         {
-            _treadmillCamera.gameObject.SetActive(true);
             foreach (GameObject planes in _planes)
             {
                 planes.transform.position += new Vector3(-2.0f * Time.deltaTime, 0, 0);
                 if (planes.transform.position.x <= _endNode.position.x)
                 {
-                    Reposition(planes);
+                    planes.transform.position = _startNode.position;
                 }
             }
         }
-    }
-
-    public void Render(RawImage image)
-    {
-        RenderTexture render = new RenderTexture(1920, 1080, 0);
-        _treadmillCamera.targetTexture = render;
-        image.texture = render;
-    }
-
-
-    private void Reposition(GameObject gameObject)
-    {
-        gameObject.transform.position = _startNode.position;
     }
 
     public void Warp()

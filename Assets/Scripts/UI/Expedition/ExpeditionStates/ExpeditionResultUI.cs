@@ -122,8 +122,9 @@ public class ExpeditionResultUI : MonoBehaviour
             _expeditionSuccess = false;
         }
     }
-    private void FixedUpdate()
+
+    public void EnableRenderImage()
     {
-        _treadmillManager.Render(_resultImage);
+        _resultImage.texture = _treadmillManager.Render(_resultImage.rectTransform.rect);
     }
 }
