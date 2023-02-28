@@ -9,21 +9,24 @@ public enum ChimeraBehaviorState
     Held,
     Training,
     Idle,
+    Treadmill,
 }
 
 public class ChimeraBehavior : MonoBehaviour
 {
     private HabitatUI _habitatUI;
-    private Animator _animator = null;
     private Camera _mainCamera = null;
     private CameraUtil _cameraUtil = null;
     private Chimera _chimera = null;
+
     private ChimeraBaseState _currentState = null;
     private PatrolState _patrolState = null;
     private WanderState _wanderState = null;
     private HeldState _heldState = null;
     private TrainingState _trainingState = null;
     private IdleState _idleState = null;
+    private TreadmillState _treadmillState = null;
+
     private NavMeshAgent _navMeshAgent = null;
     private List<Transform> _nodes = null;
     private bool _isActive = false;
@@ -33,9 +36,9 @@ public class ChimeraBehavior : MonoBehaviour
     public BoxCollider BoxCollider { get => GetChimeraCollider(); }
     public Camera MainCamera { get => _mainCamera; }
     public CameraUtil CameraUtil { get => _cameraUtil; }
-    public NavMeshAgent Agent { get => _navMeshAgent; }
     public Chimera Chimera { get => _chimera; }
     public int PatrolIndex { get => _patrolIndex; }
+    public NavMeshAgent Agent { get => _navMeshAgent; }
     public bool Dropped { get; set; } = false;
     public bool WasClicked { get; set; } = false;
 
@@ -69,19 +72,15 @@ public class ChimeraBehavior : MonoBehaviour
         _heldState = new HeldState();
         _trainingState = new TrainingState();
         _idleState = new IdleState();
-
-        _animator = _chimera.Animator;
+        _treadmillState = new TreadmillState();
     }
 
     public void StartAI()
     {
+        _navMeshAgent.enabled = true;
+
         ChangeState(ChimeraBehaviorState.Patrol);
         _isActive = true;
-    }
-
-    public void EnableNavAgent()
-    {
-        _navMeshAgent.enabled = true;
     }
 
     private void OnDestroy()
@@ -154,27 +153,40 @@ public class ChimeraBehavior : MonoBehaviour
                 return _trainingState;
             case ChimeraBehaviorState.Idle:
                 return _idleState;
+            case ChimeraBehaviorState.Treadmill:
+                return _treadmillState;
             default:
                 Debug.LogError($"Invalid State [{state}], Please Fix!");
                 return null;
         }
     }
 
-    public void EnterAnim(string _animationState)
+    public void EnterAnim(AnimationType type, bool enter)
     {
-        _animator = _chimera.Animator;
+        Animator animator = _chimera.CurrentEvolution.Animator;
+        animator.SetBool(type.ToString(), enter);
 
-        _animator.SetBool(_animationState, true);
-    }
+        StopParticles();
 
-    public void ExitAnim(string _animationState)
-    {
-        if (_animator == null)
+        switch (type)
         {
-            return;
+            case AnimationType.Idle:
+                ActivateIdleParticles();
+                break;
+            case AnimationType.Walk:
+                ActivatePatrolParticles();
+                break;
+            case AnimationType.Held:
+                ActivatePatrolParticles();
+                break;
+            case AnimationType.Success:
+                break;
+            case AnimationType.Fail:
+                break;
+            default:
+                Debug.LogError($"Invalid Anim Type [{type}], Please Fix!");
+                break;
         }
-
-        _animator.SetBool(_animationState, false);
     }
 
     public void EvaluateParticlesOnEvolve()
@@ -189,18 +201,18 @@ public class ChimeraBehavior : MonoBehaviour
         }
     }
 
-    public void StopParticles()
+    private void StopParticles()
     {
         _chimera.CurrentEvolution.TogglePatrolParticles(false);
         _chimera.CurrentEvolution.ToggleIdleParticles(false);
     }
 
-    public void ActivatePatrolParticles()
+    private void ActivatePatrolParticles()
     {
         _chimera.CurrentEvolution.TogglePatrolParticles(true);
     }
 
-    public void ActivateIdleParticles()
+    private void ActivateIdleParticles()
     {
         _chimera.CurrentEvolution.ToggleIdleParticles(true);
     }

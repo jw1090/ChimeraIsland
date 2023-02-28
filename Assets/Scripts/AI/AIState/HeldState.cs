@@ -8,7 +8,6 @@ public class HeldState : ChimeraBaseState
     private InputManager _inputManager = null;
     private AudioManager _audioManager = null;
     private Vector3 _lastValidPos = Vector3.zero;
-    private string _heldAnim = "Held";
 
     public override void Enter(ChimeraBehavior chimeraBehavior)
     {
@@ -26,9 +25,7 @@ public class HeldState : ChimeraBaseState
 
         _lastValidPos = _chimeraBehavior.transform.position;
 
-        _chimeraBehavior.StopParticles();
-
-        _chimeraBehavior.EnterAnim(_heldAnim);
+        _chimeraBehavior.EnterAnim(AnimationType.Held, true);
     }
 
     public override void Update()
@@ -48,7 +45,8 @@ public class HeldState : ChimeraBaseState
         _chimeraBehavior.BoxCollider.enabled = true;
         _chimeraBehavior.CameraUtil.IsHolding = false;
         _chimeraBehavior.Dropped = true;
-        _chimeraBehavior.ExitAnim(_heldAnim);
+
+        _chimeraBehavior.EnterAnim(AnimationType.Held, false);
     }
 
     private void ObjFollowMouse()

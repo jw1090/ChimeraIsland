@@ -4,7 +4,6 @@ public class WanderState : ChimeraBaseState
 {
     private ChimeraBehavior _chimeraBehavior = null;
     private Vector3 _wanderPoint = Vector3.zero;
-    private string _wanderAnim = "Walk";
     private float _wanderRange = 5.0f;
     private float _wanderTimer = 0.0f;
     private float _wanderDuration = 5.0f;
@@ -14,13 +13,10 @@ public class WanderState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _wanderTimer = _wanderDuration;
 
-        _chimeraBehavior.EnterAnim(_wanderAnim);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk,true);
 
         _wanderPoint = GetNewWayPoint();
-        _chimeraBehavior.EnableNavAgent();
         _chimeraBehavior.SetAgentDestination(_wanderPoint);
-
-        _chimeraBehavior.ActivatePatrolParticles();
     }
 
     public override void Update()
@@ -37,10 +33,9 @@ public class WanderState : ChimeraBaseState
             _chimeraBehavior.SetAgentDestination(_wanderPoint);
         }
     }
-
     public override void Exit()
     {
-        _chimeraBehavior.ExitAnim(_wanderAnim);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk, false);
     }
 
     private Vector3 GetNewWayPoint()

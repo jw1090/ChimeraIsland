@@ -23,22 +23,17 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] Camera _treadmillCamera = null;
 
     private bool _initialized = false;
-    public List<Chimera> ChimeraList { get => _chimeraList;}
+    private bool _isRunning = false;
 
-    public Transform FirstChimeraPosition { get => _firstChimera; }
-    public Transform SecondChimeraPosition { get => _secondChimera; }
-    public Transform ThirdChimeraPosition { get => _thirdChimera; }
-    public Transform FourthChimeraPosition { get => _fourthChimera; }
-    public Transform FifthChimeraPosition { get => _fifthChimera; }
-    public bool IsRunning { get; set; }
+    public List<Chimera> ChimeraList { get => _chimeraList; }
+    public bool IsRunning { get => _isRunning; }
+
+    public void SetIsRunning(bool isRunning) { _isRunning = isRunning; }
+
 
     public TreadmillManager Initialize()
     {
-
-        IsRunning = false;
-
         _initialized = true;
-
         _treadmillCamera.gameObject.SetActive(false);
 
         return this;
@@ -51,8 +46,8 @@ public class TreadmillManager : MonoBehaviour
             return;
         }
 
-        if(IsRunning == true)
-        {   
+        if (_isRunning == true)
+        {
             _treadmillCamera.gameObject.SetActive(true);
             foreach (GameObject planes in _planes)
             {
@@ -67,7 +62,7 @@ public class TreadmillManager : MonoBehaviour
 
     public void Render(RawImage image)
     {
-        RenderTexture render = new RenderTexture(1920,1080,0);
+        RenderTexture render = new RenderTexture(1920, 1080, 0);
         _treadmillCamera.targetTexture = render;
         image.texture = render;
     }
@@ -81,32 +76,42 @@ public class TreadmillManager : MonoBehaviour
     public void Warp()
     {
         int index = 0;
-        foreach(Chimera chimera in _chimeraList)
+        foreach (Chimera chimera in _chimeraList)
         {
-            chimera.ChimeraPosition(FirstChimeraPosition);
+            WarpChimera(chimera, _firstChimera);
 
-            if(_chimeraList.Count == 2)
+            if (_chimeraList.Count == 2)
             {
                 ++index;
-                chimera.ChimeraPosition(SecondChimeraPosition);
+
+                WarpChimera(chimera, _secondChimera);
+
                 if (index == 1)
                 {
-                    chimera.ChimeraPosition(ThirdChimeraPosition);
+                    WarpChimera(chimera, _thirdChimera);
                 }
             }
-            else if(_chimeraList.Count == 3)
+            else if (_chimeraList.Count == 3)
             {
                 index++;
-                chimera.ChimeraPosition(FirstChimeraPosition);
+
+                WarpChimera(chimera, _firstChimera);
+
                 if (index == 1)
                 {
-                    chimera.ChimeraPosition(FourthChimeraPosition);
+                    WarpChimera(chimera, _fourthChimera);
                 }
                 if (index == 2)
                 {
-                    chimera.ChimeraPosition(FifthChimeraPosition);
+                    WarpChimera(chimera, _fifthChimera);
                 }
             }
         }
+    }
+
+    private void WarpChimera(Chimera chimera, Transform newTransform)
+    {
+        chimera.transform.position = newTransform.position;
+        chimera.transform.rotation = newTransform.rotation;
     }
 }

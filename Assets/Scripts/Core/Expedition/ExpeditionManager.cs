@@ -89,13 +89,14 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiManager = ServiceLocator.Get<UIManager>();
-        _habitatUI = _uiManager.HabitatUI;
-        _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+
+        _habitatUI = _uiManager.HabitatUI;
+        _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
 
         _treadmillManager.Initialize();
 
@@ -468,29 +469,23 @@ public class ExpeditionManager : MonoBehaviour
         {
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
-            _treadmillManager.IsRunning = false;
+            _treadmillManager.SetIsRunning(false);
 
             _uiExpedition.TimerComplete();
 
-            foreach (Chimera chimera in _chimeras)
-            {
-                if(chimera.ChimeraType == ChimeraType.B1)
-                {
-                    chimera.Behavior.StopParticles();
-                }
-
-                chimera.Behavior.ExitAnim("Walk");
-                if(RandomSuccesRate() == true)
-                {
-                    chimera.Animator.Play("Success");
-                    chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
-                }
-                else
-                {
-                    chimera.Animator.Play("Fail");
-                    chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
-                }
-            }
+            //foreach (Chimera chimera in _chimeras)
+            //{
+            //    if (RandomSuccesRate() == true)
+            //    {
+            //        chimera.Behavior.EnterAnim(AnimationType.Success);
+            //        chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+            //    }
+            //    else
+            //    {
+            //        chimera.Behavior.EnterAnim(AnimationType.Fail);
+            //        chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+            //    }
+            //}
         }
     }
 
@@ -626,37 +621,30 @@ public class ExpeditionManager : MonoBehaviour
         foreach (Chimera chimera in _chimeras)
         {
             chimera.SetOnExpedition(onExpedition);
-            chimera.Animator.Play("Walk");
-
             if (onExpedition == true)
             {
-                _treadmillManager.IsRunning = true;
+                _treadmillManager.SetIsRunning(true);
                 _treadmillManager.ChimeraList.Add(chimera);
-                chimera.EnableAgent(!onExpedition); //DID THIS BECAUSE THE AGENT NEEDS TO BE OFF WHEN IT TELEPORTS TO THE AGENT
+
+                chimera.Behavior.ChangeState(ChimeraBehaviorState.Treadmill);
             }
             else
             {
                 Vector3 position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
                 chimera.gameObject.transform.position = position;
-                chimera.EnableAgent(!onExpedition); // AND TO GO BACK
+
+                chimera.Behavior.ChangeState(ChimeraBehaviorState.Patrol);
             }
         }
 
         _treadmillManager.Warp();
         _habitatUI.UpdateHabitatUI();
 
-        if (onExpedition == false) 
+        if (onExpedition == false)
         {
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
-            _treadmillManager.IsRunning = false;
-        }
-        else
-        {
-            foreach (Chimera chimera in _chimeras)
-            {
-                chimera.Animator.Play("Walk");
-            }
+            _treadmillManager.SetIsRunning(false);
         }
     }
 

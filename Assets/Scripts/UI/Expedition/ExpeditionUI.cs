@@ -37,6 +37,7 @@ public class ExpeditionUI : MonoBehaviour
         _inProgressPanel.SetTreadmillManager(treadmillManager);
         _resultPanel.SetTreadmillManager(treadmillManager);
     }
+
     public void SetAudioManager(AudioManager audioManager)
     {
         _selectionPanel.SetAudioManager(audioManager);

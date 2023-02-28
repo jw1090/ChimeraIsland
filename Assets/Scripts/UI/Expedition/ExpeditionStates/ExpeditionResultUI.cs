@@ -57,8 +57,11 @@ public class ExpeditionResultUI : MonoBehaviour
         {
             _expeditionUI.OpenExpeditionUI();
         }
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
+
         _expeditionManager.ResetSelectedExpedition();
+
         _expeditionSuccess = false;
     }
 

@@ -1,3 +1,13 @@
+public enum AnimationType
+{
+    None = -1,
+    Idle,
+    Walk,
+    Held,
+    Success,
+    Fail,
+}
+
 public enum ChimeraType
 {
     None = -1,
