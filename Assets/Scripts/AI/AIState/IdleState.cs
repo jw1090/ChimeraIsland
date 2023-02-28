@@ -11,7 +11,7 @@ public class IdleState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _idleTimer = _idleDuration;
 
-        _chimeraBehavior.EnterAnim(AnimationType.Idle, true);
+        _chimeraBehavior.EnterAnim(AnimationType.Idle);
         _chimeraBehavior.Agent.isStopped = true;
     }
 
@@ -29,6 +29,5 @@ public class IdleState : ChimeraBaseState
     {
         _chimeraBehavior.Agent.isStopped = false;
         _idleTimer = 0.0f;
-        _chimeraBehavior.EnterAnim(AnimationType.Idle, false);
     }
 }

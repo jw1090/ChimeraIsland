@@ -17,6 +17,7 @@ public class HeldState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _chimeraBehavior.BoxCollider.enabled = false;
         _chimeraBehavior.CameraUtil.IsHolding = true;
+        _chimeraBehavior.Agent.enabled = false;
 
         _audioManager.PlayHeldChimeraSFX(_chimeraBehavior.GetChimeraType());
 
@@ -25,7 +26,7 @@ public class HeldState : ChimeraBaseState
 
         _lastValidPos = _chimeraBehavior.transform.position;
 
-        _chimeraBehavior.EnterAnim(AnimationType.Held, true);
+        _chimeraBehavior.EnterAnim(AnimationType.Held);
     }
 
     public override void Update()
@@ -45,8 +46,6 @@ public class HeldState : ChimeraBaseState
         _chimeraBehavior.BoxCollider.enabled = true;
         _chimeraBehavior.CameraUtil.IsHolding = false;
         _chimeraBehavior.Dropped = true;
-
-        _chimeraBehavior.EnterAnim(AnimationType.Held, false);
     }
 
     private void ObjFollowMouse()
@@ -63,8 +62,6 @@ public class HeldState : ChimeraBaseState
 
             Vector3 desiredWorldPos = hit.point + Vector3.up;
             _chimeraBehavior.transform.position = desiredWorldPos;
-
-            _chimeraBehavior.Agent.enabled = false;
         }
     }
 }

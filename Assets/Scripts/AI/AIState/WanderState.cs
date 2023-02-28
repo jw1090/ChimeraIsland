@@ -13,7 +13,7 @@ public class WanderState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _wanderTimer = _wanderDuration;
 
-        _chimeraBehavior.EnterAnim(AnimationType.Walk,true);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk);
 
         _wanderPoint = GetNewWayPoint();
         _chimeraBehavior.SetAgentDestination(_wanderPoint);
@@ -33,9 +33,10 @@ public class WanderState : ChimeraBaseState
             _chimeraBehavior.SetAgentDestination(_wanderPoint);
         }
     }
+
     public override void Exit()
     {
-        _chimeraBehavior.EnterAnim(AnimationType.Walk, false);
+
     }
 
     private Vector3 GetNewWayPoint()

@@ -469,23 +469,23 @@ public class ExpeditionManager : MonoBehaviour
         {
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
-            _treadmillManager.SetIsRunning(false);
 
+            _treadmillManager.SetIsRunning(false);
             _uiExpedition.TimerComplete();
 
-            //foreach (Chimera chimera in _chimeras)
-            //{
-            //    if (RandomSuccesRate() == true)
-            //    {
-            //        chimera.Behavior.EnterAnim(AnimationType.Success);
-            //        chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
-            //    }
-            //    else
-            //    {
-            //        chimera.Behavior.EnterAnim(AnimationType.Fail);
-            //        chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
-            //    }
-            //}
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+
+                if (RandomSuccesRate() == true)
+                {
+                    chimera.Behavior.EnterAnim(AnimationType.Success);
+                }
+                else
+                {
+                    chimera.Behavior.EnterAnim(AnimationType.Fail);
+                }
+            }
         }
     }
 

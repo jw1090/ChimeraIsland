@@ -7,17 +7,16 @@ public class TreadmillState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _chimeraBehavior.Agent.enabled = false;
 
-        _chimeraBehavior.EnterAnim(AnimationType.Walk,true);
-    }
-
-    public override void Exit()
-    {
-
+        _chimeraBehavior.EnterAnim(AnimationType.Walk);
     }
 
     public override void Update()
     {
+        
+    }
+
+    public override void Exit()
+    {
         _chimeraBehavior.Agent.enabled = true;
-        _chimeraBehavior.EnterAnim(AnimationType.Walk, false);
     }
 }

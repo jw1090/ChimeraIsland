@@ -9,7 +9,7 @@ public class TrainingState : ChimeraBaseState
         _chimeraBehavior.BoxCollider.enabled = false;
         _chimeraBehavior.Agent.enabled = false;
 
-        _chimeraBehavior.EnterAnim(AnimationType.Idle,true);
+        _chimeraBehavior.EnterAnim(AnimationType.Idle);
     }
 
     public override void Update()
@@ -21,6 +21,5 @@ public class TrainingState : ChimeraBaseState
     {
         _chimeraBehavior.BoxCollider.enabled = true;
         _chimeraBehavior.Agent.enabled = true;
-        _chimeraBehavior.EnterAnim(AnimationType.Idle, false);
     }
 }

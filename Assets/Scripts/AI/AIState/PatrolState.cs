@@ -9,8 +9,10 @@ public class PatrolState : ChimeraBaseState
     {
         _chimeraBehavior = chimeraBehavior;
 
+        _chimeraBehavior.Agent.enabled = true;
+
         _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
-        _chimeraBehavior.EnterAnim(AnimationType.Walk, true);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk);
 
         ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
     }
@@ -54,7 +56,6 @@ public class PatrolState : ChimeraBaseState
     public override void Exit()
     {
         _chimeraBehavior.Dropped = false;
-        _chimeraBehavior.EnterAnim(AnimationType.Walk, false);
     }
 
     private IEnumerator DroppedReset()

@@ -77,8 +77,6 @@ public class ChimeraBehavior : MonoBehaviour
 
     public void StartAI()
     {
-        _navMeshAgent.enabled = true;
-
         ChangeState(ChimeraBehaviorState.Patrol);
         _isActive = true;
     }
@@ -161,10 +159,17 @@ public class ChimeraBehavior : MonoBehaviour
         }
     }
 
-    public void EnterAnim(AnimationType type, bool enter)
+    public void EnterAnim(AnimationType type)
     {
         Animator animator = _chimera.CurrentEvolution.Animator;
-        animator.SetBool(type.ToString(), enter);
+
+        animator.SetBool(AnimationType.Idle.ToString(), false);
+        animator.SetBool(AnimationType.Walk.ToString(), false);
+        animator.SetBool(AnimationType.Held.ToString(), false);
+        animator.SetBool(AnimationType.Success.ToString(), false);
+        animator.SetBool(AnimationType.Fail.ToString(), false);
+
+        animator.SetBool(type.ToString(), true);
 
         StopParticles();
 
