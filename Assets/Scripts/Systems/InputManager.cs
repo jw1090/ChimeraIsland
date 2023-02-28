@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
     private bool _freeCameraActive = false;
-    private float _rotationAmount = 0.8f;
+    private float _rotationAmount = 2.0f;
     private SceneType _currentScene = SceneType.None;
 
     public event Action<bool, int> HeldStateChange = null;
