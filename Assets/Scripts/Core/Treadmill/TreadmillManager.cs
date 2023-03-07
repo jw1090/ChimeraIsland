@@ -69,8 +69,8 @@ public class TreadmillManager : MonoBehaviour
             if (_chimeraList.Count == 2)
             {
                 ++index;
-
                 WarpChimera(chimera, _secondChimera);
+
 
                 if (index == 1)
                 {
@@ -79,9 +79,8 @@ public class TreadmillManager : MonoBehaviour
             }
             else if (_chimeraList.Count == 3)
             {
-                index++;
-
                 WarpChimera(chimera, _firstChimera);
+                index++;
 
                 if (index == 1)
                 {

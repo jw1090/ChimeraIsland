@@ -483,6 +483,11 @@ public class ExpeditionManager : MonoBehaviour
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
             Debug.Log($"Auto suceed activated, you win!");
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                chimera.Behavior.EnterAnim(AnimationType.Success);
+            }
             return true;
         }
 
