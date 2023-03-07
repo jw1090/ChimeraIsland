@@ -40,6 +40,7 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData FossilExpeditionOption { get => _fossilExpeditionOption; }
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
+    public TreadmillManager TreadmillManager { get => _treadmillManager; }
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
@@ -51,11 +52,6 @@ public class ExpeditionManager : MonoBehaviour
         _expeditionState = expeditionState;
         SetPortalColor();
     }
-    public void SetTreadmillManager(TreadmillManager treadmillManager)
-    {
-        _treadmillManager = treadmillManager;
-    }
-
     public void SetPortalColor()
     {
         _habitatManager.CurrentHabitat.Environment.Portal.ChangePortal(_expeditionState, _uiExpedition.ExpeditionResult.ExpeditionSuccess);
@@ -93,13 +89,18 @@ public class ExpeditionManager : MonoBehaviour
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
         _uiManager = ServiceLocator.Get<UIManager>();
-        _habitatUI = _uiManager.HabitatUI;
-        _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+
+        _habitatUI = _uiManager.HabitatUI;
+        _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
+
+        _treadmillManager.Initialize();
+
+        _uiExpedition.SetTreadmillManager(_treadmillManager);
 
         SetExpeditionState(ExpeditionState.Selection);
 
@@ -250,7 +251,9 @@ public class ExpeditionManager : MonoBehaviour
     {
         SetExpeditionState(ExpeditionState.InProgress);
 
+        _uiExpedition.InProgressUI.EnableRenderImage();
         _uiExpedition.InProgressUI.SetupSliderInfo(_selectedExpedition.ActualDuration);
+
         _selectedExpedition.CurrentDuration = _selectedExpedition.ActualDuration;
 
         _selectedExpedition.ActiveInProgressTimer = true;
@@ -469,6 +472,7 @@ public class ExpeditionManager : MonoBehaviour
             _selectedExpedition.CurrentDuration = 0;
             _selectedExpedition.ActiveInProgressTimer = false;
 
+            _treadmillManager.SetRunning(false);
             _uiExpedition.TimerComplete();
         }
     }
@@ -488,11 +492,25 @@ public class ExpeditionManager : MonoBehaviour
         if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                chimera.Behavior.EnterAnim(AnimationType.Success);
+            }
+
             return true;
         }
         else
         {
             _audioManager.PlayUISFX(SFXUIType.Failure);
+
+            foreach (Chimera chimera in _chimeras)
+            {
+                chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
+                chimera.Behavior.EnterAnim(AnimationType.Fail);
+            }
+
             return false;
         }
     }
@@ -605,29 +623,30 @@ public class ExpeditionManager : MonoBehaviour
         foreach (Chimera chimera in _chimeras)
         {
             chimera.SetOnExpedition(onExpedition);
-
             if (onExpedition == true)
             {
-                _treadmillManager.IsRunning = true;
+                _treadmillManager.SetRunning(true);
                 _treadmillManager.ChimeraList.Add(chimera);
-                chimera.EnableAgent(!onExpedition); //DID THIS BECAUSE THE AGENT NEEDS TO BE OFF WHEN IT TELEPORTS TO THE AGENT
+
+                chimera.Behavior.ChangeState(ChimeraBehaviorState.Treadmill);
             }
             else
             {
                 Vector3 position = _habitatManager.CurrentHabitat.RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
                 chimera.gameObject.transform.position = position;
-                chimera.EnableAgent(!onExpedition); // AND TO GO BACK
+
+                chimera.Behavior.ChangeState(ChimeraBehaviorState.Patrol);
             }
         }
 
         _treadmillManager.Warp();
         _habitatUI.UpdateHabitatUI();
 
-        if (onExpedition == false) 
+        if (onExpedition == false)
         {
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
-            _treadmillManager.IsRunning = false;
+            _treadmillManager.SetRunning(false);
         }
     }
 

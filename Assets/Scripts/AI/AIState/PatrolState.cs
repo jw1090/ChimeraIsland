@@ -4,16 +4,15 @@ using UnityEngine;
 public class PatrolState : ChimeraBaseState
 {
     private ChimeraBehavior _chimeraBehavior = null;
-    private string _patrolAnim = "Walk";
 
     public override void Enter(ChimeraBehavior chimeraBehavior)
     {
         _chimeraBehavior = chimeraBehavior;
-        _chimeraBehavior.EnableNavAgent();
-        _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
-        _chimeraBehavior.EnterAnim(_patrolAnim);
 
-        _chimeraBehavior.ActivatePatrolParticles();
+        _chimeraBehavior.Agent.enabled = true;
+
+        _chimeraBehavior.SetAgentDestination(_chimeraBehavior.GetCurrentNode().position);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk);
 
         ServiceLocator.Get<MonoUtil>().StartCoroutineEx(DroppedReset());
     }
@@ -57,7 +56,6 @@ public class PatrolState : ChimeraBaseState
     public override void Exit()
     {
         _chimeraBehavior.Dropped = false;
-        _chimeraBehavior.ExitAnim(_patrolAnim);
     }
 
     private IEnumerator DroppedReset()
