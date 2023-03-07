@@ -114,7 +114,7 @@ public class Facility : MonoBehaviour
                 vfx = _tier3VFX;
                 break;
             default:
-                UnityEngine.Debug.LogError($"facilityTier is not valid [{_currentTier+1}]!");
+                UnityEngine.Debug.LogError($"facilityTier is not valid [{_currentTier + 1}]!");
                 yield break;
         }
 
