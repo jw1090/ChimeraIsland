@@ -15,33 +15,29 @@ public class TreadmillManager : MonoBehaviour
     [SerializeField] Transform _fourthChimera = null;
     [SerializeField] Transform _fifthChimera = null;
 
-    [Header("Planes")]
+    [Header("References")]
     [SerializeField] List<GameObject> _planes = null;
-
-    [Header("Planes")]
-    [SerializeField] Camera _expeditionCamera = null;
+    [SerializeField] Camera _treadmillCamera = null;
 
     private bool _initialized = false;
-    public List<Chimera> ChimeraList { get => _chimeraList;}
+    private bool _isRunning = false;
 
-    public Transform FirstChimeraPosition { get => _firstChimera; }
-    public Transform SecondChimeraPosition { get => _secondChimera; }
-    public Transform ThirdChimeraPosition { get => _thirdChimera; }
-    public Transform FourthChimeraPosition { get => _fourthChimera; }
-    public Transform FifthChimeraPosition { get => _fifthChimera; }
-    public bool IsRunning { get; set; }
+    public List<Chimera> ChimeraList { get => _chimeraList; }
+
+    public RenderTexture Render(Rect rect) { return _treadmillCamera.targetTexture = new RenderTexture((int)rect.width * 2, (int)rect.height * 2, 0); }
+
+    public void EnableCamera(bool enable) { _treadmillCamera.gameObject.SetActive(enable); }
 
     public TreadmillManager Initialize()
     {
-
-        IsRunning = false;
-
         _initialized = true;
 
-        _expeditionCamera.gameObject.SetActive(false);
+        EnableCamera(false);
 
         return this;
     }
+
+    public void SetRunning(bool isRunning) { _isRunning = isRunning; }
 
     private void FixedUpdate()
     {
@@ -50,54 +46,58 @@ public class TreadmillManager : MonoBehaviour
             return;
         }
 
-        if(IsRunning == true)
+        if (_isRunning == true)
         {
             foreach (GameObject planes in _planes)
             {
                 planes.transform.position += new Vector3(-2.0f * Time.deltaTime, 0, 0);
                 if (planes.transform.position.x <= _endNode.position.x)
                 {
-                    Reposition(planes);
+                    planes.transform.position = _startNode.position;
                 }
             }
         }
-    }
-
-    private void Reposition(GameObject gameObject)
-    {
-        gameObject.transform.position = _startNode.position;
     }
 
     public void Warp()
     {
         int index = 0;
-        foreach(Chimera chimera in _chimeraList)
+        foreach (Chimera chimera in _chimeraList)
         {
-            chimera.transform.position = FirstChimeraPosition.position;
+            WarpChimera(chimera, _firstChimera);
 
-            if(_chimeraList.Count == 2)
+            if (_chimeraList.Count == 2)
             {
                 ++index;
-                chimera.transform.position = SecondChimeraPosition.position;
-                if(index == 1)
-                {
-                    chimera.transform.position = ThirdChimeraPosition.position;
-                }
-            }
-            else if(_chimeraList.Count == 3)
-            {
-                index++;
-                chimera.transform.position = FirstChimeraPosition.position;
+
+                WarpChimera(chimera, _secondChimera);
+
                 if (index == 1)
                 {
-                    chimera.transform.position = FourthChimeraPosition.position;
+                    WarpChimera(chimera, _thirdChimera);
+                }
+            }
+            else if (_chimeraList.Count == 3)
+            {
+                index++;
+
+                WarpChimera(chimera, _firstChimera);
+
+                if (index == 1)
+                {
+                    WarpChimera(chimera, _fourthChimera);
                 }
                 if (index == 2)
                 {
-                    chimera.transform.position = FifthChimeraPosition.position;
+                    WarpChimera(chimera, _fifthChimera);
                 }
             }
         }
     }
 
+    private void WarpChimera(Chimera chimera, Transform newTransform)
+    {
+        chimera.transform.position = newTransform.position;
+        chimera.transform.rotation = newTransform.rotation;
+    }
 }

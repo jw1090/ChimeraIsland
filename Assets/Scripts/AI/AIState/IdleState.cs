@@ -3,7 +3,6 @@ using UnityEngine;
 public class IdleState : ChimeraBaseState
 {
     private ChimeraBehavior _chimeraBehavior = null;
-    private string _idleAnim = "Idle";
     private float _idleTimer = 0.0f;
     private float _idleDuration = 5.0f;
 
@@ -12,11 +11,8 @@ public class IdleState : ChimeraBaseState
         _chimeraBehavior = chimeraBehavior;
         _idleTimer = _idleDuration;
 
-        _chimeraBehavior.EnterAnim(_idleAnim);
-        _chimeraBehavior.EnableNavAgent();
+        _chimeraBehavior.EnterAnim(AnimationType.Idle);
         _chimeraBehavior.Agent.isStopped = true;
-
-        _chimeraBehavior.ActivateIdleParticles();
     }
 
     public override void Update()
@@ -33,6 +29,5 @@ public class IdleState : ChimeraBaseState
     {
         _chimeraBehavior.Agent.isStopped = false;
         _idleTimer = 0.0f;
-        _chimeraBehavior.ExitAnim(_idleAnim);
     }
 }

@@ -7,6 +7,8 @@ public class ExpeditionResultUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successResults = null;
     [SerializeField] private TextMeshProUGUI _resultsDescription = null;
     [SerializeField] private Button _rewardsCloseButton = null;
+    [SerializeField] private RawImage _resultImage = null;
+    private TreadmillManager _treadmillManager = null;
     private ExpeditionUI _expeditionUI = null;
     private UIManager _uiManager = null;
     private ExpeditionManager _expeditionManager = null;
@@ -15,6 +17,7 @@ public class ExpeditionResultUI : MonoBehaviour
 
     public bool ExpeditionSuccess { get => _expeditionSuccess; }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+    public void SetTreadmillManager(TreadmillManager treadmillManager) { _treadmillManager = treadmillManager; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _expeditionManager = expeditionManager;
@@ -54,8 +57,11 @@ public class ExpeditionResultUI : MonoBehaviour
         {
             _expeditionUI.OpenExpeditionUI();
         }
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
+
         _expeditionManager.ResetSelectedExpedition();
+
         _expeditionSuccess = false;
     }
 
@@ -115,5 +121,10 @@ public class ExpeditionResultUI : MonoBehaviour
             _resultsDescription.text = $"Train your Chimeras and try again!";
             _expeditionSuccess = false;
         }
+    }
+
+    public void EnableRenderImage()
+    {
+        _resultImage.texture = _treadmillManager.Render(_resultImage.rectTransform.rect);
     }
 }

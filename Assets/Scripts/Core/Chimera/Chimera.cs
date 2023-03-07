@@ -46,7 +46,6 @@ public class Chimera : MonoBehaviour
     public ChimeraType ChimeraType { get => _chimeraType; }
     public ElementType ElementalType { get => _elementalType; }
     public StatType EvolutionBonusStat { get => _currentEvolution.EvolutionStat; }
-    public Animator Animator { get => _currentEvolution.Animator; }
     public BoxCollider BoxCollider { get => _boxCollider; }
     public ChimeraBehavior Behavior { get => _chimeraBehavior; }
     public EvolutionLogic CurrentEvolution { get => _currentEvolution; }
@@ -481,8 +480,8 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution = newEvolution;
         InitializeEvolution();
+
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
-        _currentEvolution.Animator.Play("Walk");
 
         _habitatManager.UpdateCurrentChimeras();
 
@@ -491,24 +490,14 @@ public class Chimera : MonoBehaviour
         _chimeraToBecome = null;
     }
 
-    public void EnableAgent(bool enable)
-    {
-        _chimeraBehavior.enabled = enable;
-        _chimeraBehavior.Agent.enabled = enable;
-    }
-
     public void RevealChimera(bool reveal)
     {
         _currentEvolution.gameObject.SetActive(reveal);
-
         _boxCollider.enabled = reveal;
-
-        EnableAgent(reveal);
 
         if (reveal == true)
         {
             _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
-            _currentEvolution.Animator.Play("Walk");
         }
         else if (reveal == false)
         {
