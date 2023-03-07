@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Chimera : MonoBehaviour
@@ -405,13 +406,12 @@ public class Chimera : MonoBehaviour
         }
     }
 
-    public void EvolveChimera()
+    public IEnumerator EvolveChimera()
     {
-        if (_readyToEvolve == false)
-        {
-            Debug.LogError($"Not ready for evolution!");
-            return;
-        }
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+        _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
+        yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
+        yield return new WaitForSeconds(1.0f);
 
         _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
@@ -423,7 +423,11 @@ public class Chimera : MonoBehaviour
 
         _habitatManager.Collections.CollectChimera(_chimeraType);
 
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+
+        yield return new WaitForSeconds(1.5f);
         _persistentData.SaveSessionData();
+        StartCoroutine(_habitatManager.CurrentHabitat.ChimeraEvolveCameraDisable());
     }
 
     // Increase stat at rate of the relevant statgrowth variable.

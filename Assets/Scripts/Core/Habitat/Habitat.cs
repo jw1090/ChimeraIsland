@@ -18,7 +18,11 @@ public class Habitat : MonoBehaviour
     [SerializeField] private Environment _environment = null;
     [SerializeField] private TempleStructure _temple = null;
     [SerializeField] private TapVFX _tapVfx = null;
+    [SerializeField] private Camera _alternateCamera = null;
+    [SerializeField] private AnimationCurve _alternateCameraTransitionCurve = new AnimationCurve();
 
+    private InputManager _inputManager = null;
+    private CameraUtil _cameraUtil = null;
     private UIManager _uiManager = null;
     private ChimeraCreator _chimeraCreator = null;
     private HabitatManager _habitatManager = null;
@@ -27,7 +31,9 @@ public class Habitat : MonoBehaviour
     private List<Chimera> _activeChimeras = new List<Chimera>();
     private bool _isInitialized = false;
     private int _currentTier = 1;
+    private bool _movingAlternateCamera = false;
 
+    public bool MovingAlternateCamera { get => _movingAlternateCamera; }
     public TapVFX TapVFX { get => _tapVfx; }
     public TempleStructure Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
@@ -101,6 +107,8 @@ public class Habitat : MonoBehaviour
     {
         Debug.Log($"<color=Orange> Initializing {this.GetType()} ... </color>");
 
+        _inputManager = ServiceLocator.Get<InputManager>();
+        _cameraUtil = ServiceLocator.Get<CameraUtil>();
         _chimeraCreator = ServiceLocator.Get<ChimeraCreator>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
@@ -336,5 +344,45 @@ public class Habitat : MonoBehaviour
         {
             ToggleFireflies(true);
         }
+    }
+
+    public void ChimeraEvolveCameraEnable(Chimera chimera)
+    {
+        _inputManager.SetInTransition(true);
+        _cameraUtil.gameObject.SetActive(false);
+        _alternateCamera.gameObject.SetActive(true);
+
+        _alternateCamera.transform.position = _cameraUtil.transform.position;
+        Vector3 endPos = chimera.transform.position + new Vector3(0.0f, 8.0f, 13.0f);
+        StartCoroutine(MoveCamera(endPos));
+    }
+
+    private IEnumerator MoveCamera(Vector3 targetPosition)
+    {
+        _movingAlternateCamera = true;
+           Vector3 startPosition = _alternateCamera.transform.position;
+
+        float distance = 1.0f + (Vector3.Distance(targetPosition, startPosition) * 0.001f);
+        float timer = 0.0f;
+        while (timer < distance)
+        {
+            timer += Time.deltaTime;
+            float linearProgress = timer / distance;
+
+            float easeProgress = _alternateCameraTransitionCurve.Evaluate(linearProgress);
+            _alternateCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, easeProgress);
+
+            yield return null;
+        }
+        _movingAlternateCamera = false;
+    }
+
+    public IEnumerator ChimeraEvolveCameraDisable()
+    {
+        StartCoroutine(MoveCamera(_cameraUtil.transform.position));
+        yield return new WaitUntil(() => _movingAlternateCamera == false);
+        _alternateCamera.gameObject.SetActive(false);
+        _cameraUtil.gameObject.SetActive(true);
+        _inputManager.SetInTransition(false);
     }
 }
