@@ -99,6 +99,7 @@ public class Facility : MonoBehaviour
         _cameraUtil.FacilityCameraShift(Type);
 
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
+        _inputManager.SetInTransition(true);
 
         switch (_currentTier)
         {
@@ -113,7 +114,7 @@ public class Facility : MonoBehaviour
                 vfx = _tier3VFX;
                 break;
             default:
-                UnityEngine.Debug.LogError($"facilityTier is not valid [{_currentTier+1}]!");
+                UnityEngine.Debug.LogError($"facilityTier is not valid [{_currentTier + 1}]!");
                 yield break;
         }
 
@@ -131,6 +132,7 @@ public class Facility : MonoBehaviour
             yield return null;
         }
         vfx.SetActive(false);
+        _inputManager.SetInTransition(false);
     }
 
     public void BuildFacility()

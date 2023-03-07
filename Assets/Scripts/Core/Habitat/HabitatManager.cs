@@ -201,19 +201,18 @@ public class HabitatManager : MonoBehaviour
         FacilityType upgradeFacility = _upgradeQueue.Peek();
         _cameraUtil.FacilityCameraShift(upgradeFacility);
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
-        _inputManager.SetInTransition(true);
         StartCoroutine(CurrentHabitat.GetFacility(upgradeFacility).BuildFacilityWithVFX());
 
         switch (upgradeFacility)
         {
             case FacilityType.Cave:
-                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Cave Facility!");
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier + 1} of the Cave Facility!");
                 break;
             case FacilityType.RuneStone:
-                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Rune Stone Facility!");
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier + 1} of the Rune Stone Facility!");
                 break;
             case FacilityType.Waterfall:
-                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier} of the Waterfall Facility!");
+                _uiManager.AlertText.CreateAlert($"You Have Unlocked Tier {CurrentHabitat.GetFacility(upgradeFacility).CurrentTier + 1} of the Waterfall Facility!");
                 break;
             default:
                 Debug.LogError($"facilityType is not valid [{upgradeFacility}] please change!");
@@ -226,10 +225,6 @@ public class HabitatManager : MonoBehaviour
         if (_upgradeQueue.Count != 0)
         {
             StartCoroutine(CamQueue());
-        }
-        else
-        {
-            _inputManager.SetInTransition(false);
         }
     }
 }
