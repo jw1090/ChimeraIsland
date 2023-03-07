@@ -1,18 +1,15 @@
-
 public class TrainingState : ChimeraBaseState
 {
     private ChimeraBehavior _chimeraBehavior = null;
-    private string _trainingAnim = "Idle";
 
     public override void Enter(ChimeraBehavior chimeraBehavior)
     {
         _chimeraBehavior = chimeraBehavior;
+
         _chimeraBehavior.BoxCollider.enabled = false;
         _chimeraBehavior.Agent.enabled = false;
 
-        _chimeraBehavior.StopParticles();
-
-        _chimeraBehavior.EnterAnim(_trainingAnim);
+        _chimeraBehavior.EnterAnim(AnimationType.Idle);
     }
 
     public override void Update()
@@ -24,7 +21,5 @@ public class TrainingState : ChimeraBaseState
     {
         _chimeraBehavior.BoxCollider.enabled = true;
         _chimeraBehavior.Agent.enabled = true;
-
-        _chimeraBehavior.ExitAnim(_trainingAnim);
     }
 }
