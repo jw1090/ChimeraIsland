@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VolumeSliderUI : MonoBehaviour
+public class TextSliderUI : MonoBehaviour
 {
     [SerializeField] Slider _slider = null;
     [SerializeField] TextMeshProUGUI _text = null;

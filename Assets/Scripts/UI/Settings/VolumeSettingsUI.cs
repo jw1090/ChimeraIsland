@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class VolumeSettingsUI : MonoBehaviour
 {
-    [SerializeField] VolumeSliderUI _masterSlider = null;
-    [SerializeField] VolumeSliderUI _musicSlider = null;
-    [SerializeField] VolumeSliderUI _sfxSlider = null;
-    [SerializeField] VolumeSliderUI _ambientSlider = null;
-    [SerializeField] VolumeSliderUI _uiSfxSlider = null;
+    [SerializeField] TextSliderUI _masterSlider = null;
+    [SerializeField] TextSliderUI _musicSlider = null;
+    [SerializeField] TextSliderUI _sfxSlider = null;
+    [SerializeField] TextSliderUI _ambientSlider = null;
+    [SerializeField] TextSliderUI _uiSfxSlider = null;
     private AudioManager _audioManager = null;
 
     public void Initialize()
