@@ -69,6 +69,8 @@ public class ExpeditionResultUI : MonoBehaviour
     {
         bool results = bypass ? bypass : _expeditionManager.RandomSuccesRate();
 
+        _expeditionManager.SuccessVisuals(results);
+
         if (results == true)
         {
             _successResults.text = $"Success";

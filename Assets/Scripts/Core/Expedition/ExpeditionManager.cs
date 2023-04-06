@@ -489,7 +489,12 @@ public class ExpeditionManager : MonoBehaviour
         float successRoll = Random.Range(0.0f, _selectedExpedition.DifficultyValue);
         Debug.Log($"You rolled: {successRoll} | You needed: {_selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower}");
 
-        if (successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower)
+        return successRoll >= _selectedExpedition.DifficultyValue - _selectedExpedition.ChimeraPower;
+    }
+
+    public void SuccessVisuals(bool success)
+    {
+        if(success == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
 
@@ -498,8 +503,6 @@ public class ExpeditionManager : MonoBehaviour
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Success);
             }
-
-            return true;
         }
         else
         {
@@ -510,8 +513,6 @@ public class ExpeditionManager : MonoBehaviour
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Fail);
             }
-
-            return false;
         }
     }
 
