@@ -9,7 +9,6 @@ public class ChimeraDetails : MonoBehaviour
     [SerializeField] private Image _elementIcon = null;
     [SerializeField] private TextMeshProUGUI _name = null;
     [SerializeField] private TMP_InputField _customName = null;
-    [SerializeField] private GameObject _panel = null;
     [SerializeField] private TextMeshProUGUI _level = null;
     [SerializeField] private TextMeshProUGUI _exploration = null;
     [SerializeField] private TextMeshProUGUI _stamina = null;
@@ -313,8 +312,6 @@ public class ChimeraDetails : MonoBehaviour
         _name.text = "";
         _customName.gameObject.SetActive(true);
         _customName.Select();
-
-        _panel.SetActive(false);
     }
 
     public void UnlockCamera()
@@ -325,8 +322,6 @@ public class ChimeraDetails : MonoBehaviour
         _customName.gameObject.SetActive(false);
 
         UpdateDetails();
-
-        _panel.SetActive(true);
     }
 
     private void NoPrefferedStat()
