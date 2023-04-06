@@ -494,7 +494,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SuccessVisuals(bool success)
     {
-        if(success == true)
+        if (success == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
 
