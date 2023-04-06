@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class ExpeditionSetupUI : MonoBehaviour
 {
+    [Header("Header")]
     [SerializeField] private TextMeshProUGUI _expeditionTitle = null;
-    [SerializeField] private TextMeshProUGUI _duration = null;
+    [SerializeField] private TextMeshProUGUI _standardDuration = null;
+    [SerializeField] private Image _arrow = null;
+    [SerializeField] private TextMeshProUGUI _modifiedDuration = null;
     [SerializeField] private TextMeshProUGUI _rewardType = null;
+
+    [Header("Main")]
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
     [SerializeField] private TextMeshProUGUI _energyDrain = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
@@ -15,6 +20,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _successText = null;
     [SerializeField] private Button _confirmButton = null;
     [SerializeField] private Button _backButton = null;
+
     private TutorialManager _tutoiralManager = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
@@ -106,30 +112,28 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void UpdateRewards(ExpeditionData data)
     {
-        string reward = "";
-
         switch (data.Type)
         {
             case ExpeditionType.Essence:
-                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Essence";
+                _rewardType.text = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Essence";
                 break;
             case ExpeditionType.Fossils:
-                reward = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Fossils";
+                _rewardType.text = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Fossils";
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (data.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        reward = $"Waterfall";
+                        _rewardType.text = $"Waterfall";
                         break;
                     case HabitatRewardType.CaveExploring:
-                        reward = $"Explorable Cave";
+                        _rewardType.text = $"Explorable Cave";
                         break;
                     case HabitatRewardType.RuneStone:
-                        reward = $"Rune Stones";
+                        _rewardType.text = $"Rune Stones";
                         break;
                     case HabitatRewardType.Habitat:
-                        reward = $"Habitat Upgrade";
+                        _rewardType.text = $"Habitat Upgrade";
                         break;
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
@@ -140,13 +144,23 @@ public class ExpeditionSetupUI : MonoBehaviour
                 Debug.LogError($"Reward Type [{data.Type}] was invalid, please change!");
                 break;
         }
-
-        _rewardType.text = $"Rewards: {reward}";
     }
 
     public void UpdateDuration(ExpeditionData data)
     {
-        _duration.text = $"Duration: {data.ActualDuration.ToString("F1")} (-{(data.BaseDuration * data.DurationModifier).ToString("F1")}) Seconds";
+        _standardDuration.text = $"{data.BaseDuration.ToString("F1")} Sec";
+
+        if (Mathf.Approximately(data.BaseDuration, data.ActualDuration) == false)
+        {
+            _modifiedDuration.text = $"{data.ActualDuration.ToString("F1")} Sec";
+            _modifiedDuration.gameObject.SetActive(true);
+            _arrow.gameObject.SetActive(true);
+        }
+        else
+        {
+            _modifiedDuration.gameObject.SetActive(false);
+            _arrow.gameObject.SetActive(false);
+        }
     }
 
     private void LoadModifiers(List<ModifierType> modifierData)

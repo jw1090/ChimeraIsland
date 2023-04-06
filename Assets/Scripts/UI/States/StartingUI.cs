@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class StartingUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _title = null;
+    [SerializeField] private GameObject _title = null;
     [SerializeField] private GameObject _container = null;
     [SerializeField] private StartingChimeraButton _acceptButton = null;
     [SerializeField] private Button _declineButton = null;
@@ -43,7 +43,7 @@ public class StartingUI : MonoBehaviour
     public void OpenChimeraInfo()
     {
         _container.SetActive(true);
-        _title.gameObject.SetActive(false);
+        _title.SetActive(false);
     }
 
     public void LoadChimeraInfo(EvolutionLogic evolutionLogic)
@@ -55,7 +55,7 @@ public class StartingUI : MonoBehaviour
     private void ResetUI()
     {
         _container.SetActive(false);
-        _title.gameObject.SetActive(true);
+        _title.SetActive(true);
     }
 
     private void ResetCamera()

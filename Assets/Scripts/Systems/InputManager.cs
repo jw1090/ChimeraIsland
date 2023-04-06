@@ -234,7 +234,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if (_inTransition == true)
+        if (_inTransition == true || _cameraUtil.InTransition == true)
         {
             return;
         }
@@ -432,7 +432,7 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Default;
         }
-        else  if (_inTransition == true)
+        else if (_inTransition == true || _cameraUtil.InTransition == true)
         {
             return CursorType.Default;
         }

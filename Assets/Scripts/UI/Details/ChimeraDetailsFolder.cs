@@ -10,8 +10,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private Image _waterButton = null;
     [SerializeField] private Image _fireButton = null;
     [SerializeField] private Image _grassButton = null;
-    [SerializeField] private Color _activeFilterColor = new Color();
-    [SerializeField] private Color _inActiveColor = new Color();
+    [SerializeField] private Image _waterCheck = null;
+    [SerializeField] private Image _grassCheck = null;
+    [SerializeField] private Image _fireCheck = null;
     [SerializeField] private Transform _detailsHierarchyParent = null;
 
     private UIManager _uiManager = null;
@@ -33,9 +34,9 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
-        _waterButton.color = _activeFilterColor;
-        _fireButton.color = _activeFilterColor;
-        _grassButton.color = _activeFilterColor;
+        _waterCheck.gameObject.SetActive(true);
+        _fireCheck.gameObject.SetActive(true);
+        _grassCheck.gameObject.SetActive(true);
 
         SetupListeners();
     }
@@ -70,11 +71,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
         _showGrass = !_showGrass;
         if (_showGrass == true)
         {
-            _grassButton.color = _activeFilterColor;
+            _grassCheck.gameObject.SetActive(true);
         }
         else
         {
-            _grassButton.color = _inActiveColor;
+            _grassCheck.gameObject.SetActive(false);
         }
         EvaluateVisibleChimera();
     }
@@ -85,11 +86,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         if (_showWater == true)
         {
-            _waterButton.color = _activeFilterColor;
+            _waterCheck.gameObject.SetActive(true);
         }
         else
         {
-            _waterButton.color = _inActiveColor;
+            _waterCheck.gameObject.SetActive(false);
         }
 
         EvaluateVisibleChimera();
@@ -101,11 +102,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
 
         if (_showFire == true)
         {
-            _fireButton.color = _activeFilterColor;
+            _fireCheck.gameObject.SetActive(true);
         }
         else
         {
-            _fireButton.color = _inActiveColor;
+            _fireCheck.gameObject.SetActive(false);
         }
 
         EvaluateVisibleChimera();
