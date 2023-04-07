@@ -127,23 +127,23 @@ public class ExpeditionSetupUI : MonoBehaviour
         switch (data.Type)
         {
             case ExpeditionType.Essence:
-                _standardCurrency.text = $"{data.BaseAmountGained} Essence";
+                _standardCurrency.text = $"{data.BaseAmountGained}  <sprite name=Essence>";
                 _standardCurrency.gameObject.SetActive(true);
 
                 if (data.BaseAmountGained != data.ActualAmountGained)
                 {
-                    _modifiedCurrency.text = $"{data.ActualAmountGained} Essence";
+                    _modifiedCurrency.text = $"{data.ActualAmountGained}  <sprite name=Essence>";
                     _modifiedCurrency.gameObject.SetActive(true);
                     _rewardArrow.gameObject.SetActive(true);
                 }
                 break;
             case ExpeditionType.Fossils:
-                _standardCurrency.text = $"{data.BaseAmountGained} Fossils";
+                _standardCurrency.text = $"{data.BaseAmountGained}  <sprite name=Fossil>";
                 _standardCurrency.gameObject.SetActive(true);
 
                 if (data.BaseAmountGained != data.ActualAmountGained)
                 {
-                    _modifiedCurrency.text = $"{data.ActualAmountGained} Fossils";
+                    _modifiedCurrency.text = $"{data.ActualAmountGained}  <sprite name=Fossil>";
                     _modifiedCurrency.gameObject.SetActive(true);
                     _rewardArrow.gameObject.SetActive(true);
                 }
