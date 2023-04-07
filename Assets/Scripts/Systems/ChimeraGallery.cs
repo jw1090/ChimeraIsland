@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ChimeraGallery : MonoBehaviour
 {
@@ -91,11 +92,12 @@ public class ChimeraGallery : MonoBehaviour
         {
             return;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
             if(_clickedDownOnChimera == false && _inputManager.GetCursorSprite() == CursorType.Dragable)
             {
                 _clickedDownOnChimera = true;
+                _inputManager.SetRotatingInGallery(true);
             }
             if (_clickedDownOnChimera == true)
             {
@@ -106,6 +108,7 @@ public class ChimeraGallery : MonoBehaviour
         }
         else
         {
+            _inputManager.SetRotatingInGallery(false);
             _clickedDownOnChimera = false;
         }
         mPrevMousePos = Input.mousePosition;
