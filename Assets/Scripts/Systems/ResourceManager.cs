@@ -37,6 +37,7 @@ public class ResourceManager : MonoBehaviour
     private Texture2D _mouseDragable = null;
     private Texture2D _mouseDragging = null;
     private Texture2D _mouseMinable = null;
+    private Texture2D _mouseRotate = null;
 
     private GameObject _chimeraBasePrefabA = null;
     private GameObject _chimeraBasePrefabB = null;
@@ -97,7 +98,8 @@ public class ResourceManager : MonoBehaviour
         _mouseClickable             = Resources.Load<Texture2D>("Mouse/Clickable Cursor");
         _mouseDragable              = Resources.Load<Texture2D>("Mouse/Dragable Cursor");
         _mouseDragging              = Resources.Load<Texture2D>("Mouse/Dragging Cursor");
-        _mouseMinable              = Resources.Load<Texture2D>("Mouse/Minable Cursor");
+        _mouseMinable               = Resources.Load<Texture2D>("Mouse/Minable Cursor");
+        _mouseRotate                = Resources.Load<Texture2D>("Mouse/Rotate Cursor");
 
         _chimeraBasePrefabA         = Resources.Load<GameObject>("Chimera/A");
         _chimeraBasePrefabB         = Resources.Load<GameObject>("Chimera/B");
@@ -140,6 +142,8 @@ public class ResourceManager : MonoBehaviour
                 return _mouseDragging;
             case CursorType.Minable:
                 return _mouseMinable;
+            case CursorType.Rotate:
+                return _mouseRotate;
             default:
                 Debug.LogError($"Unhandled cursor type: {cursorType}. Please change!");
                 return null;
