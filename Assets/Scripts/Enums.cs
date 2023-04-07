@@ -216,6 +216,7 @@ public enum CursorType
     Dragable,
     Dragging,
     Minable,
+    Rotate,
 }
 
 public enum ChimeraOrderType

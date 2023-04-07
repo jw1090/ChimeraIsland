@@ -37,6 +37,7 @@ public class InputManager : MonoBehaviour
     private bool _debugHabitatUpgradeInputEnabled = false;
     private bool _debugViewEnabled = false;
     private bool _freeCameraActive = false;
+    private bool _rotatingInGallery = false;
     private float _rotationAmount = 2.0f;
     private SceneType _currentScene = SceneType.None;
 
@@ -52,6 +53,7 @@ public class InputManager : MonoBehaviour
         _persistentData.SetSpinSpeed(speed);
     }
     public void SetInTransition(bool value) { _inTransition = value; }
+    public void SetRotatingInGallery(bool rotating) { _rotatingInGallery = rotating; }
     public void SetCurrencyManager(CurrencyManager currencyManager) { _currencyManager = currencyManager; }
     public void SetCameraUtil(CameraUtil cameraUtil)
     {
@@ -435,6 +437,10 @@ public class InputManager : MonoBehaviour
         else if (_inTransition == true || _cameraUtil.InTransition == true)
         {
             return CursorType.Default;
+        }
+        else if(_rotatingInGallery == true)
+        {
+            return CursorType.Rotate;
         }
         else if (_isHolding == true)
         {
