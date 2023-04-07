@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -33,7 +34,6 @@ public class ExpeditionManager : MonoBehaviour
     private const float _rewardExponent = 0.9f;
     private const float _duartionDenominator = 300.0f;
     private const float _durationExponent = 0.45f;
-    private float _timer = 5.0f;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
@@ -477,7 +477,6 @@ public class ExpeditionManager : MonoBehaviour
             _uiExpedition.TimerComplete();
         }
     }
-
     public bool RandomSuccesRate()
     {
         if (_selectedExpedition.AutoSucceed == true)
@@ -503,7 +502,10 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Success);
-                _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
+                if(_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
+                {
+                    _audioManager.PlayHappyChimeraSFX(_chimeras[0].ChimeraType);
+                }
             }
         }
         else
@@ -514,7 +516,10 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Fail);
-                _audioManager.PlaySadChimeraSFX(chimera.ChimeraType);
+                if (_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
+                {
+                    _audioManager.PlaySadChimeraSFX(_chimeras[0].ChimeraType);
+                }
             }
         }
     }
