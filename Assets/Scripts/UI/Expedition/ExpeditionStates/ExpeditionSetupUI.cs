@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class ExpeditionSetupUI : MonoBehaviour
 {
-    [Header("Header")]
+    [Header("Title")]
     [SerializeField] private TextMeshProUGUI _expeditionTitle = null;
+
+    [Header("Duration")]
     [SerializeField] private TextMeshProUGUI _standardDuration = null;
-    [SerializeField] private Image _arrow = null;
+    [SerializeField] private Image _durationArrow = null;
     [SerializeField] private TextMeshProUGUI _modifiedDuration = null;
-    [SerializeField] private TextMeshProUGUI _rewardType = null;
+
+    [Header("Rewards")]
+    [SerializeField] private TextMeshProUGUI _standardUpgrade = null;
+    [SerializeField] private TextMeshProUGUI _standardCurrency = null;
+    [SerializeField] private Image _rewardArrow = null;
+    [SerializeField] private TextMeshProUGUI _modifiedCurrency = null;
 
     [Header("Main")]
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
@@ -112,33 +119,56 @@ public class ExpeditionSetupUI : MonoBehaviour
 
     public void UpdateRewards(ExpeditionData data)
     {
+        _standardCurrency.gameObject.SetActive(false);
+        _rewardArrow.gameObject.SetActive(false);
+        _modifiedCurrency.gameObject.SetActive(false);
+        _standardUpgrade.gameObject.SetActive(false);
+
         switch (data.Type)
         {
             case ExpeditionType.Essence:
-                _rewardType.text = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Essence";
+                _standardCurrency.text = $"{data.BaseAmountGained} Essence";
+                _standardCurrency.gameObject.SetActive(true);
+
+                if (data.BaseAmountGained != data.ActualAmountGained)
+                {
+                    _modifiedCurrency.text = $"{data.ActualAmountGained} Essence";
+                    _modifiedCurrency.gameObject.SetActive(true);
+                    _rewardArrow.gameObject.SetActive(true);
+                }
                 break;
             case ExpeditionType.Fossils:
-                _rewardType.text = $"{data.ActualAmountGained} (+{(int)(data.BaseAmountGained * data.RewardModifier)}) Fossils";
+                _standardCurrency.text = $"{data.BaseAmountGained} Fossils";
+                _standardCurrency.gameObject.SetActive(true);
+
+                if (data.BaseAmountGained != data.ActualAmountGained)
+                {
+                    _modifiedCurrency.text = $"{data.ActualAmountGained} Fossils";
+                    _modifiedCurrency.gameObject.SetActive(true);
+                    _rewardArrow.gameObject.SetActive(true);
+                }
                 break;
             case ExpeditionType.HabitatUpgrade:
                 switch (data.UpgradeType)
                 {
                     case HabitatRewardType.Waterfall:
-                        _rewardType.text = $"Waterfall";
+                        _standardUpgrade.text = $"Waterfall";
                         break;
                     case HabitatRewardType.CaveExploring:
-                        _rewardType.text = $"Explorable Cave";
+                        _standardUpgrade.text = $"Explorable Cave";
                         break;
                     case HabitatRewardType.RuneStone:
-                        _rewardType.text = $"Rune Stones";
+                        _standardUpgrade.text = $"Rune Stones";
                         break;
                     case HabitatRewardType.Habitat:
-                        _rewardType.text = $"Habitat Upgrade";
+                        _standardUpgrade.text = $"Habitat Upgrade";
                         break;
                     default:
                         Debug.LogError($"Upgrade Type [{data.UpgradeType}] was invalid, please change!");
                         break;
                 }
+                _standardUpgrade.gameObject.SetActive(true);
+
                 break;
             default:
                 Debug.LogError($"Reward Type [{data.Type}] was invalid, please change!");
@@ -154,12 +184,12 @@ public class ExpeditionSetupUI : MonoBehaviour
         {
             _modifiedDuration.text = $"{data.ActualDuration.ToString("F1")} Sec";
             _modifiedDuration.gameObject.SetActive(true);
-            _arrow.gameObject.SetActive(true);
+            _durationArrow.gameObject.SetActive(true);
         }
         else
         {
             _modifiedDuration.gameObject.SetActive(false);
-            _arrow.gameObject.SetActive(false);
+            _durationArrow.gameObject.SetActive(false);
         }
     }
 
