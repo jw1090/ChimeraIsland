@@ -468,8 +468,6 @@ public class ExpeditionManager : MonoBehaviour
         _selectedExpedition.CurrentDuration -= Time.deltaTime;
         _uiExpedition.InProgressUI.UpdateSliderInfo(_selectedExpedition.CurrentDuration);
 
-        Debug.Log(_timer);
-
         if (_selectedExpedition.CurrentDuration <= 0)
         {
             _selectedExpedition.CurrentDuration = 0;
@@ -496,8 +494,7 @@ public class ExpeditionManager : MonoBehaviour
     }
 
     public void SuccessVisuals(bool success)
-    {
-        int index = 0;
+    { 
         if (success == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
@@ -507,29 +504,6 @@ public class ExpeditionManager : MonoBehaviour
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Success);
                 _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-
-                if (_chimeras.Count == 2)
-                {
-                    ++index;
-                    _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-                    if (index == 1)
-                    {
-                        _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-                    }
-                }
-                else if (_chimeras.Count == 3)
-                {
-                    index++;
-                    _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-                    if (index == 1)
-                    {
-                        _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-                    }
-                    if (index == 2)
-                    {
-                        _audioManager.PlayHappyChimeraSFX(chimera.ChimeraType);
-                    }
-                }
             }
         }
         else
