@@ -71,7 +71,6 @@ public class TreadmillManager : MonoBehaviour
                 ++index;
                 WarpChimera(chimera, _secondChimera);
 
-
                 if (index == 1)
                 {
                     WarpChimera(chimera, _thirdChimera);
