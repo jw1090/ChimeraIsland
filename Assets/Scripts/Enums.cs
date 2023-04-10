@@ -135,7 +135,6 @@ public enum UIElementType
     None = -1,
     All,
     OtherFacilityButtons,
-    OpenDetailsButton,
     ExpeditionButton,
     MarketplaceChimeraTab,
     WorldMapButton,
