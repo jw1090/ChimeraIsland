@@ -7,6 +7,8 @@ public class TrainingUI : MonoBehaviour
     [Header("Colors")]
     [SerializeField] private Color _validColor = Color.white;
     [SerializeField] private Color _badColor = Color.red;
+    [SerializeField] private Sprite _goodSlider = null;
+    [SerializeField] private Sprite _badSlider = null;
 
     [Header("Essence Cost")]
     [SerializeField] private TextMeshProUGUI _costText = null;
@@ -108,16 +110,16 @@ public class TrainingUI : MonoBehaviour
     {
         _costText.text = $"<sprite name=Essence> Essence Cost: {_cost}";
 
-        if (_cost > _currencyManager.Essence)
+        if (_cost > _currencyManager.Essence) // Bad
         {
             _costText.color = _badColor;
-            _sliderFill.color = _badColor;
+            _sliderFill.sprite = _badSlider;
             _confirmButton.interactable = false;
         }
-        else
+        else // Good
         {
             _costText.color = Color.white;
-            _sliderFill.color = _validColor;
+            _sliderFill.sprite = _goodSlider;
             _confirmButton.interactable = true;
         }
 
