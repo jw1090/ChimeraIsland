@@ -4,17 +4,30 @@ using UnityEngine.UI;
 
 public class TrainingUI : MonoBehaviour
 {
+    [Header("Colors")]
     [SerializeField] private Color _validColor = Color.white;
     [SerializeField] private Color _badColor = Color.red;
-    [SerializeField] private Button _screenWideOffButton = null;
+    [SerializeField] private Sprite _goodSlider = null;
+    [SerializeField] private Sprite _badSlider = null;
+
+    [Header("Essence Cost")]
+    [SerializeField] private TextMeshProUGUI _costText = null;
+
+    [Header("Slider")]
     [SerializeField] private Button _increaseButton = null;
     [SerializeField] private Button _decreaseButton = null;
-    [SerializeField] private Button _confirmButton = null;
-    [SerializeField] private Button _declineButton = null;
-    [SerializeField] private TextMeshProUGUI _statInfoText = null;
-    [SerializeField] private TextMeshProUGUI _costText = null;
     [SerializeField] private Slider _slider = null;
     [SerializeField] private Image _sliderFill = null;
+
+    [Header("Stat Change")]
+    [SerializeField] private TextMeshProUGUI _statInfoText = null;
+    [SerializeField] private TextMeshProUGUI _currentStat = null;
+    [SerializeField] private TextMeshProUGUI _newStat = null;
+
+    [Header("References")]
+    [SerializeField] private Button _screenWideOffButton = null;
+    [SerializeField] private Button _confirmButton = null;
+    [SerializeField] private Button _declineButton = null;
 
     private Facility _facility = null;
     private Chimera _chimera = null;
@@ -95,20 +108,24 @@ public class TrainingUI : MonoBehaviour
 
     private void UpdateCostUI()
     {
-        _costText.text = $"Cost: {_cost} Essence";
+        _costText.text = $"<sprite name=Essence> Essence Cost: {_cost}";
 
-        if (_cost > _currencyManager.Essence)
+        if (_cost > _currencyManager.Essence) // Bad
         {
             _costText.color = _badColor;
-            _sliderFill.color = _badColor;
+            _sliderFill.sprite = _badSlider;
+            _confirmButton.interactable = false;
         }
-        else
+        else // Good
         {
             _costText.color = Color.white;
-            _sliderFill.color = _validColor;
+            _sliderFill.sprite = _goodSlider;
+            _confirmButton.interactable = true;
         }
 
-        _statInfoText.text = $" {_facility.StatType}: {_levelGoal} (+{_levelGoal - _statAmount})";
+        _statInfoText.text = $" <sprite name={_facility.StatType}> {_facility.StatType} +{_levelGoal - _statAmount}";
+        _currentStat.text = _statAmount.ToString();
+        _newStat.text = _levelGoal.ToString();
     }
 
     public void DecreaseStatGoal()

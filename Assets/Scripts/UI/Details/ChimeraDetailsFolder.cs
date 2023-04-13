@@ -8,11 +8,11 @@ public class ChimeraDetailsFolder : MonoBehaviour
     [SerializeField] private List<ChimeraDetails> _chimeraDetailsList = new List<ChimeraDetails>();
     [SerializeField] private TMP_Dropdown _dropdown = null;
     [SerializeField] private Image _waterButton = null;
-    [SerializeField] private Image _fireButton = null;
-    [SerializeField] private Image _grassButton = null;
     [SerializeField] private Image _waterCheck = null;
-    [SerializeField] private Image _grassCheck = null;
+    [SerializeField] private Image _fireButton = null;
     [SerializeField] private Image _fireCheck = null;
+    [SerializeField] private Image _grassButton = null;
+    [SerializeField] private Image _grassCheck = null;
     [SerializeField] private Transform _detailsHierarchyParent = null;
 
     private UIManager _uiManager = null;
