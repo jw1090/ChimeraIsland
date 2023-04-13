@@ -8,7 +8,6 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private Button _closeDetailsButton = null;
     [SerializeField] private Button _settingsButton = null;
     [SerializeField] private GameObject _standardUI = null;
-    [SerializeField] private GameObject _detailsButtons = null;
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
     [SerializeField] private DetailsManager _detailsManager = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
@@ -28,6 +27,7 @@ public class HabitatUI : MonoBehaviour
     public DetailsManager DetailsManager { get => _detailsManager; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
+    public Button OpenDetailsButton { get => _openDetailsButton; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
     public bool MenuOpen { get => _menuOpen; }
     public bool TutorialOpen { get => _tutorialOpen; }
@@ -150,11 +150,6 @@ public class HabitatUI : MonoBehaviour
             case UIElementType.OtherFacilityButtons:
                 break;
             case UIElementType.All:
-                _detailsButtons.gameObject.SetActive(true);
-                _openDetailsButton.gameObject.SetActive(true);
-                break;
-            case UIElementType.OpenDetailsButton:
-                _detailsButtons.gameObject.SetActive(true);
                 _openDetailsButton.gameObject.SetActive(true);
                 break;
             case UIElementType.FossilsWallets:
@@ -187,7 +182,6 @@ public class HabitatUI : MonoBehaviour
             }
         }
 
-        _closeDetailsButton.gameObject.SetActive(false);
         _detailsManager.CloseDetails();
         _uiManager.SettingsUI.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
@@ -220,7 +214,6 @@ public class HabitatUI : MonoBehaviour
         _menuOpen = true;
 
         _detailsManager.OpenStandardDetails();
-        _closeDetailsButton.gameObject.SetActive(true);
     }
 
     public void ToggleSettingsMenu()

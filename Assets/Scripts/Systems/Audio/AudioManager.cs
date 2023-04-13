@@ -172,6 +172,7 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.DeclineButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.TrainingPanel.ConfirmButton, PlayConfirmSFX);
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(habitatUI.OpenDetailsButton, PlayClickSFX);
 
         foreach(Button closeButton in habitatUI.ExpeditionPanel.CloseButtons)
         {
