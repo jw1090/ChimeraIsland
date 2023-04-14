@@ -72,7 +72,6 @@ public class UIManager : MonoBehaviour
             _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
             _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
 
-
             yield return null;
         }
 
