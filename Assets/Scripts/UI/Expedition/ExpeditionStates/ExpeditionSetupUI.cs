@@ -35,6 +35,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
+    private Sprite _expeditionSetupSlot = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -51,6 +52,8 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _tutoiralManager = ServiceLocator.Get<TutorialManager>();
+
+        _expeditionSetupSlot = _resourceManager.GetExpeditionSetupSlot();
 
         _habitatUI = _uiManager.HabitatUI;
     }
@@ -94,7 +97,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = null;
+            icon.Icon.sprite = _expeditionSetupSlot;
         }
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
@@ -218,7 +221,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = null;
+            icon.Icon.sprite = _expeditionSetupSlot;
         }
 
         for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)

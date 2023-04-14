@@ -563,7 +563,7 @@ public class ExpeditionManager : MonoBehaviour
                         _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone, true);
                         break;
                     case HabitatRewardType.Habitat:
-                        _habitatManager.CurrentHabitat.UpgradeHabitatTier();
+                        StartCoroutine(_uiManager.FadeInAndOutLoadingScreen());
                         _tutorialManager.ShowTutorialStage(TutorialStageType.FacilityUpgrades);
                         break;
                     default:
