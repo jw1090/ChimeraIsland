@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2211597824258751350
 RectTransform:
   m_ObjectHideFlags: 0
@@ -251,8 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultStateName: Transparent
   currentState:
-    StateName: Results Panel
-    StateObject: {fileID: 8414182768606842413}
+    StateName: Transparent
+    StateObject: {fileID: 6629629786150950605}
   stateEntries:
   - StateName: Transparent
     StateObject: {fileID: 6629629786150950605}
@@ -405,7 +405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7567619572209311987, guid: 6c898f336b9834fccb2a5ba47dabe86e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c898f336b9834fccb2a5ba47dabe86e, type: 3}
@@ -1306,6 +1306,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -117.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397792751374031619, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.8773585
+      objectReference: {fileID: 0}
     - target: {fileID: 7410110376121213517, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1346,7 +1370,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4276075257514339382, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8990713355fd94982adc75f0d00a3c22, type: 3}
 --- !u!224 &16826017892662429 stripped
 RectTransform:
