@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float _fadeOutDuration = 0.5f;
     [SerializeField] private float _waitDuration = 1.0f;
     [SerializeField] private Image _loadingImage = null;
+    [SerializeField] private Image _loadingGif = null;
+    [SerializeField] private Animator _loadingGifAnimator = null;
+    [SerializeField] private TextMeshProUGUI _loadingText = null;
 
     private bool _uiVisible = true;
 
@@ -54,7 +57,9 @@ public class UIManager : MonoBehaviour
     public IEnumerator FadeInLoadingScreen(SceneType sceneType)
     {
         _loadingImage.gameObject.SetActive(true);
+        _loadingGifAnimator.SetTrigger("Play");
         Color startColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        Color endColorWhite = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         Color endColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
         float timer = 0.0f;
@@ -64,6 +69,9 @@ public class UIManager : MonoBehaviour
 
             float progress = timer / _fadeInDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
+            _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
+            _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
+
 
             yield return null;
         }
@@ -93,6 +101,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator FadeOutLoadingScreen()
     {
         Color startColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        Color startColorWhite = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         Color endColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
         float timer = 0.0f;
@@ -102,9 +111,12 @@ public class UIManager : MonoBehaviour
 
             float progress = timer / _fadeOutDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
+            _loadingGif.color = Color.Lerp(startColorWhite, endColor, progress);
+            _loadingText.color = Color.Lerp(startColorWhite, endColor, progress);
 
             yield return null;
         }
+        _loadingGifAnimator.SetTrigger("Pause");
         _loadingImage.gameObject.SetActive(false);
 
     }

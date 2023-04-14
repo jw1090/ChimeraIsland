@@ -244,7 +244,6 @@ public class LevelLoader : AsyncLoader
     private void OnComplete()
     {
         Debug.Log($"<color=Lime> {this.GetType()} finished setup. </color>");
-
         StartCoroutine(_uiManager.FadeOutLoadingScreen());
     }
 
