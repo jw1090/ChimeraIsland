@@ -416,6 +416,7 @@ public class Chimera : MonoBehaviour
         _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
         Evolve(_chimeraToBecome);
+        _chimeraBehavior.EnterAnim(AnimationType.Walk);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
