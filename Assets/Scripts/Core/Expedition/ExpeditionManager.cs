@@ -493,7 +493,8 @@ public class ExpeditionManager : MonoBehaviour
     }
 
     public void SuccessVisuals(bool success)
-    { 
+    {
+        int randomVaule = Random.Range(0, _chimeras.Count);
         if (success == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
@@ -504,7 +505,7 @@ public class ExpeditionManager : MonoBehaviour
                 chimera.Behavior.EnterAnim(AnimationType.Success);
                 if(_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
                 {
-                    _audioManager.PlayHappyChimeraSFX(_chimeras[0].ChimeraType);
+                    _audioManager.PlayHappyChimeraSFX(_chimeras[randomVaule].ChimeraType);
                 }
             }
         }
@@ -518,7 +519,7 @@ public class ExpeditionManager : MonoBehaviour
                 chimera.Behavior.EnterAnim(AnimationType.Fail);
                 if (_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
                 {
-                    _audioManager.PlaySadChimeraSFX(_chimeras[0].ChimeraType);
+                    _audioManager.PlaySadChimeraSFX(_chimeras[randomVaule].ChimeraType);
                 }
             }
         }
