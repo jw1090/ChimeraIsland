@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -476,7 +477,6 @@ public class ExpeditionManager : MonoBehaviour
             _uiExpedition.TimerComplete();
         }
     }
-
     public bool RandomSuccesRate()
     {
         if (_selectedExpedition.AutoSucceed == true)
@@ -494,6 +494,7 @@ public class ExpeditionManager : MonoBehaviour
 
     public void SuccessVisuals(bool success)
     {
+        int randomVaule = Random.Range(0, _chimeras.Count);
         if (success == true)
         {
             _audioManager.PlayUISFX(SFXUIType.Completion);
@@ -502,6 +503,10 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Success);
+                if(_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
+                {
+                    _audioManager.PlayHappyChimeraSFX(_chimeras[randomVaule].ChimeraType);
+                }
             }
         }
         else
@@ -512,6 +517,10 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Fail);
+                if (_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
+                {
+                    _audioManager.PlaySadChimeraSFX(_chimeras[randomVaule].ChimeraType);
+                }
             }
         }
     }
@@ -554,7 +563,7 @@ public class ExpeditionManager : MonoBehaviour
                         _habitatManager.CurrentHabitat.BuildFacility(FacilityType.RuneStone, true);
                         break;
                     case HabitatRewardType.Habitat:
-                        _habitatManager.CurrentHabitat.UpgradeHabitatTier();
+                        StartCoroutine(_uiManager.FadeInAndOutLoadingScreen());
                         _tutorialManager.ShowTutorialStage(TutorialStageType.FacilityUpgrades);
                         break;
                     default:
