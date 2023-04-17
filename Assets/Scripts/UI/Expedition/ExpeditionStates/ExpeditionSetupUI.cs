@@ -19,8 +19,11 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private Image _rewardArrow = null;
     [SerializeField] private TextMeshProUGUI _modifiedCurrency = null;
 
-    [Header("Main")]
+    [Header("Chimera Icons")]
+    [SerializeField] private Sprite _emptyChimeraSprite = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
+
+    [Header("Main")]
     [SerializeField] private TextMeshProUGUI _energyDrain = null;
     [SerializeField] private List<IconUI> _modifiers = new List<IconUI>();
     [SerializeField] private Slider _successSlider = null;
@@ -28,14 +31,13 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private Button _confirmButton = null;
     [SerializeField] private Button _backButton = null;
 
-    private TutorialManager _tutoiralManager = null;
+    private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private HabitatUI _habitatUI = null;
     private ExpeditionUI _expeditionUI = null;
     private ResourceManager _resourceManager = null;
     private ExpeditionManager _expeditionManager = null;
     private AudioManager _audioManager = null;
-    private Sprite _expeditionSetupSlot = null;
 
     public void ToggleConfirmButton(bool toggle) { _confirmButton.gameObject.SetActive(toggle); }
     public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
@@ -51,9 +53,7 @@ public class ExpeditionSetupUI : MonoBehaviour
         _expeditionUI = expeditionUI;
 
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _tutoiralManager = ServiceLocator.Get<TutorialManager>();
-
-        _expeditionSetupSlot = _resourceManager.GetExpeditionSetupSlot();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _habitatUI = _uiManager.HabitatUI;
     }
@@ -97,7 +97,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = _expeditionSetupSlot;
+            icon.Icon.sprite = _emptyChimeraSprite;
         }
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
@@ -112,11 +112,11 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         if (_expeditionManager.CurrentHabitatProgress == 0)
         {
-            _tutoiralManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSetup);
         }
         else if (_expeditionManager.CurrentFossilProgress == 0)
         {
-            _tutoiralManager.ShowTutorialStage(TutorialStageType.ReccomendedTraits);
+            _tutorialManager.ShowTutorialStage(TutorialStageType.ReccomendedTraits);
         }
     }
 
@@ -221,7 +221,7 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = _expeditionSetupSlot;
+            icon.Icon.sprite = _emptyChimeraSprite;
         }
 
         for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)
