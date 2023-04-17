@@ -36,7 +36,9 @@ public class ResourceManager : MonoBehaviour
     private Sprite _fossilSprite = null;
     private Sprite _upgradeSprite = null;
 
-    private Sprite _expeditionSetupSlot = null;
+    private Sprite _essenceBG = null;
+    private Sprite _fossilBG = null;
+    private Sprite _upgradeBG = null;
 
     private Texture2D _mouseDefault = null;
     private Texture2D _mouseClickable = null;
@@ -104,7 +106,9 @@ public class ResourceManager : MonoBehaviour
         _fossilSprite = Resources.Load<Sprite>("Expedition/Fossil");
         _upgradeSprite = Resources.Load<Sprite>("Expedition/Upgrade");
 
-        _expeditionSetupSlot = Resources.Load<Sprite>("Expedition/Slot-Bg");
+        _essenceBG = Resources.Load<Sprite>("Expedition/EssenceBG");
+        _fossilBG = Resources.Load<Sprite>("Expedition/FossilBG");
+        _upgradeBG = Resources.Load<Sprite>("Expedition/UpgradeBG");
 
         _mouseDefault = Resources.Load<Texture2D>("Mouse/Default Cursor");
         _mouseClickable = Resources.Load<Texture2D>("Mouse/Clickable Cursor");
@@ -134,8 +138,6 @@ public class ResourceManager : MonoBehaviour
 
         return this;
     }
-
-    public Sprite GetExpeditionSetupSlot() { return _expeditionSetupSlot; }
 
     public Texture2D GetCursorTexture(CursorType cursorType)
     {
@@ -337,6 +339,22 @@ public class ResourceManager : MonoBehaviour
                 return _fossilSprite;
             case ExpeditionType.HabitatUpgrade:
                 return _upgradeSprite;
+            default:
+                Debug.LogWarning($"Expedition Type [{expeditionType}] is invalid, please change!");
+                return null;
+        }
+    }
+
+    public Sprite GetExpeditionTypeSpriteBG(ExpeditionType expeditionType)
+    {
+        switch (expeditionType)
+        {
+            case ExpeditionType.Essence:
+                return _essenceBG;
+            case ExpeditionType.Fossils:
+                return _fossilBG;
+            case ExpeditionType.HabitatUpgrade:
+                return _upgradeBG;
             default:
                 Debug.LogWarning($"Expedition Type [{expeditionType}] is invalid, please change!");
                 return null;

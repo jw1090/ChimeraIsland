@@ -8,6 +8,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private ExpeditionType _expeditionType = ExpeditionType.None;
     [SerializeField] private Image _icon = null;
+    [SerializeField] private Image _iconBG = null;
     [SerializeField] private TextMeshProUGUI _title = null;
     [SerializeField] private TextMeshProUGUI _reward = null;
     [SerializeField] private TextMeshProUGUI _difficulty = null;
@@ -54,6 +55,7 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
     private void LoadRewardInfo(ExpeditionData expeditionData)
     {
         _icon.sprite = _resourceManager.GetExpeditionTypeSprite(expeditionData.Type);
+        _iconBG.sprite = _resourceManager.GetExpeditionTypeSpriteBG(expeditionData.Type);
         _title.text = $"{expeditionData.Title}";
         _difficulty.text = $"Difficulty: {expeditionData.Difficulty}";
         _energyDrain.text = $"Energy Drain: {expeditionData.EnergyDrain}";
