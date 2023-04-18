@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _loadingGif = null;
     [SerializeField] private Animator _loadingGifAnimator = null;
     [SerializeField] private TextMeshProUGUI _loadingText = null;
+    private Color _loadingTextColor = Color.white;
 
     private bool _uiVisible = true;
 
@@ -72,7 +73,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeInDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
-            _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
+            _loadingText.color = Color.Lerp(startColor, _loadingTextColor, progress);
 
             yield return null;
         }
@@ -113,7 +114,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeOutDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColorWhite, endColor, progress);
-            _loadingText.color = Color.Lerp(startColorWhite, endColor, progress);
+            _loadingText.color = Color.Lerp(_loadingTextColor, endColor, progress);
 
             yield return null;
         }
@@ -138,7 +139,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeInDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
-            _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
+            _loadingText.color = Color.Lerp(startColor, _loadingTextColor, progress);
 
             yield return null;
         }
@@ -158,7 +159,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeOutDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColorWhite, endColor, progress);
-            _loadingText.color = Color.Lerp(startColorWhite, endColor, progress);
+            _loadingText.color = Color.Lerp(_loadingTextColor, endColor, progress);
 
             yield return null;
         }
@@ -184,6 +185,8 @@ public class UIManager : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiStatefulObject.SetState("Transparent", true);
+
+        _loadingTextColor = _loadingText.color;
 
         return this;
     }
