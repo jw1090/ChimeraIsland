@@ -12,6 +12,9 @@ public class StartingChimeraInfo : MonoBehaviour
     [SerializeField] private List<StatefulObject> _wisdomPreference = new List<StatefulObject>();
     [SerializeField] private TextMeshProUGUI _chimeraInfo = null;
     private ResourceManager _resourceManager = null;
+    private EvolutionLogic _evolution = null;
+
+    public EvolutionLogic EvolutionLogic { get => _evolution; }
 
     public void Initialize()
     {
@@ -20,6 +23,7 @@ public class StartingChimeraInfo : MonoBehaviour
 
     public void LoadChimeraData(EvolutionLogic evolutionLogic)
     {
+        _evolution = evolutionLogic;
         _chimeraName.text = evolutionLogic.Name;
         _icon.sprite = _resourceManager.GetElementSprite(evolutionLogic.ElementType);
         _chimeraInfo.text = evolutionLogic.BackgroundInfo;

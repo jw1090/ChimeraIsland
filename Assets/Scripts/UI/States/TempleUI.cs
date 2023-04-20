@@ -89,8 +89,8 @@ public class TempleUI : MonoBehaviour
 
     private void SetAnimIdle() { SetAnim("Idle"); }
     private void SetAnimWalk() { SetAnim("Walk"); }
-    private void SetAnimSuccess() { SetAnim("Success"); }
-    private void SetAnimFailure() { SetAnim("Fail"); }
+    private void SetAnimSuccess() { SetAnim("Success"); _audioManager.PlayHappyChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
+    private void SetAnimFailure() { SetAnim("Fail"); _audioManager.PlaySadChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
     
     private void SetAnim(string anim)
     {
