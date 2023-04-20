@@ -31,8 +31,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator _loadingGifAnimator = null;
     [SerializeField] private TextMeshProUGUI _loadingText = null;
 
+
+    [Header("Tutorial")]
+    [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
+
+
+    private TutorialManager _tutorialManager = null;
+    private bool _tutorialOpen = false;
     private bool _uiVisible = true;
 
+    public bool TutorialOpen { get => _tutorialOpen; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }
     public HabitatUI HabitatUI { get => _habitatUI; }
@@ -182,8 +190,10 @@ public class UIManager : MonoBehaviour
 
         InitializeWallets();
 
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiStatefulObject.SetState("Transparent", true);
+        _tutorialOverlay.Initialize(this);
 
         return this;
     }
@@ -272,5 +282,32 @@ public class UIManager : MonoBehaviour
     {
         _uiVisible = !_uiVisible;
         gameObject.SetActive(_uiVisible);
+    }
+
+
+    public void StartTutorial(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
+    {
+        _tutorialOverlay.gameObject.SetActive(true);
+        _tutorialOverlay.ShowOverlay(tutorialSteps, tutorialType);
+        
+        if(InHabitatState)
+        {
+            _habitatUI.ActivateStandardUI(false);
+        }
+
+        _tutorialOpen = true;
+    }
+
+    public void EndTutorial()
+    {
+        _tutorialOverlay.gameObject.SetActive(false);
+        _tutorialManager.SaveTutorialProgress();
+
+        if (InHabitatState)
+        {
+            _habitatUI.ActivateStandardUI(true);
+        }
+
+        _tutorialOpen = false;
     }
 }

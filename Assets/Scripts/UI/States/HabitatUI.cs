@@ -11,16 +11,14 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private ExpeditionUI _expeditionPanel = null;
     [SerializeField] private DetailsManager _detailsManager = null;
     [SerializeField] private TrainingUI _trainingPanel = null;
-    [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
     [SerializeField] private UIEssenceWallet _essenceWallet = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
     [SerializeField] private ChimeraPopUp _chimeraPopUp = null;
 
+    private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
-    private TutorialManager _tutorialManager = null;
     private bool _menuOpen = false;
-    private bool _tutorialOpen = false;
     private bool _uiActive = true;
 
     public UIManager UIManager { get => _uiManager; }
@@ -30,7 +28,11 @@ public class HabitatUI : MonoBehaviour
     public Button OpenDetailsButton { get => _openDetailsButton; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
     public bool MenuOpen { get => _menuOpen; }
-    public bool TutorialOpen { get => _tutorialOpen; }
+
+    public void ActivateStandardUI(bool activate)
+    {
+        _standardUI.gameObject.SetActive(activate);
+    }
 
     public void ActivateChimeraPopUp(Chimera chimera)
     {
@@ -60,7 +62,6 @@ public class HabitatUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         SetupButtonListeners();
 
@@ -68,8 +69,8 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.Initialize(uiManager);
         _detailsManager.Initialize(uiManager);
         _chimeraPopUp.Initialize();
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
-        _tutorialOverlay.Initialize(this);
     }
 
     private void SetupButtonListeners()
@@ -120,26 +121,6 @@ public class HabitatUI : MonoBehaviour
         }
     }
 
-    public void StartTutorial(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
-    {
-        _tutorialOverlay.gameObject.SetActive(true);
-        _tutorialOverlay.ShowOverlay(tutorialSteps, tutorialType);
-
-        _standardUI.gameObject.SetActive(false);
-
-        _tutorialOpen = true;
-    }
-
-    public void EndTutorial()
-    {
-        _tutorialOverlay.gameObject.SetActive(false);
-        _tutorialManager.SaveTutorialProgress();
-
-        _standardUI.gameObject.SetActive(true);
-
-        _tutorialOpen = false;
-    }
-
     public void EnableUIElementByType(UIElementType uiElementType)
     {
         switch (uiElementType)
@@ -176,7 +157,7 @@ public class HabitatUI : MonoBehaviour
         {
             _openDetailsButton.gameObject.SetActive(true);
 
-            if (_tutorialOpen == false)
+            if (_uiManager.TutorialOpen == false)
             {
                 _standardUI.gameObject.SetActive(true);
             }
@@ -223,7 +204,7 @@ public class HabitatUI : MonoBehaviour
             return;
         }
 
-        if (_tutorialOpen == true)
+        if (_uiManager.TutorialOpen == true)
         {
             return;
         }
