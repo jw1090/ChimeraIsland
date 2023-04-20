@@ -12,6 +12,8 @@ public class TutorialCompletionData
     public bool _facilityUpgrades = false;
     public bool _failure = false;
     public bool _temple = false;
+    public bool _templeLeft = false;
+    public bool _templeRight = false;
 
     public bool IsCompleted(TutorialStageType type)
     {
@@ -35,6 +37,10 @@ public class TutorialCompletionData
                 return _failure;
             case TutorialStageType.Temple:
                 return _temple;
+            case TutorialStageType.TempleLeft:
+                return _templeLeft;
+            case TutorialStageType.TempleRight:
+                return _templeRight;
             default:
                 return true;
         }
@@ -71,6 +77,12 @@ public class TutorialCompletionData
             case TutorialStageType.Temple:
                 _temple = true;
                 break;
+            case TutorialStageType.TempleLeft:
+                _templeLeft = true;
+                break;
+            case TutorialStageType.TempleRight:
+                _templeRight = true;
+                break;
             default:
                 return;
         }
@@ -87,5 +99,7 @@ public class TutorialCompletionData
         _facilityUpgrades = false;
         _failure = false;
         _temple = false;
+        _templeLeft = false;
+        _templeRight = false;
     }
 }

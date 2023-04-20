@@ -163,6 +163,8 @@ public enum TutorialStageType
     FacilityUpgrades,
     Failure,
     Temple,
+    TempleLeft,
+    TempleRight,
 }
 
 public enum TutorialDarkenType
