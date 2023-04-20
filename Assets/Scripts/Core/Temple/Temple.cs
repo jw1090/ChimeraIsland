@@ -15,6 +15,8 @@ public class Temple : MonoBehaviour
     [SerializeField] Transform _collectionNode = null;
     [SerializeField] Transform _upgradeNode = null;
 
+    private TutorialManager _tutorialManager = null;
+
     public TempleBuyChimeras TempleBuyChimeras { get => _templeBuyChimeras; }
     public TempleCollections TempleCollections { get => _templeCollections; }
     public TempleUpgrades TempleUpgrades { get => _templeUpgrades; }
@@ -26,6 +28,7 @@ public class Temple : MonoBehaviour
 
     public Temple Initialize()
     {
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _templeBuyChimeras.Initialize(this);
         _templeCollections.Initialize();
         _templeUpgrades.Initalize();
@@ -37,5 +40,6 @@ public class Temple : MonoBehaviour
     public void SceneSetup()
     {
         _templeCollections.Build();
+        _tutorialManager.ShowTutorialStage(TutorialStageType.Temple);
     }
 }

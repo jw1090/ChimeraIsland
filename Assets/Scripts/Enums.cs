@@ -161,6 +161,8 @@ public enum TutorialStageType
     ReccomendedTraits,
     FossilShop,
     FacilityUpgrades,
+    Failure,
+    Temple,
 }
 
 public enum TutorialDarkenType

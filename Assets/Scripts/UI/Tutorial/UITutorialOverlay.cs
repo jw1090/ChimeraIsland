@@ -10,6 +10,9 @@ public class UITutorialOverlay : MonoBehaviour
     private TutorialManager _tutorialManager = null;
     private TutorialStageType _tutorialType;
     private int _tutorialStep = -1;
+    private Sprite _icon = null;
+
+    public void SetFirstChimeraSprite(Sprite icon) { _icon = icon; }
 
     public void Initialize(UIManager UIManager)
     {
@@ -75,8 +78,6 @@ public class UITutorialOverlay : MonoBehaviour
             return;
         }
 
-        Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
-
-        _textInfo.Load(_tutorialData.StepData[_tutorialStep].Description, icon);
+        _textInfo.Load(_tutorialData.StepData[_tutorialStep].Description, _icon);
     }
 }

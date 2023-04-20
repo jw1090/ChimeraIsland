@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     private bool _tutorialOpen = false;
     private bool _uiVisible = true;
 
+    public UITutorialOverlay TutorialOverlay { get => _tutorialOverlay; }
     public bool TutorialOpen { get => _tutorialOpen; }
     public MainMenuUI MainMenuUI { get => _mainMenuUI; }
     public StartingUI StartingUI { get => _startingUI; }

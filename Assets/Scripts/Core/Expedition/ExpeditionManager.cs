@@ -522,6 +522,8 @@ public class ExpeditionManager : MonoBehaviour
                     _audioManager.PlaySadChimeraSFX(_chimeras[randomVaule].ChimeraType);
                 }
             }
+
+            _tutorialManager.ShowTutorialStage(TutorialStageType.Failure);
         }
     }
 
