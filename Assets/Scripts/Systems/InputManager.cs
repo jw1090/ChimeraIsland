@@ -204,6 +204,18 @@ public class InputManager : MonoBehaviour
         {
             DebugViewInput();
         }
+
+        if(_currentScene == SceneType.Temple)
+        {
+            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
+            {
+                Outline outline = chimeraHit.transform.gameObject.AddComponent<Outline>();
+                outline.enabled = true;
+                chimeraHit.transform.gameObject.GetComponent<Outline>().OutlineColor = Color.cyan;
+                chimeraHit.transform.gameObject.GetComponent<Outline>().OutlineWidth = 9.0f;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -292,12 +304,12 @@ public class InputManager : MonoBehaviour
             }
             else if (_currentScene == SceneType.Temple)
             {
-                if(_templeUI.InGallery == false)
+
+                if (_templeUI.InGallery == false)
                 {
                     _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
                     //_cameraUtil.PillarTransition(_evolution.ElementType);
                     _templeUI.BuyChimera(_evolution);
-
                 }
             }
         }
