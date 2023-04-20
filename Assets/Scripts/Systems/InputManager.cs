@@ -295,8 +295,9 @@ public class InputManager : MonoBehaviour
                 if(_templeUI.InGallery == false)
                 {
                     _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
-
+                    //_cameraUtil.PillarTransition(_evolution.ElementType);
                     _templeUI.BuyChimera(_evolution);
+
                 }
             }
         }

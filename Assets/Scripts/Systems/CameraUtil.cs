@@ -316,6 +316,30 @@ public class CameraUtil : MonoBehaviour
         CameraShift(nodeTransform, true);
     }
 
+    public void PillarTransition(ElementType elementType)
+    {
+        Transform nodeTransform = null;
+
+        switch (elementType)
+        {
+            case ElementType.None:
+                break;
+            case ElementType.Water:
+                nodeTransform = _templeEnvironment.WaterNode;
+                break;
+            case ElementType.Grass:
+                nodeTransform = _templeEnvironment.GrassNode;
+                break;
+            case ElementType.Fire:
+                nodeTransform = _templeEnvironment.FireNode;
+                break;
+            default:
+                Debug.LogWarning($"{elementType} is not a valid type. Please fix!");
+                break;
+        }
+        CameraShift(nodeTransform, true);
+    }
+
     public void CameraToOrigin()
     {
         _starterEnvironment.ShowAllChimeras();
