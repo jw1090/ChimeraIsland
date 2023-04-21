@@ -70,8 +70,11 @@ public class ChimeraGallery : MonoBehaviour
                 _camera.gameObject.transform.rotation = _galleryNodeSmall.rotation;
                 break;
         }
+
         _chimeraInfo.LoadChimeraData(_currentChimera.GetComponent<EvolutionLogic>());
+
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0) == true);
+
         _active = true;
     }
 
@@ -81,8 +84,8 @@ public class ChimeraGallery : MonoBehaviour
         _active = false;
         _currentChimera.transform.localRotation = Quaternion.identity;
         _currentChimera.SetActive(false);
-        _camera.gameObject.transform.position = _cameraTempleNode.position;
-        _camera.gameObject.transform.rotation = _cameraTempleNode.rotation;
+        _camera.transform.position = _cameraTempleNode.position;
+        _camera.transform.rotation = _cameraTempleNode.rotation;
     }
 
     private void Update()

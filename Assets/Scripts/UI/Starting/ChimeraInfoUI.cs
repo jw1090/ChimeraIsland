@@ -27,9 +27,36 @@ public class ChimeraInfoUI : MonoBehaviour
 
     private ResourceManager _resourceManager = null;
     private UIManager _uiManager = null;
+    private AudioManager _audioManager = null;
     private EvolutionLogic _evolution = null;
 
-    public EvolutionLogic EvolutionLogic { get => _evolution; }
+    public void SetAudioManager(AudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
+
+    private void SetAnimIdle() { SetAnimation("Idle"); }
+    private void SetAnimWalk() { SetAnimation("Walk"); }
+    private void SetAnimSuccess()
+    {
+        SetAnimation("Success");
+        _audioManager.PlayHappyChimeraSFX(_evolution.ChimeraType);
+    }
+
+    private void SetAnimFailure()
+    {
+        SetAnimation("Fail");
+        _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
+    }
+
+    private void SetAnimation(string anim)
+    {
+        if (anim == null || anim == "")
+        {
+            return;
+        }
+        _templeEnvironment.ChimeraGallery.SetAnim(anim);
+    }
 
     public void Initialize()
     {
@@ -92,8 +119,15 @@ public class ChimeraInfoUI : MonoBehaviour
         }
     }
 
-    private void SetAnimIdle() { SetAnim("Idle"); }
-    private void SetAnimWalk() { SetAnim("Walk"); }
-    private void SetAnimSuccess() { SetAnim("Success"); _audioManager.PlayHappyChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
-    private void SetAnimFailure() { SetAnim("Fail"); _audioManager.PlaySadChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
+    public void OpenPurchaseSection()
+    {
+        _purchaseSection.SetActive(true);
+        _animationSection.SetActive(false);
+    }
+
+    public void OpenAnimationSection()
+    {
+        _purchaseSection.SetActive(false);
+        _animationSection.SetActive(true);
+    }
 }

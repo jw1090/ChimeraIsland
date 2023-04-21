@@ -9,19 +9,14 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private UIEssenceWallet _essenceWallet = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
     [SerializeField] private Button _backToHabitatButton = null;
+
+    [Header("Button")]
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
 
-    [Header("Temple Section UI")]
-    [SerializeField] private StatefulObject _sectionUIStates = null;
-
     [Header("Gallery UI")]
-    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
+    [SerializeField] private ChimeraInfoUI _chimeraInfo = null;
     [SerializeField] private Button _backToTempleButton = null;
-    [SerializeField] private Button _walkButton = null;
-    [SerializeField] private Button _idleButton = null;
-    [SerializeField] private Button _successButton = null;
-    [SerializeField] private Button _failureButton = null;
 
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
@@ -31,17 +26,22 @@ public class TempleUI : MonoBehaviour
     private SceneChanger _sceneChanger = null;
     private Temple _templeEnvironment = null;
     private InputManager _inputManager = null;
-    private bool _inGallery = false;
     private TutorialManager _tutorialManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public Button BackToHabitatButton { get => _backToHabitatButton; }
-    public StartingChimeraInfo ChimeraInfo { get => _startingChimeraInfo; }
+    public ChimeraInfoUI ChimeraInfo { get => _chimeraInfo; }
     public Button GoLeftButton { get => _goLeftButton; }
     public Button GoRightButton { get => _goRightButton; }
-    public bool InGallery { get => _inGallery; }
+    public TempleSectionType CurrentTempleSection { get => _currentTempleSection; }
+
     public void SetCameraUtil(CameraUtil cameraUtil) { _cameraUtil = cameraUtil; }
-    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
+    public void SetAudioManager(AudioManager audioManager)
+    {
+        _audioManager = audioManager;
+        _chimeraInfo.SetAudioManager(audioManager);
+    }
+
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -69,38 +69,41 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
         _uiManager.CreateButtonListener(_backToTempleButton, ExitGallery);
-        _uiManager.CreateButtonListener(_walkButton, SetAnimWalk);
-        _uiManager.CreateButtonListener(_idleButton, SetAnimIdle);
-        _uiManager.CreateButtonListener(_successButton, SetAnimSuccess);
-        _uiManager.CreateButtonListener(_failureButton, SetAnimFailure);
-
     }
 
     public void SceneSetup()
     {
         _templeEnvironment = ServiceLocator.Get<Temple>();
+        _chimeraInfo.SetTempleEnvironment(_templeEnvironment);
+
         _templeEnvironment.ChimeraGallery.SetTempleUI(this);
+
         _currentTempleSection = TempleSectionType.Buying;
     }
 
     private void ExitGallery()
     {
-        _templeEnvironment.ChimeraGallery.ExitGallery();
-        ShowSharedUIState();
+        _currentTempleSection = TempleSectionType.Gallery;
     }
 
-    private void SetAnimIdle() { SetAnim("Idle"); }
-    private void SetAnimWalk() { SetAnim("Walk"); }
-    private void SetAnimSuccess() { SetAnim("Success"); _audioManager.PlayHappyChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
-    private void SetAnimFailure() { SetAnim("Fail"); _audioManager.PlaySadChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
-    
-    private void SetAnim(string anim)
+    public void ShowGalleryUI()
     {
-        if (anim == null || anim == "") 
-        {
-            return;
-        }
-        _templeEnvironment.ChimeraGallery.SetAnim(anim);
+        _templeEnvironment.ChimeraGallery.ExitGallery();
+
+        _currentTempleSection = TempleSectionType.Buying;
+    }
+
+    public void ShowDefaultUI()
+    {
+        _title.gameObject.SetActive(true);
+        _subtitle.gameObject.SetActive(true);
+
+        _goLeftButton.gameObject.SetActive(true);
+        _goRightButton.gameObject.SetActive(true);
+
+        _currentTempleSection = TempleSectionType.Buying;
+        _templeEnvironment.ChimeraGallery.ExitGallery();
+        ShowSharedUIState();
     }
 
     private void TransitionLeft()
@@ -201,13 +204,10 @@ public class TempleUI : MonoBehaviour
         switch (_currentTempleSection)
         {
             case TempleSectionType.Buying:
-                _sectionUIStates.SetState("Buying UI", true);
                 break;
             case TempleSectionType.Upgrades:
-                _sectionUIStates.SetState("Upgrades UI", true);
                 break;
             case TempleSectionType.Collection:
-                _sectionUIStates.SetState("Collections UI", true);
                 break;
             default:
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is invalid!");

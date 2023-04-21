@@ -194,7 +194,7 @@ public class LevelLoader : AsyncLoader
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
             case SceneType.Temple:
-                _uiManager.TempleUI.ShowSharedUIState();
+                _uiManager.TempleUI.ShowDefaultUI();
                 break;
             case SceneType.Builder:
                 break;

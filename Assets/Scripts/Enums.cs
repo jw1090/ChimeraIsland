@@ -239,3 +239,10 @@ public enum TapVFXType
     Stone,
     Tree,
 }
+
+public enum BackButtonType
+{
+    None = -1,
+    Back,
+    Habitat,
+}
