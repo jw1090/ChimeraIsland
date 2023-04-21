@@ -31,10 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator _loadingGifAnimator = null;
     [SerializeField] private TextMeshProUGUI _loadingText = null;
 
-
     [Header("Tutorial")]
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
-
 
     private TutorialManager _tutorialManager = null;
     private bool _tutorialOpen = false;
@@ -290,8 +288,8 @@ public class UIManager : MonoBehaviour
     {
         _tutorialOverlay.gameObject.SetActive(true);
         _tutorialOverlay.ShowOverlay(tutorialSteps, tutorialType);
-        
-        if(InHabitatState)
+
+        if (InHabitatState)
         {
             _habitatUI.ActivateStandardUI(false);
         }
