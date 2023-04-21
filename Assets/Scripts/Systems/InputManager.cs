@@ -174,7 +174,7 @@ public class InputManager : MonoBehaviour
 
             if (MovementInputCheck() == true)
             {
-                if (_habitatUI.MenuOpen == false && _habitatUI.TutorialOpen == false)
+                if (_habitatUI.MenuOpen == false && _uiManager.TutorialOpen == false)
                 {
                     _cameraUtil.CameraUpdate();
                 }

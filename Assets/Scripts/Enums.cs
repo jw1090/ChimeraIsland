@@ -162,6 +162,10 @@ public enum TutorialStageType
     ReccomendedTraits,
     FossilShop,
     FacilityUpgrades,
+    Failure,
+    BuyChimera,
+    Collections,
+    Upgrade,
 }
 
 public enum TutorialDarkenType

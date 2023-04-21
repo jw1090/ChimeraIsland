@@ -178,6 +178,8 @@ public class HabitatManager : MonoBehaviour
         BuildFacilitiesForHabitat();
         SpawnChimerasForHabitat();
 
+        _uiManager.TutorialOverlay.SetFirstChimeraSprite(CurrentHabitat.GetFirstChimera().ChimeraIcon);
+
         if (_upgradeQueue.Count > 0)
         {
             StartCoroutine(CamQueue());
