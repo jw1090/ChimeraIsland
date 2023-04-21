@@ -504,7 +504,7 @@ public class ExpeditionManager : MonoBehaviour
             {
                 chimera.transform.Rotate(0.0f, -90.0f, 0.0f);
                 chimera.Behavior.EnterAnim(AnimationType.Success);
-                if(_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
+                if (_uiExpedition.ExpeditionResult.isActiveAndEnabled == true)
                 {
                     _audioManager.PlayHappyChimeraSFX(_chimeras[randomVaule].ChimeraType);
                 }
@@ -525,7 +525,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
             }
             _failureCount++;
-            if(_failureCount > 2)
+            if (_failureCount > 2)
             {
                 _tutorialManager.ShowTutorialStage(TutorialStageType.Failure);
                 _failureCount = 0;
