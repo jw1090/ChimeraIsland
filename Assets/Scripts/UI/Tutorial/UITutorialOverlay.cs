@@ -4,20 +4,23 @@ public class UITutorialOverlay : MonoBehaviour
 {
     [SerializeField] private UITextInfo _textInfo = null;
     [SerializeField] private StatefulObject _darken = null;
-    private HabitatUI _habitatUI = null;
+    private UIManager _UIManager = null;
     private TutorialStageData _tutorialData = null;
     private HabitatManager _habitatManager = null;
     private TutorialManager _tutorialManager = null;
     private TutorialStageType _tutorialType;
     private int _tutorialStep = -1;
+    private Sprite _icon = null;
 
-    public void Initialize(HabitatUI habitatUI)
+    public void SetFirstChimeraSprite(Sprite icon) { _icon = icon; }
+
+    public void Initialize(UIManager UIManager)
     {
         _darken.SetState("StandardBG");
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
-        _habitatUI = habitatUI;
+        _UIManager = UIManager;
 
         this.gameObject.SetActive(false);
     }
@@ -70,13 +73,11 @@ public class UITutorialOverlay : MonoBehaviour
         if (_tutorialStep >= _tutorialData.StepData.Length)
         {
             _tutorialManager.TutorialComplete(_tutorialType);
-            _habitatUI.EndTutorial();
+            _UIManager.EndTutorial();
             _textInfo.Done();
             return;
         }
 
-        Sprite icon = _habitatManager.CurrentHabitat.GetFirstChimera().ChimeraIcon;
-
-        _textInfo.Load(_tutorialData.StepData[_tutorialStep].Description, icon);
+        _textInfo.Load(_tutorialData.StepData[_tutorialStep].Description, _icon);
     }
 }
