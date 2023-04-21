@@ -62,6 +62,7 @@ public class HabitatUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         SetupButtonListeners();
 
@@ -69,7 +70,6 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.Initialize(uiManager);
         _detailsManager.Initialize(uiManager);
         _chimeraPopUp.Initialize();
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
     }
 
