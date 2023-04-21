@@ -7,6 +7,7 @@ public class Environment : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private Portal _portal = null;
     [SerializeField] private FireflyFolder _fireflyFolder = null;
+    [SerializeField] private GameObject _temple = null;
 
     [Header("Enviornmental Objects")]
     [SerializeField] private GameObject _tierOneOnlyGO = null;
@@ -22,10 +23,13 @@ public class Environment : MonoBehaviour
     [SerializeField] private Material _greenCliff = null;
 
     public Portal Portal { get => _portal; }
+    public GameObject Temple { get => _temple; }
 
     public void Initialize()
     {
         _fireflyFolder.Initialize();
+        _portal.GetComponent<Outline>().enabled = false;
+        _temple.GetComponent<Outline>().enabled = false;
     }
 
     public void ToggleFireflies(bool toggleOn)

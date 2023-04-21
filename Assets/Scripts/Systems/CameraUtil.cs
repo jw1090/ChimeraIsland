@@ -44,6 +44,7 @@ public class CameraUtil : MonoBehaviour
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }
     public bool IsNaming { get; set; }
+    public StarterEnvironment StarterEnvironment { get => _starterEnvironment; }
 
     public void SetSpeed(float speed)
     {

@@ -17,6 +17,9 @@ public class StarterEnvironment : MonoBehaviour
     public Transform ANode { get => _cameraANode; }
     public Transform BNode { get => _cameraBNode; }
     public Transform CNode { get => _cameraCNode; }
+    public EvolutionLogic ChimeraA { get => _chimeraA; }
+    public EvolutionLogic ChimeraB { get => _chimeraB; }
+    public EvolutionLogic ChimeraC { get => _chimeraC; }
 
     public void ShowAllChimeras()
     {
