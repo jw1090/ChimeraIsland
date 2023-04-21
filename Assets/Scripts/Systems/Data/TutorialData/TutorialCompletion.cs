@@ -11,9 +11,9 @@ public class TutorialCompletionData
     public bool _fossilShop = false;
     public bool _facilityUpgrades = false;
     public bool _failure = false;
-    public bool _temple = false;
-    public bool _templeLeft = false;
-    public bool _templeRight = false;
+    public bool _butChimera = false;
+    public bool collections = false;
+    public bool _upgrade = false;
 
     public bool IsCompleted(TutorialStageType type)
     {
@@ -35,12 +35,12 @@ public class TutorialCompletionData
                 return _facilityUpgrades;
             case TutorialStageType.Failure:
                 return _failure;
-            case TutorialStageType.Temple:
-                return _temple;
-            case TutorialStageType.TempleLeft:
-                return _templeLeft;
-            case TutorialStageType.TempleRight:
-                return _templeRight;
+            case TutorialStageType.BuyChimera:
+                return _butChimera;
+            case TutorialStageType.Collections:
+                return collections;
+            case TutorialStageType.Upgrade:
+                return _upgrade;
             default:
                 return true;
         }
@@ -74,14 +74,14 @@ public class TutorialCompletionData
             case TutorialStageType.Failure:
                 _failure = true;
                 break;
-            case TutorialStageType.Temple:
-                _temple = true;
+            case TutorialStageType.BuyChimera:
+                _butChimera = true;
                 break;
-            case TutorialStageType.TempleLeft:
-                _templeLeft = true;
+            case TutorialStageType.Collections:
+                collections = true;
                 break;
-            case TutorialStageType.TempleRight:
-                _templeRight = true;
+            case TutorialStageType.Upgrade:
+                _upgrade = true;
                 break;
             default:
                 return;
@@ -98,8 +98,8 @@ public class TutorialCompletionData
         _fossilShop = false;
         _facilityUpgrades = false;
         _failure = false;
-        _temple = false;
-        _templeLeft = false;
-        _templeRight = false;
+        _butChimera = false;
+        collections = false;
+        _upgrade = false;
     }
 }

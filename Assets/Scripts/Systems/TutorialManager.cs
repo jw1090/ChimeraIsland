@@ -3,12 +3,12 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
-    private UIManager _UIManager = null;
+    private UIManager _UiManager = null;
     private bool _tutorialsEnabled = false;
     private PersistentData _persistentData = null;
     private TutorialCompletionData _tutorialCompletion = null;
 
-    public void SetHabitatUI(UIManager UIManager) { _UIManager = UIManager; }
+    public void SetHabitatUI(UIManager UIManager) { _UiManager = UIManager; }
 
     public TutorialManager Initialize()
     {
@@ -73,7 +73,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)tutorialType];
-        _UIManager.StartTutorial(tutorialStage, tutorialType);
+        _UiManager.StartTutorial(tutorialStage, tutorialType);
     }
 
     public void TutorialStageCheck()

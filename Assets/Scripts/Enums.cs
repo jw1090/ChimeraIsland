@@ -162,9 +162,9 @@ public enum TutorialStageType
     FossilShop,
     FacilityUpgrades,
     Failure,
-    Temple,
-    TempleLeft,
-    TempleRight,
+    BuyChimera,
+    Collections,
+    Upgrade,
 }
 
 public enum TutorialDarkenType

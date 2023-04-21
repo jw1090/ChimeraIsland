@@ -110,7 +110,7 @@ public class TempleUI : MonoBehaviour
             case TempleSectionType.Buying: // Go To Collections
                 _goLeftButton.gameObject.SetActive(false);
                 _currentTempleSection = TempleSectionType.Collection;
-                _tutorialManager.ShowTutorialStage(TutorialStageType.TempleLeft);
+                _tutorialManager.ShowTutorialStage(TutorialStageType.Collections);
                 break;
             case TempleSectionType.Upgrades: // Go To Buying
                 _goRightButton.gameObject.SetActive(true);
@@ -131,7 +131,7 @@ public class TempleUI : MonoBehaviour
             case TempleSectionType.Buying: // Go To Upgrades
                 _goRightButton.gameObject.SetActive(false);
                 _currentTempleSection = TempleSectionType.Upgrades;
-                _tutorialManager.ShowTutorialStage(TutorialStageType.TempleRight);
+                _tutorialManager.ShowTutorialStage(TutorialStageType.Upgrade);
                 break;
             case TempleSectionType.Collection: // Go To Buying
                 _goLeftButton.gameObject.SetActive(true);

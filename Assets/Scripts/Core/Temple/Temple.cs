@@ -40,6 +40,6 @@ public class Temple : MonoBehaviour
     public void SceneSetup()
     {
         _templeCollections.Build();
-        _tutorialManager.ShowTutorialStage(TutorialStageType.Temple);
+        _tutorialManager.ShowTutorialStage(TutorialStageType.BuyChimera);
     }
 }
