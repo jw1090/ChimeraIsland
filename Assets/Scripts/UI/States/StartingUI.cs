@@ -8,7 +8,7 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private GameObject _container = null;
     [SerializeField] private StartingChimeraButton _acceptButton = null;
     [SerializeField] private Button _declineButton = null;
-    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
+    [SerializeField] private ChimeraInfoUI _startingChimeraInfo = null;
     private UIManager _uiManager = null;
     private CameraUtil _camera = null;
 

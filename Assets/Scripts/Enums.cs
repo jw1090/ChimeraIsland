@@ -149,6 +149,7 @@ public enum TempleSectionType
     Upgrades,
     Collection,
     Habitat,
+    Gallery,
 }
 
 public enum TutorialStageType

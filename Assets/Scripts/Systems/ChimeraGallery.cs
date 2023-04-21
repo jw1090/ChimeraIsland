@@ -27,7 +27,7 @@ public class ChimeraGallery : MonoBehaviour
     [SerializeField] private GameObject _chimeraC3 = null;
 
     private InputManager _inputManager = null;
-    private StartingChimeraInfo _chimeraInfo = null;
+    private ChimeraInfoUI _chimeraInfo = null;
     private bool _active = false;
     private TempleUI _templeUI;
     private GameObject _currentChimera = null;
@@ -41,20 +41,19 @@ public class ChimeraGallery : MonoBehaviour
     {
         _chimeraInfo = ServiceLocator.Get<UIManager>().TempleUI.ChimeraInfo;
         _inputManager = ServiceLocator.Get<InputManager>();
-        _chimeraInfo.Initialize();
     }
 
-    public void SetTempleUI(TempleUI templeUI)
-    {
-        _templeUI = templeUI;
-    }
+    public void SetTempleUI(TempleUI templeUI) { _templeUI = templeUI; }
 
     public IEnumerator StartGallery(ChimeraType chimeraType)
     {
-        _templeUI.ShowGalleryUIState();
+        _templeUI.ShowGalleryUI();
+
         GetCurrentChimera(chimeraType);
+
         _currentChimera.SetActive(true);
         _currentAnimator = _currentChimera.GetComponent<Animator>();
+
         switch (chimeraType)
         {
             case ChimeraType.A3:

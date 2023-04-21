@@ -3,15 +3,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartingChimeraInfo : MonoBehaviour
+public class ChimeraInfoUI : MonoBehaviour
 {
+    [Header("Main")]
     [SerializeField] private TextMeshProUGUI _chimeraName = null;
     [SerializeField] private Image _icon = null;
     [SerializeField] private List<StatefulObject> _explorationPreference = new List<StatefulObject>();
     [SerializeField] private List<StatefulObject> _staminaPreference = new List<StatefulObject>();
     [SerializeField] private List<StatefulObject> _wisdomPreference = new List<StatefulObject>();
     [SerializeField] private TextMeshProUGUI _chimeraInfo = null;
+
+    [Header("Purchase Section")]
+    [SerializeField] private GameObject _purchaseSection = null;
+    [SerializeField] private Button _purchaseButton = null;
+    [SerializeField] private Button _cancelsButton = null;
+
+    [Header("Animation Buttons")]
+    [SerializeField] private GameObject _animationSection = null;
+    [SerializeField] private Button _walkButton = null;
+    [SerializeField] private Button _idleButton = null;
+    [SerializeField] private Button _successButton = null;
+    [SerializeField] private Button _failureButton = null;
+
     private ResourceManager _resourceManager = null;
+    private UIManager _uiManager = null;
     private EvolutionLogic _evolution = null;
 
     public EvolutionLogic EvolutionLogic { get => _evolution; }
@@ -19,6 +34,15 @@ public class StartingChimeraInfo : MonoBehaviour
     public void Initialize()
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
+    }
+
+    public void SetupButtonListeners()
+    {
+        _uiManager.CreateButtonListener(_walkButton, SetAnimWalk);
+        _uiManager.CreateButtonListener(_idleButton, SetAnimIdle);
+        _uiManager.CreateButtonListener(_successButton, SetAnimSuccess);
+        _uiManager.CreateButtonListener(_failureButton, SetAnimFailure);
     }
 
     public void LoadChimeraData(EvolutionLogic evolutionLogic)
@@ -67,4 +91,9 @@ public class StartingChimeraInfo : MonoBehaviour
             iconList[i].SetState("Filled", true);
         }
     }
+
+    private void SetAnimIdle() { SetAnim("Idle"); }
+    private void SetAnimWalk() { SetAnim("Walk"); }
+    private void SetAnimSuccess() { SetAnim("Success"); _audioManager.PlayHappyChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
+    private void SetAnimFailure() { SetAnim("Fail"); _audioManager.PlaySadChimeraSFX(ChimeraInfo.EvolutionLogic.ChimeraType); }
 }

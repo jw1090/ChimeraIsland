@@ -292,7 +292,7 @@ public class InputManager : MonoBehaviour
             }
             else if (_currentScene == SceneType.Temple)
             {
-                if(_templeUI.InGallery == false)
+                if (_templeUI.InGallery == false)
                 {
                     _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
 
