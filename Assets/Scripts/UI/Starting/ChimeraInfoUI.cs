@@ -29,13 +29,14 @@ public class ChimeraInfoUI : MonoBehaviour
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private EvolutionLogic _evolution = null;
+    private Temple _temple = null;
 
     public void SetAudioManager(AudioManager audioManager)
     {
         _audioManager = audioManager;
     }
 
-    public void SetTempleEnvironment(Temple) { S}
+    public void Temple(Temple temple) { _temple = temple; }
 
     private void SetAnimIdle() { SetAnimation("Idle"); }
     private void SetAnimWalk() { SetAnimation("Walk"); }
@@ -51,14 +52,7 @@ public class ChimeraInfoUI : MonoBehaviour
         _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
     }
 
-    private void SetAnimation(string anim)
-    {
-        if (anim == null || anim == "")
-        {
-            return;
-        }
-        _templeEnvironment.ChimeraGallery.SetAnim(anim);
-    }
+    private void SetAnimation(string animationName) { _temple.ChimeraGallery.SetAnimation(animationName); }
 
     public void Initialize()
     {

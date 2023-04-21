@@ -254,7 +254,8 @@ public class InputManager : MonoBehaviour
         {
             if (_currentScene == SceneType.Temple)
             {
-                StartCoroutine(_temple.ChimeraGallery.StartGallery(figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType));
+                ChimeraType chimeraType = figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType;
+                StartCoroutine(_temple.ChimeraGallery.StartGallery(chimeraType));
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))

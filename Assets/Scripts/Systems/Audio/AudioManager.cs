@@ -261,7 +261,6 @@ public class AudioManager : MonoBehaviour
                 }
                 break;
             case SceneType.Starting:
-            case SceneType.Builder:
                 {
                     _musicSource.Stop();
 
@@ -293,7 +292,6 @@ public class AudioManager : MonoBehaviour
         {
             case SceneType.MainMenu:
             case SceneType.Starting:
-            case SceneType.Builder:
                 _ambientSource.Stop();
                 break;
             case SceneType.Habitat:

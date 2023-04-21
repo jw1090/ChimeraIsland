@@ -102,7 +102,6 @@ public enum SceneType
     Starting,
     Habitat,
     Temple,
-    Builder,
 }
 
 public enum StatPreferenceType
@@ -146,10 +145,11 @@ public enum TempleSectionType
 {
     None = -1,
     Buying,
+    Chimera,
     Upgrades,
     Collection,
-    Habitat,
     Gallery,
+    Habitat,
 }
 
 public enum TutorialStageType

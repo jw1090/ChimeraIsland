@@ -96,7 +96,7 @@ public class ChimeraGallery : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
-            if(_clickedDownOnChimera == false && _inputManager.GetCursorSprite() == CursorType.Dragable)
+            if (_clickedDownOnChimera == false && _inputManager.GetCursorSprite() == CursorType.Dragable)
             {
                 _clickedDownOnChimera = true;
                 _inputManager.SetRotatingInGallery(true);
@@ -116,17 +116,19 @@ public class ChimeraGallery : MonoBehaviour
         mPrevMousePos = Input.mousePosition;
     }
 
-    public void SetAnim(string anim)
+    public void SetAnimation(string animationName)
     {
-        if(_currentAnimator == null)
+        if (_currentAnimator == null)
         {
             return;
         }
+
         if (_currentAnim != "")
         {
             _currentAnimator.SetBool(_currentAnim, false);
         }
-        _currentAnim = anim;
+
+        _currentAnim = animationName;
         _currentAnimator.SetBool(_currentAnim, true);
     }
 

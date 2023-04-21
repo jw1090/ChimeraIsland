@@ -65,10 +65,6 @@ public class LevelLoader : AsyncLoader
             case SceneType.Temple:
                 TempleSceneSetup();
                 break;
-            case SceneType.Builder:
-                _evolutionBuilder.BuildAll();
-                _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
-                break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
                 break;
@@ -194,9 +190,6 @@ public class LevelLoader : AsyncLoader
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
             case SceneType.Temple:
-                _uiManager.TempleUI.ShowDefaultUI();
-                break;
-            case SceneType.Builder:
                 break;
             default:
                 Debug.LogWarning($"Scene Type: {_sceneType} is invalid.");
