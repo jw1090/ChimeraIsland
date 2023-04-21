@@ -262,7 +262,6 @@ public class UIManager : MonoBehaviour
     public void UpdateEssenceWallets()
     {
         _habitatUI.UpdateEssenceWallets();
-        _templeUI.UpdateEssenceWallets();
     }
 
     public void UpdateFossilWallets()
