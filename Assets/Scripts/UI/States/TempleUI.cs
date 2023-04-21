@@ -32,6 +32,7 @@ public class TempleUI : MonoBehaviour
     private Temple _templeEnvironment = null;
     private InputManager _inputManager = null;
     private bool _inGallery = false;
+    private TutorialManager _tutorialManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public Button BackToHabitatButton { get => _backToHabitatButton; }
@@ -45,6 +46,7 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager = uiManager;
 
+        _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
@@ -108,6 +110,7 @@ public class TempleUI : MonoBehaviour
             case TempleSectionType.Buying: // Go To Collections
                 _goLeftButton.gameObject.SetActive(false);
                 _currentTempleSection = TempleSectionType.Collection;
+                _tutorialManager.ShowTutorialStage(TutorialStageType.Collections);
                 break;
             case TempleSectionType.Upgrades: // Go To Buying
                 _goRightButton.gameObject.SetActive(true);
@@ -128,6 +131,7 @@ public class TempleUI : MonoBehaviour
             case TempleSectionType.Buying: // Go To Upgrades
                 _goRightButton.gameObject.SetActive(false);
                 _currentTempleSection = TempleSectionType.Upgrades;
+                _tutorialManager.ShowTutorialStage(TutorialStageType.Upgrade);
                 break;
             case TempleSectionType.Collection: // Go To Buying
                 _goLeftButton.gameObject.SetActive(true);

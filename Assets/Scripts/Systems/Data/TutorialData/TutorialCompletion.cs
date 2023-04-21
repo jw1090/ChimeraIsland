@@ -10,6 +10,10 @@ public class TutorialCompletionData
     public bool _reccomendedTraits = false;
     public bool _fossilShop = false;
     public bool _facilityUpgrades = false;
+    public bool _failure = false;
+    public bool _butChimera = false;
+    public bool collections = false;
+    public bool _upgrade = false;
 
     public bool IsCompleted(TutorialStageType type)
     {
@@ -29,6 +33,14 @@ public class TutorialCompletionData
                 return _fossilShop;
             case TutorialStageType.FacilityUpgrades:
                 return _facilityUpgrades;
+            case TutorialStageType.Failure:
+                return _failure;
+            case TutorialStageType.BuyChimera:
+                return _butChimera;
+            case TutorialStageType.Collections:
+                return collections;
+            case TutorialStageType.Upgrade:
+                return _upgrade;
             default:
                 return true;
         }
@@ -59,6 +71,18 @@ public class TutorialCompletionData
             case TutorialStageType.FacilityUpgrades:
                 _facilityUpgrades= true;
                 break;
+            case TutorialStageType.Failure:
+                _failure = true;
+                break;
+            case TutorialStageType.BuyChimera:
+                _butChimera = true;
+                break;
+            case TutorialStageType.Collections:
+                collections = true;
+                break;
+            case TutorialStageType.Upgrade:
+                _upgrade = true;
+                break;
             default:
                 return;
         }
@@ -73,5 +97,9 @@ public class TutorialCompletionData
         _reccomendedTraits = false;
         _fossilShop = false;
         _facilityUpgrades = false;
+        _failure = false;
+        _butChimera = false;
+        collections = false;
+        _upgrade = false;
     }
 }
