@@ -6,6 +6,10 @@ public class UpgradeSections : MonoBehaviour
     [SerializeField] private UpgradeNode _tier1 = null;
     [SerializeField] private UpgradeNode _tier2 = null;
     [SerializeField] private UpgradeNode _tier3 = null;
+    [SerializeField] private GameObject _rubble = null;
+    [SerializeField] private Material _upgradeConnectionOn = null;
+    [SerializeField] private MeshRenderer _upgradeConnection1 = null;
+    [SerializeField] private MeshRenderer _upgradeConnection2 = null;
     private HabitatManager _habitatManager = null;
 
     public void Initialize()
@@ -26,21 +30,28 @@ public class UpgradeSections : MonoBehaviour
         switch (currentTier)
         {
             case 0:
+                _rubble.SetActive(true);
                 _tier1.StatefulObject.SetState("To Buy", true);
-                _tier2.StatefulObject.SetState("Inactive", true);
-                _tier3.StatefulObject.SetState("Inactive", true);
+                _tier2.StatefulObject.SetState("To Buy", true);
+                _tier3.StatefulObject.SetState("To Buy", true);
                 break;
             case 1:
+                _rubble.SetActive(false);
                 _tier1.StatefulObject.SetState("Active", true);
                 _tier2.StatefulObject.SetState("To Buy", true);
-                _tier3.StatefulObject.SetState("Inactive", true);
+                _tier3.StatefulObject.SetState("To Buy", true);
                 break;
             case 2:
+                _rubble.SetActive(false);
+                _upgradeConnection1.material = _upgradeConnectionOn;
                 _tier1.StatefulObject.SetState("Active", true);
                 _tier2.StatefulObject.SetState("Active", true);
                 _tier3.StatefulObject.SetState("To Buy", true);
                 break;
             case 3:
+                _rubble.SetActive(false);
+                _upgradeConnection1.material = _upgradeConnectionOn;
+                _upgradeConnection2.material = _upgradeConnectionOn;
                 _tier1.StatefulObject.SetState("Active", true);
                 _tier2.StatefulObject.SetState("Active", true);
                 _tier3.StatefulObject.SetState("Active", true);
