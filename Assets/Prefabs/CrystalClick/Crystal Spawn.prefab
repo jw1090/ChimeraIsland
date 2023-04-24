@@ -1,37 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &107441424019294849
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 735887513593663547}
-  m_Layer: 8
-  m_Name: Single Crystal 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &735887513593663547
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107441424019294849}
-  m_LocalRotation: {x: -0.000000011175871, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0002343168, y: 0.00062926376, z: -0.00022909182}
-  m_LocalScale: {x: 0.95588696, y: 0.9558868, z: 0.9558869}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 575835142890866455}
-  m_Father: {fileID: 7823610631042927247}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 6.739, y: -210.278, z: -21.592}
 --- !u!1 &234842094372268854
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,42 +144,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 63636614297742149}
-  - {fileID: 948491370321654679}
+  - {fileID: 63636613927576763}
   m_Father: {fileID: 256120351447299518}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0.586, y: -78.283, z: 20.283}
---- !u!1 &460043691721746733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 948491370321654679}
-  m_Layer: 8
-  m_Name: Single Crystal 2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &948491370321654679
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460043691721746733}
-  m_LocalRotation: {x: -0, y: -0.00000008940696, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0003638087, y: 0.0013175801, z: -0.00042614748}
-  m_LocalScale: {x: 0.9191221, y: 0.919122, z: 0.9191221}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 63636613927576763}
-  m_Father: {fileID: 948491370761026665}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -115.867, z: 0}
 --- !u!1 &693121856116884599
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +195,6 @@ GameObject:
   - component: {fileID: 1168749819845036927}
   - component: {fileID: 2613153242514834894}
   - component: {fileID: 1214132602049429307}
-  - component: {fileID: 86307738}
   m_Layer: 8
   m_Name: Crystal Spawn
   m_TagString: Untagged
@@ -305,6 +240,10 @@ MonoBehaviour:
   - {fileID: 8278520702127213128}
   - {fileID: 8097909754358623470}
   - {fileID: 7478723617775950051}
+  _outlines:
+  - {fileID: 6231329006184783445}
+  - {fileID: 7032451452646586065}
+  - {fileID: 1080415100280654394}
 --- !u!54 &1214132602049429307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -321,77 +260,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &86307738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061694199146584755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 0.94509804, g: 0.030711493, b: 0, a: 1}
-  outlineWidth: 5
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
-  renderers:
-  - {fileID: 2749866048833669132}
-  - {fileID: 8677704774373336209}
-  - {fileID: 2642421290297110186}
-  - {fileID: 8858543323112931895}
-  - {fileID: 2572705488772287750}
-  - {fileID: 8241409393308551932}
-  - {fileID: 7722640556336401551}
-  - {fileID: 3675933093404727975}
-  - {fileID: 7874424867148625466}
-  - {fileID: 3754976825111165195}
-  - {fileID: 4651115860504515256}
-  - {fileID: 6404468953394929488}
-  - {fileID: 4759932657100092446}
-  - {fileID: 6513196989808294390}
-  - {fileID: 2572705489205330680}
-  - {fileID: 9191981961657130342}
-  - {fileID: 3249173260970378455}
-  - {fileID: 6171866688822181907}
-  - {fileID: 5605798060400692731}
-  - {fileID: 3754976824743130869}
---- !u!1 &1281884087309606176
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1910083031798957978}
-  m_Layer: 8
-  m_Name: Single Crystal 2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1910083031798957978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281884087309606176}
-  m_LocalRotation: {x: -0, y: -0.00000008940696, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0003638087, y: 0.0013175801, z: -0.00042614748}
-  m_LocalScale: {x: 0.9191221, y: 0.919122, z: 0.9191221}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1678251307958784182}
-  m_Father: {fileID: 1910083031428794468}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -115.867, z: 0}
 --- !u!1 &1281884087679767262
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,42 +289,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1678251307519418184}
-  - {fileID: 1910083031798957978}
+  - {fileID: 1678251307958784182}
   m_Father: {fileID: 1451744162367455667}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0.586, y: -78.283, z: 20.283}
---- !u!1 &1465710924094216234
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2241826131977945744}
-  m_Layer: 8
-  m_Name: Single Crystal 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2241826131977945744
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465710924094216234}
-  m_LocalRotation: {x: -0.000000011175871, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0002343168, y: 0.00062926376, z: -0.00022909182}
-  m_LocalScale: {x: 0.95588696, y: 0.9558868, z: 0.9558869}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1357609014882260412}
-  m_Father: {fileID: 8771315926480328740}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 6.739, y: -210.278, z: -21.592}
 --- !u!1 &1507050173937049403
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,38 +523,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1 &1645494888717778572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2134187591225713718}
-  m_Layer: 8
-  m_Name: Single Crystal 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2134187591225713718
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645494888717778572}
-  m_LocalRotation: {x: -0.000000011175871, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0002343168, y: 0.00062926376, z: -0.00022909182}
-  m_LocalScale: {x: 0.95588696, y: 0.9558868, z: 0.9558869}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1176999190259643162}
-  m_Father: {fileID: 8879763585398734466}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 6.739, y: -210.278, z: -21.592}
 --- !u!1 &2068422791240521436
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +619,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1867075693345102183}
-  - {fileID: 5915962772518880787}
+  - {fileID: 6904609790429450559}
   m_Father: {fileID: 256120351447299518}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -9.231, y: -169.732, z: -44.274}
@@ -865,6 +669,7 @@ GameObject:
   - component: {fileID: 4087170036033180038}
   - component: {fileID: 8278520702127213128}
   - component: {fileID: 1437066744613425481}
+  - component: {fileID: 6231329006184783445}
   m_Layer: 8
   m_Name: Crystal1
   m_TagString: Untagged
@@ -938,6 +743,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6231329006184783445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2321205005841019340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.7075472, g: 0.112093575, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+  renderers:
+  - {fileID: 4651115860504515256}
+  - {fileID: 2749866048833669132}
+  - {fileID: 6404468953394929488}
+  - {fileID: 8677704774373336209}
 --- !u!1 &2499038651016373977
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +778,7 @@ GameObject:
   - component: {fileID: 8677918889705699912}
   - component: {fileID: 3675933093404727975}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -963,13 +791,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2499038651016373977}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0045, y: -0, z: -0.001}
-  m_LocalScale: {x: 1.3564, y: 1, z: 1.394}
+  m_LocalRotation: {x: -0.000000014901159, y: 0.000000014901159, z: -0.000000005587935, w: 1}
+  m_LocalPosition: {x: -0.0045358087, y: 0.000629264, z: -0.0011849786}
+  m_LocalScale: {x: 1.296565, y: 0.9558868, z: 1.3325064}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 735887513593663547}
-  m_RootOrder: 0
+  m_Father: {fileID: 7823610631042927247}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8677918889705699912
 MeshFilter:
@@ -1033,13 +861,14 @@ GameObject:
   - component: {fileID: 4195722962601850656}
   - component: {fileID: 8097909754358623470}
   - component: {fileID: 1257564383362430959}
+  - component: {fileID: 7032451452646586065}
   m_Layer: 8
   m_Name: Crystal2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1131432900019565161
 Transform:
   m_ObjectHideFlags: 0
@@ -1106,6 +935,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7032451452646586065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2500671059602626410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.7075472, g: 0.112093575, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+  renderers:
+  - {fileID: 4759932657100092446}
+  - {fileID: 2642421290297110186}
+  - {fileID: 6513196989808294390}
+  - {fileID: 8858543323112931895}
+  - {fileID: 2572705489205330680}
+  - {fileID: 2572705488772287750}
 --- !u!1 &2716106267676625547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +972,7 @@ GameObject:
   - component: {fileID: 9183397554351625754}
   - component: {fileID: 3754976824743130869}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1201,7 +1055,7 @@ GameObject:
   - component: {fileID: 9183397554721757668}
   - component: {fileID: 3754976825111165195}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1214,13 +1068,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2716106267845428597}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0007, y: 0, z: -0.0033}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.00000008940697, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0010071938, y: 0.0013175802, z: -0.003459251}
+  m_LocalScale: {x: 0.91912216, y: 0.9191219, z: 0.91912216}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 948491370321654679}
-  m_RootOrder: 0
+  m_Father: {fileID: 948491370761026665}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9183397554721757668
 MeshFilter:
@@ -1284,7 +1138,7 @@ GameObject:
   - component: {fileID: 7555270984837295593}
   - component: {fileID: 2572705488772287750}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1297,13 +1151,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3610129638539981176}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0007, y: 0, z: -0.0033}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.00000008940697, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0010071938, y: 0.0013175802, z: -0.003459251}
+  m_LocalScale: {x: 0.91912216, y: 0.9191219, z: 0.91912216}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1910083031798957978}
-  m_RootOrder: 0
+  m_Father: {fileID: 1910083031428794468}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7555270984837295593
 MeshFilter:
@@ -1367,7 +1221,7 @@ GameObject:
   - component: {fileID: 7555270985276629527}
   - component: {fileID: 2572705489205330680}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1450,7 +1304,7 @@ GameObject:
   - component: {fileID: 8054235782277500485}
   - component: {fileID: 2642421290297110186}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1463,13 +1317,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3820763239690932948}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0045, y: -0, z: -0.001}
-  m_LocalScale: {x: 1.3564, y: 1, z: 1.394}
+  m_LocalRotation: {x: -0.000000014901159, y: 0.000000014901159, z: -0.000000005587935, w: 1}
+  m_LocalPosition: {x: -0.0045358087, y: 0.000629264, z: -0.0011849786}
+  m_LocalScale: {x: 1.296565, y: 0.9558868, z: 1.3325064}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2134187591225713718}
-  m_RootOrder: 0
+  m_Father: {fileID: 8879763585398734466}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8054235782277500485
 MeshFilter:
@@ -1533,13 +1387,14 @@ GameObject:
   - component: {fileID: 3283825926021727021}
   - component: {fileID: 7478723617775950051}
   - component: {fileID: 494139909413225442}
+  - component: {fileID: 1080415100280654394}
   m_Layer: 8
   m_Name: Crystal3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1737234692562765412
 Transform:
   m_ObjectHideFlags: 0
@@ -1606,6 +1461,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1080415100280654394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827046559113913191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0.7075472, g: 0.112093575, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+  renderers:
+  - {fileID: 9191981961657130342}
+  - {fileID: 8241409393308551932}
+  - {fileID: 3249173260970378455}
+  - {fileID: 7722640556336401551}
+  - {fileID: 6171866688822181907}
+  - {fileID: 3675933093404727975}
+  - {fileID: 5605798060400692731}
+  - {fileID: 7874424867148625466}
+  - {fileID: 3754976824743130869}
+  - {fileID: 3754976825111165195}
 --- !u!1 &4000510796056753266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,7 +1502,7 @@ GameObject:
   - component: {fileID: 7873660450537335011}
   - component: {fileID: 2749866048833669132}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,13 +1515,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4000510796056753266}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0045, y: -0, z: -0.001}
-  m_LocalScale: {x: 1.3564, y: 1, z: 1.394}
+  m_LocalRotation: {x: -0.000000014901159, y: 0.000000014901159, z: -0.000000005587935, w: 1}
+  m_LocalPosition: {x: -0.0045358087, y: 0.000629264, z: -0.0011849786}
+  m_LocalScale: {x: 1.296565, y: 0.9558868, z: 1.3325064}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2241826131977945744}
-  m_RootOrder: 0
+  m_Father: {fileID: 8771315926480328740}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7873660450537335011
 MeshFilter:
@@ -1738,8 +1622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultStateName: Crystal1
   currentState:
-    StateName: Crystal3
-    StateObject: {fileID: 3827046559113913191}
+    StateName: Crystal2
+    StateObject: {fileID: 2500671059602626410}
   stateEntries:
   - StateName: Crystal1
     StateObject: {fileID: 2321205005841019340}
@@ -1760,7 +1644,7 @@ GameObject:
   - component: {fileID: 7384426956049409080}
   - component: {fileID: 3249173260970378455}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1831,38 +1715,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4621083434420378330
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5434351935310381152}
-  m_Layer: 8
-  m_Name: Single Crystal 2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5434351935310381152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4621083434420378330}
-  m_LocalRotation: {x: -0, y: -0.00000008940696, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0003638087, y: 0.0013175801, z: -0.00042614748}
-  m_LocalScale: {x: 0.9191221, y: 0.919122, z: 0.9191221}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5089367210744797004}
-  m_Father: {fileID: 5090640446657894394}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -115.867, z: 0}
 --- !u!1 &4903073952527596653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,7 +1727,7 @@ GameObject:
   - component: {fileID: 2218938577404993788}
   - component: {fileID: 6171866688822181907}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1946,38 +1798,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5229210214366368273
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4889275667219646635}
-  m_Layer: 8
-  m_Name: Single Crystal 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4889275667219646635
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229210214366368273}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00020907284, y: 0.0008990134, z: -0.00016725829}
-  m_LocalScale: {x: 0.94892687, y: 0.9489269, z: 0.94892687}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5625436396882861959}
-  m_Father: {fileID: 7158025481830413162}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5281852997732655918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,7 +1810,7 @@ GameObject:
   - component: {fileID: 1408675022480736191}
   - component: {fileID: 6404468953394929488}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2061,38 +1881,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5337709282145285303
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4708666119423225357}
-  m_Layer: 8
-  m_Name: Single Crystal 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4708666119423225357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337709282145285303}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00020907284, y: 0.0008990134, z: -0.00016725829}
-  m_LocalScale: {x: 0.94892687, y: 0.9489269, z: 0.94892687}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5517798132826798369}
-  m_Father: {fileID: 7049491261988263372}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5462393433079022984
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,7 +1893,7 @@ GameObject:
   - component: {fileID: 1228962405419587865}
   - component: {fileID: 6513196989808294390}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2205,7 +1993,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5435339293940809942}
-  - {fileID: 5434351935310381152}
+  - {fileID: 5089367210744797004}
   m_Father: {fileID: 256120351447299518}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.953, y: -147.609, z: 18.352}
@@ -2221,7 +2009,7 @@ GameObject:
   - component: {fileID: 856165339241394775}
   - component: {fileID: 4651115860504515256}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2304,7 +2092,7 @@ GameObject:
   - component: {fileID: 676399095636153585}
   - component: {fileID: 4759932657100092446}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2375,38 +2163,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6436321581992778921
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5915962772518880787}
-  m_Layer: 8
-  m_Name: Single Crystal 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5915962772518880787
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6436321581992778921}
-  m_LocalRotation: {x: -0.000000011175871, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0002343168, y: 0.00062926376, z: -0.00022909182}
-  m_LocalScale: {x: 0.95588696, y: 0.9558868, z: 0.9558869}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6904609790429450559}
-  m_Father: {fileID: 1450877863892799051}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 6.739, y: -210.278, z: -21.592}
 --- !u!1 &6658040328147267973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,7 +2175,7 @@ GameObject:
   - component: {fileID: 479188393519181076}
   - component: {fileID: 5605798060400692731}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2490,38 +2246,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6861708445700957724
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6085066600962981030}
-  m_Layer: 8
-  m_Name: Single Crystal 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6085066600962981030
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6861708445700957724}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00020907284, y: 0.0008990134, z: -0.00016725829}
-  m_LocalScale: {x: 0.94892687, y: 0.9489269, z: 0.94892687}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6465441856282618762}
-  m_Father: {fileID: 8430219282781652839}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7201970384232117890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,7 +2258,7 @@ GameObject:
   - component: {fileID: 4121636714555632147}
   - component: {fileID: 8241409393308551932}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2547,13 +2271,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7201970384232117890}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0007, y: 0, z: -0.0033}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.00000008940698, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0010071935, y: 0.00131758, z: -0.003459249}
+  m_LocalScale: {x: 0.9191221, y: 0.9191219, z: 0.9191219}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5434351935310381152}
-  m_RootOrder: 0
+  m_Father: {fileID: 5090640446657894394}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4121636714555632147
 MeshFilter:
@@ -2634,7 +2358,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7014548436529683875}
-  - {fileID: 735887513593663547}
+  - {fileID: 575835142890866455}
   m_Father: {fileID: 256120351447299518}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 9.97, y: -345.693, z: 24.522}
@@ -2667,7 +2391,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7970747409454408774}
-  - {fileID: 4889275667219646635}
+  - {fileID: 5625436396882861959}
   m_Father: {fileID: 1451744162367455667}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.117}
@@ -2683,7 +2407,7 @@ GameObject:
   - component: {fileID: 3675155448308778110}
   - component: {fileID: 8677704774373336209}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2696,13 +2420,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7620285464482371823}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00020907278, y: 0.0008990134, z: -0.00016725829}
+  m_LocalScale: {x: 0.9489269, y: 0.94892687, z: 0.94892687}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4708666119423225357}
-  m_RootOrder: 0
+  m_Father: {fileID: 7049491261988263372}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3675155448308778110
 MeshFilter:
@@ -2764,7 +2488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7049491261988263372}
   m_Layer: 8
-  m_Name: C4
+  m_Name: C2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2783,7 +2507,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7791069276685779680}
-  - {fileID: 4708666119423225357}
+  - {fileID: 5517798132826798369}
   m_Father: {fileID: 1632301068612085525}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.117}
@@ -2799,7 +2523,7 @@ GameObject:
   - component: {fileID: 3567553334992478936}
   - component: {fileID: 8858543323112931895}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2812,13 +2536,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7728750846753553993}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00020907278, y: 0.0008990134, z: -0.00016725829}
+  m_LocalScale: {x: 0.9489269, y: 0.94892687, z: 0.94892687}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4889275667219646635}
-  m_RootOrder: 0
+  m_Father: {fileID: 7158025481830413162}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3567553334992478936
 MeshFilter:
@@ -2882,7 +2606,7 @@ GameObject:
   - component: {fileID: 3818447787355127177}
   - component: {fileID: 9191981961657130342}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -2982,7 +2706,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8570599845691451822}
-  - {fileID: 2134187591225713718}
+  - {fileID: 1176999190259643162}
   m_Father: {fileID: 1451744162367455667}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 9.97, y: -345.693, z: 24.522}
@@ -2996,7 +2720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8771315926480328740}
   m_Layer: 8
-  m_Name: C3
+  m_Name: C1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3015,7 +2739,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8390869752825843464}
-  - {fileID: 2241826131977945744}
+  - {fileID: 1357609014882260412}
   m_Father: {fileID: 1632301068612085525}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 9.97, y: -345.693, z: 24.522}
@@ -3031,7 +2755,7 @@ GameObject:
   - component: {fileID: 2324407472515083360}
   - component: {fileID: 7722640556336401551}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -3044,13 +2768,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8827481257316479217}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0045, y: -0, z: -0.001}
-  m_LocalScale: {x: 1.3564, y: 1, z: 1.394}
+  m_LocalRotation: {x: -0.0000000074505797, y: 0.00000001862645, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0045358096, y: 0.0006292637, z: -0.0011849791}
+  m_LocalScale: {x: 1.296565, y: 0.95588684, z: 1.3325064}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5915962772518880787}
-  m_RootOrder: 0
+  m_Father: {fileID: 1450877863892799051}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2324407472515083360
 MeshFilter:
@@ -3114,7 +2838,7 @@ GameObject:
   - component: {fileID: 2750067004371621589}
   - component: {fileID: 7874424867148625466}
   m_Layer: 8
-  m_Name: Crysal_low1
+  m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -3127,13 +2851,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9001082086153898564}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00020907278, y: 0.0008990134, z: -0.00016725829}
+  m_LocalScale: {x: 0.9489269, y: 0.94892687, z: 0.94892687}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6085066600962981030}
-  m_RootOrder: 0
+  m_Father: {fileID: 8430219282781652839}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2750067004371621589
 MeshFilter:
@@ -3214,7 +2938,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8734033340141555787}
-  - {fileID: 6085066600962981030}
+  - {fileID: 6465441856282618762}
   m_Father: {fileID: 256120351447299518}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.117}

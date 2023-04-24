@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -41,7 +42,9 @@ public class InputManager : MonoBehaviour
     private bool _rotatingInGallery = false;
     private float _rotationAmount = 2.0f;
     private SceneType _currentScene = SceneType.None;
+
     private Outline _currentOutline = null;
+    private CrystalSpawn _currentCrystalOutline = null;
     private OutlineType _currentOutlineType = OutlineType.None;
     private bool _disableOutline = false;
 
@@ -572,24 +575,40 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        Outline outline = raycastHit.transform.gameObject.GetComponent<Outline>();
-
-        if (_currentOutline != outline)
+        if (outlineType == OutlineType.Crystals)
         {
+            CrystalSpawn crystal = raycastHit.transform.GetComponent<CrystalSpawn>();
+            crystal.Outline(true);
+            _currentCrystalOutline = crystal;
+        }
+        else
+        {
+            Outline outline = raycastHit.transform.GetComponent<Outline>();
             outline.enabled = true;
             _currentOutline = outline;
-            _currentOutlineType = outlineType;
         }
+
+        _currentOutlineType = outlineType;
     }
 
     private void RemoveOutline()
     {
-        if (_currentOutline == null)
+        if (_currentOutline == null && _currentCrystalOutline == null)
         {
             return;
         }
 
-        _currentOutline.enabled = false;
-        _currentOutline = null;
+        if (_currentOutlineType == OutlineType.Crystals)
+        {
+            _currentCrystalOutline.Outline(false);
+            _currentCrystalOutline = null;
+        }
+        else
+        {
+            _currentOutline.enabled = false;
+            _currentOutline = null;
+        }
+
+        _currentOutlineType = OutlineType.None;
     }
 }

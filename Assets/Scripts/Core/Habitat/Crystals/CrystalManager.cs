@@ -8,6 +8,7 @@ public class CrystalManager : MonoBehaviour
     private Habitat _habitat = null;
     private ExpeditionManager _expeditionManager = null;
     private int _tracker = 0;
+
     public List<CrystalSpawn> CrystalSpawns { get => crystals; }
     public void SetExpeditionManager(ExpeditionManager expeditionManager) { _expeditionManager = expeditionManager; }
 
@@ -18,7 +19,6 @@ public class CrystalManager : MonoBehaviour
         foreach (CrystalSpawn crystal in crystals)
         {
             crystal.Initialize();
-            //crystal.GetComponent<Outline>().enabled = false;
         }
     }
 
