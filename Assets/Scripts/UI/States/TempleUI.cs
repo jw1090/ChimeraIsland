@@ -6,20 +6,27 @@ using TMPro;
 public class TempleUI : MonoBehaviour
 {
     [Header("Header")]
-    [SerializeField] private TextMeshProUGUI _title = null;
-    [SerializeField] private TextMeshProUGUI _subtitle = null;
+    [SerializeField] private GameObject _title = null;
+    [SerializeField] private TextMeshProUGUI _titleText = null;
+    [SerializeField] private GameObject _subtitle = null;
+    [SerializeField] private TextMeshProUGUI _subtitleText = null;
 
     [Header("Main")]
     [SerializeField] private ChimeraInfoUI _chimeraInfo = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
 
-    [Header("Buttons")]
+    [Header("Top Left Buttons")]
     [SerializeField] private StatefulObject _backButtonStates = null;
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _backButton = null;
+
+    [Header("Side Buttons")]
     [SerializeField] private Button _goLeftButton = null;
     [SerializeField] private Button _goRightButton = null;
-    [SerializeField] private Button _buyUpgradeButton = null;
+
+    [Header("Upgrades")]
+    [SerializeField] private Button _upgradeButton = null;
+    [SerializeField] private TextMeshProUGUI _upgradeText = null;
 
     private HabitatManager _habitatManager = null;
     private CurrencyManager _currencyManager = null;
@@ -45,6 +52,22 @@ public class TempleUI : MonoBehaviour
         _chimeraInfo.SetAudioManager(audioManager);
     }
 
+    public void SetBackButtonState(UITempleBackType backType)
+    {
+        switch (backType)
+        {
+            case UITempleBackType.BackToHabitat:
+                _backButtonStates.SetState("Habitat Button");
+                break;
+            case UITempleBackType.BackToTemple:
+                _backButtonStates.SetState("Back Button");
+                break;
+            default:
+                Debug.LogError($"UITemple Back Type is invalid [{backType}]");
+                break;
+        }
+    }
+
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
@@ -54,6 +77,8 @@ public class TempleUI : MonoBehaviour
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
+
+        _chimeraInfo.Initialize(_uiManager);
 
         SetupButtonListeners();
 
@@ -69,6 +94,9 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_backToHabitatButton, LeavingTempleTransition);
         _uiManager.CreateButtonListener(_backButton, BackButtonPress);
+
+        _uiManager.CreateButtonListener(_chimeraInfo.CancelButton, ExitChimeraCloseUp);
+
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
     }
@@ -85,11 +113,10 @@ public class TempleUI : MonoBehaviour
 
     public void ShowDefaultUI()
     {
-        _title.gameObject.SetActive(true);
-        _subtitle.gameObject.SetActive(true);
-
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(true);
+
+        _chimeraInfo.gameObject.SetActive(false);
 
         _currentTempleSection = TempleSectionType.Buying;
     }
@@ -184,11 +211,6 @@ public class TempleUI : MonoBehaviour
         }
     }
 
-    private void ExitChimeraCloseUp()
-    {
-
-    }
-
     public void ShowGalleryUI()
     {
         _currentTempleSection = TempleSectionType.Gallery;
@@ -225,19 +247,30 @@ public class TempleUI : MonoBehaviour
         _fossilWallet.UpdateWallet();
     }
 
-    public void BuyChimera(EvolutionLogic evolutionLogic)
+    public void ChimeraCloseUp(EvolutionLogic evolutionLogic)
     {
-        int price = _temple.TempleBuyChimeras.GetCurrentPrice(evolutionLogic.ChimeraType);
+        _chimeraInfo.LoadChimeraData(evolutionLogic);
+        _chimeraInfo.OpenPurchaseSection();
+        _chimeraInfo.gameObject.SetActive(true);
 
-        if (_currencyManager.SpendFossils(price) == false)
-        {
-            _uiManager.AlertText.CreateAlert($"Can't Afford The {evolutionLogic.Name} Chimera. It Costs {price} Fossils!");
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+        _title.gameObject.SetActive(false);
+        _subtitle.gameObject.SetActive(false);
+        _goLeftButton.gameObject.SetActive(false);
+        _goRightButton.gameObject.SetActive(false);
 
-            return;
-        }
+        SetBackButtonState(UITempleBackType.BackToTemple);
+    }
 
-        _temple.TempleBuyChimeras.BuyChimera(evolutionLogic);
+    private void ExitChimeraCloseUp()
+    {
+        _chimeraInfo.gameObject.SetActive(false);
+
+        _title.gameObject.SetActive(false);
+        _subtitle.gameObject.SetActive(false);
+        _goLeftButton.gameObject.SetActive(true);
+        _goRightButton.gameObject.SetActive(true);
+
+        SetBackButtonState(UITempleBackType.BackToHabitat);
     }
 
     public void BuyFacility(UpgradeNode upgradeNode)

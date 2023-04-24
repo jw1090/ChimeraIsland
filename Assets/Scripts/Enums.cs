@@ -141,6 +141,13 @@ public enum UIElementType
     EssenceWallets,
 }
 
+public enum UITempleBackType
+{
+    None = -1,
+    BackToHabitat,
+    BackToTemple,
+}
+
 public enum TempleSectionType
 {
     None = -1,
@@ -238,11 +245,4 @@ public enum TapVFXType
     Water,
     Stone,
     Tree,
-}
-
-public enum BackButtonType
-{
-    None = -1,
-    Back,
-    Habitat,
 }

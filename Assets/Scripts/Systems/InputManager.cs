@@ -293,11 +293,10 @@ public class InputManager : MonoBehaviour
             }
             else if (_currentScene == SceneType.Temple)
             {
-                if (_templeUI.CurrentTempleSection == TempleSectionType.Gallery)
+                if (_templeUI.CurrentTempleSection == TempleSectionType.Buying)
                 {
                     _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
-
-                    _templeUI.BuyChimera(_evolution);
+                    _templeUI.ChimeraCloseUp(_evolution);
                 }
             }
         }
