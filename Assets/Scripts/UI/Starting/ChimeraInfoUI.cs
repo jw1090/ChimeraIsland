@@ -16,7 +16,8 @@ public class ChimeraInfoUI : MonoBehaviour
     [Header("Purchase Section")]
     [SerializeField] private GameObject _purchaseSection = null;
     [SerializeField] private Button _purchaseButton = null;
-    [SerializeField] private Button _cancelsButton = null;
+    [SerializeField] private TextMeshProUGUI _purchaseButtonText = null;
+    [SerializeField] private Button _cancelButton = null;
 
     [Header("Animation Buttons")]
     [SerializeField] private GameObject _animationSection = null;
@@ -26,10 +27,13 @@ public class ChimeraInfoUI : MonoBehaviour
     [SerializeField] private Button _failureButton = null;
 
     private ResourceManager _resourceManager = null;
+    private CurrencyManager _currencyManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private EvolutionLogic _evolution = null;
     private Temple _temple = null;
+
+    public Button CancelButton { get => _cancelButton; }
 
     public void SetAudioManager(AudioManager audioManager)
     {
@@ -54,10 +58,12 @@ public class ChimeraInfoUI : MonoBehaviour
 
     private void SetAnimation(string animationName) { _temple.ChimeraGallery.SetAnimation(animationName); }
 
-    public void Initialize()
+    public void Initialize(UIManager uiManager)
     {
+        _uiManager = uiManager;
+
         _resourceManager = ServiceLocator.Get<ResourceManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
     }
 
     public void SetupButtonListeners()
@@ -117,8 +123,23 @@ public class ChimeraInfoUI : MonoBehaviour
 
     public void OpenPurchaseSection()
     {
+        int price = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
+        _purchaseButtonText.text = $"{price}  <sprite name=Fossil>"; 
+
         _purchaseSection.SetActive(true);
         _animationSection.SetActive(false);
+    }
+
+    public void BuyChimera()
+    {
+        int price = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
+
+        if (_currencyManager.SpendFossils(price) == false)
+        {
+            return;
+        }
+
+        _temple.TempleBuyChimeras.BuyChimera(_evolution);
     }
 
     public void OpenAnimationSection()
