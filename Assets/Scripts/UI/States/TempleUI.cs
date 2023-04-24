@@ -113,12 +113,40 @@ public class TempleUI : MonoBehaviour
 
     public void ShowDefaultUI()
     {
+        
+    }
+
+    private void ShowBuyUI()
+    {
+        _titleText.text = "Chimera Shop";
+        _subtitleText.text = "Select a Statue to Buy Chimera";
+
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(true);
 
-        _chimeraInfo.gameObject.SetActive(false);
-
         _currentTempleSection = TempleSectionType.Buying;
+    }
+
+    private void ShowUpgradesUI()
+    {
+        _titleText.text = "Upgrades Shop";
+        _subtitleText.text = "Select an Upgrade Node";
+
+        _goLeftButton.gameObject.SetActive(true);
+        _goRightButton.gameObject.SetActive(false);
+
+        _currentTempleSection = TempleSectionType.Upgrades;
+    }
+
+    private void ShowCollectionsUI()
+    {
+        _titleText.text = "Collections";
+        _subtitleText.text = "Select a Chimera Figurine";
+
+        _goLeftButton.gameObject.SetActive(false);
+        _goRightButton.gameObject.SetActive(true);
+
+        _currentTempleSection = TempleSectionType.Collection;
     }
 
     private void TransitionLeft()
@@ -126,48 +154,46 @@ public class TempleUI : MonoBehaviour
         switch (_currentTempleSection)
         {
             case TempleSectionType.Buying: // Go To Collections
-                _goLeftButton.gameObject.SetActive(false);
-                _currentTempleSection = TempleSectionType.Collection;
+                ShowCollectionsUI();
                 _tutorialManager.ShowTutorialStage(TutorialStageType.Collections);
                 break;
             case TempleSectionType.Upgrades: // Go To Buying
-                _goRightButton.gameObject.SetActive(true);
-                _currentTempleSection = TempleSectionType.Buying;
+                ShowBuyUI();
                 break;
             default:
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is not supported by left transitions.");
                 break;
         }
         _cameraUtil.TempleTransition(_currentTempleSection);
-        ChangeSectionUIState();
     }
 
     private void TransitionRight()
     {
         switch (_currentTempleSection)
         {
-            case TempleSectionType.Buying: // Go To Upgrades
-                _goRightButton.gameObject.SetActive(false);
-                _currentTempleSection = TempleSectionType.Upgrades;
+            case TempleSectionType.Buying:
+                ShowUpgradesUI();
                 _tutorialManager.ShowTutorialStage(TutorialStageType.Upgrade);
                 break;
-            case TempleSectionType.Collection: // Go To Buying
-                _goLeftButton.gameObject.SetActive(true);
-                _currentTempleSection = TempleSectionType.Buying;
+            case TempleSectionType.Collection:
+                ShowBuyUI();
                 break;
             default:
                 Debug.LogError($"Current temple section [{_currentTempleSection}] is not supported by right transitions.");
                 break;
         }
         _cameraUtil.TempleTransition(_currentTempleSection);
-        ChangeSectionUIState();
     }
 
     public void EnteringTempleTransition()
     {
         _cameraUtil.TempleTransition(_currentTempleSection);
 
-        ShowDefaultUI();
+        _title.gameObject.SetActive(true);
+        _subtitle.gameObject.SetActive(true);
+
+        ShowBuyUI();
+
         StartCoroutine(HabitatTransitionCoroutine(false));
     }
 
@@ -190,7 +216,6 @@ public class TempleUI : MonoBehaviour
         }
         else
         {
-            ShowDefaultUI();
             _goLeftButton.gameObject.SetActive(true);
             _goRightButton.gameObject.SetActive(true);
         }
@@ -211,37 +236,6 @@ public class TempleUI : MonoBehaviour
         }
     }
 
-    public void ShowGalleryUI()
-    {
-        _currentTempleSection = TempleSectionType.Gallery;
-    }
-
-    public void ExitGallery()
-    {
-        _temple.ChimeraGallery.ExitGallery();
-
-        _currentTempleSection = TempleSectionType.Buying;
-    }
-
-    private void ChangeSectionUIState()
-    {
-        switch (_currentTempleSection)
-        {
-            case TempleSectionType.Buying:
-                break;
-            case TempleSectionType.Chimera:
-                break;
-            case TempleSectionType.Upgrades:
-                break;
-            case TempleSectionType.Collection:
-                break;
-            case TempleSectionType.Gallery:
-            default:
-                Debug.LogError($"Current temple section [{_currentTempleSection}] is invalid!");
-                break;
-        }
-    }
-
     public void UpdateFossilWallets()
     {
         _fossilWallet.UpdateWallet();
@@ -258,26 +252,26 @@ public class TempleUI : MonoBehaviour
         _goLeftButton.gameObject.SetActive(false);
         _goRightButton.gameObject.SetActive(false);
 
+        _currentTempleSection = TempleSectionType.Chimera;
+
         SetBackButtonState(UITempleBackType.BackToTemple);
     }
 
     private void ExitChimeraCloseUp()
     {
+        _title.gameObject.SetActive(true);
+        _subtitle.gameObject.SetActive(true);
         _chimeraInfo.gameObject.SetActive(false);
 
-        _title.gameObject.SetActive(false);
-        _subtitle.gameObject.SetActive(false);
-        _goLeftButton.gameObject.SetActive(true);
-        _goRightButton.gameObject.SetActive(true);
-
         SetBackButtonState(UITempleBackType.BackToHabitat);
+
+        ShowBuyUI();
     }
 
     public void BuyFacility(UpgradeNode upgradeNode)
     {
         if (_habitatManager.IsFacilityBuilt(upgradeNode) == true)
         {
-            _uiManager.AlertText.CreateAlert($"This Facility Tier Has Already Been Built!");
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
 
             return;
@@ -285,7 +279,6 @@ public class TempleUI : MonoBehaviour
 
         if (upgradeNode.Tier == 1)
         {
-            _uiManager.AlertText.CreateAlert($"Complete More Expeditions To Unlock New Facility Upgrades!");
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
 
             return;
@@ -295,12 +288,23 @@ public class TempleUI : MonoBehaviour
 
         if (_currencyManager.SpendFossils(price) == false)
         {
-            _uiManager.AlertText.CreateAlert($"Can't Afford The Facility Upgrade. It Costs {price} Fossils.");
             _audioManager.PlayUISFX(SFXUIType.ErrorClick);
 
             return;
         }
 
         _temple.TempleUpgrades.BuyUpgrade(upgradeNode);
+    }
+
+    public void ShowGalleryUI()
+    {
+        _currentTempleSection = TempleSectionType.Gallery;
+    }
+
+    public void ExitGallery()
+    {
+        _temple.ChimeraGallery.ExitGallery();
+
+        _currentTempleSection = TempleSectionType.Buying;
     }
 }
