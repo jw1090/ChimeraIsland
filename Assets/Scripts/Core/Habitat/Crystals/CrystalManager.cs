@@ -18,7 +18,7 @@ public class CrystalManager : MonoBehaviour
         foreach (CrystalSpawn crystal in crystals)
         {
             crystal.Initialize();
-            crystal.GetComponent<Outline>().enabled = false;
+            //crystal.GetComponent<Outline>().enabled = false;
         }
     }
 
