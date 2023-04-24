@@ -17,9 +17,34 @@ public class TempleCollections : MonoBehaviour
     [SerializeField] private GameObject _c3 = null;
     private Collections _chimeraCollections = null;
 
+    public GameObject A{ get => _a; }
+    public GameObject A1 { get => _a1; }
+    public GameObject A2 { get => _a2; }
+    public GameObject A3 { get => _a3; }
+    public GameObject B { get => _b; }
+    public GameObject B1 { get => _b1; }
+    public GameObject B2 { get => _b2; }
+    public GameObject B3 { get => _b3; }
+    public GameObject C { get => _c; }
+    public GameObject C1 { get => _c1; }
+    public GameObject C2 { get => _c2; }
+    public GameObject C3 { get => _c3; }
+
     public void Initialize()
     {
         _chimeraCollections = ServiceLocator.Get<HabitatManager>().Collections;
+        _a.GetComponent<Outline>().enabled = false;
+        _a1.GetComponent<Outline>().enabled = false;
+        _a2.GetComponent<Outline>().enabled = false;
+        _a3.GetComponent<Outline>().enabled = false;
+        _b.GetComponent<Outline>().enabled = false;
+        _b1.GetComponent<Outline>().enabled = false;
+        _b2.GetComponent<Outline>().enabled = false;
+        _b3.GetComponent<Outline>().enabled = false;
+        _c.GetComponent<Outline>().enabled = false;
+        _c1.GetComponent<Outline>().enabled = false;
+        _c2.GetComponent<Outline>().enabled = false;
+        _c3.GetComponent<Outline>().enabled = false;
     }
 
     public void Build()

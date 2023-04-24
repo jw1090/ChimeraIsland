@@ -53,6 +53,7 @@ public class LevelLoader : AsyncLoader
 
         _sceneChanger.RecentSceneChange = false;
         LoadUIElements();
+        _inputManager.DisableOutline(false);
 
         switch (_sceneType)
         {

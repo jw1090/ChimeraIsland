@@ -238,3 +238,14 @@ public enum TapVFXType
     Stone,
     Tree,
 }
+
+public enum OutlineType
+{
+    None = -1,
+    StarterChimera,
+    Portal,
+    Crystals,
+    Temple,
+    Pillars,
+    Figurines,
+}

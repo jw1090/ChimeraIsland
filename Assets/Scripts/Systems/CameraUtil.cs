@@ -284,7 +284,6 @@ public class CameraUtil : MonoBehaviour
                 Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
                 break;
         }
-
         _starterEnvironment.ShowChimera(chimeraType);
         CameraShift(nodeTransform, true);
     }
@@ -313,7 +312,6 @@ public class CameraUtil : MonoBehaviour
                 Debug.LogWarning($"{templeSectionType} is not a valid type. Please fix!");
                 break;
         }
-
         CameraShift(nodeTransform, true);
     }
 
@@ -345,5 +343,6 @@ public class CameraUtil : MonoBehaviour
     {
         _starterEnvironment.ShowAllChimeras();
         CameraShift(_starterEnvironment.OriginNode, true);
+        _inputManager.DisableOutline(false);
     }
 }
