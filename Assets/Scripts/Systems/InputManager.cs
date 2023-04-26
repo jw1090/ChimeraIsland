@@ -241,6 +241,15 @@ public class InputManager : MonoBehaviour
         {
             Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
 
+            if (Physics.Raycast(ray, out RaycastHit cHit, 300.0f, _chimeraLayer))
+            {
+                CreateOutline(cHit, OutlineType.HabitatChimeras);
+            }
+            else if (_currentOutlineType == OutlineType.HabitatChimeras)
+            {
+                RemoveOutline();
+            }
+
             if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
             {
                 CreateOutline(crystalHit, OutlineType.Crystals);
@@ -273,9 +282,9 @@ public class InputManager : MonoBehaviour
             Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _chimeraLayer))
             {
-                CreateOutline(mouseHit, OutlineType.StarterChimera);
+                CreateOutline(mouseHit, OutlineType.StarterChimeras);
             }
-            else if (_currentOutlineType == OutlineType.StarterChimera)
+            else if (_currentOutlineType == OutlineType.StarterChimeras)
             {
                 RemoveOutline();
             }
@@ -581,19 +590,24 @@ public class InputManager : MonoBehaviour
             crystal.Outline(true);
             _currentCrystalOutline = crystal;
         }
+        else if(outlineType == OutlineType.HabitatChimeras)
+        {
+            Outline outline = raycastHit.transform.GetComponentInChildren<Outline>();
+            outline.enabled = true;
+            _currentOutline = outline;
+        }
         else
         {
             Outline outline = raycastHit.transform.GetComponent<Outline>();
             outline.enabled = true;
             _currentOutline = outline;
         }
-
         _currentOutlineType = outlineType;
     }
 
     private void RemoveOutline()
     {
-        if (_currentOutline == null && _currentCrystalOutline == null)
+        if (_currentOutline == null && _currentCrystalOutline == null || _isHolding == true)
         {
             return;
         }

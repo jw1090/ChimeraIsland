@@ -242,7 +242,8 @@ public enum TapVFXType
 public enum OutlineType
 {
     None = -1,
-    StarterChimera,
+    StarterChimeras,
+    HabitatChimeras,
     Portal,
     Crystals,
     Temple,
