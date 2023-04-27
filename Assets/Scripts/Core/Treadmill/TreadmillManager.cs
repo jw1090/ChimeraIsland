@@ -26,7 +26,15 @@ public class TreadmillManager : MonoBehaviour
 
     public RenderTexture Render(Rect rect) { return _treadmillCamera.targetTexture = new RenderTexture((int)rect.width * 2, (int)rect.height * 2, 0); }
 
-    public void EnableCamera(bool enable) { _treadmillCamera.gameObject.SetActive(enable); }
+    public void EnableCamera(bool enable)
+    {
+        if (_treadmillCamera == null)
+        {
+            return;
+        }
+
+        _treadmillCamera.gameObject.SetActive(enable);
+    }
 
     public TreadmillManager Initialize()
     {

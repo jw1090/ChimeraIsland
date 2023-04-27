@@ -49,10 +49,6 @@ public class Temple : MonoBehaviour
         _templeUpgrades.Initalize();
         _chimeraGallery.Initialize();
 
-        _waterPillar.GetComponent<Outline>().enabled = false;
-        _firePillar.GetComponent<Outline>().enabled = false;
-        _grassPillar.GetComponent<Outline>().enabled = false;
-
         return this;
     }
 

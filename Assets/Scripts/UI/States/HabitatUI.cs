@@ -45,8 +45,6 @@ public class HabitatUI : MonoBehaviour
         _chimeraPopUp.gameObject.SetActive(false);
     }
 
-    public void MenuClosed() { _menuOpen = false; }
-
     public void SetExpeditionManager(ExpeditionManager expeditionManager)
     {
         _detailsManager.SetExpeditionManager(expeditionManager);
@@ -75,7 +73,7 @@ public class HabitatUI : MonoBehaviour
 
     private void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_settingsButton, OpenHabitatSettings);
+        _uiManager.CreateButtonListener(_settingsButton, OpenSettingsUI);
         _uiManager.CreateButtonListener(_openDetailsButton, OpenStandardDetails);
         _uiManager.CreateButtonListener(_closeDetailsButton, ResetStandardUI);
     }
@@ -164,8 +162,9 @@ public class HabitatUI : MonoBehaviour
         }
 
         _detailsManager.CloseDetails();
-        _uiManager.SettingsUI.gameObject.SetActive(false);
         _expeditionPanel.CloseExpeditionUI();
+
+        _settingsButton.gameObject.SetActive(true);
 
         _menuOpen = false;
     }
@@ -226,18 +225,18 @@ public class HabitatUI : MonoBehaviour
         }
         else
         {
-            OpenHabitatSettings();
+            OpenSettingsUI();
         }
     }
 
-    private void OpenHabitatSettings()
+    private void OpenSettingsUI()
     {
         ResetStandardUI();
 
         _openDetailsButton.gameObject.SetActive(false);
-        _uiManager.SettingsUI.gameObject.SetActive(false);
+        _settingsButton.gameObject.SetActive(false);
 
-        _uiManager.SettingsUI.OpenSettingsPanel();
+        _uiManager.SettingsUI.OpenSettingsUI();
 
         _menuOpen = true;
     }

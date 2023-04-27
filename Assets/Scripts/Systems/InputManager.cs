@@ -111,7 +111,6 @@ public class InputManager : MonoBehaviour
         return this;
     }
 
-
     private void OnDebugConfigLoaded()
     {
         _debugConfig = ServiceLocator.Get<DebugConfig>();
@@ -339,7 +338,9 @@ public class InputManager : MonoBehaviour
         {
             if (_currentScene == SceneType.Temple)
             {
-                StartCoroutine(_temple.ChimeraGallery.StartGallery(figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType));
+                ChimeraType chimeraType = figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType;
+
+                _uiManager.TempleUI.EnterGallery(chimeraType);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
@@ -381,16 +382,11 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraPillarHit, 300.0f, _chimeraPillarLayer))
         {
-            if (_currentScene == SceneType.Temple)
+            if (_currentScene == SceneType.Temple && _templeUI.CurrentTempleSection == TempleSectionType.Buying)
             {
-                if (_templeUI.InGallery == false)
-                {
-                    //_disableOutline = true;
-                    //RemoveOutline();
-                    _evolution = chimeraPillarHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
-                    _cameraUtil.PillarTransition(_evolution.ElementType);
-                    _templeUI.BuyChimera(_evolution);
-                }
+                _evolution = chimeraPillarHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
+                _cameraUtil.PillarTransition(_evolution.ElementType);
+                _templeUI.ChimeraCloseUp(_evolution);
             }
         }
         else if (Physics.Raycast(ray, 300.0f, _portalLayer))
@@ -407,7 +403,7 @@ public class InputManager : MonoBehaviour
             {
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
 
-                _templeUI.BuyFacility(upgrade);
+                _templeUI.SelectFacilityUpgrade(upgrade);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
