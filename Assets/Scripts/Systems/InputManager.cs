@@ -385,6 +385,8 @@ public class InputManager : MonoBehaviour
             {
                 if (_templeUI.InGallery == false)
                 {
+                    //_disableOutline = true;
+                    //RemoveOutline();
                     _evolution = chimeraPillarHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
                     _cameraUtil.PillarTransition(_evolution.ElementType);
                     _templeUI.BuyChimera(_evolution);

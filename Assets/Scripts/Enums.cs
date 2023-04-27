@@ -196,6 +196,7 @@ public enum EnvironmentSFXType
     None = -1,
     Evolution,
     LevelUp,
+    FacilityBuild,
     PortalClick,
     MiningTap,
     MiningHarvest,
