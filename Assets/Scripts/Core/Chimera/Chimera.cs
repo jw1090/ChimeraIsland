@@ -408,17 +408,12 @@ public class Chimera : MonoBehaviour
 
     public IEnumerator EvolveChimera()
     {
-        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
         _currentEvolution.FullBody.SetActive(false);
         _currentEvolution.EvolutionAnimation.SetActive(true);
-        for (int i = 0; i < 5; i++)
-        {
-            yield return new WaitForSeconds(1.0f);
-            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
-        }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5.5f);
 
         _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
@@ -430,8 +425,6 @@ public class Chimera : MonoBehaviour
 
 
         _habitatManager.Collections.CollectChimera(_chimeraType);
-
-        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
 
         yield return new WaitForSeconds(2f);
         _persistentData.SaveSessionData();
@@ -503,12 +496,11 @@ public class Chimera : MonoBehaviour
 
         _currentEvolution.EvolutionAnimation.SetActive(true);
         _currentEvolution.FullBody.SetActive(false);
-        for(int i = 0; i < 3; i++)
-        {
-            yield return new WaitForSeconds(1.0f);
-            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
-        }
+
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
+        yield return new WaitForSeconds(3.0f);
         _currentEvolution.FullBody.SetActive(true);
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
     }
 
     public void RevealChimera(bool reveal)
