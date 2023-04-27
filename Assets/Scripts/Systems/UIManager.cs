@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private TempleUI _templeUI = null;
-    [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
     [SerializeField] private AlertText _alertText = null;
 
     [Header("Settings")]
@@ -45,7 +44,6 @@ public class UIManager : MonoBehaviour
     public StartingUI StartingUI { get => _startingUI; }
     public HabitatUI HabitatUI { get => _habitatUI; }
     public TempleUI TempleUI { get => _templeUI; }
-    public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public SettingsUI SettingsUI { get => _settingsUI; }
     public Tooltip Tooltip { get => _tooltip; }
     public AlertText AlertText { get => _alertText; }
@@ -187,7 +185,6 @@ public class UIManager : MonoBehaviour
         _startingUI.Initialize(this);
         _habitatUI.Initialize(this);
         _templeUI.Initialize(this);
-        _evolutionBuilderUI.Initialize(this);
 
         InitializeWallets();
 

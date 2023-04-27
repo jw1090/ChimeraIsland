@@ -29,7 +29,6 @@ public class ChimeraGallery : MonoBehaviour
     private InputManager _inputManager = null;
     private ChimeraInfoUI _chimeraInfo = null;
     private bool _active = false;
-    private TempleUI _templeUI;
     private GameObject _currentChimera = null;
     private Vector3 mPrevMousePos = Vector3.zero;
     private Vector3 mPosDelta = Vector3.zero;
@@ -43,14 +42,14 @@ public class ChimeraGallery : MonoBehaviour
         _inputManager = ServiceLocator.Get<InputManager>();
     }
 
-    public void SetTempleUI(TempleUI templeUI) { _templeUI = templeUI; }
-
-    public IEnumerator StartGallery(ChimeraType chimeraType)
+    public void EnterGallery(ChimeraType chimeraType)
     {
-        _templeUI.ShowGalleryUI();
+        StartCoroutine(EnterGalleryCoroutine(chimeraType));
+    }
 
-        GetCurrentChimera(chimeraType);
-
+    private IEnumerator EnterGalleryCoroutine(ChimeraType chimeraType)
+    {
+        LoadCurrentChimera(chimeraType);
         _currentChimera.SetActive(true);
         _currentAnimator = _currentChimera.GetComponent<Animator>();
 
@@ -71,7 +70,8 @@ public class ChimeraGallery : MonoBehaviour
                 break;
         }
 
-        _chimeraInfo.LoadChimeraData(_currentChimera.GetComponent<EvolutionLogic>());
+        EvolutionLogic evolutionLogic = _currentChimera.GetComponent<EvolutionLogic>();
+        _chimeraInfo.LoadChimeraData(evolutionLogic);
 
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0) == true);
 
@@ -132,7 +132,7 @@ public class ChimeraGallery : MonoBehaviour
         _currentAnimator.SetBool(_currentAnim, true);
     }
 
-    private void GetCurrentChimera(ChimeraType chimeraType)
+    private void LoadCurrentChimera(ChimeraType chimeraType)
     {
         switch (chimeraType)
         {

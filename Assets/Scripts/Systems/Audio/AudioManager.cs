@@ -155,7 +155,6 @@ public class AudioManager : MonoBehaviour
         StartingUI startingUI = _uiManager.StartingUI;
         HabitatUI habitatUI = _uiManager.HabitatUI;
         TempleUI templeUI = _uiManager.TempleUI;
-        EvolutionBuilderUI builderUI = _uiManager.EvolutionBuilderUI;
 
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, PlayClickSFX);
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, PlayClickSFX);
@@ -183,10 +182,6 @@ public class AudioManager : MonoBehaviour
 
         _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
         _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);
-
-        _uiManager.CreateButtonListener(builderUI.PlayButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(builderUI.ResetButton, PlayClickSFX);
-        _uiManager.CreateButtonListener(builderUI.SaveButton, PlayClickSFX);
 
         _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayClickSFX);
         _uiManager.CreateButtonListener(_uiManager.TempleUI.GoLeftButton, PlayWhooshSFX);

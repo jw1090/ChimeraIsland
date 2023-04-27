@@ -20,9 +20,6 @@ public class LevelLoader : AsyncLoader
     [Header("Temple")]
     [SerializeField] private Temple _templeEnvironment = null;
 
-    [Header("Builder")]
-    [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
-
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
 
@@ -115,12 +112,6 @@ public class LevelLoader : AsyncLoader
         {
             _lightingManager.Initialize();
             _habitat.SetLightingManager(_lightingManager);
-        }
-
-        if (_evolutionBuilder != null)
-        {
-            _evolutionBuilder.Initialize();
-            _uiManager.EvolutionBuilderUI.SetEvolutionBuilder(_evolutionBuilder);
         }
 
         if (_starterEnvironment != null)

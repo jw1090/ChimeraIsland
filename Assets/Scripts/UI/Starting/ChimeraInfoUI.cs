@@ -41,7 +41,7 @@ public class ChimeraInfoUI : MonoBehaviour
         _audioManager = audioManager;
     }
 
-    public void Temple(Temple temple) { _temple = temple; }
+    public void SetTemple(Temple temple) { _temple = temple; }
 
     private void SetAnimIdle() { SetAnimation("Idle"); }
     private void SetAnimWalk() { SetAnimation("Walk"); }

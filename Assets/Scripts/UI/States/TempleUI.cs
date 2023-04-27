@@ -1,7 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class TempleUI : MonoBehaviour
 {
@@ -37,6 +37,7 @@ public class TempleUI : MonoBehaviour
     private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
     private Temple _temple = null;
+    private TempleUpgrades _templeUpgrades = null;
     private InputManager _inputManager = null;
     private TutorialManager _tutorialManager = null;
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
@@ -103,22 +104,19 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
 
+        _uiManager.CreateButtonListener(_upgradeButton, BuyUpgrade);
+
         _chimeraInfo.SetupButtonListeners();
     }
 
     public void SceneSetup()
     {
         _temple = ServiceLocator.Get<Temple>();
-        _chimeraInfo.Temple(_temple);
+        _templeUpgrades = _temple.TempleUpgrades;
 
-        _temple.ChimeraGallery.SetTempleUI(this);
+        _chimeraInfo.SetTemple(_temple);
 
         _currentTempleSection = TempleSectionType.Buying;
-    }
-
-    public void ShowDefaultUI()
-    {
-
     }
 
     private void ShowBuyUI()
@@ -128,6 +126,7 @@ public class TempleUI : MonoBehaviour
 
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(true);
+        _upgradeButton.gameObject.SetActive(false);
 
         _currentTempleSection = TempleSectionType.Buying;
     }
@@ -135,25 +134,39 @@ public class TempleUI : MonoBehaviour
     private void ShowUpgradesUI()
     {
         _titleText.text = "Upgrades Shop";
-        _subtitleText.text = "Select an Upgrade Node";
+        ClearUpgrades();
 
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(false);
-
-        ClearUpgrades();
 
         _currentTempleSection = TempleSectionType.Upgrades;
     }
 
     private void ShowCollectionsUI()
     {
+        _title.SetActive(true);
         _titleText.text = "Collections";
+
+        _subtitle.SetActive(true);
         _subtitleText.text = "Select a Chimera Figurine";
 
         _goLeftButton.gameObject.SetActive(false);
         _goRightButton.gameObject.SetActive(true);
 
         _currentTempleSection = TempleSectionType.Collection;
+    }
+
+    public void ShowGalleryUI()
+    {
+        _title.SetActive(false);
+        _subtitle.SetActive(false);
+
+        _chimeraInfo.OpenAnimationSection();
+        _chimeraInfo.gameObject.SetActive(true);
+
+        _goRightButton.gameObject.SetActive(false);
+
+        _currentTempleSection = TempleSectionType.Gallery;
     }
 
     private void TransitionLeft()
@@ -228,6 +241,12 @@ public class TempleUI : MonoBehaviour
         }
     }
 
+    public void EnterGallery(ChimeraType chimeraType)
+    {
+        _temple.ChimeraGallery.EnterGallery(chimeraType);
+        ShowGalleryUI();
+    }
+
     private void BackButtonPress()
     {
         switch (_currentTempleSection)
@@ -275,49 +294,84 @@ public class TempleUI : MonoBehaviour
         ShowBuyUI();
     }
 
-    public void BuyFacility(UpgradeNode upgradeNode)
+    public void SelectFacilityUpgrade(UpgradeNode upgradeNode)
     {
-        if (_habitatManager.IsFacilityBuilt(upgradeNode) == true)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+        _subtitleText.text = BuildUpgradeString(upgradeNode.FacilityType, upgradeNode.Tier);
+        UpdateUpgradeButton(upgradeNode);
 
-            return;
+        _templeUpgrades.SelectUpgradeNode(upgradeNode);
+    }
+
+    private string BuildUpgradeString(FacilityType facilityType, int tier)
+    {
+        string facilityString = "";
+
+        switch (facilityType)
+        {
+            case FacilityType.Cave:
+                facilityString += "Cave Facility";
+                break;
+            case FacilityType.RuneStone:
+                facilityString += "Rune Stone Facility";
+                break;
+            case FacilityType.Waterfall:
+                facilityString += "Waterfall Facility";
+                break;
+            default:
+                Debug.LogError($"Invalid Facility Type [{facilityType}]");
+                break;
         }
 
-        if (upgradeNode.Tier == 1)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
+        facilityString += $" Tier {tier}";
 
-            return;
+        return facilityString;
+    }
+
+    private void UpdateUpgradeButton(UpgradeNode upgradeNode)
+    {
+        int price = _templeUpgrades.GetPrice(upgradeNode.Tier);
+
+        if (_habitatManager.IsFacilityBuilt(upgradeNode))
+        {
+            _upgradeText.text = $"Owned";
+            _upgradeButton.interactable = false;
+        }
+        else
+        {
+            _upgradeText.text = $"{price}  <sprite name=Fossil>";
+
+            if (price > _currencyManager.Fossils)
+            {
+                _upgradeButton.interactable = false;
+            }
+            else
+            {
+                _upgradeButton.interactable = true;
+            }
+
         }
 
-        int price = _temple.TempleUpgrades.GetPrice(upgradeNode.Tier);
+        _upgradeButton.gameObject.SetActive(true);
+    }
 
-        if (_currencyManager.SpendFossils(price) == false)
-        {
-            _audioManager.PlayUISFX(SFXUIType.ErrorClick);
-
-            return;
-        }
-
-        _temple.TempleUpgrades.BuyUpgrade(upgradeNode);
+    private void BuyUpgrade()
+    {
+        _templeUpgrades.BuyUpgrade();
+        _upgradeButton.gameObject.SetActive(false);
     }
 
     private void ClearUpgrades()
     {
+        _subtitleText.text = "Select an Upgrade Node";
         _upgradeButton.gameObject.SetActive(false);
-    }
-
-    public void ShowGalleryUI()
-    {
-        _currentTempleSection = TempleSectionType.Gallery;
+        _templeUpgrades.ResetUpgradeNode();
     }
 
     public void ExitGallery()
     {
-        _temple.ChimeraGallery.ExitGallery();
+        ShowCollectionsUI();
 
-        _currentTempleSection = TempleSectionType.Buying;
+        _temple.ChimeraGallery.ExitGallery();
     }
 
     private void OpenSettingsUI()
