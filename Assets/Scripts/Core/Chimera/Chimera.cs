@@ -411,11 +411,17 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
-        yield return new WaitForSeconds(1.0f);
+        _currentEvolution.FullBody.SetActive(false);
+        _currentEvolution.EvolutionAnimation.SetActive(true);
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(1.0f);
+            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+        }
 
         _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
-        Evolve(_chimeraToBecome);
+        StartCoroutine(Evolve(_chimeraToBecome));
         _chimeraBehavior.EnterAnim(AnimationType.Walk);
         _chimeraBehavior.EvaluateParticlesOnEvolve();
         _habitatUI.DetailsManager.DetailsStatGlow();
@@ -426,7 +432,7 @@ public class Chimera : MonoBehaviour
 
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         _persistentData.SaveSessionData();
         StartCoroutine(_habitatManager.CurrentHabitat.ChimeraEvolveCameraDisable());
     }
@@ -470,7 +476,7 @@ public class Chimera : MonoBehaviour
         _habitatUI.UpdateHabitatUI();
     }
 
-    private void Evolve(EvolutionLogic evolution)
+    private IEnumerator Evolve(EvolutionLogic evolution)
     {
         _readyToEvolve = false;
         _interactionIcon.gameObject.SetActive(false);
@@ -486,13 +492,22 @@ public class Chimera : MonoBehaviour
         _currentEvolution = newEvolution;
         InitializeEvolution();
 
-        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Patrol);
+        _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
 
         _habitatManager.UpdateCurrentChimeras();
 
         LevelCalculation();
 
         _chimeraToBecome = null;
+
+        _currentEvolution.EvolutionAnimation.SetActive(true);
+        _currentEvolution.FullBody.SetActive(false);
+        for(int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(1.0f);
+            _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
+        }
+        _currentEvolution.FullBody.SetActive(true);
     }
 
     public void RevealChimera(bool reveal)
