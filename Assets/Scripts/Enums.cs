@@ -203,6 +203,7 @@ public enum EnvironmentSFXType
 {
     None = -1,
     Evolution,
+    FacilityBuild,
     LevelUp,
     PortalClick,
     MiningTap,

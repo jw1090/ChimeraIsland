@@ -96,6 +96,7 @@ public class Facility : MonoBehaviour
         GameObject vfx;
         bool facilityBuilt = false;
 
+        _audioManager.PlaySFX(EnvironmentSFXType.FacilityBuild);
         _cameraUtil.FacilityCameraShift(Type);
 
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);

@@ -427,7 +427,7 @@ public class Chimera : MonoBehaviour
 
         _habitatManager.Collections.CollectChimera(_chimeraType);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         _persistentData.SaveSessionData();
         StartCoroutine(_habitatManager.CurrentHabitat.ChimeraEvolveCameraDisable());
     }
@@ -501,6 +501,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         yield return new WaitForSeconds(3.0f);
         _currentEvolution.FullBody.SetActive(true);
+        _currentEvolution.EvolutionAnimation.SetActive(false);
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.Idle);
     }
 
