@@ -8,7 +8,7 @@ public class StartingUI : MonoBehaviour
     [SerializeField] private GameObject _container = null;
     [SerializeField] private StartingChimeraButton _acceptButton = null;
     [SerializeField] private Button _declineButton = null;
-    [SerializeField] private StartingChimeraInfo _startingChimeraInfo = null;
+    [SerializeField] private ChimeraInfoUI _chimeraInfo = null;
     private UIManager _uiManager = null;
     private CameraUtil _camera = null;
 
@@ -22,7 +22,7 @@ public class StartingUI : MonoBehaviour
         _uiManager = uIManager;
 
         _acceptButton.Initialize(_uiManager);
-        _startingChimeraInfo.Initialize();
+        _chimeraInfo.Initialize(_uiManager);
 
         SetupListeners();
     }
@@ -49,7 +49,7 @@ public class StartingUI : MonoBehaviour
     public void LoadChimeraInfo(EvolutionLogic evolutionLogic)
     {
         _acceptButton.SetChimeraType(evolutionLogic.ChimeraType);
-        _startingChimeraInfo.LoadChimeraData(evolutionLogic);
+        _chimeraInfo.LoadChimeraData(evolutionLogic);
     }
 
     private void ResetUI()

@@ -254,7 +254,9 @@ public class InputManager : MonoBehaviour
         {
             if (_currentScene == SceneType.Temple)
             {
-                _temple.ChimeraGallery.StartGallery(figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType);
+                ChimeraType chimeraType = figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType;
+
+                _uiManager.TempleUI.EnterGallery(chimeraType);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
@@ -292,11 +294,10 @@ public class InputManager : MonoBehaviour
             }
             else if (_currentScene == SceneType.Temple)
             {
-                if(_templeUI.InGallery == false)
+                if (_templeUI.CurrentTempleSection == TempleSectionType.Buying)
                 {
                     _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
-
-                    _templeUI.BuyChimera(_evolution);
+                    _templeUI.ChimeraCloseUp(_evolution);
                 }
             }
         }
@@ -314,7 +315,7 @@ public class InputManager : MonoBehaviour
             {
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
 
-                _templeUI.BuyFacility(upgrade);
+                _templeUI.SelectFacilityUpgrade(upgrade);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
