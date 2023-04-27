@@ -408,6 +408,7 @@ public class Chimera : MonoBehaviour
 
     public IEnumerator EvolveChimera()
     {
+        _interactionIcon.gameObject.SetActive(false);
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
