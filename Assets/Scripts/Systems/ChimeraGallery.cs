@@ -49,7 +49,12 @@ public class ChimeraGallery : MonoBehaviour
         _templeUI = templeUI;
     }
 
-    public IEnumerator StartGallery(ChimeraType chimeraType)
+    public void StartGallery(ChimeraType chimeraType)
+    {
+        StartCoroutine(GalleryBegin(chimeraType));
+    }
+
+    private IEnumerator GalleryBegin(ChimeraType chimeraType)
     {
         _templeUI.ShowGalleryUIState();
         GetCurrentChimera(chimeraType);
