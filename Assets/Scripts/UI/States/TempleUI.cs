@@ -16,9 +16,11 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private UIFossilWallet _fossilWallet = null;
 
     [Header("Top Left Buttons")]
+    [SerializeField] private GameObject _topLeftSection = null;
     [SerializeField] private StatefulObject _backButtonStates = null;
     [SerializeField] private Button _backToHabitatButton = null;
     [SerializeField] private Button _backButton = null;
+    [SerializeField] private Button _settingsButton = null;
 
     [Header("Side Buttons")]
     [SerializeField] private Button _goLeftButton = null;
@@ -94,6 +96,7 @@ public class TempleUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_backToHabitatButton, LeavingTempleTransition);
         _uiManager.CreateButtonListener(_backButton, BackButtonPress);
+        _uiManager.CreateButtonListener(_settingsButton, OpenSettingsUI);
 
         _uiManager.CreateButtonListener(_chimeraInfo.CancelButton, ExitChimeraCloseUp);
 
@@ -115,7 +118,7 @@ public class TempleUI : MonoBehaviour
 
     public void ShowDefaultUI()
     {
-        
+
     }
 
     private void ShowBuyUI()
@@ -136,6 +139,8 @@ public class TempleUI : MonoBehaviour
 
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(false);
+
+        ClearUpgrades();
 
         _currentTempleSection = TempleSectionType.Upgrades;
     }
@@ -298,6 +303,11 @@ public class TempleUI : MonoBehaviour
         _temple.TempleUpgrades.BuyUpgrade(upgradeNode);
     }
 
+    private void ClearUpgrades()
+    {
+        _upgradeButton.gameObject.SetActive(false);
+    }
+
     public void ShowGalleryUI()
     {
         _currentTempleSection = TempleSectionType.Gallery;
@@ -308,5 +318,54 @@ public class TempleUI : MonoBehaviour
         _temple.ChimeraGallery.ExitGallery();
 
         _currentTempleSection = TempleSectionType.Buying;
+    }
+
+    private void OpenSettingsUI()
+    {
+        _title.gameObject.SetActive(false);
+        _subtitle.gameObject.SetActive(false);
+        _fossilWallet.gameObject.SetActive(false);
+        _chimeraInfo.gameObject.SetActive(false);
+        _goLeftButton.gameObject.SetActive(false);
+        _goRightButton.gameObject.SetActive(false);
+        _topLeftSection.gameObject.SetActive(false);
+
+        _uiManager.SettingsUI.OpenSettingsUI();
+    }
+
+    public void CloseSettingsUI()
+    {
+        _fossilWallet.gameObject.SetActive(true);
+        _topLeftSection.gameObject.SetActive(true);
+
+        switch (_currentTempleSection)
+        {
+            case TempleSectionType.Buying:
+                _title.gameObject.SetActive(true);
+                _subtitle.gameObject.SetActive(true);
+                _goLeftButton.gameObject.SetActive(true);
+                _goRightButton.gameObject.SetActive(true);
+                break;
+            case TempleSectionType.Chimera:
+                _chimeraInfo.gameObject.SetActive(true);
+                break;
+            case TempleSectionType.Upgrades:
+                _title.gameObject.SetActive(true);
+                _subtitle.gameObject.SetActive(true);
+                _goLeftButton.gameObject.SetActive(true);
+
+                break;
+            case TempleSectionType.Collection:
+                _title.gameObject.SetActive(true);
+                _subtitle.gameObject.SetActive(true);
+                _goRightButton.gameObject.SetActive(true);
+                break;
+            case TempleSectionType.Gallery:
+                _chimeraInfo.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogError($"Current Temple Section is invalid [{_currentTempleSection}]");
+                break;
+        }
     }
 }

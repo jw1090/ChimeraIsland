@@ -115,7 +115,7 @@ public class ExpeditionUI : MonoBehaviour
     public void CloseExpeditionUI()
     {
         _foregroundUIStates.SetState("Transparent");
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
 
         if (_expeditionManager.State == ExpeditionState.Setup)
         {

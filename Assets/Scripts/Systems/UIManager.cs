@@ -50,6 +50,8 @@ public class UIManager : MonoBehaviour
     public Tooltip Tooltip { get => _tooltip; }
     public AlertText AlertText { get => _alertText; }
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
+    public bool InTempleState { get => _uiStatefulObject.CurrentState.StateName == "Temple UI"; }
+    public bool InMainMenuState { get => _uiStatefulObject.CurrentState.StateName == "Main Menu UI"; }
     public bool UIActive { get => _uiVisible; }
 
     private HabitatManager _habitatManager = null;
@@ -240,6 +242,8 @@ public class UIManager : MonoBehaviour
     public void ShowUIByScene(SceneType uiSceneType)
     {
         Debug.Log($"<color=Cyan> Show {uiSceneType} UI.</color>");
+
+        _settingsUI.CloseSettingsUI();
 
         switch (uiSceneType)
         {
