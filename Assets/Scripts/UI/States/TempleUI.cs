@@ -99,6 +99,8 @@ public class TempleUI : MonoBehaviour
 
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
+
+        _chimeraInfo.SetupButtonListeners();
     }
 
     public void SceneSetup()

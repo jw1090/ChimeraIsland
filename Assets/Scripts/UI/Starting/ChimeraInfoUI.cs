@@ -18,6 +18,7 @@ public class ChimeraInfoUI : MonoBehaviour
     [SerializeField] private Button _purchaseButton = null;
     [SerializeField] private TextMeshProUGUI _purchaseButtonText = null;
     [SerializeField] private Button _cancelButton = null;
+    private int _currentChimeraPrice = 0;
 
     [Header("Animation Buttons")]
     [SerializeField] private GameObject _animationSection = null;
@@ -72,6 +73,7 @@ public class ChimeraInfoUI : MonoBehaviour
         _uiManager.CreateButtonListener(_idleButton, SetAnimIdle);
         _uiManager.CreateButtonListener(_successButton, SetAnimSuccess);
         _uiManager.CreateButtonListener(_failureButton, SetAnimFailure);
+        _uiManager.CreateButtonListener(_purchaseButton, BuyChimera);
     }
 
     public void LoadChimeraData(EvolutionLogic evolutionLogic)
@@ -123,23 +125,33 @@ public class ChimeraInfoUI : MonoBehaviour
 
     public void OpenPurchaseSection()
     {
-        int price = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
-        _purchaseButtonText.text = $"{price}  <sprite name=Fossil>"; 
+        UpdatePurchaseSection();
 
         _purchaseSection.SetActive(true);
         _animationSection.SetActive(false);
     }
 
+    public void UpdatePurchaseSection()
+    {
+        _currentChimeraPrice = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
+        _purchaseButtonText.text = $"{_currentChimeraPrice}  <sprite name=Fossil>";
+
+        if (_currentChimeraPrice > _currencyManager.Fossils)
+        {
+            _purchaseButton.interactable = false;
+        }
+        else
+        {
+            _purchaseButton.interactable = true;
+        }
+    }
+
     public void BuyChimera()
     {
-        int price = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
-
-        if (_currencyManager.SpendFossils(price) == false)
-        {
-            return;
-        }
-
         _temple.TempleBuyChimeras.BuyChimera(_evolution);
+
+        _currencyManager.SpendFossils(_currentChimeraPrice);
+        UpdatePurchaseSection();
     }
 
     public void OpenAnimationSection()

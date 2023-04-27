@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour
         _settingsUI.InitializeVolumeSettings();
     }
 
-
     public IEnumerator FadeInLoadingScreen(SceneType sceneType)
     {
         _loadingImage.gameObject.SetActive(true);

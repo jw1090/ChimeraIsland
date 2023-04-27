@@ -123,13 +123,11 @@ public class TempleBuyChimeras : MonoBehaviour
 
         var chimeraGO = _resourceManager.GetChimeraBasePrefab(evolutionLogic.ChimeraType);
         Chimera chimeraComp = chimeraGO.GetComponent<Chimera>();
-        chimeraComp.SetIsFirstChimera(true);
+        chimeraComp.SetIsFirstChimera(false);
 
         _habitatManager.AddNewChimera(chimeraComp);
         _habitatManager.Collections.CollectChimera(evolutionLogic.ChimeraType);
         _temple.TempleCollections.Build();
-
-        _uiManager.AlertText.CreateAlert($"You Have Acquired {evolutionLogic.Name}!");
 
         _persistentData.SaveSessionData();
 
