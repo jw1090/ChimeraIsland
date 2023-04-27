@@ -57,7 +57,7 @@ public class MainMenuUI : MonoBehaviour
     {
         _uiManager.CreateButtonListener(_openCreditsButton, OpenCredits);
         _uiManager.CreateButtonListener(_closeCreditsButton, ResetToStandard);
-        _uiManager.CreateButtonListener(_settingsButton, _uiManager.SettingsUI.OpenSettingsPanel);
+        _uiManager.CreateButtonListener(_settingsButton, OpenSettings);
         _uiManager.CreateButtonListener(_warningNoButton, ResetToStandard);
         _uiManager.CreateButtonListener(_screenWideWarningButton, ResetToStandard);
     }
@@ -76,5 +76,16 @@ public class MainMenuUI : MonoBehaviour
     public void ResetToStandard()
     {
         _statefulObject.SetState("Main Panel", true);
+    }
+
+    private void OpenSettings()
+    {
+        _settingsButton.gameObject.SetActive(false);
+        _uiManager.SettingsUI.OpenSettingsUI();
+    }
+
+    public void CloseSettingsUI()
+    {
+        _settingsButton.gameObject.SetActive(true);
     }
 }

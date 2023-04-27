@@ -297,13 +297,13 @@ public class CameraUtil : MonoBehaviour
             case TempleSectionType.None:
                 break;
             case TempleSectionType.Buying:
-                nodeTransform = _templeEnvironment.BuyingNode;
+                nodeTransform = _templeEnvironment.BuyingCamNode;
                 break;
             case TempleSectionType.Upgrades:
-                nodeTransform = _templeEnvironment.UpgradeNode;
+                nodeTransform = _templeEnvironment.UpgradeCamNode;
                 break;
             case TempleSectionType.Collection:
-                nodeTransform = _templeEnvironment.CollectionNode;
+                nodeTransform = _templeEnvironment.CollectionCamNode;
                 break;
             case TempleSectionType.Habitat:
                 nodeTransform = _templeEnvironment.StartNode;

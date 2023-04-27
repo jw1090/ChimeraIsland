@@ -29,8 +29,6 @@ public class SceneChanger : MonoBehaviour
     {
         _uiManager = ServiceLocator.Get<UIManager>();
 
-        Button mainMenuButton = _uiManager.SettingsUI.MainMenuButton;
-
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.MainMenuButton, StartLoadMainMenu);
         _uiManager.CreateButtonListener(_uiManager.SettingsUI.QuitGameButton, QuitGame);
 
@@ -97,7 +95,11 @@ public class SceneChanger : MonoBehaviour
             return;
         }
 
-        _uiManager.HabitatUI.ResetStandardUI();
+        if (_uiManager.InHabitatState == true)
+        {
+            _uiManager.HabitatUI.ResetStandardUI();
+        }
+
         _uiManager.MainMenuUI.CheckShowLoadGameButton();
 
         SaveSessionData(true);
@@ -121,7 +123,7 @@ public class SceneChanger : MonoBehaviour
         {
             return;
         }
-        
+
         SaveSessionData(true);
         FadeInLoadScreen(SceneType.Temple);
     }

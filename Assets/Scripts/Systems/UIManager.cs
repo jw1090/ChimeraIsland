@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MainMenuUI _mainMenuUI = null;
     [SerializeField] private StartingUI _startingUI = null;
     [SerializeField] private TempleUI _templeUI = null;
-    [SerializeField] private EvolutionBuilderUI _evolutionBuilderUI = null;
     [SerializeField] private AlertText _alertText = null;
 
     [Header("Settings")]
@@ -30,6 +29,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _loadingGif = null;
     [SerializeField] private Animator _loadingGifAnimator = null;
     [SerializeField] private TextMeshProUGUI _loadingText = null;
+    private Color _loadingTextColor = Color.white;
 
     [Header("Tutorial")]
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
@@ -44,11 +44,12 @@ public class UIManager : MonoBehaviour
     public StartingUI StartingUI { get => _startingUI; }
     public HabitatUI HabitatUI { get => _habitatUI; }
     public TempleUI TempleUI { get => _templeUI; }
-    public EvolutionBuilderUI EvolutionBuilderUI { get => _evolutionBuilderUI; }
     public SettingsUI SettingsUI { get => _settingsUI; }
     public Tooltip Tooltip { get => _tooltip; }
     public AlertText AlertText { get => _alertText; }
     public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
+    public bool InTempleState { get => _uiStatefulObject.CurrentState.StateName == "Temple UI"; }
+    public bool InMainMenuState { get => _uiStatefulObject.CurrentState.StateName == "Main Menu UI"; }
     public bool UIActive { get => _uiVisible; }
 
     private HabitatManager _habitatManager = null;
@@ -61,7 +62,6 @@ public class UIManager : MonoBehaviour
 
         _settingsUI.InitializeVolumeSettings();
     }
-
 
     public IEnumerator FadeInLoadingScreen(SceneType sceneType)
     {
@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeInDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
-            _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
+            _loadingText.color = Color.Lerp(startColor, _loadingTextColor, progress);
 
             yield return null;
         }
@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeOutDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColorWhite, endColor, progress);
-            _loadingText.color = Color.Lerp(startColorWhite, endColor, progress);
+            _loadingText.color = Color.Lerp(_loadingTextColor, endColor, progress);
 
             yield return null;
         }
@@ -145,7 +145,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeInDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColor, endColorWhite, progress);
-            _loadingText.color = Color.Lerp(startColor, endColorWhite, progress);
+            _loadingText.color = Color.Lerp(startColor, _loadingTextColor, progress);
 
             yield return null;
         }
@@ -165,7 +165,7 @@ public class UIManager : MonoBehaviour
             float progress = timer / _fadeOutDuration;
             _loadingImage.color = Color.Lerp(startColor, endColor, progress);
             _loadingGif.color = Color.Lerp(startColorWhite, endColor, progress);
-            _loadingText.color = Color.Lerp(startColorWhite, endColor, progress);
+            _loadingText.color = Color.Lerp(_loadingTextColor, endColor, progress);
 
             yield return null;
         }
@@ -185,7 +185,6 @@ public class UIManager : MonoBehaviour
         _startingUI.Initialize(this);
         _habitatUI.Initialize(this);
         _templeUI.Initialize(this);
-        _evolutionBuilderUI.Initialize(this);
 
         InitializeWallets();
 
@@ -193,6 +192,8 @@ public class UIManager : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _uiStatefulObject.SetState("Transparent", true);
         _tutorialOverlay.Initialize(this);
+
+        _loadingTextColor = _loadingText.color;
 
         return this;
     }
@@ -239,6 +240,8 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"<color=Cyan> Show {uiSceneType} UI.</color>");
 
+        _settingsUI.CloseSettingsUI();
+
         switch (uiSceneType)
         {
             case SceneType.MainMenu:
@@ -256,9 +259,6 @@ public class UIManager : MonoBehaviour
                 _uiStatefulObject.SetState("Temple UI", true);
                 _templeUI.SceneSetup();
                 break;
-            case SceneType.Builder:
-                _uiStatefulObject.SetState("Builder UI", true);
-                break;
             default:
                 Debug.LogError($"{uiSceneType} is invalid. Please change!");
                 break;
@@ -268,7 +268,6 @@ public class UIManager : MonoBehaviour
     public void UpdateEssenceWallets()
     {
         _habitatUI.UpdateEssenceWallets();
-        _templeUI.UpdateEssenceWallets();
     }
 
     public void UpdateFossilWallets()

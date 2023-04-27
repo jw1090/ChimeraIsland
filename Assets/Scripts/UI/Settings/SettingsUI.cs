@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class SettingsUI : MonoBehaviour
 {
+    [Header("Main")]
     [SerializeField] private VolumeSettingsUI _volumeSettingsUI = null;
     [SerializeField] private InputSettingsUI _inputSettingsUI = null;
     [SerializeField] private Button _resumeButton = null;
+    [SerializeField] private Button _screenWideButton = null;
+
+    [Header("Bottom")]
+    [SerializeField] private GameObject _bottomSection = null;
     [SerializeField] private Button _mainMenuButton = null;
     [SerializeField] private Button _quitGameButton = null;
-    [SerializeField] private Button _screenWideButton = null;
-    [SerializeField] private RectTransform _panel = null;
+
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
 
@@ -35,8 +38,8 @@ public class SettingsUI : MonoBehaviour
 
     private void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_resumeButton, CloseSettingsPanel);
-        _uiManager.CreateButtonListener(_screenWideButton, CloseSettingsPanel);
+        _uiManager.CreateButtonListener(_resumeButton, CloseSettingsButtonPressed);
+        _uiManager.CreateButtonListener(_screenWideButton, CloseSettingsButtonPressed);
     }
 
     public void InitializeVolumeSettings()
@@ -44,33 +47,35 @@ public class SettingsUI : MonoBehaviour
         _volumeSettingsUI.Initialize();
     }
 
-    public void OpenSettingsPanel()
+    public void OpenSettingsUI()
     {
-        _mainMenuButton.gameObject.SetActive(_uiManager.InHabitatState);
-        _quitGameButton.gameObject.SetActive(_uiManager.InHabitatState);
-
-        if (_uiManager.InHabitatState == true)
-        {
-            _panel.sizeDelta = new Vector2(500, 800);
-        }
-        else
-        {
-            _panel.sizeDelta = new Vector2(500, 660);
-        }
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _bottomSection.SetActive(!_uiManager.InMainMenuState);
 
         gameObject.SetActive(true);
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 
-    private void CloseSettingsPanel()
+    private void CloseSettingsButtonPressed()
+    {
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        CloseSettingsUI();
+    }
+
+    public void CloseSettingsUI()
     {
         if (_uiManager.InHabitatState == true)
         {
-            _uiManager.HabitatUI.MenuClosed();
             _uiManager.HabitatUI.ResetStandardUI();
+        }
+        else if (_uiManager.InTempleState == true)
+        {
+            _uiManager.TempleUI.CloseSettingsUI();
+        }
+        else if (_uiManager.InMainMenuState == true)
+        {
+            _uiManager.MainMenuUI.CloseSettingsUI();
         }
 
         gameObject.SetActive(false);
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
     }
 }

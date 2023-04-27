@@ -7,10 +7,11 @@ public class TempleUpgrades : MonoBehaviour
     [SerializeField] private int _tier3UpgradeCost = 10;
     [SerializeField] private List<UpgradeSections> _upgradeSections = new List<UpgradeSections>();
 
-    private HabitatManager _habitatManager = null;
-    private UIManager _uiManager = null;
-    private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
+    private CurrencyManager _currencyManager = null;
+    private HabitatManager _habitatManager = null;
+    private AudioManager _audioManager = null;
+    private UpgradeNode _lastSelectedUpgradeNode = null;
 
     public int GetPrice(int tier)
     {
@@ -24,12 +25,18 @@ public class TempleUpgrades : MonoBehaviour
         }
     }
 
+    public void ResetUpgradeNode() { _lastSelectedUpgradeNode = null; }
+    public void SelectUpgradeNode(UpgradeNode upgradeNode)
+    {
+        _lastSelectedUpgradeNode = upgradeNode;
+    }
+
     public void Initalize()
     {
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
-        _uiManager = ServiceLocator.Get<UIManager>();
-        _audioManager = ServiceLocator.Get<AudioManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _currencyManager = ServiceLocator.Get<CurrencyManager>();
+        _audioManager = ServiceLocator.Get<AudioManager>();
 
         foreach (UpgradeSections upgradeSection in _upgradeSections)
         {
@@ -37,25 +44,14 @@ public class TempleUpgrades : MonoBehaviour
         }
     }
 
-    public void BuyUpgrade(UpgradeNode upgradeNode)
+    public void BuyUpgrade()
     {
-        FacilityData facilityData = new FacilityData(upgradeNode);
+        int price = GetPrice(_lastSelectedUpgradeNode.Tier);
+        _currencyManager.SpendFossils(price);
+
+        FacilityData facilityData = new FacilityData(_lastSelectedUpgradeNode);
         _habitatManager.AddNewFacility(facilityData);
         _habitatManager.AddToUpgradeQueue(facilityData.Type);
-
-        switch (facilityData.Type)
-        {
-            case FacilityType.RuneStone:
-                _uiManager.AlertText.CreateAlert($"You Have Built The Tier {facilityData.CurrentTier} Rune Stones!");
-                break;
-            case FacilityType.Cave:
-            case FacilityType.Waterfall:
-                _uiManager.AlertText.CreateAlert($"You Have Built The Tier {facilityData.CurrentTier} {facilityData.Type}!");
-                break;
-            default:
-                Debug.LogError($"Invalid Facility Type {facilityData.Type}");
-                break;
-        }
 
         UpdateUpgradeNodes();
 

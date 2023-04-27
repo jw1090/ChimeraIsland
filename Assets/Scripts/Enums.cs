@@ -102,7 +102,6 @@ public enum SceneType
     Starting,
     Habitat,
     Temple,
-    Builder,
 }
 
 public enum StatPreferenceType
@@ -142,12 +141,21 @@ public enum UIElementType
     EssenceWallets,
 }
 
+public enum UITempleBackType
+{
+    None = -1,
+    BackToHabitat,
+    BackToTemple,
+}
+
 public enum TempleSectionType
 {
     None = -1,
     Buying,
+    Chimera,
     Upgrades,
     Collection,
+    Gallery,
     Habitat,
 }
 
