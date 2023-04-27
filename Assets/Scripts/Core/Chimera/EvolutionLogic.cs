@@ -26,11 +26,17 @@ public class EvolutionLogic : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _idleParticles = null;
     [SerializeField] private List<ParticleSystem> _patrolParticles = null;
 
+    [Header("Animations")]
+    [SerializeField] private GameObject _evolutionAnimation = null;
+    [SerializeField] private GameObject _fullBody = null;
+
     private Animator _animator = null;
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
 
+    public GameObject FullBody { get => _fullBody; }
+    public GameObject EvolutionAnimation { get => _evolutionAnimation; }
     public ChimeraType ChimeraType { get => _evolutionType; }
     public ElementType ElementType { get => _elementType; }
     public StatType EvolutionStat { get => _evolutionStat; }
