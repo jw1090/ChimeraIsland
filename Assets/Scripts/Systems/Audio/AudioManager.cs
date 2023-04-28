@@ -430,7 +430,7 @@ public class AudioManager : MonoBehaviour
                 break;
             case EnvironmentSFXType.PortalClick:
                 {
-                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build SFX").FirstOrDefault();
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
