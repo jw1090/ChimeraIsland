@@ -37,6 +37,19 @@ public class HabitatManager : MonoBehaviour
         return false;
     }
 
+    public bool IsPreviousFacilityBuilt(UpgradeNode upgradeNode)
+    {
+        foreach (FacilityData facilityData in _facilityDataList)
+        {
+            if (facilityData.Type == upgradeNode.FacilityType && facilityData.CurrentTier >= upgradeNode.Tier - 1)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int GetFacilityTier(FacilityType facilityType)
     {
         foreach (FacilityData facilityData in _facilityDataList)
