@@ -31,7 +31,7 @@ public class TutorialCompletionData
                 return _reccomendedTraits;
             case TutorialStageType.Temple:
                 return _fossilShop;
-            case TutorialStageType.FacilityUpgrades:
+            case TutorialStageType.HabitatUpgrades:
                 return _facilityUpgrades;
             case TutorialStageType.Failure:
                 return _failure;
@@ -68,7 +68,7 @@ public class TutorialCompletionData
             case TutorialStageType.Temple:
                 _fossilShop= true;
                 break;
-            case TutorialStageType.FacilityUpgrades:
+            case TutorialStageType.HabitatUpgrades:
                 _facilityUpgrades= true;
                 break;
             case TutorialStageType.Failure:

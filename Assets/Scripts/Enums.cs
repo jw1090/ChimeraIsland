@@ -168,7 +168,7 @@ public enum TutorialStageType
     Facilities,
     ReccomendedTraits,
     Temple,
-    FacilityUpgrades,
+    HabitatUpgrades,
     Failure,
     BuyChimera,
     Collections,
