@@ -573,7 +573,7 @@ public class ExpeditionManager : MonoBehaviour
                         break;
                     case HabitatRewardType.Habitat:
                         StartCoroutine(_uiManager.FadeInAndOutLoadingScreen());
-                        _tutorialManager.ShowTutorialStage(TutorialStageType.FacilityUpgrades);
+                        _tutorialManager.ShowTutorialStageDelay(TutorialStageType.HabitatUpgrades,2f);
                         break;
                     default:
                         Debug.LogError($"Upgrade type is invalid [{_selectedExpedition.UpgradeType}], please change!");

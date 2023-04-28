@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -190,6 +189,7 @@ public class TempleUI : MonoBehaviour
         _galleryChimeraInfo.gameObject.SetActive(false);
 
         ShowCollectionsUI();
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _temple.ChimeraGallery.ExitGallery();
     }

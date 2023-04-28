@@ -52,7 +52,6 @@ public class InputManager : MonoBehaviour
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
     public float RotationSpeed { get => _rotationAmount; }
-
     public void DisableOutline(bool disable) { _disableOutline = disable; }
     public void SetCurrentScene(SceneType sceneType) { _currentScene = sceneType; }
     public void SetChimeraRotationSpeed(float speed)
@@ -235,6 +234,19 @@ public class InputManager : MonoBehaviour
                 RemoveOutline();
             }
 
+            if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
+            {
+                UpgradeNode upgradeNode = upgradeHit.transform.GetComponent<UpgradeNode>();
+                if (upgradeNode.IsClickable)
+                {
+                    CreateOutline(upgradeHit, OutlineType.Upgrades);
+                }
+            }
+            else if (_currentOutlineType == OutlineType.Upgrades)
+            {
+                RemoveOutline();
+            }
+
         }
         else if (_currentScene == SceneType.Habitat)
         {
@@ -401,6 +413,7 @@ public class InputManager : MonoBehaviour
         }
         else if (Physics.Raycast(ray, 300.0f, _templeLayer))
         {
+            _habitatUI.OpenTemple();
             _sceneChanger.LoadTemple();
         }
         else if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
@@ -549,7 +562,7 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Minable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer)
+        else if (Physics.Raycast(ray, 300.0f, _chimeraPillarLayer)
             || Physics.Raycast(ray, 300.0f, _figurineLayer))
         {
             return CursorType.Dragable;
@@ -595,7 +608,7 @@ public class InputManager : MonoBehaviour
             crystal.Outline(true);
             _currentCrystalOutline = crystal;
         }
-        else if(outlineType == OutlineType.HabitatChimeras)
+        else if (outlineType == OutlineType.HabitatChimeras)
         {
             Outline outline = raycastHit.transform.GetComponent<Chimera>().CurrentEvolution.Outline;
             outline.enabled = true;

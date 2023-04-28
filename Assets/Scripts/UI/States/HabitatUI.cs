@@ -259,6 +259,11 @@ public class HabitatUI : MonoBehaviour
         _menuOpen = true;
     }
 
+    public void OpenTemple() 
+    {
+        _audioManager.PlayUISFX(SFXUIType.Whoosh);
+    }
+
     public void UpdateHabitatUI()
     {
         _detailsManager.UpdateDetailsList();
