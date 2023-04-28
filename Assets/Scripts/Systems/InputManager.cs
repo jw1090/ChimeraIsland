@@ -549,7 +549,7 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Minable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer)
+        else if (Physics.Raycast(ray, 300.0f, _chimeraPillarLayer)
             || Physics.Raycast(ray, 300.0f, _figurineLayer))
         {
             return CursorType.Dragable;
