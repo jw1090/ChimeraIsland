@@ -183,7 +183,8 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
         _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);
 
-        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayWhooshSFX);
         _uiManager.CreateButtonListener(_uiManager.TempleUI.GoLeftButton, PlayWhooshSFX);
         _uiManager.CreateButtonListener(_uiManager.TempleUI.GoRightButton, PlayWhooshSFX);
     }
