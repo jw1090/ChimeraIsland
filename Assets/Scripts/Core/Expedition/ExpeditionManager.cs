@@ -49,6 +49,7 @@ public class ExpeditionManager : MonoBehaviour
     public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
+    public bool ExpeditionFull() { return _chimeras.Count >= 3; }
     public void SetExpeditionState(ExpeditionState expeditionState)
     {
         _expeditionState = expeditionState;
@@ -550,7 +551,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
-                _tutorialManager.ShowTutorialStage(TutorialStageType.FossilShop);
+                _tutorialManager.ShowTutorialStageDelay(TutorialStageType.Temple, 5.5f);
                 break;
             case ExpeditionType.HabitatUpgrade:
                 if (_currentHabitatProgress == 0)

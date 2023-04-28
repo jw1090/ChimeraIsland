@@ -167,7 +167,7 @@ public enum TutorialStageType
     ExpeditionSetup,
     Facilities,
     ReccomendedTraits,
-    FossilShop,
+    Temple,
     FacilityUpgrades,
     Failure,
     BuyChimera,
@@ -203,6 +203,8 @@ public enum EnvironmentSFXType
 {
     None = -1,
     Evolution,
+    FacilityBuildStart,
+    FacilityBuildEnd,
     LevelUp,
     PortalClick,
     MiningTap,

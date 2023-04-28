@@ -27,9 +27,10 @@ public class StartingUI : MonoBehaviour
         SetupListeners();
     }
 
-    public void OnSceneStart()
+    public void SceneSetup()
     {
         _acceptButton.SetupStartingButton();
+        _chimeraInfo.NoAdditionalSections();
 
         ResetUI();
     }
