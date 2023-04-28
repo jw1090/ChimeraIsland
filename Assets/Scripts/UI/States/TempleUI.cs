@@ -12,7 +12,8 @@ public class TempleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _subtitleText = null;
 
     [Header("Main")]
-    [SerializeField] private ChimeraInfoUI _chimeraInfo = null;
+    [SerializeField] private ChimeraInfoUI _buyChimeraInfo = null;
+    [SerializeField] private ChimeraInfoUI _galleryChimeraInfo = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
 
     [Header("Top Left Buttons")]
@@ -43,7 +44,7 @@ public class TempleUI : MonoBehaviour
     private TempleSectionType _currentTempleSection = TempleSectionType.None;
 
     public Button BackToHabitatButton { get => _backToHabitatButton; }
-    public ChimeraInfoUI ChimeraInfo { get => _chimeraInfo; }
+    public ChimeraInfoUI GalleryChimeraInfo { get => _galleryChimeraInfo; }
     public Button GoLeftButton { get => _goLeftButton; }
     public Button GoRightButton { get => _goRightButton; }
     public TempleSectionType CurrentTempleSection { get => _currentTempleSection; }
@@ -52,7 +53,8 @@ public class TempleUI : MonoBehaviour
     public void SetAudioManager(AudioManager audioManager)
     {
         _audioManager = audioManager;
-        _chimeraInfo.SetAudioManager(audioManager);
+        _buyChimeraInfo.SetAudioManager(audioManager);
+        _galleryChimeraInfo.SetAudioManager(audioManager);
     }
 
     public void SetBackButtonState(UITempleBackType backType)
@@ -81,7 +83,8 @@ public class TempleUI : MonoBehaviour
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
 
-        _chimeraInfo.Initialize(_uiManager);
+        _buyChimeraInfo.Initialize(_uiManager);
+        _galleryChimeraInfo.Initialize(_uiManager);
 
         SetupButtonListeners();
 
@@ -99,14 +102,15 @@ public class TempleUI : MonoBehaviour
         _uiManager.CreateButtonListener(_backButton, BackButtonPress);
         _uiManager.CreateButtonListener(_settingsButton, OpenSettingsUI);
 
-        _uiManager.CreateButtonListener(_chimeraInfo.CancelButton, ExitChimeraCloseUp);
+        _uiManager.CreateButtonListener(_buyChimeraInfo.CancelButton, ExitChimeraCloseUp);
 
         _uiManager.CreateButtonListener(_goLeftButton, TransitionLeft);
         _uiManager.CreateButtonListener(_goRightButton, TransitionRight);
 
         _uiManager.CreateButtonListener(_upgradeButton, BuyUpgrade);
 
-        _chimeraInfo.SetupButtonListeners();
+        _buyChimeraInfo.SetupButtonListeners();
+        _galleryChimeraInfo.SetupButtonListeners();
     }
 
     public void SceneSetup()
@@ -114,7 +118,8 @@ public class TempleUI : MonoBehaviour
         _temple = ServiceLocator.Get<Temple>();
         _templeUpgrades = _temple.TempleUpgrades;
 
-        _chimeraInfo.SetTemple(_temple);
+        _buyChimeraInfo.SetTemple(_temple);
+        _galleryChimeraInfo.SetTemple(_temple);
 
         _currentTempleSection = TempleSectionType.Buying;
     }
@@ -127,6 +132,9 @@ public class TempleUI : MonoBehaviour
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(true);
         _upgradeButton.gameObject.SetActive(false);
+
+        _galleryChimeraInfo.gameObject.SetActive(false);
+        _buyChimeraInfo.gameObject.SetActive(false);
 
         _currentTempleSection = TempleSectionType.Buying;
     }
@@ -150,6 +158,8 @@ public class TempleUI : MonoBehaviour
         _subtitle.SetActive(true);
         _subtitleText.text = "Select a Chimera Figurine";
 
+        SetBackButtonState(UITempleBackType.BackToHabitat);
+
         _goLeftButton.gameObject.SetActive(false);
         _goRightButton.gameObject.SetActive(true);
 
@@ -160,13 +170,27 @@ public class TempleUI : MonoBehaviour
     {
         _title.SetActive(false);
         _subtitle.SetActive(false);
+        _fossilWallet.gameObject.SetActive(false);
 
-        _chimeraInfo.OpenAnimationSection();
-        _chimeraInfo.gameObject.SetActive(true);
+        SetBackButtonState(UITempleBackType.BackToTemple);
+
+        _galleryChimeraInfo.OpenAnimationSection();
+        _galleryChimeraInfo.gameObject.SetActive(true);
+        _galleryChimeraInfo.IdleClick();
 
         _goRightButton.gameObject.SetActive(false);
 
         _currentTempleSection = TempleSectionType.Gallery;
+    }
+
+    public void ExitGallery()
+    {
+        _fossilWallet.gameObject.SetActive(true);
+        _galleryChimeraInfo.gameObject.SetActive(false);
+
+        ShowCollectionsUI();
+
+        _temple.ChimeraGallery.ExitGallery();
     }
 
     private void TransitionLeft()
@@ -269,9 +293,9 @@ public class TempleUI : MonoBehaviour
 
     public void ChimeraCloseUp(EvolutionLogic evolutionLogic)
     {
-        _chimeraInfo.LoadChimeraData(evolutionLogic);
-        _chimeraInfo.OpenPurchaseSection();
-        _chimeraInfo.gameObject.SetActive(true);
+        _buyChimeraInfo.LoadChimeraData(evolutionLogic);
+        _buyChimeraInfo.OpenPurchaseSection();
+        _buyChimeraInfo.gameObject.SetActive(true);
 
         _title.gameObject.SetActive(false);
         _subtitle.gameObject.SetActive(false);
@@ -287,7 +311,7 @@ public class TempleUI : MonoBehaviour
     {
         _title.gameObject.SetActive(true);
         _subtitle.gameObject.SetActive(true);
-        _chimeraInfo.gameObject.SetActive(false);
+        _buyChimeraInfo.gameObject.SetActive(false);
 
         SetBackButtonState(UITempleBackType.BackToHabitat);
 
@@ -367,19 +391,12 @@ public class TempleUI : MonoBehaviour
         _templeUpgrades.ResetUpgradeNode();
     }
 
-    public void ExitGallery()
-    {
-        ShowCollectionsUI();
-
-        _temple.ChimeraGallery.ExitGallery();
-    }
-
     private void OpenSettingsUI()
     {
         _title.gameObject.SetActive(false);
         _subtitle.gameObject.SetActive(false);
         _fossilWallet.gameObject.SetActive(false);
-        _chimeraInfo.gameObject.SetActive(false);
+        _buyChimeraInfo.gameObject.SetActive(false);
         _goLeftButton.gameObject.SetActive(false);
         _goRightButton.gameObject.SetActive(false);
         _topLeftSection.gameObject.SetActive(false);
@@ -401,7 +418,7 @@ public class TempleUI : MonoBehaviour
                 _goRightButton.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Chimera:
-                _chimeraInfo.gameObject.SetActive(true);
+                _buyChimeraInfo.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Upgrades:
                 _title.gameObject.SetActive(true);
@@ -415,7 +432,7 @@ public class TempleUI : MonoBehaviour
                 _goRightButton.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Gallery:
-                _chimeraInfo.gameObject.SetActive(true);
+                _buyChimeraInfo.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogError($"Current Temple Section is invalid [{_currentTempleSection}]");
