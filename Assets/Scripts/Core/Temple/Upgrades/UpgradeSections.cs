@@ -11,6 +11,7 @@ public class UpgradeSections : MonoBehaviour
     [SerializeField] private MeshRenderer _upgradeConnection1 = null;
     [SerializeField] private MeshRenderer _upgradeConnection2 = null;
     private HabitatManager _habitatManager = null;
+    private bool _isRubbleGone = false;
 
     public void Initialize()
     {
@@ -26,6 +27,11 @@ public class UpgradeSections : MonoBehaviour
     public void EvaluateUpgradeStates()
     {
         int currentTier = _habitatManager.GetFacilityTier(_facilityType);
+
+        if (currentTier > 0)
+        {
+            _isRubbleGone = true;
+        }
 
         switch (currentTier)
         {
@@ -60,5 +66,9 @@ public class UpgradeSections : MonoBehaviour
                 Debug.LogError($"Current facility tier for {_facilityType} is invalid, Tier: {currentTier}");
                 break;
         }
+
+        _tier1.SetIsClickable(_isRubbleGone);
+        _tier2.SetIsClickable(_isRubbleGone);
+        _tier3.SetIsClickable(_isRubbleGone);
     }
 }

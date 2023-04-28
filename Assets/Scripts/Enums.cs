@@ -260,4 +260,5 @@ public enum OutlineType
     Temple,
     Pillars,
     Figurines,
+    Upgrades,
 }

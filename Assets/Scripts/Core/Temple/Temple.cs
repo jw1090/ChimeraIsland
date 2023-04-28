@@ -46,7 +46,7 @@ public class Temple : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _templeBuyChimeras.Initialize(this);
         _templeCollections.Initialize();
-        _templeUpgrades.Initalize();
+        _templeUpgrades.Initialize();
         _chimeraGallery.Initialize();
 
         return this;
