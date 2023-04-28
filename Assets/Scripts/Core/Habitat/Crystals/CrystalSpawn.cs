@@ -7,6 +7,7 @@ public class CrystalSpawn : MonoBehaviour
     [SerializeField] private StatefulObject _crystal = null;
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     [SerializeField] private List<Crystal> _crystalList = new List<Crystal>();
+    [SerializeField] private List<Outline> _outlines = new List<Outline>();
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
     private int _health = 3;
@@ -22,6 +23,8 @@ public class CrystalSpawn : MonoBehaviour
 
         _isActive = false;
         _crystal.gameObject.SetActive(false);
+
+        Outline(false);
     }
 
     public void Activate(int currentTier)
@@ -93,5 +96,13 @@ public class CrystalSpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(.8f);
         _mine.Stop();
+    }
+
+    public void Outline(bool glow)
+    {
+        foreach (Outline outline in _outlines)
+        {
+            outline.enabled = glow;
+        }
     }
 }

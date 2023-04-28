@@ -44,6 +44,7 @@ public class CameraUtil : MonoBehaviour
     public Camera CameraCO { get => _cameraCO; }
     public bool IsHolding { get; set; }
     public bool IsNaming { get; set; }
+    public StarterEnvironment StarterEnvironment { get => _starterEnvironment; }
 
     public void SetSpeed(float speed)
     {
@@ -283,7 +284,6 @@ public class CameraUtil : MonoBehaviour
                 Debug.LogWarning($"{chimeraType} is not a valid type. Please fix!");
                 break;
         }
-
         _starterEnvironment.ShowChimera(chimeraType);
         CameraShift(nodeTransform, true);
     }
@@ -312,7 +312,30 @@ public class CameraUtil : MonoBehaviour
                 Debug.LogWarning($"{templeSectionType} is not a valid type. Please fix!");
                 break;
         }
+        CameraShift(nodeTransform, true);
+    }
 
+    public void PillarTransition(ElementType elementType)
+    {
+        Transform nodeTransform = null;
+
+        switch (elementType)
+        {
+            case ElementType.None:
+                break;
+            case ElementType.Water:
+                nodeTransform = _templeEnvironment.WaterNode;
+                break;
+            case ElementType.Grass:
+                nodeTransform = _templeEnvironment.GrassNode;
+                break;
+            case ElementType.Fire:
+                nodeTransform = _templeEnvironment.FireNode;
+                break;
+            default:
+                Debug.LogWarning($"{elementType} is not a valid type. Please fix!");
+                break;
+        }
         CameraShift(nodeTransform, true);
     }
 
@@ -320,5 +343,6 @@ public class CameraUtil : MonoBehaviour
     {
         _starterEnvironment.ShowAllChimeras();
         CameraShift(_starterEnvironment.OriginNode, true);
+        _inputManager.DisableOutline(false);
     }
 }

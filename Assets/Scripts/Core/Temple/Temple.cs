@@ -15,8 +15,17 @@ public class Temple : MonoBehaviour
     [SerializeField] Transform _collectionNode = null;
     [SerializeField] Transform _upgradeNode = null;
 
-    private TutorialManager _tutorialManager = null;
+    [Header("Pillar Position Nodes")]
+    [SerializeField] Transform _waterNode = null;
+    [SerializeField] Transform _fireNode = null;
+    [SerializeField] Transform _grassNode = null;
 
+    [Header("Pillars")]
+    [SerializeField] GameObject _waterPillar = null;
+    [SerializeField] GameObject _firePillar = null;
+    [SerializeField] GameObject _grassPillar = null;
+
+    private TutorialManager _tutorialManager = null;
     public TempleBuyChimeras TempleBuyChimeras { get => _templeBuyChimeras; }
     public TempleCollections TempleCollections { get => _templeCollections; }
     public TempleUpgrades TempleUpgrades { get => _templeUpgrades; }
@@ -24,7 +33,13 @@ public class Temple : MonoBehaviour
     public Transform BuyingCamNode { get => _buyingNode; }
     public Transform CollectionCamNode { get => _collectionNode; }
     public Transform UpgradeCamNode { get => _upgradeNode; }
+    public Transform WaterNode { get => _waterNode; }
+    public Transform FireNode { get => _fireNode; }
+    public Transform GrassNode { get => _grassNode; }
     public ChimeraGallery ChimeraGallery { get => _chimeraGallery; }
+    public GameObject WaterPillar { get => _waterPillar; }
+    public GameObject FirePillar { get => _firePillar; }
+    public GameObject GrassPillar { get => _grassPillar; }
 
     public Temple Initialize()
     {

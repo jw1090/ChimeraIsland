@@ -5122,6 +5122,7 @@ GameObject:
   - component: {fileID: 8896751639424520476}
   - component: {fileID: 4386242687541541029}
   - component: {fileID: 4813807707902701509}
+  - component: {fileID: 2311406007801835282}
   m_Layer: 6
   m_Name: C Model
   m_TagString: Chimera
@@ -5138,7 +5139,7 @@ Transform:
   m_GameObject: {fileID: 2800218633195246044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 11, y: 11, z: 11}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5902656308673725638}
@@ -5212,6 +5213,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.17, y: 0.18, z: 0.26}
   m_Center: {x: 0, y: 0.08, z: 0}
+--- !u!114 &2311406007801835282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800218633195246044}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.94509804, b: 0.90588236, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 1
+  bakeKeys: []
+  bakeValues: []
+  renderers:
+  - {fileID: 5672102701266107934}
 --- !u!1 &2885515632176645285
 GameObject:
   m_ObjectHideFlags: 0

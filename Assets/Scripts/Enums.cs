@@ -206,6 +206,7 @@ public enum EnvironmentSFXType
     FacilityBuildStart,
     FacilityBuildEnd,
     LevelUp,
+    FacilityBuild,
     PortalClick,
     MiningTap,
     MiningHarvest,
@@ -247,4 +248,16 @@ public enum TapVFXType
     Water,
     Stone,
     Tree,
+}
+
+public enum OutlineType
+{
+    None = -1,
+    StarterChimeras,
+    HabitatChimeras,
+    Portal,
+    Crystals,
+    Temple,
+    Pillars,
+    Figurines,
 }
