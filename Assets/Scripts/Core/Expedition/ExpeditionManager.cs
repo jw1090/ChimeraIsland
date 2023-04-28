@@ -551,7 +551,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
-                _tutorialManager.ShowTutorialStageDelay(TutorialStageType.Temple, 5f);
+                _tutorialManager.ShowTutorialStageDelay(TutorialStageType.Temple, 5.5f);
                 break;
             case ExpeditionType.HabitatUpgrade:
                 if (_currentHabitatProgress == 0)
