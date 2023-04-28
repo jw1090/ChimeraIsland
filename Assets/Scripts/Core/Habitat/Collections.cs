@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class Collections
 {
     private bool _aUnlocked = false;
@@ -12,7 +15,6 @@ public class Collections
     private bool _c1Unlocked = false;
     private bool _c2Unlocked = false;
     private bool _c3Unlocked = false;
-
     public bool AUnlocked { get => _aUnlocked; }
     public bool A1Unlocked { get => _a1Unlocked; }
     public bool A2Unlocked { get => _a2Unlocked; }
