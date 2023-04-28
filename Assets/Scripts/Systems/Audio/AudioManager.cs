@@ -399,6 +399,21 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
+
+            case EnvironmentSFXType.FacilityBuildStart:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build Start SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.FacilityBuildEnd:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build End SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
             case EnvironmentSFXType.LevelUp:
                 {
                     AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Level Up SFX").FirstOrDefault();

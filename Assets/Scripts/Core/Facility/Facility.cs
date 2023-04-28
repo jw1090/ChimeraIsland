@@ -120,13 +120,20 @@ public class Facility : MonoBehaviour
 
         float stopwatch = 0.0f;
         vfx.SetActive(true);
+        bool sfxStartPlayed = false;
         while (stopwatch < 5.0f)
         {
+            if (sfxStartPlayed == false && stopwatch >= 1.0f)
+            {
+                _audioManager.PlaySFX(EnvironmentSFXType.FacilityBuildStart);
+                sfxStartPlayed = true;
+            }
             if (facilityBuilt == false && stopwatch >= 3.0f)
             {
                 facilityBuilt = true;
                 BuildFacility();
                 _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
+                _audioManager.PlaySFX(EnvironmentSFXType.FacilityBuildEnd);
             }
             stopwatch += Time.deltaTime;
             yield return null;

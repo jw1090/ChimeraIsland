@@ -49,6 +49,7 @@ public class ExpeditionManager : MonoBehaviour
     public int UpgradeMissionBounds { get => _habitatExpeditions.Count - 1; }
 
     public bool HasChimeraBeenAdded(Chimera chimeraToFind) { return _chimeras.Contains(chimeraToFind); }
+    public bool ExpeditionFull() { return _chimeras.Count >= 3; }
     public void SetExpeditionState(ExpeditionState expeditionState)
     {
         _expeditionState = expeditionState;
