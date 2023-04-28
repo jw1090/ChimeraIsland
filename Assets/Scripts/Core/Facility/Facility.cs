@@ -132,7 +132,7 @@ public class Facility : MonoBehaviour
             {
                 facilityBuilt = true;
                 BuildFacility();
-                _tutorialManager.ShowTutorialStage(TutorialStageType.Facilities);
+                _tutorialManager.ShowTutorialStageDelay(TutorialStageType.Facilities, 2f);
                 _audioManager.PlaySFX(EnvironmentSFXType.FacilityBuildEnd);
             }
             stopwatch += Time.deltaTime;

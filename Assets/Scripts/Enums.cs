@@ -167,7 +167,7 @@ public enum TutorialStageType
     ExpeditionSetup,
     Facilities,
     ReccomendedTraits,
-    FossilShop,
+    Temple,
     FacilityUpgrades,
     Failure,
     BuyChimera,
