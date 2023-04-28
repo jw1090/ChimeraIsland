@@ -190,6 +190,7 @@ public class TempleUI : MonoBehaviour
         _galleryChimeraInfo.gameObject.SetActive(false);
 
         ShowCollectionsUI();
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
 
         _temple.ChimeraGallery.ExitGallery();
     }
