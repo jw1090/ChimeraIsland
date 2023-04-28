@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -366,7 +367,17 @@ public class TempleUI : MonoBehaviour
 
         if (_habitatManager.IsFacilityBuilt(upgradeNode))
         {
-            _upgradeText.text = $"Owned";
+            _upgradeText.text = "Owned";
+            _upgradeButton.interactable = false;
+        }
+        else if (upgradeNode.Tier == 1)
+        {
+            _upgradeText.text = "Unavailable";
+            _upgradeButton.interactable = false;
+        }
+        else if (_habitatManager.IsPreviousFacilityBuilt(upgradeNode) == false)
+        {
+            _upgradeText.text = "Unavailable";
             _upgradeButton.interactable = false;
         }
         else
@@ -381,7 +392,6 @@ public class TempleUI : MonoBehaviour
             {
                 _upgradeButton.interactable = true;
             }
-
         }
 
         _upgradeButton.gameObject.SetActive(true);
@@ -405,43 +415,53 @@ public class TempleUI : MonoBehaviour
         _title.gameObject.SetActive(false);
         _subtitle.gameObject.SetActive(false);
         _fossilWallet.gameObject.SetActive(false);
+
         _buyChimeraInfo.gameObject.SetActive(false);
+        _galleryChimeraInfo.gameObject.SetActive(false);
+
         _goLeftButton.gameObject.SetActive(false);
         _goRightButton.gameObject.SetActive(false);
         _topLeftSection.gameObject.SetActive(false);
+
+        _upgradeButton.gameObject.SetActive(false);
 
         _uiManager.SettingsUI.OpenSettingsUI();
     }
 
     public void CloseSettingsUI()
     {
-        _fossilWallet.gameObject.SetActive(true);
         _topLeftSection.gameObject.SetActive(true);
 
         switch (_currentTempleSection)
         {
+            case TempleSectionType.Habitat:
+                break;
             case TempleSectionType.Buying:
                 _title.gameObject.SetActive(true);
                 _subtitle.gameObject.SetActive(true);
                 _goLeftButton.gameObject.SetActive(true);
                 _goRightButton.gameObject.SetActive(true);
+                _fossilWallet.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Chimera:
                 _buyChimeraInfo.gameObject.SetActive(true);
+                _fossilWallet.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Upgrades:
                 _title.gameObject.SetActive(true);
                 _subtitle.gameObject.SetActive(true);
                 _goLeftButton.gameObject.SetActive(true);
-
+                _fossilWallet.gameObject.SetActive(true);
+                ClearUpgrades();
                 break;
             case TempleSectionType.Collection:
                 _title.gameObject.SetActive(true);
                 _subtitle.gameObject.SetActive(true);
                 _goRightButton.gameObject.SetActive(true);
+                _fossilWallet.gameObject.SetActive(true);
                 break;
             case TempleSectionType.Gallery:
-                _buyChimeraInfo.gameObject.SetActive(true);
+                _galleryChimeraInfo.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogError($"Current Temple Section is invalid [{_currentTempleSection}]");
