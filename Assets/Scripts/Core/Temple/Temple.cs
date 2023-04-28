@@ -30,9 +30,9 @@ public class Temple : MonoBehaviour
     public TempleCollections TempleCollections { get => _templeCollections; }
     public TempleUpgrades TempleUpgrades { get => _templeUpgrades; }
     public Transform StartNode { get => _startNode; }
-    public Transform BuyingNode { get => _buyingNode; }
-    public Transform CollectionNode { get => _collectionNode; }
-    public Transform UpgradeNode { get => _upgradeNode; }
+    public Transform BuyingCamNode { get => _buyingNode; }
+    public Transform CollectionCamNode { get => _collectionNode; }
+    public Transform UpgradeCamNode { get => _upgradeNode; }
     public Transform WaterNode { get => _waterNode; }
     public Transform FireNode { get => _fireNode; }
     public Transform GrassNode { get => _grassNode; }

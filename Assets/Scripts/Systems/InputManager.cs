@@ -354,6 +354,9 @@ public class InputManager : MonoBehaviour
 
                 _heldChimera = chimeraHit.transform.gameObject.GetComponent<ChimeraBehavior>();
 
+                _disableOutline = true;
+                RemoveOutline();
+
                 if (_heldChimera.Chimera.ReadyToEvolve == true)
                 {
                     StartCoroutine(_heldChimera.Chimera.EvolveChimera());
@@ -384,6 +387,9 @@ public class InputManager : MonoBehaviour
         {
             if (_currentScene == SceneType.Temple && _templeUI.CurrentTempleSection == TempleSectionType.Buying)
             {
+                _disableOutline = true;
+                RemoveOutline();
+
                 _evolution = chimeraPillarHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
                 _cameraUtil.PillarTransition(_evolution.ElementType);
                 _templeUI.ChimeraCloseUp(_evolution);
@@ -452,6 +458,7 @@ public class InputManager : MonoBehaviour
         _habitatManager.CurrentHabitat.ActivateGlow(false);
         HeldStateChange?.Invoke(false, _heldChimera.transform.GetHashCode());
         _isHolding = false;
+        _disableOutline = false;
         _heldChimera = null;
     }
 
@@ -590,7 +597,7 @@ public class InputManager : MonoBehaviour
         }
         else if(outlineType == OutlineType.HabitatChimeras)
         {
-            Outline outline = raycastHit.transform.GetComponentInChildren<Outline>();
+            Outline outline = raycastHit.transform.GetComponent<Chimera>().CurrentEvolution.Outline;
             outline.enabled = true;
             _currentOutline = outline;
         }
@@ -605,7 +612,7 @@ public class InputManager : MonoBehaviour
 
     private void RemoveOutline()
     {
-        if (_currentOutline == null && _currentCrystalOutline == null || _isHolding == true)
+        if (_currentOutline == null && _currentCrystalOutline == null)
         {
             return;
         }

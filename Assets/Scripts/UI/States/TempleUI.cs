@@ -268,6 +268,7 @@ public class TempleUI : MonoBehaviour
     public void EnterGallery(ChimeraType chimeraType)
     {
         _temple.ChimeraGallery.EnterGallery(chimeraType);
+        _audioManager.PlayUISFX(SFXUIType.Whoosh);
         ShowGalleryUI();
     }
 
@@ -304,6 +305,8 @@ public class TempleUI : MonoBehaviour
 
         _currentTempleSection = TempleSectionType.Chimera;
 
+        _audioManager.PlayUISFX(SFXUIType.Whoosh);
+
         SetBackButtonState(UITempleBackType.BackToTemple);
     }
 
@@ -314,6 +317,12 @@ public class TempleUI : MonoBehaviour
         _buyChimeraInfo.gameObject.SetActive(false);
 
         SetBackButtonState(UITempleBackType.BackToHabitat);
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlayUISFX(SFXUIType.Whoosh);
+
+        _currentTempleSection = TempleSectionType.Buying;
+        _cameraUtil.TempleTransition(_currentTempleSection);
+        _inputManager.DisableOutline(false);
 
         ShowBuyUI();
     }
