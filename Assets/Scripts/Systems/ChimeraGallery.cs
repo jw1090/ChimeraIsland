@@ -38,7 +38,7 @@ public class ChimeraGallery : MonoBehaviour
 
     public void Initialize()
     {
-        _chimeraInfo = ServiceLocator.Get<UIManager>().TempleUI.ChimeraInfo;
+        _chimeraInfo = ServiceLocator.Get<UIManager>().TempleUI.GalleryChimeraInfo;
         _inputManager = ServiceLocator.Get<InputManager>();
     }
 
@@ -52,6 +52,9 @@ public class ChimeraGallery : MonoBehaviour
         LoadCurrentChimera(chimeraType);
         _currentChimera.SetActive(true);
         _currentAnimator = _currentChimera.GetComponent<Animator>();
+
+        EvolutionLogic evolutionLogic = _currentChimera.GetComponent<EvolutionLogic>();
+        _chimeraInfo.LoadChimeraData(evolutionLogic);
 
         switch (chimeraType)
         {
@@ -70,14 +73,10 @@ public class ChimeraGallery : MonoBehaviour
                 break;
         }
 
-        EvolutionLogic evolutionLogic = _currentChimera.GetComponent<EvolutionLogic>();
-        _chimeraInfo.LoadChimeraData(evolutionLogic);
-
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0) == true);
 
         _active = true;
     }
-
 
     public void ExitGallery()
     {
