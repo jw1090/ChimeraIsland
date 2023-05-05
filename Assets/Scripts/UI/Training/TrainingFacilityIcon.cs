@@ -36,6 +36,7 @@ public class TrainingFacilityIcon : MonoBehaviour
         }
 
         transform.LookAt(_camera.transform);
+        transform.Rotate(0, 180, 0);
     }
 
     public void UpdateSlider(int currentExperience)

@@ -118,7 +118,7 @@ public class TrainingUI : MonoBehaviour
         }
         else // Good
         {
-            _costText.color = Color.white;
+            _costText.color = _validColor;
             _sliderFill.sprite = _goodSlider;
             _confirmButton.interactable = true;
         }
