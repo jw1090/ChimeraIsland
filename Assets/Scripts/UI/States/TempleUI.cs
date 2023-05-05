@@ -333,6 +333,7 @@ public class TempleUI : MonoBehaviour
         _subtitleText.text = BuildUpgradeString(upgradeNode.FacilityType, upgradeNode.Tier);
         UpdateUpgradeButton(upgradeNode);
 
+        _audioManager.PlaySFX(EnvironmentSFXType.StoneClick);
         _templeUpgrades.SelectUpgradeNode(upgradeNode);
     }
 
