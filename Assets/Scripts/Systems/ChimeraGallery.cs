@@ -27,9 +27,8 @@ public class ChimeraGallery : MonoBehaviour
     [SerializeField] private GameObject _chimeraC3 = null;
 
     private InputManager _inputManager = null;
-    private StartingChimeraInfo _chimeraInfo = null;
+    private ChimeraInfoUI _chimeraInfo = null;
     private bool _active = false;
-    private TempleUI _templeUI;
     private GameObject _currentChimera = null;
     private Vector3 mPrevMousePos = Vector3.zero;
     private Vector3 mPosDelta = Vector3.zero;
@@ -41,20 +40,19 @@ public class ChimeraGallery : MonoBehaviour
     {
         _chimeraInfo = ServiceLocator.Get<UIManager>().TempleUI.ChimeraInfo;
         _inputManager = ServiceLocator.Get<InputManager>();
-        _chimeraInfo.Initialize();
     }
 
-    public void SetTempleUI(TempleUI templeUI)
+    public void EnterGallery(ChimeraType chimeraType)
     {
-        _templeUI = templeUI;
+        StartCoroutine(EnterGalleryCoroutine(chimeraType));
     }
 
-    public IEnumerator StartGallery(ChimeraType chimeraType)
+    private IEnumerator EnterGalleryCoroutine(ChimeraType chimeraType)
     {
-        _templeUI.ShowGalleryUIState();
-        GetCurrentChimera(chimeraType);
+        LoadCurrentChimera(chimeraType);
         _currentChimera.SetActive(true);
         _currentAnimator = _currentChimera.GetComponent<Animator>();
+
         switch (chimeraType)
         {
             case ChimeraType.A3:
@@ -71,8 +69,12 @@ public class ChimeraGallery : MonoBehaviour
                 _camera.gameObject.transform.rotation = _galleryNodeSmall.rotation;
                 break;
         }
-        _chimeraInfo.LoadChimeraData(_currentChimera.GetComponent<EvolutionLogic>());
+
+        EvolutionLogic evolutionLogic = _currentChimera.GetComponent<EvolutionLogic>();
+        _chimeraInfo.LoadChimeraData(evolutionLogic);
+
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0) == true);
+
         _active = true;
     }
 
@@ -82,8 +84,8 @@ public class ChimeraGallery : MonoBehaviour
         _active = false;
         _currentChimera.transform.localRotation = Quaternion.identity;
         _currentChimera.SetActive(false);
-        _camera.gameObject.transform.position = _cameraTempleNode.position;
-        _camera.gameObject.transform.rotation = _cameraTempleNode.rotation;
+        _camera.transform.position = _cameraTempleNode.position;
+        _camera.transform.rotation = _cameraTempleNode.rotation;
     }
 
     private void Update()
@@ -94,7 +96,7 @@ public class ChimeraGallery : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
-            if(_clickedDownOnChimera == false && _inputManager.GetCursorSprite() == CursorType.Dragable)
+            if (_clickedDownOnChimera == false && _inputManager.GetCursorSprite() == CursorType.Dragable)
             {
                 _clickedDownOnChimera = true;
                 _inputManager.SetRotatingInGallery(true);
@@ -114,21 +116,23 @@ public class ChimeraGallery : MonoBehaviour
         mPrevMousePos = Input.mousePosition;
     }
 
-    public void SetAnim(string anim)
+    public void SetAnimation(string animationName)
     {
-        if(_currentAnimator == null)
+        if (_currentAnimator == null)
         {
             return;
         }
+
         if (_currentAnim != "")
         {
             _currentAnimator.SetBool(_currentAnim, false);
         }
-        _currentAnim = anim;
+
+        _currentAnim = animationName;
         _currentAnimator.SetBool(_currentAnim, true);
     }
 
-    private void GetCurrentChimera(ChimeraType chimeraType)
+    private void LoadCurrentChimera(ChimeraType chimeraType)
     {
         switch (chimeraType)
         {

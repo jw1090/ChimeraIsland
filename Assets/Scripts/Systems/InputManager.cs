@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -25,7 +24,6 @@ public class InputManager : MonoBehaviour
     private SceneChanger _sceneChanger = null;
     private Temple _temple = null;
     private LayerMask _chimeraLayer = new LayerMask();
-    private LayerMask _chimeraPillarLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
     private LayerMask _portalLayer = new LayerMask();
     private LayerMask _templeLayer = new LayerMask();
@@ -43,17 +41,11 @@ public class InputManager : MonoBehaviour
     private float _rotationAmount = 2.0f;
     private SceneType _currentScene = SceneType.None;
 
-    private Outline _currentOutline = null;
-    private CrystalSpawn _currentCrystalOutline = null;
-    private OutlineType _currentOutlineType = OutlineType.None;
-    private bool _disableOutline = false;
-
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
     public bool IsHolding { get => _isHolding; }
     public float RotationSpeed { get => _rotationAmount; }
 
-    public void DisableOutline(bool disable) { _disableOutline = disable; }
     public void SetCurrentScene(SceneType sceneType) { _currentScene = sceneType; }
     public void SetChimeraRotationSpeed(float speed)
     {
@@ -101,7 +93,6 @@ public class InputManager : MonoBehaviour
         _upgradesLayer = LayerMask.GetMask("UpgradeNode");
         _groundLayer = LayerMask.GetMask("Ground");
         _figurineLayer = LayerMask.GetMask("Figurine");
-        _chimeraPillarLayer = LayerMask.GetMask("ChimeraPillar");
         _sphereMarker.SetActive(false);
 
         _rotationAmount = _persistentData.SettingsData.spinSpeed;
@@ -213,82 +204,6 @@ public class InputManager : MonoBehaviour
         {
             DebugViewInput();
         }
-
-        if (_currentScene == SceneType.Temple)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraPillarLayer))
-            {
-                CreateOutline(chimeraHit, OutlineType.Pillars);
-            }
-            else if (_currentOutlineType == OutlineType.Pillars)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _figurineLayer))
-            {
-                CreateOutline(hit, OutlineType.Figurines);
-            }
-            else if (_currentOutlineType == OutlineType.Figurines)
-            {
-                RemoveOutline();
-            }
-
-        }
-        else if (_currentScene == SceneType.Habitat)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit cHit, 300.0f, _chimeraLayer))
-            {
-                CreateOutline(cHit, OutlineType.HabitatChimeras);
-            }
-            else if (_currentOutlineType == OutlineType.HabitatChimeras)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
-            {
-                CreateOutline(crystalHit, OutlineType.Crystals);
-            }
-            else if (_currentOutlineType == OutlineType.Crystals)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _portalLayer))
-            {
-                CreateOutline(mouseHit, OutlineType.Portal);
-            }
-            else if (_currentOutlineType == OutlineType.Portal)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _templeLayer))
-            {
-                CreateOutline(hit, OutlineType.Temple);
-            }
-            else if (_currentOutlineType == OutlineType.Temple)
-            {
-                RemoveOutline();
-            }
-        }
-        else if (_currentScene == SceneType.Starting)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _chimeraLayer))
-            {
-                CreateOutline(mouseHit, OutlineType.StarterChimeras);
-            }
-            else if (_currentOutlineType == OutlineType.StarterChimeras)
-            {
-                RemoveOutline();
-            }
-        }
     }
 
     private void FixedUpdate()
@@ -339,7 +254,9 @@ public class InputManager : MonoBehaviour
         {
             if (_currentScene == SceneType.Temple)
             {
-                StartCoroutine(_temple.ChimeraGallery.StartGallery(figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType));
+                ChimeraType chimeraType = figurineHit.transform.gameObject.GetComponent<Figurine>().ChimeraType;
+
+                _uiManager.TempleUI.EnterGallery(chimeraType);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer))
@@ -368,9 +285,6 @@ public class InputManager : MonoBehaviour
             {
                 _evolution = chimeraHit.transform.gameObject.GetComponent<EvolutionLogic>();
 
-                _disableOutline = true;
-                RemoveOutline();
-
                 _startingUI.OpenChimeraInfo();
                 _startingUI.LoadChimeraInfo(_evolution);
 
@@ -378,18 +292,12 @@ public class InputManager : MonoBehaviour
 
                 _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
             }
-        }
-        else if (Physics.Raycast(ray, out RaycastHit chimeraPillarHit, 300.0f, _chimeraPillarLayer))
-        {
-            if (_currentScene == SceneType.Temple)
+            else if (_currentScene == SceneType.Temple)
             {
-                if (_templeUI.InGallery == false)
+                if (_templeUI.CurrentTempleSection == TempleSectionType.Buying)
                 {
-                    //_disableOutline = true;
-                    //RemoveOutline();
-                    _evolution = chimeraPillarHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
-                    _cameraUtil.PillarTransition(_evolution.ElementType);
-                    _templeUI.BuyChimera(_evolution);
+                    _evolution = chimeraHit.transform.gameObject.GetComponent<ChimeraPillar>().EvolutionLogic;
+                    _templeUI.ChimeraCloseUp(_evolution);
                 }
             }
         }
@@ -407,7 +315,7 @@ public class InputManager : MonoBehaviour
             {
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
 
-                _templeUI.BuyFacility(upgrade);
+                _templeUI.SelectFacilityUpgrade(upgrade);
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
@@ -477,7 +385,7 @@ public class InputManager : MonoBehaviour
 
     private void DebugHabitatUpgradeInput()
     {
-        if (_currentScene != SceneType.Habitat)
+        if(_currentScene != SceneType.Habitat)
         {
             return;
         }
@@ -531,7 +439,7 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Default;
         }
-        else if (_rotatingInGallery == true)
+        else if(_rotatingInGallery == true)
         {
             return CursorType.Rotate;
         }
@@ -546,7 +454,7 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Minable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer)
+        else if (Physics.Raycast(ray, 300.0f, _chimeraLayer) 
             || Physics.Raycast(ray, 300.0f, _figurineLayer))
         {
             return CursorType.Dragable;
@@ -577,54 +485,5 @@ public class InputManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    private void CreateOutline(RaycastHit raycastHit, OutlineType outlineType)
-    {
-        if (_currentOutline != null || _disableOutline == true)
-        {
-            return;
-        }
-
-        if (outlineType == OutlineType.Crystals)
-        {
-            CrystalSpawn crystal = raycastHit.transform.GetComponent<CrystalSpawn>();
-            crystal.Outline(true);
-            _currentCrystalOutline = crystal;
-        }
-        else if(outlineType == OutlineType.HabitatChimeras)
-        {
-            Outline outline = raycastHit.transform.GetComponentInChildren<Outline>();
-            outline.enabled = true;
-            _currentOutline = outline;
-        }
-        else
-        {
-            Outline outline = raycastHit.transform.GetComponent<Outline>();
-            outline.enabled = true;
-            _currentOutline = outline;
-        }
-        _currentOutlineType = outlineType;
-    }
-
-    private void RemoveOutline()
-    {
-        if (_currentOutline == null && _currentCrystalOutline == null || _isHolding == true)
-        {
-            return;
-        }
-
-        if (_currentOutlineType == OutlineType.Crystals)
-        {
-            _currentCrystalOutline.Outline(false);
-            _currentCrystalOutline = null;
-        }
-        else
-        {
-            _currentOutline.enabled = false;
-            _currentOutline = null;
-        }
-
-        _currentOutlineType = OutlineType.None;
     }
 }

@@ -20,9 +20,6 @@ public class LevelLoader : AsyncLoader
     [Header("Temple")]
     [SerializeField] private Temple _templeEnvironment = null;
 
-    [Header("Builder")]
-    [SerializeField] private EvolutionBuilder _evolutionBuilder = null;
-
     private static LevelLoader _instance = null;
     private readonly static List<Action> _queuedCallbacks = new List<Action>();
 
@@ -65,10 +62,6 @@ public class LevelLoader : AsyncLoader
                 break;
             case SceneType.Temple:
                 TempleSceneSetup();
-                break;
-            case SceneType.Builder:
-                _evolutionBuilder.BuildAll();
-                _uiManager.EvolutionBuilderUI.LoadBaseChimeras();
                 break;
             default:
                 Debug.LogError($"{_sceneType} is invalid, please change!.");
@@ -120,12 +113,6 @@ public class LevelLoader : AsyncLoader
         {
             _lightingManager.Initialize();
             _habitat.SetLightingManager(_lightingManager);
-        }
-
-        if (_evolutionBuilder != null)
-        {
-            _evolutionBuilder.Initialize();
-            _uiManager.EvolutionBuilderUI.SetEvolutionBuilder(_evolutionBuilder);
         }
 
         if (_starterEnvironment != null)
@@ -195,9 +182,6 @@ public class LevelLoader : AsyncLoader
                 _uiManager.HabitatUI.LoadHabitatSpecificUI();
                 break;
             case SceneType.Temple:
-                _uiManager.TempleUI.ShowSharedUIState();
-                break;
-            case SceneType.Builder:
                 break;
             default:
                 Debug.LogWarning($"Scene Type: {_sceneType} is invalid.");
