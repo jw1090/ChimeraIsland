@@ -30,6 +30,8 @@ public class LevelLoader : AsyncLoader
     private AudioManager _audioManager = null;
     private SceneChanger _sceneChanger = null;
 
+    public SceneType CurrentSceneType { get => _sceneType; }
+
     protected override void Awake()
     {
         _instance = this;
@@ -85,7 +87,10 @@ public class LevelLoader : AsyncLoader
 
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
+
         _uiManager = ServiceLocator.Get<UIManager>();
+        _uiManager.SetLevelLoader(this);
+
         _audioManager = ServiceLocator.Get<AudioManager>();
 
         if (_cameraUtil != null)

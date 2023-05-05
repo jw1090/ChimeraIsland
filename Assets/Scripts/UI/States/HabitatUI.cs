@@ -215,8 +215,14 @@ public class HabitatUI : MonoBehaviour
 
             _audioManager.PlayUISFX(SFXUIType.StandardClick);
         }
-        else if (_uiManager.SettingsUI.gameObject.activeInHierarchy == true ||
-            _expeditionPanel.gameObject.activeInHierarchy == true ||
+        else if(_uiManager.IsSettingsOpen == true)
+        {
+            _uiManager.SettingsUI.CloseSettingsUI();
+            ResetStandardUI();
+
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        }
+        else if ( _expeditionPanel.gameObject.activeInHierarchy == true ||
             _detailsManager.IsOpen == true)
         {
             ResetStandardUI();

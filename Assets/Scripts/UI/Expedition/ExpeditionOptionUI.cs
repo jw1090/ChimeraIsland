@@ -115,7 +115,8 @@ public class ExpeditionOptionUI : MonoBehaviour, IPointerClickHandler
                 case ModifierType.Stamina:
                 case ModifierType.Wisdom:
                 case ModifierType.Exploration:
-                    _modifiers[i].Icon.sprite = _resourceManager.GetModifierSprite(modifierType);
+                    Sprite sprite = _resourceManager.GetModifierSprite(modifierType);
+                    _modifiers[i].UpdateSprite(sprite);
                     _modifiers[i].gameObject.SetActive(true);
                     ++activeBadgeCount;
                     break;
