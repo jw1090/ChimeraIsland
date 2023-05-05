@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
@@ -58,6 +59,18 @@ public class TutorialManager : MonoBehaviour
         SaveTutorialProgress();
 
         Debug.Log($"<color=Red> Tutorial progress reset. </color>");
+    }
+
+    public void ShowTutorialStageDelay(TutorialStageType tutorialType, float delaySeconds)
+    {
+        StartCoroutine(DelayTutorial(tutorialType, delaySeconds));
+    }
+
+    private IEnumerator DelayTutorial(TutorialStageType tutorialType, float delaySeconds)
+    {
+
+        yield return new WaitForSeconds(delaySeconds);
+        ShowTutorialStage(tutorialType);
     }
 
     public void ShowTutorialStage(TutorialStageType tutorialType)

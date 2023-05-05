@@ -551,7 +551,7 @@ public class ExpeditionManager : MonoBehaviour
                 }
 
                 _currencyManager.IncreaseFossils(_selectedExpedition.ActualAmountGained);
-                _tutorialManager.ShowTutorialStage(TutorialStageType.FossilShop);
+                _tutorialManager.ShowTutorialStageDelay(TutorialStageType.Temple, 5.5f);
                 break;
             case ExpeditionType.HabitatUpgrade:
                 if (_currentHabitatProgress == 0)
@@ -573,7 +573,7 @@ public class ExpeditionManager : MonoBehaviour
                         break;
                     case HabitatRewardType.Habitat:
                         StartCoroutine(_uiManager.FadeInAndOutLoadingScreen());
-                        _tutorialManager.ShowTutorialStage(TutorialStageType.FacilityUpgrades);
+                        _tutorialManager.ShowTutorialStageDelay(TutorialStageType.HabitatUpgrades,2f);
                         break;
                     default:
                         Debug.LogError($"Upgrade type is invalid [{_selectedExpedition.UpgradeType}], please change!");

@@ -9,10 +9,12 @@ public class TempleStructure : MonoBehaviour
     [SerializeField] private GameObject _templeVFX = null;
     private bool _isCompleted = false;
     private AudioManager _audioManager = null;
+    private InputManager _inputManager = null;
 
     public void Initialize()
     {
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
     }
 
     public Transform CameraTransitionNode { get => _cameraTransitionNode; }
@@ -23,6 +25,7 @@ public class TempleStructure : MonoBehaviour
         bool facilityBuilt = false;
 
         yield return new WaitUntil(() => cameraUtil.InTransition == false);
+        _inputManager.SetInTransition(true);
 
         float stopwatch = 0.0f;
         _templeVFX.SetActive(true);
@@ -44,6 +47,7 @@ public class TempleStructure : MonoBehaviour
             yield return null;
         }
         _templeVFX.SetActive(false);
+        _inputManager.SetInTransition(false);
     }
 
     public void Build()
