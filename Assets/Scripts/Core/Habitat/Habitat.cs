@@ -119,6 +119,7 @@ public class Habitat : MonoBehaviour
         _crystalManager.Initialize(this);
         _patrolNodes.Initialize();
         _environment.Initialize();
+        _temple.Initialize();
 
         SetTier(_habitatManager.HabitatData.CurrentTier);
 

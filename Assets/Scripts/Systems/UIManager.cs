@@ -249,6 +249,7 @@ public class UIManager : MonoBehaviour
                 break;
             case SceneType.Starting:
                 _uiStatefulObject.SetState("Starting UI", true);
+                _startingUI.SceneSetup();
                 break;
             case SceneType.Habitat:
                 _uiStatefulObject.SetState("Habitat UI", true);

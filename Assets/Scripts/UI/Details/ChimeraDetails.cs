@@ -157,6 +157,8 @@ public class ChimeraDetails : MonoBehaviour
         {
             _name.text = $"{_chimera.Name}";
         }
+
+        _addButton.interactable = !_expeditionManager.ExpeditionFull();
         _level.text = $"Average Power: {_chimera.AveragePower.ToString("F1")}";
         _chimeraIcon.sprite = _chimera.ChimeraIcon;
         _elementIcon.sprite = _chimera.ElementIcon;

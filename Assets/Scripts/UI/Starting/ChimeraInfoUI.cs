@@ -33,6 +33,7 @@ public class ChimeraInfoUI : MonoBehaviour
     private AudioManager _audioManager = null;
     private EvolutionLogic _evolution = null;
     private Temple _temple = null;
+    private AnimationType _currentAnimationType = AnimationType.None;
 
     public Button CancelButton { get => _cancelButton; }
 
@@ -42,22 +43,6 @@ public class ChimeraInfoUI : MonoBehaviour
     }
 
     public void SetTemple(Temple temple) { _temple = temple; }
-
-    private void SetAnimIdle() { SetAnimation("Idle"); }
-    private void SetAnimWalk() { SetAnimation("Walk"); }
-    private void SetAnimSuccess()
-    {
-        SetAnimation("Success");
-        _audioManager.PlayHappyChimeraSFX(_evolution.ChimeraType);
-    }
-
-    private void SetAnimFailure()
-    {
-        SetAnimation("Fail");
-        _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
-    }
-
-    private void SetAnimation(string animationName) { _temple.ChimeraGallery.SetAnimation(animationName); }
 
     public void Initialize(UIManager uiManager)
     {
@@ -69,10 +54,10 @@ public class ChimeraInfoUI : MonoBehaviour
 
     public void SetupButtonListeners()
     {
-        _uiManager.CreateButtonListener(_walkButton, SetAnimWalk);
-        _uiManager.CreateButtonListener(_idleButton, SetAnimIdle);
-        _uiManager.CreateButtonListener(_successButton, SetAnimSuccess);
-        _uiManager.CreateButtonListener(_failureButton, SetAnimFailure);
+        _uiManager.CreateButtonListener(_walkButton, WalkClick);
+        _uiManager.CreateButtonListener(_idleButton, IdleClick);
+        _uiManager.CreateButtonListener(_successButton, SuccessClick);
+        _uiManager.CreateButtonListener(_failureButton, FailureClick);
         _uiManager.CreateButtonListener(_purchaseButton, BuyChimera);
     }
 
@@ -131,6 +116,18 @@ public class ChimeraInfoUI : MonoBehaviour
         _animationSection.SetActive(false);
     }
 
+    public void OpenAnimationSection()
+    {
+        _purchaseSection.SetActive(false);
+        _animationSection.SetActive(true);
+    }
+
+    public void NoAdditionalSections()
+    {
+        _purchaseSection.SetActive(false);
+        _animationSection.SetActive(false);
+    }
+
     public void UpdatePurchaseSection()
     {
         _currentChimeraPrice = _temple.TempleBuyChimeras.GetCurrentPrice(_evolution.ChimeraType);
@@ -154,9 +151,67 @@ public class ChimeraInfoUI : MonoBehaviour
         UpdatePurchaseSection();
     }
 
-    public void OpenAnimationSection()
+    public void IdleClick()
     {
-        _purchaseSection.SetActive(false);
-        _animationSection.SetActive(true);
+        _currentAnimationType = AnimationType.Idle;
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        SetAnimation("Idle");
+    }
+
+    private void WalkClick()
+    {
+        _currentAnimationType = AnimationType.Walk;
+        SetAnimation("Walk");
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+    }
+
+    private void SuccessClick()
+    {
+        _currentAnimationType = AnimationType.Success;
+        SetAnimation("Success");
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlayHappyChimeraSFX(_evolution.ChimeraType);
+    }
+
+    private void FailureClick()
+    {
+        _currentAnimationType = AnimationType.Fail;
+        SetAnimation("Fail");
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
+    }
+
+    private void SetAnimation(string animationName)
+    {
+        EvaluateInteractable();
+
+        _temple.ChimeraGallery.SetAnimation(animationName);
+    }
+
+    private void EvaluateInteractable()
+    {
+        _idleButton.interactable = true;
+        _walkButton.interactable = true;
+        _successButton.interactable = true;
+        _failureButton.interactable = true;
+
+        switch (_currentAnimationType)
+        {
+            case AnimationType.Idle:
+                _idleButton.interactable = false;
+                break;
+            case AnimationType.Walk:
+                _walkButton.interactable = false;
+                break;
+            case AnimationType.Success:
+                _successButton.interactable = false;
+                break;
+            case AnimationType.Fail:
+                _failureButton.interactable = false;
+                break;
+            default:
+                Debug.LogError($"Animation Type is not valid [{_currentAnimationType}]");
+                break;
+        }
     }
 }

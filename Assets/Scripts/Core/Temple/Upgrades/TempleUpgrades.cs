@@ -31,7 +31,7 @@ public class TempleUpgrades : MonoBehaviour
         _lastSelectedUpgradeNode = upgradeNode;
     }
 
-    public void Initalize()
+    public void Initialize()
     {
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();

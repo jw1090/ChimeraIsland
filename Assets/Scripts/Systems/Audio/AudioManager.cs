@@ -183,7 +183,8 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(startingUI.AcceptButton, PlayConfirmSFX);
         _uiManager.CreateButtonListener(startingUI.DeclineButton, PlayClickSFX);
 
-        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayClickSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayConfirmSFX);
+        _uiManager.CreateButtonListener(_uiManager.TempleUI.BackToHabitatButton, PlayWhooshSFX);
         _uiManager.CreateButtonListener(_uiManager.TempleUI.GoLeftButton, PlayWhooshSFX);
         _uiManager.CreateButtonListener(_uiManager.TempleUI.GoRightButton, PlayWhooshSFX);
     }
@@ -399,6 +400,21 @@ public class AudioManager : MonoBehaviour
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }
                 break;
+
+            case EnvironmentSFXType.FacilityBuildStart:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build Start SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.FacilityBuildEnd:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build End SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
             case EnvironmentSFXType.LevelUp:
                 {
                     AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Level Up SFX").FirstOrDefault();
@@ -415,7 +431,7 @@ public class AudioManager : MonoBehaviour
                 break;
             case EnvironmentSFXType.PortalClick:
                 {
-                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Facility Build SFX").FirstOrDefault();
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Portal Click SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }

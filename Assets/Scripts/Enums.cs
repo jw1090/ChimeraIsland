@@ -203,6 +203,8 @@ public enum EnvironmentSFXType
 {
     None = -1,
     Evolution,
+    FacilityBuildStart,
+    FacilityBuildEnd,
     LevelUp,
     FacilityBuild,
     PortalClick,
@@ -258,4 +260,5 @@ public enum OutlineType
     Temple,
     Pillars,
     Figurines,
+    Upgrades,
 }

@@ -34,6 +34,7 @@ public class EvolutionLogic : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private Chimera _chimeraBrain = null;
     private Sprite _chimeraIcon = null;
+    private Outline _outline = null;
 
     public GameObject FullBody { get => _fullBody; }
     public GameObject EvolutionAnimation { get => _evolutionAnimation; }
@@ -47,6 +48,7 @@ public class EvolutionLogic : MonoBehaviour
     public Chimera ChimeraBrain { get => _chimeraBrain; }
     public Sprite ChimeraIcon { get => _chimeraIcon; }
     public List<EvolutionLogic> PossibleEvolutions { get => _evolutionPaths; }
+    public Outline Outline { get => _outline; }
     public string Name { get => _chimeraName; }
     public string BackgroundInfo { get => _backgroundInfo; }
     public int EvolutionStatThreshold { get => _evolutionStatThreshold; }
@@ -112,6 +114,7 @@ public class EvolutionLogic : MonoBehaviour
     {
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _animator = GetComponent<Animator>();
+        _outline = GetComponent<Outline>();
 
         _chimeraIcon = _resourceManager.GetChimeraSprite(_evolutionType);
 

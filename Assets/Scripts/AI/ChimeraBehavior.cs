@@ -10,6 +10,7 @@ public enum ChimeraBehaviorState
     Training,
     Idle,
     Treadmill,
+    DoNothing,
 }
 
 public class ChimeraBehavior : MonoBehaviour
@@ -26,6 +27,7 @@ public class ChimeraBehavior : MonoBehaviour
     private TrainingState _trainingState = null;
     private IdleState _idleState = null;
     private TreadmillState _treadmillState = null;
+    private DoNothingState _doNothingState = null;
 
     private NavMeshAgent _navMeshAgent = null;
     private List<Transform> _nodes = null;
@@ -73,6 +75,7 @@ public class ChimeraBehavior : MonoBehaviour
         _trainingState = new TrainingState();
         _idleState = new IdleState();
         _treadmillState = new TreadmillState();
+        _doNothingState = new DoNothingState();
     }
 
     public void StartAI()
@@ -153,6 +156,8 @@ public class ChimeraBehavior : MonoBehaviour
                 return _idleState;
             case ChimeraBehaviorState.Treadmill:
                 return _treadmillState;
+            case ChimeraBehaviorState.DoNothing:
+                return _doNothingState;
             default:
                 Debug.LogError($"Invalid State [{state}], Please Fix!");
                 return null;
