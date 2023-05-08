@@ -11,14 +11,15 @@ public class Chimera : MonoBehaviour
     [SerializeField] private ChimeraInteractionIcon _interactionIcon = null;
 
     private PersistentData _persistentData = null;
+    private HabitatManager _habitatManager = null;
+    private InputManager _inputManager = null;
+    private ResourceManager _resourceManager = null;
     private AudioManager _audioManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
     private EvolutionLogic _chimeraToBecome = null;
-    private HabitatManager _habitatManager = null;
     private HabitatUI _habitatUI = null;
-    private ResourceManager _resourceManager = null;
     private Sprite _elementIcon = null;
     private ElementType _elementalType = ElementType.None;
     private bool _inFacility = false;
@@ -194,6 +195,7 @@ public class Chimera : MonoBehaviour
 
         _audioManager = ServiceLocator.Get<AudioManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
+        _inputManager = ServiceLocator.Get<InputManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
@@ -411,9 +413,12 @@ public class Chimera : MonoBehaviour
         _interactionIcon.gameObject.SetActive(false);
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
+
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
+
         _currentEvolution.FullBody.SetActive(false);
         _currentEvolution.EvolutionAnimation.SetActive(true);
+
         yield return new WaitForSeconds(5.5f);
 
         _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
@@ -430,6 +435,8 @@ public class Chimera : MonoBehaviour
         yield return new WaitForSeconds(4f);
         _persistentData.SaveSessionData();
         StartCoroutine(_habitatManager.CurrentHabitat.ChimeraEvolveCameraDisable());
+
+        _inputManager.DisableOutline(false);
     }
 
     // Increase stat at rate of the relevant statgrowth variable.

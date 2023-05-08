@@ -519,7 +519,7 @@ public class InputManager : MonoBehaviour
 
     private void CreateOutline(RaycastHit raycastHit, OutlineType outlineType)
     {
-        if (_disableOutline == true || _recentOutlineCreated == true)
+        if (_disableOutline == true || _recentOutlineCreated == true || _uiManager.TutorialOpen)
         {
             return;
         }
