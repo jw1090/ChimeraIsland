@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraUtil : MonoBehaviour
@@ -20,6 +21,8 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private AnimationCurve _transitionCurve = new AnimationCurve();
     [SerializeField] private float _transitionDuration = 0.8f;
     [SerializeField] private float _distanceMultiplier = 1.0f;
+    [SerializeField] private float _chimeraHeightMod = 10.0f;
+    [SerializeField] private float2 _heightRange = new float2(0.0f, 0.0f);
 
     [Header("Referenes")]
     [SerializeField] private Transform _cameraOperator = null;
@@ -63,6 +66,7 @@ public class CameraUtil : MonoBehaviour
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
+
         _sceneType = sceneType;
 
         if (_cameraOperator == null)
@@ -204,29 +208,45 @@ public class CameraUtil : MonoBehaviour
     public void TempleCameraShift()
     {
         Transform targetTransform = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode;
-
-        Vector3 targetPosition;
-        targetPosition = new Vector3(targetTransform.position.x, _cameraOperator.position.y, targetTransform.position.z); // Lock Camera Y
-
-        CameraShift(targetPosition, Quaternion.identity);
+        CameraShift(targetTransform.position, Quaternion.identity);
     }
 
     public void FacilityCameraShift(FacilityType facilityType)
     {
         Transform targetTransform = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode;
 
-        Vector3 targetPosition;
-        targetPosition = new Vector3(targetTransform.position.x, _cameraOperator.position.y, targetTransform.position.z); // Lock Camera Y
-
-        CameraShift(targetPosition, Quaternion.identity);
+        CameraShift(targetTransform.position, Quaternion.identity);
     }
 
     public void FindChimeraCameraShift(Chimera chimera)
     {
         Vector3 targetPosition;
-        targetPosition = new Vector3(chimera.transform.position.x, _cameraOperator.position.y, chimera.transform.position.z + 10.0f); // Lock Camera Y
+        targetPosition = new Vector3(chimera.transform.position.x, CalculateCameraChimeraHeight(chimera.transform.position), chimera.transform.position.z + 10.0f);
 
         CameraShift(targetPosition, Quaternion.identity);
+    }
+
+    private float CalculateCameraChimeraHeight(Vector3 chimeraPosition)
+    {
+        float newHeight = 0.0f;
+
+        newHeight = chimeraPosition.y + _chimeraHeightMod;
+
+        if (chimeraPosition.z < 10.0f) // Upper layer on map
+        {
+            newHeight += 3.0f;
+        }
+
+        if (newHeight < _heightRange.x)
+        {
+            newHeight = _heightRange.x;
+        }
+        else if (newHeight > _heightRange.y)
+        {
+            newHeight = _heightRange.y;
+        }
+
+        return newHeight;
     }
 
     private void CameraShift(Transform target, bool rotate = false)

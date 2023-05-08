@@ -232,7 +232,7 @@ public class Habitat : MonoBehaviour
     public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
-        if(moveCamera == true)
+        if (moveCamera == true)
         {
             StartCoroutine(facility.BuildFacilityWithVFX());
         }
