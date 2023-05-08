@@ -177,6 +177,8 @@ public class UIManager : MonoBehaviour
         _loadingImage.gameObject.SetActive(false);
     }
 
+    public void RevealCoreUI(bool reveal) { _uiStatefulObject.gameObject.SetActive(reveal); }
+
     public UIManager Initialize()
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");

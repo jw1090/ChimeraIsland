@@ -15,6 +15,7 @@ public class Chimera : MonoBehaviour
     private InputManager _inputManager = null;
     private ResourceManager _resourceManager = null;
     private AudioManager _audioManager = null;
+    private UIManager _uiManager = null;
     private BoxCollider _boxCollider = null;
     private ChimeraBehavior _chimeraBehavior = null;
     private EvolutionLogic _currentEvolution = null;
@@ -197,6 +198,7 @@ public class Chimera : MonoBehaviour
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _inputManager = ServiceLocator.Get<InputManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _uiManager = ServiceLocator.Get<UIManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
         _habitatUI = ServiceLocator.Get<UIManager>().HabitatUI;
 
@@ -413,6 +415,7 @@ public class Chimera : MonoBehaviour
         _interactionIcon.gameObject.SetActive(false);
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
+        _uiManager.RevealCoreUI(false);
 
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
 
@@ -429,7 +432,6 @@ public class Chimera : MonoBehaviour
         _habitatUI.DetailsManager.DetailsStatGlow();
         _habitatUI.UpdateHabitatUI();
 
-
         _habitatManager.Collections.CollectChimera(_chimeraType);
 
         yield return new WaitForSeconds(4f);
@@ -437,6 +439,7 @@ public class Chimera : MonoBehaviour
         StartCoroutine(_habitatManager.CurrentHabitat.ChimeraEvolveCameraDisable());
 
         _inputManager.DisableOutline(false);
+        _uiManager.RevealCoreUI(true);
     }
 
     // Increase stat at rate of the relevant statgrowth variable.

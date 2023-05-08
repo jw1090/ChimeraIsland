@@ -211,7 +211,7 @@ public class HabitatManager : MonoBehaviour
         _currentHabitat.CreateFacilitiesFromData(_facilityDataList, _upgradeQueue);
     }
 
-    IEnumerator CamQueue()
+    private IEnumerator CamQueue()
     {
         FacilityType upgradeFacility = _upgradeQueue.Peek();
         _cameraUtil.FacilityCameraShift(upgradeFacility);
