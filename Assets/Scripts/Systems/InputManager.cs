@@ -336,8 +336,10 @@ public class InputManager : MonoBehaviour
             if (_currentScene == SceneType.Temple)
             {
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
-
-                _templeUI.SelectFacilityUpgrade(upgrade);
+                if (upgrade.IsClickable)
+                {
+                   _templeUI.SelectFacilityUpgrade(upgrade);
+                }
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
@@ -488,9 +490,13 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Clickable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _upgradesLayer))
+        else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _upgradesLayer))
         {
-            return CursorType.Dragable;
+            UpgradeNode upgradeNode = hit.transform.GetComponent<UpgradeNode>();
+            if (upgradeNode.IsClickable)
+            {
+                return CursorType.Dragable;
+            }
         }
 
         return CursorType.Default;
