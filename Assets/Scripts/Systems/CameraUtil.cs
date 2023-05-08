@@ -22,8 +22,9 @@ public class CameraUtil : MonoBehaviour
     [SerializeField] private float _distanceMultiplier = 1.0f;
 
     [Header("Referenes")]
+    [SerializeField] private Transform _cameraOperator = null;
+    [SerializeField] private Camera _mainCamera = null;
     [SerializeField] private FreeCamera _freeCamera = null;
-    [SerializeField] private Camera _cameraCO = null;
 
     private Coroutine _transitionCoroutine = null;
     private HabitatManager _habitatManager = null;
@@ -41,7 +42,7 @@ public class CameraUtil : MonoBehaviour
     private bool _inTransition = false;
 
     public bool InTransition { get => _inTransition; }
-    public Camera CameraCO { get => _cameraCO; }
+    public Camera CameraCO { get => _mainCamera; }
     public bool IsHolding { get; set; }
     public bool IsNaming { get; set; }
     public StarterEnvironment StarterEnvironment { get => _starterEnvironment; }
@@ -64,6 +65,11 @@ public class CameraUtil : MonoBehaviour
         _inputManager = ServiceLocator.Get<InputManager>();
         _sceneType = sceneType;
 
+        if (_cameraOperator == null)
+        {
+            _cameraOperator = transform;
+        }
+
         _initialized = true;
 
         return this;
@@ -82,7 +88,7 @@ public class CameraUtil : MonoBehaviour
         }
         else if (_sceneType == SceneType.Temple)
         {
-            transform.position = _templeEnvironment.StartNode.position;
+            _cameraOperator.position = _templeEnvironment.StartNode.position;
         }
     }
 
@@ -115,10 +121,10 @@ public class CameraUtil : MonoBehaviour
         bool moveLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && _canMoveLeft;
         bool moveRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && _canMoveRight;
 
-        direction.z = moveUp ? -1 : moveDown ? 1 : 0;
+        direction = moveUp ? _cameraOperator.forward : moveDown ? -_cameraOperator.forward : Vector3.zero;
         direction.x = moveLeft ? 1 : moveRight ? -1 : 0;
 
-        transform.position = transform.position + direction * panSpeed * Time.deltaTime;
+        _cameraOperator.localPosition = _cameraOperator.localPosition + direction * panSpeed * Time.deltaTime;
     }
 
     public void CameraZoom()
@@ -130,33 +136,26 @@ public class CameraUtil : MonoBehaviour
 
     private void CameraCollisionCheck()
     {
-        Vector3 newPosition = transform.localPosition;
+        Vector3 newPosition = _cameraOperator.localPosition;
         RaycastHit hit;
         float pushback = _offset * 0.5f;
 
-        Debug.DrawRay(transform.position, Vector3.forward * _offset, Color.yellow);
-        Debug.DrawRay(transform.position, Vector3.back * _offset, Color.yellow);
-        Debug.DrawRay(transform.position, Vector3.left * _offset, Color.yellow);
-        Debug.DrawRay(transform.position, Vector3.right * _offset, Color.yellow);
+        Vector3 forward = _cameraOperator.forward;
+        Vector3 backward = -_cameraOperator.forward;
+        Vector3 right = _cameraOperator.right;
+        Vector3 left = -_cameraOperator.right;
 
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.forward, out hit, _offset))
+        Debug.DrawRay(_cameraOperator.position, forward * _offset, Color.yellow);
+        Debug.DrawRay(_cameraOperator.position, backward * _offset, Color.yellow);
+        Debug.DrawRay(_cameraOperator.position, right * _offset, Color.yellow);
+        Debug.DrawRay(_cameraOperator.position, left * _offset, Color.yellow);
+
+        if (Physics.SphereCast(_cameraOperator.position, _sphereRadius, forward, out hit, _offset))
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
-                newPosition.z = transform.localPosition.z - pushback;
+                newPosition.z = _cameraOperator.localPosition.z - pushback;
 
-                _canMoveDown = false;
-            }
-        }
-        else
-        {
-            _canMoveDown = true;
-        }
-
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.back, out hit, _offset))
-        {
-            if (hit.transform.CompareTag("CameraBounds"))
-            {
                 _canMoveUp = false;
             }
         }
@@ -165,19 +164,19 @@ public class CameraUtil : MonoBehaviour
             _canMoveUp = true;
         }
 
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.right, out hit, _offset))
+        if (Physics.SphereCast(_cameraOperator.position, _sphereRadius, backward, out hit, _offset))
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
-                _canMoveLeft = false;
+                _canMoveDown = false;
             }
         }
         else
         {
-            _canMoveLeft = true;
+            _canMoveDown = true;
         }
 
-        if (Physics.SphereCast(transform.position, _sphereRadius, Vector3.left, out hit, _offset))
+        if (Physics.SphereCast(_cameraOperator.position, _sphereRadius, right, out hit, _offset))
         {
             if (hit.transform.CompareTag("CameraBounds"))
             {
@@ -188,6 +187,18 @@ public class CameraUtil : MonoBehaviour
         {
             _canMoveRight = true;
         }
+
+        if (Physics.SphereCast(_cameraOperator.position, _sphereRadius, left, out hit, _offset))
+        {
+            if (hit.transform.CompareTag("CameraBounds"))
+            {
+                _canMoveLeft = false;
+            }
+        }
+        else
+        {
+            _canMoveLeft = true;
+        }
     }
 
     public void TempleCameraShift()
@@ -195,7 +206,7 @@ public class CameraUtil : MonoBehaviour
         Transform targetTransform = _habitatManager.CurrentHabitat.Temple.CameraTransitionNode;
 
         Vector3 targetPosition;
-        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
+        targetPosition = new Vector3(targetTransform.position.x, _cameraOperator.position.y, targetTransform.position.z); // Lock Camera Y
 
         CameraShift(targetPosition, Quaternion.identity);
     }
@@ -205,7 +216,7 @@ public class CameraUtil : MonoBehaviour
         Transform targetTransform = _habitatManager.CurrentHabitat.GetFacility(facilityType).CameraTransitionNode;
 
         Vector3 targetPosition;
-        targetPosition = new Vector3(targetTransform.position.x, this.transform.position.y, targetTransform.position.z); // Lock Camera Y
+        targetPosition = new Vector3(targetTransform.position.x, _cameraOperator.position.y, targetTransform.position.z); // Lock Camera Y
 
         CameraShift(targetPosition, Quaternion.identity);
     }
@@ -213,7 +224,7 @@ public class CameraUtil : MonoBehaviour
     public void FindChimeraCameraShift(Chimera chimera)
     {
         Vector3 targetPosition;
-        targetPosition = new Vector3(chimera.transform.position.x, this.transform.position.y, chimera.transform.position.z + 10.0f); // Lock Camera Y
+        targetPosition = new Vector3(chimera.transform.position.x, _cameraOperator.position.y, chimera.transform.position.z + 10.0f); // Lock Camera Y
 
         CameraShift(targetPosition, Quaternion.identity);
     }
@@ -238,8 +249,8 @@ public class CameraUtil : MonoBehaviour
         _inputManager.SetInTransition(true);
         _inTransition = true;
 
-        Vector3 startPosition = transform.position;
-        Quaternion startRotation = transform.rotation;
+        Vector3 startPosition = _cameraOperator.position;
+        Quaternion startRotation = _cameraOperator.rotation;
 
         float distance = 1.0f + (Vector3.Distance(targetPosition, startPosition) * 0.001f);
         float td = _transitionDuration + _distanceMultiplier * distance;
@@ -251,11 +262,11 @@ public class CameraUtil : MonoBehaviour
             float linearProgress = timer / td;
 
             float easeProgress = _transitionCurve.Evaluate(linearProgress);
-            transform.position = Vector3.Lerp(startPosition, targetPosition, easeProgress);
+            _cameraOperator.position = Vector3.Lerp(startPosition, targetPosition, easeProgress);
 
             if (rotate == true)
             {
-                transform.rotation = Quaternion.Lerp(startRotation, targetRotation, easeProgress);
+                _cameraOperator.rotation = Quaternion.Lerp(startRotation, targetRotation, easeProgress);
             }
 
             yield return null;

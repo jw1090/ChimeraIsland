@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -165,11 +164,6 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                {
-                    return;
-                }
-
                 if (_currentScene == SceneType.Habitat)
                 {
                     _cameraUtil.CameraZoom();
