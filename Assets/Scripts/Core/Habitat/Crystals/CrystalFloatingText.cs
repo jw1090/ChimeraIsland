@@ -9,6 +9,7 @@ public class CrystalFloatingText : MonoBehaviour
     [SerializeField] private float _duration = 5.0f;
     [SerializeField] private float _randomRange = 1.5f;
     [SerializeField] private AnimationCurve _transitionCurve = new AnimationCurve();
+    [SerializeField] private AnimationCurve _colorCurve = new AnimationCurve();
     [SerializeField] private TextMeshProUGUI _textOne = null;
     [SerializeField] private TextMeshProUGUI _textTwo = null;
     [SerializeField] private TextMeshProUGUI _textThree = null;
@@ -106,14 +107,8 @@ public class CrystalFloatingText : MonoBehaviour
             float easeProgress = _transitionCurve.Evaluate(linearProgress);
             text.transform.position = Vector3.Lerp(startPos, endPos, easeProgress);
 
-            if (linearProgress < 0.5f)
-            {
-                text.color = Color.Lerp(startingColor, finalColor, linearProgress);
-            }
-            else
-            {
-                text.color = Color.Lerp(finalColor, startingColor, linearProgress);
-            }
+            float colorProgress = _colorCurve.Evaluate(linearProgress);
+            text.color = Color.Lerp(startingColor, finalColor, colorProgress);
 
             yield return null;
         }
