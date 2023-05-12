@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UITutorialOverlay _tutorialOverlay = null;
 
     private TutorialManager _tutorialManager = null;
+    private LevelLoader _levelLoader = null;
     private bool _tutorialOpen = false;
     private bool _uiVisible = true;
 
@@ -47,9 +48,10 @@ public class UIManager : MonoBehaviour
     public SettingsUI SettingsUI { get => _settingsUI; }
     public Tooltip Tooltip { get => _tooltip; }
     public AlertText AlertText { get => _alertText; }
-    public bool InHabitatState { get => _uiStatefulObject.CurrentState.StateName == "Habitat UI"; }
-    public bool InTempleState { get => _uiStatefulObject.CurrentState.StateName == "Temple UI"; }
-    public bool InMainMenuState { get => _uiStatefulObject.CurrentState.StateName == "Main Menu UI"; }
+    public bool InHabitatState { get => _levelLoader.CurrentSceneType == SceneType.Habitat; }
+    public bool InTempleState { get => _levelLoader.CurrentSceneType == SceneType.Temple; }
+    public bool InMainMenuState { get => _levelLoader.CurrentSceneType == SceneType.MainMenu; }
+    public bool IsSettingsOpen { get => _settingsUI.gameObject.activeInHierarchy; }
     public bool UIActive { get => _uiVisible; }
 
     private HabitatManager _habitatManager = null;
@@ -62,6 +64,8 @@ public class UIManager : MonoBehaviour
 
         _settingsUI.InitializeVolumeSettings();
     }
+
+    public void SetLevelLoader(LevelLoader levelLoader) { _levelLoader = levelLoader;  }
 
     public IEnumerator FadeInLoadingScreen(SceneType sceneType)
     {
@@ -172,6 +176,8 @@ public class UIManager : MonoBehaviour
         _loadingGifAnimator.SetTrigger("Pause");
         _loadingImage.gameObject.SetActive(false);
     }
+
+    public void RevealCoreUI(bool reveal) { _uiStatefulObject.gameObject.SetActive(reveal); }
 
     public UIManager Initialize()
     {

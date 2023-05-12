@@ -257,7 +257,6 @@ MonoBehaviour:
   _lightingManager: {fileID: 0}
   _expeditionManager: {fileID: 0}
   _templeEnvironment: {fileID: 1842013947}
-  _evolutionBuilder: {fileID: 0}
 --- !u!1 &60577355
 GameObject:
   m_ObjectHideFlags: 0
@@ -4284,8 +4283,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _transitionDuration: 0.8
   _distanceMultiplier: 0.1
+  _mainCamera: {fileID: 1197885159}
   _freeCamera: {fileID: 0}
-  _cameraCO: {fileID: 1197885159}
 --- !u!114 &1197885157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6573,11 +6572,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010257786}
   m_Mesh: {fileID: -7412549029447109030, guid: 148e43ed4da06ae4db2f834bde7bc500, type: 3}
---- !u!1 &2031571515 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7049501375356725165, guid: 21af1b6efcb27e7458dec93a1b81107a, type: 3}
-  m_PrefabInstance: {fileID: 4382457443939600267}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2032551134 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6708825435631578652, guid: 850ebb94c193e0649a9daa5c9fc733aa, type: 3}
@@ -7030,7 +7024,7 @@ PrefabInstance:
     - target: {fileID: 654016959514619139, guid: 21af1b6efcb27e7458dec93a1b81107a, type: 3}
       propertyPath: currentState.StateObject
       value: 
-      objectReference: {fileID: 2031571515}
+      objectReference: {fileID: 0}
     - target: {fileID: 3029148920464574613, guid: 21af1b6efcb27e7458dec93a1b81107a, type: 3}
       propertyPath: _rubble
       value: 

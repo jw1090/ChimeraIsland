@@ -63,6 +63,11 @@ public class SettingsUI : MonoBehaviour
 
     public void CloseSettingsUI()
     {
+        if (gameObject.activeInHierarchy == false)
+        {
+            return;
+        }
+
         if (_uiManager.InHabitatState == true)
         {
             _uiManager.HabitatUI.ResetStandardUI();

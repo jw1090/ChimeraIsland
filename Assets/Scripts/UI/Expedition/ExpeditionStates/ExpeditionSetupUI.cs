@@ -20,7 +20,6 @@ public class ExpeditionSetupUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _modifiedCurrency = null;
 
     [Header("Chimera Icons")]
-    [SerializeField] private Sprite _emptyChimeraSprite = null;
     [SerializeField] private List<IconUI> _chimeraIcons = new List<IconUI>();
 
     [Header("Main")]
@@ -97,7 +96,7 @@ public class ExpeditionSetupUI : MonoBehaviour
 
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = _emptyChimeraSprite;
+            icon.ToggleIcon(false);
         }
 
         ExpeditionData data = _expeditionManager.SelectedExpedition;
@@ -208,8 +207,11 @@ public class ExpeditionSetupUI : MonoBehaviour
             }
             else
             {
-                _modifiers[i].Icon.sprite = _resourceManager.GetModifierSprite(modifierType);
-                _modifiers[i].gameObject.SetActive(true);
+                IconUI icon = _modifiers[i];
+                Sprite sprite = _resourceManager.GetModifierSprite(modifierType);
+
+                icon.UpdateSprite(sprite);
+                icon.gameObject.SetActive(true);
                 ++activeBadgeCount;
             }
 
@@ -221,12 +223,16 @@ public class ExpeditionSetupUI : MonoBehaviour
     {
         foreach (var icon in _chimeraIcons)
         {
-            icon.Icon.sprite = _emptyChimeraSprite;
+            icon.ToggleIcon(false);
         }
 
         for (int i = 0; i < _expeditionManager.Chimeras.Count; ++i)
         {
-            _chimeraIcons[i].Icon.sprite = _expeditionManager.Chimeras[i].ChimeraIcon;
+            IconUI icon = _chimeraIcons[i];
+            Sprite sprite = _expeditionManager.Chimeras[i].ChimeraIcon;
+
+            icon.UpdateSprite(sprite);
+            icon.ToggleIcon(true);
         }
     }
 

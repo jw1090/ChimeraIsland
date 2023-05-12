@@ -97,6 +97,7 @@ public class Facility : MonoBehaviour
         bool facilityBuilt = false;
 
         _cameraUtil.FacilityCameraShift(Type);
+        _uiManager.RevealCoreUI(false);
 
         yield return new WaitUntil(() => _cameraUtil.InTransition == false);
         _inputManager.SetInTransition(true);
@@ -140,6 +141,7 @@ public class Facility : MonoBehaviour
         }
         vfx.SetActive(false);
         _inputManager.SetInTransition(false);
+        _uiManager.RevealCoreUI(true);
     }
 
     public void BuildFacility()

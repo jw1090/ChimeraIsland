@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -45,8 +44,10 @@ public class InputManager : MonoBehaviour
 
     private Outline _currentOutline = null;
     private CrystalSpawn _currentCrystalOutline = null;
+    private Chimera _currentChimeraOutline = null;
     private OutlineType _currentOutlineType = OutlineType.None;
     private bool _disableOutline = false;
+    private bool _recentOutlineCreated = false;
 
     public event Action<bool, int> HeldStateChange = null;
     public GameObject SphereMarker { get => _sphereMarker; }
@@ -163,11 +164,6 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
-                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                {
-                    return;
-                }
-
                 if (_currentScene == SceneType.Habitat)
                 {
                     _cameraUtil.CameraZoom();
@@ -212,94 +208,7 @@ public class InputManager : MonoBehaviour
             DebugViewInput();
         }
 
-        if (_currentScene == SceneType.Temple)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraPillarLayer))
-            {
-                CreateOutline(chimeraHit, OutlineType.Pillars);
-            }
-            else if (_currentOutlineType == OutlineType.Pillars)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _figurineLayer))
-            {
-                CreateOutline(hit, OutlineType.Figurines);
-            }
-            else if (_currentOutlineType == OutlineType.Figurines)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
-            {
-                UpgradeNode upgradeNode = upgradeHit.transform.GetComponent<UpgradeNode>();
-                if (upgradeNode.IsClickable)
-                {
-                    CreateOutline(upgradeHit, OutlineType.Upgrades);
-                }
-            }
-            else if (_currentOutlineType == OutlineType.Upgrades)
-            {
-                RemoveOutline();
-            }
-
-        }
-        else if (_currentScene == SceneType.Habitat)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit cHit, 300.0f, _chimeraLayer))
-            {
-                CreateOutline(cHit, OutlineType.HabitatChimeras);
-            }
-            else if (_currentOutlineType == OutlineType.HabitatChimeras)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
-            {
-                CreateOutline(crystalHit, OutlineType.Crystals);
-            }
-            else if (_currentOutlineType == OutlineType.Crystals)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _portalLayer))
-            {
-                CreateOutline(mouseHit, OutlineType.Portal);
-            }
-            else if (_currentOutlineType == OutlineType.Portal)
-            {
-                RemoveOutline();
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _templeLayer))
-            {
-                CreateOutline(hit, OutlineType.Temple);
-            }
-            else if (_currentOutlineType == OutlineType.Temple)
-            {
-                RemoveOutline();
-            }
-        }
-        else if (_currentScene == SceneType.Starting)
-        {
-            Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _chimeraLayer))
-            {
-                CreateOutline(mouseHit, OutlineType.StarterChimeras);
-            }
-            else if (_currentOutlineType == OutlineType.StarterChimeras)
-            {
-                RemoveOutline();
-            }
-        }
+        DetectOutline();
     }
 
     private void FixedUpdate()
@@ -421,8 +330,10 @@ public class InputManager : MonoBehaviour
             if (_currentScene == SceneType.Temple)
             {
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
-
-                _templeUI.SelectFacilityUpgrade(upgrade);
+                if (upgrade.IsClickable)
+                {
+                   _templeUI.SelectFacilityUpgrade(upgrade);
+                }
             }
         }
         else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _groundLayer))
@@ -563,7 +474,8 @@ public class InputManager : MonoBehaviour
             return CursorType.Minable;
         }
         else if (Physics.Raycast(ray, 300.0f, _chimeraPillarLayer)
-            || Physics.Raycast(ray, 300.0f, _figurineLayer))
+            || Physics.Raycast(ray, 300.0f, _figurineLayer)
+            || Physics.Raycast(ray, 300.0f, _chimeraLayer))
         {
             return CursorType.Dragable;
         }
@@ -572,9 +484,13 @@ public class InputManager : MonoBehaviour
         {
             return CursorType.Clickable;
         }
-        else if (Physics.Raycast(ray, 300.0f, _upgradesLayer))
+        else if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _upgradesLayer))
         {
-            return CursorType.Dragable;
+            UpgradeNode upgradeNode = hit.transform.GetComponent<UpgradeNode>();
+            if (upgradeNode.IsClickable)
+            {
+                return CursorType.Dragable;
+            }
         }
 
         return CursorType.Default;
@@ -597,10 +513,12 @@ public class InputManager : MonoBehaviour
 
     private void CreateOutline(RaycastHit raycastHit, OutlineType outlineType)
     {
-        if (_currentOutline != null || _disableOutline == true)
+        if (_disableOutline == true || _recentOutlineCreated == true || _uiManager.TutorialOpen)
         {
             return;
         }
+
+        Outline outline = null;
 
         if (outlineType == OutlineType.Crystals)
         {
@@ -610,17 +528,31 @@ public class InputManager : MonoBehaviour
         }
         else if (outlineType == OutlineType.HabitatChimeras)
         {
-            Outline outline = raycastHit.transform.GetComponent<Chimera>().CurrentEvolution.Outline;
+            Chimera chimera = raycastHit.transform.GetComponent<Chimera>();
+
+            if (_currentChimeraOutline != chimera)
+            {
+                RemoveOutline();
+            }
+
+            outline = chimera.CurrentEvolution.Outline;
             outline.enabled = true;
             _currentOutline = outline;
+            _currentChimeraOutline = chimera;
         }
         else
         {
-            Outline outline = raycastHit.transform.GetComponent<Outline>();
+            outline = raycastHit.transform.GetComponent<Outline>();
             outline.enabled = true;
             _currentOutline = outline;
         }
+
+        if (outline != _currentOutline)
+        {
+            RemoveOutline();
+        }
         _currentOutlineType = outlineType;
+        _recentOutlineCreated = true;
     }
 
     private void RemoveOutline()
@@ -642,5 +574,126 @@ public class InputManager : MonoBehaviour
         }
 
         _currentOutlineType = OutlineType.None;
+    }
+
+    private void DetectOutline()
+    {
+        _recentOutlineCreated = false;
+        switch (_currentScene)
+        {
+            case SceneType.None:
+            case SceneType.MainMenu:
+                break;
+            case SceneType.Starting:
+                DetectOutlineInStarter();
+                break;
+            case SceneType.Habitat:
+                DetectOutlineInHabitat();
+                break;
+            case SceneType.Temple:
+                DetectOutlineInTemple();
+                break;
+            default:
+                Debug.LogError("Invalid Scene Type!");
+                break;
+        }
+    }
+
+    private void DetectOutlineInStarter()
+    {
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _chimeraLayer))
+        {
+            CreateOutline(mouseHit, OutlineType.StarterChimeras);
+        }
+        else if (_currentOutlineType == OutlineType.StarterChimeras)
+        {
+            RemoveOutline();
+        }
+    }
+
+    private void DetectOutlineInHabitat()
+    {
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit crystalHit, 300.0f, _crystalLayer))
+        {
+            if (_currentOutlineType == OutlineType.HabitatChimeras || _currentOutlineType == OutlineType.Portal || _currentOutlineType == OutlineType.Temple)
+            {
+                RemoveOutline();
+            }
+            CreateOutline(crystalHit, OutlineType.Crystals);
+        }
+        else if (_currentOutlineType == OutlineType.Crystals)
+        {
+            RemoveOutline();
+        }
+        if (Physics.Raycast(ray, out RaycastHit cHit, 300.0f, _chimeraLayer))
+        {
+            if (_currentOutlineType == OutlineType.Portal || _currentOutlineType == OutlineType.Temple)
+            {
+                RemoveOutline();
+            }
+
+            CreateOutline(cHit, OutlineType.HabitatChimeras);
+        }
+        else if (_currentOutlineType == OutlineType.HabitatChimeras)
+        {
+            RemoveOutline();
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit mouseHit, 300.0f, _portalLayer))
+        {
+            CreateOutline(mouseHit, OutlineType.Portal);
+        }
+        else if (_currentOutlineType == OutlineType.Portal)
+        {
+            RemoveOutline();
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _templeLayer))
+        {
+            CreateOutline(hit, OutlineType.Temple);
+        }
+        else if (_currentOutlineType == OutlineType.Temple)
+        {
+            RemoveOutline();
+        }
+    }
+
+    private void DetectOutlineInTemple()
+    {
+        Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraPillarLayer))
+        {
+            CreateOutline(chimeraHit, OutlineType.Pillars);
+        }
+        else if (_currentOutlineType == OutlineType.Pillars)
+        {
+            RemoveOutline();
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 300.0f, _figurineLayer))
+        {
+            CreateOutline(hit, OutlineType.Figurines);
+        }
+        else if (_currentOutlineType == OutlineType.Figurines)
+        {
+            RemoveOutline();
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit upgradeHit, 300.0f, _upgradesLayer))
+        {
+            UpgradeNode upgradeNode = upgradeHit.transform.GetComponent<UpgradeNode>();
+            if (upgradeNode.IsClickable)
+            {
+                CreateOutline(upgradeHit, OutlineType.Upgrades);
+            }
+        }
+        else if (_currentOutlineType == OutlineType.Upgrades)
+        {
+            RemoveOutline();
+        }
     }
 }

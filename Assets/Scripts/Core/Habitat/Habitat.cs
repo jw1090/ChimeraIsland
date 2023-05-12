@@ -232,7 +232,7 @@ public class Habitat : MonoBehaviour
     public void BuildFacility(FacilityType facilityType, bool moveCamera = false)
     {
         Facility facility = GetFacility(facilityType);
-        if(moveCamera == true)
+        if (moveCamera == true)
         {
             StartCoroutine(facility.BuildFacilityWithVFX());
         }
@@ -350,10 +350,11 @@ public class Habitat : MonoBehaviour
     public void ChimeraEvolveCameraEnable(Chimera chimera)
     {
         _inputManager.SetInTransition(true);
-        _cameraUtil.gameObject.SetActive(false);
-        _alternateCamera.gameObject.SetActive(true);
 
-        _alternateCamera.transform.position = _cameraUtil.transform.position;
+        _alternateCamera.transform.position = _cameraUtil.CameraCO.transform.position;
+        _alternateCamera.enabled = true;
+        _cameraUtil.CameraCO.enabled = false;
+
         Vector3 endPos = chimera.transform.position + new Vector3(0.0f, 8.0f, 13.0f);
         StartCoroutine(MoveCamera(endPos));
     }
@@ -361,7 +362,7 @@ public class Habitat : MonoBehaviour
     private IEnumerator MoveCamera(Vector3 targetPosition)
     {
         _movingAlternateCamera = true;
-           Vector3 startPosition = _alternateCamera.transform.position;
+        Vector3 startPosition = _alternateCamera.transform.position;
 
         float distance = 1.0f + (Vector3.Distance(targetPosition, startPosition) * 0.001f);
         float timer = 0.0f;
@@ -380,10 +381,12 @@ public class Habitat : MonoBehaviour
 
     public IEnumerator ChimeraEvolveCameraDisable()
     {
-        StartCoroutine(MoveCamera(_cameraUtil.transform.position));
+        StartCoroutine(MoveCamera(_cameraUtil.CameraCO.transform.position));
+
         yield return new WaitUntil(() => _movingAlternateCamera == false);
-        _alternateCamera.gameObject.SetActive(false);
-        _cameraUtil.gameObject.SetActive(true);
+
+        _alternateCamera.enabled = false;
+        _cameraUtil.CameraCO.enabled = true;
         _inputManager.SetInTransition(false);
     }
 }

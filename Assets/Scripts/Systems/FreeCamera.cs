@@ -11,16 +11,12 @@ public class FreeCamera : MonoBehaviour
     private float _mouseRotationSpeed = 100.0f;
 
     public Camera CameraCO { get => _cameraCO; }
-    public bool IsInitialized { get => _initialized; }
 
     public FreeCamera Initialize(float movementSpeed)
     {
         _cameraCO.enabled = false;
 
         _movementSpeed = movementSpeed;
-
-        transform.localPosition = new Vector3(0, 0, 0);
-        transform.localRotation = Quaternion.Euler(0, 0, 0);
 
         _initialized = true;
 

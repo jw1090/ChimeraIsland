@@ -214,6 +214,7 @@ public enum EnvironmentSFXType
     StoneHit,
     DirtHit,
     TreeHit,
+    StoneClick,
 }
 
 public enum DayType
