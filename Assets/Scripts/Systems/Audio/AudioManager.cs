@@ -393,9 +393,16 @@ public class AudioManager : MonoBehaviour
     {
         switch (environmentSFXType)
         {
-            case EnvironmentSFXType.Evolution:
+            case EnvironmentSFXType.Evolution1:
                 {
-                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Evolution SFX").FirstOrDefault();
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Evolution 1 SFX").FirstOrDefault();
+                    _sfxSource.clip = item.Clip;
+                    _sfxSource.PlayOneShot(_sfxSource.clip);
+                }
+                break;
+            case EnvironmentSFXType.Evolution2:
+                {
+                    AudioClipItem item = _environmentSFXManifest.AudioItems.Where(c => c.Name == "Evolution 2 SFX").FirstOrDefault();
                     _sfxSource.clip = item.Clip;
                     _sfxSource.PlayOneShot(_sfxSource.clip);
                 }

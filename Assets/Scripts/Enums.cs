@@ -202,7 +202,8 @@ public enum SFXUIType
 public enum EnvironmentSFXType
 {
     None = -1,
-    Evolution,
+    Evolution1,
+    Evolution2,
     FacilityBuildStart,
     FacilityBuildEnd,
     LevelUp,
