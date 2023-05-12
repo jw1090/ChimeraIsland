@@ -27,6 +27,7 @@ public class CameraUtil : MonoBehaviour
     [Header("Referenes")]
     [SerializeField] private Transform _cameraOperator = null;
     [SerializeField] private Camera _mainCamera = null;
+    [SerializeField] private Camera _uiCamera = null;
     [SerializeField] private FreeCamera _freeCamera = null;
 
     private Coroutine _transitionCoroutine = null;
@@ -135,7 +136,8 @@ public class CameraUtil : MonoBehaviour
     {
         _zoom -= Input.GetAxis("Mouse ScrollWheel") * _zoomAmount;
         _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
-        CameraCO.fieldOfView = _zoom;
+        _mainCamera.fieldOfView = _zoom;
+        _uiCamera.fieldOfView = _zoom;
     }
 
     private void CameraCollisionCheck()

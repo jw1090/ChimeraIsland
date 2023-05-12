@@ -7,6 +7,7 @@ public class CrystalFloatingText : MonoBehaviour
     [SerializeField] private Color _textColor = Color.white;
     [SerializeField] private float _endHeight = 0.0f;
     [SerializeField] private float _duration = 5.0f;
+    [SerializeField] private float _randomRange = 1.5f;
     [SerializeField] private TextMeshProUGUI _textOne = null;
     [SerializeField] private TextMeshProUGUI _textTwo = null;
     [SerializeField] private TextMeshProUGUI _textThree = null;
@@ -87,8 +88,12 @@ public class CrystalFloatingText : MonoBehaviour
         Color startingColor = finalColor;
         startingColor.a = 0.0f;
 
+        float rand = Random.Range(-_randomRange, _randomRange);
+
         Vector3 startPos = transform.position;
-        Vector3 endPos = transform.position;
+        startPos.x +=rand;
+
+        Vector3 endPos = startPos;
         endPos.y += _endHeight;
 
         text.gameObject.SetActive(true);
@@ -98,7 +103,6 @@ public class CrystalFloatingText : MonoBehaviour
             float progress = timer / _duration;
 
             text.transform.position = Vector3.Lerp(startPos, endPos, progress);
-
 
             if (progress < 0.5f)
             {
