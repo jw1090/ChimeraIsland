@@ -416,6 +416,7 @@ public class Chimera : MonoBehaviour
         _chimeraBehavior.ChangeState(ChimeraBehaviorState.DoNothing);
         _habitatManager.CurrentHabitat.ChimeraEvolveCameraEnable(this);
         _uiManager.RevealCoreUI(false);
+        _audioManager.PlaySFX(EnvironmentSFXType.Evolution1);
 
         yield return new WaitUntil(() => _habitatManager.CurrentHabitat.MovingAlternateCamera == false);
 
@@ -490,7 +491,7 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        _audioManager.PlaySFX(EnvironmentSFXType.Evolution);
+        _audioManager.PlaySFX(EnvironmentSFXType.Evolution2);
 
         Destroy(_currentEvolution.gameObject);
 
