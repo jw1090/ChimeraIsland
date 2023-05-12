@@ -29,15 +29,17 @@ public class CrystalFloatingText : MonoBehaviour
         _textThree.gameObject.SetActive(false);
     }
 
-    public void Update()
+    private void Update()
     {
         if (_isActive == false)
         {
             return;
         }
+
+        BillBoard();
     }
 
-    private void BillBoard(Transform text)
+    private void BillBoard()
     {
         transform.LookAt(_camera.transform);
         transform.Rotate(0, 180, 0);
@@ -90,14 +92,13 @@ public class CrystalFloatingText : MonoBehaviour
         endPos.y += _endHeight;
 
         text.gameObject.SetActive(true);
-        BillBoard(text.transform);
-
         while (timer < _duration)
         {
             timer += Time.deltaTime;
             float progress = timer / _duration;
 
             text.transform.position = Vector3.Lerp(startPos, endPos, progress);
+
 
             if (progress < 0.5f)
             {
@@ -110,8 +111,8 @@ public class CrystalFloatingText : MonoBehaviour
 
             yield return null;
         }
-
         text.gameObject.SetActive(false);
+
         if (text == _textThree)
         {
             _isActive = false;

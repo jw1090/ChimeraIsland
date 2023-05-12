@@ -28,6 +28,17 @@ public class TrainingFacilityIcon : MonoBehaviour
         _initialized = true;
     }
 
+    private void Update()
+    {
+        if (_initialized == false)
+        {
+            return;
+        }
+
+        transform.LookAt(_camera.transform);
+        transform.Rotate(0, 180, 0);
+    }
+
     public void UpdateSlider(int currentExperience)
     {
         _slider.value += currentExperience;
