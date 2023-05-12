@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
         _settingsUI.SetAudioManager(audioManager);
         _habitatUI.SetAudioManager(audioManager);
         _templeUI.SetAudioManager(audioManager);
+        _tutorialOverlay.SetAudioManager(audioManager);
 
         _settingsUI.InitializeVolumeSettings();
     }
