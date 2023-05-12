@@ -53,7 +53,7 @@ public class TempleStructure : MonoBehaviour
 
         _templeVFX.SetActive(false);
         _inputManager.SetInTransition(false);
-        _uiManager.RevealCoreUI(false);
+        _uiManager.RevealCoreUI(true);
     }
 
     public void Build()
