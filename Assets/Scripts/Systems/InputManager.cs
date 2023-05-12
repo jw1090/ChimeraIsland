@@ -665,9 +665,9 @@ public class InputManager : MonoBehaviour
     {
         Ray ray = _cameraMain.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraPillarLayer))
+        if (Physics.Raycast(ray, out RaycastHit chimeraPillarHit, 300.0f, _chimeraPillarLayer))
         {
-            CreateOutline(chimeraHit, OutlineType.Pillars);
+            CreateOutline(chimeraPillarHit, OutlineType.Pillars);
         }
         else if (_currentOutlineType == OutlineType.Pillars)
         {
@@ -679,6 +679,15 @@ public class InputManager : MonoBehaviour
             CreateOutline(hit, OutlineType.Figurines);
         }
         else if (_currentOutlineType == OutlineType.Figurines)
+        {
+            RemoveOutline();
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit chimeraHit, 300.0f, _chimeraLayer) && GetCursorSprite() == CursorType.Dragable)
+        {
+            CreateOutline(chimeraHit, OutlineType.StarterChimeras);
+        }
+        else if (_currentOutlineType == OutlineType.StarterChimeras)
         {
             RemoveOutline();
         }
