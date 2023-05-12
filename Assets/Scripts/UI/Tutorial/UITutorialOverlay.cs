@@ -8,11 +8,13 @@ public class UITutorialOverlay : MonoBehaviour
     private TutorialStageData _tutorialData = null;
     private HabitatManager _habitatManager = null;
     private TutorialManager _tutorialManager = null;
+    private AudioManager _audioManager = null;
     private TutorialStageType _tutorialType;
     private int _tutorialStep = -1;
     private Sprite _icon = null;
 
     public void SetFirstChimeraSprite(Sprite icon) { _icon = icon; }
+    public void SetAudioManager(AudioManager audioManager) { _audioManager = audioManager; }
 
     public void Initialize(UIManager UIManager)
     {
@@ -55,6 +57,11 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void NextStep()
     {
+        if(_tutorialStep != -1)
+        {
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        }
+
         if (_textInfo.Finished == true)
         {
             ++_tutorialStep;
