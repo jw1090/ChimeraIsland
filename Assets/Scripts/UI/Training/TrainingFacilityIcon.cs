@@ -30,7 +30,7 @@ public class TrainingFacilityIcon : MonoBehaviour
 
     private void Update()
     {
-        if(_initialized == false)
+        if (_initialized == false)
         {
             return;
         }

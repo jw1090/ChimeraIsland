@@ -8,6 +8,7 @@ public class CrystalSpawn : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     [SerializeField] private List<Crystal> _crystalList = new List<Crystal>();
     [SerializeField] private List<Outline> _outlines = new List<Outline>();
+    [SerializeField] private CrystalFloatingText _floatingText = null;
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
     private int _health = 3;
@@ -24,6 +25,8 @@ public class CrystalSpawn : MonoBehaviour
         _isActive = false;
         _crystal.gameObject.SetActive(false);
 
+        _floatingText.Initialize();
+
         Outline(false);
     }
 
@@ -35,6 +38,8 @@ public class CrystalSpawn : MonoBehaviour
         }
 
         _crystal.SetState($"Crystal{currentTier}");
+
+        _floatingText.Activate();
 
         _currentTier = currentTier;
         _health = _currentTier;
@@ -53,7 +58,10 @@ public class CrystalSpawn : MonoBehaviour
 
         ShowEffect();
 
-        _currencyManager.IncreaseEssence(25 * _currentTier);
+        int cost = 25 * _currentTier;
+
+        _currencyManager.IncreaseEssence(cost);
+        _floatingText.Click(cost);
 
         --_health;
 
