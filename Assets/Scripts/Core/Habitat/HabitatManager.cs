@@ -12,7 +12,6 @@ public class HabitatManager : MonoBehaviour
     private Habitat _currentHabitat = null;
     private HabitatUI _habitatUI = null;
     private UIManager _uiManager = null;
-    private InputManager _inputManager = null;
     private float _tickTimer = 0.06f;
     private Queue<FacilityType> _upgradeQueue = new Queue<FacilityType>();
     private CameraUtil _cameraUtil = null;
@@ -96,7 +95,6 @@ public class HabitatManager : MonoBehaviour
     {
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
-        _inputManager = ServiceLocator.Get<InputManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
 
         LoadHabitatData();
