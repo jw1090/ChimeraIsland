@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CrystalSpawn : MonoBehaviour
 {
+    [Header("Essence Gain")]
+    [SerializeField] private float _rangePercent = 0.1f;
+    [SerializeField] private int _baseMultiplyier = 25;
+
+    [Header("References")]
     [SerializeField] private StatefulObject _crystal = null;
     [SerializeField] private List<ParticleSystem> _tapMine = new List<ParticleSystem>();
     [SerializeField] private List<Crystal> _crystalList = new List<Crystal>();
@@ -11,6 +16,7 @@ public class CrystalSpawn : MonoBehaviour
     [SerializeField] private CrystalFloatingText _floatingText = null;
     private CurrencyManager _currencyManager = null;
     private AudioManager _audioManager = null;
+    private HabitatManager _habitatManager = null;
     private int _health = 3;
     private bool _isActive = false;
     private int _currentTier = 1;
@@ -21,6 +27,7 @@ public class CrystalSpawn : MonoBehaviour
     {
         _currencyManager = ServiceLocator.Get<CurrencyManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
+        _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         _isActive = false;
         _crystal.gameObject.SetActive(false);
@@ -58,7 +65,7 @@ public class CrystalSpawn : MonoBehaviour
 
         ShowEffect();
 
-        int cost = 25 * _currentTier;
+        int cost = EvaluateEssenceCost();
 
         _currencyManager.IncreaseEssence(cost);
         _floatingText.Click(cost);
@@ -82,6 +89,19 @@ public class CrystalSpawn : MonoBehaviour
 
             _audioManager.PlaySFX(EnvironmentSFXType.MiningHarvest);
         }
+    }
+
+    private int EvaluateEssenceCost()
+    {
+        int baseCost = _baseMultiplyier * _currentTier;
+        baseCost += _habitatManager.ChimerasInHabitat.Count * 5;
+
+        float range = _rangePercent * baseCost;
+        int deviation = Mathf.RoundToInt(Random.Range(-range, range));
+
+        int finalCost = baseCost + deviation;
+
+        return finalCost;
     }
 
     private void ShowEffect()

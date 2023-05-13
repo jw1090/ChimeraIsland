@@ -31,8 +31,22 @@ public class Tooltip : MonoBehaviour
 
     public void FollowMouse()
     {
-        transform.position = Input.mousePosition + new Vector3(80.0f, 0.0f, 0.0f);
+        float distance = EvaluateSideDistance();
+
+        transform.position = Input.mousePosition + new Vector3(distance, 0.0f, 0.0f);
         gameObject.SetActive(true);
+    }
+
+    private float EvaluateSideDistance()
+    {
+        if (Input.mousePosition.x > Screen.width / 2.0f) // Is Right
+        {
+            return -340.0f;
+        }
+        else // Is Left
+        {
+            return 80.0f;
+        }
     }
 
     public void LoadStatText()
