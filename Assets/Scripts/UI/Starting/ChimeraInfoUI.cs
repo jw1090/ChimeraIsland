@@ -151,24 +151,35 @@ public class ChimeraInfoUI : MonoBehaviour
         UpdatePurchaseSection();
     }
 
-    public void IdleClick()
+    public void IdleEnter()
     {
         _currentAnimationType = AnimationType.Idle;
-        _audioManager.PlayUISFX(SFXUIType.StandardClick);
         SetAnimation("Idle");
+    }
+
+    private void IdleClick()
+    {
+        _currentAnimationType = AnimationType.Idle;
+        SetAnimation("Idle");
+
+        _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
     }
 
     private void WalkClick()
     {
         _currentAnimationType = AnimationType.Walk;
         SetAnimation("Walk");
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        _audioManager.PlayHeldChimeraSFX(_evolution.ChimeraType);
     }
 
     private void SuccessClick()
     {
         _currentAnimationType = AnimationType.Success;
         SetAnimation("Success");
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
         _audioManager.PlayHappyChimeraSFX(_evolution.ChimeraType);
     }
@@ -177,6 +188,8 @@ public class ChimeraInfoUI : MonoBehaviour
     {
         _currentAnimationType = AnimationType.Fail;
         SetAnimation("Fail");
+        _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
+
         _audioManager.PlayUISFX(SFXUIType.StandardClick);
         _audioManager.PlaySadChimeraSFX(_evolution.ChimeraType);
     }

@@ -162,22 +162,16 @@ public class InputManager : MonoBehaviour
 
         if (_cameraUtil != null && _freeCameraActive == false)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0)
-            {
-                if (_currentScene == SceneType.Habitat)
-                {
-                    _cameraUtil.CameraZoom();
-                }
-            }
-
             if (_inTransition == true)
             {
                 return;
             }
 
-            if (MovementInputCheck() == true)
+            if (_habitatUI.MenuOpen == false && _uiManager.TutorialOpen == false)
             {
-                if (_habitatUI.MenuOpen == false && _uiManager.TutorialOpen == false)
+                Scroll();
+
+                if (MovementInputCheck() == true)
                 {
                     _cameraUtil.CameraUpdate();
                 }
@@ -190,7 +184,14 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _uiManager.HabitatUI.ToggleSettingsMenu();
+            if (_currentScene == SceneType.Habitat)
+            {
+                _uiManager.HabitatUI.ToggleSettingsMenu();
+            }
+            else if (_currentScene == SceneType.Temple)
+            {
+                _uiManager.TempleUI.ToggleSettingsMenu();
+            }
         }
 
         if (_debugCurrencyInputEnabled == true)
@@ -221,6 +222,23 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             RotateChimeraCheck();
+        }
+    }
+
+    private void Scroll()
+    {
+        if (_uiManager.TutorialOpen)
+        {
+            return;
+        }
+
+
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            if (_currentScene == SceneType.Habitat)
+            {
+                _cameraUtil.CameraZoom();
+            }
         }
     }
 
@@ -332,7 +350,7 @@ public class InputManager : MonoBehaviour
                 UpgradeNode upgrade = upgradeHit.transform.gameObject.GetComponent<UpgradeNode>();
                 if (upgrade.IsClickable)
                 {
-                   _templeUI.SelectFacilityUpgrade(upgrade);
+                    _templeUI.SelectFacilityUpgrade(upgrade);
                 }
             }
         }
