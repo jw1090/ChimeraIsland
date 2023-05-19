@@ -492,8 +492,6 @@ public class Chimera : MonoBehaviour
 
         EvolutionLogic newEvolution = Instantiate(evolution, transform);
 
-        //_audioManager.StartFadeCoroutine(1.0f, 1.0f, 3.0f, 3.0f);
-
         _audioManager.PlaySFX(EnvironmentSFXType.Evolution2);
 
         Destroy(_currentEvolution.gameObject);
