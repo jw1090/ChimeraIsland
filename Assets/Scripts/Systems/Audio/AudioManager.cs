@@ -3,6 +3,7 @@ using UnityEngine.Audio;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -175,7 +176,7 @@ public class AudioManager : MonoBehaviour
         _uiManager.CreateButtonListener(habitatUI.CloseDetailsButton, PlayClickSFX);
         _uiManager.CreateButtonListener(habitatUI.OpenDetailsButton, PlayClickSFX);
 
-        foreach(Button closeButton in habitatUI.ExpeditionPanel.CloseButtons)
+        foreach (Button closeButton in habitatUI.ExpeditionPanel.CloseButtons)
         {
             _uiManager.CreateButtonListener(closeButton, PlayClickSFX);
         }
@@ -311,7 +312,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayUISFX(SFXUIType uIElementsSFX)
     {
-        switch(uIElementsSFX)
+        switch (uIElementsSFX)
         {
             case SFXUIType.StandardClick:
                 {
@@ -793,5 +794,48 @@ public class AudioManager : MonoBehaviour
     private void PlayWhooshSFX()
     {
         PlayUISFX(SFXUIType.Whoosh);
+    }
+
+    public void StartFadeCoroutine(float introDuration, float outroDuration, float targetVolume, float delay)
+    {
+        StartCoroutine(MusicFadeCoroutine(introDuration, outroDuration, targetVolume, delay));
+    }
+
+    private IEnumerator MusicFadeCoroutine(float introDuration, float outroDuration, float targetVolume, float delay)
+    {
+        float timer = 0.0f;
+        float startingVolume = _musicSource.volume;
+
+        while (timer < introDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / introDuration;
+
+            _musicSource.volume = Mathf.Lerp(startingVolume, targetVolume, progress);
+
+            yield return null;
+        }
+
+        timer = 0.0f;
+
+        while (timer < delay)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        timer = 0.0f;
+        targetVolume = startingVolume;
+        startingVolume = _musicSource.volume;
+
+        while (timer < outroDuration)
+        {
+            timer += Time.deltaTime;
+            float progress = timer / introDuration;
+
+            _musicSource.volume = Mathf.Lerp(startingVolume, targetVolume, progress);
+
+            yield return null;
+        }
     }
 }
