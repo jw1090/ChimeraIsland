@@ -51,6 +51,8 @@ public class LevelLoader : AsyncLoader
         ProcessQueuedCallbacks();
 
         _sceneChanger.RecentSceneChange = false;
+        _inputManager.SetInTransition(false);
+
         LoadUIElements();
         _inputManager.DisableOutline(false);
 

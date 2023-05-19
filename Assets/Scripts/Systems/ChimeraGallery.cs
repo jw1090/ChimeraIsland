@@ -30,8 +30,8 @@ public class ChimeraGallery : MonoBehaviour
     private ChimeraInfoUI _chimeraInfo = null;
     private bool _active = false;
     private GameObject _currentChimera = null;
-    private Vector3 mPrevMousePos = Vector3.zero;
-    private Vector3 mPosDelta = Vector3.zero;
+    private Vector3 _prevMousePos = Vector3.zero;
+    private Vector3 _posDelta = Vector3.zero;
     private string _currentAnim = "";
     private Animator _currentAnimator = null;
     private bool _clickedDownOnChimera = false;
@@ -102,8 +102,8 @@ public class ChimeraGallery : MonoBehaviour
             }
             if (_clickedDownOnChimera == true)
             {
-                mPosDelta = Input.mousePosition - mPrevMousePos;
-                _currentChimera.transform.Rotate(_camera.gameObject.transform.up, -Vector3.Dot(mPosDelta, _camera.transform.right), Space.World);
+                _posDelta = Input.mousePosition - _prevMousePos;
+                _currentChimera.transform.Rotate(_camera.gameObject.transform.up, -Vector3.Dot(_posDelta, _camera.transform.right), Space.World);
                 _currentChimera.transform.localEulerAngles = new Vector3(0.0f, _currentChimera.transform.localEulerAngles.y, 0.0f);
             }
         }
@@ -112,7 +112,7 @@ public class ChimeraGallery : MonoBehaviour
             _inputManager.SetRotatingInGallery(false);
             _clickedDownOnChimera = false;
         }
-        mPrevMousePos = Input.mousePosition;
+        _prevMousePos = Input.mousePosition;
     }
 
     public void SetAnimation(string animationName)
