@@ -251,8 +251,6 @@ public class HabitatUI : MonoBehaviour
 
         ResetStandardUI();
 
-        _tutorialManager.ShowTutorialStage(TutorialStageType.ExpeditionSelection);
-
         _audioManager.PlaySFX(EnvironmentSFXType.PortalClick);
 
         _expeditionPanel.OpenExpeditionUI();
