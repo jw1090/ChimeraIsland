@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
     private HabitatManager _habitatManager = null;
+    private InputManager _inputManager = null;
     private PersistentData _persistentData = null;
     private UIManager _uiManager = null;
 
@@ -15,6 +14,7 @@ public class SceneChanger : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
+        _inputManager = ServiceLocator.Get<InputManager>();
         _habitatManager = ServiceLocator.Get<HabitatManager>();
 
         return this;
@@ -22,6 +22,8 @@ public class SceneChanger : MonoBehaviour
     private void FadeInLoadScreen(SceneType sceneType)
     {
         RecentSceneChange = true;
+        _inputManager.SetInTransition(true);
+
         StartCoroutine(_uiManager.FadeInLoadingScreen(sceneType));
     }
 

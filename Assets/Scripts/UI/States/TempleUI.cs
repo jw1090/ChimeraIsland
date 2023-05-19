@@ -87,8 +87,6 @@ public class TempleUI : MonoBehaviour
         _galleryChimeraInfo.Initialize(_uiManager);
 
         SetupButtonListeners();
-
-        _currentTempleSection = TempleSectionType.Buying;
     }
 
     public void InitializeWallets()
@@ -122,6 +120,8 @@ public class TempleUI : MonoBehaviour
         _galleryChimeraInfo.SetTemple(_temple);
 
         _currentTempleSection = TempleSectionType.Buying;
+
+        CloseSettingsUI();
     }
 
     private void ShowBuyUI()
@@ -176,7 +176,7 @@ public class TempleUI : MonoBehaviour
 
         _galleryChimeraInfo.OpenAnimationSection();
         _galleryChimeraInfo.gameObject.SetActive(true);
-        _galleryChimeraInfo.IdleClick();
+        _galleryChimeraInfo.IdleEnter();
 
         _goRightButton.gameObject.SetActive(false);
 
@@ -467,6 +467,25 @@ public class TempleUI : MonoBehaviour
             default:
                 Debug.LogError($"Current Temple Section is invalid [{_currentTempleSection}]");
                 break;
+        }
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        if (_uiManager.TutorialOpen == true)
+        {
+            return;
+        }
+        else if (_uiManager.IsSettingsOpen == true)
+        {
+            _uiManager.SettingsUI.CloseSettingsUI();
+            CloseSettingsUI();
+
+            _audioManager.PlayUISFX(SFXUIType.StandardClick);
+        }
+        else
+        {
+            OpenSettingsUI();
         }
     }
 }

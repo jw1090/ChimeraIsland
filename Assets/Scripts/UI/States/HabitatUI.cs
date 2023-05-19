@@ -198,11 +198,6 @@ public class HabitatUI : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
-        if (isActiveAndEnabled == false)
-        {
-            return;
-        }
-
         if (_uiManager.TutorialOpen == true)
         {
             return;
