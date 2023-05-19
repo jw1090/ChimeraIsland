@@ -35,6 +35,7 @@ public class ExpeditionManager : MonoBehaviour
     private const float _duartionDenominator = 300.0f;
     private const float _durationExponent = 0.45f;
     private int _failureCount = 0;
+    bool _modifiersLoaded = false;
 
     public ExpeditionState State { get => _expeditionState; }
     public List<Chimera> Chimeras { get => _chimeras; }
@@ -135,12 +136,26 @@ public class ExpeditionManager : MonoBehaviour
 
     public void LoadExpeditionOptions()
     {
-        SetupExpeditionOption(ref _essenceExpeditionOption, ExpeditionType.Essence);
-        SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils);
-        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade);
+        HabitatData data = _habitatManager.HabitatData;
+        SetupExpeditionOption(ref _essenceExpeditionOption, ExpeditionType.Essence, data.ExpeditionEssenceModifier.Count > 0);
+        SetupExpeditionOption(ref _fossilExpeditionOption, ExpeditionType.Fossils, data.ExpeditionFossilModifier.Count > 0);
+        SetupExpeditionOption(ref _habitatExpeditionOption, ExpeditionType.HabitatUpgrade, data.ExpeditionHabitatModifier.Count > 0);
+        if (data.ExpeditionEssenceModifier.Count > 0)
+        {
+            _essenceExpeditionOption.Modifiers = data.ExpeditionEssenceModifier;
+        }
+        if (data.ExpeditionHabitatModifier.Count > 0)
+        {
+            _habitatExpeditionOption.Modifiers = data.ExpeditionHabitatModifier;
+        }
+        if (data.ExpeditionFossilModifier.Count > 0)
+        {
+            _fossilExpeditionOption.Modifiers = data.ExpeditionFossilModifier;
+        }
+        _modifiersLoaded = true;
     }
 
-    private void SetupExpeditionOption(ref ExpeditionData expedition, ExpeditionType expeditionType)
+    private void SetupExpeditionOption(ref ExpeditionData expedition, ExpeditionType expeditionType, bool modifierSaveExists = false)
     {
         if (expedition != null) // Already Created
         {
@@ -149,7 +164,25 @@ public class ExpeditionManager : MonoBehaviour
 
         if (ExpeditionDataByType(expeditionType, out ExpeditionData newExpedition) == true)
         {
-            AssignExpeditionUpgradeType(newExpedition.Modifiers);
+            if(_modifiersLoaded == true || modifierSaveExists == false)
+            {
+                AssignExpeditionUpgradeType(newExpedition.Modifiers);
+                switch (expeditionType)
+                {
+                    case ExpeditionType.Essence:
+                        _habitatManager.HabitatData.ExpeditionEssenceModifier = newExpedition.Modifiers;
+                        break;
+                    case ExpeditionType.Fossils:
+                        _habitatManager.HabitatData.ExpeditionFossilModifier = newExpedition.Modifiers;
+                        break;
+                    case ExpeditionType.HabitatUpgrade:
+                        _habitatManager.HabitatData.ExpeditionHabitatModifier = newExpedition.Modifiers;
+                        break;
+                    default:
+                        Debug.LogError($"Expedition Type [{expeditionType}] is invalid!");
+                        break;
+                }
+            }
             AnalyseRandomUpgrade(newExpedition);
             expedition = newExpedition;
         }
