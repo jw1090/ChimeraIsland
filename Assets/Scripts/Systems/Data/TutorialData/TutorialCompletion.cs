@@ -21,8 +21,6 @@ public class TutorialCompletionData
         {
             case TutorialStageType.Intro:
                 return _intro;
-            case TutorialStageType.ExpeditionSelection:
-                return _expeditionSelection;
             case TutorialStageType.ExpeditionSetup:
                 return _expeditionSetup;
             case TutorialStageType.Facilities:
@@ -52,9 +50,6 @@ public class TutorialCompletionData
         {
             case TutorialStageType.Intro:
                 _intro = true;
-                break;
-            case TutorialStageType.ExpeditionSelection:
-                _expeditionSelection = true;
                 break;
             case TutorialStageType.ExpeditionSetup:
                 _expeditionSetup= true;

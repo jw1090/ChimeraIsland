@@ -120,15 +120,6 @@ public enum StatType
     Wisdom,
 }
 
-public enum TutorialIconType
-{
-    None = -1,
-    Happy,
-    Shocked,
-    Speaking,
-    Standard,
-}
-
 public enum UIElementType
 {
     None = -1,
@@ -163,7 +154,6 @@ public enum TutorialStageType
 {
     None = -1,
     Intro,
-    ExpeditionSelection,
     ExpeditionSetup,
     Facilities,
     ReccomendedTraits,
@@ -263,4 +253,10 @@ public enum OutlineType
     Pillars,
     Figurines,
     Upgrades,
+}
+
+ public enum QuestType
+{
+    None = -1,
+    NotNone
 }
