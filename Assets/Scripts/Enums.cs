@@ -165,14 +165,6 @@ public enum TutorialStageType
     Upgrade,
 }
 
-public enum TutorialDarkenType
-{
-    Standard,
-    FirstExpedition,
-    ChimeraList,
-    ReccomendedTraits,
-}
-
 
 public enum SFXUIType
 {
