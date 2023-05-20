@@ -36,6 +36,11 @@ public class QuestManager : MonoBehaviour
         if (IsActiveQuest(questType) == true)
         {
             _activeQuests.Remove(questType);
+
+            foreach(QuestType unlockedQuestType in _questLibrary[questType].QuestUnlocks)
+            {
+                ActivateQuest(unlockedQuestType);
+            }
         }
     }
 
