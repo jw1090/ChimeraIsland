@@ -174,6 +174,7 @@ public class HabitatUI : MonoBehaviour
         _settingsButton.gameObject.SetActive(false);
         _fossilWallet.gameObject.SetActive(false);
         _essenceWallet.gameObject.SetActive(false);
+        _questLogUI.gameObject.SetActive(false);
     }
 
     public void RevealButtonsForExpeditions()
@@ -182,6 +183,7 @@ public class HabitatUI : MonoBehaviour
         _settingsButton.gameObject.SetActive(true);
         _fossilWallet.gameObject.SetActive(true);
         _essenceWallet.gameObject.SetActive(true);
+        _questLogUI.gameObject.SetActive(true);
 
         LoadCurrentUIProgress(); // Check for tutuorial steps
     }

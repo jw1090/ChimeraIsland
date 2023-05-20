@@ -110,21 +110,6 @@ public class ExpeditionResultUI : MonoBehaviour
                     break;
             }
 
-            switch (expeditionData.Title)
-            {
-                case "First Facility":
-                    _expeditionManager.QuestManager.CompleteQuest(QuestType.FirstExpedition);
-                    break;
-                case "A New Look":
-                    _expeditionManager.QuestManager.CompleteQuest(QuestType.UpgradeHabitatT2);
-                    break;
-                case "Restoration":
-                    _expeditionManager.QuestManager.CompleteQuest(QuestType.UpgradeHabitatT3);
-                    break;
-                default:
-                    break;
-            }
-
             _expeditionSuccess = true;
 
             if (bypass == true)

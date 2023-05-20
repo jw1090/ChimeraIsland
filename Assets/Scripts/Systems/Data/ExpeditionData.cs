@@ -13,6 +13,7 @@ public class ExpeditionData : ScriptableObject
     public int Difficulty = 0;
     public int EnergyDrain = 5;
     public List<ModifierType> Modifiers = new List<ModifierType>();
+    public QuestType CompleteQuest = QuestType.None;
 
     public int ActualAmountGained { get => BaseAmountGained + (int)(BaseAmountGained * RewardModifier); }
     public float ActualDuration { get => BaseDuration - (BaseDuration * DurationModifier); }
@@ -41,8 +42,8 @@ public class ExpeditionData : ScriptableObject
         deepCopy.Difficulty = Difficulty;
         deepCopy.EnergyDrain = EnergyDrain;
         deepCopy.BaseDuration = BaseDuration;
-
         deepCopy.Modifiers = new List<ModifierType>();
+        deepCopy.CompleteQuest = CompleteQuest;
 
         foreach (var modifier in Modifiers)
         {

@@ -632,6 +632,8 @@ public class ExpeditionManager : MonoBehaviour
             Debug.LogError($"Selected Expedition is null. Please change!");
         }
 
+        QuestEvaluate();
+
         switch (_selectedExpedition.Type)
         {
             case ExpeditionType.Essence:
@@ -672,6 +674,27 @@ public class ExpeditionManager : MonoBehaviour
                 break;
         }
         _habitatManager.SetExpeditionProgress(_currentEssenceProgress, _currentFossilProgress, _currentHabitatProgress);
+    }
+
+    private void QuestEvaluate()
+    {
+        switch (_selectedExpedition.CompleteQuest)
+        {
+            case QuestType.FirstExpedition:
+                _questManager.CompleteQuest(QuestType.FirstExpedition);
+                break;
+            case QuestType.Archeology:
+                _questManager.CompleteQuest(QuestType.Archeology);
+                break;
+            case QuestType.UpgradeHabitatT2:
+                _questManager.CompleteQuest(QuestType.UpgradeHabitatT2);
+                break;
+            case QuestType.UpgradeHabitatT3:
+                _questManager.CompleteQuest(QuestType.UpgradeHabitatT3);
+                break;
+            default:
+                break;
+        }
     }
 
     public void ChimerasOnExpedition(bool onExpedition)

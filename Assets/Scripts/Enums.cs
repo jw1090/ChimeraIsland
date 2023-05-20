@@ -158,7 +158,7 @@ public enum QuestType
     FirstExpedition,
     MineCrystal,
     TrainChimera,
-    RestoreTemple,
+    Archeology,
     UpgradeHabitatT2,
     SummonChimera,
     UpgradeFacilityT2,

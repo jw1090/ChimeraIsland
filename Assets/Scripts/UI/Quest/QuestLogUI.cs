@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class QuestLogUI : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _textMeshProUGUI = null;
     [SerializeField] private List<QuestUI> _questUIList = new List<QuestUI>();
 
     public void Initialize()
@@ -18,7 +19,7 @@ public class QuestLogUI : MonoBehaviour
             questUI.gameObject.SetActive(false);
         }
 
-        gameObject.SetActive(false);
+        _textMeshProUGUI.gameObject.SetActive(false);
     }
 
     public void DisplayActiveQuests(List<QuestData> quests)
@@ -36,7 +37,7 @@ public class QuestLogUI : MonoBehaviour
 
         if (quests.Count > 0)
         {
-            gameObject.SetActive(true);
+            _textMeshProUGUI.gameObject.SetActive(true);
         }
     }
 }
