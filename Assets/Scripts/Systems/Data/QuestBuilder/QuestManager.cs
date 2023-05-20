@@ -35,7 +35,7 @@ public class QuestManager : MonoBehaviour
         {
             foreach (QuestData questData in _habitatManager.HabitatData.questDataList)
             {
-                if(questData.QuestType != QuestType.None)
+                if (questData.QuestType != QuestType.None)
                 {
                     _activeQuests.Add(questData.QuestType, questData);
                 }
@@ -71,7 +71,7 @@ public class QuestManager : MonoBehaviour
         {
             _activeQuests.Remove(questType);
 
-            foreach(QuestType unlockedQuestType in _questLibrary[questType].QuestUnlocks)
+            foreach (QuestType unlockedQuestType in _questLibrary[questType].QuestUnlocks)
             {
                 ActivateQuest(unlockedQuestType);
             }
@@ -83,7 +83,7 @@ public class QuestManager : MonoBehaviour
     {
         if (IsActiveQuest(questType) == false)
         {
-            _activeQuests.Add(questType, _questLibrary[questType]); 
+            _activeQuests.Add(questType, _questLibrary[questType]);
             SaveActiveQuests();
             DisplayActiveQuests();
         }
@@ -96,7 +96,7 @@ public class QuestManager : MonoBehaviour
     public void DisplayActiveQuests()
     {
         List<QuestData> questDataList = new List<QuestData>();
-        foreach(QuestData questData in _activeQuests.Values)
+        foreach (QuestData questData in _activeQuests.Values)
         {
             questDataList.Add(questData);
         }
