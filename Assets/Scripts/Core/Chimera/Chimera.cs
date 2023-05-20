@@ -426,7 +426,7 @@ public class Chimera : MonoBehaviour
 
         yield return new WaitForSeconds(5.5f);
 
-        _habitatUI.UIManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
+        _uiManager.AlertText.CreateAlert($"{GetName()} Has Evolved To {_chimeraToBecome.Name}!");
 
         StartCoroutine(Evolve(_chimeraToBecome));
         _chimeraBehavior.EnterAnim(AnimationType.Walk);

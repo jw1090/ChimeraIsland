@@ -14,19 +14,19 @@ public class HabitatUI : MonoBehaviour
     [SerializeField] private UIEssenceWallet _essenceWallet = null;
     [SerializeField] private UIFossilWallet _fossilWallet = null;
     [SerializeField] private ChimeraPopUp _chimeraPopUp = null;
+    [SerializeField] private QuestLogUI _questLogUI = null;
 
-    private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private bool _menuOpen = false;
     private bool _uiActive = true;
 
-    public UIManager UIManager { get => _uiManager; }
     public DetailsManager DetailsManager { get => _detailsManager; }
     public TrainingUI TrainingPanel { get => _trainingPanel; }
     public ExpeditionUI ExpeditionPanel { get => _expeditionPanel; }
     public Button OpenDetailsButton { get => _openDetailsButton; }
     public Button CloseDetailsButton { get => _closeDetailsButton; }
+    public QuestLogUI QuestLogUI { get => _questLogUI; }
     public bool MenuOpen { get => _menuOpen; }
 
     public void ActivateStandardUI(bool activate)
@@ -60,7 +60,6 @@ public class HabitatUI : MonoBehaviour
     public void Initialize(UIManager uiManager)
     {
         _uiManager = uiManager;
-        _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         SetupButtonListeners();
 
