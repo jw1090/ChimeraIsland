@@ -15,6 +15,7 @@ public class HabitatManager : MonoBehaviour
     private float _tickTimer = 0.06f;
     private Queue<FacilityType> _upgradeQueue = new Queue<FacilityType>();
     private CameraUtil _cameraUtil = null;
+    private QuestManager _questManager = null;
 
     public HabitatData HabitatData { get => _habitatData; }
     public List<FacilityData> FacilitiesInHabitat { get => _facilityDataList; }
@@ -96,7 +97,7 @@ public class HabitatManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-
+        _questManager = ServiceLocator.Get<QuestManager>();
         LoadHabitatData();
 
         return this;
@@ -114,6 +115,7 @@ public class HabitatManager : MonoBehaviour
     {
         _chimeraDataList.Clear();
         _facilityDataList.Clear();
+        _questManager.ClearActiveQuests();
     }
 
     public void UpdateCurrentChimeras()
