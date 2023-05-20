@@ -12,7 +12,6 @@ public class QuestManager : MonoBehaviour
     public void SetHabitatManager(HabitatManager habitatManager)
     {
         _habitatManager = habitatManager;
-        LoadActiveQuests();
     }
 
     private void SaveActiveQuests()
@@ -31,7 +30,10 @@ public class QuestManager : MonoBehaviour
         {
             foreach (QuestData questData in _habitatManager.HabitatData.questDataList)
             {
-                _activeQuests.Add(questData.QuestType, questData);
+                if(questData.QuestType != QuestType.None)
+                {
+                    _activeQuests.Add(questData.QuestType, questData);
+                }
             }
         }
     }
