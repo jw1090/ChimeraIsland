@@ -215,7 +215,6 @@ public enum TutorialStageType
     Upgrade,
 }
 
-
 public enum SFXUIType
 {
     None = -1,
@@ -250,8 +249,6 @@ public enum UITempleBackType
     BackToTemple,
 }
 
-
-
 public enum TapVFXType
 {
     None = -1,
@@ -260,7 +257,3 @@ public enum TapVFXType
     Stone,
     Tree,
 }
-
-
-
-
