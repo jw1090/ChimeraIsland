@@ -8,6 +8,14 @@ public enum AnimationType
     Fail,
 }
 
+public enum ChimeraOrderType
+{
+    AveragePower,
+    Exploration,
+    Stamina,
+    Wisdom,
+}
+
 public enum ChimeraType
 {
     None = -1,
@@ -25,13 +33,6 @@ public enum ChimeraType
     C3,
 }
 
-public enum DayType
-{
-    None = -1,
-    DayTime,
-    NightTime,
-}
-
 public enum CursorType
 {
     Default,
@@ -42,12 +43,11 @@ public enum CursorType
     Rotate,
 }
 
-public enum ChimeraOrderType
+public enum DayType
 {
-    AveragePower,
-    Exploration,
-    Stamina,
-    Wisdom,
+    None = -1,
+    DayTime,
+    NightTime,
 }
 
 public enum DetailsButtonType
@@ -173,6 +173,21 @@ public enum SceneType
     Temple,
 }
 
+public enum SFXUIType
+{
+    None = -1,
+    StandardClick,
+    ConfirmClick,
+    PurchaseClick,
+    PlaceChimera,
+    RemoveChimera,
+    ErrorClick,
+    Completion,
+    Failure,
+    StoneDrag,
+    Whoosh,
+}
+
 public enum StatPreferenceType
 {
     None = -1,
@@ -187,6 +202,15 @@ public enum StatType
     Exploration,
     Stamina,
     Wisdom,
+}
+
+public enum TapVFXType
+{
+    None = -1,
+    Ground,
+    Water,
+    Stone,
+    Tree,
 }
 
 public enum TempleSectionType
@@ -215,22 +239,6 @@ public enum TutorialStageType
     Upgrade,
 }
 
-
-public enum SFXUIType
-{
-    None = -1,
-    StandardClick,
-    ConfirmClick,
-    PurchaseClick,
-    PlaceChimera,
-    RemoveChimera,
-    ErrorClick,
-    Completion,
-    Failure,
-    StoneDrag,
-    Whoosh,
-}
-
 public enum UIElementType
 {
     None = -1,
@@ -249,18 +257,3 @@ public enum UITempleBackType
     BackToHabitat,
     BackToTemple,
 }
-
-
-
-public enum TapVFXType
-{
-    None = -1,
-    Ground,
-    Water,
-    Stone,
-    Tree,
-}
-
-
-
-
