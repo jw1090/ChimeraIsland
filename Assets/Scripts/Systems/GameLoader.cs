@@ -99,6 +99,11 @@ public class GameLoader : AsyncLoader
         persistentDataComp.SetCurrencyManager(currencyManagerComp);
         inputManagerComp.SetCurrencyManager(currencyManagerComp);
 
+        var questManagerGo = Instantiate(resourceManagerComp.QuestManager, systemsParent);
+        questManagerGo.name = "Quest Manager";
+        var questManagerComp = questManagerGo.GetComponent<QuestManager>().Initialize();
+        ServiceLocator.Register<QuestManager>(questManagerComp);
+
         var habitatManagerGO = new GameObject("Habitat Manager");
         habitatManagerGO.transform.SetParent(systemsParent);
         var habitatManagerComp = habitatManagerGO.AddComponent<HabitatManager>().Initialize();
@@ -130,8 +135,10 @@ public class GameLoader : AsyncLoader
 
         inputManagerComp.SetUIManager(uiManagerComp);
         currencyManagerComp.SetUIManager(uiManagerComp);
+        questManagerComp.SetUIManager(uiManagerComp);
         habitatManagerComp.SetHabitatUI(uiManagerComp);
         tutorialComp.SetHabitatUI(uiManagerComp);
+        
 
         sceneChangerComp.SetupUIListeners();
 
