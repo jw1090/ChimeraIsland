@@ -25,6 +25,7 @@ public class LevelLoader : AsyncLoader
 
     private HabitatManager _habitatManager = null;
     private InputManager _inputManager = null;
+    private QuestManager _questManager = null;
     private TutorialManager _tutorialManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
@@ -87,6 +88,8 @@ public class LevelLoader : AsyncLoader
         _inputManager = ServiceLocator.Get<InputManager>();
         _inputManager.SetCurrentScene(_sceneType);
 
+        _questManager = ServiceLocator.Get<QuestManager>();
+
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _sceneChanger = ServiceLocator.Get<SceneChanger>();
 
@@ -148,6 +151,7 @@ public class LevelLoader : AsyncLoader
         _habitatManager.CurrentHabitat.MoveChimerasToFacility();
 
         StartHabitatTickTimer();
+        _questManager.DisplayActiveQuests();
 
         _tutorialManager.TutorialStageCheck();
     }
