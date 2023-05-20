@@ -65,9 +65,11 @@ public class ResourceManager : MonoBehaviour
 
     private GameObject _inputManager = null;
     private GameObject _uiManagerPrefab = null;
+    private GameObject _questManagerPrefab = null;
 
     public GameObject InputManager { get => _inputManager; }
     public GameObject UIManager { get => _uiManagerPrefab; }
+    public GameObject QuestManager { get => _questManagerPrefab; }
 
     public ResourceManager Initialize()
     {
@@ -135,6 +137,7 @@ public class ResourceManager : MonoBehaviour
 
         _uiManagerPrefab = Resources.Load<GameObject>("UI Manager");
         _inputManager = Resources.Load<GameObject>("Input Manager");
+        _questManagerPrefab = Resources.Load<GameObject>("Quest Manager");
 
         return this;
     }
