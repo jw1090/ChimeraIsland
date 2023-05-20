@@ -14,6 +14,11 @@ public class QuestManager : MonoBehaviour
         _habitatManager = habitatManager;
     }
 
+    public void ClearActiveQuests()
+    {
+        _activeQuests.Clear();
+    }
+
     private void SaveActiveQuests()
     {
         List<QuestData> questDataList = new List<QuestData>();
