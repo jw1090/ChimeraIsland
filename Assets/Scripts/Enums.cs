@@ -156,6 +156,7 @@ public enum QuestType
 {
     None = -1,
     FirstExpedition,
+    MineCrystal,
     TrainChimera,
     UpgradeHabitatT2,
     SummonChimera,
