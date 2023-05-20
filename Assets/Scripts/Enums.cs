@@ -160,7 +160,8 @@ public enum QuestType
     TrainChimera,
     UpgradeHabitatT2,
     SummonChimera,
-    UpgradeFacility,
+    UpgradeFacilityT2,
+    UpgradeFacilityT3,
     UpgradeHabitatT3,
     UnlockAllChimera,
 }

@@ -28,6 +28,7 @@ public class Facility : MonoBehaviour
     private TrainingUI _uiTraining = null;
     private FacilityData _loadedFacilityData = null;
     private InputManager _inputManager = null;
+    private QuestManager _questManager = null;
     private Habitat _habitat = null;
     private bool _isBuilt = false;
     private bool _activateTraining = false;
@@ -62,6 +63,7 @@ public class Facility : MonoBehaviour
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
         _inputManager = ServiceLocator.Get<InputManager>();
+        _questManager = ServiceLocator.Get<QuestManager>();
 
         _habitatUI = _uiManager.HabitatUI;
         _uiTraining = _habitatUI.TrainingPanel;
@@ -166,10 +168,12 @@ public class Facility : MonoBehaviour
             if (_currentTier == 1)
             {
                 _tiers.SetState("Tier 2", true);
+                _questManager.CompleteQuest(QuestType.UpgradeFacilityT2);
             }
             else if (_currentTier == 2)
             {
                 _tiers.SetState("Tier 3", true);
+                _questManager.CompleteQuest(QuestType.UpgradeFacilityT3);
             }
         }
 
@@ -293,6 +297,9 @@ public class Facility : MonoBehaviour
         if (currentStatAmount >= _trainToLevel)
         {
             RemoveChimera();
+
+            _questManager.CompleteQuest(QuestType.TrainChimera);
+
             return;
         }
 
