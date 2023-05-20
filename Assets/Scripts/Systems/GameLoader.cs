@@ -140,7 +140,6 @@ public class GameLoader : AsyncLoader
         questManagerComp.SetUIManager(uiManagerComp);
         habitatManagerComp.SetHabitatUI(uiManagerComp);
         tutorialComp.SetHabitatUI(uiManagerComp);
-        
 
         sceneChangerComp.SetupUIListeners();
 
