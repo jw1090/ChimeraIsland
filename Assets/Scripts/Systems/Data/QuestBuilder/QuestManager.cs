@@ -5,7 +5,8 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] private QuestManifest _questManifest = null;
-    private List<QuestType> _activeQuest = new List<QuestType>();
+    private Dictionary<QuestType, QuestData> _activeQuests = new Dictionary<QuestType, QuestData>();
+    private Dictionary<QuestType, QuestData> _questLibrary = new Dictionary<QuestType, QuestData>();
     private UIManager _uiManager = null;
 
     public void SetUIManager(UIManager uiManager)
@@ -15,14 +16,26 @@ public class QuestManager : MonoBehaviour
 
     public QuestManager Initialize()
     {
+        Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
+
+        SetupQuestLibrary();
+
         return this;
+    }
+
+    private void SetupQuestLibrary()
+    {
+        foreach (QuestData questData in _questManifest.QuestData)
+        {
+            _questLibrary.Add(questData.QuestType, questData);
+        }
     }
 
     public void CompleteQuest(QuestType questType)
     {
-        if(IsActiveQuest(questType) == true)
+        if (IsActiveQuest(questType) == true)
         {
-            _activeQuest.Remove(questType);
+            _activeQuests.Remove(questType);
         }
     }
 
@@ -30,7 +43,7 @@ public class QuestManager : MonoBehaviour
     {
         if (IsActiveQuest(questType) == false)
         {
-            _activeQuest.Add(questType);
+            _activeQuests.Add(questType, _questLibrary[questType]);
         }
         else
         {
@@ -45,12 +58,9 @@ public class QuestManager : MonoBehaviour
 
     private bool IsActiveQuest(QuestType questType)
     {
-        foreach(QuestType quests in _activeQuest)
+        if (_activeQuests.ContainsKey(questType))
         {
-            if(quests == questType)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }
