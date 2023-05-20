@@ -23,6 +23,7 @@ public class InputManager : MonoBehaviour
     private PersistentData _persistentData = null;
     private SceneChanger _sceneChanger = null;
     private Temple _temple = null;
+    private QuestManager _questManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _chimeraPillarLayer = new LayerMask();
     private LayerMask _crystalLayer = new LayerMask();
@@ -81,6 +82,11 @@ public class InputManager : MonoBehaviour
         _startingUI = _uiManager.StartingUI;
         _templeUI = _uiManager.TempleUI;
     }
+    public void SetQuestManager(QuestManager questManager)
+    {
+        _questManager = questManager;
+    }
+
     public void SetTemple(Temple temple)
     {
         _temple = temple;
@@ -270,6 +276,8 @@ public class InputManager : MonoBehaviour
         {
             CrystalSpawn crystal = crystalHit.transform.gameObject.GetComponent<CrystalSpawn>();
             crystal.Harvest();
+
+            _questManager.CompleteQuest(QuestType.MineCrystal);
 
             return;
         }

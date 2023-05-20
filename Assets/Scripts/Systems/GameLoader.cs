@@ -136,6 +136,7 @@ public class GameLoader : AsyncLoader
         ServiceLocator.Register<UIManager>(uiManagerComp);
 
         inputManagerComp.SetUIManager(uiManagerComp);
+        inputManagerComp.SetQuestManager(questManagerComp);
         currencyManagerComp.SetUIManager(uiManagerComp);
         questManagerComp.SetUIManager(uiManagerComp);
         habitatManagerComp.SetHabitatUI(uiManagerComp);
