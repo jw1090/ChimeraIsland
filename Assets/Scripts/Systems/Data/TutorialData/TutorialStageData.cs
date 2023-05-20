@@ -5,4 +5,5 @@ using System.Collections.Generic;
 public class TutorialStageData
 {
     public TutorialStepData[] StepData;
+    public QuestTypeData[] QuestList;
 }
