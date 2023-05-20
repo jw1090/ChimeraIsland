@@ -8,6 +8,14 @@ public enum AnimationType
     Fail,
 }
 
+public enum ChimeraOrderType
+{
+    AveragePower,
+    Exploration,
+    Stamina,
+    Wisdom,
+}
+
 public enum ChimeraType
 {
     None = -1,
@@ -25,6 +33,23 @@ public enum ChimeraType
     C3,
 }
 
+public enum CursorType
+{
+    Default,
+    Clickable,
+    Dragable,
+    Dragging,
+    Minable,
+    Rotate,
+}
+
+public enum DayType
+{
+    None = -1,
+    DayTime,
+    NightTime,
+}
+
 public enum DetailsButtonType
 {
     None = -1,
@@ -40,19 +65,30 @@ public enum ElementType
     Fire,
 }
 
+public enum EnvironmentSFXType
+{
+    None = -1,
+    Evolution1,
+    Evolution2,
+    FacilityBuildStart,
+    FacilityBuildEnd,
+    LevelUp,
+    FacilityBuild,
+    PortalClick,
+    MiningTap,
+    MiningHarvest,
+    WaterHit,
+    StoneHit,
+    DirtHit,
+    TreeHit,
+    StoneClick,
+}
+
 public enum EvolutionVFXType
 {
     None = -1,
     GrowingLight,
     WaterDrop,
-}
-
-public enum ExpeditionType
-{
-    None = -1,
-    Essence,
-    Fossils,
-    HabitatUpgrade,
 }
 
 public enum ExpeditionState
@@ -62,6 +98,14 @@ public enum ExpeditionState
     Setup,
     InProgress,
     Result,
+}
+
+public enum ExpeditionType
+{
+    None = -1,
+    Essence,
+    Fossils,
+    HabitatUpgrade,
 }
 
 public enum FacilityType
@@ -95,6 +139,31 @@ public enum ModifierType
     Max,
 }
 
+public enum OutlineType
+{
+    None = -1,
+    StarterChimeras,
+    HabitatChimeras,
+    Portal,
+    Crystals,
+    Temple,
+    Pillars,
+    Figurines,
+    Upgrades,
+}
+
+public enum QuestType
+{
+    None = -1,
+    FirstExpedition,
+    TrainChimera,
+    UpgradeHabitatT2,
+    SummonChimera,
+    UpgradeFacility,
+    UpgradeHabitatT3,
+    UnlockAllChimera,
+}
+
 public enum SceneType
 {
     None = -1,
@@ -102,6 +171,21 @@ public enum SceneType
     Starting,
     Habitat,
     Temple,
+}
+
+public enum SFXUIType
+{
+    None = -1,
+    StandardClick,
+    ConfirmClick,
+    PurchaseClick,
+    PlaceChimera,
+    RemoveChimera,
+    ErrorClick,
+    Completion,
+    Failure,
+    StoneDrag,
+    Whoosh,
 }
 
 public enum StatPreferenceType
@@ -120,23 +204,13 @@ public enum StatType
     Wisdom,
 }
 
-public enum UIElementType
+public enum TapVFXType
 {
     None = -1,
-    All,
-    OtherFacilityButtons,
-    ExpeditionButton,
-    MarketplaceChimeraTab,
-    WorldMapButton,
-    FossilsWallets,
-    EssenceWallets,
-}
-
-public enum UITempleBackType
-{
-    None = -1,
-    BackToHabitat,
-    BackToTemple,
+    Ground,
+    Water,
+    Stone,
+    Tree,
 }
 
 public enum TempleSectionType
@@ -165,90 +239,21 @@ public enum TutorialStageType
     Upgrade,
 }
 
-
-public enum SFXUIType
+public enum UIElementType
 {
     None = -1,
-    StandardClick,
-    ConfirmClick,
-    PurchaseClick,
-    PlaceChimera,
-    RemoveChimera,
-    ErrorClick,
-    Completion,
-    Failure,
-    StoneDrag,
-    Whoosh,
+    All,
+    OtherFacilityButtons,
+    ExpeditionButton,
+    MarketplaceChimeraTab,
+    WorldMapButton,
+    FossilsWallets,
+    EssenceWallets,
 }
 
-public enum EnvironmentSFXType
+public enum UITempleBackType
 {
     None = -1,
-    Evolution1,
-    Evolution2,
-    FacilityBuildStart,
-    FacilityBuildEnd,
-    LevelUp,
-    FacilityBuild,
-    PortalClick,
-    MiningTap,
-    MiningHarvest,
-    WaterHit,
-    StoneHit,
-    DirtHit,
-    TreeHit,
-    StoneClick,
-}
-
-public enum DayType
-{
-    None = -1,
-    DayTime,
-    NightTime,
-}
-
-public enum CursorType
-{
-    Default,
-    Clickable,
-    Dragable,
-    Dragging,
-    Minable,
-    Rotate,
-}
-
-public enum ChimeraOrderType
-{ 
-    AveragePower,
-    Exploration,
-    Stamina,
-    Wisdom,
-}
-
-public enum TapVFXType
-{
-    None = -1,
-    Ground,
-    Water,
-    Stone,
-    Tree,
-}
-
-public enum OutlineType
-{
-    None = -1,
-    StarterChimeras,
-    HabitatChimeras,
-    Portal,
-    Crystals,
-    Temple,
-    Pillars,
-    Figurines,
-    Upgrades,
-}
-
- public enum QuestType
-{
-    None = -1,
-    NotNone
+    BackToHabitat,
+    BackToTemple,
 }
