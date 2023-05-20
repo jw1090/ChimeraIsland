@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "QuestData", menuName = "ScriptableObjects/Quest", order = 2)]
 [Serializable]
+[CreateAssetMenu(fileName = "QuestData", menuName = "ScriptableObjects/Quest", order = 2)]
 public class QuestData : ScriptableObject
 {
     public QuestType QuestType = QuestType.None;

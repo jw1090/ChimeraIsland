@@ -23,7 +23,12 @@ public class QuestManager : MonoBehaviour
     public void SetHabitatManager(HabitatManager habitatManager)
     {
         _habitatManager = habitatManager;
-        if(_habitatManager.HabitatData.questDataList.Count > 0) 
+        LoadActiveQuests();
+    }
+
+    private void LoadActiveQuests()
+    {
+        if (_habitatManager.HabitatData.questDataList.Count > 0)
         {
             foreach (QuestData questData in _habitatManager.HabitatData.questDataList)
             {
