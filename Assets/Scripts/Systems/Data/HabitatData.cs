@@ -10,6 +10,7 @@ public class HabitatData
     public List<ModifierType> ExpeditionEssenceModifier = new List<ModifierType>();
     public List<ModifierType> ExpeditionFossilModifier = new List<ModifierType>();
     public List<ModifierType> ExpeditionHabitatModifier = new List<ModifierType>();
+    public List<QuestData> questDataList = new List<QuestData>();
     public int CurrentTier = 1;
     public bool CaveUnlocked = false;
     public bool RuneUnlocked = false;
