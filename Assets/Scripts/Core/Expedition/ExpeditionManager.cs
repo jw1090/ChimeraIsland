@@ -632,6 +632,24 @@ public class ExpeditionManager : MonoBehaviour
             Debug.LogError($"Selected Expedition is null. Please change!");
         }
 
+        switch (_selectedExpedition.Title)
+        {
+            case "First Facility":
+                _questManager.CompleteQuest(QuestType.FirstExpedition);
+                break;
+            case "Archeology":
+                _questManager.CompleteQuest(QuestType.Archeology);
+                break;
+            case "A New Look":
+                _questManager.CompleteQuest(QuestType.UpgradeHabitatT2);
+                break;
+            case "Restoration":
+                _questManager.CompleteQuest(QuestType.UpgradeHabitatT3);
+                break;
+            default:
+                break;
+        }
+
         switch (_selectedExpedition.Type)
         {
             case ExpeditionType.Essence:

@@ -76,10 +76,12 @@ public class QuestManager : MonoBehaviour
             {
                 DisplayActiveQuests();
             }
-
-            foreach(QuestType unlockedQuestType in questUnlocks)
+            else
             {
-                ActivateQuest(unlockedQuestType);
+                foreach (QuestType unlockedQuestType in questUnlocks)
+                {
+                    ActivateQuest(unlockedQuestType);
+                }
             }
         }
         SaveActiveQuests();
