@@ -6,6 +6,7 @@ public class TempleBuyChimeras : MonoBehaviour
 
     private HabitatManager _habitatManager = null;
     private ResourceManager _resourceManager = null;
+    private QuestManager _questManager = null;
     private UIManager _uiManager = null;
     private AudioManager _audioManager = null;
     private PersistentData _persistentData = null;
@@ -39,6 +40,7 @@ public class TempleBuyChimeras : MonoBehaviour
 
         _habitatManager = ServiceLocator.Get<HabitatManager>();
         _resourceManager = ServiceLocator.Get<ResourceManager>();
+        _questManager = ServiceLocator.Get<QuestManager>();
         _uiManager = ServiceLocator.Get<UIManager>();
         _audioManager = ServiceLocator.Get<AudioManager>();
         _persistentData = ServiceLocator.Get<PersistentData>();
@@ -132,6 +134,13 @@ public class TempleBuyChimeras : MonoBehaviour
         _persistentData.SaveSessionData();
 
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
+
+        _questManager.CompleteQuest(QuestType.SummonChimera);
+
+        if(_habitatManager.Collections.AllChimerasCollected() == true)
+        {
+            _questManager.CompleteQuest(QuestType.UnlockAllChimera);
+        }
     }
 
     private void IncreasePurchaseAmount(ChimeraType chimeraType)

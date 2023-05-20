@@ -25,6 +25,7 @@ public class ExpeditionManager : MonoBehaviour
     private HabitatManager _habitatManager = null;
     private AudioManager _audioManager = null;
     private TutorialManager _tutorialManager = null;
+    private QuestManager _questManager = null;
     private ExpeditionState _expeditionState = ExpeditionState.None;
     private const float _difficultyFlatModifier = 10.0f;
     private const float _difficultyScalar = 14.5f;
@@ -44,6 +45,7 @@ public class ExpeditionManager : MonoBehaviour
     public ExpeditionData HabitatExpeditionOption { get => _habitatExpeditionOption; }
     public ExpeditionData SelectedExpedition { get => _selectedExpedition; }
     public TreadmillManager TreadmillManager { get => _treadmillManager; }
+    public QuestManager QuestManager { get => _questManager; }
     public int CurrentEssenceProgress { get => _currentEssenceProgress; }
     public int CurrentFossilProgress { get => _currentFossilProgress; }
     public int CurrentHabitatProgress { get => _currentHabitatProgress; }
@@ -98,6 +100,7 @@ public class ExpeditionManager : MonoBehaviour
         _audioManager = ServiceLocator.Get<AudioManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
         _cameraUtil = ServiceLocator.Get<CameraUtil>();
+        _questManager = ServiceLocator.Get<QuestManager>();
 
         _habitatUI = _uiManager.HabitatUI;
         _uiExpedition = _uiManager.HabitatUI.ExpeditionPanel;
@@ -565,6 +568,7 @@ public class ExpeditionManager : MonoBehaviour
                 _failureCount = 0;
             }
         }
+
     }
 
     public void SuccessRewards()
