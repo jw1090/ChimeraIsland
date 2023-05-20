@@ -7,6 +7,34 @@ public class QuestManager : MonoBehaviour
     private Dictionary<QuestType, QuestData> _activeQuests = new Dictionary<QuestType, QuestData>();
     private Dictionary<QuestType, QuestData> _questLibrary = new Dictionary<QuestType, QuestData>();
     private UIManager _uiManager = null;
+    private HabitatManager _habitatManager = null;
+
+    public void SetHabitatManager(HabitatManager habitatManager)
+    {
+        _habitatManager = habitatManager;
+        LoadActiveQuests();
+    }
+
+    private void SaveActiveQuests()
+    {
+        List<QuestData> questDataList = new List<QuestData>();
+        foreach (QuestData questData in _activeQuests.Values)
+        {
+            questDataList.Add(questData);
+        }
+        _habitatManager.HabitatData.questDataList = questDataList;
+    }
+
+    public void LoadActiveQuests()
+    {
+        if (_habitatManager.HabitatData.questDataList.Count > 0)
+        {
+            foreach (QuestData questData in _habitatManager.HabitatData.questDataList)
+            {
+                _activeQuests.Add(questData.QuestType, questData);
+            }
+        }
+    }
 
     public void SetUIManager(UIManager uiManager)
     {
@@ -41,13 +69,15 @@ public class QuestManager : MonoBehaviour
                 ActivateQuest(unlockedQuestType);
             }
         }
+        SaveActiveQuests();
     }
 
     public void ActivateQuest(QuestType questType)
     {
         if (IsActiveQuest(questType) == false)
         {
-            _activeQuests.Add(questType, _questLibrary[questType]);
+            _activeQuests.Add(questType, _questLibrary[questType]); 
+            SaveActiveQuests();
             DisplayActiveQuests();
         }
         else

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "QuestData", menuName = "ScriptableObjects/Quest", order = 2)]
 public class QuestData : ScriptableObject
 {

@@ -110,6 +110,8 @@ public class GameLoader : AsyncLoader
         ServiceLocator.Register<HabitatManager>(habitatManagerComp);
         persistentDataComp.SetHabitatManager(habitatManagerComp);
         inputManagerComp.SetHabitatManager(habitatManagerComp);
+        questManagerComp.SetHabitatManager(habitatManagerComp);
+        questManagerComp.LoadActiveQuests();
 
         var tutorialGO = new GameObject("Tutorial Manager");
         tutorialGO.transform.SetParent(systemsParent);
