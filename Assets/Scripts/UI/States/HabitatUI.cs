@@ -67,7 +67,7 @@ public class HabitatUI : MonoBehaviour
         _expeditionPanel.Initialize(uiManager);
         _detailsManager.Initialize(uiManager);
         _chimeraPopUp.Initialize();
-
+        _questLogUI.Initialize();
     }
 
     private void SetupButtonListeners()
