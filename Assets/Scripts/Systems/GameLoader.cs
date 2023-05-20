@@ -99,7 +99,7 @@ public class GameLoader : AsyncLoader
         persistentDataComp.SetCurrencyManager(currencyManagerComp);
         inputManagerComp.SetCurrencyManager(currencyManagerComp);
 
-        var questManagerGO = Instantiate(resourceManagerComp.QuestManager, systemsParent);
+        var questManagerGO = new GameObject("Quest Manager");
         questManagerGO.transform.SetParent(systemsParent);
         var questManagerComp = currencyManagerGO.AddComponent<QuestManager>().Initialize();
         ServiceLocator.Register<QuestManager>(questManagerComp);
