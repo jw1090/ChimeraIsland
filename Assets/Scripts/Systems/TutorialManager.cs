@@ -109,7 +109,7 @@ public class TutorialManager : MonoBehaviour
         {
             if (quest != null)
             {
-                _questManager.ActivateQuest(quest.questType);
+                _questManager.ActivateQuest(quest.QuestType);
             }
         }
         _tutorialCompletion.Complete(tutorialType);
