@@ -27,25 +27,6 @@ public class UITutorialOverlay : MonoBehaviour
 
     public void ShowOverlay(TutorialStageData tutorialSteps, TutorialStageType tutorialType)
     {
-        //switch ((TutorialDarkenType)Enum.Parse(typeof(TutorialDarkenType), tutorialSteps.Darken, true))
-        //{
-        //    case TutorialDarkenType.Standard:
-        //        _darken.SetState("StandardBG");
-        //        break;
-        //    case TutorialDarkenType.FirstExpedition:
-        //        _darken.SetState("FirstExpeditionBG");
-        //        break;
-        //    case TutorialDarkenType.ChimeraList:
-        //        _darken.SetState("ChimeraListBG");
-        //        break;
-        //    case TutorialDarkenType.ReccomendedTraits:
-        //        _darken.SetState("ReccomendedTraitsBG");
-        //        break;
-        //    default:
-        //        Debug.LogError($"TutorialDarkenType: {tutorialSteps.Darken} not available");
-        //        break;
-        //}
-
         _tutorialType = tutorialType;
         _tutorialStep = -1;
         _tutorialData = tutorialSteps;

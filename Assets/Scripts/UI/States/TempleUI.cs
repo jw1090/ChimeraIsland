@@ -127,7 +127,7 @@ public class TempleUI : MonoBehaviour
     private void ShowBuyUI()
     {
         _titleText.text = "Chimera Shop";
-        _subtitleText.text = "Select a Statue to Buy Chimera";
+        _subtitleText.text = "Select a Statue to Summon Chimera";
 
         _goLeftButton.gameObject.SetActive(true);
         _goRightButton.gameObject.SetActive(true);
