@@ -6,7 +6,6 @@ public class UITutorialOverlay : MonoBehaviour
     [SerializeField] private StatefulObject _darken = null;
     private UIManager _UIManager = null;
     private TutorialStageData _tutorialData = null;
-    private HabitatManager _habitatManager = null;
     private TutorialManager _tutorialManager = null;
     private AudioManager _audioManager = null;
     private TutorialStageType _tutorialType;
@@ -19,7 +18,6 @@ public class UITutorialOverlay : MonoBehaviour
     public void Initialize(UIManager UIManager)
     {
         _darken.SetState("StandardBG");
-        _habitatManager = ServiceLocator.Get<HabitatManager>();
         _tutorialManager = ServiceLocator.Get<TutorialManager>();
 
         _UIManager = UIManager;
@@ -79,7 +77,7 @@ public class UITutorialOverlay : MonoBehaviour
     {
         if (_tutorialStep >= _tutorialData.StepData.Length)
         {
-            _tutorialManager.TutorialComplete(_tutorialType);
+            _tutorialManager.TutorialComplete(_tutorialType, _tutorialData);
             _UIManager.EndTutorial();
             _textInfo.Done();
             return;

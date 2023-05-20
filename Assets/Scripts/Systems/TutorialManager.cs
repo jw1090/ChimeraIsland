@@ -5,6 +5,7 @@ public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
     private UIManager _UiManager = null;
+    private QuestManager _QuestManager = null;
     private bool _tutorialsEnabled = false;
     private PersistentData _persistentData = null;
     private TutorialCompletionData _tutorialCompletion = null;
@@ -18,7 +19,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-
+        _QuestManager = ServiceLocator.Get<QuestManager>();
         LoadTutorialFromJson();
 
         return this;
@@ -102,8 +103,15 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    public void TutorialComplete(TutorialStageType tutorialType)
+    public void TutorialComplete(TutorialStageType tutorialType, TutorialStageData tutorialData)
     {
+        foreach(var quest in tutorialData.QuestList)
+        {
+            if (quest != null)
+            {
+                _QuestManager.ActivateQuest(quest.questType);
+            }
+        }
         _tutorialCompletion.Complete(tutorialType);
     }
 }
