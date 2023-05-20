@@ -4,12 +4,13 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     private TutorialData _tutorialData = null;
-    private UIManager _UiManager = null;
+    private UIManager _uiManager = null;
+    private QuestManager _questManager = null;
     private bool _tutorialsEnabled = false;
     private PersistentData _persistentData = null;
     private TutorialCompletionData _tutorialCompletion = null;
 
-    public void SetHabitatUI(UIManager UIManager) { _UiManager = UIManager; }
+    public void SetHabitatUI(UIManager UIManager) { _uiManager = UIManager; }
 
     public TutorialManager Initialize()
     {
@@ -18,7 +19,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log($"<color=Lime> Initializing {this.GetType()} ... </color>");
 
         _persistentData = ServiceLocator.Get<PersistentData>();
-
+        _questManager = ServiceLocator.Get<QuestManager>();
         LoadTutorialFromJson();
 
         return this;
@@ -86,7 +87,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         TutorialStageData tutorialStage = _tutorialData.Tutorials[(int)tutorialType];
-        _UiManager.StartTutorial(tutorialStage, tutorialType);
+        _uiManager.StartTutorial(tutorialStage, tutorialType);
     }
 
     public void TutorialStageCheck()
@@ -102,8 +103,15 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    public void TutorialComplete(TutorialStageType tutorialType)
+    public void TutorialComplete(TutorialStageType tutorialType, TutorialStageData tutorialData)
     {
+        foreach(var quest in tutorialData.QuestList)
+        {
+            if (quest != null)
+            {
+                _questManager.ActivateQuest(quest.questType);
+            }
+        }
         _tutorialCompletion.Complete(tutorialType);
     }
 }
