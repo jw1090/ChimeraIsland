@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,6 +48,7 @@ public class QuestManager : MonoBehaviour
         if (IsActiveQuest(questType) == false)
         {
             _activeQuests.Add(questType, _questLibrary[questType]);
+            DisplayActiveQuests();
         }
         else
         {
@@ -56,9 +56,15 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void DisplayActiveQuest()
+    public void DisplayActiveQuests()
     {
+        List<QuestData> questDataList = new List<QuestData>();
+        foreach(QuestData questData in _activeQuests.Values)
+        {
+            questDataList.Add(questData);
+        }
 
+        _uiManager.HabitatUI.QuestLogUI.DisplayActiveQuests(questDataList);
     }
 
     private bool IsActiveQuest(QuestType questType)
@@ -69,5 +75,4 @@ public class QuestManager : MonoBehaviour
         }
         return false;
     }
-
 }
