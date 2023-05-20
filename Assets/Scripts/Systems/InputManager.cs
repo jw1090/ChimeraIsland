@@ -86,6 +86,7 @@ public class InputManager : MonoBehaviour
     {
         _questManager = questManager;
     }
+
     public void SetTemple(Temple temple)
     {
         _temple = temple;
