@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Collections
 {
+    private QuestManager _questManager = null;
+
     private bool _aUnlocked = false;
     private bool _a1Unlocked = false;
     private bool _a2Unlocked = false;
@@ -15,6 +14,7 @@ public class Collections
     private bool _c1Unlocked = false;
     private bool _c2Unlocked = false;
     private bool _c3Unlocked = false;
+
     public bool AUnlocked { get => _aUnlocked; }
     public bool A1Unlocked { get => _a1Unlocked; }
     public bool A2Unlocked { get => _a2Unlocked; }
@@ -27,15 +27,10 @@ public class Collections
     public bool C1Unlocked { get => _c1Unlocked; }
     public bool C2Unlocked { get => _c2Unlocked; }
     public bool C3Unlocked { get => _c3Unlocked; }
-    public bool AllChimerasCollected()
+
+    public void Initialize()
     {
-        if (_aUnlocked && _a1Unlocked && _a2Unlocked && _a3Unlocked &&
-            _bUnlocked && _b1Unlocked && _b2Unlocked && _b3Unlocked &&
-            _cUnlocked && _c1Unlocked && _c2Unlocked && _c3Unlocked)
-        {
-            return true;
-        }
-        return false;
+        _questManager = ServiceLocator.Get<QuestManager>();
     }
 
     public void LoadData(CollectionData collectionData)
@@ -97,5 +92,21 @@ public class Collections
             default:
                 break;
         }
+
+        if (AreAllChimerasCollected() == true)
+        {
+            _questManager.CompleteQuest(QuestType.UnlockAllChimera);
+        }
+    }
+
+    private bool AreAllChimerasCollected()
+    {
+        if (_aUnlocked && _a1Unlocked && _a2Unlocked && _a3Unlocked &&
+            _bUnlocked && _b1Unlocked && _b2Unlocked && _b3Unlocked &&
+            _cUnlocked && _c1Unlocked && _c2Unlocked && _c3Unlocked)
+        {
+            return true;
+        }
+        return false;
     }
 }
