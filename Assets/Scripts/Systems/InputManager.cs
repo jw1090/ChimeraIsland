@@ -22,7 +22,6 @@ public class InputManager : MonoBehaviour
     private ResourceManager _resourceManager = null;
     private PersistentData _persistentData = null;
     private SceneChanger _sceneChanger = null;
-    private Temple _temple = null;
     private QuestManager _questManager = null;
     private LayerMask _chimeraLayer = new LayerMask();
     private LayerMask _chimeraPillarLayer = new LayerMask();
@@ -82,14 +81,10 @@ public class InputManager : MonoBehaviour
         _startingUI = _uiManager.StartingUI;
         _templeUI = _uiManager.TempleUI;
     }
+
     public void SetQuestManager(QuestManager questManager)
     {
         _questManager = questManager;
-    }
-
-    public void SetTemple(Temple temple)
-    {
-        _temple = temple;
     }
 
     public InputManager Initialize()
@@ -539,8 +534,14 @@ public class InputManager : MonoBehaviour
 
     private void CreateOutline(RaycastHit raycastHit, OutlineType outlineType)
     {
-        if (_disableOutline == true || _recentOutlineCreated == true || _uiManager.TutorialOpen)
+        if (_disableOutline == true || _recentOutlineCreated == true)
         {
+            return;
+        }
+
+        if (_uiManager.IsSettingsOpen || _uiManager.TutorialOpen)
+        {
+            RemoveOutline();
             return;
         }
 
