@@ -136,11 +136,6 @@ public class TempleBuyChimeras : MonoBehaviour
         _audioManager.PlayUISFX(SFXUIType.PurchaseClick);
 
         _questManager.CompleteQuest(QuestType.SummonChimera);
-
-        if(_habitatManager.Collections.AllChimerasCollected() == true)
-        {
-            _questManager.CompleteQuest(QuestType.UnlockAllChimera);
-        }
     }
 
     private void IncreasePurchaseAmount(ChimeraType chimeraType)

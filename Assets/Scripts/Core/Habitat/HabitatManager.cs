@@ -98,6 +98,9 @@ public class HabitatManager : MonoBehaviour
 
         _persistentData = ServiceLocator.Get<PersistentData>();
         _questManager = ServiceLocator.Get<QuestManager>();
+
+        _collections.Initialize();
+
         LoadHabitatData();
 
         return this;
