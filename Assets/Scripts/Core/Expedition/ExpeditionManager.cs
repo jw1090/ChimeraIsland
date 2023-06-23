@@ -147,7 +147,7 @@ public class ExpeditionManager : MonoBehaviour
         {
             _essenceExpeditionOption.Modifiers = data.ExpeditionEssenceModifier;
         }
-        if (data.ExpeditionHabitatModifier.Count > 0)
+        if (data.ExpeditionHabitatModifier.Count > 0 && _habitatExpeditionOption != null)
         {
             _habitatExpeditionOption.Modifiers = data.ExpeditionHabitatModifier;
         }
