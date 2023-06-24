@@ -498,6 +498,11 @@ public class InputManager : MonoBehaviour
             || Physics.Raycast(ray, 300.0f, _figurineLayer)
             || Physics.Raycast(ray, 300.0f, _chimeraLayer))
         {
+            if (_disableOutline == true)
+            {
+                return CursorType.Default;
+            }
+
             return CursorType.Dragable;
         }
         else if (Physics.Raycast(ray, 300.0f, _portalLayer)
@@ -539,7 +544,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        if (_uiManager.IsSettingsOpen || _uiManager.TutorialOpen)
+        if (_uiManager.IsSettingsOpen || _uiManager.TutorialOpen || _uiManager.HabitatUI.MenuOpen)
         {
             RemoveOutline();
             return;

@@ -718,15 +718,18 @@ public class ExpeditionManager : MonoBehaviour
             }
         }
 
-        _treadmillManager.Warp();
-        _habitatUI.UpdateHabitatUI();
-
         if (onExpedition == false)
         {
             _chimeras.Clear();
             _treadmillManager.ChimeraList.Clear();
             _treadmillManager.SetRunning(false);
         }
+        else
+        {
+            _treadmillManager.Warp();
+        }
+
+        _habitatUI.UpdateHabitatUI();
     }
 
     public void CompleteCurrentUpgradeExpedition()

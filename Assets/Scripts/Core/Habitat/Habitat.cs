@@ -13,7 +13,6 @@ public class Habitat : MonoBehaviour
     [SerializeField] private GameObject _chimeraFolder = null;
     [SerializeField] private CrystalManager _crystalManager = null;
     [SerializeField] private GameObject _spawnPoint = null;
-    [SerializeField] private GameObject _templeSpawnPoint = null;
     [SerializeField] private PatrolNodes _patrolNodes = null;
     [SerializeField] private Environment _environment = null;
     [SerializeField] private TempleStructure _temple = null;
@@ -38,7 +37,6 @@ public class Habitat : MonoBehaviour
     public TempleStructure Temple { get => _temple; }
     public CrystalManager CrystalManager { get => _crystalManager; }
     public Transform SpawnPoint { get => _spawnPoint.transform; }
-    public Transform TempleSpawnPoint { get => _templeSpawnPoint.transform; }
     public List<Chimera> ActiveChimeras { get => _activeChimeras; }
     public List<Facility> Facilities { get => _facilities; }
     public List<Transform> PatrolNodes { get => _patrolNodes.Nodes; }
@@ -141,7 +139,7 @@ public class Habitat : MonoBehaviour
         {
             var newChimera = _chimeraCreator.CreateChimera(chimeraInfo);
 
-            AddChimera(newChimera.transform, true);
+            AddChimera(newChimera.transform);
         }
     }
 
@@ -192,19 +190,15 @@ public class Habitat : MonoBehaviour
         return nodes[random].position;
     }
 
-    public void AddChimera(Transform newChimera, bool loadingIn = false)
+    public void AddChimera(Transform newChimera)
     {
         if (ActiveChimeras.Count == 0)
         {
             newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.SpawnPoint.position);
         }
-        else if (loadingIn == true)
-        {
-            newChimera.position = RandomDistanceFromPoint(GetRandomPatrolNode());
-        }
         else
         {
-            newChimera.position = RandomDistanceFromPoint(_habitatManager.CurrentHabitat.TempleSpawnPoint.position);
+            newChimera.position = RandomDistanceFromPoint(GetRandomPatrolNode());
         }
 
         newChimera.rotation = Quaternion.identity;
